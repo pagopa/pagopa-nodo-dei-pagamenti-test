@@ -1,6 +1,6 @@
-# Il test verifica che in caso di 3Transfer e 1 stazione broadcast nella paGetPaymentResponse siano generate 2 receipt +
+# Il test verifica che in caso di 3Transfer e 2 stazioni broadcast nella paGetPaymentResponse siano generate 3 receipt +
 
-Feature: 3Transfers - 1 stazione broadcast - 2 receipt
+Feature: 3Transfers - 2 stazioni broadcast - 3 receipt
 
     Background:
         Given systems up
@@ -8,7 +8,7 @@ Feature: 3Transfers - 1 stazione broadcast - 2 receipt
 
     #DB update
     Scenario: Execute pa_stazione_pa update
-        Then updates through the query stationUpdateBroadcast of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro sendPaymentResultV2 on db nodo_cfg
+        Then updates through the query stationUpdate2BroadcastSamePA of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro sendPaymentResultV2 on db nodo_cfg
 
     #refresh pa e stazioni
     Scenario: Execute refresh pa e stazioni
@@ -228,30 +228,30 @@ Feature: 3Transfers - 1 stazione broadcast - 2 receipt
         And checks the value None of the record at column BUNDLE_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value None of the record at column BUNDLE_PA_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         # POSITION_RECEIPT_RECIPIENT
-        And verify 2 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
-        And checks the value 66666666666,90000000001 of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
-        And checks the value 66666666666,90000000001 of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
-        And checks the value 66666666666_01,90000000001_06 of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
-        And checks the value NOTIFIED,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value 66666666666,90000000001,90000000001 of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value 66666666666,90000000001,90000000001 of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value 66666666666_01,90000000001_06,90000000001_09 of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value NOTIFIED,NOTIFIED,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt on db nodo_online under macro NewMod3
         # RE
-        And verify 4 record for the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
-        And checks the value REQ,RESP,REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
-        And checks the value 66666666666_01,66666666666_01,90000000001_06,90000000001_06 of the record at column IDENTIFICATIVO_EROGATORE of the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
+        And verify 6 record for the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
+        And checks the value RE,RESP,REQ,RESP,REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
+        And checks the value 66666666666_01,66666666666_01,90000000001_06,90000000001_06,90000000001_09,90000000001_09 of the record at column IDENTIFICATIVO_EROGATORE of the table RE retrived by the query select_paSendRT on db re under macro sendPaymentResultV2
         # POSITION_RECEIPT_RECIPIENT_STATUS
-        And verify 6 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt on db nodo_online under macro NewMod3
-        And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And verify 9 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt on db nodo_online under macro NewMod3
         # POSITION_RECEIPT_XML
-        And verify 2 record for the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And verify 3 record for the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
-        And checks the value 66666666666,90000000001 of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
-        And checks the value 66666666666,90000000001 of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
-        And checks the value 66666666666_01,90000000001_06 of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value 66666666666,90000000001,90000000001 of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value 66666666666,90000000001,90000000001 of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value 66666666666_01,90000000001_06,90000000001_09 of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query position_receipt on db nodo_online under macro NewMod3
 
     #DB update 1
     Scenario: Execute pa_stazione_pa update 1
         Given the DB check scenario executed successfully
-        Then updates through the query stationUpdateBroadcast of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro sendPaymentResultV2 on db nodo_cfg
+        Then updates through the query stationUpdate2BroadcastSamePA of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro sendPaymentResultV2 on db nodo_cfg
 
     #refresh pa e stazioni 1
     Scenario: Execute refresh pa e stazioni 1
