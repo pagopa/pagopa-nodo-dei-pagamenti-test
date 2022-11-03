@@ -89,7 +89,7 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-                <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+                <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                 <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
@@ -134,8 +134,8 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -225,11 +225,11 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRT>
-            <identificativoIntermediarioPSP>60000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>60000000001_07</identificativoCanale>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>60000000001</identificativoPSP>
-            <identificativoDominio>66666666666</identificativoDominio>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$CCP</codiceContestoPagamento>
             <tipoFirma></tipoFirma>

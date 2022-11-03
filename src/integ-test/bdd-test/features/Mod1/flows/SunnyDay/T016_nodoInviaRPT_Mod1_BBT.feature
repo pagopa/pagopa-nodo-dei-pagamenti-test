@@ -9,8 +9,8 @@ Feature: process tests for nodoInviaRT_Mod1_BBT
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>66666666666</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>66666666666_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -108,6 +108,22 @@ Feature: process tests for nodoInviaRT_Mod1_BBT
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML pspInviaRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:pspInviaRPTResponse>
+                    <pspInviaRPTResponse>
+                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                        <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+                        <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                    </pspInviaRPTResponse>
+                </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And check url field exists in nodoInviaRPT response
