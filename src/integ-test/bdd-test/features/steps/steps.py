@@ -87,6 +87,12 @@ def step_impl(context, primitive):
         payload = payload.replace('#yesterday_date#', yesterday_date)
         setattr(context, 'yesterday_date', yesterday_date)
 
+    if '#identificativoFlusso#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
+        payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
+        setattr(context, 'identificativoFlusso', identificativoFlusso)
+
     if "#ccp#" in payload:
         ccp = str(random.randint(100000000000000, 999999999999999))
         payload = payload.replace('#ccp#', ccp)
@@ -164,10 +170,6 @@ def step_impl(context, primitive):
     if '$intermediarioPA' in payload:
         payload = payload.replace(
             '$intermediarioPA', getattr(context, 'intermediarioPA'))
-
-    if '$identificativoFlusso' in payload:
-        payload = payload.replace('$identificativoFlusso', getattr(
-            context, 'identificativoFlusso'))
 
     if '$2ccp' in payload:
         payload = payload.replace('$2ccp', getattr(context, 'ccp2'))
