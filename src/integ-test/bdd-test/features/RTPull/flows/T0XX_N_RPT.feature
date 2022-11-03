@@ -4,7 +4,7 @@ Feature: T0XX_N_RPT
         Given systems up
 
     Scenario: Execute nodoInviaRPT1 (Phase 1)
-         Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '7000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
+         Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
         And RPT generation
@@ -444,7 +444,8 @@ Feature: T0XX_N_RPT
         And wait 10 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
-        
+
+    @runnable    
     Scenario: Execute nodoInviaRPT3 (Phase 3)
         Given the Execute nodoInviaRPT2 (Phase 2) scenario executed successfully
         And RPT3 generation
@@ -625,7 +626,7 @@ Feature: T0XX_N_RPT
         And wait 10 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
-        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '7000%' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
         # check correctness STATI_RPT 1

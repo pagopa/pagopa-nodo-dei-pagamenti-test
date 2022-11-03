@@ -110,6 +110,22 @@ Feature: process tests for nodoInoltraPagamentoMod2
             </soapenv:Body>
             </soapenv:Envelope>
             """
+         And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
@@ -139,7 +155,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
             "identificativoPsp": "#psp#",
             "tipoVersamento": "AD",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#"
+            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod2 response is 404
@@ -154,7 +170,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
             "identificativoPsp": "#psp#",
             "tipoVersamento": "AD",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#"
+            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod2 response is 404
@@ -230,7 +246,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
             "identificativoPsp":"#psp#",
             "tipoVersamento": "CP",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#"
+            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod2 response is 422
@@ -245,7 +261,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
             "identificativoPsp":"#psp#",
             "tipoVersamento": "AD",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#"
+            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod2 response is 200
@@ -256,11 +272,11 @@ Feature: process tests for nodoInoltraPagamentoMod2
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
          """
          {
-            "idPagamento":"$sessionToken",
-            "identificativoPsp":"#psp#",
+            "idPagamento": "$sessionToken",
+            "identificativoPsp": "#psp#",
             "tipoVersamento": "BBT",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#"
+            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod2 response is 200
@@ -275,7 +291,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
             "identificativoPsp":"#psp#",
             "tipoVersamento": "BP",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#"
+            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod2 response is 200
@@ -286,11 +302,11 @@ Feature: process tests for nodoInoltraPagamentoMod2
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
          """
          {
-            "idPagamento":"$sessionToken",
-            "identificativoPsp":"#psp#",
+            "idPagamento": "$sessionToken",
+            "identificativoPsp": "#psp#",
             "tipoVersamento": "PO",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#"
+            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod2 response is 422
@@ -306,7 +322,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
             "identificativoPsp":"#psp#",
             "tipoVersamento": "OBEP",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#"
+            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod2 response is 422

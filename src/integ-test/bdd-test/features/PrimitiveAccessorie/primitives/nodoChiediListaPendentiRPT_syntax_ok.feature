@@ -2,6 +2,7 @@ Feature: Syntax checks for nodoChiediListaPendentiRPT - OK
 
     Background:
         Given systems up
+
 @runnable
     # [CLPRPTSIN15]
     Scenario: Check valid response for nodoChiediListaPendenti primitive

@@ -110,6 +110,23 @@ Feature: process tests for nodoInoltraPagamentoMod1
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
@@ -262,7 +279,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "tipoVersamento": "CP",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canale#",
-            "tipoOperazione": "web"
+            "tipoOperazione": "mobile",
+            "mobileToken": "123ABC456"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
@@ -312,7 +330,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "tipoVersamento": "OBEP",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canale#",
-            "tipoOperazione": "web"
+            "tipoOperazione": "mobile",
+            "mobileToken": "123ABC456"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
@@ -327,7 +346,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "tipoVersamento": "BBT",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canale#",
-            "tipoOperazione": "web"
+           "tipoOperazione": "mobile",
+            "mobileToken": "123ABC456"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
@@ -342,7 +362,8 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "tipoVersamento": "BP",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canale#",
-            "tipoOperazione": "web"
+            "tipoOperazione": "mobile",
+            "mobileToken": "123ABC456"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
@@ -648,7 +669,7 @@ Feature: process tests for nodoInoltraPagamentoMod1
             "identificativoIntermediario":"#psp#",
             "identificativoCanale": "#canale#",
             "tipoOperazione":"mobile",
-            "mobileToken":""
+            "mobileToken": ""
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200

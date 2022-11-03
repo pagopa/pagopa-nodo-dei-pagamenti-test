@@ -2,7 +2,7 @@ Feature: RPT-RT bollo
 
    Background:
       Given systems up
-@runnable
+
    Scenario: MB generation
       Given MB generation
          """
@@ -41,7 +41,6 @@ Feature: RPT-RT bollo
             </Signature>
          </marcaDaBollo>
          """
-
       And RPT generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_2_0.xsd ">
@@ -121,7 +120,6 @@ Feature: RPT-RT bollo
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-
       And RT generation
             """
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0.xsd ">
@@ -211,7 +209,6 @@ Feature: RPT-RT bollo
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-
       And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -255,6 +252,7 @@ Feature: RPT-RT bollo
       When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoInviaRPT response
       And check redirect is 1 of nodoInviaRPT response
+
 @runnable
    Scenario: Execute nodoInviaRT
       Given the MB generation scenario executed successfully

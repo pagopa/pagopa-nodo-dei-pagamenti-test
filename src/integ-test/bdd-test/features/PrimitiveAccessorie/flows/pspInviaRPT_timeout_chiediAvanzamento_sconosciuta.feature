@@ -2,7 +2,7 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento_sconosciuta
 
     Background:
         Given systems up
-@runnable
+
     Scenario: RPT generation
         Given nodo-dei-pagamenti has config parameter scheduler.pspChiediAvanzamentoRptPollerMaxRetry set to 1
         And RPT generation
@@ -82,7 +82,7 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento_sconosciuta
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
