@@ -211,7 +211,7 @@ Feature: 3Transfers - 1 stazione broadcast - 2 receipt
         And checks the value $activatePaymentNoticeResponse.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value OK of the record at column OUTCOME of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-        And checks the value 10 of the record at column PAYMENT_AMOUNT of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value 15 of the record at column PAYMENT_AMOUNT of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNoticeResponse.companyName of the record at column COMPANY_NAME of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNoticeResponse.officeName of the record at column OFFICE_NAME of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
