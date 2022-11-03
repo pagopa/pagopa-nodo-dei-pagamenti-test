@@ -41,9 +41,9 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
 Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
         Given replace status content with RPT_ACCETTATA_PSP content
         And replace pa content with #creditor_institution_code_old# content
-        And execution query stati_rpt_snapshot to get value on the table STATI_RPT_SNAPSHOT, with the columns IUV, CCP under macro Primitive_accessorie with db name nodo_online
-        And through the query stati_rpt_snapshot retrieve param iuv at position 0 in the row 0 and save it under the key iuv
-        And through the query stati_rpt_snapshot retrieve param ccp at position 1 in the row 0 and save it under the key ccp
+        And execution query rpt to get value on the table STATI_RPT_SNAPSHOT, with the columns IUV, CCP under macro Primitive_accessorie with db name nodo_online
+        And through the query rpt retrieve param iuv at position 0 in the row 0 and save it under the key iuv
+        And through the query rpt retrieve param ccp at position 1 in the row 0 and save it under the key ccp
         And identificativoUnivocoVersamento with <iuv_value> in nodoChiediCopiaRT
         And codiceContestoPagamento with <ccp_value> in nodoChiediCopiaRT
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
