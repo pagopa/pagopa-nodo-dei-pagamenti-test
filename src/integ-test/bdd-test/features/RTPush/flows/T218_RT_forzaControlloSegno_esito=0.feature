@@ -2,7 +2,7 @@ Feature: T218_RT_forzaControlloSegno_esito=0
 
     Background:
         Given systems up
-@runnable
+
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given RPT1 generation
             """
