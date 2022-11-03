@@ -1,4 +1,4 @@
-Feature: process tests for paaInviaRT[IRTRES1]
+Feature: process tests for paaInviaRT[IRTRES6]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -238,12 +238,17 @@ Feature: process tests for paaInviaRT[IRTRES1]
             """
         And initial XML paaInviaRT
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soappppppp/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+           <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:paaInviaRTRisposta>
                     <paaInviaRTRisposta>
-                        <esito>OK</esito>
+                        <fault>
+                        <faultCode>CIAO</faultCode>
+                        <faultString>La firma è sbagliata</faultString>
+                        <id>IDPSPFNZ</id>
+                        </fault>
+                        <esito>KO</esito>
                     </paaInviaRTRisposta>
                 </ws:paaInviaRTRisposta>
             </soapenv:Body>
@@ -252,7 +257,7 @@ Feature: process tests for paaInviaRT[IRTRES1]
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
-        And check faultCode is PPT_SYSTEM_ERROR of nodoInviaRT response
+        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoInviaRT response
 
 
     
