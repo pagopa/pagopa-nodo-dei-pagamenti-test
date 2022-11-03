@@ -318,6 +318,7 @@ Feature: Execute nodoInviaRPT - MOD2 [T0XX]
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And wait 5 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
