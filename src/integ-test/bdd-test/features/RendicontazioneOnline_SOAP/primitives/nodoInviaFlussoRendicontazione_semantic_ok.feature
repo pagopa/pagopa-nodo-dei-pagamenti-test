@@ -40,7 +40,6 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             </pay_i:FlussoRiversamento>
             """
 
-    @runnable
     # [SEM_NIFR_16]
     Scenario: Send nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully

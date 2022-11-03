@@ -214,6 +214,7 @@ Feature: T218A_RT_forzaControlloSegno_esito=1_carrello_mod2
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
+@runnable
     Scenario Outline: Execute nodoInviaRT (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         And initial XML nodoInviaRT

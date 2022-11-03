@@ -444,7 +444,8 @@ Feature: T0XX_N_RPT
         And wait 10 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
-        
+
+    @runnable    
     Scenario: Execute nodoInviaRPT3 (Phase 3)
         Given the Execute nodoInviaRPT2 (Phase 2) scenario executed successfully
         And RPT3 generation
