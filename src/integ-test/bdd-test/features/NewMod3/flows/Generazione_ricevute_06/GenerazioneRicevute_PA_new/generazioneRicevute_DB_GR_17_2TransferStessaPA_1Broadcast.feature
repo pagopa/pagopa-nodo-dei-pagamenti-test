@@ -212,8 +212,8 @@ Feature: 3Transfers - 1 stazione broadcast - 2 receipt
         And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value OK of the record at column OUTCOME of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value 15 of the record at column PAYMENT_AMOUNT of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-        And checks the value $activatePaymentNoticeResponse.companyName of the record at column COMPANY_NAME of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-        And checks the value $activatePaymentNoticeResponse.officeName of the record at column OFFICE_NAME of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value NA of the record at column COMPANY_NAME of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value None of the record at column OFFICE_NAME of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value #canale_old# of the record at column CHANNEL_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value $sendPaymentOutcome.paymentChannel of the record at column CHANNEL_DESCRIPTION of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
@@ -222,7 +222,7 @@ Feature: 3Transfers - 1 stazione broadcast - 2 receipt
         And checks the value NotNone of the record at column PAYMENT_DATE_TIME of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column APPLICATION_DATE of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-        And checks the value NotNone of the record at column METADATA of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+        And checks the value None of the record at column METADATA of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value None of the record at column RT_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value None of the record at column FEE_PA of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And checks the value None of the record at column BUNDLE_ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
