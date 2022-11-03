@@ -85,7 +85,7 @@ Feature: process tests for pspInviaRT[IRPTRES11]
         Given the RPT generation scenario executed successfully
             And initial XML pspInviaRPT
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soappppppp/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             </soapenv:Header>
             <soapenv:Body>
