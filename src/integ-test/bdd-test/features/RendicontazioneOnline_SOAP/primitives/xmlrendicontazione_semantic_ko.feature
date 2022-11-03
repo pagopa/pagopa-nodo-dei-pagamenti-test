@@ -2,7 +2,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
 
     Background:
         Given systems up
-@runnable
+
     Scenario: Create REND
         Given REND generation
             """
@@ -39,6 +39,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
+
 @runnable
     Scenario Outline: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
@@ -67,7 +68,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             | tag                  | tag_value                 | soapUI test |
             | identificativoFlusso | 201-09-12IDPSPFNZ-ciao123 | SEM_NIFR_27 |
             | identificativoFlusso | 2017-09-12IDPSPFN-ciao125 | SEM_NIFR_29 |
-@runnable
+
         # [SEM_NIFR_26]
     Scenario: Create REND2
         Given REND generation
@@ -105,6 +106,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
+
 @runnable
     Scenario: Send nodoInviaFlussoRendicontazione3 primitive
         Given the Create REND2 scenario executed successfully
