@@ -996,32 +996,6 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # PSRTV2_ACTV1_12
 
     Scenario: PSRTV2_ACTV1_12 (part 1)
@@ -1033,7 +1007,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+
     Scenario: PSRTV2_ACTV1_12 (part 2)
         Given the PSRTV2_ACTV1_12 (part 1) scenario executed successfully
         And the paSendRTV2 response scenario executed successfully
@@ -1058,4 +1032,70 @@ Feature: revision checks for sendPaymentOutcomeV2
 
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # PSRTV2_ACTV1_13
+
+    Scenario: PSRTV2_ACTV1_13 (part 1)
+        Given the verifyPaymentNotice scenario executed successfully
+        And the activatePaymentNotice request scenario executed successfully
+        And the paGetPaymentV2 response scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+    @wip
+    Scenario: PSRTV2_ACTV1_13 (part 2)
+        Given the PSRTV2_ACTV1_13 (part 1) scenario executed successfully
+        And the paSendRTV2 response scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paSendRTV2
+        And the sendPaymentOutcome request scenario executed successfully
+        And outcome with KO in sendPaymentOutcome
+        When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+
+        # POSITION_RECEIPT_RECIPIENT_STATUS
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_RECEIPT_RECIPIENT
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
