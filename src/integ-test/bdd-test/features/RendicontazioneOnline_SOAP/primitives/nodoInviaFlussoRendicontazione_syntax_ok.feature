@@ -39,6 +39,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
+            
 @runnable
     # [SIN_NIFR_02]
     Scenario: Check valid response for nodoInviaFlussoRendicontazione primitive
@@ -63,6 +64,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
+
 @runnable
     # [SIN_NIFR_06]
     Scenario: Check valid response for nodoInviaFlussoRendicontazione primitive
@@ -87,6 +89,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
+
 @runnable
     Scenario Outline: Check valid response for nodoInviaFlussoRendicontazione primitive
         Given initial xml REND

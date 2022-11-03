@@ -2,7 +2,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
 
     Background:
         Given systems up
-    @runnable
+
     Scenario: Generazione rendicontazione
         Given REND generation
             """
@@ -39,6 +39,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
+
     @runnable
     # [SIN_NIFR_01]
     Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive
@@ -63,6 +64,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaFlussoRendicontazione response
+
     @runnable
     # [SIN_NIFR_04]
     Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive
@@ -87,6 +89,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaFlussoRendicontazione response
+
     @runnable
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoInviaFlussoRendicontazione primitive
         Given the Generazione rendicontazione scenario executed successfully
@@ -206,7 +209,6 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-
         And <tag> with <tag_value> in REND
         And REND generation
         """
