@@ -1305,9 +1305,7 @@ Feature: revision checks for sendPaymentOutcomeV2
     @wip
     Scenario: PSRTV2_ACTV1_20 (part 3)
         Given the PSRTV2_ACTV1_20 (part 2) scenario executed successfully
-        And the paSendRTV2 timeout response scenario executed successfully
-        And EC replies to nodo-dei-pagamenti with the paSendRTV2
-        When job paSendRt triggered after 12 seconds
+        When job paSendRt triggered after 70 seconds
         Then verify the HTTP status code of paSendRt response is 200
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
