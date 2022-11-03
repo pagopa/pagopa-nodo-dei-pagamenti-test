@@ -122,8 +122,8 @@ Feature: process tests for InoltroEsitoCartaCarrello_RPT_TIMEOUT-BUG_593
                 <soapenv:Body>
                     <ws:pspInviaCarrelloRPTCarteResponse>
                         <pspInviaCarrelloRPTResponse>
-                            <delay>10000</delay>
                             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <delay>10000</delay>
                             <identificativoCarrello>CART_1636705689274_PROVA_RES</identificativoCarrello>
                             <parametriPagamentoImmediato>idBruciatura=1636705689274</parametriPagamentoImmediato>
                         </pspInviaCarrelloRPTResponse>
@@ -199,7 +199,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_RPT_TIMEOUT-BUG_593
                     <ws:pspInviaRPTResponse>
                         <pspInviaRPTResponse>
                             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <wait>timeout</wait>
+                            <delay>10000</delay>
                             <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
                             <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
                         </pspInviaRPTResponse>
