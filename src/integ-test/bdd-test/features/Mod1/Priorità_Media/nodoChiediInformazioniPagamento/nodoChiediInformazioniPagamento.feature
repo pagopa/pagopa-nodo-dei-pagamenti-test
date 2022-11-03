@@ -141,8 +141,7 @@ Feature: process tests for nodoChiediInformazioniPagamento
     Scenario: execution nodoChiediInformazioniPagamento - PM_CIP5
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento;idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then check error is HTTP method not allowed, supported methods: OPTIONS of informazioniPagamento response
-        #verify the HTTP status code of informazioniPagamento response is 405
+        Then verify the HTTP status code of informazioniPagamento response is 405
 
 
 
