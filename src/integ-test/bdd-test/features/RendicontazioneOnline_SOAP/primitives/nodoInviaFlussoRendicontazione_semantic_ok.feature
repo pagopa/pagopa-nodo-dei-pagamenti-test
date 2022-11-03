@@ -365,7 +365,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
-            <dataOraFlusso>$timedate+1</dataOraFlusso>
+            <dataOraFlusso>$futureTimedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
             </ws:nodoInviaFlussoRendicontazione>
             </soapenv:Body>
