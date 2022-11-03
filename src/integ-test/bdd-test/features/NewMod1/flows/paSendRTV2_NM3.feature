@@ -1139,34 +1139,6 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # PSRTV2_ACTV1_16
 
     Scenario: PSRTV2_ACTV1_16 (part 1)
@@ -1177,12 +1149,83 @@ Feature: revision checks for sendPaymentOutcomeV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+
     Scenario: PSRTV2_ACTV1_16 (part 2)
         Given the PSRTV2_ACTV1_16 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         And wait 10 seconds for expiration
+
+        # POSITION_RECEIPT_RECIPIENT_STATUS
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_RECEIPT_RECIPIENT
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # PSRTV2_ACTV1_17
+
+    Scenario: PSRTV2_ACTV1_17 (part 1)
+        Given updates through the query update_fk_pa of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
+        And the verifyPaymentNotice scenario executed successfully
+        And the activatePaymentNotice request scenario executed successfully
+        And expirationTime with 4000 in activatePaymentNotice
+        And the paGetPaymentV2 response with 3 transfers scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+    @wip
+    Scenario: PSRTV2_ACTV1_17 (part 2)
+        Given the PSRTV2_ACTV1_17 (part 1) scenario executed successfully
+        When job mod3CancelV2 triggered after 6 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
