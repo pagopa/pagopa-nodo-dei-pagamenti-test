@@ -143,11 +143,13 @@ Feature: process tests for nodoNotificaAnnullamento
     Scenario: execution nodoChiediListaPSP - PM_NA6
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento;idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of notificaAnnullamento response is 405
-        And check error is HTTP method not allowed, supported methods: OPTIONS of inoltroEsito/mod2 response
+        Then the output should contain "Error 405 (Method Not Allowed)"
+        #Then verify the HTTP status code of notificaAnnullamento response is 405
+        #And check error is HTTP method not allowed, supported methods: OPTIONS of inoltroEsito/mod2 response
 
     Scenario: execution nodoChiediListaPSP - PM_NA7
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento;importoTotale=100?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of notificaAnnullamento response is 405
-        And check error is HTTP method not allowed, supported methods: OPTIONS of inoltroEsito/mod2 response
+        Then the output should contain "Error 405 (Method Not Allowed)"
+        #Then verify the HTTP status code of notificaAnnullamento response is 405
+        #And check error is HTTP method not allowed, supported methods: OPTIONS of inoltroEsito/mod2 response
