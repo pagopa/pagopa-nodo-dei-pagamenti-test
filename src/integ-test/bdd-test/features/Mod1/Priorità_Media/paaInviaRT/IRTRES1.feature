@@ -216,20 +216,6 @@ Feature: process tests for paaInviaRT[IRTRES1]
     @runnable
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully 
-        And initial XML paaInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:paaInviaRTRisposta>
-                    <paaInviaRTRisposta>
-                        <esito>OK</esito>
-                    </paaInviaRTRisposta>
-                </ws:paaInviaRTRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -250,10 +236,23 @@ Feature: process tests for paaInviaRT[IRTRES1]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-            
-            When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
-            Then check esito is KO of nodoInviaRT response
-            And check faultCode is PPT_SYSTEM_ERROR of nodoInviaRT response
+        And initial XML paaInviaRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soappppppp/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:paaInviaRTRisposta>
+                    <paaInviaRTRisposta>
+                        <esito>OK</esito>
+                    </paaInviaRTRisposta>
+                </ws:paaInviaRTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaInviaRT
+        When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is KO of nodoInviaRT response
+        And check faultCode is PPT_SYSTEM_ERROR of nodoInviaRT response
 
 
     

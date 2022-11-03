@@ -2,7 +2,7 @@ Feature: NIFRFTP
 
     Background:
         Given systems up
-@runnable
+
     Scenario: REND generation
         Given REND generation
             """
@@ -39,7 +39,6 @@ Feature: NIFRFTP
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-@runnable
 
     Scenario: Execute nodoInviaFlussoRendicontazione request
         Given the REND generation scenario executed successfully

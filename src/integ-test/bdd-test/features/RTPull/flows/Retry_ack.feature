@@ -2,7 +2,7 @@ Feature: RTPull flows
 
     Background:
         Given systems up
-        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '7000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
         And MB generation
@@ -330,7 +330,7 @@ Feature: RTPull flows
         Then check esito is OK of nodoInviaRPT response
         And wait 10 seconds for expiration
 
-    @timeout
+    @runnable
     #Retry ACK timeout step2
     Scenario: Retry ack timeout
         Given the Execute nodoInviaRPT_timeout scenario executed successfully 
@@ -343,7 +343,7 @@ Feature: RTPull flows
         And execution query by_iuv_and_ccp to get value on the table RETRY_PSP_ACK, with the columns RETRY under macro RTPull with db name nodo_online
         And through the query by_iuv_and_ccp retrieve param retry at position 0 and save it under the key retry
         And check value $schedulerPspRetryAckNegativePollerMaxRetry is equal to value $retry
-        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '7000%' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
         And restore initial configurations
@@ -378,7 +378,7 @@ Feature: RTPull flows
         Then check esito is OK of nodoInviaRPT response
         And wait 10 seconds for expiration
 
-    @sysError
+    @runnable
     #Retry ACK system error step2
     Scenario: Retry ack system error
         Given the Execute nodoInviaRPT_systemError scenario executed successfully
@@ -391,7 +391,7 @@ Feature: RTPull flows
         And execution query by_iuv_and_ccp to get value on the table RETRY_PSP_ACK, with the columns RETRY under macro RTPull with db name nodo_online
         And through the query by_iuv_and_ccp retrieve param retry at position 0 and save it under the key retry
         And check value $schedulerPspRetryAckNegativePollerMaxRetry is equal to value $retry
-        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '7000%' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
         And restore initial configurations
@@ -423,7 +423,7 @@ Feature: RTPull flows
         Then check esito is OK of nodoInviaRPT response
         And wait 10 seconds for expiration
 
-    @malformed
+    @runnable
     #Retry ACK malformed step2
     Scenario: Retry ack malformed
         Given the Execute nodoInviaRPT_malformed scenario executed successfully 
@@ -436,7 +436,7 @@ Feature: RTPull flows
         And execution query by_iuv_and_ccp to get value on the table RETRY_PSP_ACK, with the columns RETRY under macro RTPull with db name nodo_online
         And through the query by_iuv_and_ccp retrieve param retry at position 0 and save it under the key retry
         And check value $schedulerPspRetryAckNegativePollerMaxRetry is equal to value $retry
-        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '7000%' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
         And restore initial configurations
@@ -473,7 +473,7 @@ Feature: RTPull flows
         Then check esito is OK of nodoInviaRPT response
         And wait 10 seconds for expiration
 
-    @syntaxKO
+    @runnable
     #Retry ACK syntax KO step2
     Scenario: Retry ack syntax KO
         Given the Execute nodoInviaRPT_synKO scenario executed successfully
@@ -486,7 +486,7 @@ Feature: RTPull flows
         And execution query by_iuv_and_ccp to get value on the table RETRY_PSP_ACK, with the columns RETRY under macro RTPull with db name nodo_online
         And through the query by_iuv_and_ccp retrieve param retry at position 0 and save it under the key retry
         And check value $schedulerPspRetryAckNegativePollerMaxRetry is equal to value $retry
-        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '7000%' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
         And restore initial configurations

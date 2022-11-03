@@ -4,7 +4,7 @@ Feature: T001_CARRELLO_5_RPT
         Given systems up
 
     Scenario: Execute nodoInviaCarrelloRPT - [T001_CARRELLO_5_RPT]
-        Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '7000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
+        Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
@@ -959,6 +959,7 @@ Feature: T001_CARRELLO_5_RPT
         When job pspChiediListaAndChiediRt triggered after 5 seconds
         #And wait 5 seconds for expiration
     
+    @runnable
     Scenario: fifth pspChiediListaAndChiediRt trigger
         Given the fourth pspChiediListaAndChiediRt trigger scenario executed successfully
         And identificativoUnivocoVersamento with $5iuv in pspChiediListaRT
@@ -969,7 +970,7 @@ Feature: T001_CARRELLO_5_RPT
         And job paInviaRt triggered after 10 seconds
         And wait 5 seconds for expiration
 
-        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '7000%' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
         And replace iuv content with $1iuv content
