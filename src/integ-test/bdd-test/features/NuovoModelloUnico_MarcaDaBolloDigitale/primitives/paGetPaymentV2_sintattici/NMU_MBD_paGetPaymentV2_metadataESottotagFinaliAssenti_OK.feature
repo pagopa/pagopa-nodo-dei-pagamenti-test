@@ -101,10 +101,12 @@ Feature: activatePaymentNoticeV2Request without metadata and tags at the end
             <!--Optional:-->
             <transfer>
             <!--1 to 10 repetitions:-->
+            <metadata>
             <mapEntry>
             <key>1</key>
             <value>22</value>
             </mapEntry>
+            </metadata>
             </transfer>
             </transfer>
             <transfer>
