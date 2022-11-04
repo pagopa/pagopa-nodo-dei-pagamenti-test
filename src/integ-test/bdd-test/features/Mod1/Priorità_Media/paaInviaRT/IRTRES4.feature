@@ -9,8 +9,8 @@ Feature: process tests for paaInviaRT[IRTRES4]
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -87,7 +87,7 @@ Feature: process tests for paaInviaRT[IRTRES4]
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>44444444444_01</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>TR0001_20120302-10:37:52.0264-F098</pay_i:identificativoMessaggioRicevuta>
@@ -172,9 +172,9 @@ Feature: process tests for paaInviaRT[IRTRES4]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -211,26 +211,26 @@ Feature: process tests for paaInviaRT[IRTRES4]
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-    
 
-    @runnable
+
+    
     Scenario: Execute nodoInviaRT
-        Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully 
+        Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML paaInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-                <ws:paaInviaRTRisposta>
-                    <paaInviaRTRisposta>
-                        <fault>
-                        <faultCode>PPT_ERRORE_FORMATO_BUSTA_FERMATA</faultCode>
-                        <faultString>La firma è sbagliata</faultString>
-                        <id>NodoDeiPagamentiSPC</id>
-                        </fault>
-                        <esito>OK</esito>
-                    </paaInviaRTRisposta>
-                </ws:paaInviaRTRisposta>
+            <ws:paaInviaRTRisposta>
+            <paaInviaRTRisposta>
+            <fault>
+            <faultCode>PPT_ERRORE_FORMATO_BUSTA_FERMATA</faultCode>
+            <faultString>La firma è sbagliata</faultString>
+            <id>NodoDeiPagamentiSPC</id>
+            </fault>
+            <esito>OK</esito>
+            </paaInviaRTRisposta>
+            </ws:paaInviaRTRisposta>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -242,10 +242,10 @@ Feature: process tests for paaInviaRT[IRTRES4]
             <soapenv:Body>
             <ws:nodoInviaRT>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+            <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
@@ -255,10 +255,9 @@ Feature: process tests for paaInviaRT[IRTRES4]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-            
-            When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
-            Then check esito is KO of nodoInviaRT response
-            And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoInviaRT response
+
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is KO of nodoInviaRT response
+        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoInviaRT response
 
 
-    

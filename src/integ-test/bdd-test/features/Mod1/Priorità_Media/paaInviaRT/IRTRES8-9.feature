@@ -1,4 +1,4 @@
-Feature: process tests for paaInviaRT[IRTRES6]
+Feature: process tests for paaInviaRT[IRTRES8-9]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -97,7 +97,7 @@ Feature: process tests for paaInviaRT[IRTRES6]
             <pay_i:istitutoAttestante>
             <pay_i:identificativoUnivocoAttestante>
             <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>CodiceIdentific</pay_i:codiceIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>IDPSPFNZ2</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoAttestante>
             <pay_i:denominazioneAttestante>DenominazioneAttestante</pay_i:denominazioneAttestante>
             <pay_i:codiceUnitOperAttestante>CodiceUOA</pay_i:codiceUnitOperAttestante>
@@ -184,7 +184,7 @@ Feature: process tests for paaInviaRT[IRTRES6]
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rpt1Attachment</rpt>
             </ws:nodoInviaRPT>
@@ -213,31 +213,24 @@ Feature: process tests for paaInviaRT[IRTRES6]
 
 
 
-   
+    
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML paaInviaRT
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
             <ws:paaInviaRTRisposta>
             <paaInviaRTRisposta>
-            <fault>
-            <faultCode>PAA_RT_NON_DISPONIBILE</faultCode>
-            <faultString>Test 1</faultString>
-            <id>sgf</id>
-            <description>gdh</description>
-            <serial>1</serial>
-            </fault>
-            <!--esito>KO</esito-->
+            <esito>OK</esito>
             </paaInviaRTRisposta>
             </ws:paaInviaRTRisposta>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-
+        And soapenv:Body with Empty in paaInviaRT
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -245,7 +238,7 @@ Feature: process tests for paaInviaRT[IRTRES6]
             <soapenv:Body>
             <ws:nodoInviaRT>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
@@ -263,3 +256,43 @@ Feature: process tests for paaInviaRT[IRTRES6]
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoInviaRT response
 
 
+    Scenario: Execute nodoInviaRT
+        Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
+        And initial XML paaInviaRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:paaInviaRTRisposta>
+            <paaInviaRTRisposta>
+            <esito>OK</esito>
+            </paaInviaRTRisposta>
+            </ws:paaInviaRTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaInviaRT
+        And ws:paaInviaRTRisposta with Empty in paaInviaRT
+        And initial XML nodoInviaRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:nodoInviaRT>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <tipoFirma></tipoFirma>
+            <forzaControlloSegno>1</forzaControlloSegno>
+            <rt>$rt1Attachment</rt>
+            </ws:nodoInviaRT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is KO of nodoInviaRT response
+        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoInviaRT response

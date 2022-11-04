@@ -1,4 +1,4 @@
-Feature: process tests for paaInviaRT[IRTRES6]
+Feature: process tests for paaInviaRT[IRTRES2]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -97,7 +97,7 @@ Feature: process tests for paaInviaRT[IRTRES6]
             <pay_i:istitutoAttestante>
             <pay_i:identificativoUnivocoAttestante>
             <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>CodiceIdentific</pay_i:codiceIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>IDPSPFNZ2</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoAttestante>
             <pay_i:denominazioneAttestante>DenominazioneAttestante</pay_i:denominazioneAttestante>
             <pay_i:codiceUnitOperAttestante>CodiceUOA</pay_i:codiceUnitOperAttestante>
@@ -184,7 +184,7 @@ Feature: process tests for paaInviaRT[IRTRES6]
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rpt1Attachment</rpt>
             </ws:nodoInviaRPT>
@@ -220,20 +220,6 @@ Feature: process tests for paaInviaRT[IRTRES6]
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaInviaRTRisposta>
-            <paaInviaRTRisposta>
-            <fault>
-            <faultCode>PAA_RT_NON_DISPONIBILE</faultCode>
-            <faultString>Test 1</faultString>
-            <id>sgf</id>
-            <description>gdh</description>
-            <serial>1</serial>
-            </fault>
-            <!--esito>KO</esito-->
-            </paaInviaRTRisposta>
-            </ws:paaInviaRTRisposta>
-            </soapenv:Body>
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
@@ -245,7 +231,7 @@ Feature: process tests for paaInviaRT[IRTRES6]
             <soapenv:Body>
             <ws:nodoInviaRT>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
