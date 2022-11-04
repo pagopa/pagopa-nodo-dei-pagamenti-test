@@ -234,7 +234,7 @@ Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains PPT_RPT_SCONOSCIUTA of nodoChiediStatoRPT response
+        Then check faultCode is PPT_RPT_SCONOSCIUTA of nodoChiediStatoRPT response
        
 
     Scenario: Execute nodoInviaCarrelloRPT
