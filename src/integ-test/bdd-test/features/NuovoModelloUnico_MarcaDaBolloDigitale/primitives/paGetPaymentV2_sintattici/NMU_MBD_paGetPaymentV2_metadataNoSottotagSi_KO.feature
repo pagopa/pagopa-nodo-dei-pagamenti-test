@@ -1,31 +1,10 @@
-#Il test verifica che il nodo non accetti un'activatePAymentNoticeV2 senza metadata ma con i sottotag finali
+# Il test verifica che il nodo restituisca un OK
 
-Feature: activatePaymentNoticeV2Request without metadata but with tags at the end
+Feature: check syntax OK for paGetPaymentV2 with MBD
 
     Background:
         Given systems up
         And EC new version
-
-    # checkPosition phase
-    Scenario: Execute checkPosition request
-        Given initial json checkPosition
-            """
-            {
-                "positionslist": [
-                    {
-                        "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "310#iuv#"
-                    }
-                ]
-            }
-            """
-        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of checkPosition response is 200
-        And check outcome is OK of checkPosition response
-
-    # activateV2 phase
-    Scenario: activatePaymentNoticeV2
-        Given the Execute checkPosition request scenario executed successfully
         And initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -39,7 +18,7 @@ Feature: activatePaymentNoticeV2Request without metadata but with tags at the en
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310$iuv</noticeNumber>
+            <noticeNumber>310#iuv#</noticeNumber>
             </qrCode>
             <expirationTime>60000</expirationTime>
             <amount>10.00</amount>
@@ -48,7 +27,9 @@ Feature: activatePaymentNoticeV2Request without metadata but with tags at the en
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML paGetPaymentV2
+
+    Scenario Outline:
+        Given initial XML paGetPaymentV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Body>
@@ -58,8 +39,6 @@ Feature: activatePaymentNoticeV2Request without metadata but with tags at the en
             <creditorReferenceId>10$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-30</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
@@ -93,55 +72,28 @@ Feature: activatePaymentNoticeV2Request without metadata but with tags at the en
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>1.00</transferAmount>
+            <transferAmount>9.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
+            <richiestaMarcaDaBollo>
+            <hashDocumento>ciao</hashDocumento>
+            <tipoBollo>01</tipoBollo>
+            <provinciaResidenza>MI</provinciaResidenza>
+            </richiestaMarcaDaBollo>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
             <!--Optional:-->
-            <transfer>
+            <metadata>
             <!--1 to 10 repetitions:-->
             <mapEntry>
             <key>1</key>
             <value>22</value>
             </mapEntry>
-            </transfer>
-            </transfer>
-            <transfer>
-            <idTransfer>2</idTransfer>
-            <transferAmount>2.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info2</remittanceInformation>
-            <transferCategory>category2</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>3</idTransfer>
-            <transferAmount>2.50</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info3</remittanceInformation>
-            <transferCategory>category3</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>4</idTransfer>
-            <transferAmount>2.50</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info4</remittanceInformation>
-            <transferCategory>category4</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>5</idTransfer>
-            <transferAmount>2.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info5</remittanceInformation>
-            <transferCategory>category5</transferCategory>
+            </metadata>
             </transfer>
             </transferList>
             <!--Optional:-->
             
+            <!--1 to 10 repetitions:-->
             <mapEntry>
             <key>1</key>
             <value>22</value>
@@ -153,6 +105,6 @@ Feature: activatePaymentNoticeV2Request without metadata but with tags at the en
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
