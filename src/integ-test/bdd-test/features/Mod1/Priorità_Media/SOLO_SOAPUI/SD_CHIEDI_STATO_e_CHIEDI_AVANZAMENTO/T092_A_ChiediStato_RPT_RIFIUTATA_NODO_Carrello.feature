@@ -139,9 +139,9 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
-            <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
+            <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
+            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>#iuv2#</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>#ccp2#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
@@ -152,7 +152,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT96R0123454321000400012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
@@ -166,9 +166,9 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>#iuv#</identificativoCarrello>
+            <identificativoCarrello>#CARRELLO#</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -176,7 +176,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoCanale>#canaleRtPull#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
@@ -195,24 +195,9 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML pspInviaCarrelloRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTResponse>
-                        <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>#iuv#</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=#iuv#</parametriPagamentoImmediato>
-                        </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTResponse>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
-        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+        Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_IBAN_NON_CENSITO of nodoInviaCarrelloRPT response
         #And retrieve session token from $nodoInviaRPTResponse.url
         # check STATI_RPT table
@@ -289,22 +274,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML pspInviaCarrelloRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTResponse>
-                        <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>#iuv#</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=#iuv#</parametriPagamentoImmediato>
-                        </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTResponse>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
-        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+        Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_IBAN_NON_CENSITO of nodoInviaCarrelloRPT response
