@@ -1,4 +1,4 @@
-Feature: process tests for paaInviaRT[IRTRES6]
+Feature: process tests for paaInviaRT[IRTRES11]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -213,22 +213,17 @@ Feature: process tests for paaInviaRT[IRTRES6]
 
 
 
-
+   
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML paaInviaRT
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
             <ws:paaInviaRTRisposta>
             <paaInviaRTRisposta>
-            <fault>
-            <faultCode>CIAO</faultCode>
-            <faultString>La firma è sbagliata</faultString>
-            <id>IDPSPFNZ</id>
-            </fault>
-            <esito>KO</esito>
+            <esito>CIAO</esito>
             </paaInviaRTRisposta>
             </ws:paaInviaRTRisposta>
             </soapenv:Body>

@@ -4,8 +4,6 @@ Feature: process tests for RPT-RT bollo
         Given systems up
 
     Scenario: MB generation
-        #Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code NA
-        #And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         Given MB generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -123,18 +121,7 @@ Feature: process tests for RPT-RT bollo
             </pay_i:datiMarcaBolloDigitale>
             </pay_i:datiSingoloVersamento>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>2.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>12.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.2</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica2</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>2.50</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>5.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>12.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -315,4 +302,3 @@ Feature: process tests for RPT-RT bollo
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_SEMANTICA of nodoInviaRT response
-        And check description is mancata corrispondenza tra richiesta bollo e marca da bollo di ritorno of nodoInviaRT response
