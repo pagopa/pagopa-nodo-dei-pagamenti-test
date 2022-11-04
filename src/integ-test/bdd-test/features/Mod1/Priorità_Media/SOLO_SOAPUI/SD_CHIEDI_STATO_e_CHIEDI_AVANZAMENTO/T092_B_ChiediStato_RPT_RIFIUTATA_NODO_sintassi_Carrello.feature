@@ -223,8 +223,8 @@ Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
             <soapenv:Header />
             <soapenv:Body>
                 <ws:nodoChiediStatoRPT>
-                    <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>44444444444</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaErrResponse92</identificativoUnivocoVersamento>
