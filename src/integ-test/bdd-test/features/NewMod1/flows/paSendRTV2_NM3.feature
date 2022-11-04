@@ -1308,29 +1308,6 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activate on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # PSRTV2_ACTV1_21
 
     Scenario: PSRTV2_ACTV1_21 (part 1)
@@ -1348,7 +1325,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the sendPaymentOutcome request scenario executed successfully
         When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-    @wip
+    
     Scenario: PSRTV2_ACTV1_21 (part 3)
         Given the PSRTV2_ACTV1_21 (part 2) scenario executed successfully
         And the paSendRTV2 timeout response scenario executed successfully
@@ -1387,38 +1364,6 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activate on db nodo_online under macro NewMod1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     # PSRTV2_ACTV1_22
 
@@ -1545,12 +1490,12 @@ Feature: revision checks for sendPaymentOutcomeV2
     @wip
     Scenario: PSRTV2_ACTV1_23 (part 3)
         Given the PSRTV2_ACTV1_23 (part 2) scenario executed successfully
-        And updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
         And the paSendRTV2 timeout response scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
         When job paSendRt triggered after 12 seconds
         Then verify the HTTP status code of paSendRt response is 200
+        And updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
