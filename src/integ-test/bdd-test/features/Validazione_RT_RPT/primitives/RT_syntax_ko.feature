@@ -9,8 +9,8 @@ Feature: Syntax checks for RT - KO
       <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
       <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
       <pay_i:dominio>
-      <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-      <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+      <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+      <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
       </pay_i:dominio>
       <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
       <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -86,9 +86,9 @@ Feature: Syntax checks for RT - KO
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
           <soapenv:Header>
           <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
           </ppt:intestazionePPT>
@@ -113,8 +113,8 @@ Feature: Syntax checks for RT - KO
             <ws:pspInviaRPTResponse>
                 <pspInviaRPTResponse>
                     <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                    <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-                    <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                    <identificativoCarrello>$1iuv</identificativoCarrello>
+                    <parametriPagamentoImmediato>$1iuv</parametriPagamentoImmediato>
                 </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>
         </soapenv:Body>
@@ -122,7 +122,6 @@ Feature: Syntax checks for RT - KO
       """
     And psp replies to nodo-dei-pagamenti with the pspInviaRPT
 
-  @prova
   Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on invalid RT tag
     Given initial xml RT
       """
@@ -130,8 +129,8 @@ Feature: Syntax checks for RT - KO
       <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd "> 
         <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
         <pay_i:dominio> 
-          <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio> 
-          <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente> 
+          <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio> 
+          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente> 
         </pay_i:dominio> 
         <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta> 
         <pay_i:dataOraMessaggioRicevuta>2001-12-31T12:00:00</pay_i:dataOraMessaggioRicevuta> 
@@ -227,7 +226,7 @@ Feature: Syntax checks for RT - KO
                 <identificativoCanale>#canale#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <identificativoPSP>#psp#</identificativoPSP>
-                <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                 <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 <tipoFirma></tipoFirma>
@@ -237,13 +236,11 @@ Feature: Syntax checks for RT - KO
         </soapenv:Body>
         </soapenv:Envelope>
       """
-    When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-    And EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+    When psp sends SOAP nodoInviaRT to nodo-dei-pagamenti
     Then check esito is KO of nodoInviaRT response
     And check faultCode is PPT_SINTASSI_XSD of nodoInviaRT response
-
     Examples: 
-      | SoapUI   | tag                                     | tag_value                                                                                                                                                                                                                                                 |
+     | SoapUI   | tag                                     | tag_value                                                                                                                                                                                                                                                 |
      | RTSIN1   | pay_i:versioneOggetto                   | Empty                                                                                                                                                                                                                                                     |
      | RTSIN2   | pay_i:versioneOggetto                   | None                                                                                                                                                                                                                                                      |
      | RTSIN3   | pay_i:versioneOggetto                   | Sono17CaratteAlfa                                                                                                                                                                                                                                         |
@@ -439,8 +436,8 @@ Feature: Syntax checks for RT - KO
       <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd "> 
         <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
         <pay_i:dominio> 
-          <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio> 
-          <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente> 
+          <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio> 
+          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente> 
         </pay_i:dominio> 
         <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta> 
         <pay_i:dataOraMessaggioRicevuta>2001-12-31T12:00:00</pay_i:dataOraMessaggioRicevuta> 
@@ -535,7 +532,7 @@ Feature: Syntax checks for RT - KO
                 <identificativoCanale>#canale#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <identificativoPSP>#psp#</identificativoPSP>
-                <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                 <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 <tipoFirma></tipoFirma>
@@ -545,8 +542,7 @@ Feature: Syntax checks for RT - KO
         </soapenv:Body>
         </soapenv:Envelope>
       """
-    When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-    And EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+    When psp sends SOAP nodoInviaRT to nodo-dei-pagamenti
     Then check esito is KO of nodoInviaRT response
     And check faultCode is PPT_SINTASSI_XSD of nodoInviaRT response
 
@@ -557,8 +553,8 @@ Feature: Syntax checks for RT - KO
       <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd "> 
         <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
         <pay_i:dominio> 
-          <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio> 
-          <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente> 
+          <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio> 
+          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente> 
         </pay_i:dominio> 
         <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta> 
         <pay_i:dataOraMessaggioRicevuta>2001-12-31T12:00:00</pay_i:dataOraMessaggioRicevuta> 
@@ -653,7 +649,7 @@ Feature: Syntax checks for RT - KO
                 <identificativoCanale>#canale#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <identificativoPSP>#psp#</identificativoPSP>
-                <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                 <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 <tipoFirma></tipoFirma>
@@ -663,7 +659,6 @@ Feature: Syntax checks for RT - KO
         </soapenv:Body>
         </soapenv:Envelope>
       """
-    When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-    And EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+    When psp sends SOAP nodoInviaRT to nodo-dei-pagamenti
     Then check esito is KO of nodoInviaRT response
     And check faultCode is PPT_SINTASSI_XSD of nodoInviaRT response
