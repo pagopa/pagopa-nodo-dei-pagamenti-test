@@ -191,8 +191,6 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
-            <requireLightPayment>01</requireLightPayment>
-            <multiBeneficiario>0</multiBeneficiario>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -287,8 +285,6 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
-            <requireLightPayment>01</requireLightPayment>
-            <multiBeneficiario>0</multiBeneficiario>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
