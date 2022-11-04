@@ -220,7 +220,7 @@ Feature: NCAP
         And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
         
     Scenario: Execute nodoNotificaAnnullamento
-        Given the Execute nodoInoltraPagamentoMod1 scenario executed successfully
+        Given the Execute nodoInoltraPagamentoCarta scenario executed successfully
         When WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         #And job paInviaRt triggered after 20 seconds
         Then verify the HTTP status code of notificaAnnullamento response is 404
