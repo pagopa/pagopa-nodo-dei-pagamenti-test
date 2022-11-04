@@ -1,4 +1,4 @@
-Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
+Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
 
     
     Background:
@@ -63,7 +63,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-                <pay_i:identificativoUnivocoVersamento>avanzaErrResponse</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>avanzaErrResponse92</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito> 
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -179,31 +179,31 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>avanzaErrResponse92</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
+            <rpt></rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444445</identificativoDominio>
             <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
-            <rpt>$rpt2Attachment</rpt>
+            <rpt></rpt>
             </elementoListaRPT>
             </listaRPT>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        
+      
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-        And check faultCode is PPT_IBAN_NON_CENSITO of nodoInviaCarrelloRPT response
+        And check faultCode is PPT_SINTASSI_XSD of nodoInviaCarrelloRPT response
         #And retrieve session token from $nodoInviaRPTResponse.url
         # check STATI_RPT table
         And replace pa content with 44444444444 content
-        And replace iuv content with avanzaErrResponse content
-        #And replace noticeNumber content with $1carrello content
-        And checks the value RPT_RICEVUTA_NODO, RPT_RIFIUTATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
+        And replace iuv content with avanzaErrResponse92 content
+        And verify 0 record for the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
+        #And checks the value RPT_RICEVUTA_NODO, RPT_RIFIUTATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         #And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         #check STATI_CARRELLO table
         #And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO retrived by the query stati_carrello on db nodo_online under macro Mod1
@@ -227,15 +227,15 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
                     <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>44444444444</identificativoDominio>
-                    <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>avanzaErrResponse92</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
             </soapenv:Body>
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
+        Then check faultCode is PPT_RPT_SCONOSCIUTA of nodoChiediStatoRPT response
+       
 
     Scenario: Execute nodoInviaCarrelloRPT
         Given the Execute nodoChiediStatoRPT scenario executed successfully
@@ -258,22 +258,21 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>avanzaErrResponse92</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
+            <rpt></rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444445</identificativoDominio>
             <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
-            <rpt>$rpt2Attachment</rpt>
+            <rpt></rpt>
             </elementoListaRPT>
             </listaRPT>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-        And check faultCode is PPT_IBAN_NON_CENSITO of nodoInviaCarrelloRPT response
+        And check faultCode is PPT_SINTASSI_XSD of nodoInviaCarrelloRPT response

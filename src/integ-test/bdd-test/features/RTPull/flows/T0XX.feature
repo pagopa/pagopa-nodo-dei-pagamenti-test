@@ -3,9 +3,9 @@ Feature: Execute nodoInviaRPT - MOD2 [T0XX]
     Background:
         Given systems up
 
-    @runnable
+@final
     Scenario: Execute nodoInviaRPT - MOD2 [T0XX]
-        Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
+        Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canale_DIFFERITO_MOD2#' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
         And MB generation
@@ -231,7 +231,7 @@ Feature: Execute nodoInviaRPT - MOD2 [T0XX]
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPull#</identificativoCanale>
+            <identificativoCanale>#canale_DIFFERITO_MOD2#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -285,40 +285,9 @@ Feature: Execute nodoInviaRPT - MOD2 [T0XX]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML pspInviaAckRT
-            """
-            <soapenv:Envelope
-            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaAckRTResponse>
-            <pspInviaAckRTResponse>
-            <esito>OK</esito>
-            </pspInviaAckRTResponse>
-            </ws:pspInviaAckRTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paaInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaInviaRTRisposta>
-            <paaInviaRTRisposta>
-            <esito>OK</esito>
-            </paaInviaRTRisposta>
-            </ws:paaInviaRTRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-    
-        Given identificativoCanale with #canale_DIFFERITO_MOD2# in nodoInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
-        And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And wait 5 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
