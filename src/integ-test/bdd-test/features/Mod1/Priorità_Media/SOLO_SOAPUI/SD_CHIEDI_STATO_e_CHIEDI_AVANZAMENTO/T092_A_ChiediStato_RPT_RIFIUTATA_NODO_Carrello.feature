@@ -227,7 +227,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-                    <identificativoUnivocoVersamento>#iuv#</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
             </soapenv:Body>
