@@ -163,7 +163,7 @@ Feature: NCAP
    
 
     Scenario: Execute nodoInoltraPagamentoCarta
-        Given the Execute nodoNotificaAnnullamento scenario executed successfully
+        Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
          """
          {  

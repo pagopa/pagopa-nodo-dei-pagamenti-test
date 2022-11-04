@@ -1,13 +1,11 @@
-Feature: NCAP
+Feature: T092_ChiediStato_RPT_RIFIUTATA_NODO
 
     
     Background:
         Given systems up
 
     Scenario: RPT generation
-        Given nodo-dei-pagamenti has config parameter useCountChiediAvanzamento set to false
-        And nodo-dei-pagamenti has config parameter maxChiediAvanzamento set to 3
-        And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
         And RPT generation
             """
@@ -77,7 +75,7 @@ Feature: NCAP
                 <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
                 <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito> 
                 <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-                <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio> 
+                <pay_i:ibanAppoggio>IT96R0123454321000400012345</pay_i:ibanAppoggio> 
                 <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
                 <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
                 <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
@@ -127,70 +125,89 @@ Feature: NCAP
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti 
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
+        Then check esito is KO of nodoInviaRPT response
+        And check faultCode is PPT_IBAN_NON_CENSITO of nodoInviaRPT response
+        #And retrieve session token from $nodoInviaRPTResponse.url
         # check STATI_RPT table
         And replace iuv content with $1iuv content
         And replace pa content with #creditor_institution_code_old# content
         And replace noticeNumber content with $1carrello content
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
+        And checks the value RPT_RICEVUTA_NODO, RPT_RIFIUTATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
+        #And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         #check STATI_CARRELLO table
         #And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO retrived by the query stati_carrello on db nodo_online under macro Mod1
         #And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query stati_carrello on db nodo_online under macro Mod1
         # check POSITION_PAYMENT
-        And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
+        #And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
+        #And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
+        #And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
+        #And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
 
 @runnable
-    Scenario: Execute nodoChiediAvanzamentoPagamento
+    Scenario: Execute nodoChiediStatoRPT
         Given the RPT generation scenario executed successfully
-        When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of avanzamentoPagamento response is 200
-         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        #check STATI_CARRELLO table
-        #And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO retrived by the query stati_carrello on db nodo_online under macro Mod1
-        #And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query stati_carrello on db nodo_online under macro Mod1
-        # check POSITION_PAYMENT
-        And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
+        And initial XML nodoChiediStatoRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header />
+            <soapenv:Body>
+                <ws:nodoChiediStatoRPT>
+                    <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+                    <password>pwdpwdpwd</password>
+                    <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+                    <identificativoUnivocoVersamento>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>$nodoInviaRPT.codiceContestoPagamento</codiceContestoPagamento>
+                </ws:nodoChiediStatoRPT>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+        Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
 
-   
-
-    Scenario: Execute nodoInoltraPagamentoCarta
-        Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
-        When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
-         """
-         {  
-            "idPagamento":"$sessionToken",
-            "RRN":10638081,
-            "identificativoPsp":"40000000001",
-            "tipoVersamento":"BBT",
-            "identificativoIntermediario":"40000000001",
-            "identificativoCanale":"40000000001_03",
-            "importoTotalePagato":12.31,
-            "timestampOperazione":"2018-02-08T17:06:03.100+01:00",
-            "codiceAutorizzativo":"123456",
-            "esitoTransazioneCarta":"00"
-         }
-         """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
-        #And check esito is KO of inoltroEsito/mod1 response
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        #check STATI_CARRELLO table
-        #And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO,CART_INVIATO_A_PSP,CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO retrived by the query stati_carrello on db nodo_online under macro Mod1
-        #And checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query stati_carrello on db nodo_online under macro Mod1
-        # check POSITION_PAYMENT
-        And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
-        And restore initial configurations
-    
-        
+    Scenario: Execute nodoInviaRPT
+        Given the Execute nodoChiediStatoRPT scenario executed successfully
+        And initial XML nodoInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header>
+            <ppt:intestazionePPT>
+            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            </ppt:intestazionePPT>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:nodoInviaRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+            <tipoFirma></tipoFirma>
+            <rpt>$rptAttachment</rpt>
+            </ws:nodoInviaRPT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+         And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti 
+        Then check esito is KO of nodoInviaRPT response
+        And check faultCode is PPT_IBAN_NON_CENSITO of nodoInviaRPT response
