@@ -149,5 +149,4 @@ Feature: activatePaymentNoticeV2Request without metadata and tags at the end
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNoticeV2 response
-        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
+        Then check outcome is OK of activatePaymentNoticeV2 response
