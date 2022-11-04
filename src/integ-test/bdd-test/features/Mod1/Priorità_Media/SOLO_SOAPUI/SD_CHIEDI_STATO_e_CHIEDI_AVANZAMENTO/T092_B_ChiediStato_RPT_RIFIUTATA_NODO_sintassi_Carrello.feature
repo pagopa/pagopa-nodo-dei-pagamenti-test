@@ -63,7 +63,7 @@ Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-                <pay_i:identificativoUnivocoVersamento>avanzaErrResponse</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>avanzaErrResponse92</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito> 
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -179,7 +179,7 @@ Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>avanzaErrResponse92</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt></rpt>
             </elementoListaRPT>
@@ -201,7 +201,7 @@ Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
         #And retrieve session token from $nodoInviaRPTResponse.url
         # check STATI_RPT table
         And replace pa content with 44444444444 content
-        And replace iuv content with avanzaErrResponse content
+        And replace iuv content with avanzaErrResponse92 content
         And verify 0 record for the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         #And checks the value RPT_RICEVUTA_NODO, RPT_RIFIUTATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         #And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
@@ -227,7 +227,7 @@ Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>44444444444</identificativoDominio>
-                    <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>avanzaErrResponse92</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
             </soapenv:Body>
@@ -258,7 +258,7 @@ Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>avanzaErrResponse92</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt></rpt>
             </elementoListaRPT>
