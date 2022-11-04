@@ -65,7 +65,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-                <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -142,7 +142,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>#iuv2#</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>#ccp2#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -168,7 +168,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$1iuv</identificativoCarrello>
+            <identificativoCarrello>#iuv#</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -180,19 +180,19 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>#iuv#</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>#iuv#</identificativoUnivocoVersamento>
             <codiceContestoPagamento>#ccp2#</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
               <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>#iuv2#</identificativoUnivocoVersamento>
             <codiceContestoPagamento>#ccp2#</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
@@ -211,8 +211,8 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
                     <ws:pspInviaCarrelloRPTResponse>
                         <pspInviaCarrelloRPTResponse>
                             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>$1iuv</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
+                            <identificativoCarrello>#iuv#</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=#iuv#</parametriPagamentoImmediato>
                         </pspInviaCarrelloRPTResponse>
                     </ws:pspInviaCarrelloRPTResponse>
                 </soapenv:Body>
@@ -251,7 +251,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>#iuv#</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
             </soapenv:Body>
@@ -270,7 +270,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$1iuv</identificativoCarrello>
+            <identificativoCarrello>#iuv#</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -282,13 +282,13 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>#iuv#</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>#iuv2#</identificativoUnivocoVersamento>
             <codiceContestoPagamento>#ccp2#</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
@@ -313,8 +313,8 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
                     <ws:pspInviaCarrelloRPTResponse>
                         <pspInviaCarrelloRPTResponse>
                             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>$1iuv</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
+                            <identificativoCarrello>#iuv#</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=#iuv#</parametriPagamentoImmediato>
                         </pspInviaCarrelloRPTResponse>
                     </ws:pspInviaCarrelloRPTResponse>
                 </soapenv:Body>
