@@ -1720,6 +1720,48 @@ Feature: revision checks for sendPaymentOutcomeV2
         # POSITION_RETRY_PA_SEND_RT
         And verify 1 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activate on db nodo_online under macro NewMod1
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     # PSRTV2_ACTV1_29
 
     Scenario: PSRTV2_ACTV1_29 (part 1)
