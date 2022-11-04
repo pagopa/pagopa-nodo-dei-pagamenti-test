@@ -164,10 +164,6 @@ Feature: Execute nodoInviaRPT - RT_RIFIUTATA_PA [T002]
             <pay_i:identificativoUnivocoRiscossione>$iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            <pay_i:allegatoRicevuta>
-            <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
-            <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
-            </pay_i:allegatoRicevuta>
             </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
