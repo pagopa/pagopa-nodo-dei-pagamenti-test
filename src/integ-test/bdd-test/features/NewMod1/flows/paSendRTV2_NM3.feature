@@ -1649,7 +1649,7 @@ Feature: revision checks for sendPaymentOutcomeV2
 
     Scenario: PSRTV2_ACTV1_29 (part 2)
         Given the PSRTV2_ACTV1_29 (part 1) scenario executed successfully
-        When job mod3CancelV2 triggered after 3 seconds
+        When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
 
     Scenario: PSRTV2_ACTV1_29 (part 3)
@@ -1665,7 +1665,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the PSRTV2_ACTV1_29 (part 3) scenario executed successfully
         And the paSendRTV2 timeout response scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
-        When job paSendRt triggered after 10 seconds
+        When job paSendRt triggered after 12 seconds
         Then verify the HTTP status code of paSendRt response is 200
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
