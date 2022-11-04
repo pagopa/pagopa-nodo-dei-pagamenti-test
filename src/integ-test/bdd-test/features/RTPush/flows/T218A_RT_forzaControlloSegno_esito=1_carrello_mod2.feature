@@ -224,7 +224,7 @@ Feature: T218A_RT_forzaControlloSegno_esito=1_carrello_mod2
             <soapenv:Body>
             <ws:nodoInviaRT>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_DIFFERITO_MOD2#</identificativoCanale>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
