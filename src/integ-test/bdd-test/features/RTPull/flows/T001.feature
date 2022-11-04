@@ -217,7 +217,7 @@ Feature: Execute nodoInviaRPT - RT_ACCETTATA_PA [T001]
             <elementoListaRTResponse>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-            
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </elementoListaRTResponse>
             </pspChiediListaRTResponse>
             </ws:pspChiediListaRTResponse>
@@ -270,6 +270,7 @@ Feature: Execute nodoInviaRPT - RT_ACCETTATA_PA [T001]
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And wait 5 seconds for expiration
         When EC sends soap nodoInviaRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
         And job paInviaRt triggered after 10 seconds
