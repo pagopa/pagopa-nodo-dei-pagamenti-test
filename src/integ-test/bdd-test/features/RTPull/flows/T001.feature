@@ -217,7 +217,7 @@ Feature: Execute nodoInviaRPT - RT_ACCETTATA_PA [T001]
             <elementoListaRTResponse>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-            
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </elementoListaRTResponse>
             </pspChiediListaRTResponse>
             </ws:pspChiediListaRTResponse>
