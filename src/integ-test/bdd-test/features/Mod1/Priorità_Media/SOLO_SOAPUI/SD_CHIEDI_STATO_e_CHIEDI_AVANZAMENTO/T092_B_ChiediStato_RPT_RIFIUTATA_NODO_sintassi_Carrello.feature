@@ -182,13 +182,13 @@ Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
+            <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>#ccp2#</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
+            <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
             <requireLightPayment>01</requireLightPayment>
@@ -206,7 +206,7 @@ Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
                         <pspInviaCarrelloRPTResponse>
                             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
                             <identificativoCarrello>$1iuv</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$1carrello</parametriPagamentoImmediato>
+                            <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
                         </pspInviaCarrelloRPTResponse>
                     </ws:pspInviaCarrelloRPTResponse>
                 </soapenv:Body>
@@ -214,14 +214,14 @@ Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
-        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        And check faultCode is PPT_IBAN_NON_CENSITO of nodoInviaCarrelloRPT response
+        Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+        And check faultCode is PPT_SINTASSI_XSD of nodoInviaCarrelloRPT response
         #And retrieve session token from $nodoInviaRPTResponse.url
         # check STATI_RPT table
         And replace iuv content with $1iuv content
         And replace pa content with #creditor_institution_code_old# content
-        And replace noticeNumber content with $1carrello content
-        And checks the value RPT_RICEVUTA_NODO, RPT_RIFIUTATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
+        And verify 0 record for the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
+        #And checks the value RPT_RICEVUTA_NODO, RPT_RIFIUTATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         #And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         #check STATI_CARRELLO table
         #And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO retrived by the query stati_carrello on db nodo_online under macro Mod1
@@ -245,15 +245,15 @@ Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-                    <identificativoUnivocoVersamento>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$nodoInviaRPT.codiceContestoPagamento</codiceContestoPagamento>
+                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
             </soapenv:Body>
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
+        Then checks stato contains PPT_RPT_SCONOSCIUTA of nodoChiediStatoRPT response
+       
 
     Scenario: Execute nodoInviaCarrelloRPT
         Given the Execute nodoChiediStatoRPT scenario executed successfully
@@ -264,7 +264,7 @@ Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$1carrello</identificativoCarrello>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -278,7 +278,13 @@ Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
+            <rpt>$rpt1Attachment</rpt>
+            </elementoListaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>#ccp2#</codiceContestoPagamento>
+            <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
             <requireLightPayment>01</requireLightPayment>
@@ -295,8 +301,8 @@ Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
                     <ws:pspInviaCarrelloRPTResponse>
                         <pspInviaCarrelloRPTResponse>
                             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>$1carrello</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$1carrello</parametriPagamentoImmediato>
+                            <identificativoCarrello>$1iuv</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
                         </pspInviaCarrelloRPTResponse>
                     </ws:pspInviaCarrelloRPTResponse>
                 </soapenv:Body>
@@ -304,5 +310,5 @@ Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
-        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        And check faultCode is PPT_IBAN_NON_CENSITO of nodoInviaCarrelloRPT response
+        Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+        And check faultCode is PPT_SINTASSI_XSD of nodoInviaCarrelloRPT response
