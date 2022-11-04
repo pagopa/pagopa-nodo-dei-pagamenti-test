@@ -200,8 +200,8 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
         And check faultCode is PPT_IBAN_NON_CENSITO of nodoInviaCarrelloRPT response
         #And retrieve session token from $nodoInviaRPTResponse.url
         # check STATI_RPT table
-        And replace iuv content with avanzaErrResponse
-        And replace pa content with 44444444444
+        And replace pa content with 44444444444 content
+        And replace iuv content with avanzaErrResponse content
         #And replace noticeNumber content with $1carrello content
         And checks the value RPT_RICEVUTA_NODO, RPT_RIFIUTATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         #And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
@@ -244,28 +244,28 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>#iuv#</identificativoCarrello>
+            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+            <identificativoCarrello>$1ccp</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>#iuv#</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>#iuv2#</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>#ccp2#</codiceContestoPagamento>
+            <identificativoDominio>44444444445</identificativoDominio>
+            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
