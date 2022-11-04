@@ -1654,8 +1654,8 @@ Feature: revision checks for sendPaymentOutcomeV2
 
     Scenario: PSRTV2_ACTV1_29 (part 3)
         Given the PSRTV2_ACTV1_29 (part 2) scenario executed successfully
-        # And the paSendRTV2 timeout response scenario executed successfully
-        # And EC replies to nodo-dei-pagamenti with the paSendRTV2
+        And the paSendRTV2 timeout response scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paSendRTV2
         And the sendPaymentOutcome request scenario executed successfully
         When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
@@ -1665,7 +1665,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the PSRTV2_ACTV1_29 (part 3) scenario executed successfully
         And the paSendRTV2 timeout response scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
-        When job paSendRt triggered after 12 seconds
+        When job paSendRt triggered after 5 seconds
         Then verify the HTTP status code of paSendRt response is 200
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
