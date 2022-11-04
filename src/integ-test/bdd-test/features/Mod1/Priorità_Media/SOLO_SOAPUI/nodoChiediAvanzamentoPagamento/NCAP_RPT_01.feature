@@ -190,20 +190,24 @@ Feature: NCAP
         And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
         And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
 
-    Scenario: Execute nodoInoltraPagamentoMod1
+    Scenario: Execute nodoInoltraPagamentoCarta
         Given the Execute nodoChiediAvanzamentoPagamento2 scenario executed successfully
-         When WISP sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
+         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
          """
-         {  "idPagamento":"$sessionToken",
-            "identificativoPsp":"#psp#",
+         {  
+            "idPagamento":"$sessionToken",
+            "RRN":10638081,
+            "identificativoPsp":"40000000001",
             "tipoVersamento":"BBT",
-            "identificativoIntermediario":"#psp#",
-            "identificativoCanale":"#canale#",
-            "tipoOperazione":"mobile",
-            "mobileToken":"123ABC456"
+            "identificativoIntermediario":"40000000001",
+            "identificativoCanale":"40000000001_03",
+            "importoTotalePagato":12.31,
+            "timestampOperazione":"2018-02-08T17:06:03.100+01:00",
+            "codiceAutorizzativo":"123456",
+            "esitoTransazioneCarta":"00"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+        Then verify the HTTP status code of inoltroEsito/carta response is 200
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         #check STATI_CARRELLO table

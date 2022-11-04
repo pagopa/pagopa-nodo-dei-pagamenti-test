@@ -160,38 +160,8 @@ Feature: NCAP
         And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
         And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
 
-    Scenario: Execute nodoChiediAvanzamentoPagamento1
+     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
-        When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of avanzamentoPagamento response is 200
-         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        #check STATI_CARRELLO table
-        #And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO retrived by the query stati_carrello on db nodo_online under macro Mod1
-        #And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query stati_carrello on db nodo_online under macro Mod1
-        # check POSITION_PAYMENT
-        And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
-
-    Scenario: Execute nodoChiediAvanzamentoPagamento2
-        Given the Execute nodoChiediAvanzamentoPagamento1 scenario executed successfully
-        When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of avanzamentoPagamento response is 200
-         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        #check STATI_CARRELLO table
-        #And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO retrived by the query stati_carrello on db nodo_online under macro Mod1
-        #And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query stati_carrello on db nodo_online under macro Mod1
-        # check POSITION_PAYMENT
-        And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
-
-    Scenario: Execute nodoNotificaAnnullamento
-        Given the Execute nodoChiediAvanzamentoPagamento2 scenario executed successfully
         When WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         And job paInviaRt triggered after 20 seconds
         Then verify the HTTP status code of notificaAnnullamento response is 200
@@ -207,36 +177,8 @@ Feature: NCAP
         And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
         And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
 
-
-    Scenario: Execute nodoInoltraPagamentoCarta
-        Given the Execute nodoNotificaAnnullamento scenario executed successfully
-        When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
-         """
-         {  
-            "idPagamento":"$sessionToken",
-            "RRN":10638081,
-            "identificativoPsp":"40000000001",
-            "tipoVersamento":"BBT",
-            "identificativoIntermediario":"40000000001",
-            "identificativoCanale":"40000000001_03",
-            "importoTotalePagato":12.31,
-            "timestampOperazione":"2018-02-08T17:06:03.100+01:00",
-            "codiceAutorizzativo":"123456",
-            "esitoTransazioneCarta":"00"
-         }
-         """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is KO of inoltroEsito/carta response
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        #check STATI_CARRELLO table
-        #And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO,CART_INVIATO_A_PSP,CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO retrived by the query stati_carrello on db nodo_online under macro Mod1
-        #And checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query stati_carrello on db nodo_online under macro Mod1
-        # check POSITION_PAYMENT
-        And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
+    Scenario: Execute nodoChiediAvanzamentoPagamento1
+        Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
+        When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of avanzamentoPagamento response is 200
         And restore initial configurations
-    
-        
