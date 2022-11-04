@@ -182,11 +182,11 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>#iuv#</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rpt1Attachment</rpt>
+            <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>#iuv#</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>#iuv2#</identificativoUnivocoVersamento>
             <codiceContestoPagamento>#ccp2#</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
@@ -284,7 +284,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>#iuv#</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rpt1Attachment</rpt>
+            <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
