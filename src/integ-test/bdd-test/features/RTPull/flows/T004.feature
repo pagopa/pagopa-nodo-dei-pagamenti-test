@@ -239,34 +239,6 @@ Feature: Execute nodoInviaRPT - RT_RIFIUTATA_NODO (pspChiediRT_ KO_TAG_RT_errato
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML pspInviaAckRT
-            """
-            <soapenv:Envelope
-            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaAckRTResponse>
-            <pspInviaAckRTResponse>
-            <esito>OK</esito>
-            </pspInviaAckRTResponse>
-            </ws:pspInviaAckRTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paaInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaInviaRTRisposta>
-            <paaInviaRTRisposta>
-            <esito>OK</esito>
-            </paaInviaRTRisposta>
-            </ws:paaInviaRTRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
         And replace rt tag in pspChiediRT with tagErrato
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
