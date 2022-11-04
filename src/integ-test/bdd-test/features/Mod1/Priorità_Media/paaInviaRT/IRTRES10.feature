@@ -1,4 +1,4 @@
-Feature: process tests for paaInviaRT[IRTRES6]
+Feature: process tests for paaInviaRT[IRTRES10]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -218,23 +218,7 @@ Feature: process tests for paaInviaRT[IRTRES6]
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML paaInviaRT
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaInviaRTRisposta>
-            <paaInviaRTRisposta>
-            <fault>
-            <faultCode>PAA_RT_NON_DISPONIBILE</faultCode>
-            <faultString>Test 1</faultString>
-            <id>sgf</id>
-            <description>gdh</description>
-            <serial>1</serial>
-            </fault>
-            <!--esito>KO</esito-->
-            </paaInviaRTRisposta>
-            </ws:paaInviaRTRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
+            <esito>KO</esito>
             """
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
 

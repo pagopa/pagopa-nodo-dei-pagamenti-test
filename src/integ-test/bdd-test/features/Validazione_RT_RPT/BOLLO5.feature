@@ -312,7 +312,7 @@ Feature: flows checks for Bollo
             <CodiceFiscale>12345678901</CodiceFiscale>
             <Denominazione>#psp#</Denominazione>
             </PSP>
-            <IUBD>#iubd#</IUBD>
+            <IUBD>$iubd</IUBD>
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
             <Importo>10.00</Importo>
             <TipoBollo>01</TipoBollo>
