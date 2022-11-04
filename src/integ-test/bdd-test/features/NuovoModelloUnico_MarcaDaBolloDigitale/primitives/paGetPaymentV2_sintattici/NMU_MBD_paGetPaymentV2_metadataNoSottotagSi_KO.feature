@@ -1,6 +1,6 @@
-#Il test verifica che il nodo non accetti un'activatePAymentNoticeV2 con metadata ma senza i sottotag finali
+#Il test verifica che il nodo non accetti un'activatePAymentNoticeV2 senza metadata ma con i sottotag finali
 
-Feature: activatePaymentNoticeV2Request with metadata but without tags at the end
+Feature: activatePaymentNoticeV2Request without metadata but with tags at the end
 
     Background:
         Given systems up
@@ -141,9 +141,12 @@ Feature: activatePaymentNoticeV2Request with metadata but without tags at the en
             </transfer>
             </transferList>
             <!--Optional:-->
-            <metadata>
             
-            </metadata>
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            
             </data>
             </paf:paGetPaymentV2Response>
             </soapenv:Body>
