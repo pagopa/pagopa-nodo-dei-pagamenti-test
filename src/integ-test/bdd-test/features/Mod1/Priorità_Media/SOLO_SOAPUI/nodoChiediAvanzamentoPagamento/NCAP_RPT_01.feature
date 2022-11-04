@@ -127,7 +127,7 @@ Feature: NCAP
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti 
-        Then check esitoComplessivoOperazione is OK of nodoInviaRPT response
+        Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
         # check STATI_RPT table
         And replace iuv content with $1iuv content
