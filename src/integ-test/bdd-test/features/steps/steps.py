@@ -600,6 +600,7 @@ def step_impl(context):
         payload = payload.replace('#timedate#', timedate)
         setattr(context, 'timedate', timedate)
 
+
     if "#ccp#" in payload:
         ccp = str(utils.current_milli_time())
         payload = payload.replace('#ccp#', ccp)

@@ -232,7 +232,7 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_Carte
         And check esito is OK of inoltroEsito/carta response
 
 
-    @runnable
+    #@runnable
     Scenario Outline: Execute nodoInviaRT (Phase 3)
         Given the Execute nodoInoltraEsitoCarta (Phase 2) scenario executed successfully
         And initial XMl nodoInviaRT

@@ -243,7 +243,7 @@ Feature: Semantic checks for nodoInviaRT - OK
         Examples:
             | SoapUI  | tag                                     | tag_value                               |
             | RTSEM1  | pay_i:versioneOggetto                   | 6.0                                     |
-#             #| RTSEM4  | pay_i:identificativoDominio             | 90000000002         |
+            #| RTSEM4  | pay_i:identificativoDominio             | 90000000002                             |
             | RTSEM6  | pay_i:identificativoStazioneRichiedente | None                                    |
             | RTSEM9  | pay_i:dataOraMessaggioRicevuta          | 2017-09-14T11:24:10                     |
             | RTSEM10 | pay_i:riferimentoMessaggioRichiesta     | MSGRICHIESTA03                          |
@@ -299,7 +299,12 @@ Feature: Semantic checks for nodoInviaRT - OK
             | RTSEM81 | pay_i:nazionePagatore                   | None                                    |
             | RTSEM83 | pay_i:e-mailPagatore                    | GesualdoModificato.riccitelli@poste.it  |
             | RTSEM84 | pay_i:e-mailPagatore                    | None                                    |
-
-# #56
-# #| RTSEM86 | pay_i:importoTotalePagato               | 150.00              |
-# #| RTSEM88 | pay_i:codiceContestoPagamento           | CCG01               |
+            #| RTSEM86 | pay_i:importoTotalePagato               | 150.00                                  |
+            #| RTSEM88 | pay_i:codiceContestoPagamento           | CCG01                                   |
+            | RTSEM91 | pay_i:singoloImportoPagato              | 0.00                                    |
+            | RTSEM91 | pay_i:esitoSingoloPagamento             | OK                                      |
+            | RTSEM91 | pay_i:identificativoUnivocoRiscossione  | Ciao                                    |
+            | RTSEM92 | pay_i:causaleVersamento                 | XXXX                                    |
+            | RTSEM93 | pay_i:datiSpecificiRiscossione          | 1/def                                   |
+            #| RTSEM7  | pay_i:identificativoDominio             | None                                    |
+#59
