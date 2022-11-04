@@ -99,7 +99,7 @@ Feature: Flow checks Bollo 7 -12
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
                 <pay_i:dataEsecuzionePagamento>2012-01-16</pay_i:dataEsecuzionePagamento>
-                <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
+                <pay_i:importoTotaleDaVersare>15.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
                 <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
@@ -108,7 +108,7 @@ Feature: Flow checks Bollo 7 -12
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
                 <pay_i:datiSingoloVersamento>
                   <pay_i:importoSingoloVersamento>15.00</pay_i:importoSingoloVersamento>
-                  <pay_i:commissioneCaricoPA>10</pay_i:commissioneCaricoPA>
+                  <pay_i:commissioneCaricoPA>10.00</pay_i:commissioneCaricoPA>
                   <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
                   <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
                   <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -155,7 +155,7 @@ Feature: Flow checks Bollo 7 -12
             <pay_i:enteBeneficiario>
                 <pay_i:identificativoUnivocoBeneficiario>
                   <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-                  <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
+                  <pay_i:codiceIdentificativoUnivoco>$1iuv</pay_i:codiceIdentificativoUnivoco>
                 </pay_i:identificativoUnivocoBeneficiario>
                 <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
                 <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
@@ -196,7 +196,7 @@ Feature: Flow checks Bollo 7 -12
             </pay_i:soggettoPagatore>
             <pay_i:datiPagamento>
                 <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
-                <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
+                <pay_i:importoTotalePagato>15.00</pay_i:importoTotalePagato>
                 <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
                 <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
                 <pay_i:datiSingoloPagamento>
@@ -231,31 +231,29 @@ Feature: Flow checks Bollo 7 -12
                 <password>pwdpwdpwd</password>
                 <identificativoPSP>#psp#</identificativoPSP>
                 <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoCanale>#canaleRtPush#</identificativoCanale>
+                <identificativoCanale>#canaleRtPull#</identificativoCanale>
                 <tipoFirma></tipoFirma>
                 <rpt>$rptAttachment</rpt>
               </ws:nodoInviaRPT>
           </soapenv:Body>
         </soapenv:Envelope>
-        """
+        """  
       And initial XML pspInviaRPT
         """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-          <soapenv:Header/>
-          <soapenv:Body>
-              <ws:pspInviaRPTResponse>
-                  <pspInviaRPTResponse>
-                      <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                      <identificativoCarrello>$1iuv</identificativoCarrello>
-                      <parametriPagamentoImmediato>$1iuv</parametriPagamentoImmediato>
-                  </pspInviaRPTResponse>
-              </ws:pspInviaRPTResponse>
-          </soapenv:Body>
-        </soapenv:Envelope>
-        """
-      And psp replies to nodo-dei-pagamenti with the pspInviaRPT
-      
-      
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaRPTResponse>
+                        <pspInviaRPTResponse>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                        </pspInviaRPTResponse>
+                    </ws:pspInviaRPTResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+        """ 
+      And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
       And initial XML nodoInviaRT
         """
           <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -276,7 +274,22 @@ Feature: Flow checks Bollo 7 -12
           </soapenv:Body>
           </soapenv:Envelope>
         """
-      When psp sends SOAP nodoInviaRT to nodo-dei-pagamenti
+      And initial XML paaInviaRT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+          <soapenv:Header/>
+          <soapenv:Body>
+              <ws:paaInviaRTRisposta>
+                <paaInviaRTRisposta>
+                    <esito>OK</esito>
+                </paaInviaRTRisposta>
+              </ws:paaInviaRTRisposta>
+          </soapenv:Body>
+        </soapenv:Envelope>
+        """
+      And EC replies to nodo-dei-pagamenti with the paaInviaRT
+      When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+      And psp sends SOAP nodoInviaRT to nodo-dei-pagamenti
       Then check esito is KO of nodoInviaRT response
       And check faultCode is PPT_SEMANTICA of nodoInviaRT response
   
@@ -1381,7 +1394,7 @@ Feature: Flow checks Bollo 7 -12
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
                 <pay_i:datiSingoloVersamento>
                   <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
-                  <pay_i:commissioneCaricoPA>10</pay_i:commissioneCaricoPA>
+                  <pay_i:commissioneCaricoPA>10.00</pay_i:commissioneCaricoPA>
                   <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
                   <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
                   <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
