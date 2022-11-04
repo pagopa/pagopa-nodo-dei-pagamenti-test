@@ -190,12 +190,6 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <codiceContestoPagamento>#ccp2#</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
-              <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>#iuv2#</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>#ccp2#</codiceContestoPagamento>
-            <rpt>$rpt2Attachment</rpt>
-            </elementoListaRPT>
             </listaRPT>
             <requireLightPayment>01</requireLightPayment>
             <multiBeneficiario>0</multiBeneficiario>
@@ -289,12 +283,6 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>#iuv2#</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>#ccp2#</codiceContestoPagamento>
-            <rpt>$rpt2Attachment</rpt>
-            </elementoListaRPT>
-              <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>#ccp2#</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
