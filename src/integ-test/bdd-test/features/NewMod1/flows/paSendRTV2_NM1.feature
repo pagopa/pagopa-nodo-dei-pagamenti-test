@@ -1595,6 +1595,7 @@ Feature: flow tests for paSendRTV2
     Scenario: PSRTV2_ACTV1_28 (part 3)
         Given the PSRTV2_ACTV1_28 (part 2) scenario executed successfully
         And the paSendRTV2 timeout response scenario executed successfully
+        And wait 5 seconds for expiration
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
         When job paSendRt triggered after 12 seconds
         Then verify the HTTP status code of paSendRt response is 200
@@ -1634,7 +1635,6 @@ Feature: flow tests for paSendRTV2
     Scenario: PSRTV2_ACTV1_28 (part 4)
         Given the PSRTV2_ACTV1_28 (part 3) scenario executed successfully
         And the paSendRTV2 response scenario executed successfully
-        And wait 5 seconds for expiration
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
         When job paSendRt triggered after 5 seconds
         Then verify the HTTP status code of paSendRt response is 200
