@@ -8,8 +8,8 @@ Feature: process checks for pspNotifyPayment
       <soapenv:Header/>
       <soapenv:Body>
         <nod:activateIOPaymentReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
+          <idPSP>#psp#</idPSP>
+          <idBrokerPSP>#psp#</idBrokerPSP>
           <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
           <!--Optional:-->

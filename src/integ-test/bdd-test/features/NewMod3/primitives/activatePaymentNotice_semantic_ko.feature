@@ -78,7 +78,7 @@ Feature: Semantic checks KO for activatePaymentNoticeReq
   @runnable
   # idChannel value check: idChannel with value in NODO4_CFG.CANALI whose field MODELLO_PAGAMENTO in NODO4_CFG.CANALI_NODO table of nodo-dei-pagamenti database does not contain value 'ATTIVATO_PRESSO_PSP' (e.g. contains 'IMMEDIATO_MULTIBENEFICIARIO') [SEM_APNR_07]
   Scenario: Check PPT_AUTORIZZAZIONE error on psp channel not enabled for payment model 3
-    Given idChannel with 70000000001_03_ONUS in activatePaymentNotice
+    Given idChannel with #canale#_ONUS in activatePaymentNotice
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_AUTORIZZAZIONE of activatePaymentNotice response
@@ -129,9 +129,9 @@ Feature: Semantic checks KO for activatePaymentNoticeReq
     And check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of activatePaymentNotice response
     Examples:
       # | iKey                   | value              | soapUI test        |
-      # | 70000000001_5114567890 | 511456789012345678 | SEM_APNR_12 - aux5 |
+      # | #psp#_5114567890 | 511456789012345678 | SEM_APNR_12 - aux5 |
       # | #canale_ATTIVATO_PRESSO_PSP#14567890 | 011456789012345678 | SEM_APNR_12 - aux0 |
-      # | 70000000001_3004567890 | 300456789012345678 | SEM_APNR_12 - aux3 |
+      # | #psp#_3004567890 | 300456789012345678 | SEM_APNR_12 - aux3 |
       | value              | soapUI test        |
       | 511456789012345678 | SEM_APNR_12 - aux5 |
       | 011456789012345678 | SEM_APNR_12 - aux0 |
