@@ -259,7 +259,7 @@ Feature: T094_A_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_entrambiFault
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
+        Then checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
@@ -283,9 +283,10 @@ Feature: T094_A_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_entrambiFault
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
+        Then checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And check url field not exists in nodoChiediStatoRPT response
 
     Scenario: Execute nodoInviaCarrelloRPT2
         Given the Execute nodoChiediStatoRPT2 scenario executed successfully
@@ -346,7 +347,8 @@ Feature: T094_A_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_entrambiFault
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
+        Then checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
+        And check url field not exists in nodoChiediStatoRPT response
