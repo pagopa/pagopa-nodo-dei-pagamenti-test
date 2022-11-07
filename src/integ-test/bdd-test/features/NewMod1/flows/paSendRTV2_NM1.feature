@@ -737,7 +737,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    
+
     Scenario: PSRTV2_ACTV1_04 (part 2)
         Given the PSRTV2_ACTV1_04 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -784,7 +784,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @wip
+    
     Scenario: PSRTV2_ACTV1_05 (part 2)
         Given the PSRTV2_ACTV1_05 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -823,7 +823,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-
+    @wip
     Scenario: PSRTV2_ACTV1_06 (part 2)
         Given the PSRTV2_ACTV1_06 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
