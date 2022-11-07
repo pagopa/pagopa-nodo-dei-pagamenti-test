@@ -35,6 +35,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - PPT_TOKEN_SCADUTO [SEM_SPO_
     When job mod3Cancel triggered after 5 seconds
     Then verify the HTTP status code of mod3Cancel response is 200
 
+@runnable
 	# sendPaymentOutcomeReq phase
   Scenario: Execute sendPaymentOutcome
     Given the Execute mod3Cancel poller scenario executed successfully

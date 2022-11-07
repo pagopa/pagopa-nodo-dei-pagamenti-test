@@ -108,7 +108,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
     And saving activatePaymentNotice request in activatePaymentNotice2
     And save activatePaymentNotice response in activatePaymentNotice2
 
-
+@runnable
   Scenario: DB check
     Given the Execute activatePaymentNotice2 request scenario executed successfully
     Then check datetime plus number of date 0 of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_psp_2 on db nodo_online under macro NewMod3
