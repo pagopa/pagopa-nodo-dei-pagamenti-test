@@ -1477,19 +1477,8 @@ Feature: flow tests for paSendRTV2
     Scenario: PSRTV2_ACTV1_26 (part 3)
         Given the PSRTV2_ACTV1_26 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
-        # And the paSendRTV2 timeout response scenario executed successfully
-        # And wait 10 seconds for expiration
+        And the paSendRTV2 timeout response scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <paf:paSendRTV2Response>
-            <delay>10000</delay>
-            </paf:paSendRTV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
         When job paSendRt triggered after 12 seconds
         Then verify the HTTP status code of paSendRt response is 200
         And updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
@@ -1605,20 +1594,9 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_28 (part 3)
         Given the PSRTV2_ACTV1_28 (part 2) scenario executed successfully
-        # And the paSendRTV2 timeout response scenario executed successfully
-        # And wait 10 seconds for expiration
         And wait 12 seconds for expiration
+        And the paSendRTV2 timeout response scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <paf:paSendRTV2Response>
-            <delay>10000</delay>
-            </paf:paSendRTV2Response>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
         When job paSendRt triggered after 12 seconds
         Then verify the HTTP status code of paSendRt response is 200
 
