@@ -14,7 +14,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
          <password>pwdpwdpwd</password>
          <qrCode>
          <fiscalCode>#creditor_institution_code#</fiscalCode>
-         <noticeNumber>302094719472095710</noticeNumber>
+         <noticeNumber>#notice_number#</noticeNumber>
          </qrCode>
          </nod:verifyPaymentNoticeReq>
          </soapenv:Body>
@@ -22,6 +22,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
          """
       And EC new version
 
+   @runnable
    # element value check
    Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
       Given initial XML paVerifyPaymentNotice
@@ -59,7 +60,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
          | outcome                      | PP           | SIN_PVPNR_09 |
          | outcome                      | KO           | SIN_PVPNR_10 |
 
-
+   @runnable
    Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
       Given initial XML paVerifyPaymentNotice
          """

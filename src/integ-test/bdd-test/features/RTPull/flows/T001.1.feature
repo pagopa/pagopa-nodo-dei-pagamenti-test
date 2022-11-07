@@ -4,10 +4,10 @@ Feature: T001.1_RT-PULL OK RT_ACCETTATA_PA da  RPT_ESITO_SCONOSCIUTO_PSP
         Given systems up
 
     Scenario: Execute nodoInviaRPT (Phase 1)
-        Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
-        And wait 5 seconds for expiration
-        And RPT1 generation
+        #Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
+        #And refresh job PSP triggered after 10 seconds
+        #And wait 5 seconds for expiration
+        Given RPT1 generation
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
         <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -186,7 +186,7 @@ Feature: T001.1_RT-PULL OK RT_ACCETTATA_PA da  RPT_ESITO_SCONOSCIUTO_PSP
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>#psp#</identificativoPSP>
                     <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canaleRtPull#</identificativoCanale>
+                    <identificativoCanale>#canaleRtPull_sec#</identificativoCanale>
                     <tipoFirma></tipoFirma>
                     <rpt>$rpt1Attachment</rpt>
                 </ws:nodoInviaRPT>
@@ -213,7 +213,7 @@ Feature: T001.1_RT-PULL OK RT_ACCETTATA_PA da  RPT_ESITO_SCONOSCIUTO_PSP
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaRPT response
@@ -222,7 +222,7 @@ Feature: T001.1_RT-PULL OK RT_ACCETTATA_PA da  RPT_ESITO_SCONOSCIUTO_PSP
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
 
-@final       
+@runnable      
     Scenario: Execute job (Phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML pspChiediListaRT
@@ -257,14 +257,14 @@ Feature: T001.1_RT-PULL OK RT_ACCETTATA_PA da  RPT_ESITO_SCONOSCIUTO_PSP
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 5 seconds
         And job paInviaRt triggered after 10 seconds
-        And wait 20 seconds for expiration
-        Then generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
-        And wait 10 seconds for expiration
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        And wait 130 seconds for expiration
+        #Then generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
+        #And refresh job PSP triggered after 10 seconds
+        #And wait 10 seconds for expiration
+        Then checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull

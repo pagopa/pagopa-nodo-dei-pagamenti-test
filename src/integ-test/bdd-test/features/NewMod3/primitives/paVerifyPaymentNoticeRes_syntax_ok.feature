@@ -14,7 +14,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
                <password>pwdpwdpwd</password>
                <qrCode>
                   <fiscalCode>#creditor_institution_code#</fiscalCode>
-                  <noticeNumber>302094719472095710</noticeNumber>
+                  <noticeNumber>#notice_number#</noticeNumber>
                </qrCode>
             </nod:verifyPaymentNoticeReq>
          </soapenv:Body>
@@ -22,6 +22,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
       """
     And EC new version
 
+  @runnable
   Scenario Outline: Check paVerifyPaymentRes response with missing optional fields
     Given initial XML paVerifyPaymentNotice
     """

@@ -27,6 +27,7 @@ Feature: Semantic checks for paGetPaymentRes - OK
       """
     And EC new version
 
+  @runnable
   Scenario Outline: Check outcome OK on amount or fiscalCodePA of paGetPaymentRes different from paGetPaymentReq
     Given EC replies to nodo-dei-pagamenti with the paGetPayment
 	"""

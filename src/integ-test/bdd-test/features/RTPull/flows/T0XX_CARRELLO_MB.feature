@@ -4,10 +4,10 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
         Given systems up
 
     Scenario: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO]
-        Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
-        And wait 10 seconds for expiration
-        And MB generation
+        #Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
+        #And refresh job PSP triggered after 10 seconds
+        #And wait 10 seconds for expiration
+        Given MB generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
                 <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
@@ -396,7 +396,7 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPull#</identificativoCanale>
+            <identificativoCanale>#canaleRtPull_sec#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
@@ -462,13 +462,13 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
         And job paInviaRt triggered after 10 seconds
-        And wait 10 seconds for expiration
+        And wait 130 seconds for expiration
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_IUV on db nodo_online under macro RTPull
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_IUV on db nodo_online under macro RTPull
@@ -476,20 +476,20 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
         #And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_IUV on db nodo_online under macro RTPull
         #And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_IUV on db nodo_online under macro RTPull
 
-@final
+@runnable
     Scenario: second iuv
         Given the Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO] scenario executed successfully
         And rt with $rt2Attachment in pspChiediRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         And identificativoUnivocoVersamento with $2IUV in pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         #And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When job pspChiediListaAndChiediRt triggered after 5 seconds
         And job paInviaRt triggered after 10 seconds
-        And wait 10 seconds for expiration
+        And wait 130 seconds for expiration
         Then replace IUV content with $2IUV content
-        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
-        And wait 10 seconds for expiration
+        #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
+        #And refresh job PSP triggered after 10 seconds
+        #And wait 10 seconds for expiration
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_IUV on db nodo_online under macro RTPull
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_IUV on db nodo_online under macro RTPull

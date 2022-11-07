@@ -22,7 +22,7 @@ Feature: check syntax KO for paaVerificaRPTRes
             """
         And EC old version
 
-
+    @runnable
     Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
         Given initial XML paaVerificaRPT
             """

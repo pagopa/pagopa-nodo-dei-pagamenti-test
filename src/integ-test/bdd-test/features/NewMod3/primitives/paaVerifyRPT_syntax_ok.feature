@@ -22,7 +22,7 @@ Feature: check syntax OK for paaVerificaRPTRes
             """
         And EC old version
 
-
+    @runnable
     Scenario Outline:
         Given initial XML paaVerificaRPT
             """
