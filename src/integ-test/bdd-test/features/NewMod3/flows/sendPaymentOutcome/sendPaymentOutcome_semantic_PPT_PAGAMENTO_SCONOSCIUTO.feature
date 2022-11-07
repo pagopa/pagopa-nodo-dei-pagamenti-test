@@ -8,8 +8,8 @@ Feature: semantic checks for sendPaymentOutcomeReq - PPT_PAGAMENTO_SCONOSCIUTO [
       <soapenv:Header/>
       <soapenv:Body>
         <nod:sendPaymentOutcomeReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
+          <idPSP>#psp#</idPSP>
+          <idBrokerPSP>#psp#</idBrokerPSP>
           <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
           <paymentToken>831c6575705546beb93cffbe3b212310</paymentToken>
@@ -49,7 +49,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - PPT_PAGAMENTO_SCONOSCIUTO [
       </soapenv:Body>
     </soapenv:Envelope>
     """
-    And api-config executes the sql INSERT INTO NODO_ONLINE.POSITION_ACTIVATE (PA_FISCAL_CODE, NOTICE_ID, CREDITOR_REFERENCE_ID, PSP_ID, IDEMPOTENCY_KEY, PAYMENT_TOKEN, AMOUNT, INSERTED_TIMESTAMP) VALUES ('77777777777', '311011591891198800', '011591891198800', '70000000001', '70000000001_125703rybY', '831c6575705546beb93cffbe3b212310', '10', sysdate)
+    And api-config executes the sql INSERT INTO NODO_ONLINE.POSITION_ACTIVATE (PA_FISCAL_CODE, NOTICE_ID, CREDITOR_REFERENCE_ID, PSP_ID, IDEMPOTENCY_KEY, PAYMENT_TOKEN, AMOUNT, INSERTED_TIMESTAMP) VALUES ('66666666666', '311011591891198800', '011591891198800', '60000000001', '60000000001_125703rybY', '831c6575705546beb93cffbe3b212310', '10', sysdate)
     And EC new version
 
 @runnable      

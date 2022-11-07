@@ -8,8 +8,8 @@ Feature:  semantic checks for paVerifyPaymentNoticeRes faultCode
          <soapenv:Header/>
          <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
                <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <qrCode>

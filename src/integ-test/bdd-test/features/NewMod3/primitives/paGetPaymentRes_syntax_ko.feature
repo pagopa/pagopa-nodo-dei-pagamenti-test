@@ -8,8 +8,8 @@ Feature: Syntax checks for paGetPaymentRes - KO
             <soapenv:Header />
             <soapenv:Body>
                <nod:activatePaymentNoticeReq>
-                  <idPSP>70000000001</idPSP>
-                  <idBrokerPSP>70000000001</idBrokerPSP>
+                  <idPSP>#psp#</idPSP>
+                  <idBrokerPSP>#psp#</idBrokerPSP>
                   <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                   <password>pwdpwdpwd</password>
                   <idempotencyKey>#idempotency_key#</idempotencyKey>

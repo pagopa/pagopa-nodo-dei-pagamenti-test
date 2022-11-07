@@ -8,8 +8,8 @@ Feature: Semantic checks for verifyPaymentReq - KO
          <soapenv:Header/>
          <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
                <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <qrCode>
@@ -65,7 +65,7 @@ Feature: Semantic checks for verifyPaymentReq - KO
 
   # idChannel value check: idChannel with value in NODO4_CFG.CANALI whose field MODELLO_PAGAMENTO in NODO4_CFG.CANALI_NODO table of nodo-dei-pagamenti database does not contain value 'ATTIVATO_PRESSO_PSP' (e.g. contains 'IMMEDIATO_MULTIBENEFICIARIO') [SEM_VPNR_07]
   Scenario: Check PPT_AUTORIZZAZIONE error on psp channel not enabled for payment model 3
-    Given idChannel with 70000000001_03_ONUS in verifyPaymentNotice
+    Given idChannel with #canale#_ONUS in verifyPaymentNotice
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_AUTORIZZAZIONE of verifyPaymentNotice response

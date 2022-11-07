@@ -8,8 +8,8 @@ Feature: Semantic checks for sendPaymentOutcome - KO
            <soapenv:Header/>
            <soapenv:Body>
               <nod:sendPaymentOutcomeReq>
-                 <idPSP>70000000001</idPSP>
-                 <idBrokerPSP>70000000001</idBrokerPSP>
+                 <idPSP>#psp#</idPSP>
+                 <idBrokerPSP>#psp#</idBrokerPSP>
                  <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                  <password>pwdpwdpwd</password>
                  <paymentToken>12345678901234567890123456789012</paymentToken>

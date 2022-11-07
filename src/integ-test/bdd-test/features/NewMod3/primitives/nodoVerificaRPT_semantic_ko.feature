@@ -8,8 +8,8 @@ Feature: Checks for EC new and nodoVerificaRPT
           <soapenv:Header/>
           <soapenv:Body>
               <ws:nodoVerificaRPT>
-                  <identificativoPSP>70000000001</identificativoPSP>
-                  <identificativoIntermediarioPSP>70000000001</identificativoIntermediarioPSP>
+                  <identificativoPSP>#psp#</identificativoPSP>
+                  <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
                   <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
                   <password>pwdpwdpwd</password>
                   <codiceContestoPagamento>120671877019565</codiceContestoPagamento>

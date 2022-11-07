@@ -12,8 +12,8 @@ Feature: Semantic checks for sendPaymentOutcomeReq - OK [SEM_SPO_07]
          <soapenv:Header/>
          <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
                <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -41,9 +41,9 @@ Feature: Semantic checks for sendPaymentOutcomeReq - OK [SEM_SPO_07]
       <soapenv:Header/>
       <soapenv:Body>
         <nod:sendPaymentOutcomeReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
-          <idChannel>70000000001_03</idChannel>
+          <idPSP>#psp#</idPSP>
+          <idBrokerPSP>#psp#</idBrokerPSP>
+          <idChannel>#canale#</idChannel>
           <password>pwdpwdpwd</password>
           <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
           <outcome>OK</outcome>
