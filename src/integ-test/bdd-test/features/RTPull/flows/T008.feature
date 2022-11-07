@@ -231,7 +231,7 @@ Feature: Execute nodoInviaRPT - RPT-RT Marca da bollo [T008]
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPull#</identificativoCanale>
+            <identificativoCanale>#canale_DIFFERITO_MOD2#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
