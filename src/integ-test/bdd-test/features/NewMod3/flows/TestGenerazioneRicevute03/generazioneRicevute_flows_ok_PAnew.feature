@@ -164,7 +164,7 @@ Feature: process tests for generazioneRicevute
       </soapenv:Envelope>
       """
 
-
+@runnable
   # test execution
   Scenario: Execution test DB_GR_01
     Given the Execute sendPaymentOutcome request scenario executed successfully
@@ -214,7 +214,7 @@ Feature: process tests for generazioneRicevute
       </soapenv:Body>
       </soapenv:Envelope>
       """
-
+@runnable
   # test execution
   Scenario: Execution test DB_GR_01
     Given the Execute sendPaymentOutcome request scenario executed successfully
