@@ -8,8 +8,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -43,7 +43,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
       <idPSP></idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -86,8 +86,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>$sendPaymentOutcome.idempotencyKey</idempotencyKey>
@@ -120,7 +120,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
- 
+
+@runnable 
   Scenario: DB check
     Given the Execute sendPaymentOutcome request 1 scenario executed successfully
     Then verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod3

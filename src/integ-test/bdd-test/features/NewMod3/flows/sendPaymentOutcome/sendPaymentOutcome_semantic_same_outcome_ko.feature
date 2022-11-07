@@ -12,8 +12,8 @@ Feature: semantic checks for sendPaymentOutcomeReq - same outcome - ko [SEM_SPO_
            <soapenv:Header/>
            <soapenv:Body>
               <nod:activatePaymentNoticeReq>
-                 <idPSP>70000000001</idPSP>
-                 <idBrokerPSP>70000000001</idBrokerPSP>
+                 <idPSP>#psp#</idPSP>
+                 <idBrokerPSP>#psp#</idBrokerPSP>
                  <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                  <password>pwdpwdpwd</password>
                  <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -39,8 +39,8 @@ Feature: semantic checks for sendPaymentOutcomeReq - same outcome - ko [SEM_SPO_
       <soapenv:Header/>
       <soapenv:Body>
         <nod:sendPaymentOutcomeReq>
-          <idPSP>70000000001</idPSP>
-           <idBrokerPSP>70000000001</idBrokerPSP>
+          <idPSP>#psp#</idPSP>
+           <idBrokerPSP>#psp#</idBrokerPSP>
           <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
           <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
@@ -83,7 +83,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - same outcome - ko [SEM_SPO_
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
       
-    
+@runnable    
   # sendPaymentOutcomeReq phase 2
   Scenario: Execute a new sendPaymentOutcome request
     Given the Execute a sendPaymentOutcome request scenario executed successfully

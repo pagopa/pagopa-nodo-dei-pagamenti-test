@@ -6,7 +6,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
 
-        And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
+        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
 
         And RPT1 generation
             """
@@ -14,7 +14,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
 
-            <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
 
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
@@ -93,8 +93,8 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station_secondary#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -189,7 +189,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
 
-            <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
 
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1carrello</identificativoCarrello>
@@ -198,20 +198,20 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
             <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>AGID_01</identificativoPSP>
-            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
 
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
 
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>90000000001</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
@@ -230,7 +230,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
     Scenario: Generation of two more RPT
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
 
-        And replace pa content with #codicePA# content
+        And replace pa content with #creditor_institution_code# content
 
         And replace iuv content with $1iuv content
         And replace noticeNumber content with $1noticeNumber content
@@ -240,7 +240,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
         And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS = 'PAID', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
         And generic update through the query param_update_generic_where_condition of the table POSITION_STATUS the parameter STATUS = 'INSERTED', with where condition NOTICE_ID = '$1noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
 
-        And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
+        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
 
         And RPT3 generation
             """
@@ -248,7 +248,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
 
-            <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
 
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
@@ -327,8 +327,8 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station_secondary#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -400,7 +400,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
             </pay_i:RPT>
             """
 
-
+@runnable
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the Generation of two more RPT scenario executed successfully
         And initial XML paaInviaRT
@@ -424,7 +424,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
 
-            <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
 
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1carrello</identificativoCarrello>
@@ -433,20 +433,20 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
             <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>AGID_01</identificativoPSP>
-            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
 
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
 
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt3Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>90000000001</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt4Attachment</rpt>
@@ -484,7 +484,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
 
         #POSITION_SERVICE
 
-        And checks the value #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value Pagamento multibeneficiario of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -503,7 +503,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
         #POSITION_PAYMENT_PLAN
         And replace iuv content with $1iuv content
 
-        And checks the value #codicePA#, #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value #creditor_institution_code#, #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
         And checks the value $1noticeNumber, $1noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1iuv, $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -518,8 +518,8 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
         And checks the value $1noticeNumber, $1noticeNumber, $1noticeNumber, $1noticeNumber of the record at column NOTICE_ID of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
         And checks the value $1iuv, $1iuv, $1iuv, $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
 
-        And checks the value #codicePA#, #codicePA#, #codicePA#, #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
-        And checks the value #codicePA#, 90000000001, #codicePA#, 90000000001 of the record at column PA_FISCAL_CODE_SECONDARY of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
+        And checks the value #creditor_institution_code#, #creditor_institution_code#, #creditor_institution_code#, #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
+        And checks the value #creditor_institution_code#, #creditor_institution_code_secondary#, #creditor_institution_code#, #creditor_institution_code_secondary# of the record at column PA_FISCAL_CODE_SECONDARY of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
 
         And checks the value 1.5, 1.5, 2.5, 2.5 of the record at column AMOUNT of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
         And checks the value pagamento fotocopie pratica, pagamento fotocopie pratica, pagamento fotocopie pratica, pagamento fotocopie pratica of the record at column REMITTANCE_INFORMATION of the table POSITION_TRANSFER retrived by the query by_position_transfer on db nodo_online under macro Mod1Mb
@@ -532,12 +532,12 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
 
         #POSITION_PAYMENT
 
-        And checks the value #codicePA#, #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value #creditor_institution_code#, #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber, $1noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1iuv, $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $nodoInviaCarrelloRPT.identificativoCarrello, $nodoInviaCarrelloRPT.identificativoCarrello of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value #codicePA#, #codicePA# of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value #codicePA#_01, #codicePA#_01 of the record at column STATION_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value #creditor_institution_code#, #creditor_institution_code# of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value #creditor_institution_code#_01, #creditor_institution_code#_01 of the record at column STATION_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
         And checks the value 2, 2 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $nodoInviaCarrelloRPT.identificativoPSP, $nodoInviaCarrelloRPT.identificativoPSP of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -560,7 +560,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
 
         #POSITION_STATUS
 
-        And checks the value #codicePA#, #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value #creditor_institution_code#, #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
         And checks the value $1noticeNumber, $1noticeNumber of the record at column NOTICE_ID of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value INSERTED, PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -569,7 +569,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
         
         #POSITION_STATUS_SNAPSHOT
 
-        And checks the value #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -579,7 +579,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
 
         #POSITION_PAYMENT_STATUS
 
-        And checks the value #codicePA#, #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value #creditor_institution_code#, #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
         And checks the value $1iuv, $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber, $1noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -590,7 +590,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
 
         #POSITION_PAYMENT_STATUS_SNAPSHOT
 
-        And checks the value #codicePA#, #codicePA# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And checks the value #creditor_institution_code#, #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
         And checks the value $1noticeNumber, $1noticeNumber of the record at column NOTICE_ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1iuv, $1iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb

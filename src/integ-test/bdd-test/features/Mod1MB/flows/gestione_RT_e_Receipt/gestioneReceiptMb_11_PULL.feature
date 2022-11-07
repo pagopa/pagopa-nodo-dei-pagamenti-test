@@ -348,10 +348,10 @@ Feature: gestioneReceiptMb_11_PULL
             """
             {
             "idPagamento":"$sessionToken",
-            "identificativoPsp":"40000000001",
+            "identificativoPsp":"#psp#",
             "tipoVersamento":"BBT",
-            "identificativoIntermediario":"40000000001",
-            "identificativoCanale":"40000000001_06",
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#psp#_06",
             "tipoOperazione":"mobile",
             "mobileToken":"123ABC456"
             }
@@ -561,7 +561,7 @@ Feature: gestioneReceiptMb_11_PULL
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And restore initial configurations
 
-
+@runnable
     Scenario: Checks
         Given the Check POSITION_RETRY_PA_SEND_RT table scenario executed successfully
         And wait 60 seconds for expiration

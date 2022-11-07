@@ -1,7 +1,8 @@
 Feature: Semantic checks KO for nodoAttivaRPT
     Background:
         Given systems up
-    
+
+@runnable
     Scenario: Check PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE error on identificativoIntermediarioPA not in configuration
     Given initial XML nodoAttivaRPT
         """
@@ -9,15 +10,15 @@ Feature: Semantic checks KO for nodoAttivaRPT
           <soapenv:Header/>
           <soapenv:Body>
               <ws:nodoAttivaRPT>
-                <identificativoPSP>40000000001</identificativoPSP>
-                <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                <identificativoCanale>40000000001_01</identificativoCanale>
+                <identificativoPSP>#psp#</identificativoPSP>
+                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                <identificativoIntermediarioPSPPagamento>40000000001</identificativoIntermediarioPSPPagamento>
-                <identificativoCanalePagamento>40000000001_01</identificativoCanalePagamento>
+                <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
+                <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
                 <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-                <codiceIdRPT><aim:aim128> <aim:CCPost>444444444444</aim:CCPost> <aim:CodStazPA>02</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>018361937127600</aim:CodIUV></aim:aim128></codiceIdRPT>
+                <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>02</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>018361937127600</aim:CodIUV></aim:aim128></codiceIdRPT>
                 <datiPagamentoPSP>
                     <importoSingoloVersamento>4.00</importoSingoloVersamento>
                     <!--Optional:-->
@@ -77,5 +78,27 @@ Feature: Semantic checks KO for nodoAttivaRPT
           </soapenv:Body>
         </soapenv:Envelope>
         """
+    And initial XML paaAttivaRPT
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:paaAttivaRPTRisposta>
+                <paaAttivaRPTRisposta>
+                    <esito>KO</esito>
+                    <irraggiungibile/>
+                    <fault>
+                        <faultCode>PAA_FIRMA_INDISPONIBILE</faultCode>
+                        <faultString>gbyiua</faultString>
+                        <id>#creditor_institution_code_old#</id>
+                        <description>dfstf</description>
+                        <serial>1</serial>
+                    </fault>
+                </paaAttivaRPTRisposta>
+            </ws:paaAttivaRPTRisposta>
+        </soapenv:Body>
+    </soapenv:Envelope>
+    """
+    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
     Then check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of nodoAttivaRPT response

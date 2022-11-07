@@ -6,9 +6,7 @@ Feature: gestioneReceiptMb_12
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code -
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-
-        And replace pa1 content with 90000000001 content
-
+        And replace pa1 content with #creditor_institution_code_secondary# content
         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -93,7 +91,7 @@ Feature: gestioneReceiptMb_12
             <pay_i:dominio>
             <pay_i:identificativoDominio>$pa1</pay_i:identificativoDominio>
 
-            <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoStazioneRichiedente>#id_station_secondary#</pay_i:identificativoStazioneRichiedente>
 
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -263,7 +261,7 @@ Feature: gestioneReceiptMb_12
             <pay_i:dominio>
             <pay_i:identificativoDominio>$pa1</pay_i:identificativoDominio>
 
-            <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoStazioneRichiedente>#id_station_secondary#</pay_i:identificativoStazioneRichiedente>
 
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>TR0001_20120302-10:37:52.0264-F098</pay_i:identificativoMessaggioRicevuta>
@@ -359,7 +357,7 @@ Feature: gestioneReceiptMb_12
                         <password>pwdpwdpwd</password>
                         <identificativoPSP>#psp_AGID#</identificativoPSP>
                         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-                        <identificativoCanale>97735020584_02</identificativoCanale>
+                        <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
                         <listaRPT>
                             <elementoListaRPT>
                                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
@@ -397,7 +395,7 @@ Feature: gestioneReceiptMb_12
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
 
 
-        And replace station_id content with 90000000001_06 content
+        And replace station_id content with #creditor_institution_code_secondary#_06 content
         And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
@@ -444,10 +442,10 @@ Feature: gestioneReceiptMb_12
             {
 
                 "idPagamento":"$sessionToken",
-                "identificativoPsp":"40000000001",
+                "identificativoPsp":"#psp#",
                 "tipoVersamento":"BBT", 
-                "identificativoIntermediario":"40000000001",
-                "identificativoCanale":"40000000001_03",
+                "identificativoIntermediario":"#psp#",
+                "identificativoCanale":"#canale#",
                 "tipoOperazione":"mobile",
                 "mobileToken":"123ABC456"
 
@@ -456,6 +454,7 @@ Feature: gestioneReceiptMb_12
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
 
+@runnable
     Scenario: Execute nodoInviaRT (Phase 4)
         Given the Execute nodoInoltroEsitoMod1 (Phase 3) scenario executed successfully
         And initial XML nodoInviaRT
@@ -500,7 +499,7 @@ Feature: gestioneReceiptMb_12
 
         And replace noticeNumber content with $1noticeNumber content
         And replace pa content with #creditor_institution_code# content
-        And replace psp content with 40000000001 content
+        And replace psp content with #psp# content
         #extraction from POSITION_RECEIPT table
         And execution query by_notice_number_and_pa to get value on the table POSITION_RECEIPT, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_pa retrieve param receptID at position 1 and save it under the key receptID
@@ -569,7 +568,7 @@ Feature: gestioneReceiptMb_12
         And check value $company is equal to value $expCompanyName
         And check value $officeName is equal to value $expOfficeName
         And check value $debtorID is equal to value $expDebtorID
-        And check value $pspID is equal to value 40000000001
+        And check value $pspID is equal to value #psp#
 
         And check value $pspCompany is equal to value $ragioneSociale
 
@@ -608,7 +607,7 @@ Feature: gestioneReceiptMb_12
         And check value $recipientPA1 is equal to value $pa1
         And check value $recipientBroker1 is equal to value $pa1
 
-        And check value $recipientStation1 is equal to value 90000000001_06
+        And check value $recipientStation1 is equal to value #creditor_institution_code_secondary#_06
         #And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
 
@@ -633,7 +632,7 @@ Feature: gestioneReceiptMb_12
         And check value $recipientPA1 is equal to value $pa1
         And check value $recipientBroker1 is equal to value $pa1
 
-        And check value $recipientStation1 is equal to value 90000000001_06
+        And check value $recipientStation1 is equal to value #creditor_institution_code_secondary#_06
 
         #And replace pa content with $pa content
         # And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb

@@ -2,9 +2,9 @@ Feature: RTPull flows
 
     Background:
         Given systems up
-        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
-        And wait 10 seconds for expiration
+        #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
+        #And refresh job PSP triggered after 10 seconds
+        #And wait 10 seconds for expiration
         And MB generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -228,7 +228,7 @@ Feature: RTPull flows
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPull#</identificativoCanale>
+            <identificativoCanale>#canaleRtPull_sec#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -321,10 +321,10 @@ Feature: RTPull flows
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
-        And PSP replies to nodo-dei-pagamenti with the pspInviaAckRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
         Then check esito is OK of nodoInviaRPT response
@@ -334,7 +334,7 @@ Feature: RTPull flows
     #Retry ACK timeout step2
     Scenario: Retry ack timeout
         Given the Execute nodoInviaRPT_timeout scenario executed successfully 
-        And PSP replies to nodo-dei-pagamenti with the pspInviaAckRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
         When job pspRetryAckNegative triggered after 5 seconds
         Then wait 10 seconds for expiration
         And execution query getSchedulerPspRetryAckNegativePollerMaxRetry to get value on the table CONFIGURATION_KEYS, with the columns CONFIG_VALUE under macro RTPull with db name nodo_cfg
@@ -343,17 +343,17 @@ Feature: RTPull flows
         And execution query by_iuv_and_ccp to get value on the table RETRY_PSP_ACK, with the columns RETRY under macro RTPull with db name nodo_online
         And through the query by_iuv_and_ccp retrieve param retry at position 0 and save it under the key retry
         And check value $schedulerPspRetryAckNegativePollerMaxRetry is equal to value $retry
-        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
-        And wait 10 seconds for expiration
+        #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
+        #And refresh job PSP triggered after 10 seconds
+        #And wait 10 seconds for expiration
         And restore initial configurations
 
     #Retry ACK system error step1
     Scenario: Execute nodoInviaRPT_systemError
         Given the Execute pspRetryAckNegative job scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         And initial XML pspInviaAckRT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -372,7 +372,7 @@ Feature: RTPull flows
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaAckRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
         Then check esito is OK of nodoInviaRPT response
@@ -382,7 +382,7 @@ Feature: RTPull flows
     #Retry ACK system error step2
     Scenario: Retry ack system error
         Given the Execute nodoInviaRPT_systemError scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaAckRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
         When job pspRetryAckNegative triggered after 5 seconds
         Then wait 10 seconds for expiration
         And execution query getSchedulerPspRetryAckNegativePollerMaxRetry to get value on the table CONFIGURATION_KEYS, with the columns CONFIG_VALUE under macro RTPull with db name nodo_cfg
@@ -391,9 +391,9 @@ Feature: RTPull flows
         And execution query by_iuv_and_ccp to get value on the table RETRY_PSP_ACK, with the columns RETRY under macro RTPull with db name nodo_online
         And through the query by_iuv_and_ccp retrieve param retry at position 0 and save it under the key retry
         And check value $schedulerPspRetryAckNegativePollerMaxRetry is equal to value $retry
-        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
-        And wait 10 seconds for expiration
+        #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
+        #And refresh job PSP triggered after 10 seconds
+        #And wait 10 seconds for expiration
         And restore initial configurations
 
 
@@ -414,10 +414,10 @@ Feature: RTPull flows
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
-        And PSP replies to nodo-dei-pagamenti with the pspInviaAckRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
         Then check esito is OK of nodoInviaRPT response
@@ -427,7 +427,7 @@ Feature: RTPull flows
     #Retry ACK malformed step2
     Scenario: Retry ack malformed
         Given the Execute nodoInviaRPT_malformed scenario executed successfully 
-        And PSP replies to nodo-dei-pagamenti with the pspInviaAckRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
         When job pspRetryAckNegative triggered after 5 seconds
         Then wait 10 seconds for expiration
         And execution query getSchedulerPspRetryAckNegativePollerMaxRetry to get value on the table CONFIGURATION_KEYS, with the columns CONFIG_VALUE under macro RTPull with db name nodo_cfg
@@ -436,18 +436,18 @@ Feature: RTPull flows
         And execution query by_iuv_and_ccp to get value on the table RETRY_PSP_ACK, with the columns RETRY under macro RTPull with db name nodo_online
         And through the query by_iuv_and_ccp retrieve param retry at position 0 and save it under the key retry
         And check value $schedulerPspRetryAckNegativePollerMaxRetry is equal to value $retry
-        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
-        And wait 10 seconds for expiration
+        #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
+        #And refresh job PSP triggered after 10 seconds
+        #And wait 10 seconds for expiration
         And restore initial configurations
 
 
     #Retry ACK syntax KO step1
     Scenario: Execute nodoInviaRPT_synKO
         Given the Execute pspRetryAckNegative job scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         And initial XML pspInviaAckRT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -467,7 +467,7 @@ Feature: RTPull flows
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaAckRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
         Then check esito is OK of nodoInviaRPT response
@@ -477,7 +477,7 @@ Feature: RTPull flows
     #Retry ACK syntax KO step2
     Scenario: Retry ack syntax KO
         Given the Execute nodoInviaRPT_synKO scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaAckRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
         When job pspRetryAckNegative triggered after 5 seconds
         Then wait 10 seconds for expiration
         And execution query getSchedulerPspRetryAckNegativePollerMaxRetry to get value on the table CONFIGURATION_KEYS, with the columns CONFIG_VALUE under macro RTPull with db name nodo_cfg
@@ -486,8 +486,8 @@ Feature: RTPull flows
         And execution query by_iuv_and_ccp to get value on the table RETRY_PSP_ACK, with the columns RETRY under macro RTPull with db name nodo_online
         And through the query by_iuv_and_ccp retrieve param retry at position 0 and save it under the key retry
         And check value $schedulerPspRetryAckNegativePollerMaxRetry is equal to value $retry
-        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
-        And wait 10 seconds for expiration
+        #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
+        #And refresh job PSP triggered after 10 seconds
+        #And wait 10 seconds for expiration
         And restore initial configurations
     

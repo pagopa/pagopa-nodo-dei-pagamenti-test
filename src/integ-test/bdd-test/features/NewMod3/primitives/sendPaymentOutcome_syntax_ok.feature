@@ -10,8 +10,8 @@ Feature: Syntax checks for sendPaymentOutcome - OK
         <soapenv:Header/>
         <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-                <idPSP>70000000001</idPSP>
-                <idBrokerPSP>70000000001</idBrokerPSP>
+                <idPSP>#psp#</idPSP>
+                <idBrokerPSP>#psp#</idBrokerPSP>
                 <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                 <password>pwdpwdpwd</password>
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -29,6 +29,7 @@ Feature: Syntax checks for sendPaymentOutcome - OK
     """
     And PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
 
+    @runnable
     # [SIN_SPO_00]
     Scenario: Check sendPaymentOutcome response with mandatory fields
       Given initial XML sendPaymentOutcome
@@ -37,8 +38,8 @@ Feature: Syntax checks for sendPaymentOutcome - OK
       <soapenv:Header/>
       <soapenv:Body>
         <nod:sendPaymentOutcomeReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
+          <idPSP>#psp#</idPSP>
+          <idBrokerPSP>#psp#</idBrokerPSP>
           <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -85,7 +86,7 @@ Feature: Syntax checks for sendPaymentOutcome - OK
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-
+  @runnable
   # element value check
   Scenario Outline: Check sendPaymentOutcome response with missing optional fields
     Given initial XML sendPaymentOutcome
@@ -94,8 +95,8 @@ Feature: Syntax checks for sendPaymentOutcome - OK
       <soapenv:Header/>
       <soapenv:Body>
         <nod:sendPaymentOutcomeReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
+          <idPSP>#psp#</idPSP>
+          <idBrokerPSP>#psp#</idBrokerPSP>
           <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>

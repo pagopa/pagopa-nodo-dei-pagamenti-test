@@ -3,22 +3,18 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
    Background:
       Given systems up
 
-@runnable
+
    # [inoltropagamentoMb_01]
    Scenario: RPT generation
       Given nodo-dei-pagamenti has config parameter CONFIG_VALUE set to false
       And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-
-      And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
-
+      And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
       And RPT1 generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-
-         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
-
+         <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -96,8 +92,8 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
          <pay_i:dominio>
-         <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
-         <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
+         <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
+         <pay_i:identificativoStazioneRichiedente>#id_station_secondary#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
          <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -169,7 +165,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
          </pay_i:RPT>
          """
 
-@runnable
+
    Scenario: Execute nodoInviaCarrelloRPT request
       Given the RPT generation scenario executed successfully
       And initial XML paaInviaRT
@@ -186,15 +182,12 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
          </soapenv:Envelope>
          """
       And EC replies to nodo-dei-pagamenti with the paaInviaRT
-
       And initial XML nodoInviaCarrelloRPT
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
-
-         <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
-
+         <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>$1carrello</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
@@ -202,20 +195,18 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
          <soapenv:Body>
          <ws:nodoInviaCarrelloRPT>
          <password>pwdpwdpwd</password>
-         <identificativoPSP>AGID_01</identificativoPSP>
-         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-         <identificativoCanale>97735020584_02</identificativoCanale>
+         <identificativoPSP>#psp_AGID#</identificativoPSP>
+         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+         <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
-
-         <identificativoDominio>#codicePA#</identificativoDominio>
-
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
          <rpt>$rpt1Attachment</rpt>
          </elementoListaRPT>
          <elementoListaRPT>
-         <identificativoDominio>90000000001</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
          <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
          <rpt>$rpt2Attachment</rpt>
@@ -231,7 +222,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
       Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
       Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-@runnable
+
    Scenario: Execute nodoChiediInformazioniPagamento
       Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
       When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -242,7 +233,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
       And check oggettoPagamento field exists in informazioniPagamento response
       And check urlRedirectEC field exists in informazioniPagamento response
       And check enteBeneficiario field exists in informazioniPagamento response
-@runnable
+
    Scenario: Execute nodoInoltraEsitoCarta
       Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
       When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -262,6 +253,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
          """
       Then verify the HTTP status code of inoltroEsito/carta response is 200
       And check esito is OK of inoltroEsito/carta response
+
 @runnable
    Scenario: Trigger paInviaRT
       Given the Execute nodoInoltraEsitoCarta scenario executed successfully
@@ -287,7 +279,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
 
       #DB-CHECK-POSITION_PAYMENT
 
-      And replace pa content with #codicePA# content
+      And replace pa content with #creditor_institution_code# content
 
       And replace noticeNumber content with $1noticeNumber content
 
@@ -307,7 +299,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
       And checks the value Y of the record at column RICEVUTA_PM of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value Y of the record at column WISP_2 of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
 
-      And replace pa content with 90000000001 content
+      And replace pa content with #creditor_institution_code_secondary# content
 
       And checks the value #canale# of the record at column CANALE of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value #psp# of the record at column PSP of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb

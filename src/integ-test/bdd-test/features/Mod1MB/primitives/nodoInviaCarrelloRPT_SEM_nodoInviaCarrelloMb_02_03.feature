@@ -3,10 +3,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
    Background:
       Given systems up
 
-
-
    #[SEM_nodoInviaCarrelloMb_02]
-
    Scenario: Define RPT
       Given RPT generation
          """
@@ -95,7 +92,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-         <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
+         <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -168,7 +165,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:RPT>
          """
 
-
+   @runnable
    Scenario: Check PPT_DOMINIO_SCONOSCIUTO error for nodoInviaCarrelloRPT primitive
       Given the Define RPT2 scenario executed successfully
       And initial XML nodoInviaCarrelloRPT
@@ -185,18 +182,18 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Body>
          <ws:nodoInviaCarrelloRPT>
          <password>pwdpwdpwd</password>
-         <identificativoPSP>AGID_01</identificativoPSP>
-         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-         <identificativoCanale>97735020584_02</identificativoCanale>
+         <identificativoPSP>#psp_AGID#</identificativoPSP>
+         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+         <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$idCarrello</codiceContestoPagamento>
          <rpt>$rptAttachment</rpt>
          </elementoListaRPT>
          <elementoListaRPT>
-         <identificativoDominio>90000000001</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$idCarrello</codiceContestoPagamento>
          <rpt>$rpt2Attachment</rpt>
@@ -218,7 +215,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
    # [SEM_nodoInviaCarrelloMb_03]
    Scenario: Define RPT3
       Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-      And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
+      And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
 
       Given RPT3 generation
          """
@@ -226,7 +223,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
 
-         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+         <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
 
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
@@ -308,7 +305,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-         <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
+         <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -382,8 +379,8 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-
-
+   
+   @runnable
    Scenario: Check PPT_DOMINIO_SCONOSCIUTO error
       Given the Define RPT4 scenario executed successfully
       And initial XML nodoInviaCarrelloRPT
@@ -400,18 +397,18 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Body>
          <ws:nodoInviaCarrelloRPT>
          <password>pwdpwdpwd</password>
-         <identificativoPSP>AGID_01</identificativoPSP>
-         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-         <identificativoCanale>97735020584_02</identificativoCanale>
+         <identificativoPSP>#psp_AGID#</identificativoPSP>
+         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+         <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoUnivocoVersamento>$3iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
          <rpt>$rpt3Attachment</rpt>
          </elementoListaRPT>
          <elementoListaRPT>
-         <identificativoDominio>90000000001</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
          <identificativoUnivocoVersamento>$3iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
          <rpt>$rpt4Attachment</rpt>

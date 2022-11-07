@@ -3,7 +3,6 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
    Background:
       Given systems up
 
-@runnable
    # [SEM_MB_01]
    Scenario: RPT generation
       Given RPT generation
@@ -12,7 +11,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
 
-         <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+         <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
 
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
@@ -85,7 +84,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-@runnable
+
    Scenario: RPT2 generation
       Given the RPT generation scenario executed successfully
       And RPT2 generation
@@ -93,7 +92,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-         <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
+         <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -177,7 +176,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
 
-         <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+         <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
 
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>#carrello1#</identificativoCarrello>
@@ -186,13 +185,13 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Body>
          <ws:nodoInviaCarrelloRPT>
          <password>pwdpwdpwd</password>
-         <identificativoPSP>AGID_01</identificativoPSP>
-         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-         <identificativoCanale>97735020584_02</identificativoCanale>
+         <identificativoPSP>#psp_AGID#</identificativoPSP>
+         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+         <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
 
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
 
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$carrello</codiceContestoPagamento>
@@ -200,7 +199,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </elementoListaRPT>
          <elementoListaRPT>
 
-         <identificativoDominio>#codicePA#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoUnivocoVersamento>$2IuV</identificativoUnivocoVersamento>
 
          <codiceContestoPagamento>$carrello</codiceContestoPagamento>
@@ -220,7 +219,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       Examples:
          | elem                   | value                               | error                   |
          | identificativoCarrello | 7777777777731101905117516600059410  | PPT_MULTI_BENEFICIARIO  |
-         | identificativoCarrello | 90000000001311017011570102700-48595 | PPT_MULTI_BENEFICIARIO  |
+         | identificativoCarrello | #creditor_institution_code_secondary#311017011570102700-48595 | PPT_MULTI_BENEFICIARIO  |
          | identificativoCarrello | 44444444444311017141190124500-07607 | PPT_MULTI_BENEFICIARIO  |
          | identificativoCarrello | 7777777777311015321688135500-14816  | PPT_MULTI_BENEFICIARIO  |
          | identificativoCarrello | 31101473154911720077777777777-23596 | PPT_DOMINIO_SCONOSCIUTO |

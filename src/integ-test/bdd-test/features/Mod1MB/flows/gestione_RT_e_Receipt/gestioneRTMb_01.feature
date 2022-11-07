@@ -6,7 +6,7 @@ Feature: gestionRTMb_01
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code -
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-        And replace pa1 content with 90000000001 content
+        And replace pa1 content with #creditor_institution_code_secondary# content
         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -90,7 +90,7 @@ Feature: gestionRTMb_01
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
             <pay_i:identificativoDominio>$pa1</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoStazioneRichiedente>#id_station_secondary#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -348,7 +348,7 @@ Feature: gestionRTMb_01
                         <password>pwdpwdpwd</password>
                         <identificativoPSP>#psp_AGID#</identificativoPSP>
                         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-                        <identificativoCanale>97735020584_02</identificativoCanale>
+                        <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
                         <listaRPT>
                             <elementoListaRPT>
                                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
@@ -413,10 +413,10 @@ Feature: gestionRTMb_01
             """
             {
                 "idPagamento":"$sessionToken",
-                "identificativoPsp":"40000000001",
+                "identificativoPsp":"#psp#",
                 "tipoVersamento":"BP", 
-                "identificativoIntermediario":"40000000001",
-                "identificativoCanale":"40000000001_03",
+                "identificativoIntermediario":"#psp#",
+                "identificativoCanale":"#canale#",
                 "tipoOperazione":"web"
             }
             """
@@ -455,6 +455,7 @@ Feature: gestionRTMb_01
         And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
+@runnable
     Scenario: Execute nodoInviaRT1 (Phase 5)
         Given the Execute nodoInviaRT2 (Phase 4) scenario executed successfully
         And identificativoDominio with #creditor_institution_code# in nodoInviaRT
@@ -471,7 +472,7 @@ Feature: gestionRTMb_01
         And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         #pa1
-        And replace pa content with 90000000001 content
+        And replace pa content with #creditor_institution_code_secondary# content
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
         And replace idCarrello content with $1carrello content

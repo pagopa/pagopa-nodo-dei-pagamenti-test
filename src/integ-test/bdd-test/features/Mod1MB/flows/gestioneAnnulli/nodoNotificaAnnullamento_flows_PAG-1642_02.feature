@@ -4,21 +4,16 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
         Given systems up
 
 
-
     Scenario: RPT generation
         Given nodo-dei-pagamenti has config parameter CONFIG_VALUE set to false
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-
-        And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
-
+        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
-            <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
-
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -96,8 +91,8 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station_secondary#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -192,9 +187,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-
-            <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
-
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
@@ -202,20 +195,18 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
             <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>AGID_01</identificativoPSP>
-            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
-
-            <identificativoDominio>#codicePA#</identificativoDominio>
-
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>90000000001</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
@@ -233,14 +224,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
 
     Scenario: update column valid_to UPDATED_TIMESTAMP
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-
         And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-
         And change date Today to remove minutes 20
         And replace iuv content with $1iuv content
         Then update through the query DB_GEST_ANN_update1 with date $date under macro Mod1Mb on db nodo_online
         And replace iuv content with $2iuv content
-
         And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
         And wait 10 seconds for expiration
 
@@ -249,7 +237,6 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
         Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully
         When job annullamentoRptMaiRichiesteDaPm triggered after 10 seconds
         Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
-
         And wait 20 seconds for expiration
 
 
@@ -313,9 +300,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
             <payer>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-
-            <entityUniqueIdentifierValue>#codicePA#</entityUniqueIdentifierValue>
-
+            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
             </uniqueIdentifier>
             <fullName>IOname_</fullName>
             <!--Optional:-->
@@ -337,7 +322,6 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
         When EC sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
         And restore initial configurations
@@ -365,7 +349,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
         And check enteBeneficiario field exists in informazioniPagamento response
 
     #And check $1iuv field exists in informazioniPagamento response
-    #And check #codicePA# field exists in informazioniPagamento response
+    #And check #creditor_institution_code# field exists in informazioniPagamento response
 
 
     Scenario: Execute nodoInoltroEsitoCarta
@@ -388,7 +372,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
 
-
+@runnable
     Scenario: Execute sendPaymentOutcome request
         Given the Execute nodoInoltroEsitoCarta scenario executed successfully
         And initial XML sendPaymentOutcome
@@ -458,7 +442,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
 
         #DB-CHECK-POSITION_PAYMENT_STATUS
 
-        And replace pa content with #codicePA# content
+        And replace pa content with #creditor_institution_code# content
 
         And replace noticeNumber content with $1noticeNumber content
         And checks the value PAYING, CANCELLED, PAYMENT_SENT, PAYMENT_ACCEPTED, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb

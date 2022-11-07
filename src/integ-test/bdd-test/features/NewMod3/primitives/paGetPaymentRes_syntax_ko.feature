@@ -8,8 +8,8 @@ Feature: Syntax checks for paGetPaymentRes - KO
             <soapenv:Header />
             <soapenv:Body>
                <nod:activatePaymentNoticeReq>
-                  <idPSP>70000000001</idPSP>
-                  <idBrokerPSP>70000000001</idBrokerPSP>
+                  <idPSP>#psp#</idPSP>
+                  <idBrokerPSP>#psp#</idBrokerPSP>
                   <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                   <password>pwdpwdpwd</password>
                   <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -26,6 +26,7 @@ Feature: Syntax checks for paGetPaymentRes - KO
          """
       And EC new version
 
+   @runnable
    # element value check
    Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
       Given initial XML paGetPayment
@@ -63,7 +64,7 @@ Feature: Syntax checks for paGetPaymentRes - KO
          | outcome             | PP           | SIN_PGPR_09 |
          | outcome             | KO           | SIN_PGPR_10 |
 
-
+   @runnable
    Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
       Given initial XML paGetPayment
          """

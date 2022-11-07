@@ -348,7 +348,7 @@ Feature: gestioneRTMb_04
                         <password>pwdpwdpwd</password>
                         <identificativoPSP>#psp_AGID#</identificativoPSP>
                         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-                        <identificativoCanale>97735020584_02</identificativoCanale>
+                        <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
                         <listaRPT>
                             <elementoListaRPT>
                                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
@@ -457,6 +457,7 @@ Feature: gestioneRTMb_04
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
 
+@runnable
     Scenario: Execute pspChiediListaAndChiediRt (Phase 4)
         Given the Execute nodoInoltroEsitoMod1 (Phase 3) scenario executed successfully
         And initial XML pspChiediRT

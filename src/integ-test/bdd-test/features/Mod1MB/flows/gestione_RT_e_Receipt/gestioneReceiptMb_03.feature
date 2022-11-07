@@ -6,7 +6,7 @@ Feature: gestioneReceiptMb_03
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code -
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-        And replace pa1 content with 90000000001 content
+        And replace pa1 content with #creditor_institution_code_secondary# content
         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -90,7 +90,7 @@ Feature: gestioneReceiptMb_03
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
             <pay_i:identificativoDominio>$pa1</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoStazioneRichiedente>#id_station_secondary#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -168,7 +168,7 @@ Feature: gestioneReceiptMb_03
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
             <pay_i:identificativoDominio>$pa1</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoStazioneRichiedente>#id_station_secondary#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>TR0001_20120302-10:37:52.0264-F098</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>2012-03-02T10:37:52</pay_i:dataOraMessaggioRicevuta>
@@ -348,7 +348,7 @@ Feature: gestioneReceiptMb_03
                         <password>pwdpwdpwd</password>
                         <identificativoPSP>#psp_AGID#</identificativoPSP>
                         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-                        <identificativoCanale>97735020584_02</identificativoCanale>
+                        <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
                         <listaRPT>
                             <elementoListaRPT>
                                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
@@ -410,16 +410,17 @@ Feature: gestioneReceiptMb_03
             """
             {
                 "idPagamento":"$sessionToken",
-                "identificativoPsp":"40000000001",
+                "identificativoPsp":"#psp#",
                 "tipoVersamento":"BP", 
-                "identificativoIntermediario":"40000000001",
-                "identificativoCanale":"40000000001_03",
+                "identificativoIntermediario":"#psp#",
+                "identificativoCanale":"#canale#",
                 "tipoOperazione":"web"
             }
             """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
 
+@runnable
     Scenario: Execute nodoInviaRT (Phase 4)
         Given the Execute nodoInoltroEsitoMod1 (Phase 3) scenario executed successfully
         And initial XML nodoInviaRT
@@ -446,7 +447,7 @@ Feature: gestioneReceiptMb_03
         Then check esito is OK of nodoInviaRT response
         And replace noticeNumber content with $1noticeNumber content
         And replace pa content with #creditor_institution_code# content
-        And replace psp content with 40000000001 content
+        And replace psp content with #psp# content
         #extraction from POSITION_RECEIPT table
         And execution query by_notice_number_and_pa to get value on the table POSITION_RECEIPT, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_pa retrieve param receptID at position 1 and save it under the key receptID
@@ -515,7 +516,7 @@ Feature: gestioneReceiptMb_03
         And check value $company is equal to value $expCompanyName
         And check value $officeName is equal to value $expOfficeName
         And check value $debtorID is equal to value $expDebtorID
-        And check value $pspID is equal to value 40000000001
+        And check value $pspID is equal to value #psp#
         #And check value $pspCompany is equal to value $ragioneSociale
         And check value $pspFiscalCode is equal to value $codiceFiscale
         And check value $pspVatNumber is equal to value $vatNumber
