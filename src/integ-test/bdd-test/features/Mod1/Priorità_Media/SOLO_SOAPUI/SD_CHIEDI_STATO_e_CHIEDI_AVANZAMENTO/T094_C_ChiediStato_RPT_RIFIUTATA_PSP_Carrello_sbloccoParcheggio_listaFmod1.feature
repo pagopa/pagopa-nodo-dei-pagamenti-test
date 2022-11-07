@@ -211,6 +211,7 @@ Feature: T094_C_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_sbloccoParcheggio_listaFa
                 </soapenv:Body>
             </soapenv:Envelope>
             """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         #And check faultCode is PPT_CANALE_ERRORE of nodoInviaCarrelloRPT response
@@ -255,7 +256,7 @@ Feature: T094_C_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_sbloccoParcheggio_listaFa
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When WISP sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
          """
          {
