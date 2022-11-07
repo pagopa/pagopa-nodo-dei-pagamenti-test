@@ -7,7 +7,7 @@ Feature: gestioneReceiptMb_07
         Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code -
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
 
-        And replace pa1 content with 90000000001 content
+        And replace pa1 content with #creditor_institution_code_secondary# content
 
         And RPT1 generation
             """
@@ -93,7 +93,7 @@ Feature: gestioneReceiptMb_07
             <pay_i:dominio>
             <pay_i:identificativoDominio>$pa1</pay_i:identificativoDominio>
 
-            <pay_i:identificativoStazioneRichiedente>90000000001_01</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoStazioneRichiedente>#id_station_secondary#</pay_i:identificativoStazioneRichiedente>
 
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -355,7 +355,7 @@ Feature: gestioneReceiptMb_07
             <identificativoPSP>#psp_AGID#</identificativoPSP>
             <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
 
-            <identificativoCanale>97735020584_02</identificativoCanale>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
 
             <listaRPT>
             <elementoListaRPT>
@@ -391,7 +391,7 @@ Feature: gestioneReceiptMb_07
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
 
 
-        And replace station_id content with 90000000001_06 content
+        And replace station_id content with #creditor_institution_code_secondary#_06 content
 
         And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
@@ -591,7 +591,7 @@ Feature: gestioneReceiptMb_07
         And check value $recipientPA1 is equal to value $pa1
         And check value $recipientBroker1 is equal to value $pa1
 
-        And check value $recipientStation1 is equal to value 90000000001_06
+        And check value $recipientStation1 is equal to value #creditor_institution_code_secondary#_06
 
         # And check value $paFiscalCode2 is equal to value $expFiscalCode
         # And check value $noticeID2 is equal to value $expNoticeID
@@ -599,7 +599,7 @@ Feature: gestioneReceiptMb_07
         # And check value $paymentToken2 is equal to value $expPaymentToken
         # And check value $recipientPA2 is equal to value $pa1
         # And check value $recipientBroker2 is equal to value $pa1
-        # And check value $recipientStation2 is equal to value 90000000001_09
+        # And check value $recipientStation2 is equal to value #creditor_institution_code_secondary#_09
 
         #And check value $status is equal to value NOTIFIED
 
@@ -631,7 +631,7 @@ Feature: gestioneReceiptMb_07
         And check value $recipientPA1 is equal to value $pa1
         And check value $recipientBroker1 is equal to value $pa1
 
-        And check value $recipientStation1 is equal to value 90000000001_06
+        And check value $recipientStation1 is equal to value #creditor_institution_code_secondary#_06
 
         # And check value $paFiscalCode2 is equal to value $expFiscalCode
         # And check value $noticeID2 is equal to value $expNoticeID
@@ -639,7 +639,7 @@ Feature: gestioneReceiptMb_07
         # And check value $paymentToken2 is equal to value $expPaymentToken
         # And check value $recipientPA2 is equal to value $pa1
         # And check value $recipientBroker2 is equal to value $pa1
-        # And check value $recipientStation2 is equal to value 90000000001_09
+        # And check value $recipientStation2 is equal to value #creditor_institution_code_secondary#_09
 
         # #And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
         #And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
@@ -664,7 +664,7 @@ Feature: gestioneReceiptMb_07
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
 
 
-        And replace station_id content with 90000000001_06 content
+        And replace station_id content with #creditor_institution_code_secondary#_06 content
 
         And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID

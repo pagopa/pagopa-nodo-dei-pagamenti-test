@@ -5,7 +5,7 @@ Feature: process tests for inoltropagamentoMb_07
 @runnable
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-        And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
+        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
 
         And RPT1 generation
             """
@@ -13,7 +13,7 @@ Feature: process tests for inoltropagamentoMb_07
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
 
-            <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
 
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
@@ -93,7 +93,7 @@ Feature: process tests for inoltropagamentoMb_07
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
 
-            <pay_i:identificativoDominio>#codicePA#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
 
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
@@ -191,7 +191,7 @@ Feature: process tests for inoltropagamentoMb_07
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
 
-            <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
 
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1carrello</identificativoCarrello>
@@ -200,13 +200,13 @@ Feature: process tests for inoltropagamentoMb_07
             <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>AGID_01</identificativoPSP>
-            <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-            <identificativoCanale>97735020584_02</identificativoCanale>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
 
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
 
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
@@ -214,7 +214,7 @@ Feature: process tests for inoltropagamentoMb_07
             </elementoListaRPT>
             <elementoListaRPT>
 
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
 
             <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
@@ -288,7 +288,7 @@ Feature: process tests for inoltropagamentoMb_07
 
         #DB-CHECK-POSITION_PAYMENT
 
-        And replace pa content with #codicePA# content
+        And replace pa content with #creditor_institution_code# content
 
         And replace noticeNumber content with $1noticeNumber content
 
@@ -296,7 +296,7 @@ Feature: process tests for inoltropagamentoMb_07
 
         #DB-CHECK-RPT
 
-        And replace pa content with #codicePA# content
+        And replace pa content with #creditor_institution_code# content
 
         And replace iuv content with $1iuv content
 
@@ -318,7 +318,7 @@ Feature: process tests for inoltropagamentoMb_07
 
         #DB-CHECK-CARRELLO
 
-        And replace pa content with #codicePA# content
+        And replace pa content with #creditor_institution_code# content
 
         And replace iuv content with $1iuv content
 

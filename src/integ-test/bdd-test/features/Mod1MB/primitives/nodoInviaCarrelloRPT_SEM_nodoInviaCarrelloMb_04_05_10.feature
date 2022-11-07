@@ -90,7 +90,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-         <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
+         <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -181,9 +181,9 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Body>
          <ws:nodoInviaCarrelloRPT>
          <password>pwdpwdpwd</password>
-         <identificativoPSP>AGID_01</identificativoPSP>
-         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-         <identificativoCanale>97735020584_02</identificativoCanale>
+         <identificativoPSP>#psp_AGID#</identificativoPSP>
+         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+         <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
          <identificativoDominio>09871234560</identificativoDominio>
@@ -192,7 +192,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <rpt>$rptAttachment</rpt>
          </elementoListaRPT>
          <elementoListaRPT>
-         <identificativoDominio>90000000001</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
 
          <identificativoUnivocoVersamento>$2IuV</identificativoUnivocoVersamento>
 
@@ -302,7 +302,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-         <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
+         <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
          <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -393,9 +393,9 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Body>
          <ws:nodoInviaCarrelloRPT>
          <password>pwdpwdpwd</password>
-         <identificativoPSP>AGID_01</identificativoPSP>
-         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-         <identificativoCanale>97735020584_02</identificativoCanale>
+         <identificativoPSP>#psp_AGID#</identificativoPSP>
+         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+         <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
          <identificativoDominio>77777777778</identificativoDominio>
@@ -404,7 +404,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <rpt>$rptAttachment</rpt>
          </elementoListaRPT>
          <elementoListaRPT>
-         <identificativoDominio>90000000001</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
 
          <identificativoUnivocoVersamento>$2IuV</identificativoUnivocoVersamento>
 
@@ -514,7 +514,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-         <pay_i:identificativoDominio>90000000001</pay_i:identificativoDominio>
+         <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
          <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -598,7 +598,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
 
-         <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+         <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
 
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>$carrello</identificativoCarrello>
@@ -607,9 +607,9 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Body>
          <ws:nodoInviaCarrelloRPT>
          <password>pwdpwdpwd</password>
-         <identificativoPSP>AGID_01</identificativoPSP>
-         <identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-         <identificativoCanale>97735020584_02</identificativoCanale>
+         <identificativoPSP>#psp_AGID#</identificativoPSP>
+         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+         <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
          <identificativoDominio>NOT_ENABLED</identificativoDominio>
@@ -618,7 +618,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <rpt>$rptAttachment</rpt>
          </elementoListaRPT>
          <elementoListaRPT>
-         <identificativoDominio>90000000001</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
 
          <identificativoUnivocoVersamento>$2IuV</identificativoUnivocoVersamento>
 

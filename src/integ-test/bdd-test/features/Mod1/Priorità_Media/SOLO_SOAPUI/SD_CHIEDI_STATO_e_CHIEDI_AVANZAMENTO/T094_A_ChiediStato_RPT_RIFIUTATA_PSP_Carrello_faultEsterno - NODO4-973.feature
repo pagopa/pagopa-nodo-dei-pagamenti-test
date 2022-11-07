@@ -1,4 +1,4 @@
-Feature: T094_A_ChiediStato_RPT_RIFIUTATA_PSP_Carrello
+Feature: T094_A_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_faultEsterno - NODO4-973
 
     
     Background:
@@ -199,19 +199,20 @@ Feature: T094_A_ChiediStato_RPT_RIFIUTATA_PSP_Carrello
         And initial XML pspInviaCarrelloRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:pspInviaCarrelloRPTResponse>
-                <pspInviaCarrelloRPTResponse>
-                    <fault>
-                    <faultCode>CANALE_SYSTEM_ERROR</faultCode>
-                    <faultString>system error</faultString>
-                    <id>wrapper</id>
-                    </fault>
-                    <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTResponse>
-        </soapenv:Body>
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:pspInviaCarrelloRPTResponse>
+                    <pspInviaCarrelloRPTResponse>
+                        <fault>
+                            <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
+                            <faultString>fault esterno</faultString>
+                            <id>400000000001</id>
+                            <description>descrizione fault esterno</description>
+                        </fault>
+                        <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                    </pspInviaCarrelloRPTResponse>
+                </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
         </soapenv:Envelope>
         """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
