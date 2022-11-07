@@ -1229,7 +1229,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @wip
+    
     Scenario: PSRTV2_ACTV1_20 (part 3)
         Given the PSRTV2_ACTV1_20 (part 2) scenario executed successfully
         And the paSendRTV2 timeout response scenario executed successfully
@@ -1660,6 +1660,7 @@ Feature: flow tests for paSendRTV2
     Scenario: PSRTV2_ACTV1_29 (part 1)
         Given updates through the query update_fk_pa of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
+        And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 1000
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And expirationTime with 2000 in activatePaymentNoticeV2
@@ -1687,6 +1688,7 @@ Feature: flow tests for paSendRTV2
     @wip
     Scenario: PSRTV2_ACTV1_29 (part 4)
         Given the PSRTV2_ACTV1_29 (part 3) scenario executed successfully
+        And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
         And the paSendRTV2 timeout response scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
         When job paSendRt triggered after 12 seconds
