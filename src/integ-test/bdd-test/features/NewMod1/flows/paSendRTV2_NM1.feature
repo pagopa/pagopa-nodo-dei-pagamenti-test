@@ -1357,7 +1357,7 @@ Feature: flow tests for paSendRTV2
         And wait 15 seconds for expiration
         And the paSendRTV2 timeout response scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
-        When job paSendRt triggered after 12 seconds
+        When job paSendRt triggered after 15 seconds
         Then verify the HTTP status code of paSendRt response is 200
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
@@ -1483,7 +1483,7 @@ Feature: flow tests for paSendRTV2
         And wait 15 seconds for expiration
         And the paSendRTV2 timeout response scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
-        When job paSendRt triggered after 12 seconds
+        When job paSendRt triggered after 15 seconds
         Then verify the HTTP status code of paSendRt response is 200
         And updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
