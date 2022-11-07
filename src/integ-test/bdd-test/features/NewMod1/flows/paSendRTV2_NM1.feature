@@ -1473,7 +1473,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @wip
+    
     Scenario: PSRTV2_ACTV1_26 (part 3)
         Given the PSRTV2_ACTV1_26 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1647,15 +1647,15 @@ Feature: flow tests for paSendRTV2
         And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
-        And checks the value PAYING,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTICE_SENT,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 7 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTICE_SENT,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 10 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_RETRY_PA_SEND_RT
-        And verify 1 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # PSRTV2_ACTV1_29
 
