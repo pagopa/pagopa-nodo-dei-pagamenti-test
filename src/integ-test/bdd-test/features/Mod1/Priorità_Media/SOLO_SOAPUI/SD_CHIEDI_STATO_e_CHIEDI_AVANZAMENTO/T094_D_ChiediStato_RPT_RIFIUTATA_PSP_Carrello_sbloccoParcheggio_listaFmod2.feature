@@ -264,7 +264,7 @@ Feature: T094_D_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_sbloccoParcheggio_listaFa
             "identificativoPsp": "#psp#",
             "tipoVersamento": "BBT",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#"
+            "identificativoCanale": "#canale_BBT#"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod2 response is 200
