@@ -1598,45 +1598,6 @@ Feature: flow tests for paSendRTV2
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activate on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # PSRTV2_ACTV1_28
 
     Scenario: PSRTV2_ACTV1_28 (part 1)
@@ -1719,48 +1680,6 @@ Feature: flow tests for paSendRTV2
 
         # POSITION_RETRY_PA_SEND_RT
         And verify 1 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activate on db nodo_online under macro NewMod1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     # PSRTV2_ACTV1_29
 

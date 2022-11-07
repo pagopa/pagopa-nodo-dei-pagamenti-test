@@ -603,6 +603,21 @@ Feature: flow tests for paSendRTV2
         And check outcome is OK of v2/closepayment response
 
     @skip
+    Scenario: pspNotifyPaymentV2 timeout
+        Given initial XML pspNotifyPaymentV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentV2Res>
+            <delay>10000</delay>
+            </pfn:pspNotifyPaymentV2Res>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
+
+    @skip
     Scenario: sendPaymentOutcomeV2 request
         Given initial XML sendPaymentOutcomeV2
             """
@@ -1334,7 +1349,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-
+    @wip
     Scenario: PSRTV2_ACTV1_22 (part 3)
         Given the PSRTV2_ACTV1_22 (part 2) scenario executed successfully
         And the paSendRTV2 timeout response scenario executed successfully
@@ -1351,7 +1366,7 @@ Feature: flow tests for paSendRTV2
         And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
-        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS_SNAPSHOT
@@ -1395,7 +1410,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-
+    @wip
     Scenario: PSRTV2_ACTV1_23 (part 3)
         Given the PSRTV2_ACTV1_23 (part 2) scenario executed successfully
         And the paSendRTV2 timeout response scenario executed successfully
@@ -1414,7 +1429,7 @@ Feature: flow tests for paSendRTV2
         And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
-        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS_SNAPSHOT
@@ -1458,7 +1473,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-
+    @wip
     Scenario: PSRTV2_ACTV1_26 (part 3)
         Given the PSRTV2_ACTV1_26 (part 2) scenario executed successfully
         And the paSendRTV2 timeout response scenario executed successfully
@@ -1477,7 +1492,7 @@ Feature: flow tests for paSendRTV2
         And verify 2 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
-        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS_SNAPSHOT
@@ -1522,7 +1537,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-
+    @wip
     Scenario: PSRTV2_ACTV1_27 (part 3)
         Given the PSRTV2_ACTV1_27 (part 2) scenario executed successfully
         And the paSendRTV2 timeout response scenario executed successfully
@@ -1539,7 +1554,7 @@ Feature: flow tests for paSendRTV2
         And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
-        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS_SNAPSHOT
@@ -1592,7 +1607,7 @@ Feature: flow tests for paSendRTV2
         And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
-        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS_SNAPSHOT
@@ -1614,7 +1629,7 @@ Feature: flow tests for paSendRTV2
         And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-
+    @wip
     Scenario: PSRTV2_ACTV1_28 (part 4)
         Given the PSRTV2_ACTV1_28 (part 3) scenario executed successfully
         And the paSendRTV2 response scenario executed successfully
@@ -1630,7 +1645,8 @@ Feature: flow tests for paSendRTV2
         And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
-        And checks the value PAYING,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTICE_SENT,NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTICE_SENT,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 7 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1654,8 +1670,9 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_29 (part 2)
         Given the PSRTV2_ACTV1_29 (part 1) scenario executed successfully
+        And the pspNotifyPaymentV2 timeout scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And wait 5 seconds for expiration
+        And wait 12 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
 
@@ -1667,7 +1684,7 @@ Feature: flow tests for paSendRTV2
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
-
+    @wip
     Scenario: PSRTV2_ACTV1_29 (part 4)
         Given the PSRTV2_ACTV1_29 (part 3) scenario executed successfully
         And the paSendRTV2 timeout response scenario executed successfully
@@ -1684,25 +1701,20 @@ Feature: flow tests for paSendRTV2
         And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
-        And checks the value PAYING,CANCELLED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 6 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS_SNAPSHOT
-        And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_STATUS
-        And checks the value PAYING,INSERTED,PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 3 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 2 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_STATUS_SNAPSHOT
-        And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_RETRY_PA_SEND_RT
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcomeV2.paymentToken of the record at column TOKEN of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column FK_RECIPIENT of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
