@@ -83,6 +83,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:RPT>
          """
 
+   @runnable
    Scenario: Check PPT_DOMINIO_DISABILITATO error for nodoInviaCarrelloRPT primitive
       Given the Define RPT scenario executed successfully
       And initial XML nodoInviaCarrelloRPT
@@ -207,7 +208,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:RPT>
          """
 
-
+   @runnable
    Scenario: Check second PPT_DOMINIO_DISABILITATO error for nodoInviaCarrelloRPT primitive
       Given the Define RPT2 scenario executed successfully
       And initial XML nodoInviaCarrelloRPT

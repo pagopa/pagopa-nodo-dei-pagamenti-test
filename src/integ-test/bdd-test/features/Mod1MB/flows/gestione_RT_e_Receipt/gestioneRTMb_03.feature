@@ -413,16 +413,17 @@ Feature: gestioneRTMb_03
             """
             {
                 "idPagamento":"$sessionToken",
-                "identificativoPsp":"40000000001",
+                "identificativoPsp":"#psp#",
                 "tipoVersamento":"BP", 
-                "identificativoIntermediario":"40000000001",
-                "identificativoCanale":"40000000001_03",
+                "identificativoIntermediario":"#psp#",
+                "identificativoCanale":"#canale#",
                 "tipoOperazione":"web"
             }
             """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
 
+@runnable
     Scenario: Execute nodoInviaRT (Phase 4)
         Given the Execute nodoInoltroEsitoMod1 (Phase 3) scenario executed successfully
         And initial XML nodoInviaRT

@@ -3,7 +3,6 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
    Background:
       Given systems up
 
-@runnable
    # [SEM_MB_01]
    Scenario: RPT generation
       Given RPT generation
@@ -85,7 +84,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-@runnable
+
    Scenario: RPT2 generation
       Given the RPT generation scenario executed successfully
       And RPT2 generation

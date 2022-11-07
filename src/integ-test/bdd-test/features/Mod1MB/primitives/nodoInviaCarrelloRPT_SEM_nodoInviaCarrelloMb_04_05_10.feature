@@ -165,6 +165,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:RPT>
          """
 
+   @runnable
    Scenario: Check error for nodoInviaCarrelloRPT primitive
       Given the Define RPT2 scenario executed successfully
       And initial XML nodoInviaCarrelloRPT
@@ -376,7 +377,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:RPT>
          """
 
-
+   @runnable
    Scenario: Check second error for nodoInviaCarrelloRPT primitive
       Given the Define RPT4 scenario executed successfully
       And initial XML nodoInviaCarrelloRPT
@@ -588,6 +589,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:RPT>
          """
 
+   @runnable
    Scenario: Check third error for nodoInviaCarrelloRPT primitive
       Given the Define RPT6 scenario executed successfully
       And initial XML nodoInviaCarrelloRPT

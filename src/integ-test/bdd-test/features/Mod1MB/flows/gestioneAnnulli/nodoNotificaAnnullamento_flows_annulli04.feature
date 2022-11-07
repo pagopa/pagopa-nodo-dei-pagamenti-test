@@ -4,21 +4,16 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
       Given systems up
 
 
-@runnable
    # [annulli_04]
    Scenario: RPT generation
       Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
       And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-
       And RPT generation
-
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
          <pay_i:dominio>
-
          <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -71,9 +66,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-
          <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-
          <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -92,17 +85,13 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
          </pay_i:datiVersamento>
          </pay_i:RPT>
          """
-
       And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-
       And RPT2 generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
          <pay_i:dominio>
-
          <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -155,9 +144,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-
          <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
-
          <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -177,7 +164,6 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
          </pay_i:RPT>
          """
 
-@runnable
    Scenario: Execute nodoInviaCarrelloRPT request
       Given the RPT generation scenario executed successfully
       And initial XML paaInviaRT
@@ -194,17 +180,14 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
          </soapenv:Envelope>
          """
       And EC replies to nodo-dei-pagamenti with the paaInviaRT
-
       And initial XML nodoInviaCarrelloRPT
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
-
          <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>$1carrello</identificativoCarrello>
-
          </ppt:intestazioneCarrelloPPT>
          </soapenv:Header>
          <soapenv:Body>
@@ -215,18 +198,14 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
          <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
-
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-
          <codiceContestoPagamento>CCD01</codiceContestoPagamento>
          <rpt>$rptAttachment</rpt>
          </elementoListaRPT>
          <elementoListaRPT>
-
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
-
          <codiceContestoPagamento>CCD01</codiceContestoPagamento>
          <rpt>$rpt2Attachment</rpt>
          </elementoListaRPT>
@@ -241,7 +220,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
       Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
       Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-@runnable
+
    Scenario: update column valid_to UPDATED_TIMESTAMP
       Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
       And replace iuv content with $1iuv content
