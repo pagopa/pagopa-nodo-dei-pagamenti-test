@@ -1,4 +1,4 @@
-Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
+Feature: T093_D_ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello_nonVista+vistaDalPM
 
     
     Background:
@@ -233,13 +233,35 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
         #And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
         #And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
 
-     Scenario: Execute nodoChiediInformazioniPagamento
+    Scenario: Execute nodoChiediStatoRPT
         Given the RPT generation scenario executed successfully
+        And initial XML nodoChiediStatoRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header />
+            <soapenv:Body>
+                <ws:nodoChiediStatoRPT>
+                    <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                    <password>pwdpwdpwd</password>
+                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                </ws:nodoChiediStatoRPT>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+        Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
+
+     Scenario: Execute nodoChiediInformazioniPagamento
+        Given the Execute nodoChiediStatoRPT scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
 @runnable
-    Scenario: Execute nodoChiediStatoRPT
+    Scenario: Execute nodoChiediStatoRPT1
         Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
         And initial XML nodoChiediStatoRPT
         """
@@ -261,8 +283,8 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
         Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
 
-    Scenario: Execute nodoChiediStatoRPT1
-        Given the Execute nodoChiediStatoRPT scenario executed successfully
+    Scenario: Execute nodoChiediStatoRPT2
+        Given the Execute nodoChiediStatoRPT1 scenario executed successfully
         And initial XML nodoChiediStatoRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
