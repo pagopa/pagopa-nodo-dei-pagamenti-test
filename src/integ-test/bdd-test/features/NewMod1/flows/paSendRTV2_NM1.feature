@@ -543,7 +543,7 @@ Feature: flow tests for paSendRTV2
             """
             {
                 "paymentTokens": [
-                    "$activatePaymentNoticeV2_1Response.paymentToken"
+                    "$activatePaymentNoticeV2Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
