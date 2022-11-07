@@ -4,11 +4,10 @@ Feature: TXX
         Given systems up
 
     Scenario: Initialize all mock responses
-        Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
-
-        And wait 10 seconds for expiration
-        And initial XML pspInviaRPT
+        #Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
+        #And refresh job PSP triggered after 10 seconds
+        #And wait 10 seconds for expiration
+        Given initial XML pspInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
@@ -87,7 +86,6 @@ Feature: TXX
 
     Scenario: Execute nodoInviaRPT1 (Phase 1)
         Given the Initialize all mock responses scenario executed successfully
-
         And RPT generation
 
             """
@@ -280,7 +278,7 @@ Feature: TXX
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPull#</identificativoCanale>
+            <identificativoCanale>#canaleRtPull_sec#</identificativoCanale>
             <tipoFirma></tipoFirma>
 
             <rpt>$rptAttachment</rpt>
@@ -312,16 +310,15 @@ Feature: TXX
 
         And identificativoUnivocoVersamento with $iuv in pspChiediRT
 
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         And wait 10 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
-
-        And job paInviaRt triggered after 50 seconds
-        And wait 50 seconds for expiration
+        And job paInviaRt triggered after 5 seconds
+        And wait 130 seconds for expiration
 
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
@@ -501,15 +498,15 @@ Feature: TXX
         And rpt with $rpt2Attachment in nodoInviaRPT
         And identificativoUnivocoVersamento with $2iuv in nodoChiediStatoRPT
 
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         And wait 10 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
         And job paInviaRt triggered after 10 seconds
-        And wait 10 seconds for expiration
+        And wait 130 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
 
@@ -694,7 +691,7 @@ Feature: TXX
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
         And job paInviaRt triggered after 10 seconds
-        And wait 10 seconds for expiration
+        And wait 130 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
 
@@ -883,13 +880,13 @@ Feature: TXX
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
         And job paInviaRt triggered after 10 seconds
-        And wait 10 seconds for expiration
+        And wait 130 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
-        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
+        #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
+        #And refresh job PSP triggered after 10 seconds
 
-        And wait 10 seconds for expiration
+        #And wait 10 seconds for expiration
         # check correctness STATI_RPT 1
 
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull

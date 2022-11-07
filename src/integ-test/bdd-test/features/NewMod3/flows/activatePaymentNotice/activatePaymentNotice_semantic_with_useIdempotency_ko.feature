@@ -126,7 +126,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
   @runnable
   Scenario: Execute formally correct activatePaymentNotice request with same idempotencyKey before it expires
     Given the Execute activatePaymentNotice request with an empty idPSP scenario executed successfully
-    And idPSP with 70000000001 in activatePaymentNotice
+    And idPSP with #psp# in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 

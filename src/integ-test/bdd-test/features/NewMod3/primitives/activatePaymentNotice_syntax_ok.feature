@@ -9,8 +9,8 @@ Feature: Syntax checks OK for activatePaymentNoticeReq
           <soapenv:Header/>
           <soapenv:Body>
               <nod:activatePaymentNoticeReq>
-                  <idPSP>70000000001</idPSP>
-                  <idBrokerPSP>70000000001</idBrokerPSP>
+                  <idPSP>#psp#</idPSP>
+                  <idBrokerPSP>#psp#</idBrokerPSP>
                   <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                   <password>pwdpwdpwd</password>
                   <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -26,11 +26,13 @@ Feature: Syntax checks OK for activatePaymentNoticeReq
           </soapenv:Body>
       </soapenv:Envelope>
       """
-
+  
+  @runnable
   Scenario: Check valid URL in WSDL namespace
     When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
+  @runnable
   Scenario Outline: Check OK response on missing optional fields idempotencyKey - SIN_APNR_18
     Given <elem> with <value> in activatePaymentNotice
     When psp sends soap activatePaymentNotice to nodo-dei-pagamenti

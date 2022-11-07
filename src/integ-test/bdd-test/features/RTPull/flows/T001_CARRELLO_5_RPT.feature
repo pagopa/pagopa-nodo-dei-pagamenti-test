@@ -4,16 +4,15 @@ Feature: T001_CARRELLO_5_RPT
         Given systems up
 
     Scenario: Execute nodoInviaCarrelloRPT - [T001_CARRELLO_5_RPT]
-        Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
-        And wait 10 seconds for expiration
-        And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
+        #Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
+        #And refresh job PSP triggered after 10 seconds
+        #And wait 10 seconds for expiration
+        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
         And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
         And generate 3 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
         And generate 4 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
         And generate 5 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
-
         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -839,7 +838,7 @@ Feature: T001_CARRELLO_5_RPT
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPull#</identificativoCanale>
+            <identificativoCanale>#canaleRtPull_sec#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
@@ -923,9 +922,9 @@ Feature: T001_CARRELLO_5_RPT
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
         #And job paaInviaRT triggered after 10 seconds
@@ -936,8 +935,8 @@ Feature: T001_CARRELLO_5_RPT
         Given the Execute nodoInviaCarrelloRPT - [T001_CARRELLO_5_RPT] scenario executed successfully
         And identificativoUnivocoVersamento with $2iuv in pspChiediListaRT
         And rt with $rt2Attachment in pspChiediRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 5 seconds
         #And wait 5 seconds for expiration
     
@@ -945,8 +944,8 @@ Feature: T001_CARRELLO_5_RPT
         Given the second pspChiediListaAndChiediRt trigger scenario executed successfully
         And identificativoUnivocoVersamento with $3iuv in pspChiediListaRT
         And rt with $rt3Attachment in pspChiediRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 5 seconds
         #And wait 5 seconds for expiration
     
@@ -954,25 +953,24 @@ Feature: T001_CARRELLO_5_RPT
         Given the third pspChiediListaAndChiediRt trigger scenario executed successfully
         And identificativoUnivocoVersamento with $4iuv in pspChiediListaRT
         And rt with $rt4Attachment in pspChiediRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 5 seconds
         #And wait 5 seconds for expiration
-@final    
+@runnable
     Scenario: fifth pspChiediListaAndChiediRt trigger
         Given the fourth pspChiediListaAndChiediRt trigger scenario executed successfully
         And identificativoUnivocoVersamento with $5iuv in pspChiediListaRT
         And rt with $rt5Attachment in pspChiediRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 5 seconds
         And job paInviaRt triggered after 10 seconds
-        And wait 5 seconds for expiration
-
-        And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
-        And wait 10 seconds for expiration
+        And wait 130 seconds for expiration
+        #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
+        #And refresh job PSP triggered after 10 seconds
+        #And wait 10 seconds for expiration
         And replace iuv content with $1iuv content
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        Then checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull

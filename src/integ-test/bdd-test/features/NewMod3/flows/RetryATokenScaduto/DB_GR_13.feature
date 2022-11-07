@@ -162,7 +162,7 @@ Feature: process tests for Retry_DB_GR_13
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>60000000001</idBrokerPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>

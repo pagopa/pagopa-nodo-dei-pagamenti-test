@@ -9,8 +9,8 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
         <soapenv:Header/>
         <soapenv:Body>
           <nod:activatePaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -27,6 +27,7 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       </soapenv:Envelope>
       """
 
+  @runnable
   # attribute value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
     Given <attribute> set <value> for <elem> in activatePaymentNotice
@@ -37,7 +38,7 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       | elem             | attribute     | value                                     | soapUI test |
       | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_APNR_01 |
 
-
+  @runnable
   # element value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
     Given <elem> with <value> in activatePaymentNotice
@@ -63,15 +64,15 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       | password                     | 1234567                                                                                                                                                                                                             | SIN_APNR_16   |
       | password                     | 1234567890123456                                                                                                                                                                                                    | SIN_APNR_17   |
       | idempotencyKey               | Empty                                                                                                                                                                                                               | SIN_APNR_19   |
-      | idempotencyKey               | 70000000001.1244565744                                                                                                                                                                                              | SIN_APNR_20   |
-      | idempotencyKey               | 70000000001_%244565744                                                                                                                                                                                              | SIN_APNR_20   |
-      | idempotencyKey               | 70000000001-1244565744                                                                                                                                                                                              | SIN_APNR_20   |
-      | idempotencyKey               | 1244565768_70000000001                                                                                                                                                                                              | SIN_APNR_20   |
+      | idempotencyKey               | 60000000001.1244565744                                                                                                                                                                                              | SIN_APNR_20   |
+      | idempotencyKey               | 60000000001_%244565744                                                                                                                                                                                              | SIN_APNR_20   |
+      | idempotencyKey               | 60000000001-1244565744                                                                                                                                                                                              | SIN_APNR_20   |
+      | idempotencyKey               | 1244565768_#psp#                                                                                                                                                                                              | SIN_APNR_20   |
       | idempotencyKey               | 1244565744                                                                                                                                                                                                          | SIN_APNR_20   |
-      | idempotencyKey               | 700000000011244565744                                                                                                                                                                                               | SIN_APNR_20   |
-      | idempotencyKey               | 70000000001_12445657684                                                                                                                                                                                             | SIN_APNR_21   |
-      | idempotencyKey               | 70000000001_124456576                                                                                                                                                                                               | SIN_APNR_22   |
-      | idempotencyKey               | 700000hj123_1244565767                                                                                                                                                                                              | SIN_APNR_22.1 |
+      | idempotencyKey               | 600000000011244565744                                                                                                                                                                                               | SIN_APNR_20   |
+      | idempotencyKey               | 60000000001_12445657684                                                                                                                                                                                             | SIN_APNR_21   |
+      | idempotencyKey               | 60000000001_124456576                                                                                                                                                                                               | SIN_APNR_22   |
+      | idempotencyKey               | 600000hj123_1244565767                                                                                                                                                                                              | SIN_APNR_22.1 |
       | qrCode                       | None                                                                                                                                                                                                                | SIN_APNR_23   |
       | qrCode                       | RemoveParent                                                                                                                                                                                                        | SIN_APNR_24   |
       | qrCode                       | Empty                                                                                                                                                                                                               | SIN_APNR_25   |

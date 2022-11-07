@@ -12,8 +12,8 @@ Feature: Semantic checks for sendPaymentOutcome - OUTCOME KO [SEM_SPO_22]
       <soapenv:Header/>
       <soapenv:Body>
         <nod:activatePaymentNoticeReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
+          <idPSP>#psp#</idPSP>
+          <idBrokerPSP>#psp#</idBrokerPSP>
           <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -39,8 +39,8 @@ Feature: Semantic checks for sendPaymentOutcome - OUTCOME KO [SEM_SPO_22]
       <soapenv:Header/>
       <soapenv:Body>
         <nod:sendPaymentOutcomeReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
+          <idPSP>#psp#</idPSP>
+          <idBrokerPSP>#psp#</idBrokerPSP>
           <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
           <paymentToken>$activatePaymentNotice_1Response.paymentToken</paymentToken>
@@ -93,8 +93,8 @@ Feature: Semantic checks for sendPaymentOutcome - OUTCOME KO [SEM_SPO_22]
       <soapenv:Header/>
       <soapenv:Body>
         <nod:activatePaymentNoticeReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
+          <idPSP>#psp#</idPSP>
+          <idBrokerPSP>#psp#</idBrokerPSP>
           <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>

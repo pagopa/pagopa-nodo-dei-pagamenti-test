@@ -8,8 +8,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -42,8 +42,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -154,8 +154,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -208,8 +208,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -254,8 +254,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -294,7 +294,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
   # Send payment outcome Phase 2 - different idempotencyKey [IDMP_SPO_28]
   Scenario: 13. Execute again the same sendPaymentOutcome request with outcome KO with a different idempotencyKey
     Given the 12. Execute sendPaymentOutcome request with outcome KO scenario executed successfully
-    And random idempotencyKey having 70000000001 as idPSP in sendPaymentOutcome
+    And random idempotencyKey having #psp# as idPSP in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
@@ -305,7 +305,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
   Scenario: 14. Execute again the same sendPaymentOutcome request with a different idempotencyKey
     Given the 2. Execute sendPaymentOutcome request scenario executed successfully
     And outcome with KO in sendPaymentOutcome
-    And random idempotencyKey having 70000000001 as idPSP in sendPaymentOutcome
+    And random idempotencyKey having #psp# as idPSP in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
@@ -320,8 +320,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -361,7 +361,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
   Scenario: 16. Execute again the same sendPaymentOutcome request with outcome OK with a different idempotencyKey
     Given the Execute sendPaymentOutcome request with outcome KO scenario executed successfully
     And outcome with OK in sendPaymentOutcome
-    And random idempotencyKey having 70000000001 as idPSP in sendPaymentOutcome
+    And random idempotencyKey having #psp# as idPSP in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
@@ -389,8 +389,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
       <soapenv:Header/>
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -429,7 +429,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
   Scenario: 20. Execute sendPaymentOutcome request on token of Activate Phase and different idempotencyKey
     Given the Execute sendPaymentOutcome request on token of Activate Phase 2 scenario executed successfully
     And paymentToken with $activatePaymentNoticeResponse.paymentToken in sendPaymentOutcome
-    And random idempotencyKey having 70000000001 as idPSP in sendPaymentOutcome
+    And random idempotencyKey having #psp# as idPSP in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
