@@ -1410,7 +1410,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @wip
+    
     Scenario: PSRTV2_ACTV1_23 (part 3)
         Given the PSRTV2_ACTV1_23 (part 2) scenario executed successfully
         And the paSendRTV2 timeout response scenario executed successfully
@@ -1685,7 +1685,7 @@ Feature: flow tests for paSendRTV2
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
-    @wip
+    
     Scenario: PSRTV2_ACTV1_29 (part 4)
         Given the PSRTV2_ACTV1_29 (part 3) scenario executed successfully
         And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
