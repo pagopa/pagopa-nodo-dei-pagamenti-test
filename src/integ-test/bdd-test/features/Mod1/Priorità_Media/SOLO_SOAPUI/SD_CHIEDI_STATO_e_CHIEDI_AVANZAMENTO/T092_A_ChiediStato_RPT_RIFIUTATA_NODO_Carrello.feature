@@ -10,7 +10,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
                 <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
                 <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
                 <pay_i:dominio>
-                <pay_i:identificativoDominio>#cred#itor_institution_code</pay_i:identificativoDominio>
+                <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
                 </pay_i:dominio>
                 <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
