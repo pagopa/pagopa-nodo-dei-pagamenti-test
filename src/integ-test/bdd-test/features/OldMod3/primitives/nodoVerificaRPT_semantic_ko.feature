@@ -23,7 +23,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
+@runnable
     Scenario Outline: Check faultCode error on non-existent or invalid field
         Given <field> with <value> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
@@ -39,6 +39,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
             | password                       | test_wrong_pwd     | PPT_AUTENTICAZIONE                 | VRPTSEM7    |
             | codificaInfrastrutturaPSP      | codificaErrata     | PPT_CODIFICA_PSP_SCONOSCIUTA       | VRPTSEM8    |
 
+@runnable
     Scenario Outline: Check faultCode PPT_SEMANTICA on invalid body element
         Given <field_1> with <value_1> in nodoVerificaRPT
         And <field_2> with <value_2> in nodoVerificaRPT
@@ -49,6 +50,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
             | qrc:AuxDigit | 0       | qrc:CodIUV | 12345678901234567 | VRPTSEM9    |
             | qrc:AuxDigit | 1       | qrc:CodIUV | 123456789012345   | VRPTSEM10   |
 
+@runnable
     Scenario Outline: Check faultCode error on unknown or invalid CodStazPA
         Given <field> with <value> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti

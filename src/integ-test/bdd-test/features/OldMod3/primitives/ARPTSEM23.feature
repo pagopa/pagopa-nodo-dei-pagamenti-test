@@ -1,7 +1,8 @@
 Feature: Semantic checks KO for nodoAttivaRPT
     Background:
         Given systems up
-    
+
+@runnable
     Scenario: Check PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE error on identificativoIntermediarioPA not in configuration
     Given initial XML nodoAttivaRPT
         """

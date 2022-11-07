@@ -75,6 +75,8 @@ Feature: Syntax checks KO for nodoAttivaRPT
             </soapenv:Body>
             </soapenv:Envelope>
             """
+
+@runnable        
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
         Given <attribute> set <value> for <elem> in nodoAttivaRPT
         When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
@@ -84,6 +86,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
             | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | ARPTSIN1    |
             | soapenv:Body     | xmlns:ws      | <wss:></wss>                              | ARPTSIN2    |
 
+@runnable
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD error on invalid body element value
         Given <elem> with <value> in nodoAttivaRPT
         When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
@@ -93,6 +96,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
             | soapenv:Body | None  | ARPTSIN3    |
             | soapenv:Body | Empty | ARPTSIN4    |
 
+@runnable
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value
         Given <elem> with <value> in nodoAttivaRPT
         When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
@@ -151,12 +155,13 @@ Feature: Syntax checks KO for nodoAttivaRPT
             | pag:indirizzoVersante                   | Empty                                                                   | ARPTSIN62   |
             | pag:indirizzoVersante                   | RSSFNC50S01L781HARSSFNC50S01L781HARSSFNC50S01L781HARSSFNC50S01L781HAasd | ARPTSIN63   |
 
-
+@runnable
     Scenario: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value [ARPTSIN115]
         Given bc:CodStazPA with Empty in nodoAttivaRPT
         When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoAttivaRPT response
 
+@runnable
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value
         Given <tag> with <value> in nodoAttivaRPT
         When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti
@@ -166,6 +171,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
             | identificativoPSP | Empty                                | ARPTSIN7    |
             | identificativoPSP | QuestiSono36CaratteriAlfaNumericiTT1 | ARPTSIN8    |
 
+@runnable
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value
         Given <tag> with <value> in nodoAttivaRPT
         When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti
@@ -175,6 +181,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
             | identificativoIntermediarioPSP | Empty                                | ARPTSIN10   |
             | identificativoIntermediarioPSP | QuestiSono36CaratteriAlfaNumericiTT1 | ARPTSIN11   |
 
+@runnable
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value
         Given <tag> with <value> in nodoAttivaRPT
         When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti
@@ -185,6 +192,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
                 | password | Alpha_7          | ARPTSIN17   |
                 | password | Alpha_16_Num_123 | ARPTSIN18   |
 
+@runnable
     Scenario: Check faultCode PPT_SINTASSI_EXTRAXSD on invalid body element value [ARPTSIN13]
         Given identificativoCanale with Empty in nodoAttivaRPT
         When psp sends soap nodoAttivaRPT to nodo-dei-pagamenti
