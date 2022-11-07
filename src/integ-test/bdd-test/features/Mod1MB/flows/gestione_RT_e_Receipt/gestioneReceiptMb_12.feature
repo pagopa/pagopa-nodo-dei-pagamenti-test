@@ -6,9 +6,7 @@ Feature: gestioneReceiptMb_12
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code -
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-
         And replace pa1 content with #creditor_institution_code_secondary# content
-
         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -456,6 +454,7 @@ Feature: gestioneReceiptMb_12
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
 
+@runnable
     Scenario: Execute nodoInviaRT (Phase 4)
         Given the Execute nodoInoltroEsitoMod1 (Phase 3) scenario executed successfully
         And initial XML nodoInviaRT

@@ -30,7 +30,7 @@ Feature: process tests for gestioneRTMb02
          """
 
 
-
+@runnable
    Scenario: Execution test [gestioneRTMb02]
       Given the nodoNotificaAnnullamento request scenario executed successfully
       When psp sends SOAP nodoNotificaAnnullamento to nodo-dei-pagamenti
