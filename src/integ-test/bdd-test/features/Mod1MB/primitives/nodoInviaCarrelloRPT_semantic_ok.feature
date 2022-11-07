@@ -178,6 +178,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
          </pay_i:RPT>
          """
 
+   @runnable
    Scenario: Check no error for nodoInviaCarrelloRPT
       Given the Define RPT2 scenario executed successfully
       And initial XML paaInviaRT
