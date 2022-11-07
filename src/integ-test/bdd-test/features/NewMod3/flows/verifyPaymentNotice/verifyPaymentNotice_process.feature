@@ -45,6 +45,7 @@ Feature:  process checks for verifyPaymentNotice
 
 
     # verifyPaymentNotice OK - EC old [PRO_VPNR_01]
+    @runnable
     Scenario: Execute verifyPaymentNotice request OLD OK
         Given the Execute paaVerificaRPT OK scenario executed successfully
         And initial XML verifyPaymentNotice
@@ -72,6 +73,7 @@ Feature:  process checks for verifyPaymentNotice
 
 
     # verifyPaymentNotice OK - EC new [PRO_VPNR_02 - PRO_VPNR_09]
+    @runnable
     Scenario: Execute verifyPaymentNotice request NEW OK
         Given initial XML paVerifyPaymentNotice
             """
@@ -124,6 +126,7 @@ Feature:  process checks for verifyPaymentNotice
 
 
     # nodoVerificaRPT OK - EC old [PRO_VPNR_03]
+    @runnable
     Scenario: Execute nodoVerificaRPT request OLD OK
         Given the Execute paaVerificaRPT OK scenario executed successfully
         And initial XML nodoVerificaRPT
@@ -157,6 +160,7 @@ Feature:  process checks for verifyPaymentNotice
 
 
     # verifyPaymentNotice KO - EC old [PRO_VPNR_05]
+    @runnable
     Scenario: Execute verifyPaymentNotice request OLD KO
         Given initial XML paaVerificaRPT
             """

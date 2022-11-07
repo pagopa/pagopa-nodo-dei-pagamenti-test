@@ -91,6 +91,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_09]
     Then check outcome is OK of activatePaymentNotice response
 
   # Payment Outcome Phase outcome OK
+  @runnable
   Scenario: Execute sendPaymentOutcome request
     Given the Execute activatePaymentNotice request scenario executed successfully
     Given initial XML sendPaymentOutcome

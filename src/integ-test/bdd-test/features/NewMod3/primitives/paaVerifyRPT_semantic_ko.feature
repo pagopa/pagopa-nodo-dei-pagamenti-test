@@ -21,6 +21,7 @@ Feature: check semantic paaVerifyRPT - KO
                 </soapenv:Body>
             </soapenv:Envelope>
             """
+    
     @runnable
     Scenario Outline:
         Given initial XML paaVerificaRPT

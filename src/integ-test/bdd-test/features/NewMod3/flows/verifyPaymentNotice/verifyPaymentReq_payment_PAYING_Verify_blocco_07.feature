@@ -12,8 +12,8 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
          <soapenv:Header/>
          <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
                <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <qrCode>
@@ -36,8 +36,8 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
          <soapenv:Header/>
          <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
                <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -58,6 +58,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
 
 
    # Verify Phase 2
+   @runnable
   Scenario: Execute verifyPaymentNotice2 request with the same request as Verify Phase 1
     Given the activatePaymentNotice scenario executed successfully
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti

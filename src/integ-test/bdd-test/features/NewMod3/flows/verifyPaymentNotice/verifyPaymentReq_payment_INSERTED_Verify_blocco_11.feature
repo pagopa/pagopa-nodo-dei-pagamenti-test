@@ -65,6 +65,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
 
 	
   # Verify Phase 2
+  @runnable
   Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1
 	# Given the Mod3Cancel Phase executed successfully
     Given the Execute mod3Cancel poller scenario executed successfully
