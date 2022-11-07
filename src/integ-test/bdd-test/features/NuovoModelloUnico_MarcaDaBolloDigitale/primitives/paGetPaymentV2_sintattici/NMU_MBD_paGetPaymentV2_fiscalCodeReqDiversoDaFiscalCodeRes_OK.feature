@@ -1,4 +1,4 @@
-#Il test verifica che il nodo accetti un'activatePAymentNoticeV2 con amount req != amount res
+#Il test verifica che il nodo accetti un'activatePAymentNoticeV2 con fiscalCode req != fiscalCode res
 
 Feature: activatePaymentNoticeV2Request with amount req different from amount res
 
