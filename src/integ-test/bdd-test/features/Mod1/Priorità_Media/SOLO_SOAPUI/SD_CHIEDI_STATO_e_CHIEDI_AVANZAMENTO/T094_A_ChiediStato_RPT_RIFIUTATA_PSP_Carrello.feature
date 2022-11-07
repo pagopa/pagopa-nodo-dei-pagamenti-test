@@ -177,7 +177,7 @@ Feature: T094_A_ChiediStato_RPT_RIFIUTATA_PSP_Carrello
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp_AGID#</identificativoPSP>
             <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+            <identificativoCanale>#canale#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
@@ -217,7 +217,7 @@ Feature: T094_A_ChiediStato_RPT_RIFIUTATA_PSP_Carrello
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-        And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
+        And check faultCode is PPT_CANALE_ERRORE of nodoInviaCarrelloRPT response
         #And retrieve session token from $nodoInviaCarrelloRPTResponse.url
         # check STATI_RPT table
         #And replace pa content with #creditor_institution_code# content
@@ -259,6 +259,7 @@ Feature: T094_A_ChiediStato_RPT_RIFIUTATA_PSP_Carrello
         Then checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And check url field not exists in nodoChiediStatoRPT response
 
      Scenario: Execute nodoChiediStatoRPT2
         Given the Execute nodoChiediStatoRPT scenario executed successfully
