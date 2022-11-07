@@ -1220,7 +1220,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is OK of activatePaymentNoticeV2 response
 
         # prova
-        And check metadata field exists in activatePaymentNoticeV2 response
+        And check <metadata/> is contained in activatePaymentNoticeV2 response
     # prova
 
     # And check metadata is Empty of activatePaymentNoticeV2 response
