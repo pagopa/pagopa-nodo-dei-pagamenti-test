@@ -210,8 +210,8 @@ Feature: T094_A_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_entrambiFault
                             <description>descrizione fault esterno</description>
                         </fault>
                         <esitoComplessivoOperazione>malformata</esitoComplessivoOperazione>
-                        <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                        <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoUnivocoVersamento</identificativoCarrello>
+                        <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
                     </pspInviaCarrelloRPTResponse>
                 </ws:pspInviaCarrelloRPTResponse>
             </soapenv:Body>
