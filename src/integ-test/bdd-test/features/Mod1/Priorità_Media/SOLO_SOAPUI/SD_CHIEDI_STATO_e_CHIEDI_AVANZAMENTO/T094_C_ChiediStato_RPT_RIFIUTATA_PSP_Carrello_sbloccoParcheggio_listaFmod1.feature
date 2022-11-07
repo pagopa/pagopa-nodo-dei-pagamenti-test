@@ -196,7 +196,21 @@ Feature: T094_C_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_sbloccoParcheggio_listaFa
             </soapenv:Body>
             </soapenv:Envelope>
             """
-      
+        And initial XML pspInviaCarrelloRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaCarrelloRPTResponse>
+                        <pspInviaCarrelloRPTResponse>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <identificativoCarrello>$1carrello</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$1carrello</parametriPagamentoImmediato>
+                        </pspInviaCarrelloRPTResponse>
+                    </ws:pspInviaCarrelloRPTResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         #And check faultCode is PPT_CANALE_ERRORE of nodoInviaCarrelloRPT response
