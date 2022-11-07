@@ -49,6 +49,7 @@ Feature: activatePaymentNoticeV2Request without value in mapEntry at the end of 
             </soapenv:Envelope>
             """
         And initial XML paGetPaymentV2
+            Given initial XML paGetPaymentV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Body>
@@ -58,8 +59,6 @@ Feature: activatePaymentNoticeV2Request without value in mapEntry at the end of 
             <creditorReferenceId>10$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-30</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
@@ -93,51 +92,23 @@ Feature: activatePaymentNoticeV2Request without value in mapEntry at the end of 
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>1.00</transferAmount>
+            <transferAmount>9.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
+            <richiestaMarcaDaBollo>
+            <hashDocumento>ciao</hashDocumento>
+            <tipoBollo>01</tipoBollo>
+            <provinciaResidenza>MI</provinciaResidenza>
+            </richiestaMarcaDaBollo>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
             <!--Optional:-->
-            <transfer>
+            <metadata>
             <!--1 to 10 repetitions:-->
             <mapEntry>
             <key>1</key>
             <value>22</value>
             </mapEntry>
-            </transfer>
-            </transfer>
-            <transfer>
-            <idTransfer>2</idTransfer>
-            <transferAmount>2.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info2</remittanceInformation>
-            <transferCategory>category2</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>3</idTransfer>
-            <transferAmount>2.50</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info3</remittanceInformation>
-            <transferCategory>category3</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>4</idTransfer>
-            <transferAmount>2.50</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info4</remittanceInformation>
-            <transferCategory>category4</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>5</idTransfer>
-            <transferAmount>2.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>info5</remittanceInformation>
-            <transferCategory>category5</transferCategory>
+            </metadata>
             </transfer>
             </transferList>
             <!--Optional:-->
@@ -147,6 +118,7 @@ Feature: activatePaymentNoticeV2Request without value in mapEntry at the end of 
             <key>1</key>
             
             </mapEntry>
+            </metadata>
             </data>
             </paf:paGetPaymentV2Response>
             </soapenv:Body>
