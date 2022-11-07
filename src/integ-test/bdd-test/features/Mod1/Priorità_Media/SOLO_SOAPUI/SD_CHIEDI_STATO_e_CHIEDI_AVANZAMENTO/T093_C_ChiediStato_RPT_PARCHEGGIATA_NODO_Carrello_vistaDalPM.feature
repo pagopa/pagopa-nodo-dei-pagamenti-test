@@ -6,6 +6,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
 
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
         And RPT generation
             """
                 <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -168,7 +169,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$1ccp</identificativoCarrello>
+            <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -203,8 +204,8 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
                     <ws:pspInviaCarrelloRPTResponse>
                         <pspInviaCarrelloRPTResponse>
                             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>$1ccp</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$1ccp</parametriPagamentoImmediato>
+                            <identificativoCarrello>$1carrello</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$1carrello</parametriPagamentoImmediato>
                         </pspInviaCarrelloRPTResponse>
                     </ws:pspInviaCarrelloRPTResponse>
                 </soapenv:Body>
@@ -251,7 +252,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                     <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
             </soapenv:Body>
         </soapenv:Envelope>
