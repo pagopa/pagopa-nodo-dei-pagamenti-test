@@ -243,7 +243,7 @@ Feature: T094_B_ChiediStato_RPT_RIFIUTATA_PSP_sbloccoParcheggio
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-        And check descrizione is Risposta negativa del Canale of inoltroEsito/mod1 response
+        And check descrizione is stato risolto da Nodo - KO1 - annullare of inoltroEsito/mod1 response
         And check esito is KO of inoltroEsito/mod1 response
 
      Scenario: execution nodoInviaRPT duplicato
