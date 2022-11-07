@@ -1476,6 +1476,7 @@ Feature: flow tests for paSendRTV2
     @wip
     Scenario: PSRTV2_ACTV1_26 (part 3)
         Given the PSRTV2_ACTV1_26 (part 2) scenario executed successfully
+        And wait 12 seconds for expiration
         # And the paSendRTV2 timeout response scenario executed successfully
         # And wait 10 seconds for expiration
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
@@ -1606,6 +1607,7 @@ Feature: flow tests for paSendRTV2
         Given the PSRTV2_ACTV1_28 (part 2) scenario executed successfully
         # And the paSendRTV2 timeout response scenario executed successfully
         # And wait 10 seconds for expiration
+        And wait 12 seconds for expiration
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -1651,7 +1653,7 @@ Feature: flow tests for paSendRTV2
         And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    
+    @wip
     Scenario: PSRTV2_ACTV1_28 (part 4)
         Given the PSRTV2_ACTV1_28 (part 3) scenario executed successfully
         And the paSendRTV2 response scenario executed successfully
