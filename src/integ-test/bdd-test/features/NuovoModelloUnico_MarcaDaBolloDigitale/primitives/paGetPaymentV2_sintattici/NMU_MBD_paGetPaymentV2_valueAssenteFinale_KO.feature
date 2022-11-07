@@ -1,4 +1,4 @@
-#Il test verifica che il nodo non accetti un'activatePAymentNoticeV2 senza value in mapEntry alla fine dell'xml
+#Il test verifica che il nodo non accetti un'activatePAymentNoticeV2 senza value nel mapEntry alla fine dell'xml
 
 Feature: activatePaymentNoticeV2Request without value in mapEntry at the end of xml
 
@@ -145,13 +145,8 @@ Feature: activatePaymentNoticeV2Request without value in mapEntry at the end of 
             <!--1 to 10 repetitions:-->
             <mapEntry>
             <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            <mapEntry>
             
-            <value>22</value>
             </mapEntry>
-            </metadata>
             </data>
             </paf:paGetPaymentV2Response>
             </soapenv:Body>
