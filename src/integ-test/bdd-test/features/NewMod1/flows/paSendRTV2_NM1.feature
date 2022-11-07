@@ -692,7 +692,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @wip
+
     Scenario: PSRTV2_ACTV1_03 (part 2)
         Given the PSRTV2_ACTV1_03 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -737,7 +737,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-
+    @wip
     Scenario: PSRTV2_ACTV1_04 (part 2)
         Given the PSRTV2_ACTV1_04 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -758,8 +758,8 @@ Feature: flow tests for paSendRTV2
         And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
-        And checks the value PAYING,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
