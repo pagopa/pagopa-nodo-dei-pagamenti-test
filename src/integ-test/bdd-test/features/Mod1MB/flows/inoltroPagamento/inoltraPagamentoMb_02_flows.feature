@@ -2,19 +2,16 @@ Feature: process tests for inoltropagamentoMb_02
    Background:
       Given systems up
 
-@runnable
+
    Scenario: RPT generation
       Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
       And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-
       And RPT1 generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-
          <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -165,7 +162,7 @@ Feature: process tests for inoltropagamentoMb_02
          </pay_i:RPT>
          """
 
-@runnable
+
    Scenario: Execute nodoInviaCarrelloRPT request
       Given the RPT generation scenario executed successfully
       And initial XML paaInviaRT
@@ -182,15 +179,12 @@ Feature: process tests for inoltropagamentoMb_02
          </soapenv:Envelope>
          """
       And EC replies to nodo-dei-pagamenti with the paaInviaRT
-
       And initial XML nodoInviaCarrelloRPT
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
-
          <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>$1carrello</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
@@ -203,9 +197,7 @@ Feature: process tests for inoltropagamentoMb_02
          <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
-
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-
          <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
          <rpt>$rpt1Attachment</rpt>
@@ -226,7 +218,7 @@ Feature: process tests for inoltropagamentoMb_02
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
       Then retrieve session token from $nodoInviaCarrelloRPTResponse.url
-@runnable
+
    Scenario: Execute nodoChiediInformazioniPagamento
       Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
       When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -236,7 +228,7 @@ Feature: process tests for inoltropagamentoMb_02
       And check ragioneSociale field exists in informazioniPagamento response
       And check oggettoPagamento field exists in informazioniPagamento response
       And check urlRedirectEC field exists in informazioniPagamento response
-@runnable
+
    Scenario: Execute nodoInoltraPagamentoMod1
       Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
       And initial XML pspInviaCarrelloRPT
@@ -273,6 +265,7 @@ Feature: process tests for inoltropagamentoMb_02
          """
       Then verify the HTTP status code of inoltroEsito/mod1 response is 200
       And check esito is OK of inoltroEsito/mod1 response
+
 @runnable
    Scenario: Trigger paInviaRT
       Given the Execute nodoInoltraPagamentoMod1 scenario executed successfully

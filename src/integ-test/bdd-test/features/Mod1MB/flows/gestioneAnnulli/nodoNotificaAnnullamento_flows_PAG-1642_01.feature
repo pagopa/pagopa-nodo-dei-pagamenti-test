@@ -3,22 +3,16 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
     Background:
         Given systems up
 
-
-
     Scenario: RPT generation
         Given nodo-dei-pagamenti has config parameter CONFIG_VALUE set to false
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-
         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-
             <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -192,9 +186,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
@@ -207,9 +199,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
             <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
-
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
@@ -245,7 +235,6 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
         Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
-
         And wait 10 seconds for expiration
 
 
@@ -307,9 +296,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
             <payer>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-
             <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
-
             </uniqueIdentifier>
             <fullName>IOname_</fullName>
             <!--Optional:-->
@@ -382,7 +369,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
 
-
+@runnable
     Scenario: Execute sendPaymentOutcome request
         Given the Execute nodoInoltroEsitoCarta scenario executed successfully
         And initial XML sendPaymentOutcome

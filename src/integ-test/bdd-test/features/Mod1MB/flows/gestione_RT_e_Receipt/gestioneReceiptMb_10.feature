@@ -451,6 +451,7 @@ Feature: gestioneReceiptMb_10
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
 
+@runnable
     Scenario: Execute nodoInviaRT (Phase 4)
         Given the Execute nodoInoltroEsitoMod1 (Phase 3) scenario executed successfully
         And initial XML nodoInviaRT
@@ -628,6 +629,7 @@ Feature: gestioneReceiptMb_10
         And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
+
     Scenario: Check POSITION_RETRY_PA_SEND_RT table
         Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
         And wait 120 seconds for expiration
@@ -655,7 +657,7 @@ Feature: gestioneReceiptMb_10
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And restore initial configurations
 
-    @test
+@runnable
     Scenario: Checks
         Given the Check POSITION_RETRY_PA_SEND_RT table scenario executed successfully
         And wait 60 seconds for expiration

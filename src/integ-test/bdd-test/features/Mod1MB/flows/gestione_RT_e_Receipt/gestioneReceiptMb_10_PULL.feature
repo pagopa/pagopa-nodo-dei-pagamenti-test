@@ -498,6 +498,7 @@ Feature: gestioneReceiptMb_10_PULL
         #And job paSendRt triggered after 10 seconds
         Then wait 15 seconds for expiration
 
+
     Scenario: job pspChiediRT (Phase 4.1)
         Given the job pspChiediRT (Phase 4) scenario executed successfully
         And initial XML pspChiediListaRT
@@ -719,7 +720,7 @@ Feature: gestioneReceiptMb_10_PULL
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And restore initial configurations
 
-    @test
+@runnable
     Scenario: Checks
         Given the Check POSITION_RETRY_PA_SEND_RT table scenario executed successfully
         And wait 60 seconds for expiration
