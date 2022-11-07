@@ -10,13 +10,13 @@ Feature: Semantic checks KO for nodoVerificaRPT
         <soapenv:Header/>
         <soapenv:Body>
             <ws:nodoVerificaRPT>
-                <identificativoPSP>40000000001</identificativoPSP>
-                <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                <identificativoCanale>40000000001_01</identificativoCanale>
+                <identificativoPSP>#psp#</identificativoPSP>
+                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <codiceContestoPagamento>irraggiungibile</codiceContestoPagamento>
                 <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-                <codiceIdRPT><aim:aim128> <aim:CCPost>444444444444</aim:CCPost> <aim:CodStazPA>02</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>016101258167700</aim:CodIUV></aim:aim128></codiceIdRPT>
+                <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>02</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>016101258167700</aim:CodIUV></aim:aim128></codiceIdRPT>
             </ws:nodoVerificaRPT>
         </soapenv:Body>
         </soapenv:Envelope>

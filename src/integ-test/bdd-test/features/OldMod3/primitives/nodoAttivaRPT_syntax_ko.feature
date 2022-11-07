@@ -12,7 +12,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
-            <identificativoIntermediarioPSPPagamento>97735020584</identificativoIntermediarioPSPPagamento>
+            <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
             <identificativoCanalePagamento>#canale#</identificativoCanalePagamento>
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT><bc:BarCode><bc:Gln>1234567890122</bc:Gln><bc:CodStazPA>01</bc:CodStazPA><bc:AuxDigit>0</bc:AuxDigit><bc:CodIUV>112222222222222</bc:CodIUV></bc:BarCode></codiceIdRPT>
