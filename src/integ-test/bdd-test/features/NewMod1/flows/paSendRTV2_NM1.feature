@@ -1288,7 +1288,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @wip
+    
     Scenario: PSRTV2_ACTV1_21 (part 3)
         Given the PSRTV2_ACTV1_21 (part 2) scenario executed successfully
         And the paSendRTV2 timeout response scenario executed successfully
@@ -1695,12 +1695,10 @@ Feature: flow tests for paSendRTV2
         Then verify the HTTP status code of paSendRt response is 200
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
-        And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 5 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_RECEIPT_RECIPIENT
-        And checks the value NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
