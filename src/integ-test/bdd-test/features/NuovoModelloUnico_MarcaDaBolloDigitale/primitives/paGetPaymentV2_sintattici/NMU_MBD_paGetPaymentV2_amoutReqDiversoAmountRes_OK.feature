@@ -116,7 +116,7 @@ Feature: activatePaymentNoticeV2Request with amount req different from amount re
             <!--1 to 10 repetitions:-->
             <mapEntry>
             <key>1</key>
-            
+            <value>22</value>
             </mapEntry>
             </metadata>
             </data>
