@@ -1349,7 +1349,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @wip
+    
     Scenario: PSRTV2_ACTV1_22 (part 3)
         Given the PSRTV2_ACTV1_22 (part 2) scenario executed successfully
         And the paSendRTV2 timeout response scenario executed successfully
@@ -1717,4 +1717,4 @@ Feature: flow tests for paSendRTV2
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_RETRY_PA_SEND_RT
-        And verify 1 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
