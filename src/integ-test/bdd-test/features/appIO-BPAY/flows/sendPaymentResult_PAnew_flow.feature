@@ -229,7 +229,7 @@ Feature: flow checks for sendPaymentResult
       Then check outcome is OK of activateIOPayment response
       And save activateIOPayment response in activateIOPaymentResponse
       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-      And check the value #psp_AGID# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value #psp_AGID# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
 
    Scenario: T_SPR_01 (part 2)
       Given the T_SPR_01 (part 1) scenario executed successfully
@@ -239,9 +239,9 @@ Feature: flow checks for sendPaymentResult
    Scenario: T_SPR_01 (part 3)
       Given the T_SPR_01 (part 2) scenario executed successfully
       And the closePayment scenario executed successfully
-      When PM sends closePayment to nodo-dei-pagamenti
-      Then check esito is OK of closePayment response
-      And check faultCode is 200 of closePayment response
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v1/closepayment response is 200
+      And check esito is OK of v1/closepayment response
       And verify 1 record for the table POSITION_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
       And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
       And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
