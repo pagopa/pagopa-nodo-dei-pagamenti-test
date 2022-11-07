@@ -2,10 +2,7 @@ Feature: flow checks for sendPaymentResult
 
    Background:
       Given systems up
-
-   @skip
-   Scenario: verifyPaymentNotice
-      Given initial XML verifyPaymentNotice
+      And initial XML verifyPaymentNotice
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
