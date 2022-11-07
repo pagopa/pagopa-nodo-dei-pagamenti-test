@@ -8,15 +8,15 @@ Feature: Syntax checks KO for nodoAttivaRPT
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoAttivaRPT>
-                    <identificativoPSP>40000000001</identificativoPSP>
-                    <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                    <identificativoCanale>40000000001_03</identificativoCanale>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canale#</identificativoCanale>
                     <password>pwd</password>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                    <identificativoIntermediarioPSPPagamento>40000000001</identificativoIntermediarioPSPPagamento>
-                    <identificativoCanalePagamento>40000000001_03</identificativoCanalePagamento>
+                    <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
+                    <identificativoCanalePagamento>#canale#</identificativoCanalePagamento>
                     <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
-                    <codiceIdRPT><bc:BarCode>  <bc:Gln>9000000000001</bc:Gln>  <!--<bc:CodStazPA>11</bc:CodStazPA>-->  <bc:AuxDigit>3</bc:AuxDigit>  <bc:CodIUV>11102281035412050</bc:CodIUV> </bc:BarCode> </codiceIdRPT>
+                    <codiceIdRPT><bc:BarCode>  <bc:Gln>#creditor_institution_code_secondary#</bc:Gln>  <!--<bc:CodStazPA>11</bc:CodStazPA>-->  <bc:AuxDigit>3</bc:AuxDigit>  <bc:CodIUV>11102281035412050</bc:CodIUV> </bc:BarCode> </codiceIdRPT>
                     <datiPagamentoPSP>
                         <importoSingoloVersamento>10.00</importoSingoloVersamento>
                         <!--Optional:-->
@@ -108,7 +108,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
                     <fault>
                     <faultCode>PAA_SEMANTICA</faultCode>
                     <faultString>Firma non disponibile</faultString>
-                    <id>90000000001</id>
+                    <id>#creditor_institution_code_secondary#</id>
                     </fault>
                     <esito>OK</esito>
                     <datiPagamentoPA>

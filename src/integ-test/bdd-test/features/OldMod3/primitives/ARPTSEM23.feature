@@ -10,15 +10,15 @@ Feature: Semantic checks KO for nodoAttivaRPT
           <soapenv:Header/>
           <soapenv:Body>
               <ws:nodoAttivaRPT>
-                <identificativoPSP>40000000001</identificativoPSP>
-                <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                <identificativoCanale>40000000001_01</identificativoCanale>
+                <identificativoPSP>#psp#</identificativoPSP>
+                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                <identificativoIntermediarioPSPPagamento>40000000001</identificativoIntermediarioPSPPagamento>
-                <identificativoCanalePagamento>40000000001_01</identificativoCanalePagamento>
+                <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
+                <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
                 <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-                <codiceIdRPT><aim:aim128> <aim:CCPost>444444444444</aim:CCPost> <aim:CodStazPA>02</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>018361937127600</aim:CodIUV></aim:aim128></codiceIdRPT>
+                <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>02</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>018361937127600</aim:CodIUV></aim:aim128></codiceIdRPT>
                 <datiPagamentoPSP>
                     <importoSingoloVersamento>4.00</importoSingoloVersamento>
                     <!--Optional:-->
