@@ -92,7 +92,7 @@ Feature: activatePaymentNoticeV2Request with amount req different from amount re
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>9.00</transferAmount>
+            <transferAmount>10.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
             <richiestaMarcaDaBollo>
             <hashDocumento>ciao</hashDocumento>
