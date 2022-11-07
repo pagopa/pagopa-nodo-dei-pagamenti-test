@@ -603,7 +603,7 @@ Feature: flow tests for paSendRTV2
         And check outcome is OK of v2/closepayment response
 
     @skip
-    Scenario: pspNotifyPaymentV2 timeout
+    Scenario: pspNotifyPaymentV2 timeout response
         Given initial XML pspNotifyPaymentV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
@@ -1229,9 +1229,10 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-
+    @wip
     Scenario: PSRTV2_ACTV1_20 (part 3)
         Given the PSRTV2_ACTV1_20 (part 2) scenario executed successfully
+        And wait 12 seconds for expiration
         And the paSendRTV2 timeout response scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
         When job paSendRt triggered after 12 seconds
@@ -1288,9 +1289,10 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-
+    @wip
     Scenario: PSRTV2_ACTV1_21 (part 3)
         Given the PSRTV2_ACTV1_21 (part 2) scenario executed successfully
+        And wait 12 seconds for expiration
         And the paSendRTV2 timeout response scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
         When job paSendRt triggered after 12 seconds
@@ -1349,9 +1351,10 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-
+    @wip
     Scenario: PSRTV2_ACTV1_22 (part 3)
         Given the PSRTV2_ACTV1_22 (part 2) scenario executed successfully
+        And wait 12 seconds for expiration
         And the paSendRTV2 timeout response scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
         When job paSendRt triggered after 12 seconds
@@ -1410,9 +1413,10 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-
+    @wip
     Scenario: PSRTV2_ACTV1_23 (part 3)
         Given the PSRTV2_ACTV1_23 (part 2) scenario executed successfully
+        And wait 12 seconds for expiration
         And the paSendRTV2 timeout response scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
         When job paSendRt triggered after 12 seconds
@@ -1473,7 +1477,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    
+    @wip
     Scenario: PSRTV2_ACTV1_26 (part 3)
         Given the PSRTV2_ACTV1_26 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1538,9 +1542,10 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-
+    @wip
     Scenario: PSRTV2_ACTV1_27 (part 3)
         Given the PSRTV2_ACTV1_27 (part 2) scenario executed successfully
+        And wait 12 seconds for expiration
         And the paSendRTV2 timeout response scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
         When job paSendRt triggered after 12 seconds
@@ -1673,7 +1678,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_29 (part 2)
         Given the PSRTV2_ACTV1_29 (part 1) scenario executed successfully
-        And the pspNotifyPaymentV2 timeout scenario executed successfully
+        And the pspNotifyPaymentV2 timeout response scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And wait 12 seconds for expiration
         When job mod3CancelV2 triggered after 4 seconds
@@ -1687,9 +1692,10 @@ Feature: flow tests for paSendRTV2
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
-
+    @wip
     Scenario: PSRTV2_ACTV1_29 (part 4)
         Given the PSRTV2_ACTV1_29 (part 3) scenario executed successfully
+        And wait 12 seconds for expiration
         And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
         And the paSendRTV2 timeout response scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
