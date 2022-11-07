@@ -145,6 +145,27 @@ Feature: T094_B_ChiediStato_RPT_RIFIUTATA_PSP_sbloccoParcheggio
 
     Scenario: execution nodoInoltraPagamentoMod1
         Given the RPT generation scenario executed successfully
+        And initial XML pspInviaRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+                <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                <listaErroriRPT>
+                    <fault>
+                        <faultCode>CANALE_RPT_DA_RIFIUTARE</faultCode>
+                        <faultString>RPT da Rifiutare lato PSP</faultString>
+                        <id>40000000001</id>
+                    </fault>
+                </listaErroriRPT>
+                </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When WISP sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
          """
          {
