@@ -164,10 +164,6 @@ Feature: Execute nodoInviaRPT - RT_RIFIUTATA_PA [T002]
             <pay_i:identificativoUnivocoRiscossione>$iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            <pay_i:allegatoRicevuta>
-            <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
-            <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
-            </pay_i:allegatoRicevuta>
             </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
@@ -261,19 +257,6 @@ Feature: Execute nodoInviaRPT - RT_RIFIUTATA_PA [T002]
         And initial XML paaInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaInviaRTRisposta>
-            <paaInviaRTRisposta>
-            <esito>OK</esito>
-            </paaInviaRTRisposta>
-            </ws:paaInviaRTRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paaInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
                 <soapenv:Header/>
                 <soapenv:Body>
                     <ws:paaInviaRTRisposta>
@@ -296,6 +279,7 @@ Feature: Execute nodoInviaRPT - RT_RIFIUTATA_PA [T002]
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         And PSP replies to nodo-dei-pagamenti with the pspInviaAckRT
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
+        And wait 5 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
         And job paInviaRt triggered after 10 seconds

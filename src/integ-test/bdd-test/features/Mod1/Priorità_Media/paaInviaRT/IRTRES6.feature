@@ -213,7 +213,7 @@ Feature: process tests for paaInviaRT[IRTRES6]
 
 
 
-   
+
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML paaInviaRT
@@ -224,13 +224,11 @@ Feature: process tests for paaInviaRT[IRTRES6]
             <ws:paaInviaRTRisposta>
             <paaInviaRTRisposta>
             <fault>
-            <faultCode>PAA_RT_NON_DISPONIBILE</faultCode>
-            <faultString>Test 1</faultString>
-            <id>sgf</id>
-            <description>gdh</description>
-            <serial>1</serial>
+            <faultCode>CIAO</faultCode>
+            <faultString>La firma è sbagliata</faultString>
+            <id>IDPSPFNZ</id>
             </fault>
-            <!--esito>KO</esito-->
+            <esito>KO</esito>
             </paaInviaRTRisposta>
             </ws:paaInviaRTRisposta>
             </soapenv:Body>

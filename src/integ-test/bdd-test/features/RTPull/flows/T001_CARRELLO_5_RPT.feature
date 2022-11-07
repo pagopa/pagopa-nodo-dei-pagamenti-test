@@ -958,8 +958,7 @@ Feature: T001_CARRELLO_5_RPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 5 seconds
         #And wait 5 seconds for expiration
-    
-    @runnable
+@final    
     Scenario: fifth pspChiediListaAndChiediRt trigger
         Given the fourth pspChiediListaAndChiediRt trigger scenario executed successfully
         And identificativoUnivocoVersamento with $5iuv in pspChiediListaRT
