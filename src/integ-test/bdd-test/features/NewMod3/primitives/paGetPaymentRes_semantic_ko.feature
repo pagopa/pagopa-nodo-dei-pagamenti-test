@@ -8,8 +8,8 @@ Feature:  semantic checks for paGetPaymentRes - KO
 				<soapenv:Header/>
 				<soapenv:Body>
 					<nod:activatePaymentNoticeReq>
-						<idPSP>70000000001</idPSP>
-						<idBrokerPSP>70000000001</idBrokerPSP>
+						<idPSP>#psp#</idPSP>
+						<idBrokerPSP>#psp#</idBrokerPSP>
 						<idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
 						<password>pwdpwdpwd</password>
 						<idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -26,6 +26,7 @@ Feature:  semantic checks for paGetPaymentRes - KO
 			"""
 		And EC new version
 
+	@runnable
 	# fiscalCodePA and IBAN check: fiscalCodePA and IBAN not in db, fiscalCodePA with field ENABLED = N, IBAN not associated to fiscalCodePa in NODO4_CFG.INFORMATIVE_CONTO_ACCREDITO_DETAIL table
 	Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on non-existent or disabled body element value
 		Given initial XML paGetPayment

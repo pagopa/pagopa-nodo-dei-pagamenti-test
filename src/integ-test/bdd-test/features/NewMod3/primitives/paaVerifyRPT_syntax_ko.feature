@@ -8,8 +8,8 @@ Feature: check syntax KO for paaVerificaRPTRes
             <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
@@ -22,7 +22,7 @@ Feature: check syntax KO for paaVerificaRPTRes
             """
         And EC old version
 
-
+    @runnable
     Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
         Given initial XML paaVerificaRPT
             """
