@@ -177,7 +177,7 @@ Feature: T094_A_ChiediStato_RPT_RIFIUTATA_PSP_Carrello
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp_AGID#</identificativoPSP>
             <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoCanale>#canale_AGID#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
