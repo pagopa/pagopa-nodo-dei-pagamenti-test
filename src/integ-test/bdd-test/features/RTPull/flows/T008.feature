@@ -5,10 +5,10 @@ Feature: Execute nodoInviaRPT - RPT-RT Marca da bollo [T008]
 
     @fix
     Scenario: Execute nodoInviaRPT - RPT-RT Marca da bollo [T008]
-        Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
-        And wait 10 seconds for expiration
-        And MB generation
+        #Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
+        #And refresh job PSP triggered after 10 seconds
+        #And wait 10 seconds for expiration
+        Given MB generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
                 <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
@@ -231,7 +231,7 @@ Feature: Execute nodoInviaRPT - RPT-RT Marca da bollo [T008]
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPull#</identificativoCanale>
+            <identificativoCanale>#canale_DIFFERITO_MOD2#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
