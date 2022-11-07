@@ -177,6 +177,7 @@ Feature: process tests for nodoInviaCarrelloMB
             </pay_i:RPT>
             """
 
+@runnable
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML paaInviaRT

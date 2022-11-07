@@ -215,7 +215,7 @@
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+@runnable
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the MB generation scenario executed successfully
         And initial XML paaInviaRT
