@@ -12,7 +12,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
             <ws:nodoVerificaRPT>
                 <identificativoPSP>#psp#</identificativoPSP>
                 <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoCanale>#canale#</identificativoCanale>
+                <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <codiceContestoPagamento>irraggiungibile</codiceContestoPagamento>
                 <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
@@ -21,5 +21,25 @@ Feature: Semantic checks KO for nodoVerificaRPT
         </soapenv:Body>
         </soapenv:Envelope>
         """
+        And initial XML paaVerificaRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:paaVerificaRPTRisposta>
+                    <paaVerificaRPTRisposta>
+                        <irraggiungibile/>
+                        <fault>
+                        <faultCode>PAA_SEMANTICA</faultCode>
+                        <faultString>chiamata da rifiutare</faultString>
+                        <id>#creditor_institution_code_old#</id>
+                        </fault>
+                        <esito>KO</esito>
+                    </paaVerificaRPTRisposta>
+                </ws:paaVerificaRPTRisposta>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of nodoVerificaRPT response
