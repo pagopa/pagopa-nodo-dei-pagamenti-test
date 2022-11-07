@@ -84,7 +84,7 @@ Feature: Check semantic payment status
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
-
+@runnable
     Scenario: Execute sendPaymentOutcome2
         Given the Execute sendPaymentOutcome1 scenario executed successfully
         And outcome with OK in sendPaymentOutcome

@@ -120,7 +120,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
- 
+
+@runnable 
   Scenario: DB check
     Given the Execute sendPaymentOutcome request 1 scenario executed successfully
     Then verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod3

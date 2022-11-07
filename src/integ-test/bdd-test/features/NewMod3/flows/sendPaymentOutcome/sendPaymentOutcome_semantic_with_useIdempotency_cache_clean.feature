@@ -114,6 +114,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is OK of activatePaymentNotice_1 response
     And verify the paymentToken of the activatePaymentNotice_1 response is equals to paymentTokenPhase1
 
+@runnable
   # Second activate check [IDMP_SPO_18]
   Scenario: Execute again activatePaymentNotice2 request of Activate Phase 2
     Given the Execute again activatePaymentNotice1 request of Activate Phase 1 scenario executed successfully
@@ -172,7 +173,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP activatePaymentNotice_1 to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice_1 response
     And verify the paymentToken of the activatePaymentNotice_1 response is equals to paymentTokenPhase1
-  
+
+@runnable  
   # Second activate check [IDMP_SPO_19]
   Scenario: Execute again activatePaymentNotice request of Activate Phase 2
     Given the Execute again activatePaymentNotice1 request of Activate Phase 1 scenario executed successfully
@@ -224,7 +226,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_PSP_SCONOSCIUTO of sendPaymentOutcome response
-    
+
+@runnable    
   # First activate check [IDMP_SPO_20.1]
   Scenario: Execute again activatePaymentNotice3 request
     Given the Semantic error for sendPaymentOutcome response executed on token of Activate Phase 1 scenario executed successfully

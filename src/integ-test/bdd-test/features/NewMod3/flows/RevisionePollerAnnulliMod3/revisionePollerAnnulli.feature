@@ -11,8 +11,8 @@ Feature: process tests for reviione-poller annulli01_02
         <soapenv:Header />
         <soapenv:Body>
           <nod:verifyPaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
@@ -35,8 +35,8 @@ Feature: process tests for reviione-poller annulli01_02
         <soapenv:Header/>
         <soapenv:Body>
           <nod:activatePaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -55,13 +55,15 @@ Feature: process tests for reviione-poller annulli01_02
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
+@runnable
   Scenario: [REV_ANN_01]
     Given the Execute activatePaymentNotice (Phase 2) scenario executed successfully
     When job mod3CancelV2 triggered after 3 seconds
     Then verify the HTTP status code of mod3CancelV2 response is 200
     And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
-  
+
+@runnable
   Scenario: [REV_ANN_02]
     Given the Execute activatePaymentNotice (Phase 2) scenario executed successfully
     When job mod3CancelV2 triggered after 7 seconds
@@ -82,6 +84,7 @@ Feature: process tests for reviione-poller annulli01_02
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
+@runnable
   Scenario: [REV_ANN_05] (Phase 3)
     Given the [REV_ANN_05] (Phase 2) scenario executed successfully
     And initial XML sendPaymentOutcome
@@ -90,8 +93,8 @@ Feature: process tests for reviione-poller annulli01_02
          <soapenv:Header/>
          <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
                <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>

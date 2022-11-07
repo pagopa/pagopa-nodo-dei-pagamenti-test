@@ -120,6 +120,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
+@runnable
   Scenario: DB check
     Given the Execute sendPaymentOutcome2 request scenario executed successfully
     And wait 3 seconds for expiration

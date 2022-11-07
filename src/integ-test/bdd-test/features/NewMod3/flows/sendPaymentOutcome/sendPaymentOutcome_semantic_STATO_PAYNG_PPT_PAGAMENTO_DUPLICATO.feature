@@ -62,7 +62,8 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAYING - PPT_PAGAMENT
     """
     When PSP sends SOAP activatePaymentNotice_2 to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice_2 response
-    
+
+@runnable    
   # sendPaymentOutcomeReq phase
   Scenario: Execute a sendPaymentOutcome request
     Given the Execute a new activatePaymentNotice request scenario executed successfully
