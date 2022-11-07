@@ -1,5 +1,6 @@
 Feature: process check for activatePaymentNotice - KO
 
+
   Background:
     Given systems up
     And initial XML activatePaymentNotice
@@ -27,6 +28,7 @@ Feature: process check for activatePaymentNotice - KO
       """
     And EC old version
 
+@runnable
   Scenario Outline: semantic check on paaAttivaRPTRes
     Given initial XML paaAttivaRPT
       # MODIFICARE IL TIPO DI RISPOSTA (https://pagopa.atlassian.net/wiki/spaces/PAG/pages/493617751/Analisi+paaAttivaRPT)
