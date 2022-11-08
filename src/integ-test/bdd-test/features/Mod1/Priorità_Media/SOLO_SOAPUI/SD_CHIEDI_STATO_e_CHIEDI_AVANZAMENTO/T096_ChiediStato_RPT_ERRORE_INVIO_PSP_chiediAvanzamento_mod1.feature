@@ -131,7 +131,7 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
 
     Scenario: Execute nodoChiediStatoRPT request
         Given the RPT generation scenario executed successfully
-        And wait 70 seconds for expiration
+        #And wait 70 seconds for expiration
         And initial XML nodoChiediStatoRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
