@@ -226,11 +226,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And change date Today to remove minutes 20
-        And replace iuv content with $1iuv content
-        Then update through the query DB_GEST_ANN_update1 with date $date under macro Mod1Mb on db nodo_online
-        And replace iuv content with $2iuv content
-        And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
-        And wait 10 seconds for expiration
+        # And replace iuv content with $1iuv content
+        # Then update through the query DB_GEST_ANN_update1 with date $date under macro Mod1Mb on db nodo_online
+        # And replace iuv content with $2iuv content
+        # And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
+        # And wait 10 seconds for expiration
 
 
     Scenario: Trigger annullamentoRptMaiRichiesteDaPm
@@ -243,7 +243,6 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
 
         #DB-CHECK-STATI_RPT
         And replace iuv content with $1iuv content
-
 
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt_pa1 on db nodo_online under macro Mod1Mb
