@@ -428,6 +428,11 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
         And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query rt_1 on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query rt_1 on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query rt_1 on db nodo_online under macro NewMod3
+        # POSITION_RECEIPT_XML
+        And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT_XML retrived by the query position_payment_status_old on db nodo_online under macro NewMod3
+        And checks the value $nodoInviaRPT.identificativoIntermediarioPA of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query position_payment_status_old on db nodo_online under macro NewMod3
+        And checks the value $nodoInviaRPT.identificativoUnivocoVersamento of the record at column NOTICE_ID of the table POSITION_RECEIPT_XML retrived by the query position_payment_status_old on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query position_payment_status_old on db nodo_online under macro NewMod3
 
     #DB update 2
     Scenario: Execute station version update 2
