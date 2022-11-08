@@ -1483,6 +1483,8 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 
     query_string = str(query_result)
     
+    print("value: ", value)
+
     assert value in query_string, f"value obtained: {value}, query obtained: {query_string}"
 
     db.closeConnection(conn)
