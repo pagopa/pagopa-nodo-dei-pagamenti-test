@@ -178,13 +178,13 @@ stages:
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO --tags=runnable
               
               # Lorenzo  
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1MB/gestione_RT_e_Receipt/gestioneReceiptMb_03_PULL.feature --tags=runnable
+              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1MB/gestione_RT_e_Receipt/gestioneReceiptMb_03_PULL.feature --tags=runnable
 
               # Alessandro
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/nodoInviaRT/IRTSIN.feature --tags=runnable
               
               # Marisa
-              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_CHIEDI_STATO_e_CHIEDI_AVANZAMENTO/T095_D_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParch_noFmod1.feature
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_CHIEDI_STATO_e_CHIEDI_AVANZAMENTO/T095_D_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParch_noFmod1.feature
               
               # Davide
               #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/paSendRT/PSRT_30_new.feature
