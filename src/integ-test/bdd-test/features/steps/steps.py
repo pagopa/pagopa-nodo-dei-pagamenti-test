@@ -1690,10 +1690,8 @@ def step_impl(context, value1, condition, value2):
         assert value1 > value2, f"{value1} <= {value2}"
     elif condition == 'smaller than':
         assert value1 < value2, f"{value1} >= {value2}"
-    # prova
     elif condition == 'containing':
         assert value2 in value1, f"{value1} contains {value2}"
-    # prova
     else:
         assert False
 
