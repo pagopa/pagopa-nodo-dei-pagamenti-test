@@ -652,6 +652,82 @@ Feature: flow tests for paSendRTV2
             """
 
     @skip
+    Scenario: paGetPaymentV2 response with metadata CHIAVESCONOSCIUTA
+        Given initial XML paGetPaymentV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paGetPaymentV2Response>
+            <outcome>OK</outcome>
+            <data>
+            <creditorReferenceId>10$iuv</creditorReferenceId>
+            <paymentAmount>10.00</paymentAmount>
+            <dueDate>2021-12-12</dueDate>
+            <!--Optional:-->
+            <retentionDate>2021-12-30T12:12:12</retentionDate>
+            <!--Optional:-->
+            <lastPayment>1</lastPayment>
+            <description>test</description>
+            <!--Optional:-->
+            <companyName>company</companyName>
+            <!--Optional:-->
+            <officeName>office</officeName>
+            <debtor>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>paGetPaymentName</fullName>
+            <!--Optional:-->
+            <streetName>paGetPaymentStreet</streetName>
+            <!--Optional:-->
+            <civicNumber>paGetPayment99</civicNumber>
+            <!--Optional:-->
+            <postalCode>20155</postalCode>
+            <!--Optional:-->
+            <city>paGetPaymentCity</city>
+            <!--Optional:-->
+            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>paGetPayment@test.it</e-mail>
+            </debtor>
+            <transferList>
+            <!--1 to 5 repetitions:-->
+            <transfer>
+            <idTransfer>1</idTransfer>
+            <transferAmount>10.00</transferAmount>
+            <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
+            <IBAN>IT45R0760103200000000001016</IBAN>
+            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
+            <transferCategory>paGetPaymentTest</transferCategory>
+            <!--Optional:-->
+            <metadata>
+            <!--1 to 10 repetitions:-->
+            <mapEntry>
+            <key>CHIAVESCONOSCIUTA</key>
+            <value>22</value>
+            </mapEntry>
+            </metadata>
+            </transfer>
+            </transferList>
+            <!--Optional:-->
+            <metadata>
+            <!--1 to 10 repetitions:-->
+            <mapEntry>
+            <key>CHIAVESCONOSCIUTA</key>
+            <value>22</value>
+            </mapEntry>
+            </metadata>
+            </data>
+            </paf:paGetPaymentV2Response>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
+    @skip
     Scenario: sendPaymentOutcome request
         Given initial XML sendPaymentOutcome
             """
@@ -1831,33 +1907,6 @@ Feature: flow tests for paSendRTV2
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activate on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # PSRTV2_ACTV1_30
 
     Scenario: PSRTV2_ACTV1_30 (part 1)
@@ -1870,6 +1919,29 @@ Feature: flow tests for paSendRTV2
     @wip
     Scenario: PSRTV2_ACTV1_30 (part 2)
         Given the PSRTV2_ACTV1_30 (part 1) scenario executed successfully
+        And the paSendRTV2 response scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paSendRTV2
+        And the sendPaymentOutcome request scenario executed successfully
+        When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+
+        # RE
+        And execution query pasendrtv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query pasendrtv2_req_spo retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
+        And check value $paSendRTV2Req.key is equal to value $paGetPaymentV2.key
+
+    # PSRTV2_ACTV1_31
+
+    Scenario: PSRTV2_ACTV1_31 (part 1)
+        Given the verifyPaymentNotice scenario executed successfully
+        And the activatePaymentNotice request scenario executed successfully
+        And the paGetPaymentV2 response with metadata CHIAVESCONOSCIUTA scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+    @wip
+    Scenario: PSRTV2_ACTV1_31 (part 2)
+        Given the PSRTV2_ACTV1_31 (part 1) scenario executed successfully
         And the paSendRTV2 response scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
         And the sendPaymentOutcome request scenario executed successfully
