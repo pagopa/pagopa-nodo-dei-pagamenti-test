@@ -1024,7 +1024,7 @@ Feature: flux tests for demandPaymentNotice
         And check value $XML_DB.PSPCompanyName is equal to value PSP Paolo
         And check value $XML_DB.idChannel is equal to value $sendPaymentOutcome.idChannel
         And check value $XML_DB.channelDescription is equal to value $sendPaymentOutcome.paymentChannel
-        And check value $XML_DB.payer is equal to value <uniqueIdentifier><entityUniqueIdentifierType>G</entityUniqueIdentifierType><entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue></uniqueIdentifier><fullName>name</fullName><streetName>street</streetName><civicNumber>civic</civicNumber><postalCode>postal</postalCode><city>city</city><stateProvinceRegion>state</stateProvinceRegion><country>IT</country><e-mail>prova@test.it</e-mail>
+        # check sui campi del payer
         And check value $XML_DB.paymentMethod is equal to value $sendPaymentOutcome.paymentMethod
         And check value $XML_DB.fee is equal to value $sendPaymentOutcome.fee
         And check value $XML_DB.applicationDate is equal to value $sendPaymentOutcome.applicationDate
