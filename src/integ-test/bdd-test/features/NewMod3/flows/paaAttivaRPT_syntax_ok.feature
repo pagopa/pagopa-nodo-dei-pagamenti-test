@@ -27,6 +27,7 @@ Feature: check syntax OK for paaAttivaRPT
             """
         And EC old version
 
+@runnable
     Scenario Outline:
         Given initial XML paaAttivaRPT
             """

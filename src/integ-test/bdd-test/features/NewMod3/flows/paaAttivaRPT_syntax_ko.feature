@@ -27,6 +27,7 @@ Feature: check syntax KO for paaAttivaRPT
             """
         And EC old version
 
+@runnable
     Scenario Outline:
         Given initial XML paaAttivaRPT
             """
@@ -133,8 +134,3 @@ Feature: check syntax KO for paaAttivaRPT
             | causaleVersamento                     | None                                                                                                                                          | SIN_PARPTR_68 |
             | causaleVersamento                     | Empty                                                                                                                                         | SIN_PARPTR_69 |
             | causaleVersamento                     | CXYFD9jxEWpaefYPBMGaWHbDBIeU01JMraSQJ7VKHnfWT75DaLXvAPEcV7TDFfThv4u56iGvFT86Ui0ma9EVs1kRk5ETNjGc281weayrfiiHauaJfSNTDxqMONb7tN3PkkgBcn1gJxr6Y | SIN_PARPTR_70 |
-
-
-
-
-
