@@ -1322,6 +1322,24 @@ def step_impl(context, query_name, param, position, row_number, key):
     print(f'{param}: {selected_element}')
     setattr(context, key, selected_element)
 
+@step("through the query {query_name} retrieve xml {xml} at position {position:d} and save it under the key {key}")
+def step_impl(context, query_name, xml, position, key):
+    result_query = getattr(context, query_name)
+    print(f'{query_name}: {result_query}')
+    selected_element = result_query[0][position]
+    selected_element = selected_element.read()
+    selected_element = selected_element.decode("utf-8")
+    print(f'{xml}: {selected_element}')
+    setattr(context, key, selected_element)
+
+@step("through the query {query_name} retrieve xml_no_decode {xml} at position {position:d} and save it under the key {key}")
+def step_impl(context, query_name, xml, position, key):
+    result_query = getattr(context, query_name)
+    print(f'{query_name}: {result_query}')
+    selected_element = result_query[0][position]
+    selected_element = selected_element.read()
+    print(f'{xml}: {selected_element}')
+    setattr(context, key, selected_element)
 
 @step("with the query {query_name1} check assert beetwen elem {elem1} in position {position1:d} and elem {elem2} with position {position2:d} of the query {query_name2}")
 def stemp_impl(context, query_name1, elem1, position1, elem2, query_name2, position2):
