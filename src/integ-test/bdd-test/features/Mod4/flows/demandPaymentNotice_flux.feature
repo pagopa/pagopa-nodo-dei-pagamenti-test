@@ -1311,7 +1311,7 @@ Feature: flux tests for demandPaymentNotice
         And check value $XML_DB.idStation is equal to value 90000000001_06
         And check value $XML_DB.receiptId is equal to value $activatePaymentNoticeResponse.paymentToken
         And check value $XML_DB.noticeNumber is equal to value $activatePaymentNotice.noticeNumber
-        And check value $XML_DB.fiscalCode is equal to value 90000000001
+        And check value $XML_DB.fiscalCode is equal to value $activatePaymentNotice.fiscalCode
         And check value $XML_DB.outcome is equal to value $sendPaymentOutcome.outcome
         And check value $XML_DB.creditorReferenceId is equal to value $paGetPayment.creditorReferenceId
         And check value $XML_DB.paymentAmount is equal to value $activatePaymentNotice.amount
@@ -1352,7 +1352,7 @@ Feature: flux tests for demandPaymentNotice
         And check value $XML_DB.idStation is equal to value 90000000001_01
         And check value $XML_DB.receiptId is equal to value $activatePaymentNoticeResponse.paymentToken
         And check value $XML_DB.noticeNumber is equal to value $activatePaymentNotice.noticeNumber
-        And check value $XML_DB.fiscalCode is equal to value 90000000002
+        And check value $XML_DB.fiscalCode is equal to value $activatePaymentNotice.fiscalCode
         And check value $XML_DB.outcome is equal to value $sendPaymentOutcome.outcome
         And check value $XML_DB.creditorReferenceId is equal to value $paGetPayment.creditorReferenceId
         And check value $XML_DB.paymentAmount is equal to value $activatePaymentNotice.amount
