@@ -228,7 +228,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04]
       And change date Today to remove minutes 20
       Then update through the query DB_GEST_ANN_update1 with date $date under macro Mod1Mb on db nodo_online
       And replace iuv content with $2iuv content
-      And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
+      And update through the query DB_GEST_ANN_update1 with date $date under macro Mod1Mb on db nodo_online
       And wait 10 second for expiration
 
 @runnable
