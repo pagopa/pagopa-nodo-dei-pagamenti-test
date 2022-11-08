@@ -154,6 +154,8 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
             </soapenv:Envelope>
             """
         And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT 
+        And job pspChiediAvanzamentoRpt triggered after 5 seconds
+        And wait 10 seconds for expiration
         And initial XML nodoChiediStatoRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
