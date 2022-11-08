@@ -474,7 +474,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @wip
+
     Scenario: FLUSSO_CP_01 (part 3)
         Given the FLUSSO_CP_01 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -1291,7 +1291,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-
+    @wip
     Scenario: FLUSSO_CP_05 (part 3)
         Given the FLUSSO_CP_05 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1506,8 +1506,45 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPayment.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #id_station# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-
-    # check XML receipt: da implementare
+        And execution query select_activateio to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod1 with db name nodo_online
+        And through the query select_activateio retrieve xml XML at position 0 and save it under the key XML_DB
+        And check value $XML_DB.idPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idBrokerPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idStation is equal to value #id_station#
+        And check value $XML_DB.receiptId is equal to value $activateIOPaymentResponse.paymentToken
+        And check value $XML_DB.noticeNumber is equal to value $activateIOPayment.noticeNumber
+        And check value $XML_DB.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.outcome is equal to value $sendPaymentOutcome.outcome
+        And check value $XML_DB.creditorReferenceId is equal to value $paGetPayment.creditorReferenceId
+        And check value $XML_DB.paymentAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.description is equal to value $paGetPayment.description
+        And check value $XML_DB.companyName is equal to value $paGetPayment.companyName
+        And check value $XML_DB.entityUniqueIdentifierType is equal to value $paGetPayment.entityUniqueIdentifierType
+        And check value $XML_DB.entityUniqueIdentifierValue is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And check value $XML_DB.fullName is equal to value $paGetPayment.fullName
+        And check value $XML_DB.streetName is equal to value $paGetPayment.streetName
+        And check value $XML_DB.civicNumber is equal to value $paGetPayment.civicNumber
+        And check value $XML_DB.postalCode is equal to value $paGetPayment.postalCode
+        And check value $XML_DB.city is equal to value $paGetPayment.city
+        And check value $XML_DB.stateProvinceRegion is equal to value $paGetPayment.stateProvinceRegion
+        And check value $XML_DB.country is equal to value $paGetPayment.country
+        And check value $XML_DB.idTransfer is equal to value $paGetPayment.idTransfer
+        And check value $XML_DB.transferAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.fiscalCodePA is equal to value $paGetPayment.fiscalCodePA
+        And check value $XML_DB.IBAN is equal to value $paGetPayment.IBAN
+        And check value $XML_DB.remittanceInformation is equal to value $paGetPayment.remittanceInformation
+        And check value $XML_DB.transferCategory is equal to value $paGetPayment.transferCategory
+        And check value $XML_DB.idPSP is equal to value $sendPaymentOutcome.idPSP
+        And check value $XML_DB.pspFiscalCode is equal to value CF60000000006
+        And check value $XML_DB.PSPCompanyName is equal to value PSP Paolo
+        And check value $XML_DB.idChannel is equal to value #canale_IMMEDIATO_MULTIBENEFICIARIO#
+        And check value $XML_DB.channelDescription is equal to value WISP
+        And check value $XML_DB.paymentMethod is equal to value TPAY
+        And check value $XML_DB.fee is equal to value 2.00
+        And check value $XML_DB.applicationDate is equal to value $sendPaymentOutcome.applicationDate
+        And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
+        And check value $XML_DB.key is equal to value $paGetPayment.key
+        And check value $XML_DB.value is equal to value $paGetPayment.value
 
     # FLUSSO_CP_06
 
@@ -1530,7 +1567,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-
+    @wip
     Scenario: FLUSSO_CP_06 (part 3)
         Given the FLUSSO_CP_06 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -1745,8 +1782,45 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPayment.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #id_station# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-
-    # check XML receipt: da implementare
+        And execution query select_activateio to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod1 with db name nodo_online
+        And through the query select_activateio retrieve xml XML at position 0 and save it under the key XML_DB
+        And check value $XML_DB.idPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idBrokerPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idStation is equal to value #id_station#
+        And check value $XML_DB.receiptId is equal to value $activateIOPaymentResponse.paymentToken
+        And check value $XML_DB.noticeNumber is equal to value $activateIOPayment.noticeNumber
+        And check value $XML_DB.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.outcome is equal to value $sendPaymentOutcome.outcome
+        And check value $XML_DB.creditorReferenceId is equal to value $paGetPayment.creditorReferenceId
+        And check value $XML_DB.paymentAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.description is equal to value $paGetPayment.description
+        And check value $XML_DB.companyName is equal to value $paGetPayment.companyName
+        And check value $XML_DB.entityUniqueIdentifierType is equal to value $paGetPayment.entityUniqueIdentifierType
+        And check value $XML_DB.entityUniqueIdentifierValue is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And check value $XML_DB.fullName is equal to value $paGetPayment.fullName
+        And check value $XML_DB.streetName is equal to value $paGetPayment.streetName
+        And check value $XML_DB.civicNumber is equal to value $paGetPayment.civicNumber
+        And check value $XML_DB.postalCode is equal to value $paGetPayment.postalCode
+        And check value $XML_DB.city is equal to value $paGetPayment.city
+        And check value $XML_DB.stateProvinceRegion is equal to value $paGetPayment.stateProvinceRegion
+        And check value $XML_DB.country is equal to value $paGetPayment.country
+        And check value $XML_DB.idTransfer is equal to value $paGetPayment.idTransfer
+        And check value $XML_DB.transferAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.fiscalCodePA is equal to value $paGetPayment.fiscalCodePA
+        And check value $XML_DB.IBAN is equal to value $paGetPayment.IBAN
+        And check value $XML_DB.remittanceInformation is equal to value $paGetPayment.remittanceInformation
+        And check value $XML_DB.transferCategory is equal to value $paGetPayment.transferCategory
+        And check value $XML_DB.idPSP is equal to value $sendPaymentOutcome.idPSP
+        And check value $XML_DB.pspFiscalCode is equal to value CF60000000006
+        And check value $XML_DB.PSPCompanyName is equal to value PSP Paolo
+        And check value $XML_DB.idChannel is equal to value #canale_IMMEDIATO_MULTIBENEFICIARIO#
+        And check value $XML_DB.channelDescription is equal to value WISP
+        And check value $XML_DB.paymentMethod is equal to value TPAY
+        And check value $XML_DB.fee is equal to value 2.00
+        And check value $XML_DB.applicationDate is equal to value $sendPaymentOutcome.applicationDate
+        And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
+        And check value $XML_DB.key is equal to value $paGetPayment.key
+        And check value $XML_DB.value is equal to value $paGetPayment.value
 
     # FLUSSO_CP_07
 
@@ -2053,7 +2127,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-
+    @wip
     Scenario: FLUSSO_CP_09 (part 3)
         Given the FLUSSO_CP_09 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -2268,8 +2342,45 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPayment.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #id_station# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-
-        # check XML receipt: da implementare
+        And execution query select_activateio to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod1 with db name nodo_online
+        And through the query select_activateio retrieve xml XML at position 0 and save it under the key XML_DB
+        And check value $XML_DB.idPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idBrokerPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idStation is equal to value #id_station#
+        And check value $XML_DB.receiptId is equal to value $activateIOPaymentResponse.paymentToken
+        And check value $XML_DB.noticeNumber is equal to value $activateIOPayment.noticeNumber
+        And check value $XML_DB.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.outcome is equal to value $sendPaymentOutcome.outcome
+        And check value $XML_DB.creditorReferenceId is equal to value $paGetPayment.creditorReferenceId
+        And check value $XML_DB.paymentAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.description is equal to value $paGetPayment.description
+        And check value $XML_DB.companyName is equal to value $paGetPayment.companyName
+        And check value $XML_DB.entityUniqueIdentifierType is equal to value $paGetPayment.entityUniqueIdentifierType
+        And check value $XML_DB.entityUniqueIdentifierValue is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And check value $XML_DB.fullName is equal to value $paGetPayment.fullName
+        And check value $XML_DB.streetName is equal to value $paGetPayment.streetName
+        And check value $XML_DB.civicNumber is equal to value $paGetPayment.civicNumber
+        And check value $XML_DB.postalCode is equal to value $paGetPayment.postalCode
+        And check value $XML_DB.city is equal to value $paGetPayment.city
+        And check value $XML_DB.stateProvinceRegion is equal to value $paGetPayment.stateProvinceRegion
+        And check value $XML_DB.country is equal to value $paGetPayment.country
+        And check value $XML_DB.idTransfer is equal to value $paGetPayment.idTransfer
+        And check value $XML_DB.transferAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.fiscalCodePA is equal to value $paGetPayment.fiscalCodePA
+        And check value $XML_DB.IBAN is equal to value $paGetPayment.IBAN
+        And check value $XML_DB.remittanceInformation is equal to value $paGetPayment.remittanceInformation
+        And check value $XML_DB.transferCategory is equal to value $paGetPayment.transferCategory
+        And check value $XML_DB.idPSP is equal to value $sendPaymentOutcome.idPSP
+        And check value $XML_DB.pspFiscalCode is equal to value CF60000000006
+        And check value $XML_DB.PSPCompanyName is equal to value PSP Paolo
+        And check value $XML_DB.idChannel is equal to value #canale_IMMEDIATO_MULTIBENEFICIARIO#
+        And check value $XML_DB.channelDescription is equal to value WISP
+        And check value $XML_DB.paymentMethod is equal to value TPAY
+        And check value $XML_DB.fee is equal to value 2.00
+        And check value $XML_DB.applicationDate is equal to value $sendPaymentOutcome.applicationDate
+        And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
+        And check value $XML_DB.key is equal to value $paGetPayment.key
+        And check value $XML_DB.value is equal to value $paGetPayment.value
 
         And nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 3600000
 
@@ -2410,7 +2521,7 @@ Feature: flux tests for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
         And check description is Outcome already acquired of v2/closepayment response
-
+    @wip
     Scenario: FLUSSO_CP_11 (part 4)
         Given the FLUSSO_CP_11 (part 3) scenario executed successfully
         And wait 5 seconds for expiration
@@ -2625,8 +2736,45 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPayment.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #id_station# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-
-    # check XML receipt: da implementare
+        And execution query select_activateio to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod1 with db name nodo_online
+        And through the query select_activateio retrieve xml XML at position 0 and save it under the key XML_DB
+        And check value $XML_DB.idPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idBrokerPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idStation is equal to value #id_station#
+        And check value $XML_DB.receiptId is equal to value $activateIOPaymentResponse.paymentToken
+        And check value $XML_DB.noticeNumber is equal to value $activateIOPayment.noticeNumber
+        And check value $XML_DB.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.outcome is equal to value $sendPaymentOutcome.outcome
+        And check value $XML_DB.creditorReferenceId is equal to value $paGetPayment.creditorReferenceId
+        And check value $XML_DB.paymentAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.description is equal to value $paGetPayment.description
+        And check value $XML_DB.companyName is equal to value $paGetPayment.companyName
+        And check value $XML_DB.entityUniqueIdentifierType is equal to value $paGetPayment.entityUniqueIdentifierType
+        And check value $XML_DB.entityUniqueIdentifierValue is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And check value $XML_DB.fullName is equal to value $paGetPayment.fullName
+        And check value $XML_DB.streetName is equal to value $paGetPayment.streetName
+        And check value $XML_DB.civicNumber is equal to value $paGetPayment.civicNumber
+        And check value $XML_DB.postalCode is equal to value $paGetPayment.postalCode
+        And check value $XML_DB.city is equal to value $paGetPayment.city
+        And check value $XML_DB.stateProvinceRegion is equal to value $paGetPayment.stateProvinceRegion
+        And check value $XML_DB.country is equal to value $paGetPayment.country
+        And check value $XML_DB.idTransfer is equal to value $paGetPayment.idTransfer
+        And check value $XML_DB.transferAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.fiscalCodePA is equal to value $paGetPayment.fiscalCodePA
+        And check value $XML_DB.IBAN is equal to value $paGetPayment.IBAN
+        And check value $XML_DB.remittanceInformation is equal to value $paGetPayment.remittanceInformation
+        And check value $XML_DB.transferCategory is equal to value $paGetPayment.transferCategory
+        And check value $XML_DB.idPSP is equal to value $sendPaymentOutcome.idPSP
+        And check value $XML_DB.pspFiscalCode is equal to value CF60000000006
+        And check value $XML_DB.PSPCompanyName is equal to value PSP Paolo
+        And check value $XML_DB.idChannel is equal to value #canale_IMMEDIATO_MULTIBENEFICIARIO#
+        And check value $XML_DB.channelDescription is equal to value WISP
+        And check value $XML_DB.paymentMethod is equal to value TPAY
+        And check value $XML_DB.fee is equal to value 2.00
+        And check value $XML_DB.applicationDate is equal to value $sendPaymentOutcome.applicationDate
+        And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
+        And check value $XML_DB.key is equal to value $paGetPayment.key
+        And check value $XML_DB.value is equal to value $paGetPayment.value
 
     # FLUSSO_CP_12
 
@@ -2773,7 +2921,7 @@ Feature: flux tests for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
         And check description is Outcome already acquired of v2/closepayment response
-
+    @wip
     Scenario: FLUSSO_CP_13 (part 4)
         Given the FLUSSO_CP_13 (part 3) scenario executed successfully
         And wait 5 seconds for expiration
@@ -2988,8 +3136,45 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPayment.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #id_station# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-
-    # check XML receipt: da implementare
+        And execution query select_activateio to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod1 with db name nodo_online
+        And through the query select_activateio retrieve xml XML at position 0 and save it under the key XML_DB
+        And check value $XML_DB.idPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idBrokerPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idStation is equal to value #id_station#
+        And check value $XML_DB.receiptId is equal to value $activateIOPaymentResponse.paymentToken
+        And check value $XML_DB.noticeNumber is equal to value $activateIOPayment.noticeNumber
+        And check value $XML_DB.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.outcome is equal to value $sendPaymentOutcome.outcome
+        And check value $XML_DB.creditorReferenceId is equal to value $paGetPayment.creditorReferenceId
+        And check value $XML_DB.paymentAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.description is equal to value $paGetPayment.description
+        And check value $XML_DB.companyName is equal to value $paGetPayment.companyName
+        And check value $XML_DB.entityUniqueIdentifierType is equal to value $paGetPayment.entityUniqueIdentifierType
+        And check value $XML_DB.entityUniqueIdentifierValue is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And check value $XML_DB.fullName is equal to value $paGetPayment.fullName
+        And check value $XML_DB.streetName is equal to value $paGetPayment.streetName
+        And check value $XML_DB.civicNumber is equal to value $paGetPayment.civicNumber
+        And check value $XML_DB.postalCode is equal to value $paGetPayment.postalCode
+        And check value $XML_DB.city is equal to value $paGetPayment.city
+        And check value $XML_DB.stateProvinceRegion is equal to value $paGetPayment.stateProvinceRegion
+        And check value $XML_DB.country is equal to value $paGetPayment.country
+        And check value $XML_DB.idTransfer is equal to value $paGetPayment.idTransfer
+        And check value $XML_DB.transferAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.fiscalCodePA is equal to value $paGetPayment.fiscalCodePA
+        And check value $XML_DB.IBAN is equal to value $paGetPayment.IBAN
+        And check value $XML_DB.remittanceInformation is equal to value $paGetPayment.remittanceInformation
+        And check value $XML_DB.transferCategory is equal to value $paGetPayment.transferCategory
+        And check value $XML_DB.idPSP is equal to value $sendPaymentOutcome.idPSP
+        And check value $XML_DB.pspFiscalCode is equal to value CF60000000006
+        And check value $XML_DB.PSPCompanyName is equal to value PSP Paolo
+        And check value $XML_DB.idChannel is equal to value #canale_IMMEDIATO_MULTIBENEFICIARIO#
+        And check value $XML_DB.channelDescription is equal to value WISP
+        And check value $XML_DB.paymentMethod is equal to value TPAY
+        And check value $XML_DB.fee is equal to value 2.00
+        And check value $XML_DB.applicationDate is equal to value $sendPaymentOutcome.applicationDate
+        And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
+        And check value $XML_DB.key is equal to value $paGetPayment.key
+        And check value $XML_DB.value is equal to value $paGetPayment.value
 
     # FLUSSO_CP_14
 
@@ -3209,7 +3394,7 @@ Feature: flux tests for closePaymentV2
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
         And check description is Esito discorde of sendPaymentOutcome response
-
+    @wip
     Scenario: FLUSSO_CP_15 (part 4)
         Given the FLUSSO_CP_15 (part 3) scenario executed successfully
         And outcome with OK in sendPaymentOutcome
@@ -3345,8 +3530,45 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPayment.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #id_station# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-
-    # check XML receipt: da implementare
+        And execution query select_activateio to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod1 with db name nodo_online
+        And through the query select_activateio retrieve xml XML at position 0 and save it under the key XML_DB
+        And check value $XML_DB.idPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idBrokerPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idStation is equal to value #id_station#
+        And check value $XML_DB.receiptId is equal to value $activateIOPaymentResponse.paymentToken
+        And check value $XML_DB.noticeNumber is equal to value $activateIOPayment.noticeNumber
+        And check value $XML_DB.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.outcome is equal to value $sendPaymentOutcome.outcome
+        And check value $XML_DB.creditorReferenceId is equal to value $paGetPayment.creditorReferenceId
+        And check value $XML_DB.paymentAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.description is equal to value $paGetPayment.description
+        And check value $XML_DB.companyName is equal to value $paGetPayment.companyName
+        And check value $XML_DB.entityUniqueIdentifierType is equal to value $paGetPayment.entityUniqueIdentifierType
+        And check value $XML_DB.entityUniqueIdentifierValue is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And check value $XML_DB.fullName is equal to value $paGetPayment.fullName
+        And check value $XML_DB.streetName is equal to value $paGetPayment.streetName
+        And check value $XML_DB.civicNumber is equal to value $paGetPayment.civicNumber
+        And check value $XML_DB.postalCode is equal to value $paGetPayment.postalCode
+        And check value $XML_DB.city is equal to value $paGetPayment.city
+        And check value $XML_DB.stateProvinceRegion is equal to value $paGetPayment.stateProvinceRegion
+        And check value $XML_DB.country is equal to value $paGetPayment.country
+        And check value $XML_DB.idTransfer is equal to value $paGetPayment.idTransfer
+        And check value $XML_DB.transferAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.fiscalCodePA is equal to value $paGetPayment.fiscalCodePA
+        And check value $XML_DB.IBAN is equal to value $paGetPayment.IBAN
+        And check value $XML_DB.remittanceInformation is equal to value $paGetPayment.remittanceInformation
+        And check value $XML_DB.transferCategory is equal to value $paGetPayment.transferCategory
+        And check value $XML_DB.idPSP is equal to value $sendPaymentOutcome.idPSP
+        And check value $XML_DB.pspFiscalCode is equal to value CF60000000006
+        And check value $XML_DB.PSPCompanyName is equal to value PSP Paolo
+        And check value $XML_DB.idChannel is equal to value #canale_IMMEDIATO_MULTIBENEFICIARIO#
+        And check value $XML_DB.channelDescription is equal to value WISP
+        And check value $XML_DB.paymentMethod is equal to value TPAY
+        And check value $XML_DB.fee is equal to value 2.00
+        And check value $XML_DB.applicationDate is equal to value $sendPaymentOutcome.applicationDate
+        And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
+        And check value $XML_DB.key is equal to value $paGetPayment.key
+        And check value $XML_DB.value is equal to value $paGetPayment.value
 
     # FLUSSO_CP_16
 
@@ -3583,9 +3805,46 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPayment.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #id_station# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-
-    # check XML receipt: da implementare
-
+        And execution query select_activateio to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod1 with db name nodo_online
+        And through the query select_activateio retrieve xml XML at position 0 and save it under the key XML_DB
+        And check value $XML_DB.idPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idBrokerPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idStation is equal to value #id_station#
+        And check value $XML_DB.receiptId is equal to value $activateIOPaymentResponse.paymentToken
+        And check value $XML_DB.noticeNumber is equal to value $activateIOPayment.noticeNumber
+        And check value $XML_DB.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.outcome is equal to value $sendPaymentOutcome.outcome
+        And check value $XML_DB.creditorReferenceId is equal to value $paGetPayment.creditorReferenceId
+        And check value $XML_DB.paymentAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.description is equal to value $paGetPayment.description
+        And check value $XML_DB.companyName is equal to value $paGetPayment.companyName
+        And check value $XML_DB.entityUniqueIdentifierType is equal to value $paGetPayment.entityUniqueIdentifierType
+        And check value $XML_DB.entityUniqueIdentifierValue is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And check value $XML_DB.fullName is equal to value $paGetPayment.fullName
+        And check value $XML_DB.streetName is equal to value $paGetPayment.streetName
+        And check value $XML_DB.civicNumber is equal to value $paGetPayment.civicNumber
+        And check value $XML_DB.postalCode is equal to value $paGetPayment.postalCode
+        And check value $XML_DB.city is equal to value $paGetPayment.city
+        And check value $XML_DB.stateProvinceRegion is equal to value $paGetPayment.stateProvinceRegion
+        And check value $XML_DB.country is equal to value $paGetPayment.country
+        And check value $XML_DB.idTransfer is equal to value $paGetPayment.idTransfer
+        And check value $XML_DB.transferAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.fiscalCodePA is equal to value $paGetPayment.fiscalCodePA
+        And check value $XML_DB.IBAN is equal to value $paGetPayment.IBAN
+        And check value $XML_DB.remittanceInformation is equal to value $paGetPayment.remittanceInformation
+        And check value $XML_DB.transferCategory is equal to value $paGetPayment.transferCategory
+        And check value $XML_DB.idPSP is equal to value $sendPaymentOutcome.idPSP
+        And check value $XML_DB.pspFiscalCode is equal to value CF60000000006
+        And check value $XML_DB.PSPCompanyName is equal to value PSP Paolo
+        And check value $XML_DB.idChannel is equal to value #canale_IMMEDIATO_MULTIBENEFICIARIO#
+        And check value $XML_DB.channelDescription is equal to value WISP
+        And check value $XML_DB.paymentMethod is equal to value TPAY
+        And check value $XML_DB.fee is equal to value 2.00
+        And check value $XML_DB.applicationDate is equal to value $sendPaymentOutcome.applicationDate
+        And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
+        And check value $XML_DB.key is equal to value $paGetPayment.key
+        And check value $XML_DB.value is equal to value $paGetPayment.value
+    @wip
     Scenario: FLUSSO_CP_16 (part 4)
         Given the FLUSSO_CP_16 (part 3) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -3608,7 +3867,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-
+    @wip
     Scenario: FLUSSO_CP_17 (part 2)
         Given the FLUSSO_CP_17 (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -3816,8 +4075,45 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPayment.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #id_station# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-
-    # check XML receipt: da implementare
+        And execution query select_activateio to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod1 with db name nodo_online
+        And through the query select_activateio retrieve xml XML at position 0 and save it under the key XML_DB
+        And check value $XML_DB.idPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idBrokerPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idStation is equal to value #id_station#
+        And check value $XML_DB.receiptId is equal to value $activateIOPaymentResponse.paymentToken
+        And check value $XML_DB.noticeNumber is equal to value $activateIOPayment.noticeNumber
+        And check value $XML_DB.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.outcome is equal to value $sendPaymentOutcome.outcome
+        And check value $XML_DB.creditorReferenceId is equal to value $paGetPayment.creditorReferenceId
+        And check value $XML_DB.paymentAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.description is equal to value $paGetPayment.description
+        And check value $XML_DB.companyName is equal to value $paGetPayment.companyName
+        And check value $XML_DB.entityUniqueIdentifierType is equal to value $paGetPayment.entityUniqueIdentifierType
+        And check value $XML_DB.entityUniqueIdentifierValue is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And check value $XML_DB.fullName is equal to value $paGetPayment.fullName
+        And check value $XML_DB.streetName is equal to value $paGetPayment.streetName
+        And check value $XML_DB.civicNumber is equal to value $paGetPayment.civicNumber
+        And check value $XML_DB.postalCode is equal to value $paGetPayment.postalCode
+        And check value $XML_DB.city is equal to value $paGetPayment.city
+        And check value $XML_DB.stateProvinceRegion is equal to value $paGetPayment.stateProvinceRegion
+        And check value $XML_DB.country is equal to value $paGetPayment.country
+        And check value $XML_DB.idTransfer is equal to value $paGetPayment.idTransfer
+        And check value $XML_DB.transferAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.fiscalCodePA is equal to value $paGetPayment.fiscalCodePA
+        And check value $XML_DB.IBAN is equal to value $paGetPayment.IBAN
+        And check value $XML_DB.remittanceInformation is equal to value $paGetPayment.remittanceInformation
+        And check value $XML_DB.transferCategory is equal to value $paGetPayment.transferCategory
+        And check value $XML_DB.idPSP is equal to value $sendPaymentOutcome.idPSP
+        And check value $XML_DB.pspFiscalCode is equal to value CF60000000006
+        And check value $XML_DB.PSPCompanyName is equal to value PSP Paolo
+        And check value $XML_DB.idChannel is equal to value #canale_IMMEDIATO_MULTIBENEFICIARIO#
+        And check value $XML_DB.channelDescription is equal to value WISP
+        And check value $XML_DB.paymentMethod is equal to value TPAY
+        And check value $XML_DB.fee is equal to value 2.00
+        And check value $XML_DB.applicationDate is equal to value $sendPaymentOutcome.applicationDate
+        And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
+        And check value $XML_DB.key is equal to value $paGetPayment.key
+        And check value $XML_DB.value is equal to value $paGetPayment.value
 
     # FLUSSO_CP_18
 
@@ -4054,9 +4350,46 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPayment.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #id_station# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
-
-    # check XML receipt: da implementare
-
+        And execution query select_activateio to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod1 with db name nodo_online
+        And through the query select_activateio retrieve xml XML at position 0 and save it under the key XML_DB
+        And check value $XML_DB.idPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idBrokerPA is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.idStation is equal to value #id_station#
+        And check value $XML_DB.receiptId is equal to value $activateIOPaymentResponse.paymentToken
+        And check value $XML_DB.noticeNumber is equal to value $activateIOPayment.noticeNumber
+        And check value $XML_DB.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And check value $XML_DB.outcome is equal to value $sendPaymentOutcome.outcome
+        And check value $XML_DB.creditorReferenceId is equal to value $paGetPayment.creditorReferenceId
+        And check value $XML_DB.paymentAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.description is equal to value $paGetPayment.description
+        And check value $XML_DB.companyName is equal to value $paGetPayment.companyName
+        And check value $XML_DB.entityUniqueIdentifierType is equal to value $paGetPayment.entityUniqueIdentifierType
+        And check value $XML_DB.entityUniqueIdentifierValue is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And check value $XML_DB.fullName is equal to value $paGetPayment.fullName
+        And check value $XML_DB.streetName is equal to value $paGetPayment.streetName
+        And check value $XML_DB.civicNumber is equal to value $paGetPayment.civicNumber
+        And check value $XML_DB.postalCode is equal to value $paGetPayment.postalCode
+        And check value $XML_DB.city is equal to value $paGetPayment.city
+        And check value $XML_DB.stateProvinceRegion is equal to value $paGetPayment.stateProvinceRegion
+        And check value $XML_DB.country is equal to value $paGetPayment.country
+        And check value $XML_DB.idTransfer is equal to value $paGetPayment.idTransfer
+        And check value $XML_DB.transferAmount is equal to value $activateIOPayment.amount
+        And check value $XML_DB.fiscalCodePA is equal to value $paGetPayment.fiscalCodePA
+        And check value $XML_DB.IBAN is equal to value $paGetPayment.IBAN
+        And check value $XML_DB.remittanceInformation is equal to value $paGetPayment.remittanceInformation
+        And check value $XML_DB.transferCategory is equal to value $paGetPayment.transferCategory
+        And check value $XML_DB.idPSP is equal to value $sendPaymentOutcome.idPSP
+        And check value $XML_DB.pspFiscalCode is equal to value CF60000000006
+        And check value $XML_DB.PSPCompanyName is equal to value PSP Paolo
+        And check value $XML_DB.idChannel is equal to value #canale_IMMEDIATO_MULTIBENEFICIARIO#
+        And check value $XML_DB.channelDescription is equal to value WISP
+        And check value $XML_DB.paymentMethod is equal to value TPAY
+        And check value $XML_DB.fee is equal to value 2.00
+        And check value $XML_DB.applicationDate is equal to value $sendPaymentOutcome.applicationDate
+        And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
+        And check value $XML_DB.key is equal to value $paGetPayment.key
+        And check value $XML_DB.value is equal to value $paGetPayment.value
+    @wip
     Scenario: FLUSSO_CP_18 (part 4)
         Given the FLUSSO_CP_18 (part 3) scenario executed successfully
         And execution query transactionid to get value on the table PM_METADATA, with the columns * under macro NewMod1 with db name nodo_online
