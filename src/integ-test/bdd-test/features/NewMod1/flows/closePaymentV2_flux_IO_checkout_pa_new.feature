@@ -713,7 +713,6 @@ Feature: flux tests for closePaymentV2
         And check value $XML_DB.city is equal to value $paGetPayment.city
         And check value $XML_DB.stateProvinceRegion is equal to value $paGetPayment.stateProvinceRegion
         And check value $XML_DB.country is equal to value $paGetPayment.country
-        And check value $XML_DB.e-mail is equal to value paGetPayment@test.it
         And check value $XML_DB.idTransfer is equal to value $paGetPayment.idTransfer
         And check value $XML_DB.transferAmount is equal to value $activateIOPayment.amount
         And check value $XML_DB.fiscalCodePA is equal to value $paGetPayment.fiscalCodePA
