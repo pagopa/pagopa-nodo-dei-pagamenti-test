@@ -260,6 +260,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
       When job paInviaRt triggered after 5 seconds
       And wait 10 seconds for expiration
       Then verify the HTTP status code of paInviaRt response is 200
+      And replace pa1 content with #creditor_institution_code_secondary# content
 
 
       #DB-CHECK-STATI_RPT

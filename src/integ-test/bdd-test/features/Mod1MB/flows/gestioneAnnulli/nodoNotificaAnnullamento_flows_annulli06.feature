@@ -241,12 +241,12 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
       When job paInviaRt triggered after 5 seconds
       And wait 10 seconds for expiration
       Then verify the HTTP status code of paInviaRt response is 200
+      And replace pa1 content with #creditor_institution_code_secondary# content
 
 
 
       #DB-CHECK-STATI_RPT
       And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP, RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
-
       And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP, RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt_pa1 on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-STATI_RPT_SNAPSHOT

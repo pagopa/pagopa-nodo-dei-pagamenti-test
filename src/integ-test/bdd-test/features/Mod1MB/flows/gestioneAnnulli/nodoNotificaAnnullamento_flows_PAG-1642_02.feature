@@ -238,6 +238,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
         When job annullamentoRptMaiRichiesteDaPm triggered after 10 seconds
         Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
         And wait 20 seconds for expiration
+        And replace pa1 content with #creditor_institution_code_secondary# content
 
 
         #DB-CHECK-STATI_RPT
