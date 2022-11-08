@@ -1017,8 +1017,8 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>INT_NOT_ENABLED</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>STAZIONE_NOT_ENABLED</identificativoStazioneIntermediarioPA>
+            <identificativoIntermediarioPA>#intermediario_stz_disabled#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_disabled#</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1iuv</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
@@ -1273,7 +1273,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM]
             </soapenv:Envelope>
             """
         When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoInviaCarrelloRPT response
+        Then check faultCode is PPT_DOMINIO_DISABILITATO of nodoInviaCarrelloRPT response
 
 
     @runnable
