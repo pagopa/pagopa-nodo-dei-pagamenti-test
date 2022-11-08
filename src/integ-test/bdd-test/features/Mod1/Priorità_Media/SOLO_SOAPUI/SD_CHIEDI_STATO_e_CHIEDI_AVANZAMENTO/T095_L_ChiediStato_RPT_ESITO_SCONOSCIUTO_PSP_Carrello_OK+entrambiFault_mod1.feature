@@ -1,4 +1,4 @@
-Feature: T095_E_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio_nessunFault_mod2
+Feature: T095_L_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_OK+entrambiFault_mod1
 
     
     Background:
@@ -234,7 +234,7 @@ Feature: T095_E_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio
         #And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
         #And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
 
-    Scenario: execution nodoInoltraPagamentoMod2
+    Scenario: execution nodoInoltraPagamentoMod1
         Given the RPT generation scenario executed successfully
         And initial XML pspInviaCarrelloRPT
         """
@@ -251,21 +251,22 @@ Feature: T095_E_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio
         </soapenv:Envelope>
         """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
-        When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
+        When WISP sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
          """
          {
             "idPagamento":"$sessionToken",
             "identificativoPsp": "#psp#",
             "tipoVersamento": "BBT",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
+            "identificativoCanale": "#canale#",
+            "tipoOperazione": "web"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod2 response is 408
-        And check error is timeout of inoltroEsito/mod2 response
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 408
+        And check error is timeout of inoltroEsito/mod1 response
 
     Scenario: Execute nodoChiediStatoRPT
-        Given the execution nodoInoltraPagamentoMod2 scenario executed successfully
+        Given the execution nodoInoltraPagamentoMod1 scenario executed successfully
         And initial XML nodoChiediStatoRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -299,7 +300,7 @@ Feature: T095_E_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$noticeNumber+</identificativoCarrello>
+            <identificativoCarrello>$noticeNumber</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -328,7 +329,7 @@ Feature: T095_E_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-        And check faultCode is PPT_RPT_DUPLICATA of nodoInviaCarrelloRPT response
+        And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
      Scenario: Execute nodoChiediStatoRPT2
         Given the Execute nodoInviaCarrelloRPT2 scenario executed successfully
@@ -355,71 +356,11 @@ Feature: T095_E_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
 
-     Scenario: Execute nodoInviaCarrelloRPT3
-        Given the Execute nodoChiediStatoRPT2 scenario executed successfully
-        And initial XML nodoInviaCarrelloRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-            <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$noticeNumber-</identificativoCarrello>
-            </ppt:intestazioneCarrelloPPT>
-            </soapenv:Header>
-            <soapenv:Body>
-            <ws:nodoInviaCarrelloRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp_AGID#</identificativoPSP>
-            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
-            <listaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
-            </elementoListaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>avanzaErrResponse$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
-            <rpt>$rpt2Attachment</rpt>
-            </elementoListaRPT>
-            </listaRPT>
-            </ws:nodoInviaCarrelloRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
-        Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-        And check faultCode is PPT_RPT_DUPLICATA of nodoInviaCarrelloRPT response
 
-     Scenario: Execute nodoChiediStatoRPT3
-        Given the Execute nodoInviaCarrelloRPT3 scenario executed successfully
-        And initial XML nodoChiediStatoRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header />
-            <soapenv:Body>
-                <ws:nodoChiediStatoRPT>
-                    <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                    <password>pwdpwdpwd</password>
-                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                    <identificativoUnivocoVersamento>avanzaErrResponse$1iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
-                </ws:nodoChiediStatoRPT>
-            </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
 
 
      Scenario: Execute nodoNotificaAnnullamento
-        Given the Execute nodoChiediStatoRPT3 scenario executed successfully
+        Given the Execute nodoChiediStatoRPT2 scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 404
         And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
