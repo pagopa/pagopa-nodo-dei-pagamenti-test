@@ -150,7 +150,7 @@
         "update_obj_id": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = '2685736'",
         "sessiontoken": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$sessionToken'",
         "ccp": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$ccp'",
-        "pasendrtv2_req_spo": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcome.paymentToken' AND TIPO_EVENTO = 'paSendRTV2' AND SOTTO_TIPO_EVENTO = 'REQ'"
+        "pasendrtv2_req_spo": "SELECT columns as blob FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcome.paymentToken' AND TIPO_EVENTO = 'paSendRTV2' AND SOTTO_TIPO_EVENTO = 'REQ'"
     },
     "Mod4": {
         "update_id_intermediario_pa": "UPDATE table_name SET param = 'value' WHERE ID_INTERMEDIARIO_PA = '77777777777'",

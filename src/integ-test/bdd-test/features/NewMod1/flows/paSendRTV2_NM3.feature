@@ -1877,4 +1877,6 @@ Feature: flow tests for paSendRTV2
         Then check outcome is OK of sendPaymentOutcome response
 
         # RE
-        And checks the value CHIAVEOK is contained in the record at column utl_raw.cast_to_varchar2(dbms_lob.substr(PAYLOAD,2000)) || utl_raw.cast_to_varchar2(dbms_lob.substr(PAYLOAD,4000,2001)) of the table RE retrived by the query pasendrtv2_req_spo on db re under macro NewMod1
+        And execution query pasendrtv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query pasendrtv2_req_spo retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
+        And check value $paSendRTV2Req.key is equal to value CHIAVEOK
