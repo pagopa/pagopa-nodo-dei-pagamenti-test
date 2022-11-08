@@ -420,7 +420,7 @@ Feature: T095_D_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio
 
 
      Scenario: Execute nodoNotificaAnnullamento
-        Given the Execute nodoChiediStatoRPT2 scenario executed successfully
+        Given the Execute nodoChiediStatoRPT3 scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 404
         And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
