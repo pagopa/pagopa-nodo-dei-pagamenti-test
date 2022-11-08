@@ -1916,7 +1916,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+    
     Scenario: PSRTV2_ACTV1_30 (part 2)
         Given the PSRTV2_ACTV1_30 (part 1) scenario executed successfully
         And the paSendRTV2 response scenario executed successfully
@@ -1940,7 +1940,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+    
     Scenario: PSRTV2_ACTV1_31 (part 2)
         Given the PSRTV2_ACTV1_31 (part 1) scenario executed successfully
         And the paSendRTV2 response scenario executed successfully
