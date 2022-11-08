@@ -1879,34 +1879,6 @@ Feature: flow tests for paSendRTV2
         # POSITION_RETRY_PA_SEND_RT
         And verify 0 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # PSRTV2_ACTV1_30
 
     Scenario: PSRTV2_ACTV1_30 (part 1)
@@ -1916,7 +1888,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @wip
+    
     Scenario: PSRTV2_ACTV1_30 (part 2)
         Given the PSRTV2_ACTV1_30 (part 1) scenario executed successfully
         And the paSendRTV2 response scenario executed successfully
@@ -1932,7 +1904,7 @@ Feature: flow tests for paSendRTV2
         And check value $paSendRTV2Req.key is equal to value $paGetPaymentV2.key
 
     # PSRTV2_ACTV1_31
-    @wip
+    
     Scenario: PSRTV2_ACTV1_31 (part 1)
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
