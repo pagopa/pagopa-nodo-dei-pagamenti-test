@@ -1480,10 +1480,10 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     value = utils.replace_global_variables(value, context)
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
+
+    query_string = str(query_result)
     
-    print("value: ", value)
-    
-    assert value in query_result, f"value obtained: {value}, query obtained: {query_result}"
+    assert value in query_string, f"value obtained: {value}, query obtained: {query_string}"
 
     db.closeConnection(conn)
 
