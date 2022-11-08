@@ -1,4 +1,4 @@
-Feature: process tests for ChiediInformazioniPagamento to checkMail
+Feature: process tests for ChiediInformazioniPagamento No Email
 
     Background:
         Given systems up
@@ -27,7 +27,6 @@ Feature: process tests for ChiediInformazioniPagamento to checkMail
                 <pay_i:localitaVersante>Roma</pay_i:localitaVersante>
                 <pay_i:provinciaVersante>RM</pay_i:provinciaVersante>
                 <pay_i:nazioneVersante>IT</pay_i:nazioneVersante>
-                <pay_i:e-mailVersante>soggetto.versante@poste.it</pay_i:e-mailVersante>
             </pay_i:soggettoVersante>
             <pay_i:soggettoPagatore>
                 <pay_i:identificativoUnivocoPagatore>
@@ -41,7 +40,6 @@ Feature: process tests for ChiediInformazioniPagamento to checkMail
                 <pay_i:localitaPagatore>Roma</pay_i:localitaPagatore>
                 <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
                 <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
-                <pay_i:e-mailPagatore>soggetto.pagatore@poste.it</pay_i:e-mailPagatore>
             </pay_i:soggettoPagatore>
             <pay_i:enteBeneficiario>
                 <pay_i:identificativoUnivocoBeneficiario>
@@ -60,7 +58,7 @@ Feature: process tests for ChiediInformazioniPagamento to checkMail
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-                <pay_i:importoTotaleDaVersare>1.23</pay_i:importoTotaleDaVersare>
+                <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
                 <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
@@ -68,7 +66,7 @@ Feature: process tests for ChiediInformazioniPagamento to checkMail
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
                 <pay_i:datiSingoloVersamento>
-                    <pay_i:importoSingoloVersamento>1.23</pay_i:importoSingoloVersamento>
+                    <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
                     <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
                     <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
                     <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -79,9 +77,8 @@ Feature: process tests for ChiediInformazioniPagamento to checkMail
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                 </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
-            </pay_i:RPT>
+        </pay_i:RPT>
         """
-
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -122,10 +119,6 @@ Feature: process tests for ChiediInformazioniPagamento to checkMail
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
         And check bolloDigitale is False of informazioniPagamento response
-        And check email is soggetto.versante@poste.it of informazioniPagamento response
-        And check dettagli field exists in informazioniPagamento response
-        And check IUV is $nodoInviaRPT.identificativoUnivocoVersamento of informazioniPagamento response
-        And check codiceFiscale is VERGLD09P09H502E of informazioniPagamento response
-
+        And check email is None of informazioniPagamento response
 
 
