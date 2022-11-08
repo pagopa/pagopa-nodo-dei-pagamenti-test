@@ -1327,9 +1327,9 @@ Feature: flux tests for demandPaymentNotice
         And check value $XML_DB.city is equal to value $paGetPayment.city
         And check value $XML_DB.stateProvinceRegion is equal to value $paGetPayment.stateProvinceRegion
         And check value $XML_DB.country is equal to value $paGetPayment.country
-        And check value $XML_DB.idTransfer is equal to value 2
-        And check value $XML_DB.transferAmount is equal to value 3.00
-        And check value $XML_DB.fiscalCodePA is equal to value 90000000001
+        And check value $XML_DB.idTransfer is equal to value $paGetPayment.idTransfer
+        And check value $XML_DB.transferAmount is equal to value $paGetPayment.transferAmount
+        And check value $XML_DB.fiscalCodePA is equal to value $paGetPayment.fiscalCodePA
         And check value $XML_DB.IBAN is equal to value $paGetPayment.IBAN
         And check value $XML_DB.remittanceInformation is equal to value $paGetPayment.remittanceInformation
         And check value $XML_DB.transferCategory is equal to value $paGetPayment.transferCategory
@@ -1368,9 +1368,9 @@ Feature: flux tests for demandPaymentNotice
         And check value $XML_DB.city is equal to value $paGetPayment.city
         And check value $XML_DB.stateProvinceRegion is equal to value $paGetPayment.stateProvinceRegion
         And check value $XML_DB.country is equal to value $paGetPayment.country
-        And check value $XML_DB.idTransfer is equal to value 3
-        And check value $XML_DB.transferAmount is equal to value 4.00
-        And check value $XML_DB.fiscalCodePA is equal to value 90000000002
+        And check value $XML_DB.idTransfer is equal to value $paGetPayment.idTransfer
+        And check value $XML_DB.transferAmount is equal to value $paGetPayment.transferAmount
+        And check value $XML_DB.fiscalCodePA is equal to value $paGetPayment.fiscalCodePA
         And check value $XML_DB.IBAN is equal to value $paGetPayment.IBAN
         And check value $XML_DB.remittanceInformation is equal to value $paGetPayment.remittanceInformation
         And check value $XML_DB.transferCategory is equal to value $paGetPayment.transferCategory
