@@ -1929,6 +1929,7 @@ Feature: flow tests for paSendRTV2
         And execution query blob_spo to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod1 with db name nodo_online
         And through the query blob_spo retrieve xml XML at position 0 and save it under the key blob_xml
         And check value $blob_xml.key is equal to value $paGetPaymentV2.key
+        And checks the value sendPaymentOutcome of the record at column BUSINESS_PROCESS of the table RE retrived by the query pasendrtv2_req_spo on db re under macro NewMod1
         # prova
 
         # RE
