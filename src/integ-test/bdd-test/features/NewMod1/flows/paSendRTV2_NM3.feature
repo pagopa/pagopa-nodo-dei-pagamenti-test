@@ -1924,11 +1924,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcome request scenario executed successfully
         When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-
-        # prova
-        And wait 10 seconds for expiration
-        And checks the value sendPaymentOutcome of the record at column BUSINESS_PROCESS of the table RE retrived by the query pasendrtv2_req_spo on db re under macro NewMod1
-        # prova
+        And wait 5 seconds for expiration
 
         # RE
         And execution query pasendrtv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
@@ -1952,6 +1948,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcome request scenario executed successfully
         When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+        And wait 5 seconds for expiration
 
         # RE
         And execution query pasendrtv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
