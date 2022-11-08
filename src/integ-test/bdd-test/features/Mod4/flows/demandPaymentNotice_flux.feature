@@ -950,7 +950,7 @@ Feature: flux tests for demandPaymentNotice
         And the activatePaymentNotice request scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+    
     Scenario: F_DPNR_07 (part 2)
         Given the F_DPNR_07 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1152,7 +1152,7 @@ Feature: flux tests for demandPaymentNotice
         And check value $XML_DB.stateProvinceRegion is equal to value $paGetPayment.stateProvinceRegion
         And check value $XML_DB.country is equal to value $paGetPayment.country
         And check value $XML_DB.idTransfer is equal to value $paGetPayment.idTransfer
-        And check value $XML_DB.transferAmount is equal to value $activatePaymentNotice.amount
+        And check value $XML_DB.transferAmount is equal to value $paGetPayment.transferAmount
         And check value $XML_DB.fiscalCodePA is equal to value $paGetPayment.fiscalCodePA
         And check value $XML_DB.IBAN is equal to value $paGetPayment.IBAN
         And check value $XML_DB.remittanceInformation is equal to value $paGetPayment.remittanceInformation
