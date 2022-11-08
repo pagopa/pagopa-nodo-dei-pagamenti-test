@@ -713,7 +713,7 @@ Feature: flux tests for closePaymentV2
         And check value $XML_DB.city is equal to value $paGetPayment.city
         And check value $XML_DB.stateProvinceRegion is equal to value $paGetPayment.stateProvinceRegion
         And check value $XML_DB.country is equal to value $paGetPayment.country
-        And check value $XML_DB.e-mail is equal to value prova@test.it
+        And check value $XML_DB.e-mail is equal to value paGetPayment@test.it
         And check value $XML_DB.idTransfer is equal to value $paGetPayment.idTransfer
         And check value $XML_DB.transferAmount is equal to value $activateIOPayment.amount
         And check value $XML_DB.fiscalCodePA is equal to value $paGetPayment.fiscalCodePA
@@ -721,12 +721,16 @@ Feature: flux tests for closePaymentV2
         And check value $XML_DB.remittanceInformation is equal to value $paGetPayment.remittanceInformation
         And check value $XML_DB.transferCategory is equal to value $paGetPayment.transferCategory
         And check value $XML_DB.idPSP is equal to value $sendPaymentOutcome.idPSP
-        And check value $XML_DB.pspFiscalCode is equal to value $paGetPayment.remittanceInformation
-        And check value $XML_DB.PSPCompanyName is equal to value $paGetPayment.remittanceInformation
+        And check value $XML_DB.pspFiscalCode is equal to value CF60000000006
+        And check value $XML_DB.PSPCompanyName is equal to value PSP Paolo
         And check value $XML_DB.idChannel is equal to value $sendPaymentOutcome.idChannel
         And check value $XML_DB.channelDescription is equal to value WISP
-        And check value $XML_DB.officeName is equal to value $paGetPayment.officeName
-        # da continuare
+        And check value $XML_DB.paymentmethod is equal to value TPAY
+        And check value $XML_DB.fee is equal to value 2
+        And check value $XML_DB.applicationDate is equal to value $sendPaymentOutcome.applicationDate
+        And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
+        And check value $XML_DB.key is equal to value $paGetPayment.key
+        And check value $XML_DB.value is equal to value $paGetPayment.value
 
     # FLUSSO_CP_02
 
