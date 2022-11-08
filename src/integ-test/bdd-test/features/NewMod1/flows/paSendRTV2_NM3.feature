@@ -1879,4 +1879,4 @@ Feature: flow tests for paSendRTV2
         # RE
         And execution query pasendrtv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query pasendrtv2_req_spo retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
-        And check value $paSendRTV2Req.key is equal to value CHIAVEOK
+        And check value $paSendRTV2Req.key is equal to value $paGetPaymentV2.key
