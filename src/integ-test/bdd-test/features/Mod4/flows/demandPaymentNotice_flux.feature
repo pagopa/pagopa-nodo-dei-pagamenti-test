@@ -1348,7 +1348,7 @@ Feature: flux tests for demandPaymentNotice
         And execution query recipient_pa_fiscal_code_2 to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod1 with db name nodo_online
         And through the query recipient_pa_fiscal_code_2 retrieve xml XML at position 0 and save it under the key XML_DB
         And check value $XML_DB.idPA is equal to value 90000000002
-        And check value $XML_DB.idBrokerPA is equal to value 90000000002
+        And check value $XML_DB.idBrokerPA is equal to value 90000000001
         And check value $XML_DB.idStation is equal to value 90000000001_01
         And check value $XML_DB.receiptId is equal to value $activatePaymentNoticeResponse.paymentToken
         And check value $XML_DB.noticeNumber is equal to value $activatePaymentNotice.noticeNumber
