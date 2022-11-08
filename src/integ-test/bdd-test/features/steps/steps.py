@@ -1459,6 +1459,36 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 
     db.closeConnection(conn)
 
+# prova
+
+@step(u"checks the value {value} is contained in the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+def step_impl(context, value, column, query_name, table_name, db_name, name_macro):
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+
+    selected_query = utils.query_json(context, query_name, name_macro).replace(
+        "columns", column).replace("table_name", table_name)
+    print(selected_query)
+    exec_query = db.executeQuery(conn, selected_query)
+
+    query_result = [t[0] for t in exec_query]
+    print('query_result: ', query_result)
+
+    value = utils.replace_global_variables(value, context)
+    value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
+    
+    print("value: ", value)
+    
+    assert value in query_result, f"value obtained: {value}, query obtained: {query_result}"
+
+    db.closeConnection(conn)
+
+# prova
+
 @step("update through the query {query_name} of the table {table_name} the parameter {param} with {value}, with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, where_condition, valore, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
