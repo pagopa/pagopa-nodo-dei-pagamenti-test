@@ -1925,6 +1925,12 @@ Feature: flow tests for paSendRTV2
         When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
+        # prova
+        And execution query blob_spo to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod1 with db name nodo_online
+        And through the query blob_spo retrieve xml XML at position 0 and save it under the key blob_xml
+        And check value $blob_xml.key is equal to value $paGetPaymentV2.key
+        # prova
+
         # RE
         And execution query pasendrtv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query pasendrtv2_req_spo retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
