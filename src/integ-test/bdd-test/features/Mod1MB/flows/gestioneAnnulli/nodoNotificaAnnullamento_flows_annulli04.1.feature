@@ -224,17 +224,18 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04.1]
    Scenario: update column valid_to UPDATED_TIMESTAMP
       Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
       And replace iuv content with $1iuv content
-      And change date Today to remove minutes 15
-      Then update through the query DB_GEST_ANN_update1 with date $date under macro Mod1Mb on db nodo_online
-      And replace iuv content with $2iuv content
-      And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
-      And wait 10 seconds for expiration
+      And change date Today to remove minutes 20
+      # Then update through the query DB_GEST_ANN_update1 with date $date under macro Mod1Mb on db nodo_online
+      # And replace iuv content with $2iuv content
+      # And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
+      # And wait 10 seconds for expiration
 
 @runnable
    # Activate phase
    Scenario: Trigger annullamentoRptMaiRichiesteDaPm
       Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully
       When job annullamentoRptMaiRichiesteDaPm triggered after 10 seconds
+      And wait 10 seconds for expiration
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
 
       #DB-CHECK-STATI_RPT
@@ -244,8 +245,8 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04.1]
       And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_iuv2 on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-STATI_RPT_SNAPSHOT
-      And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
-      And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_iuv2 on db nodo_online under macro Mod1Mb
+      And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
+      And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query DB_GEST_ANN_iuv2 on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-STATI_CARRELLO
       And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO retrived by the query DB_GEST_ANN_stati_payment_token on db nodo_online under macro Mod1Mb
