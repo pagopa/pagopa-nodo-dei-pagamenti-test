@@ -1877,4 +1877,4 @@ Feature: flow tests for paSendRTV2
         Then check outcome is OK of sendPaymentOutcome response
 
         # RE
-        And checks the value CHIAVEOK is contained in the record at column PAYLOAD of the table RE retrived by the query pasendrtv2_req_spo on db re under macro NewMod1
+        And checks the value CHIAVEOK is contained in the record at column utl_raw.cast_to_varchar2(dbms_lob.substr(PAYLOAD,2000)) || utl_raw.cast_to_varchar2(dbms_lob.substr(PAYLOAD,4000,2001)) of the table RE retrived by the query pasendrtv2_req_spo on db re under macro NewMod1
