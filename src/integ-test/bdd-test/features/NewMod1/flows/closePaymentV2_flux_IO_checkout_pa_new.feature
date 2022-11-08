@@ -725,7 +725,7 @@ Feature: flux tests for closePaymentV2
         And check value $XML_DB.idChannel is equal to value #canale_IMMEDIATO_MULTIBENEFICIARIO#
         And check value $XML_DB.channelDescription is equal to value WISP
         And check value $XML_DB.paymentMethod is equal to value TPAY
-        And check value $XML_DB.fee is equal to value 2
+        And check value $XML_DB.fee is equal to value 2.00
         And check value $XML_DB.applicationDate is equal to value $sendPaymentOutcome.applicationDate
         And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
         And check value $XML_DB.key is equal to value $paGetPayment.key
