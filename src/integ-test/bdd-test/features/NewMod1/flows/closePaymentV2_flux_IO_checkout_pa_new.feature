@@ -455,7 +455,7 @@ Feature: flux tests for closePaymentV2
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
     # FLUSSO_CP_01
-    
+
     Scenario: FLUSSO_CP_01 (part 1)
         Given current date generation
         And the verifyPaymentNotice scenario executed successfully
@@ -467,14 +467,14 @@ Feature: flux tests for closePaymentV2
 
         When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-    
+
     Scenario: FLUSSO_CP_01 (part 2)
         Given the FLUSSO_CP_01 (part 1) scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    
+    @wip
     Scenario: FLUSSO_CP_01 (part 3)
         Given the FLUSSO_CP_01 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -691,11 +691,16 @@ Feature: flux tests for closePaymentV2
         And checks the value $activateIOPayment.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #id_station# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activateio on db nodo_online under macro NewMod1
+        # prova
+        And execution query select_activateio to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod1 with db name nodo_online
+        And through the query select_activateio retrieve xml XML at position 0 and save it under the key XML_DB
+        And check value $XML_DB.idPA is equal to value $activateIOPayment.fiscalCode
+    # prova
 
     # check XML receipt: da implementare
 
     # FLUSSO_CP_02
-    
+
     Scenario: FLUSSO_CP_02 (part 1)
         Given current date generation
         And the verifyPaymentNotice scenario executed successfully
@@ -707,14 +712,14 @@ Feature: flux tests for closePaymentV2
 
         When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-    
+
     Scenario: FLUSSO_CP_02 (part 2)
         Given the FLUSSO_CP_02 (part 1) scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    
+
     Scenario: FLUSSO_CP_02 (part 3)
         Given the FLUSSO_CP_02 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -4423,7 +4428,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    
+
     Scenario: FLUSSO_CP_24 (part 3)
         Given the FLUSSO_CP_24 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
