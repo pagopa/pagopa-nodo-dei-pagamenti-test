@@ -1291,7 +1291,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @wip
+    
     Scenario: FLUSSO_CP_05 (part 3)
         Given the FLUSSO_CP_05 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1567,7 +1567,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @wip
+    
     Scenario: FLUSSO_CP_06 (part 3)
         Given the FLUSSO_CP_06 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -2127,7 +2127,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @wip
+    
     Scenario: FLUSSO_CP_09 (part 3)
         Given the FLUSSO_CP_09 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -2521,7 +2521,7 @@ Feature: flux tests for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
         And check description is Outcome already acquired of v2/closepayment response
-    @wip
+    
     Scenario: FLUSSO_CP_11 (part 4)
         Given the FLUSSO_CP_11 (part 3) scenario executed successfully
         And wait 5 seconds for expiration
@@ -2921,7 +2921,7 @@ Feature: flux tests for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
         And check description is Outcome already acquired of v2/closepayment response
-    @wip
+    
     Scenario: FLUSSO_CP_13 (part 4)
         Given the FLUSSO_CP_13 (part 3) scenario executed successfully
         And wait 5 seconds for expiration
@@ -3394,7 +3394,7 @@ Feature: flux tests for closePaymentV2
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
         And check description is Esito discorde of sendPaymentOutcome response
-    @wip
+    
     Scenario: FLUSSO_CP_15 (part 4)
         Given the FLUSSO_CP_15 (part 3) scenario executed successfully
         And outcome with OK in sendPaymentOutcome
@@ -3844,7 +3844,7 @@ Feature: flux tests for closePaymentV2
         And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
-    @wip
+    
     Scenario: FLUSSO_CP_16 (part 4)
         Given the FLUSSO_CP_16 (part 3) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -3867,7 +3867,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @wip
+    
     Scenario: FLUSSO_CP_17 (part 2)
         Given the FLUSSO_CP_17 (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -4389,7 +4389,7 @@ Feature: flux tests for closePaymentV2
         And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
-    @wip
+    
     Scenario: FLUSSO_CP_18 (part 4)
         Given the FLUSSO_CP_18 (part 3) scenario executed successfully
         And execution query transactionid to get value on the table PM_METADATA, with the columns * under macro NewMod1 with db name nodo_online
