@@ -240,6 +240,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_05]
       Then verify the HTTP status code of notificaAnnullamento response is 200
 
       #And wait 10 seconds for expiration
+      And replace pa1 content with #creditor_institution_code_secondary# content
 
 
       #DB-CHECK-STATI_RPT

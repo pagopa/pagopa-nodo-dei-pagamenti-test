@@ -95,6 +95,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
    Scenario: Define RPT2
 
       Given the Define RPT scenario executed successfully
+      Given generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
       And RPT2 generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -155,7 +156,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
 
-         <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+         <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
          <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
 
@@ -212,7 +213,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
          <password>pwdpwdpwd</password>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-         <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+         <identificativoCanale>#canale#</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
@@ -222,7 +223,7 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
          </elementoListaRPT>
          <elementoListaRPT>
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+         <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
          <rpt>$rpt2Attachment</rpt>
          </elementoListaRPT>
@@ -234,7 +235,22 @@ Feature: checks semantic OK for nodoInviaCarrelloRPT
 
          </soapenv:Envelope>
          """
-
+      And initial XML pspInviaCarrelloRPT
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+         <soapenv:Header/>
+         <soapenv:Body>
+            <ws:pspInviaCarrelloRPTResponse>
+                  <pspInviaCarrelloRPTResponse>
+                     <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                     <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+                     <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+                  </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
+         </soapenv:Body>
+      </soapenv:Envelope>
+      """
+      And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
       And multiBeneficiario with false in nodoInviaCarrelloRPT
       When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
       Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response

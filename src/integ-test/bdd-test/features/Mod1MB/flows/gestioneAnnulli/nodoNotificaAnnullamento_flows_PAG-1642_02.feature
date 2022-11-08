@@ -237,12 +237,12 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
         Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully
         When job annullamentoRptMaiRichiesteDaPm triggered after 10 seconds
         Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
-        And wait 20 seconds for expiration
+        And wait 10 seconds for expiration
+        And replace pa1 content with #creditor_institution_code_secondary# content
 
 
         #DB-CHECK-STATI_RPT
         And replace iuv content with $1iuv content
-
 
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt_pa1 on db nodo_online under macro Mod1Mb
