@@ -164,5 +164,6 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_mod3
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
+        Then check esito is KO of nodoInviaRPT response
+        And check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
        

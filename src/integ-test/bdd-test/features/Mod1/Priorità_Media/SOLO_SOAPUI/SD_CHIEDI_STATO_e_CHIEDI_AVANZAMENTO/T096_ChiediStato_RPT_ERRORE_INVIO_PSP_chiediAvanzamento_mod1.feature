@@ -115,9 +115,12 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
             <soapenv:Body>
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
-            <esitoComplessivoOperazione>malformata</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            <fault>
+               <faultCode>CANALE_RPT_SCONOSCIUTA</faultCode>
+               <faultString>RPT mai arrivata al PSP</faultString>
+               <id>#psp#</id>
+               <description>RPT sconosciuta per il PSP</description>
+            </fault>
             </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>
             </soapenv:Body>
