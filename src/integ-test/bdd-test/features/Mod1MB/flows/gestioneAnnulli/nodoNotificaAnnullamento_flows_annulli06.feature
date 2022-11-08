@@ -233,6 +233,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
    Scenario: Trigger annullamentoRptMaiRichiesteDaPm
       Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully
       When job annullamentoRptMaiRichiesteDaPm triggered after 10 seconds
+      And wait 130 seconds for expiration
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
 
 

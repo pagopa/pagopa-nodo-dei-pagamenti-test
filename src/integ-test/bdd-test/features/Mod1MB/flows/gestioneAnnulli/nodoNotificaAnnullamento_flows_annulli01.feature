@@ -238,16 +238,17 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_01]
       And wait 20 seconds for expiration
       Then verify the HTTP status code of notificaAnnullamento response is 200
 
+      And replace iuv content with $1iuv content
+      And replace pa1 content with #creditor_institution_code_secondary# content
       #And wait 10 seconds for expiration
 
 
       #DB-CHECK-STATI_RPT
-      And replace iuv content with $1iuv content
       And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP, RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
       And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP, RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query DB_GEST_ANN_stati_rpt_pa1 on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-STATI_RPT_SNAPSHOT
-      And replace pa1 content with #creditor_institution_code_secondary# content
+      
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query DB_GEST_ANN_stati_rpt on db nodo_online under macro Mod1Mb
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query DB_GEST_ANN_stati_rpt_pa1 on db nodo_online under macro Mod1Mb
 
