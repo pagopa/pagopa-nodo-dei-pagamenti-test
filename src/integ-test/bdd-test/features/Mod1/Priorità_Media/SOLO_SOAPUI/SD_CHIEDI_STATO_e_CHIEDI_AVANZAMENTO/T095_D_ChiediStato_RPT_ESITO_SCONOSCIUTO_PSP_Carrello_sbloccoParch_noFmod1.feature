@@ -365,7 +365,7 @@ Feature: T095_D_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$noticeNumber+b</identificativoCarrello>
+            <identificativoCarrello>$noticeNumber+</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
