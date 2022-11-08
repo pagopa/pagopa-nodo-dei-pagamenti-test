@@ -1023,7 +1023,7 @@ Feature: flux tests for demandPaymentNotice
         And check value $XML_DB.pspFiscalCode is equal to value CF60000000006
         And check value $XML_DB.PSPCompanyName is equal to value PSP Paolo
         And check value $XML_DB.idChannel is equal to value $sendPaymentOutcome.idChannel
-        And check value $XML_DB.channelDescription is equal to value $sendPaymentOutcome.channelDescription
+        And check value $XML_DB.channelDescription is equal to value $sendPaymentOutcome.paymentChannel
         And check value $XML_DB.payer is equal to value $sendPaymentOutcome.payer
         And check value $XML_DB.paymentMethod is equal to value $sendPaymentOutcome.paymentMethod
         And check value $XML_DB.fee is equal to value $sendPaymentOutcome.fee
