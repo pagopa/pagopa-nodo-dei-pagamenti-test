@@ -436,7 +436,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
 
         #DB-CHECK-STATI_CARRELLO
-        And replace idCarrello content with $nodoInviaCarrelloRPT.identificativoCarrello
+        And replace idCarrello content with $nodoInviaCarrelloRPT.identificativoCarrello content
         And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO, CART_ANNULLATO_WISP of the record at column STATO of the table STATI_CARRELLO retrived by the query by_id_carrello on db nodo_online under macro Mod1Mb
 
         #DB-CHECK-STATI_CARRELLO_SNAPSHOT
