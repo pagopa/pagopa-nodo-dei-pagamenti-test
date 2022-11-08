@@ -135,6 +135,25 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
     Scenario: Execute nodoChiediStatoRPT request
         Given the RPT generation scenario executed successfully
         #And wait 70 seconds for expiration
+         And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <fault>
+               <faultCode>CANALE_RPT_SCONOSCIUTA</faultCode>
+               <faultString>RPT mai arrivata al PSP</faultString>
+               <id>#psp#</id>
+               <description>RPT sconosciuta per il PSP</description>
+            </fault>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         And initial XML nodoChiediStatoRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
