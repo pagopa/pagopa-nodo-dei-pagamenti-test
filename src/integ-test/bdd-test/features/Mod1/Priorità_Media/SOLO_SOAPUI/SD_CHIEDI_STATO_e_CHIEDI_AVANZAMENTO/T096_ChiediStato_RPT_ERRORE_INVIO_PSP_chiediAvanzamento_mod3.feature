@@ -127,11 +127,11 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaRPT response
+        And wait 70 seconds for expiration
        
 
     Scenario: Execute nodoChiediStatoRPT request
         Given the RPT generation scenario executed successfully
-        And wait 70 seconds for expiration
         And initial XML nodoChiediStatoRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
