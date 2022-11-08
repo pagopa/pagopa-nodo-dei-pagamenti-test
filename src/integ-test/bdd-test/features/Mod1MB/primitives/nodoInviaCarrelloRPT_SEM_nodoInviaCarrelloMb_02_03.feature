@@ -403,13 +403,13 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <elementoListaRPT>
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-         <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+         <codiceContestoPagamento>$idCarrello</codiceContestoPagamento>
          <rpt>$rptAttachment</rpt>
          </elementoListaRPT>
          <elementoListaRPT>
          <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-         <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+         <codiceContestoPagamento>$idCarrello</codiceContestoPagamento>
          <rpt>$rpt4Attachment</rpt>
          </elementoListaRPT>
          </listaRPT>
