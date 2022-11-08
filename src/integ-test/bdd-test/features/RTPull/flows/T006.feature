@@ -5,10 +5,11 @@ Feature: Execute nodoInviaRPT - RT_ESITO_SCONOSCIUTO_PA [T006]
 
     @runnable
     Scenario: Execute nodoInviaRPT - RT_ESITO_SCONOSCIUTO_PA [T006]
+        Given nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
         #Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
         #And refresh job PSP triggered after 10 seconds
         #And wait 10 seconds for expiration
-        Given RPT generation
+        And RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_2_0.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
@@ -273,9 +274,9 @@ Feature: Execute nodoInviaRPT - RT_ESITO_SCONOSCIUTO_PA [T006]
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        And job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 10 seconds
-        And wait 130 seconds for expiration
+        #And job pspChiediListaAndChiediRt triggered after 5 seconds
+        #And job paInviaRt triggered after 10 seconds
+        And wait 180 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
         #And refresh job PSP triggered after 10 seconds
@@ -284,4 +285,4 @@ Feature: Execute nodoInviaRPT - RT_ESITO_SCONOSCIUTO_PA [T006]
         And checks the value RT_ESITO_SCONOSCIUTO_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And verify 1 record for the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value NotNone of the record at column RETRY of the table RETRY_PA_INVIA_RT retrived by the query rpt_stati on db nodo_online under macro RTPull
-        
+        And restore initial configurations

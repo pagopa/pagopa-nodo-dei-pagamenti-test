@@ -1,4 +1,4 @@
-Feature: T094_C_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_sbloccoParcheggio_listaFault_mod1
+Feature: T094_D_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_sbloccoParcheggio_listaFault_mod2
 
     
     Background:
@@ -234,7 +234,7 @@ Feature: T094_C_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_sbloccoParcheggio_listaFa
         #And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
         #And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
 
-    Scenario: execution nodoInoltraPagamentoMod1
+    Scenario: execution nodoInoltraPagamentoMod2
         Given the RPT generation scenario executed successfully
         And initial XML pspInviaCarrelloRPT
         """
@@ -257,23 +257,22 @@ Feature: T094_C_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_sbloccoParcheggio_listaFa
         </soapenv:Envelope>
         """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
-        When WISP sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
+        When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
          """
          {
             "idPagamento":"$sessionToken",
             "identificativoPsp": "#psp#",
             "tipoVersamento": "BBT",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#",
-            "tipoOperazione": "web"
+            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
          }
          """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-        And check descrizione is Risposta negativa del Canale of inoltroEsito/mod1 response
-        And check esito is KO of inoltroEsito/mod1 response
+        Then verify the HTTP status code of inoltroEsito/mod2 response is 200
+        And check descrizione is Risposta negativa del Canale of inoltroEsito/mod2 response
+        And check esito is KO of inoltroEsito/mod2 response
 
     Scenario: Execute nodoChiediStatoRPT
-        Given the execution nodoInoltraPagamentoMod1 scenario executed successfully
+        Given the execution nodoInoltraPagamentoMod2 scenario executed successfully
         And initial XML nodoChiediStatoRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">

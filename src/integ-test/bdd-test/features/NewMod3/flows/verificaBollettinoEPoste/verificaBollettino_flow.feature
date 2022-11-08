@@ -29,13 +29,13 @@ Feature: flow checks for verificaBollettino - EC new
       """
     And EC new version
   
-  @prova
   # nodoVerificaRPTReq phase - TF_VB_04
   Scenario: Execute nodoVerificaRPT request
     When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
     Then check esito is KO of nodoVerificaRPT response
     And check faultCode is PPT_MULTI_BENEFICIARIO of nodoVerificaRPT response
 
+  @runnable
   # verificaBollettinoReq phase - TF_VB_04
   Scenario: Execute verificaBollettino request
     Given the Execute nodoVerificaRPT request scenario executed successfully
@@ -88,6 +88,7 @@ Feature: flow checks for verificaBollettino - EC new
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
+  @runnable
   # Payment Outcome Phase outcome OK - TF_VB_04
   Scenario: Execute sendPaymentOutcome request
     Given the Execute activatePaymentNotice request scenario executed successfully

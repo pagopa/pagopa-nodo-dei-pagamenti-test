@@ -123,7 +123,7 @@ Feature: process tests for generazioneRicevute
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-
+@runnable
     Scenario: trigger PollerAnnulli
         Given the Execute activatePaymentNotice (Phase 2) scenario executed successfully
         When job mod3CancelV2 triggered after 4 seconds

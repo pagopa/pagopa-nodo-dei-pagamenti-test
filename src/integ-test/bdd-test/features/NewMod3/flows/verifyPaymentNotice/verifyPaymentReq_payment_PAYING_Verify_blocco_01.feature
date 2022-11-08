@@ -59,6 +59,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
 
 
    # Payment Outcome Phase
+   @runnable
    Scenario: Execute nodoInviaRPT request
       Given the activatePaymentNotice scenario executed successfully
       Given initial XML nodoInviaRPT
@@ -92,6 +93,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
 
 
    # Verify Phase 2
+   @runnable
    Scenario: Execute verifyPaymentNotice1 request with the same request as Verify Phase 1
       Given the activatePaymentNotice scenario executed successfully
       When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti

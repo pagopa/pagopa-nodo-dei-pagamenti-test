@@ -7,9 +7,7 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
 
   # Verify phase
   Scenario: Execute verifyPaymentNotice request
-
       Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
-
       And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
       And initial XML verifyPaymentNotice
       """
@@ -29,9 +27,6 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
       </soapenv:Body>
       </soapenv:Envelope>
       """
-
-    And EC old version
-
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
@@ -189,7 +184,7 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
     And check redirect is 0 of nodoInviaRPT response
 
 
-
+@runnable
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
     Given the Execute nodoInviaRPT request scenario executed successfully

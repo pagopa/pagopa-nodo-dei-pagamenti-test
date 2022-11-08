@@ -7,22 +7,50 @@ Feature: TXX
         #Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
         #And refresh job PSP triggered after 10 seconds
         #And wait 10 seconds for expiration
-        Given initial XML pspInviaRPT
+        Given initial XML nodoInviaRPT
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header>
+            <ppt:intestazionePPT>
+            <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+
+            <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            </ppt:intestazionePPT>
+            </soapenv:Header>
             <soapenv:Body>
-            <ws:pspInviaRPTResponse>
-            <pspInviaRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-            </pspInviaRPTResponse>
-            </ws:pspInviaRPTResponse>
+            <ws:nodoInviaRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canaleRtPull_sec#</identificativoCanale>
+            <tipoFirma></tipoFirma>
+
+            <rpt>$rptAttachment</rpt>
+
+            </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML pspChiediListaRT
+        And initial XML pspInviaRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:pspInviaRPTResponse>
+                    <pspInviaRPTResponse>
+                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                        <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+                        <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                    </pspInviaRPTResponse>
+                </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        Given initial XML pspChiediListaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
@@ -259,35 +287,6 @@ Feature: TXX
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-        And initial XML nodoInviaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-            <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-
-            <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            </ppt:intestazionePPT>
-            </soapenv:Header>
-            <soapenv:Body>
-            <ws:nodoInviaRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPull_sec#</identificativoCanale>
-            <tipoFirma></tipoFirma>
-
-            <rpt>$rptAttachment</rpt>
-
-            </ws:nodoInviaRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
 
         And initial XML nodoChiediStatoRPT
             """

@@ -5,6 +5,7 @@ Feature: flow checks for verificaBollettino
 
 
     # nodoVerificaRPT phase - EC new [TF_VB_01]
+    @runnable
     Scenario: Execute nodoVerificaRPT request PPT_MULTI_BENEFICIARIO
         Given initial XML nodoVerificaRPT
             """
@@ -36,6 +37,7 @@ Feature: flow checks for verificaBollettino
 
 
     # nodoVerificaRPT phase - EC old [TF_VB_02]
+    @runnable
     Scenario: Execute nodoVerificaRPT request OK
         Given initial XML nodoVerificaRPT
             """
@@ -67,6 +69,7 @@ Feature: flow checks for verificaBollettino
 
 
     # verificaBollettino phase - EC new [TF_VB_03 - TF_VB_05 - TF_VB_08]
+    @runnable
     Scenario: Execute verificaBollettino request
         Given the Execute nodoVerificaRPT request PPT_MULTI_BENEFICIARIO scenario executed successfully
         And initial XML verificaBollettino
@@ -93,6 +96,7 @@ Feature: flow checks for verificaBollettino
         
 
     # verificaBollettino phase 1 - EC old [TF_VB_06]
+    @runnable
     Scenario: Execute verificaBollettino request OLD (Phase 1)
         Given initial XML verificaBollettino
             """
@@ -122,6 +126,7 @@ Feature: flow checks for verificaBollettino
 
 
     # verificaBollettino phase 2 - EC old [TF_VB_06]
+    @runnable
     Scenario: Execute verificaBollettino request OLD (Phase 2)
         Given the Execute verificaBollettino request OLD (Phase 1) scenario executed successfully
         When wait 10 seconds for expiration
@@ -136,6 +141,7 @@ Feature: flow checks for verificaBollettino
     
 
     # verificaBollettino KO - EC old [TF_VB_07]
+    @runnable
     Scenario: Execute verificaBollettino request OLD KO
         Given initial XML paaVerificaRPT
             """
@@ -181,6 +187,7 @@ Feature: flow checks for verificaBollettino
 
 
     # verificaBollettino IBAN - EC old [TF_VB_09]
+    @runnable
     Scenario: Execute verificaBollettino request OLD IBAN
         Given initial XML verificaBollettino
             """
@@ -207,6 +214,7 @@ Feature: flow checks for verificaBollettino
 
 
     # verificaBollettino IBAN KO - EC old [TF_VB_10]
+    @runnable
     Scenario: Execute verificaBollettino request OLD IBAN KO
         Given initial XML paaVerificaRPT
             """

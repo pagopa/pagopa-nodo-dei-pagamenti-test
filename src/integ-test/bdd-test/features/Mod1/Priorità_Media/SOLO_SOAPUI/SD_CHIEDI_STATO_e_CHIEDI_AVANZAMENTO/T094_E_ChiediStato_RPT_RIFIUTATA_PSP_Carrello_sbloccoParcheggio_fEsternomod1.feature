@@ -1,4 +1,4 @@
-Feature: T094_C_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_sbloccoParcheggio_listaFault_mod1
+Feature: T094_E_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_sbloccoParcheggio_faultEsterno_mod1
 
     
     Background:
@@ -238,23 +238,22 @@ Feature: T094_C_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_sbloccoParcheggio_listaFa
         Given the RPT generation scenario executed successfully
         And initial XML pspInviaCarrelloRPT
         """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
             <ws:pspInviaCarrelloRPTResponse>
-                <pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <fault>
+               <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
+               <faultString>fault esterno</faultString>
+               <id>400000000001</id>
+               <description>descrizione fault esterno</description>
+            </fault>
             <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                <listaErroriRPT>
-                    <fault>
-                        <faultCode>CANALE_RPT_DA_RIFIUTARE</faultCode>
-                        <faultString>RPT da Rifiutare lato PSP</faultString>
-                        <id>40000000001</id>
-                    </fault>
-                </listaErroriRPT>
-                </pspInviaCarrelloRPTResponse>
+            </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTResponse>
-        </soapenv:Body>
-        </soapenv:Envelope>
+            </soapenv:Body>
+            </soapenv:Envelope>
         """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When WISP sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
