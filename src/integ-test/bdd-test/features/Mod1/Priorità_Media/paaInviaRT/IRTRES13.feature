@@ -234,7 +234,7 @@ Feature: process tests for paaInviaRT[IRTRES13]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And fault with None in paaInviaRT
+        And faultCode with None in paaInviaRT
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And initial XML nodoInviaRT
             """
