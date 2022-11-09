@@ -314,23 +314,25 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 befo
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-    
-    # nodoInoltraEsitoPagamentoPaypal
-    Scenario: Execute nodoInoltroEsitoPayPal in timeout
-        Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+    # define pspNotifyPayment timeout
+    Scenario: pspNotifyPayment timeout
+        Given initial XML pspNotifyPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-                <psp:pspNotifyPaymentRes>
-                <outcome>OK</outcome>
-                <!--Optional:-->
-                <wait>20</wait>
-                </psp:pspNotifyPaymentRes>
+            <pfn:pspNotifyPaymentRes>
+            <delay>10000</delay>
+            </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
-        </soapenv:Envelope>
-        """
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+
+
+    # nodoInoltraEsitoPagamentoPaypal
+    Scenario: Execute nodoInoltroEsitoPayPal in timeout
+        Given the pspNotifyPayment timeout scenario executed successfully
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
             """
             {
