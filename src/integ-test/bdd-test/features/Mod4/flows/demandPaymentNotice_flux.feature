@@ -1452,7 +1452,7 @@ Feature: flux tests for demandPaymentNotice
         And the activatePaymentNotice request with 2 transfers scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+
     Scenario: F_DPNR_16 (part 2)
         Given the F_DPNR_16 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1617,7 +1617,7 @@ Feature: flux tests for demandPaymentNotice
         And the activatePaymentNotice request with 3 transfers (1.1) scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-
+    @wip
     Scenario: F_DPNR_17 (part 2)
         Given the F_DPNR_17 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1667,7 +1667,7 @@ Feature: flux tests for demandPaymentNotice
         And check value $XML_DB.stateProvinceRegion is equal to value $paGetPayment.stateProvinceRegion
         And check value $XML_DB.country is equal to value $paGetPayment.country
         And check value $XML_DB.idTransfer is equal to value $paGetPayment.idTransfer
-        And check value $XML_DB.transferAmount is equal to value $activatePaymentNotice.amount
+        And check value $XML_DB.transferAmount is equal to value $paGetPayment.transferAmount
         And check value $XML_DB.fiscalCodePA is equal to value $paGetPayment.fiscalCodePA
         And check value $XML_DB.IBAN is equal to value $paGetPayment.IBAN
         And check value $XML_DB.remittanceInformation is equal to value $paGetPayment.remittanceInformation
@@ -1684,8 +1684,47 @@ Feature: flux tests for demandPaymentNotice
         And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
-
-    # altri db check xml receipt da implementare
+        And execution query recipient_station_id_1 to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod1 with db name nodo_online
+        And through the query recipient_station_id_1 retrieve xml XML at position 0 and save it under the key XML_DB
+        And check value $XML_DB.idPA is equal to value 90000000001
+        And check value $XML_DB.idBrokerPA is equal to value 90000000001
+        And check value $XML_DB.idStation is equal to value 90000000001_06
+        And check value $XML_DB.receiptId is equal to value $activatePaymentNoticeResponse.paymentToken
+        And check value $XML_DB.noticeNumber is equal to value $activatePaymentNotice.noticeNumber
+        And check value $XML_DB.fiscalCode is equal to value $activatePaymentNotice.fiscalCode
+        And check value $XML_DB.outcome is equal to value $sendPaymentOutcome.outcome
+        And check value $XML_DB.creditorReferenceId is equal to value $paGetPayment.creditorReferenceId
+        And check value $XML_DB.paymentAmount is equal to value $activatePaymentNotice.amount
+        And check value $XML_DB.description is equal to value $paGetPayment.description
+        And check value $XML_DB.companyName is equal to value $paGetPayment.companyName
+        And check value $XML_DB.officeName is equal to value $paGetPayment.officeName
+        And check value $XML_DB.entityUniqueIdentifierType is equal to value $paGetPayment.entityUniqueIdentifierType
+        And check value $XML_DB.entityUniqueIdentifierValue is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And check value $XML_DB.fullName is equal to value $paGetPayment.fullName
+        And check value $XML_DB.streetName is equal to value $paGetPayment.streetName
+        And check value $XML_DB.civicNumber is equal to value $paGetPayment.civicNumber
+        And check value $XML_DB.postalCode is equal to value $paGetPayment.postalCode
+        And check value $XML_DB.city is equal to value $paGetPayment.city
+        And check value $XML_DB.stateProvinceRegion is equal to value $paGetPayment.stateProvinceRegion
+        And check value $XML_DB.country is equal to value $paGetPayment.country
+        And check value $XML_DB.idTransfer is equal to value $paGetPayment.idTransfer
+        And check value $XML_DB.transferAmount is equal to value $paGetPayment.transferAmount
+        And check value $XML_DB.fiscalCodePA is equal to value $paGetPayment.fiscalCodePA
+        And check value $XML_DB.IBAN is equal to value $paGetPayment.IBAN
+        And check value $XML_DB.remittanceInformation is equal to value $paGetPayment.remittanceInformation
+        And check value $XML_DB.transferCategory is equal to value $paGetPayment.transferCategory
+        And check value $XML_DB.idPSP is equal to value $sendPaymentOutcome.idPSP
+        And check value $XML_DB.pspFiscalCode is equal to value CF60000000006
+        And check value $XML_DB.PSPCompanyName is equal to value PSP Paolo
+        And check value $XML_DB.idChannel is equal to value $sendPaymentOutcome.idChannel
+        And check value $XML_DB.channelDescription is equal to value $sendPaymentOutcome.paymentChannel
+        And check value $XML_DB is containing value <uniqueIdentifier><entityUniqueIdentifierType>G</entityUniqueIdentifierType><entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue></uniqueIdentifier><fullName>name</fullName><streetName>street</streetName><civicNumber>civic</civicNumber><postalCode>postal</postalCode><city>city</city><stateProvinceRegion>state</stateProvinceRegion><country>IT</country>
+        And check value $XML_DB.paymentMethod is equal to value $sendPaymentOutcome.paymentMethod
+        And check value $XML_DB.fee is equal to value $sendPaymentOutcome.fee
+        And check value $XML_DB.applicationDate is equal to value $sendPaymentOutcome.applicationDate
+        And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
+        And check value $XML_DB.key is equal to value $paGetPayment.key
+        And check value $XML_DB.value is equal to value $paGetPayment.value
 
     # F_DPNR_18
 
