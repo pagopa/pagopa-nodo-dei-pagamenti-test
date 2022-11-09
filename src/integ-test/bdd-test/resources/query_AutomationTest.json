@@ -279,7 +279,7 @@
         "select_activatev2_1": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2_1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode'",
         "update_noticeid_pa_ver2": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='310$iuv' and PA_FISCAL_CODE='#creditor_institution_code#'",
         "update_noticeid1_pa_ver2": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='310$iuv1' and PA_FISCAL_CODE='#creditor_institution_code#'",
-        "update_id_stazione": "UPDATE table_name SET param = 'value' WHERE ID_STAZIONE IN ('88888888888_01', '88888888888_02')"
+        "update_obj_id_1": "UPDATE table_name SET param = 'value' WHERE OBJ_ID IN ('4328', '4329')"
     },
     "sendPaymentResultV2": {
         "select_sprV2_old": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$ccp' AND TIPO_EVENTO = 'sendPaymentResult-v2' ORDER BY ID ASC",

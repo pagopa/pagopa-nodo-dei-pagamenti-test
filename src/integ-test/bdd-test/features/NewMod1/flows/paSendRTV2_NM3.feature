@@ -1770,7 +1770,7 @@ Feature: flow tests for paSendRTV2
     # PSRTV2_ACTV1_24
 
     Scenario: PSRTV2_ACTV1_24 (part 1)
-        Given updates through the query update_id_stazione of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro NewMod1 on db nodo_cfg
+        Given updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro NewMod1 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
         And the verifyPaymentNotice scenario executed successfully
         And the activatePaymentNotice request scenario executed successfully
@@ -1796,7 +1796,7 @@ Feature: flow tests for paSendRTV2
         And EC2 replies to nodo-dei-pagamenti with the paSendRTV2
         When job paSendRt triggered after 12 seconds
         Then verify the HTTP status code of paSendRt response is 200
-        And updates through the query update_id_stazione of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro NewMod1 on db nodo_cfg
+        And updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro NewMod1 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
