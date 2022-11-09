@@ -315,7 +315,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 befo
         Then verify the HTTP status code of informazioniPagamento response is 200
 
     # define pspNotifyPayment timeout
-    Scenario: Define pspNotifePayment
+    Scenario: Define pspNotifyPayment
         Given initial xml pspNotifyPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
@@ -332,7 +332,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 befo
 
     # nodoInoltraEsitoPagamentoPaypal
     Scenario: Execute nodoInoltroEsitoPayPal in timeout
-        Given the Define pspNotifePayment scenario executed successfully
+        Given the Define pspNotifyPayment scenario executed successfully
         And psp replies to nodo-dei-pagamenti with the pspNotifyPayment
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
             """
