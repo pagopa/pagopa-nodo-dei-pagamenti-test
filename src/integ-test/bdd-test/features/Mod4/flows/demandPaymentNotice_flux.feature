@@ -1617,7 +1617,7 @@ Feature: flux tests for demandPaymentNotice
         And the activatePaymentNotice request with 3 transfers (1.1) scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @wip
+    
     Scenario: F_DPNR_17 (part 2)
         Given the F_DPNR_17 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
