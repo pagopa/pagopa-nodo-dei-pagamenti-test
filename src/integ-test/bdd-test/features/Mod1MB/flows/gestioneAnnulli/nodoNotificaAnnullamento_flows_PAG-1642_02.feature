@@ -229,6 +229,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
         And replace iuv content with $1iuv content
         Then update through the query DB_GEST_ANN_update1 with date $date under macro Mod1Mb on db nodo_online
         And replace iuv content with $2iuv content
+        ANd replace pa1 content with #creditor_institution_code_secondary# content
         And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
         And wait 10 seconds for expiration
 
