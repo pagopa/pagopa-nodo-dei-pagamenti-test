@@ -128,9 +128,4 @@ Feature: process tests for chiediInformazioniPagamento noQueryStringRedirect
         And check CCP is CCD01 of informazioniPagamento response
         And check idDominio is #creditor_institution_code# of informazioniPagamento response
         And check enteBeneficiario is AZIENDA XXX of informazioniPagamento response
-
-    Scenario: get idSession
-        Given the Execution nodoChiediInfoPag scenario executed successfully
-        When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-    
+        And check urlRedirectEC contains http://siapagopa.rf.gd/ec?qrstr=prova&idSession=$sessionToken&idDominio=$nodoInviaRPT.identificativoDominio of informazioniPagamento response
