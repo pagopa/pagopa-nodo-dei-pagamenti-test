@@ -2,6 +2,7 @@ Feature: process test for NM3 with station migration from V1 to V2
 
     Background:
         Given systems up
+        And EC old version
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -20,7 +21,7 @@ Feature: process test for NM3 with station migration from V1 to V2
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
+        
 
     # Verify phase
     Scenario: Execute verifyPaymentNotice request
