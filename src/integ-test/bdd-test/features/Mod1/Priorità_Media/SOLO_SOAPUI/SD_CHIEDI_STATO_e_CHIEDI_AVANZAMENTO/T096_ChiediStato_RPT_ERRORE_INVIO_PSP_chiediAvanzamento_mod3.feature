@@ -223,6 +223,7 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
                <id>#psp#</id>
                <description>hgggg</description>
             </fault>
+            <esito>KO</esito>
             </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>
             </soapenv:Body>
