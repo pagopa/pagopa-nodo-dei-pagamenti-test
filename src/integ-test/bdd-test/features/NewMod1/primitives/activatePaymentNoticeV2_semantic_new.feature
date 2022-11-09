@@ -88,7 +88,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <key>1</key>
             <value>22</value>
             </mapEntry>
-            </metadata>
+            <metadata/>
             </data>
             </paf:paGetPaymentRes>
             </soapenv:Body>
@@ -178,7 +178,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <key>1</key>
             <value>22</value>
             </mapEntry>
-            </metadata>
+            <metadata/>
             </transfer>
             </transferList>
             <!--Optional:-->
@@ -188,7 +188,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <key>1</key>
             <value>22</value>
             </mapEntry>
-            </metadata>
+            <metadata/>
             </data>
             </paf:paGetPaymentV2Response>
             </soapenv:Body>
@@ -278,7 +278,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <key>chiaveok</key>
             <value>22</value>
             </mapEntry>
-            </metadata>
+            <metadata/>
             </transfer>
             </transferList>
             <!--Optional:-->
@@ -288,7 +288,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <key>chiaveok</key>
             <value>22</value>
             </mapEntry>
-            </metadata>
+            <metadata/>
             </data>
             </paf:paGetPaymentV2Response>
             </soapenv:Body>
@@ -378,7 +378,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <key>CHIAVEOKFINNULL</key>
             <value>22</value>
             </mapEntry>
-            </metadata>
+            <metadata/>
             </transfer>
             </transferList>
             <!--Optional:-->
@@ -388,7 +388,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <key>CHIAVEOKFINNULL</key>
             <value>22</value>
             </mapEntry>
-            </metadata>
+            <metadata/>
             </data>
             </paf:paGetPaymentV2Response>
             </soapenv:Body>
@@ -478,7 +478,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <key>CHIAVEOKFININF</key>
             <value>22</value>
             </mapEntry>
-            </metadata>
+            <metadata/>
             </transfer>
             </transferList>
             <!--Optional:-->
@@ -488,7 +488,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <key>CHIAVEOKFININF</key>
             <value>22</value>
             </mapEntry>
-            </metadata>
+            <metadata/>
             </data>
             </paf:paGetPaymentV2Response>
             </soapenv:Body>
@@ -578,7 +578,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <key>CHIAVEOKINIZSUP</key>
             <value>22</value>
             </mapEntry>
-            </metadata>
+            <metadata/>
             </transfer>
             </transferList>
             <!--Optional:-->
@@ -588,7 +588,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <key>CHIAVEOKINIZSUP</key>
             <value>22</value>
             </mapEntry>
-            </metadata>
+            <metadata/>
             </data>
             </paf:paGetPaymentV2Response>
             </soapenv:Body>
@@ -678,7 +678,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <key>chiaveminuscola</key>
             <value>22</value>
             </mapEntry>
-            </metadata>
+            <metadata/>
             </transfer>
             </transferList>
             <!--Optional:-->
@@ -688,7 +688,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <key>chiaveminuscola</key>
             <value>22</value>
             </mapEntry>
-            </metadata>
+            <metadata/>
             </data>
             </paf:paGetPaymentV2Response>
             </soapenv:Body>
@@ -778,7 +778,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <key>CHIAVEOK</key>
             <value>22</value>
             </mapEntry>
-            </metadata>
+            <metadata/>
             </transfer>
             </transferList>
             <!--Optional:-->
@@ -788,7 +788,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <key>CHIAVEOK</key>
             <value>22</value>
             </mapEntry>
-            </metadata>
+            <metadata/>
             </data>
             </paf:paGetPaymentV2Response>
             </soapenv:Body>
@@ -1224,7 +1224,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And wait 5 seconds for expiration
         And execution query activatev2_resp to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query activatev2_resp retrieve xml PAYLOAD at position 0 and save it under the key XML_DB
-        And check value $XML_DB is containing value </metadata>
+        And check value $XML_DB is containing value <metadata/>
         #prova
 
         And checks the value chiaveok is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
@@ -1247,7 +1247,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And wait 5 seconds for expiration
         And execution query activatev2_resp to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query activatev2_resp retrieve xml PAYLOAD at position 0 and save it under the key XML_DB
-        And check value $XML_DB is containing value </metadata>
+        And check value $XML_DB is containing value <metadata/>
         #prova
 
         And checks the value CHIAVEOKFININF is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
@@ -1262,7 +1262,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And wait 5 seconds for expiration
         And execution query activatev2_resp to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query activatev2_resp retrieve xml PAYLOAD at position 0 and save it under the key XML_DB
-        And check value $XML_DB is containing value </metadata>
+        And check value $XML_DB is containing value <metadata/>
         #prova
 
         And checks the value CHIAVEOKINIZSUP is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
@@ -1277,7 +1277,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And wait 5 seconds for expiration
         And execution query activatev2_resp to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query activatev2_resp retrieve xml PAYLOAD at position 0 and save it under the key XML_DB
-        And check value $XML_DB is containing value </metadata>
+        And check value $XML_DB is containing value <metadata/>
         #prova
 
         And checks the value chiaveminuscola is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
