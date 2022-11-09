@@ -218,7 +218,7 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
             <fault>
-               <faultCode>CANALE_RPT_DUPLICATA</faultCode>
+               <faultCode>PPT_CANALE_ERRORE_RESPONSE</faultCode>
                <faultString>ffffff</faultString>
                <id>#psp#</id>
                <description>hgggg</description>
