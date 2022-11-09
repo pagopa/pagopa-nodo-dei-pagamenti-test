@@ -19,30 +19,42 @@
       "healthcheck": "/info",
       "soap_service": "",
       "rest_service": ""
+    },
+    "secondary-mock-ec": {
+      "url": "https://api.dev.platform.pagopa.it/secondary-mock-ec/api/v1",
+      "healthcheck": "/info",
+      "soap_service": "",
+      "rest_service": ""
+    },
+    "secondary-mock-psp": {
+      "url": "https://api.dev.platform.pagopa.it/secondary-mock-psp-service/api/v1",
+      "healthcheck": "/info",
+      "soap_service": "",
+      "rest_service": ""
     }
   },
   "global_configuration": {
-    "canale":"60000000001_07",
-    "id_station_old" : "66666666666_05",
-    "creditor_institution_code": "66666666666",	    
-    "creditor_institution_code_old": "66666666666",	    
-    "psp":"60000000001",	    
-    "id_broker_psp":"60000000001",
-    "codicePA": "66666666666",	    
-    "intermediarioPA":"66666666666",	   
-    "codicePA_old" :"66666666666",	    
-    "fiscalCodePA": "12345678901",	
-    "id_station": "66666666666_01",	   
-    "id_broker": "66666666666",	    
-	  "canale_ATTIVATO_PRESSO_PSP": "60000000001_01",
+    "canale": "60000000001_07",
+    "id_station_old": "66666666666_05",
+    "creditor_institution_code": "66666666666",
+    "creditor_institution_code_old": "66666666666",
+    "psp": "60000000001",
+    "id_broker_psp": "60000000001",
+    "intermediarioPA": "66666666666",
+    "intermediarioPAOld": "66666666666",
+    "fiscalCodePA": "12345678901",
+    "id_station": "66666666666_01",
+    "id_broker": "66666666666",
+    "canale_ATTIVATO_PRESSO_PSP": "60000000001_01",
     "canale_IMMEDIATO_MULTIBENEFICIARIO": "60000000001_03",
     "canale_versione_primitive_2": "60000000001_08",
     "stazione_versione_primitive_2": "66666666666_08",
-	  "intermediarioPSP2": "60000000002",
-	  "canale32": "60000000002_01",
+    "intermediarioPSP2": "60000000002",
+    "canale32": "60000000002_01",
     "id_broker_old": "66666666666",
-	  "cod_segr": "02",
-	  "ccPoste": "666666666666",
+    "cod_segr": "02",
+    "cod_segr_old": "12",
+    "ccPoste": "666666666666",
     "ccPoste_noIBAN": "616666666666",
     "pspPoste": "POSTE3",
     "brokerPspPoste": "BANCOPOSTA",
@@ -51,47 +63,54 @@
     "broker_AGID": "97735020584",
     "canale_AGID": "97735020584_03",
     "canale_AGID_02": "97735020584_02",
+    "canale_AGID_BBT": "97735020584_02",
     "password": "pwdpwdpwd",
     "pspEcommerce": "36892710904",
     "brokerEcommerce": "36892710904",
-    "canaleEcommerce": "36892710904_02"
+    "canaleEcommerce": "36892710904_02",
+    "id_station_secondary": "88888888888_01",
+    "id_station_disabled": "STAZIONE_NOT_ENABLED",
+    "intermediario_stz_disabled": "INT_STZ_NOT_ENABLED",
+    "canaleRtPull": "60000000001_06",
+    "canaleRtPush": "60000000001_03",
+    "canale_DIFFERITO_MOD2": "60000000001_04",
+    "canaleRtPull_sec": "60000000001_03_ONUS"
   },
-  
   "db_configuration": {
-    "nodo_cfg" : {
-      "host" : "10.70.67.18",
-      "database" : "NDPSPCT",
-      "user" : "NODO4_CFG_DEV",
+    "nodo_cfg": {
+      "host": "10.70.67.18",
+      "database": "NDPSPCT",
+      "user": "NODO4_CFG_DEV",
       "password": "NODO4_CFG_DEV",
-      "port" : "1522"
+      "port": "1522"
     },
-    "nodo_online" : {
-      "host" : "10.70.67.18",
-      "database" : "NDPSPCT",
-      "user" : "NODO_ONLINE_DEV",
+    "nodo_online": {
+      "host": "10.70.67.18",
+      "database": "NDPSPCT",
+      "user": "NODO_ONLINE_DEV",
       "password": "NODO_ONLINE_DEV",
-      "port" : "1522"
+      "port": "1522"
     },
-    "nodo_offline" : {
-      "host" : "10.70.67.18",
-      "database" : "NDPSPCT",
-      "user" : "NODO_OFFLINE_DEV",
+    "nodo_offline": {
+      "host": "10.70.67.18",
+      "database": "NDPSPCT",
+      "user": "NODO_OFFLINE_DEV",
       "password": "NODO_OFFLINE_DEV",
-      "port" : "1522"
+      "port": "1522"
     },
-    "re" : {
-      "host" : "10.70.67.18",
-      "database" : "NDPARET",
-      "user" : "RE_DEV",
+    "re": {
+      "host": "10.70.67.18",
+      "database": "NDPARET",
+      "user": "RE_DEV",
       "password": "RE_DEV",
-      "port" : "1522"
+      "port": "1522"
     },
-    "wfesp" : {
-      "host" : "10.70.67.18",
-      "database" : "NDPSPCT",
-      "user" : "WFESP_DEV",
+    "wfesp": {
+      "host": "10.70.67.18",
+      "database": "NDPSPCT",
+      "user": "WFESP_DEV",
       "password": "WEFSP_DEV",
-      "port" : "1522"
+      "port": "1522"
     }
-  }  
+  }
 }
