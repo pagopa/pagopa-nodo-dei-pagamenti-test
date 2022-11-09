@@ -316,7 +316,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 befo
 
     # define pspNotifyPayment timeout
     Scenario: Define pspNotifyPayment
-        Given initial xml pspNotifyPayment
+        Given initial xml pspNotifyPayment response
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
@@ -333,7 +333,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 befo
     # nodoInoltraEsitoPagamentoPaypal
     Scenario: Execute nodoInoltroEsitoPayPal in timeout
         Given the Define pspNotifyPayment scenario executed successfully
-        And psp replies to nodo-dei-pagamenti with the pspNotifyPayment
+        And psp replies to nodo-dei-pagamenti with the pspNotifyPayment response
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
             """
             {
