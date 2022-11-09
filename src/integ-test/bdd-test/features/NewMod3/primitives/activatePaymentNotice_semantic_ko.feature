@@ -174,5 +174,5 @@ Feature: Semantic checks KO for activatePaymentNoticeReq
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_AUTORIZZAZIONE of activatePaymentNotice response
-    And check description is expirationTime deve essere <= 600000 of activatePaymentNotice response
+    And check description is expirationTime deve essere <= 7000 of activatePaymentNotice response
     And restore initial configurations
