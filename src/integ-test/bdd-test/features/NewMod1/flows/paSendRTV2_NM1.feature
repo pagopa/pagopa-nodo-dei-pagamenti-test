@@ -493,7 +493,7 @@ Feature: flow tests for paSendRTV2
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>3.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
+            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -693,7 +693,7 @@ Feature: flow tests for paSendRTV2
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>5.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
+            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
