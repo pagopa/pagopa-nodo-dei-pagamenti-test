@@ -1903,7 +1903,7 @@ Feature: flow tests for paSendRTV2
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_RETRY_PA_SEND_RT
-        And checks the value $sendPaymentOutcome.paymentToken,$sendPaymentOutcome.paymentToken of the record at column TOKEN of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.paymentToken,$sendPaymentOutcomeV2.paymentToken of the record at column TOKEN of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value 1,1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # PSRTV2_ACTV1_25
@@ -1958,7 +1958,7 @@ Feature: flow tests for paSendRTV2
 
         # POSITION_RETRY_PA_SEND_RT
         And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value $sendPaymentOutcome.paymentToken of the record at column TOKEN of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.paymentToken of the record at column TOKEN of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column FK_RECIPIENT of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
