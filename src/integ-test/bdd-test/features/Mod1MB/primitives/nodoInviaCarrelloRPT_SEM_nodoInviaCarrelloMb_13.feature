@@ -5,7 +5,9 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
 
    # [SEM_MB_13]
    Scenario: Define RPT
-      Given RPT generation
+      Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 10 
+      And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
+      And RPT generation
          """
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -64,7 +66,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
          <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
-         <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+         <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
          <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -93,7 +95,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <ppt:intestazioneCarrelloPPT>
          <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-         <identificativoCarrello>CCD01</identificativoCarrello>
+         <identificativoCarrello>$1carrello</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
          </soapenv:Header>
          <soapenv:Body>
@@ -106,7 +108,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <elementoListaRPT>
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-         <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+         <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
          <rpt>$rptAttachment</rpt>
          </elementoListaRPT>
          </listaRPT>
