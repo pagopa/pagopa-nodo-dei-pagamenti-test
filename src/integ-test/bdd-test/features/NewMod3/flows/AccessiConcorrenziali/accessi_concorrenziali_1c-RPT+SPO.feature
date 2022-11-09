@@ -195,7 +195,7 @@ Feature: process tests for accessiConCorrenziali [1c - RPT+SPO]
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SINTASSI_EXTRAXSD of sendPaymentOutcome response
-        And calling primitive nodoInviaRPT and sendPaymentOutcome in parallel
+        And calling primitive nodoInviaRPT_nodoInviaRPT POST and sendPaymentOutcome_sendPaymentOutcome POST in parallel
         #DB CHECK-POSITION_PAYMENT_STATUS
         And checks the value PAYING, PAYING_RPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
         #DB CHECK-POSITION_PAYMENT_STATUS_SNAPSHOT
