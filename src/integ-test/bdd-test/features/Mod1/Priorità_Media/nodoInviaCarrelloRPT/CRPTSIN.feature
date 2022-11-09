@@ -177,7 +177,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
 
     @runnable
     #CRPTSIN3
-    Scenario: (phase 3) Execute nodoInviaCarrelloRPT request
+    Scenario: (phase 2) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
@@ -213,7 +213,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
 
     @runnable
     #CRPTSIN4
-    Scenario: (phase 4) Execute nodoInviaCarrelloRPT request
+    Scenario: (phase 3) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
@@ -269,7 +269,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
     @runnable
-    Scenario Outline: (phase 5) Execute nodoInviaCarrelloRPT request
+    Scenario Outline: (phase 4) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
@@ -349,7 +349,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
 
     @runnable
     #CRPTSIN39
-    Scenario: (phase 6) Execute nodoInviaCarrelloRPT request
+    Scenario: (phase 5) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
@@ -402,7 +402,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
 
     @runnable
     #CRPTSIN39.1
-    Scenario: (phase 6_1) Execute nodoInviaCarrelloRPT request
+    Scenario: (phase 5_1) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
@@ -457,7 +457,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
 
     @runnable
     #CRPTSIN40
-    Scenario: (phase 7) Execute nodoInviaCarrelloRPT request
+    Scenario: (phase 6) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
@@ -511,7 +511,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
 
 
     #CRPTSIN43
-    Scenario: (phase 8) RPT generation
+    Scenario: (phase 7) RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -591,8 +591,8 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
             """
 
     @runnable
-    Scenario: (phase 8) Execute nodoInviaCarrelloRPT request
-        Given the (phase 8) RPT generation scenario executed successfully
+    Scenario: (phase 7) Execute nodoInviaCarrelloRPT request
+        Given the (phase 7) RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -627,7 +627,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
 
     @runnable
     #CRPTSIN44
-    Scenario: (phase 9) Execute nodoInviaCarrelloRPT request
+    Scenario: (phase 8) Execute nodoInviaCarrelloRPT request
         Given initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -736,7 +736,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
 
     @runnable
     #CRPTSIN45
-    Scenario: (phase 10) Execute nodoInviaCarrelloRPT request
+    Scenario: (phase 9) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
@@ -788,7 +788,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
 
     @runnable
     #CRPTSIN48
-    Scenario: (phase 11) Execute nodoInviaCarrelloRPT request
+    Scenario: (phase 10) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
@@ -841,7 +841,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
 
     @runnable
     #CRPTSIN49
-    Scenario: (phase 12) Execute nodoInviaCarrelloRPT request
+    Scenario: (phase 11) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
@@ -893,7 +893,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
 
     @runnable
     #CRPTSIN50
-    Scenario: (phase 13) Execute nodoInviaCarrelloRPT request
+    Scenario: (phase 12) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
@@ -930,7 +930,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
 
     @runnable
     #CRPTSIN51
-    Scenario: (phase 14) Execute nodoInviaCarrelloRPT request
+    Scenario: (phase 13) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
@@ -967,7 +967,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
 
     @runnable
     #CRPTSIN52
-    Scenario: (phase 15) Execute nodoInviaCarrelloRPT request
+    Scenario: (phase 14) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
@@ -1004,7 +1004,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
 
     @runnable
     #CRPTSIN46
-    Scenario: (phase 16) Execute nodoInviaCarrelloRPT request
+    Scenario: (phase 15) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
