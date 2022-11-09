@@ -2746,3 +2746,22 @@ def step_impl(contex, seconds):
     while True:
         if datetime.datetime.now() >= endT:
             break
+
+@step(u"under macro {name_macro} on db {db_name} with the query {query_name} verify the value {value} of the record at column {column} of table {table_name}")
+def step_impl(context, name_macro, db_name, query_name, value, column, table_name):
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    selected_query = utils.query_json(context, query_name, name_macro).replace(
+        "columns", column).replace("table_name", table_name)
+    print(selected_query)
+    exec_query = db.executeQuery(conn, selected_query)
+    query_result = [t[0] for t in exec_query]
+    print('query_result: ', query_result)
+    value = utils.replace_global_variables(value, context)
+    value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
+    
+    assert value in query_result, f"check expected element: {value}, obtained: {query_result}"
+    db.closeConnection(conn)
