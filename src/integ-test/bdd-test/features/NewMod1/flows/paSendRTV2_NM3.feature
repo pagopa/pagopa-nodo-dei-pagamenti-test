@@ -1793,7 +1793,7 @@ Feature: flow tests for paSendRTV2
         Given the PSRTV2_ACTV1_24 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
         And the paSendRTV2 timeout response scenario executed successfully
-        And EC replies to nodo-dei-pagamenti with the paSendRTV2
+        And EC2 replies to nodo-dei-pagamenti with the paSendRTV2
         When job paSendRt triggered after 12 seconds
         Then verify the HTTP status code of paSendRt response is 200
         And updates through the query update_id_stazione of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro NewMod1 on db nodo_cfg
