@@ -218,10 +218,10 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
             <fault>
-               <faultCode>CANALE_RPT_SCONOSCIUTA</faultCode>
-               <faultString>RPT mai arrivata al PSP</faultString>
+               <faultCode>CANALE_RPT_DUPLICATA</faultCode>
+               <faultString>ffffff</faultString>
                <id>#psp#</id>
-               <description>RPT sconosciuta per il PSP</description>
+               <description>hgggg</description>
             </fault>
             </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>
