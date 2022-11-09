@@ -219,11 +219,10 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
             <pspInviaRPTResponse>
             <fault>
                <faultCode>CANALE_RPT_SCONOSCIUTA</faultCode>
-               <faultString>ffffff</faultString>
+               <faultString>RPT sconosciuta per il PSP</faultString>
                <id>#psp#</id>
                <description>hgggg</description>
             </fault>
-            <esito>KO</esito>
             </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>
             </soapenv:Body>
