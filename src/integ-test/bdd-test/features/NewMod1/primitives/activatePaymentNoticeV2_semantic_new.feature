@@ -1221,6 +1221,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is OK of activatePaymentNoticeV2 response
 
         #prova
+        And wait 5 seconds for expiration
         And execution query activatev2_resp to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query activatev2_resp retrieve xml PAYLOAD at position 0 and save it under the key XML_DB
         And check value $XML_DB is containing value </metadata>
@@ -1243,6 +1244,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is OK of activatePaymentNoticeV2 response
 
         #prova
+        And wait 5 seconds for expiration
         And execution query activatev2_resp to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query activatev2_resp retrieve xml PAYLOAD at position 0 and save it under the key XML_DB
         And check value $XML_DB is containing value </metadata>
@@ -1257,6 +1259,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is OK of activatePaymentNoticeV2 response
 
         #prova
+        And wait 5 seconds for expiration
         And execution query activatev2_resp to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query activatev2_resp retrieve xml PAYLOAD at position 0 and save it under the key XML_DB
         And check value $XML_DB is containing value </metadata>
@@ -1271,6 +1274,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is OK of activatePaymentNoticeV2 response
 
         #prova
+        And wait 5 seconds for expiration
         And execution query activatev2_resp to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query activatev2_resp retrieve xml PAYLOAD at position 0 and save it under the key XML_DB
         And check value $XML_DB is containing value </metadata>
