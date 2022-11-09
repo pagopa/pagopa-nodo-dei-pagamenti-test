@@ -462,7 +462,7 @@ Feature: T096_D_ChiediStato_RPT_ERRORE_INVIO_PSP_Carrello_sbloccoParcheggio_manc
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaErrResponse$1iuv+</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$2CCP+</codiceContestoPagamento>
+                    <codiceContestoPagamento>CCD02</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
             </soapenv:Body>
         </soapenv:Envelope>
