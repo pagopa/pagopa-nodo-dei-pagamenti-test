@@ -345,7 +345,6 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
             | codiceContestoPagamento               | as12df57g8q45er69t74yuiop45789asw123 | PPT_SINTASSI_EXTRAXSD | CRPTSIN38   |
             | codiceContestoPagamento               | None                                 | PPT_SINTASSI_EXTRAXSD | CRPTSIN41   |
             | codiceContestoPagamento               | Empty                                | PPT_SINTASSI_EXTRAXSD | CRPTSIN42   |
-            | requireLightPayment                   | Empty                                | PPT_SINTASSI_EXTRAXSD | CRPTSIN46   |
             | requireLightPayment                   | 4                                    | PPT_SINTASSI_EXTRAXSD | CRPTSIN47   |
 
     @runnable
@@ -996,6 +995,44 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
             </elementoListaRPT>
             </listaRPT>
             <codiceConvenzione>as12df57g8q45er69t74yuiop45789asw123</codiceConvenzione>
+            </ws:nodoInviaCarrelloRPT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaCarrelloRPT response
+
+
+
+    @runnable
+    Scenario: (phase 16) Execute nodoInviaCarrelloRPT request
+        Given the RPT generation scenario executed successfully
+        And initial XML nodoInviaCarrelloRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header>
+            <ppt:intestazioneCarrelloPPT>
+            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
+            </ppt:intestazioneCarrelloPPT>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:nodoInviaCarrelloRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
+            <listaRPT>
+            <!--1 or more repetitions:-->
+            <elementoListaRPT>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <rpt>$rptAttachment</rpt>
+            </elementoListaRPT>
+            </listaRPT>
+            <requireLightPayment></requireLightPayment>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
