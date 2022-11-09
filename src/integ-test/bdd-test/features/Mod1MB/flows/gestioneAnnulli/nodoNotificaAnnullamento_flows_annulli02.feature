@@ -457,8 +457,8 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_02.1]
       <rpt>$rpt2Attachment</rpt>
       </elementoListaRPT>
       </listaRPT>
-      <multiBeneficiario>0</multiBeneficiario>
       <requireLightPayment>01</requireLightPayment>
+      <multiBeneficiario>0</multiBeneficiario>
       </ws:nodoInviaCarrelloRPT>
       </soapenv:Body>
       </soapenv:Envelope>
