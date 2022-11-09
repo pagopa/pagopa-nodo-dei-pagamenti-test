@@ -175,43 +175,6 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
             | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | PPT_SINTASSI_EXTRAXSD | CRPTSIN1    |
 
 
-
-    @runnable
-    #CRPTSIN2
-    Scenario: (phase 2) Execute nodoInviaCarrelloRPT request
-        Given the RPT generation scenario executed successfully
-        And initial XML nodoInviaCarrelloRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-            <pt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$1iuv</identificativoCarrello>
-            </pt:intestazioneCarrelloPPT>
-            </soapenv:Header>
-            <soapenv:Body>
-            <ws:nodoInviaCarrelloRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <listaRPT>
-            <!--1 or more repetitions:-->
-            <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
-            </elementoListaRPT>
-            </listaRPT>
-            </ws:nodoInviaCarrelloRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaCarrelloRPT response
-
     @runnable
     #CRPTSIN3
     Scenario: (phase 3) Execute nodoInviaCarrelloRPT request
@@ -354,7 +317,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
             | identificativoCarrello                | as12df57g8q45er69t74yuiop45789asw123 | PPT_SINTASSI_EXTRAXSD | CRPTSIN13   |
             | soapenv:Body                          | None                                 | PPT_SINTASSI_EXTRAXSD | CRPTSIN14   |
             | soapenv:Body                          | Empty                                | PPT_SINTASSI_EXTRAXSD | CRPTSIN15   |
-            | nodoInviaCarrelloRPT                  | Empty                                | PPT_SINTASSI_EXTRAXSD | CRPTSIN16   |
+            | ws:nodoInviaCarrelloRPT               | Empty                                | PPT_SINTASSI_EXTRAXSD | CRPTSIN16   |
             | password                              | None                                 | PPT_SINTASSI_EXTRAXSD | CRPTSIN17   |
             | password                              | Empty                                | PPT_SINTASSI_EXTRAXSD | CRPTSIN18   |
             | password                              | passwor                              | PPT_SINTASSI_EXTRAXSD | CRPTSIN19   |
@@ -383,7 +346,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
             | codiceContestoPagamento               | None                                 | PPT_SINTASSI_EXTRAXSD | CRPTSIN41   |
             | codiceContestoPagamento               | Empty                                | PPT_SINTASSI_EXTRAXSD | CRPTSIN42   |
             | requireLightPayment                   | Empty                                | PPT_SINTASSI_EXTRAXSD | CRPTSIN46   |
-            | requireLightPayment                   | 1                                    | PPT_SINTASSI_EXTRAXSD | CRPTSIN47   |
+            | requireLightPayment                   | 4                                    | PPT_SINTASSI_EXTRAXSD | CRPTSIN47   |
 
     @runnable
     #CRPTSIN39
@@ -661,7 +624,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
             </soapenv:Envelope>
             """
         When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaCarrelloRPT response
+        Then check faultCode is PPT_SINTASSI_XSD of nodoInviaCarrelloRPT response
 
     @runnable
     #CRPTSIN44
