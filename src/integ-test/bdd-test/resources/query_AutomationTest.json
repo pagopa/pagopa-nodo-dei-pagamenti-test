@@ -141,6 +141,8 @@
         "recipient_pa_fiscal_code": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND RECIPIENT_PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "recipient_pa_fiscal_code_1": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND RECIPIENT_PA_FISCAL_CODE = '90000000001'",
         "recipient_pa_fiscal_code_2": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND RECIPIENT_PA_FISCAL_CODE = '90000000002'",
+        "recipient_station_id_1": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND RECIPIENT_STATION_ID = '90000000001_06'",
+        "recipient_station_id_2": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND RECIPIENT_STATION_ID = '90000000001_09'",
         "iuv": "SELECT columns FROM table_name WHERE IUV = '$nodoInviaRPT.identificativoUnivocoVersamento'",
         "notice_id_2_activatev2": "SELECT columns FROM table_name WHERE NOTICE_ID IN ('$activatePaymentNoticeV2_1Request.noticeNumber', '$activatePaymentNoticeV2_2Request.noticeNumber')",
         "notice_id_first_activatev2": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2_1Request.noticeNumber'",
