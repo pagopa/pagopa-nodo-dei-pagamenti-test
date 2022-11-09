@@ -11,6 +11,7 @@ parameters:
     values:
       - dev
       - sit
+    default: sit
 
 variables:
   archiveName: nodo-dei-pagamenti-NRT.zip
