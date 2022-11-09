@@ -218,7 +218,7 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
             <fault>
-               <faultCode>PPT_CANALE_ERRORE_RESPONSE</faultCode>
+               <faultCode>CANALE_RPT_SCONOSCIUTA</faultCode>
                <faultString>ffffff</faultString>
                <id>#psp#</id>
                <description>hgggg</description>
@@ -232,5 +232,5 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
-        And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaRPT response
+        And check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
        
