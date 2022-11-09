@@ -314,26 +314,23 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 befo
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-    # define pspNotifyPayment timeout
-    Scenario: Define pspNotifyPayment
-        Given initial xml pspNotifyPayment response
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
-            <delay>30000</delay>
-            <outcome>OK</outcome>
-            </psp:pspNotifyPaymentRes>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-
+    
     # nodoInoltraEsitoPagamentoPaypal
     Scenario: Execute nodoInoltroEsitoPayPal in timeout
-        Given the Define pspNotifyPayment scenario executed successfully
-        And psp replies to nodo-dei-pagamenti with the pspNotifyPayment response
+        Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <psp:pspNotifyPaymentRes>
+                <outcome>OK</outcome>
+                <!--Optional:-->
+                <wait>20</wait>
+                </psp:pspNotifyPaymentRes>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
             """
             {
@@ -348,6 +345,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 befo
             }
             """
         Then verify the HTTP status code of inoltroEsito/paypal response is 408
+        And check error is Operazione in timeout of inoltroEsito/paypal response
 
 
     # Payment Outcome Phase outcome OK
