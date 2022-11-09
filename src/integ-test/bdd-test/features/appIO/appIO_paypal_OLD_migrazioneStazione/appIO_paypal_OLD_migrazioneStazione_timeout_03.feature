@@ -331,8 +331,9 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 befo
 
 
     # nodoInoltraEsitoPagamentoPaypal
-    Scenario: Execute nodoInoltroEsitoPayPal OK
-        Given the Execute refresh pa e stazioni scenario executed successfully
+    Scenario: Execute nodoInoltroEsitoPayPal in timeout
+        Given the Define pspNotifePayment scenario executed successfully
+        And psp replies to nodo-dei-pagamenti with the pspNotifyPayment
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
             """
             {
@@ -346,13 +347,12 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 befo
                 "timestampOperazione": "2012-04-23T18:25:43Z"
             }
             """
-        And psp replies to nodo-dei-pagamenti with the pspNotifyPayment
         Then verify the HTTP status code of inoltroEsito/paypal response is 408
 
 
     # Payment Outcome Phase outcome OK
     Scenario: Execute sendPaymentOutcome request
-        Given the Execute nodoInoltroEsitoPayPal OK scenario executed successfully
+        Given the Execute nodoInoltroEsitoPayPal in timeout scenario executed successfully
         And initial XML sendPaymentOutcome
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
