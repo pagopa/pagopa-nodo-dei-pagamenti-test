@@ -127,7 +127,7 @@ Feature: T097_B_ChiediStato_RPT_ACCETTATA_PSP_sbloccoParcheggio
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti 
         Then check esito is OK of nodoInviaRPT response
         #And check faultCode is PPT_IBAN_NON_CENSITO of nodoInviaRPT response
-        #And retrieve session token from $nodoInviaRPTResponse.url
+        And retrieve session token from $nodoInviaRPTResponse.url
         # check STATI_RPT table
         #And replace iuv content with $1iuv content
         #And replace pa content with #creditor_institution_code# content
@@ -150,7 +150,7 @@ Feature: T097_B_ChiediStato_RPT_ACCETTATA_PSP_sbloccoParcheggio
          {
             "idPagamento":"$sessionToken",
             "identificativoPsp": "#psp#",
-            "tipoVersamento": "BP",
+            "tipoVersamento": "BBT",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canale#",
             "tipoOperazione": "web"
@@ -227,7 +227,7 @@ Feature: T097_B_ChiediStato_RPT_ACCETTATA_PSP_sbloccoParcheggio
      
 
     Scenario: Execute nodoNotificaAnnullamento
-        Given the Execute nodoChiediStatoRPT1 scenario executed successfully
+        Given the execution nodoInviaRPT duplicato scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of notificaAnnullamento response is 200
-        And check esito is OK of notificaAnnullamento response
+        Then verify the HTTP status code of notificaAnnullamento response is 404
+        And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
