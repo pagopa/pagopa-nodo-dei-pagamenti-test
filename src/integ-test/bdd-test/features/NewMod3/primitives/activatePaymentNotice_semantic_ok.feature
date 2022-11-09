@@ -39,7 +39,7 @@ Feature: Semantic checks OK for activatePaymentNotice
   # denylist value check: combination fiscalCode-idChannel-idPSP identifies a record in NODO4_CFG.DENYLIST table of nodo-dei-pagamenti database  [SEM_APNR_24]
   Scenario: Check outcome OK if combination psp-channel-pa in denylist
     Given fiscalCode with 44444444444 in activatePaymentNotice
-    And idPsp with 40000000001 in activatePaymentNotice
+    And idPSP with 40000000001 in activatePaymentNotice
     And idBrokerPSP with 40000000002 in activatePaymentNotice
     And idChannel with 40000000002_01 in activatePaymentNotice
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
