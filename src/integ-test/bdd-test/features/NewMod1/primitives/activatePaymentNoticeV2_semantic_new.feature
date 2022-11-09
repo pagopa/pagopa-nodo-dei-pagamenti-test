@@ -1292,8 +1292,17 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And checks the value CHIAVEOK is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
 
     # SEM_APNV2_28
+    @wip
     Scenario: semantic check 28
         Given the activatePaymentNoticeV2 + paGetPaymentV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-# And checks the value $activatePaymentNoticeV2Response of the record at column RESPONSE of the table IDEMPOTENCY_CACHE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        #prova
+        And wait 5 seconds for expiration
+        And execution query activatev2_resp to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query activatev2_resp retrieve xml PAYLOAD at position 0 and save it under the key XML_DB_1
+        And execution query select_activatev2 to get value on the table IDEMPOTENCY_CACHE, with the columns RESPONSE under macro NewMod1 with db name nodo_online
+        And through the query select_activatev2 retrieve xml RESPONSE at position 0 and save it under the key XML_DB_2
+        And check value $XML_DB_1 is equal to value $XML_DB_2
+        #prova
