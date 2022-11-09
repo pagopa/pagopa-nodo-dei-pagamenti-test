@@ -6,24 +6,24 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
       xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-        <soapenv:Header/>
-        <soapenv:Body>
-          <nod:activatePaymentNoticeReq>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>pwdpwdpwd</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-              <fiscalCode>#creditor_institution_code#</fiscalCode>
-              <noticeNumber>#notice_number#</noticeNumber>
-            </qrCode>
-            <expirationTime>120000</expirationTime>
-            <amount>10.00</amount>
-            <dueDate>2021-12-31</dueDate>
-            <paymentNote>causale</paymentNote>
-          </nod:activatePaymentNoticeReq>
-        </soapenv:Body>
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:activatePaymentNoticeReq>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+      <password>pwdpwdpwd</password>
+      <idempotencyKey>#idempotency_key#</idempotencyKey>
+      <qrCode>
+      <fiscalCode>#creditor_institution_code#</fiscalCode>
+      <noticeNumber>#notice_number#</noticeNumber>
+      </qrCode>
+      <expirationTime>120000</expirationTime>
+      <amount>10.00</amount>
+      <dueDate>2021-12-31</dueDate>
+      <paymentNote>causale</paymentNote>
+      </nod:activatePaymentNoticeReq>
+      </soapenv:Body>
       </soapenv:Envelope>
       """
 
@@ -67,7 +67,7 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       | idempotencyKey               | 60000000001.1244565744                                                                                                                                                                                              | SIN_APNR_20   |
       | idempotencyKey               | 60000000001_%244565744                                                                                                                                                                                              | SIN_APNR_20   |
       | idempotencyKey               | 60000000001-1244565744                                                                                                                                                                                              | SIN_APNR_20   |
-      | idempotencyKey               | 1244565768_#psp#                                                                                                                                                                                              | SIN_APNR_20   |
+      | idempotencyKey               | 1244565768_#psp#                                                                                                                                                                                                    | SIN_APNR_20   |
       | idempotencyKey               | 1244565744                                                                                                                                                                                                          | SIN_APNR_20   |
       | idempotencyKey               | 600000000011244565744                                                                                                                                                                                               | SIN_APNR_20   |
       | idempotencyKey               | 60000000001_12445657684                                                                                                                                                                                             | SIN_APNR_21   |
@@ -92,6 +92,7 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       | expirationTime               | 48:12:12                                                                                                                                                                                                            | SIN_APNR_37   |
       | expirationTime               | 12:12                                                                                                                                                                                                               | SIN_APNR_37   |
       | expirationTime               | 1800001                                                                                                                                                                                                             | SIN_APNR_38   |
+      | amount                       | None                                                                                                                                                                                                                | SIN_APNR_39   |
       | amount                       | Empty                                                                                                                                                                                                               | SIN_APNR_40   |
       | amount                       | 10,00                                                                                                                                                                                                               | SIN_APNR_41   |
       | amount                       | 10.1                                                                                                                                                                                                                | SIN_APNR_42   |

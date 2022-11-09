@@ -1363,7 +1363,6 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSEM]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_AUTORIZZAZIONE of nodoInviaCarrelloRPT response
 

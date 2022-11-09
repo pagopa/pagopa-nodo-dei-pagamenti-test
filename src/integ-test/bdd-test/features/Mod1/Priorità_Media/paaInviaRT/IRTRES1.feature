@@ -213,9 +213,6 @@ Feature: process tests for paaInviaRT[IRTRES1]
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-
-
-
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML paaInviaRT

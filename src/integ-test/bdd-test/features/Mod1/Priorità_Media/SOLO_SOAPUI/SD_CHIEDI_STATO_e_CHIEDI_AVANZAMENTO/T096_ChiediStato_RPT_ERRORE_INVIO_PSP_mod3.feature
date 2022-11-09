@@ -154,15 +154,18 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_mod3
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp_AGID#</identificativoPSP>
-            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
+        Then check esito is KO of nodoInviaRPT response
+        And check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
+        
        

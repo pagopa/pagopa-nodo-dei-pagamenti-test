@@ -115,9 +115,12 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
             <soapenv:Body>
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
-            <esitoComplessivoOperazione>malformata</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            <fault>
+               <faultCode>CANALE_RPT_SCONOSCIUTA</faultCode>
+               <faultString>RPT mai arrivata al PSP</faultString>
+               <id>#psp#</id>
+               <description>RPT sconosciuta per il PSP</description>
+            </fault>
             </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>
             </soapenv:Body>
@@ -127,11 +130,38 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaRPT response
-       
 
-    Scenario: Execute nodoChiediStatoRPT request
+    Scenario: Execute ChiediAvanzamento
         Given the RPT generation scenario executed successfully
-        And wait 70 seconds for expiration
+        #And wait 70 seconds for expiration
+        And initial XML pspChiediAvanzamentoRPT 
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspChiediAvanzamentoRPTResponse>
+            <pspChiediAvanzamentoRPTResponse>
+            <fault>
+               <faultCode>CANALE_RPT_SCONOSCIUTA</faultCode>
+               <faultString>RPT mai arrivata al PSP</faultString>
+               <id>#psp#</id>
+               <description>RPT sconosciuta per il PSP</description>
+            </fault>
+            </pspChiediAvanzamentoRPTResponse>
+            </ws:pspChiediAvanzamentoRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT 
+        When job pspChiediAvanzamentoRpt triggered after 5 seconds
+        And wait 10 seconds for expiration
+        And replace iuv content with $1iuv content
+        And replace pa content with #creditor_institution_code# content
+        And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
+        
+    Scenario: Execute nodoChiediStatoRPT request
+        Given the Execute ChiediAvanzamento scenario executed successfully
+        #And wait 70 seconds for expiration
         And initial XML nodoChiediStatoRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">

@@ -72,7 +72,7 @@ Feature: Semantic checks for verifyPaymentReq - KO
   @runnable
   # idChannel value check: idChannel with value in NODO4_CFG.CANALI whose field MODELLO_PAGAMENTO in NODO4_CFG.CANALI_NODO table of nodo-dei-pagamenti database does not contain value 'ATTIVATO_PRESSO_PSP' (e.g. contains 'IMMEDIATO_MULTIBENEFICIARIO') [SEM_VPNR_07]
   Scenario: Check PPT_AUTORIZZAZIONE error on psp channel not enabled for payment model 3
-    Given idChannel with #canale#_ONUS in verifyPaymentNotice
+    Given idChannel with #canale# in verifyPaymentNotice
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_AUTORIZZAZIONE of verifyPaymentNotice response
@@ -107,7 +107,7 @@ Feature: Semantic checks for verifyPaymentReq - KO
   @runnable
   # fiscalCode value check: fiscalCode with field ENABLED = N in NODO4_CFG.PA table of nodo-dei-pagamenti database corresponding to ID_DOMINIO [SEM_VPNR_10]
   Scenario: Check PPT_DOMINIO_DISABILITATO error on disabled pa
-    Given fiscalCode with 11111122222 in verifyPaymentNotice
+    Given fiscalCode with 11111122223 in verifyPaymentNotice
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_DOMINIO_DISABILITATO of verifyPaymentNotice response
@@ -129,8 +129,8 @@ Feature: Semantic checks for verifyPaymentReq - KO
   @runnable
   # station value check: combination fiscalCode-noticeNumber identifies a station corresponding to an ID_STAZIONE value with field ENABLED = N in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database [SEM_VPNR_13]
   Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on disabled station
-    Given fiscalCode with 77777777777 in verifyPaymentNotice
-    And noticeNumber with 314456789012345478 in verifyPaymentNotice
+    #Given fiscalCode with 77777777777 in verifyPaymentNotice
+    Given noticeNumber with 316456789012345478 in verifyPaymentNotice
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of verifyPaymentNotice response
@@ -138,8 +138,8 @@ Feature: Semantic checks for verifyPaymentReq - KO
   @runnable
   # station value check: combination fiscalCode-noticeNumber identifies a station corresponding to an ID_STAZIONE value with field IP in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database not reachable (e.g. IP = 1.2.3.4) [SEM_VPNR_14]
   Scenario: Check PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE error on unreachable station
-    Given fiscalCode with 77777777777 in verifyPaymentNotice
-    And noticeNumber with 099456789012345678 in verifyPaymentNotice
+    #Given fiscalCode with 77777777777 in verifyPaymentNotice
+    Given noticeNumber with 099456789012345678 in verifyPaymentNotice
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of verifyPaymentNotice response
@@ -147,8 +147,8 @@ Feature: Semantic checks for verifyPaymentReq - KO
   @runnable
   # pa broker value check: combination fiscalCode-noticeNumber identifies a pa broker corresponding to an ID_INTERMEDIARIO_PA value with field ENABLED = N in NODO4_CFG.INTERMEDIARI_PA table of nodo-dei-pagamenti database [SEM_VPNR_15]
   Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error on disabled pa broker
-    Given fiscalCode with 77777777777 in verifyPaymentNotice
-    And noticeNumber with 088456789012345678 in verifyPaymentNotice
+    #Given fiscalCode with 77777777777 in verifyPaymentNotice
+    Given noticeNumber with 010456789012345678 in verifyPaymentNotice
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of verifyPaymentNotice response

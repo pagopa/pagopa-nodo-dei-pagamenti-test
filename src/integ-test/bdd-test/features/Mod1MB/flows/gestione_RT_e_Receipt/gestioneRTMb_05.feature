@@ -494,7 +494,7 @@ Feature: gestioneRTMb_05
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         When job pspChiediListaAndChiediRt triggered after 7 seconds
         And job paInviaRt triggered after 10 seconds
-        And wait 20 seconds for expiration
+        And wait 130 seconds for expiration
 
 
         And replace pa content with #creditor_institution_code# content
