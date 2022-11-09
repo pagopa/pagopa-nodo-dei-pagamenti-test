@@ -199,10 +199,10 @@ Feature: response tests for paDemandPaymentNotice
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
         Examples:
             | elem                              | value                                                                                                                                           | soapUI test  |
-            # | soapenv:Body                      | None                                                                                                                                            | TRES_PDPN_03 |
-            # | soapenv:Body                      | Empty                                                                                                                                           | TRES_PDPN_04 |
-            # | paf:paDemandPaymentNoticeResponse | None                                                                                                                                            | TRES_PDPN_05 |
-            # | paf:paDemandPaymentNoticeResponse | RemoveParent                                                                                                                                    | TRES_PDPN_06 |
+            | soapenv:Body                      | None                                                                                                                                            | TRES_PDPN_03 |
+            | soapenv:Body                      | Empty                                                                                                                                           | TRES_PDPN_04 |
+            | paf:paDemandPaymentNoticeResponse | None                                                                                                                                            | TRES_PDPN_05 |
+            | paf:paDemandPaymentNoticeResponse | RemoveParent                                                                                                                                    | TRES_PDPN_06 |
             | paf:paDemandPaymentNoticeResponse | Empty                                                                                                                                           | TRES_PDPN_07 |
             | outcome                           | None                                                                                                                                            | TRES_PDPN_08 |
             | outcome                           | Empty                                                                                                                                           | TRES_PDPN_09 |
