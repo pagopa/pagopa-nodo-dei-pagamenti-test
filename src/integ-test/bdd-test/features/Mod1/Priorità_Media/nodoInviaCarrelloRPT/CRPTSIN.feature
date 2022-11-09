@@ -1002,9 +1002,8 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
         When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaCarrelloRPT response
 
-
-
     @runnable
+    #CRPTSIN46
     Scenario: (phase 16) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
