@@ -304,7 +304,7 @@ Feature: process tests for inoltropagamentoMb_03
       And checks the value #psp# of the record at column PSP of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value BBT of the record at column TIPO_VERSAMENTO of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
-      And checks the value N of the record at column RICEVUTA_PM of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
+      And checks the value Y of the record at column RICEVUTA_PM of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value Y of the record at column WISP_2 of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
 
       And replace pa content with #creditor_institution_code_secondary# content
@@ -313,7 +313,7 @@ Feature: process tests for inoltropagamentoMb_03
       And checks the value #psp# of the record at column PSP of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value #psp# of the record at column INTERMEDIARIOPSP of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value BBT of the record at column TIPO_VERSAMENTO of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
-      And checks the value N of the record at column RICEVUTA_PM of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
+      And checks the value Y of the record at column RICEVUTA_PM of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
       And checks the value Y of the record at column WISP_2 of the table RPT retrived by the query by_iuv_and_ident_dominio on db nodo_online under macro Mod1Mb
 
       #DB-CHECK-CARRELLO
