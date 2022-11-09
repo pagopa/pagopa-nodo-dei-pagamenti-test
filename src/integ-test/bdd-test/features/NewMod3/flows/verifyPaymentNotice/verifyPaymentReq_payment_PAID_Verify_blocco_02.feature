@@ -17,7 +17,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
          <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
          <password>pwdpwdpwd</password>
          <qrCode>
-         <fiscalCode>#codicePA_old#</fiscalCode>
+         <fiscalCode>#creditor_institution_code#</fiscalCode>
          <noticeNumber>#notice_number_old#</noticeNumber>
          </qrCode>
          </nod:verifyPaymentNoticeReq>
@@ -148,7 +148,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
          <ppt:intestazionePPT>
          <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-         <identificativoDominio>#codicePA_old#</identificativoDominio>
+         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
          </ppt:intestazionePPT>
