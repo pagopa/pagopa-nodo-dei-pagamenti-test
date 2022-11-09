@@ -1979,11 +1979,6 @@ def step_impl(context, value1, condition, value2):
         assert False
 
 
-@step("calling primitive {primitive1} and {primitive2} in parallel")
-def step_impl(context, primitive1, primitive2):
-    list_of_primitive = [primitive1, primitive2]
-    utils.threading(context, list_of_primitive)
-
 @step("calling primitive {primitive1} {restType1} and {primitive2} {restType2} in parallel")
 def step_impl(context, primitive1, primitive2, restType1, restType2):
     list_of_primitive = [primitive1, primitive2]
