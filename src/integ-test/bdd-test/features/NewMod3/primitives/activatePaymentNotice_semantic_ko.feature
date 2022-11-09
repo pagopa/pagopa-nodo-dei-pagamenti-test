@@ -168,9 +168,11 @@ Feature: Semantic checks KO for activatePaymentNoticeReq
   # expirationTime > default_token_duration_validity_millis [SEM_APNR_25]
   Scenario: Check PPT_AUTORIZZAZIONE error if expirationTime > default_token_duration_validity_millis
     Given expirationTime with 900000 in activatePaymentNotice
+    And nodo-dei-pagamenti has config parameter default_token_duration_validity_millis set to 7000
     # TODO And default_token_duration_validity_millis with 7000 in NODO4_CFG.CONFIGURATION_KEYS
     # TODO And nodo-dei-pagamenti must reload configuration
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_AUTORIZZAZIONE of activatePaymentNotice response
     And check description is expirationTime deve essere <= 600000 of activatePaymentNotice response
+    And restore initial configurations

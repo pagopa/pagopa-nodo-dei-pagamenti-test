@@ -12,7 +12,7 @@ Feature: Semantic checks for verificaBollettino - KO
                  <idBrokerPSP>BANCOPOSTA</idBrokerPSP>
                  <idChannel>POSTE3</idChannel>
                  <password>pwdpwdpwd</password>
-                 <ccPost>#creditor_institution_code#</ccPost>
+                 <ccPost>#ccPoste#</ccPost>
                  <noticeNumber>#notice_number#</noticeNumber>
               </nod:verificaBollettinoReq>
            </soapenv:Body>
