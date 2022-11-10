@@ -345,8 +345,8 @@ Feature: syntax checks for closePayment outcome KO
       """
       {
         "paymentTokens": [
-          "$activateIOPaymentResponse.paymentToken",
-          "$activateIOPaymentResponse2.paymentToken"
+          "$activateIOPayment1Response.paymentToken",
+          "$activateIOPayment2Response.paymentToken"
         ],
         "outcome": "KO",
         "identificativoPsp": "#psp#",
