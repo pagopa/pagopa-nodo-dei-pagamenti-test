@@ -5,7 +5,7 @@ Feature: T102_A_chiediStato_RT_RIFIUTATA_PA_Carrello - BUG_590
 
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-        And generate 1 cart with PA #codicePA# and notice number $1noticeNumber
+        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And RPT generation
             """
                 <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -521,6 +521,7 @@ Feature: T102_A_chiediStato_RT_RIFIUTATA_PA_Carrello - BUG_590
      
     Scenario: Execute nodoChiediStatoRPT
         Given the Execute job paInviaRt scenario executed successfully
+        And wait 10 seconds for expiration
         And initial XML nodoChiediStatoRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -547,6 +548,7 @@ Feature: T102_A_chiediStato_RT_RIFIUTATA_PA_Carrello - BUG_590
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
+        
      Scenario: Execute nodoChiediStatoRPT2
         Given the Execute nodoChiediStatoRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -574,6 +576,18 @@ Feature: T102_A_chiediStato_RT_RIFIUTATA_PA_Carrello - BUG_590
         And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
+        And replace iuv content with $1iuv content
+        And replace ccp content with CCD01 content
+        And execution query Retrieve_IdSession to get value on the table RT, with the columns ID_SESSIONE under macro Mod1 with db name nodo_online
+        And through the query Retrieve_IdSession retrieve param idSessione at position 0 and save it under the key idSessione
+        And replace 2iuv content with avanzaErrResponse$1iuv content
+        And replace 2ccp content with CCD02 content
+        And execution query Retrieve_IdSession2 to get value on the table RT, with the columns ID_SESSIONE under macro Mod1 with db name nodo_online
+        And through the query Retrieve_IdSession2 retrieve param 2idSessione at position 0 and save it under the key 2idSessione
+        And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table RE retrived by the query Re on db re under macro Mod1
+        And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table RE retrived by the query Re_2 on db re under macro Mod1
+        And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_RIFIUTATA_PA of the record at column STATUS of the table RE retrived by the query Re on db re under macro Mod1
+        And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_RIFIUTATA_PA of the record at column STATUS of the table RE retrived by the query Re_2 on db re under macro Mod1
 
     Scenario: execution nodoInviaRT2
         Given the Execute nodoChiediStatoRPT2 scenario executed successfully
