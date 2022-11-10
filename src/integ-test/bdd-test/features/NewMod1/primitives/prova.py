@@ -143,7 +143,6 @@ if body != None:
     print("here")
 else:
     body = """{}"""
-    body = json.dumps(body, indent=4)
     print(type(body))
     print(body)
     print("here1")

@@ -13,7 +13,7 @@ Feature: syntax checks for checkPosition
                 ]
             }
             """
-    # test al momento non eseguibile: viene sollevato un errore a livello di codice non risolvibile al momento, da rivedere in seguito
+    
     # SIN_CPO_01
     Scenario: Invalid positionslist 1
         Given positionslist with None in checkPosition
