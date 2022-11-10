@@ -632,7 +632,7 @@ Feature: flow checks for closePayment - PA new
       # [TBD] nella POSITION_ACTIVATE la colonna TOKEN_VALID_TO = current_timestamp di esecuzione della closePayment
       And execution query payment_status to get value on the table POSITION_ACTIVATE, with the columns TOKEN_VALID_TO under macro AppIO with db name nodo_online
       And through the query payment_status retrieve param TOKEN_VALID_TO at position 0 and save it under the key tokenvalidto
-      And check value $date is equal to value $tokenvalidto
+      And check value $date_with_microseconds is equal to value $tokenvalidto
 
    Scenario: FLUSSO_CP_03 (part 4)
       Given the FLUSSO_CP_03 (part 3) scenario executed successfully
