@@ -256,8 +256,8 @@ Feature: syntax checks for closePayment outcome OK
     And check descrizione is Richiesta non valida of v1/closepayment response
     Examples:
       | elem                          | value | soapUI test |
-      # | totalAmount                 | 12,21 | SIN_CP_24   |   gestione della virgola non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
-      # | fee                         | 12,32 | SIN_CP_29   |   gestione della virgola non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
+      # | totalAmount                 | 12,21 | SIN_CP_24   |    test non eseguibile in python: non sono ammessi dei numeri separati da virgola
+      # | fee                         | 12,32 | SIN_CP_29   |    test non eseguibile in python: non sono ammessi dei numeri separati da virgola
       | additionalPaymentInformations | None  | SIN_CP_35   |
       | additionalPaymentInformations | Empty | SIN_CP_36   |
 

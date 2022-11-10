@@ -294,17 +294,17 @@ Feature: syntax checks for closePayment outcome KO
       | totalAmount | Empty | SIN_CP_23   |
       | fee         | Empty | SIN_CP_28   |
 
-
+  #  test non eseguibile in python: non sono ammessi dei numeri separati da virgola
   # syntax check - Richiesta non valida
-  Scenario Outline: Check syntax error on invalid request
-    Given the closePayment scenario executed successfully
-    And <elem> with <value> in v1/closepayment
-    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-    Then verify the HTTP status code of v1/closepayment response is 400
-    And check esito is KO of v1/closepayment response
-    And check descrizione is Richiesta non valida of v1/closepayment response
-    Examples:
-      | elem | value | soapUI test |
+  # Scenario Outline: Check syntax error on invalid request
+  #   Given the closePayment scenario executed successfully
+  #   And <elem> with <value> in v1/closepayment
+  #   When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+  #   Then verify the HTTP status code of v1/closepayment response is 400
+  #   And check esito is KO of v1/closepayment response
+  #   And check descrizione is Richiesta non valida of v1/closepayment response
+  #   Examples:
+  #     | elem | value | soapUI test |
   # | totalAmount | 12,21 | SIN_CP_24   |
   # | fee         | 12,32 | SIN_CP_29   |
 
