@@ -418,7 +418,7 @@ Feature: T101_C_chiediStato_RT_ACCETTATA_PA_Carrello_Annullamento
 
      
     Scenario: Execute nodoChiediStatoRPT
-        Given the Execute nodoNotificaAnnullamento scenario executed successfully
+        Given the Execute job paInviaRt scenario executed successfully
         And initial XML nodoChiediStatoRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
