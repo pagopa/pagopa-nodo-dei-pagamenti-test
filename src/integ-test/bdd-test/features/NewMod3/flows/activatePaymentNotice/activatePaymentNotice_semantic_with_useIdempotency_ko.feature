@@ -42,7 +42,6 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
 
   # Activate Phase 2 - PPT_ERRORE_IDEMPOTENZA [SEM_APNR_20]
-  @runnable
   Scenario: Execute again the activatePaymentNotice request with same idempotencyKey before it expires
     Given the Execute activatePaymentNotice request scenario executed successfully
     And random noticeNumber in activatePaymentNotice
@@ -113,7 +112,6 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
 
   # Activate Phase 1 - syntax error: no value of idPSP [IDMP_ACT_15.1]
-  @runnable
   Scenario: Execute activatePaymentNotice request with an empty idPSP
     Given idPSP with Empty in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
@@ -129,7 +127,6 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     Then check outcome is OK of activatePaymentNotice response
 
   # Activate Phase 1 - semantic error: wrong password [IDMP_ACT_15.2]
-  @runnable
   Scenario: Execute activatePaymentNotice request with wrong password
     Given password with wrongPassword in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
@@ -169,7 +166,6 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
 
 
   # Mod3Cancel Phase - [IDMP_ACT_20]
-  @runnable
   Scenario: Execute mod3Cancel poller
     Given expirationTime with 2000 in activatePaymentNotice
     And the Execute activatePaymentNotice request scenario executed successfully
@@ -179,13 +175,12 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
   # Activate Phase 2 - different amount - [IDMP_ACT_20]
   @runnable
   Scenario: Execute activatePaymentNotice request with different amount
-    Given the Execute mod3CancelV2 poller scenario executed successfully
+    Given the Execute mod3Cancel poller scenario executed successfully
     And amount with 8.00 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
   # IdempotencyCacheClean Phase [IDMP_ACT_23]
-  @runnable
   Scenario: Execute idempotencyCacheClean poller
     Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to true
     And expirationTime with 2000 in activatePaymentNotice

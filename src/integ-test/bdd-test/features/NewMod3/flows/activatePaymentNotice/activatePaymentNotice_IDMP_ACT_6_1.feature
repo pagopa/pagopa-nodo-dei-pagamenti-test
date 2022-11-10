@@ -31,6 +31,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     Then check outcome is OK of activatePaymentNotice response
     And save activatePaymentNotice response in activatePaymentNotice1
 
+@runnable
   Scenario: Execute activatePaymentNotice1 request
     Given the Execute activatePaymentNotice request scenario executed successfully
     And initial XML activatePaymentNotice
@@ -39,9 +40,9 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>80000000001</idPSP>
-      <idBrokerPSP>80000000001</idBrokerPSP>
-      <idChannel>80000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>$activatePaymentNotice.idempotencyKey</idempotencyKey>
       <qrCode>
@@ -55,14 +56,12 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       </soapenv:Body>
       </soapenv:Envelope>
       """
+    And random idempotencyKey having #psp# as idPSP in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
 
-  #DB check
-  @runnable
-  Scenario: Execute activatePaymentNotice request
-    Given the Execute activatePaymentNotice1 request scenario executed successfully
+    #DB check
     And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_pay_act1 on db nodo_online under macro NewMod3
     And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_pay_act1 on db nodo_online under macro NewMod3
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3

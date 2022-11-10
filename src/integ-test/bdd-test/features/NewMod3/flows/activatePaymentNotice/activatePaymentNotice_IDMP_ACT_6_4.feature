@@ -13,7 +13,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <nod:activatePaymentNoticeReq>
       <idPSP>#psp#</idPSP>
       <idBrokerPSP>#psp#</idBrokerPSP>
-      <idChannel>canale_ATTIVATO_PRESSO_PSP</idChannel>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
@@ -43,7 +43,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <nod:activatePaymentNoticeReq>
       <idPSP>#psp#</idPSP>
       <idBrokerPSP>#psp#</idBrokerPSP>
-      <idChannel>canale_ATTIVATO_PRESSO_PSP</idChannel>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>$activatePaymentNotice.idempotencyKey</idempotencyKey>
       <qrCode>
