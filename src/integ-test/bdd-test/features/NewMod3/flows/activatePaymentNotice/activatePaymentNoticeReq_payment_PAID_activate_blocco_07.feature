@@ -35,8 +35,8 @@ Feature:  block check for activatePaymentNoticeReq - position status in PAID aft
    # Mod3Cancel Phase
    Scenario: Execute mod3Cancel poller
       Given the Execute activatePaymentNotice request scenario executed successfully
-      When job mod3Cancel triggered after 3 seconds
-      Then verify the HTTP status code of mod3Cancel response is 200
+      When job mod3CancelV2 triggered after 3 seconds
+      Then verify the HTTP status code of mod3CancelV2 response is 200
 
    # Payment Outcome Phase
    Scenario: Execute sendPaymentOutcome request

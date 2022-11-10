@@ -1387,7 +1387,8 @@ def step_impl(context, param, value):
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     setattr(context, param, value)
-
+    print(">>>>>>>>>>>>>>>", getattr(param))
+    
     exec_query = db.executeQuery(conn, selected_query)
     if exec_query is not None:
         print(f'executed query: {exec_query}')
@@ -1717,6 +1718,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     elif number == 'default_idempotency_key_validity_minutes':
         default = int(
             getattr(context, 'default_idempotency_key_validity_minutes'))
+        print(">>>>>>>>>>>>>>>>>>>", default)
         value = (datetime.datetime.today() +
                  datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
         selected_query = utils.query_json(context, query_name, name_macro).replace(

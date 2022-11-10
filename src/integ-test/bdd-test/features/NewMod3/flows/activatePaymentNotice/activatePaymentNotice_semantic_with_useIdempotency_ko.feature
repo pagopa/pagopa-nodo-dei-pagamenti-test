@@ -173,13 +173,13 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
   Scenario: Execute mod3Cancel poller
     Given expirationTime with 2000 in activatePaymentNotice
     And the Execute activatePaymentNotice request scenario executed successfully
-    When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
+    When job mod3CancelV2 triggered after 3 seconds
+    Then verify the HTTP status code of mod3CancelV2 response is 200
 
   # Activate Phase 2 - different amount - [IDMP_ACT_20]
   @runnable
   Scenario: Execute activatePaymentNotice request with different amount
-    Given the Execute mod3Cancel poller scenario executed successfully
+    Given the Execute mod3CancelV2 poller scenario executed successfully
     And amount with 8.00 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response

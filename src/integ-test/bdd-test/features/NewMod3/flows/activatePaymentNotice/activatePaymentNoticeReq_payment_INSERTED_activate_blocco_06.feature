@@ -1,4 +1,4 @@
-Feature:  block check for activatePaymentNoticeReq - position status in INSERTED (mod3Cancel) [Activate_blocco_06]
+Feature:  block check for activatePaymentNoticeReq - position status in INSERTED (mod3CancelV2) [Activate_blocco_06]
 
   Background:
     Given systems up
@@ -32,15 +32,15 @@ Feature:  block check for activatePaymentNoticeReq - position status in INSERTED
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  # Mod3Cancel Phase
-  Scenario: Execute mod3Cancel poller
+  # mod3CancelV2 Phase
+  Scenario: Execute mod3CancelV2 poller
     Given the Execute activatePaymentNotice request scenario executed successfully
-    When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
+    When job mod3CancelV2 triggered after 3 seconds
+    Then verify the HTTP status code of mod3CancelV2 response is 200
 
   # Activate Phase 2
   Scenario: Execute activatePaymentNotice request with same request as Activate Phase 1 except for idempotencyKey
-    Given the Execute mod3Cancel poller scenario executed successfully
+    Given the Execute mod3CancelV2 poller scenario executed successfully
     And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">

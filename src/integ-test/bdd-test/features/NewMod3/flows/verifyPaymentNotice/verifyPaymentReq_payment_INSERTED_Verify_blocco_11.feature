@@ -1,4 +1,4 @@
-Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3Cancel poller) [Verify_blocco_11]
+Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3CancelV2 poller) [Verify_blocco_11]
 
   Background:
     Given systems up
@@ -56,19 +56,19 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
     And paymentToken exists of activatePaymentNotice response
     And paymentToken length is less than 36 of activatePaymentNotice response
 
-  # Mod3Cancel Phase
-  Scenario: Execute mod3Cancel poller
+  # mod3CancelV2 Phase
+  Scenario: Execute mod3CancelV2 poller
     Given the Execute activatePaymentNotice request scenario executed successfully
-    # When expirationTime inserted in activatePaymentNoticeReq has passed and mod3Cancel poller has been triggered
-    When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
+    # When expirationTime inserted in activatePaymentNoticeReq has passed and mod3CancelV2 poller has been triggered
+    When job mod3CancelV2 triggered after 3 seconds
+    Then verify the HTTP status code of mod3CancelV2 response is 200
 
 	
   # Verify Phase 2
   @runnable
   Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1
-	# Given the Mod3Cancel Phase executed successfully
-    Given the Execute mod3Cancel poller scenario executed successfully
+	# Given the mod3CancelV2 Phase executed successfully
+    Given the Execute mod3CancelV2 poller scenario executed successfully
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
