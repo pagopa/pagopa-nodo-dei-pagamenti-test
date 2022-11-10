@@ -11,7 +11,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP></idPSP>
+      <idPSP>#psp#</idPSP>
       <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
