@@ -406,24 +406,7 @@ Feature: T102_C_chiediStato_RT_RIFIUTATA_PA_Carrello_sbloccoParcheggio-BUG_590
 
     Scenario: Execution Esito Mod1
         Given the RPT generation scenario executed successfully
-        And initial XML pspInviaCarrelloRPT 
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTResponse>
-                        <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-                        </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTResponse>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
-
             """
             {
             "idPagamento":"$sessionToken",
@@ -525,7 +508,7 @@ Feature: T102_C_chiediStato_RT_RIFIUTATA_PA_Carrello_sbloccoParcheggio-BUG_590
         """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
         Then check esito is OK of nodoInviaRT response
-
+        And wait 1 seconds for expiration
     
      
     Scenario: Execute nodoChiediStatoRPT
