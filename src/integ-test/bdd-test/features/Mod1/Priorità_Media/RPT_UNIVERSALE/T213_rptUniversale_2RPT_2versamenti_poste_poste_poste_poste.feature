@@ -1,4 +1,4 @@
-Feature: process tests for T213_rptUniversale_2RPT_2versamenti_poste_poste_poste_noPoste
+Feature: process tests for T213_rptUniversale_2RPT_2versamenti_poste_poste_poste_poste
 
     Background:
         Given systems up
@@ -6,7 +6,7 @@ Feature: process tests for T213_rptUniversale_2RPT_2versamenti_poste_poste_poste
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code 12 and application code -
         #And generate 2 notice number and iuv with aux digit 3, segregation code 12 and application code -
-        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
+        #And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         Given RPT1 generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -205,7 +205,7 @@ Feature: process tests for T213_rptUniversale_2RPT_2versamenti_poste_poste_poste
         And execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
         And through the query version retrieve param version at position 0 and save it under the key version
         #And replace lingua content with IT content
-        And replace importoTot content with 8.80 content
+        And replace importoTot content with 4.40 content
         And execution query getPspCarte_noLingua to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
         And through the query getPspCarte_noLingua retrieve param sizeCarte at position 0 and save it under the key sizeCarte
         And execution query getPspCarte_noLingua to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline

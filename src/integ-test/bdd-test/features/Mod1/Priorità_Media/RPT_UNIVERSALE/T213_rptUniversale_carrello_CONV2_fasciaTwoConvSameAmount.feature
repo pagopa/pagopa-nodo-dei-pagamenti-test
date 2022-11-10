@@ -1,4 +1,4 @@
-Feature: process tests for T213_rptUniversale_carrello_CONV1_fasciaTwoConvSameAmount
+Feature: process tests for T213_rptUniversale_carrello_CONV2_fasciaTwoConvSameAmount
 
     Background:
         Given systems up
@@ -133,18 +133,18 @@ Feature: process tests for T213_rptUniversale_carrello_CONV1_fasciaTwoConvSameAm
         And through the query version retrieve param version at position 0 and save it under the key version
         And replace lingua content with IT content
         And replace importoTot content with 4.40 content
-        And replace codiceConvenzione content with 1 content
+        And replace codiceConvenzione content with 2 content
         #And replace version content with 0 content
         And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param sizeCarte at position -1 and save it under the key sizeCarte
+        And through the query getPsp_CONV1 retrieve param sizeCarte at position 0 and save it under the key sizeCarte
         And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param listaCarte at position -1 and save it under the key listaCarte
+        And through the query getPsp_CONV1 retrieve param listaCarte at position 0 and save it under the key listaCarte
         And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param sizeConto at position -1 and save it under the key sizeConto
+        And through the query getPsp_CONV1 retrieve param sizeConto at position 0 and save it under the key sizeConto
         And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param listaConto at position -1 and save it under the key listaConto
+        And through the query getPsp_CONV1 retrieve param listaConto at position 0 and save it under the key listaConto
         And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param listaAltro at position -1 and save it under the key listaAltro
+        And through the query getPsp_CONV1 retrieve param listaAltro at position 0 and save it under the key listaAltro
 
     Scenario: execution nodoChiediListaPSP - altro
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
@@ -155,11 +155,12 @@ Feature: process tests for T213_rptUniversale_carrello_CONV1_fasciaTwoConvSameAm
         Given the execution nodoChiediListaPSP - altro scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
-        
+        And check totalRows is 0 of listaPSP response
     Scenario: execution nodoChiediListaPSP - conto
         Given the execution nodoChiediListaPSP - carte scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
+        And check totalRows is 0 of listaPSP response
 
 
 
