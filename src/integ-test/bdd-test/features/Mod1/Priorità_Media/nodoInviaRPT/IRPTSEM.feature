@@ -111,7 +111,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             """
         And <tag> with <tagvalue> in nodoInviaRPT
         When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is KO of nodoInviaRPT responseù
+        Then check esito is KO of nodoInviaRPT response
         Then check faultCode is <error> of nodoInviaRPT response
         Examples:
             | tag                                   | tagvalue                        | error                              | soapUI test |
@@ -119,7 +119,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             | identificativoStazioneIntermediarioPA | sconosciuto                     | PPT_STAZIONE_INT_PA_SCONOSCIUTA    | IRPTSEM3    |
             | identificativoDominio                 | sconosciuto                     | PPT_DOMINIO_SCONOSCIUTO            | IRPTSEM5    |
             | identificativoDominio                 | NOT_ENABLED                     | PPT_DOMINIO_DISABILITATO           | IRPTSEM6    |
-            | identificativoDominio                 | 90400000001                     | PPT_SEMANTICA                      | IRPTSEM7    |
+            | identificativoDominio                 | 88888888888                     | PPT_SEMANTICA                      | IRPTSEM7    |
             | identificativoUnivocoVersamento       | IUV4066_2018-03-29_08:53:24.152 | PPT_SEMANTICA                      | IRPTSEM8    |
             | codiceContestoPagamento               | CCP01                           | PPT_SEMANTICA                      | IRPTSEM9    |
             | password                              | password01                      | PPT_AUTENTICAZIONE                 | IRPTSEM10   |
@@ -129,7 +129,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             | identificativoIntermediarioPSP        | INT_NOT_ENABLED                 | PPT_INTERMEDIARIO_PSP_DISABILITATO | IRPTSEM14   |
             | identificativoCanale                  | sconosciuto                     | PPT_CANALE_SCONOSCIUTO             | IRPTSEM15   |
             | identificativoCanale                  | CANALE_NOT_ENABLED              | PPT_CANALE_DISABILITATO            | IRPTSEM19   |
-            | identificativoPSP                     | 80000000001                     | PPT_AUTORIZZAZIONE                 | IRPTSEM21   |
+            | identificativoPSP                     | 40000000001                     | PPT_AUTORIZZAZIONE                 | IRPTSEM21   |
             | identificativoIntermediarioPSP        | 80000000001                     | PPT_AUTORIZZAZIONE                 | IRPTSEM21.1 |
             | identificativoCanale                  | 60000000001_01                  | PPT_AUTORIZZAZIONE                 | IRPTSEM21.2 |
             | identificativoCanale                  | 60000000001_07                  | PPT_AUTORIZZAZIONE                 | IRPTSEM21.3 |
@@ -145,8 +145,8 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>#intermediario_stz_disabled#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station_disabled#</identificativoStazioneIntermediarioPA>
+            <identificativoIntermediarioPA>#intermediario_disabled#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_int_disabled#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
@@ -169,7 +169,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
 
     @runnable
     #IRPTSEM4
-    Scenario: (phase 2) Execute nodoInviaRPT request
+    Scenario: (phase 2.1) Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
             """
@@ -202,6 +202,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
     #IRPTSEM22_siMock
     Scenario: (phase 3) RPT generation
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+        And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -415,7 +416,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>CCD02</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -471,8 +472,8 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>cart16366383977852087</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=16366383977852087</parametriPagamentoImmediato>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
             </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>
             </soapenv:Body>
@@ -518,14 +519,14 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>cart16366383977852087</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=16366383977852087</parametriPagamentoImmediato>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
             </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        #And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
 
@@ -541,7 +542,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD02</codiceContestoPagamento>
+            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -566,8 +567,8 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>cart16366383977852087</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=16366383977852087</parametriPagamentoImmediato>
+            <identificativoCarrello>$1carrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$1carrello</parametriPagamentoImmediato>
             </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>
             </soapenv:Body>
@@ -575,7 +576,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
+        Then check esito is OK of nodoInviaRPT response
 
 
 
@@ -907,6 +908,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
     #IRPTSEM22_conRT
     Scenario: (phase 5) RPT generation
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+        And generate 2 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -1120,7 +1122,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>CCD02</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>$2carrello</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -1252,6 +1254,24 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope
+            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
@@ -1276,7 +1296,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <tipoFirma></tipoFirma>
-            <rpt>$rp21Attachment</rpt>
+            <rpt>$rpt2Attachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -1305,6 +1325,24 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope
+            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
@@ -1320,7 +1358,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD02</codiceContestoPagamento>
+            <codiceContestoPagamento>$2carrello</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -1335,6 +1373,24 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope
+            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$2carrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$2carrello</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
@@ -1477,8 +1533,26 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope
+            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_TIPOFIRMA_SCONOSCIUTO of nodoInviaRPT response
+        Then check esito is OK of nodoInviaRPT response
 
 
     @runnable
@@ -1578,7 +1652,3 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
         When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_CANALE_TIMEOUT of nodoInviaRPT response
 
-
-
-17
-18
