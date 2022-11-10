@@ -595,7 +595,7 @@ Feature: T102_C_chiediStato_RT_RIFIUTATA_PA_Carrello_sbloccoParcheggio-BUG_590
 
     Scenario: nodoInviaCarrelloRPT duplicato
         Given the Execute nodoNotificaAnnullamentoPagamento scenario executed successfully
-       And initial XML nodoInviaCarrelloRPT
+        And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
@@ -661,7 +661,7 @@ Feature: T102_C_chiediStato_RT_RIFIUTATA_PA_Carrello_sbloccoParcheggio-BUG_590
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
 
-    Scenario: Execution Esito Mod1
+    Scenario: Execution Esito Mod1.1
         Given the execution nodoInviaRT2 scenario executed successfully
         And initial XML pspInviaCarrelloRPT 
             """
