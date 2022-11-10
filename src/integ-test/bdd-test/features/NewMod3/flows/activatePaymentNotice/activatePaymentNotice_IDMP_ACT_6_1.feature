@@ -56,6 +56,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       </soapenv:Body>
       </soapenv:Envelope>
       """
+    And random idempotencyKey having #psp# as idPSP in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
