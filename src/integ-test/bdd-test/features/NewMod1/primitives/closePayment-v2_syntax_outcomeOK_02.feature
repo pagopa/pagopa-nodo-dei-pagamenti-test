@@ -534,19 +534,19 @@ Feature: syntax checks for closePaymentV2 outcome OK
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-
+    # test non eseguibile in python: non sono ammessi dei numeri separati da virgola
     # syntax check - Invalid request
-    Scenario Outline: Check syntax error on invalid request
-        Given the closePaymentV2 scenario executed successfully
-        And <elem> with <value> in v2/closepayment
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 400
-        And check outcome is KO of v2/closepayment response
-        And check description is Invalid request of v2/closepayment response
-        Examples:
-            | elem        | value | soapUI test |
-            | totalAmount | 12,21 | SIN_CPV2_24 |
-            | fee         | 12,32 | SIN_CPV2_29 |
+    # Scenario Outline: Check syntax error on invalid request
+    #     Given the closePaymentV2 scenario executed successfully
+    #     And <elem> with <value> in v2/closepayment
+    #     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+    #     Then verify the HTTP status code of v2/closepayment response is 400
+    #     And check outcome is KO of v2/closepayment response
+    #     And check description is Invalid request of v2/closepayment response
+    #     Examples:
+    #         | elem        | value | soapUI test |
+    #         | totalAmount | 12,21 | SIN_CPV2_24 |
+    #         | fee         | 12,32 | SIN_CPV2_29 |
 
 
     # syntax check - Mismatched amount [SIN_CPV2_31.1]
