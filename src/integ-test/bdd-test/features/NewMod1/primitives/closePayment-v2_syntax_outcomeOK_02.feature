@@ -569,31 +569,31 @@ Feature: syntax checks for closePaymentV2 outcome OK
 
     # problema con lo step @when(u'{sender} sends rest {method:Method} {service} to {receiver}')
 
-    Scenario: closePaymentV2 without brackets in paymentTokens [SIN_CPV2_03.1]
-        Given initial JSON v2/closepayment
-            """
-            {
-                "paymentTokens": "a3738f8bff1f4a32998fc197bd0a6b05",
-                "outcome": "OK",
-                "identificativoPsp": "#psp#",
-                "tipoVersamento": "BPAY",
-                "identificativoIntermediario": "#id_broker_psp#",
-                "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-                "pspTransactionId": "#psp_transaction_id#",
-                "totalAmount": 12,
-                "fee": 2,
-                "timestampOperation": "2033-04-23T18:25:43Z",
-                "additionalPaymentInformations": {
-                    "transactionId": "#transaction_id#",
-                    "outcomePaymentGateway": "EFF",
-                    "authorizationCode": "resOK"
-                }
-            }
-            """
+    # Scenario: closePaymentV2 without brackets in paymentTokens [SIN_CPV2_03.1]
+    #     Given initial JSON v2/closepayment
+    #         """
+    #         {
+    #             "paymentTokens": "a3738f8bff1f4a32998fc197bd0a6b05",
+    #             "outcome": "OK",
+    #             "identificativoPsp": "#psp#",
+    #             "tipoVersamento": "BPAY",
+    #             "identificativoIntermediario": "#id_broker_psp#",
+    #             "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+    #             "pspTransactionId": "#psp_transaction_id#",
+    #             "totalAmount": 12,
+    #             "fee": 2,
+    #             "timestampOperation": "2033-04-23T18:25:43Z",
+    #             "additionalPaymentInformations": {
+    #                 "transactionId": "#transaction_id#",
+    #                 "outcomePaymentGateway": "EFF",
+    #                 "authorizationCode": "resOK"
+    #             }
+    #         }
+    #         """
 
-    Scenario: check closePaymentV2 without brackets in paymentTokens
-        Given the closePaymentV2 without brackets in paymentTokens [SIN_CPV2_03.1] scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 400
-        And check outcome is KO of v2/closepayment response
-        And check description is Invalid paymentTokens of v2/closepayment response
+    # Scenario: check closePaymentV2 without brackets in paymentTokens
+    #     Given the closePaymentV2 without brackets in paymentTokens [SIN_CPV2_03.1] scenario executed successfully
+    #     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+    #     Then verify the HTTP status code of v2/closepayment response is 400
+    #     And check outcome is KO of v2/closepayment response
+    #     And check description is Invalid paymentTokens of v2/closepayment response

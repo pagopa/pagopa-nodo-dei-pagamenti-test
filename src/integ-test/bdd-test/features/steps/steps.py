@@ -1085,12 +1085,11 @@ def step_impl(context, sender, method, service, receiver):
         body = xmltodict.parse(bodyXml)
         body = body["root"]
         if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None):
-            if type(body["paymentTokens"]) != list and type(body["paymentTokens"]["paymentToken"]) != str:
+            body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+            if type(body["paymentTokens"]) != list:
                 l = list()
                 l.append(body["paymentTokens"])
                 body["paymentTokens"] = l
-            else:
-                body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
         if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
             body["totalAmount"] = float(body["totalAmount"])
         if ('fee' in body.keys()) and (body["fee"] != None):
