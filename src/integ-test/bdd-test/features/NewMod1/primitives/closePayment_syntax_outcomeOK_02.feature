@@ -333,33 +333,33 @@ Feature: syntax checks for closePayment outcome OK
     And check esito is OK of v1/closepayment response
 
 
+# problema con lo step @when(u'{sender} sends rest {method:Method} {service} to {receiver}')
 
-  
-  Scenario: closePayment without brackets in paymentTokens [SIN_CP_03.1]
-    Given initial JSON v1/closepayment
-      """
-      {
-        "paymentTokens": "a3738f8bff1f4a32998fc197bd0a6b05",
-        "outcome": "OK",
-        "identificativoPsp": "#psp#",
-        "tipoVersamento": "BPAY",
-        "identificativoIntermediario": "#id_broker_psp#",
-        "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-        "pspTransactionId": "#psp_transaction_id#",
-        "totalAmount": 12,
-        "fee": 2,
-        "timestampOperation": "2033-04-23T18:25:43Z",
-        "additionalPaymentInformations": {
-          "transactionId": "#transaction_id#",
-          "outcomePaymentGateway": "EFF",
-          "authorizationCode": "resOK"
-        }
-      }
-      """
+# Scenario: closePayment without brackets in paymentTokens [SIN_CP_03.1]
+#   Given initial JSON v1/closepayment
+#     """
+#     {
+#       "paymentTokens": "a3738f8bff1f4a32998fc197bd0a6b05",
+#       "outcome": "OK",
+#       "identificativoPsp": "#psp#",
+#       "tipoVersamento": "BPAY",
+#       "identificativoIntermediario": "#id_broker_psp#",
+#       "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+#       "pspTransactionId": "#psp_transaction_id#",
+#       "totalAmount": 12,
+#       "fee": 2,
+#       "timestampOperation": "2033-04-23T18:25:43Z",
+#       "additionalPaymentInformations": {
+#         "transactionId": "#transaction_id#",
+#         "outcomePaymentGateway": "EFF",
+#         "authorizationCode": "resOK"
+#       }
+#     }
+#     """
 
-  Scenario: check closePayment without brackets in paymentTokens
-    Given the closePayment without brackets in paymentTokens [SIN_CP_03.1] scenario executed successfully
-    When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-    Then verify the HTTP status code of v1/closepayment response is 400
-    And check esito is KO of v1/closepayment response
-    And check descrizione is paymentTokens invalido of v1/closepayment response
+# Scenario: check closePayment without brackets in paymentTokens
+#   Given the closePayment without brackets in paymentTokens [SIN_CP_03.1] scenario executed successfully
+#   When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+#   Then verify the HTTP status code of v1/closepayment response is 400
+#   And check esito is KO of v1/closepayment response
+#   And check descrizione is paymentTokens invalido of v1/closepayment response
