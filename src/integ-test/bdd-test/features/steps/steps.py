@@ -1,5 +1,5 @@
 import datetime
-
+import pytz
 from datetime import timedelta
 import json
 from multiprocessing.sharedctypes import Value
@@ -1715,12 +1715,13 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d %H:%M')
+
     elif number == 'default_idempotency_key_validity_minutes':
         default = int(
             getattr(context, 'default_idempotency_key_validity_minutes'))
         print("###################", default)
-        
-        value = (datetime.datetime.today() +
+
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
                  datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
         print(">>>>>>>>>>>>>>>>>>>", value)
 
