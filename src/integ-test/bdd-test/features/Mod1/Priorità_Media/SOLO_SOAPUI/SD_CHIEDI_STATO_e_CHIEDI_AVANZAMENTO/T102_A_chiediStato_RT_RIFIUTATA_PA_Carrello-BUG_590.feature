@@ -567,7 +567,8 @@ Feature: T102_A_chiediStato_RT_RIFIUTATA_PA_Carrello - BUG_590
         And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_RIFIUTATA_PA of the record at column STATUS of the table RE retrived by the query Re_2 on db re under macro Mod1
 
     Scenario: execution nodoInviaRT2
-        Given initial XML nodoInviaRT
+        Given the Execute nodoChiediStatoRPT2 scenario executed successfully
+        And initial XML nodoInviaRT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header/>
