@@ -1387,8 +1387,8 @@ def step_impl(context, param, value):
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     setattr(context, param, value)
-    print(">>>>>>>>>>>>>>>", getattr(param))
-    
+    print(">>>>>>>>>>>>>>>", getattr(context, param))
+
     exec_query = db.executeQuery(conn, selected_query)
     if exec_query is not None:
         print(f'executed query: {exec_query}')
