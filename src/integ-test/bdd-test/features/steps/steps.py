@@ -1101,7 +1101,9 @@ def step_impl(context, sender, method, service, receiver):
                     l = list()
                     l.append(body["positionslist"])
                     body["positionslist"] = l
-        body = json.dumps(body, indent=4)
+            body = json.dumps(body, indent=4)
+        else:
+            body = """{}"""
     print(body)
     body = utils.replace_local_variables(body, context)
     body = utils.replace_context_variables(body, context)
