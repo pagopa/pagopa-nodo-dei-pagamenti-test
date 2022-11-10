@@ -11,7 +11,7 @@ Feature: process test for NM3 with station migration from V1 to V2
             <nod:verifyPaymentNoticeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_old#</idChannel>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
@@ -39,7 +39,7 @@ Feature: process test for NM3 with station migration from V1 to V2
             <nod:activatePaymentNoticeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_old#</idChannel>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
@@ -196,7 +196,7 @@ Feature: process test for NM3 with station migration from V1 to V2
             <nod:sendPaymentOutcomeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_old#</idChannel>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
             <outcome>OK</outcome>

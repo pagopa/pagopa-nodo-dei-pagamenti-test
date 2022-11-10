@@ -16,7 +16,7 @@ Feature: 3Transfers - spo KO - 0 receipt
             <nod:verifyPaymentNoticeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_old#</idChannel>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -73,7 +73,7 @@ Feature: 3Transfers - spo KO - 0 receipt
             <nod:activatePaymentNoticeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_old#</idChannel>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
@@ -188,7 +188,7 @@ Feature: 3Transfers - spo KO - 0 receipt
             <nod:sendPaymentOutcomeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_old#</idChannel>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
             <outcome>KO</outcome>

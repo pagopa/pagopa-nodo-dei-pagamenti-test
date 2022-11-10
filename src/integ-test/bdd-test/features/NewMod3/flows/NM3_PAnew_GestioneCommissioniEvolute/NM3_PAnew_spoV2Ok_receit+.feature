@@ -10,7 +10,7 @@ Feature: process test for NM3 with spoV2 OK and generation of receipt
             <nod:verifyPaymentNoticeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_old#</idChannel>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -38,7 +38,7 @@ Feature: process test for NM3 with spoV2 OK and generation of receipt
             <nod:activatePaymentNoticeV2Request>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_old#</idChannel>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
@@ -68,7 +68,7 @@ Feature: process test for NM3 with spoV2 OK and generation of receipt
             <nod:sendPaymentOutcomeV2Request>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_old#</idChannel>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <paymentTokens>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>

@@ -361,7 +361,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 befo
             <nod:sendPaymentOutcomeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_old#</idChannel>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <paymentToken>$nodoVerificaRPT.codiceContestoPagamento</paymentToken>
             <outcome>OK</outcome>
