@@ -1707,7 +1707,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     if number == 'default_token_duration_validity_millis':
         default = int(
             getattr(context, 'default_token_duration_validity_millis')) / 60000
-        value = (datetime.datetime.today() +
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
                  datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
         selected_query = utils.query_json(context, query_name, name_macro).replace(
             "columns", column).replace("table_name", table_name)
@@ -1743,7 +1743,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
 
     elif 'minutes:' in number:
         min = int(number.split(':')[1]) / 60000
-        value = (datetime.datetime.today() +
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
                  datetime.timedelta(minutes=min)).strftime('%Y-%m-%d %H:%M')
         selected_query = utils.query_json(context, query_name, name_macro).replace(
             "columns", column).replace("table_name", table_name)
@@ -1753,8 +1753,8 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         elem = query_result[0].strftime('%Y-%m-%d %H:%M')
     else:
         number = int(number)
-        value = (datetime.datetime.today() +
-                 datetime.timedelta(days=number)).strftime('%Y-%m-%d')
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
+                 datetime.timedelta(days=number)).strftime('%Y-%m-%d %H:%M')
         selected_query = utils.query_json(context, query_name, name_macro).replace(
             "columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
