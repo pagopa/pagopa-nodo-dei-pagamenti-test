@@ -364,7 +364,7 @@ Feature: syntax checks for closePayment outcome KO
         }
       }
       """
-  @wip
+  
   Scenario: check closePayment OK with 2 tokens
     Given the closePayment 2 tokens scenario executed successfully
     When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
@@ -395,7 +395,7 @@ Feature: syntax checks for closePayment outcome KO
         }
       }
       """
-  @wip
+  
   Scenario: check closePayment without brackets in paymentTokens
     Given the closePayment without brackets in paymentTokens [SIN_CP_03.1] scenario executed successfully
     When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
