@@ -93,17 +93,15 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_22]
   @runnable
-  Scenario Outline: Execute again activatePaymentNotice request right after default_idempotency_key_validity_minutes has passed
-    Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to <minutes>
-    And nodo-dei-pagamenti has config parameter default_token_duration_validity_millis set to 1800000
+  Scenario: Execute again activatePaymentNotice request right after default_idempotency_key_validity_minutes has passed
+    Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1
     And the Execute activatePaymentNotice request scenario executed successfully
-    And PSP waits <minutes> minutes for expiration
+    And PSP waits 70 seconds for expiration
+    And expirationTime with 1000 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
-    Examples:
-      | minutes |
-      | 10      |
+
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_23.1]
   @runnable
@@ -161,28 +159,27 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
   # Activate Phase 2 - different position in second activate [IDMP_ACT_17]
   @runnable
   Scenario Outline: Execute activatePaymentNotice request with different fiscalCode, right after default_idempotency_key_validity_minutes has passed
-    Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to <minutes>
+    Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1
     Given the Execute activatePaymentNotice request scenario executed successfully
+    And wait 70 seconds for expiration
     And fiscalCode with 44444444444 in activatePaymentNotice
-    And PSP waits <minutes> minutes for expiration
+    And PSP waits 1 seconds for expiration
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-    Examples:
-      | minutes |
-      | 10      |
+
 
   # Mod3Cancel Phase - [IDMP_ACT_20]
   @runnable
   Scenario: Execute mod3Cancel poller
     Given expirationTime with 2000 in activatePaymentNotice
     And the Execute activatePaymentNotice request scenario executed successfully
-    When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
+    When job mod3CancelV2 triggered after 3 seconds
+    Then verify the HTTP status code of mod3CancelV2 response is 200
 
   # Activate Phase 2 - different amount - [IDMP_ACT_20]
   @runnable
   Scenario: Execute activatePaymentNotice request with different amount
-    Given the Execute mod3Cancel poller scenario executed successfully
+    Given the Execute mod3CancelV2 poller scenario executed successfully
     And amount with 8.00 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response

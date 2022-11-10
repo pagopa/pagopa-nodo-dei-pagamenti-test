@@ -133,7 +133,6 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
         
     Scenario: Execute ChiediAvanzamento
         Given the RPT generation scenario executed successfully
-        #And wait 70 seconds for expiration
         And initial XML pspChiediAvanzamentoRPT 
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -155,9 +154,9 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
         And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT 
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
         And wait 10 seconds for expiration
-        And replace iuv content with $1iuv content
-        And replace pa content with #creditor_institution_code# content
-        And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
+        #And replace iuv content with $1iuv content
+        #And replace pa content with #creditor_institution_code# content
+        #And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
 
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute ChiediAvanzamento scenario executed successfully
@@ -219,9 +218,9 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
             <pspInviaRPTResponse>
             <fault>
                <faultCode>CANALE_RPT_SCONOSCIUTA</faultCode>
-               <faultString>RPT mai arrivata al PSP</faultString>
+               <faultString>RPT sconosciuta per il PSP</faultString>
                <id>#psp#</id>
-               <description>RPT sconosciuta per il PSP</description>
+               <description>hgggg</description>
             </fault>
             </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>
@@ -231,5 +230,5 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
-        And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaRPT response
+        And check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
        

@@ -1387,6 +1387,7 @@ def step_impl(context, param, value):
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     setattr(context, param, value)
+    print(">>>>>>>>>>>>>>>", getattr(context, param))
 
     exec_query = db.executeQuery(conn, selected_query)
     if exec_query is not None:
@@ -1717,14 +1718,19 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     elif number == 'default_idempotency_key_validity_minutes':
         default = int(
             getattr(context, 'default_idempotency_key_validity_minutes'))
+        print("###################", default)
+        
         value = (datetime.datetime.today() +
                  datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
+        print(">>>>>>>>>>>>>>>>>>>", value)
+
         selected_query = utils.query_json(context, query_name, name_macro).replace(
             "columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d %H:%M')
+
     elif number == 'Today':
         value = (datetime.datetime.today()).strftime('%Y-%m-%d')
         selected_query = utils.query_json(context, query_name, name_macro).replace(
@@ -1733,6 +1739,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d')
+
     elif 'minutes:' in number:
         min = int(number.split(':')[1]) / 60000
         value = (datetime.datetime.today() +

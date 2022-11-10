@@ -3,6 +3,8 @@ Feature: Process for activatePaymentNoticeReq
   Background:
     Given systems up
 
+@runnable
+  #[PRO_APNR_03]
   Scenario: initial nodoattivarpt paold
     Given initial XML nodoAttivaRPT
       """
@@ -18,7 +20,7 @@ Feature: Process for activatePaymentNoticeReq
       <identificativoIntermediarioPSPPagamento>#intermediarioPSP2#</identificativoIntermediarioPSPPagamento>
       <identificativoCanalePagamento>#canale32#</identificativoCanalePagamento>
       <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-      <codiceIdRPT><qrc:QrCode><qrc:CF>#codicePA_old#</qrc:CF><qrc:CodStazPA>02</qrc:CodStazPA><qrc:AuxDigit>0</qrc:AuxDigit><qrc:CodIUV>#iuv#</qrc:CodIUV></qrc:QrCode></codiceIdRPT>
+      <codiceIdRPT><qrc:QrCode><qrc:CF>#creditor_institution_code_old#</qrc:CF><qrc:CodStazPA>02</qrc:CodStazPA><qrc:AuxDigit>0</qrc:AuxDigit><qrc:CodIUV>#iuv#</qrc:CodIUV></qrc:QrCode></codiceIdRPT>
       <datiPagamentoPSP>
       <importoSingoloVersamento>10.00</importoSingoloVersamento>
       <!--Optional:-->
@@ -78,14 +80,11 @@ Feature: Process for activatePaymentNoticeReq
       </soapenv:Body>
       </soapenv:Envelope>
       """
-
-  #pa old
-  @runnable
-  Scenario: PRO_APNR_03
-    Given the initial nodoattivarpt paold scenario executed successfully
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoAttivaRPT response
 
+@runnable
+  #[PRO_APNR_04]
   Scenario: initial nodoattivarpt panew
     Given initial XML nodoAttivaRPT
       """
@@ -101,7 +100,7 @@ Feature: Process for activatePaymentNoticeReq
       <identificativoIntermediarioPSPPagamento>#intermediarioPSP2#</identificativoIntermediarioPSPPagamento>
       <identificativoCanalePagamento>#canale32#</identificativoCanalePagamento>
       <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-      <codiceIdRPT><qrc:QrCode><qrc:CF>#codicePA#</qrc:CF><qrc:AuxDigit>3</qrc:AuxDigit><qrc:CodIUV>#cod_segr##iuv#</qrc:CodIUV></qrc:QrCode></codiceIdRPT>
+      <codiceIdRPT><qrc:QrCode><qrc:CF>#creditor_institution_code#</qrc:CF><qrc:AuxDigit>3</qrc:AuxDigit><qrc:CodIUV>#cod_segr##iuv#</qrc:CodIUV></qrc:QrCode></codiceIdRPT>
       <datiPagamentoPSP>
       <importoSingoloVersamento>10.00</importoSingoloVersamento>
       <!--Optional:-->
@@ -161,11 +160,6 @@ Feature: Process for activatePaymentNoticeReq
       </soapenv:Body>
       </soapenv:Envelope>
       """
-
-  #pa old
-  @runnable
-  Scenario: PRO_APNR_04
-    Given the initial nodoattivarpt panew scenario executed successfully
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode contains PPT_MULTI_BENEFICIARIO of nodoAttivaRPT response
 

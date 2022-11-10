@@ -54,7 +54,18 @@ Feature: process check for activatePaymentNotice - KO
   # Timeout from PA [PRO_APNR_08]
   @runnable
   Scenario: Check PPT_STAZIONE_INT_PA_TIMEOUT error when paGetPaymentRes is in timeout
-    Given EC wait for 30 seconds at paGetPayment
+    Given EC replies to nodo-dei-pagamenti with the paGetPayment
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <paf:paGetPaymentRes>
+      <outcome>OK</outcome>
+      <delay>10000</delay>
+      </paf:paGetPaymentRes>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNotice response

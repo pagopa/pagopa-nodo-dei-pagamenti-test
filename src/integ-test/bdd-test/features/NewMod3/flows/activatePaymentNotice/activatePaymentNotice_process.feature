@@ -3,6 +3,7 @@ Feature: Process for activatePaymentNoticeReq
     Background:
         Given systems up
 
+@runnable
     Scenario: initial activate paold
         And initial XML activatePaymentNotice
             """
@@ -27,14 +28,10 @@ Feature: Process for activatePaymentNoticeReq
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
-    #pa old
-    @runnable
-    Scenario: PRO_APNR_01
-        Given the initial activate paold scenario executed successfully
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
+@runnable
     Scenario: initial activate panew
         Given initial XML activatePaymentNotice
             """
@@ -59,10 +56,5 @@ Feature: Process for activatePaymentNoticeReq
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    
-    #pa new
-    @runnable
-    Scenario: PRO_APNR_02
-        Given the initial activate panew scenario executed successfully
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
