@@ -3,7 +3,11 @@ Feature: process test for NM3 with station migration from V1 to V2
     Background:
         Given systems up
         And EC old version
-        And initial XML verifyPaymentNotice
+
+
+    # Verify phase
+    Scenario: Execute verifyPaymentNotice request
+        Given initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -56,12 +60,8 @@ Feature: process test for NM3 with station migration from V1 to V2
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
-
-    # Verify phase
-    Scenario: Execute verifyPaymentNotice request
-        When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
+        When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
     # Activate Phase
