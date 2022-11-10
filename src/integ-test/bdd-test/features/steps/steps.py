@@ -2769,3 +2769,19 @@ def step_impl(context, name_macro, db_name, query_name, value, column, table_nam
     assert value in query_result, f"check expected element: {value}, obtained: {query_result}"
 
     db.closeConnection(conn)
+
+
+@step("through the query {query_name} convert json {json} at position {position:d} to xml and save it under the key {key}")
+def step_impl(context, query_name, xml, position, key):
+    result_query = getattr(context, query_name)
+    print(f'{query_name}: {result_query}')
+    selected_element = result_query[0][position]
+    selected_element = selected_element.read()
+    selected_element = selected_element.decode("utf-8")
+    
+    jsonDict = json.loads(selected_element)
+    selected_element = utils.json2xml(jsonDict)
+    selected_element = '<root>' + selected_element + '</root>'	
+	
+    print(f'{xml}: {selected_element}')
+    setattr(context, key, selected_element)
