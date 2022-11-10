@@ -1844,6 +1844,17 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d %H:%M')
+    elif number == 'default_durata_estensione_token_IO':
+        default = int(
+            getattr(context, 'default_durata_estensione_token_IO')) / 60000
+        value = (datetime.datetime.today() +
+                 datetime.timedelta(hours = 1, minutes=default)).strftime('%Y-%m-%d %H:%M')
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[0].strftime('%Y-%m-%d %H:%M')
     elif number == 'Today':
         value = (datetime.datetime.today()).strftime('%Y-%m-%d')
         selected_query = utils.query_json(context, query_name, name_macro).replace(
