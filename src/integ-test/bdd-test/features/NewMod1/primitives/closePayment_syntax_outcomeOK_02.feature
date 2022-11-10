@@ -334,7 +334,7 @@ Feature: syntax checks for closePayment outcome OK
 
 
 
-  @wip
+  
   Scenario: closePayment without brackets in paymentTokens [SIN_CP_03.1]
     Given initial JSON v1/closepayment
       """
