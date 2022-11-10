@@ -51,7 +51,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <password>pwdpwdpwd</password>
       <idempotencyKey>$activatePaymentNotice.idempotencyKey</idempotencyKey>
       <qrCode>
-      <fiscalCode>#creditor_institution_code_secondary#</fiscalCode>
+      <fiscalCode>44444444444</fiscalCode>
       <noticeNumber>$activatePaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
       <amount>10.00</amount>
