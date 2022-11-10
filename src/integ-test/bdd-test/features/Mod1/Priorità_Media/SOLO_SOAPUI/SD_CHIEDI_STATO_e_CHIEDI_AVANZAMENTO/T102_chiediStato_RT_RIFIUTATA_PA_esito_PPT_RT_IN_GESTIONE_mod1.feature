@@ -346,7 +346,7 @@ Scenario: execution nodoInviaRT1
         """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
         Then check esito is KO of nodoInviaRT response
-        Then check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
+        And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
     
 @runnable
     Scenario: Execute nodoChiediStatoRPT1
