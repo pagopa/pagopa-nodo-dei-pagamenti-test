@@ -1104,6 +1104,7 @@ def step_impl(context, sender, method, service, receiver):
             body = json.dumps(body, indent=4)
         else:
             body = """{}"""
+            body = json.dumps(body, indent=4)
     print(body)
     body = utils.replace_local_variables(body, context)
     body = utils.replace_context_variables(body, context)
