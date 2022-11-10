@@ -414,7 +414,7 @@ Feature: T101_C_chiediStato_RT_ACCETTATA_PA_Carrello_Annullamento
     Scenario: Execute job paInviaRt
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         When job paInviaRt triggered after 5 seconds
-        And wait 10 seconds for expiration
+        And wait 70 seconds for expiration
 
      
     Scenario: Execute nodoChiediStatoRPT
