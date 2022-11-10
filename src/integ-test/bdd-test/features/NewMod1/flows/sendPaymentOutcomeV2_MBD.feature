@@ -228,13 +228,13 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          </soapenv:Body>
          </soapenv:Envelope>
          """
-   @wip
+   
    # sunny day
    Scenario: execute activatePaymentNoticeV2 1
       Given the activatePaymentNoticeV2 scenario executed successfully
       When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
       Then check outcome is OK of activatePaymentNoticeV2 response
-   @wip
+   
    Scenario: execute closePaymentV2 1
       Given the execute activatePaymentNoticeV2 1 scenario executed successfully
       And the closePaymentV2 scenario executed successfully
@@ -242,7 +242,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
       Then verify the HTTP status code of v2/closepayment response is 200
       And check outcome is OK of v2/closepayment response
       And wait 5 seconds for expiration
-   @wip
+   
    Scenario: execute sendPaymentOutcomeV2 1
       Given the execute closePaymentV2 1 scenario executed successfully
       And the Define MBD scenario executed successfully

@@ -251,3 +251,7 @@ Feature: flow checks for sendPaymentResult
       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
       And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
       And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+      And verify 2 record for the table RE retrived by the query select_sprV1_new on db re under macro AppIO
+      And execution query select_sprV1_new to get value on the table RE, with the columns PAYLOAD under macro AppIO with db name re
+      And through the query select_sprV1_new convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+      And check value $XML_RE.paymentToken is equal to value $activateIOPaymentResponse.paymentToken
