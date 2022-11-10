@@ -255,3 +255,5 @@ Feature: flow checks for sendPaymentResult
       And execution query select_sprV1_new to get value on the table RE, with the columns PAYLOAD under macro AppIO with db name re
       And through the query select_sprV1_new convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
       And check value $XML_RE.paymentToken is equal to value $activateIOPaymentResponse.paymentToken
+      And check value $XML_RE.pspTransactionId is equal to value $psp_transaction_id
+      And check value $XML_RE.outcome is equal to value OK

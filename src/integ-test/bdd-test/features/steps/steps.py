@@ -2775,7 +2775,7 @@ def step_impl(context, name_macro, db_name, query_name, value, column, table_nam
 
 
 @step("through the query {query_name} convert json {json} at position {position:d} to xml and save it under the key {key}")
-def step_impl(context, query_name, xml, position, key):
+def step_impl(context, query_name, json, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
     selected_element = result_query[0][position]
@@ -2786,5 +2786,5 @@ def step_impl(context, query_name, xml, position, key):
     selected_element = utils.json2xml(jsonDict)
     selected_element = '<root>' + selected_element + '</root>'	
 	
-    print(f'{xml}: {selected_element}')
+    print(f'{json}: {selected_element}')
     setattr(context, key, selected_element)
