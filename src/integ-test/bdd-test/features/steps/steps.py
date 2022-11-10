@@ -1434,9 +1434,7 @@ def step_impl(context):
 @step('current date generation')
 def step_impl(context):
     date = (datetime.datetime.now() + datetime.timedelta(hours = 1)).strftime("%Y-%m-%d %H:%M:%S")
-    date_with_microseconds = (datetime.datetime.now() + datetime.timedelta(hours = 1)).strftime("%Y-%m-%d %H:%M:%S.%f")
     setattr(context, 'date', date)
-    setattr(context, 'date_with_microseconds', date_with_microseconds)
 
 @step('current date plus {minutes:d} minutes generation')
 def step_impl(context, minutes):

@@ -630,9 +630,9 @@ Feature: flow checks for closePayment - PA new
       And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       # [TBD] nella POSITION_ACTIVATE la colonna TOKEN_VALID_TO = current_timestamp di esecuzione della closePayment
-      And execution query payment_status to get value on the table POSITION_ACTIVATE, with the columns TOKEN_VALID_TO under macro AppIO with db name nodo_online
-      And through the query payment_status retrieve param TOKEN_VALID_TO at position 0 and save it under the key tokenvalidto
-      And check value $date_with_microseconds is equal to value $tokenvalidto
+      And execution query payment_status to get value on the table POSITION_ACTIVATE, with the columns TO_CHAR(TOKEN_VALID_TO, 'YYYY-MM-DD HH24:MI:SS') under macro AppIO with db name nodo_online
+      And through the query payment_status retrieve param TO_CHAR(TOKEN_VALID_TO, 'YYYY-MM-DD HH24:MI:SS') at position 0 and save it under the key tokenvalidto
+      And check value $date is equal to value $tokenvalidto
 
    Scenario: FLUSSO_CP_03 (part 4)
       Given the FLUSSO_CP_03 (part 3) scenario executed successfully
