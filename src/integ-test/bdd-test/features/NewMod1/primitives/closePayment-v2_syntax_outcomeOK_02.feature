@@ -544,9 +544,9 @@ Feature: syntax checks for closePaymentV2 outcome OK
         And check outcome is KO of v2/closepayment response
         And check description is Invalid request of v2/closepayment response
         Examples:
-            | elem | value | soapUI test |
-    # | totalAmount                 | 12,21 | SIN_CPV2_24   |   gestione della virgola non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
-    # | fee                         | 12,32 | SIN_CPV2_29   |   gestione della virgola non previsto nello step when(u'{sender} sends rest {method:Method} {service} to {receiver}')
+            | elem        | value | soapUI test |
+            | totalAmount | 12,21 | SIN_CPV2_24 |
+            | fee         | 12,32 | SIN_CPV2_29 |
 
 
     # syntax check - Mismatched amount [SIN_CPV2_31.1]

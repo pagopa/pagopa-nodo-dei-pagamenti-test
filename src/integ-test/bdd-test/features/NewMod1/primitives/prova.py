@@ -99,25 +99,18 @@ payload = """
             }
     """
 
-payload2 = """
-    {}
-    """
-# print(type(payload2))
-# print(payload2)
-jsonDict = json.loads(payload2)
-# print(type(jsonDict))
-# print(jsonDict)
-payload = json2xml(jsonDict)
-# print(type(payload))
-# print(payload)
-payload = '<root>' + payload + '</root>'
-# print(payload)
 
-print("inizio step sender")
+
+jsonDict = json.loads(payload)
+payload = json2xml(jsonDict)
+payload = '<root>' + payload + '</root>'
+
+
+#inizio step when sender
+
+#print(payload)
 
 body = xmltodict.parse(payload)
-# print(type(body))
-# print(body)
 body = body["root"]
 
 if body != None:
@@ -138,11 +131,8 @@ if body != None:
             l.append(body["positionslist"])
             body["positionslist"] = l
     body = json.dumps(body, indent=4)
-    print(type(body))
-    #print(body)
-    print("here")
+    
 else:
     body = """{}"""
-    print(type(body))
-    print(body)
-    print("here1")
+
+#print(body)
