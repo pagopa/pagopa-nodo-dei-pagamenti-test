@@ -344,7 +344,8 @@ Feature: flow checks for closePayment - PA new
 
    # FLUSSO_CP_01
    Scenario: FLUSSO_CP_01 (part 1)
-      Given the verifyPaymentNotice scenario executed successfully
+      Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 16000
+      And the verifyPaymentNotice scenario executed successfully
       And the activateIOPayment scenario executed successfully
       When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
       Then check outcome is OK of activateIOPayment response
@@ -356,7 +357,7 @@ Feature: flow checks for closePayment - PA new
       Given the FLUSSO_CP_01 (part 1) scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
-   @wip
+
    Scenario: FLUSSO_CP_01 (part 3)
       Given the FLUSSO_CP_01 (part 2) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -432,7 +433,7 @@ Feature: flow checks for closePayment - PA new
       And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       # [TBD] nella POSITION_ACTIVATE la colonna TOKEN_VALID_TO è aggiornata con il timestamp di esecuzione della closePayment+defaultDurataEstensioneTokenIO
       And check datetime plus number of date default_durata_estensione_token_IO of the record at column TOKEN_VALID_TO of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-
+   @wip
    Scenario: FLUSSO_CP_01 (part 4)
       Given the FLUSSO_CP_01 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -505,7 +506,6 @@ Feature: flow checks for closePayment - PA new
       And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
       And check value $XML_DB.key is equal to value $paGetPayment.key
       And check value $XML_DB.value is equal to value $paGetPayment.value
-
 
    # FLUSSO_CP_02
    Scenario: FLUSSO_CP_02 (part 1)
