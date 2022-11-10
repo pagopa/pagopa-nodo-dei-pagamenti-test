@@ -466,14 +466,12 @@ Feature: Commissioni evolute process
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @wip
     # sendPaymentOutcome - sunny day
     Scenario: Execute activate 10
         Given the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        
-    @wip   
+
     Scenario: Execute sendPaymentOutcomeV2
         Given the Execute activate 10 scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
