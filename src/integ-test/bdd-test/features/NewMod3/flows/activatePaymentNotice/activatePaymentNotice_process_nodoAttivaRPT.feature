@@ -17,8 +17,8 @@ Feature: Process for activatePaymentNoticeReq
       <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
       <password>pwdpwdpwd</password>
       <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
-      <identificativoIntermediarioPSPPagamento>#intermediarioPSP2#</identificativoIntermediarioPSPPagamento>
-      <identificativoCanalePagamento>#canale32#</identificativoCanalePagamento>
+      <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
+      <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
       <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
       <codiceIdRPT><qrc:QrCode><qrc:CF>#creditor_institution_code_old#</qrc:CF><qrc:CodStazPA>02</qrc:CodStazPA><qrc:AuxDigit>0</qrc:AuxDigit><qrc:CodIUV>#iuv#</qrc:CodIUV></qrc:QrCode></codiceIdRPT>
       <datiPagamentoPSP>
@@ -97,8 +97,8 @@ Feature: Process for activatePaymentNoticeReq
       <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
       <password>pwdpwdpwd</password>
       <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
-      <identificativoIntermediarioPSPPagamento>#intermediarioPSP2#</identificativoIntermediarioPSPPagamento>
-      <identificativoCanalePagamento>#canale32#</identificativoCanalePagamento>
+      <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
+      <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
       <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
       <codiceIdRPT><qrc:QrCode><qrc:CF>#creditor_institution_code#</qrc:CF><qrc:AuxDigit>3</qrc:AuxDigit><qrc:CodIUV>#cod_segr##iuv#</qrc:CodIUV></qrc:QrCode></codiceIdRPT>
       <datiPagamentoPSP>

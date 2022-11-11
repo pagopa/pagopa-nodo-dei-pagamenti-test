@@ -42,7 +42,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     Then check outcome is OK of activatePaymentNotice response
 
   # [SEM_APNR_20.1]
-  @fix
+  @runnable
   Scenario: Execute again activatePaymentNotice request with different fiscalCode
     Given the Execute activatePaymentNotice request scenario executed successfully
     And fiscalCode with #creditor_institution_code_secondary# in activatePaymentNotice
