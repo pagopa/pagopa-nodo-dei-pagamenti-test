@@ -235,13 +235,22 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
         And verify the HTTP status code of v2/closepayment response is 200
 
 
+    # check db
+    Scenario: DB check1
+        Given the Execute a closePayment-v2 request scenario executed successfully
+        And wait 30 seconds for expiration
+        # POSITION_PAYMENT_STATUS
+        Then verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_SEND_ERROR,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+        # POSITION_STATUS
+        And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
+        # POSITION_STATUS_SNAPSHOT
+        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+        # RE
+        And verify 2 record for the table RE retrived by the query select_sprV2_new on db re under macro sendPaymentResultV2
+        And checks the value REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_sprV2_new on db re under macro sendPaymentResultV2
 
-
-# check db
-#Scenario: DB check1
-#Given the Execute sendPaymentOutcome request scenario executed successfully
-#Then verify 1 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-#And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
-#And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-
-# implementare gli altri DB check sugli stati e i check su RE per verificare che la sendPaymentResult-v2 sia inviata
+# implementare i check su RE per verificare che la sendPaymentResult-v2 inviata sia corretta (sul campo blob)
