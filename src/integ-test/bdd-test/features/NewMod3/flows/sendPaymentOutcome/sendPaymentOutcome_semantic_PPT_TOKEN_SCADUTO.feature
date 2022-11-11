@@ -29,16 +29,16 @@ Feature: semantic checks for sendPaymentOutcomeReq - PPT_TOKEN_SCADUTO [SEM_SPO_
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-	# Mod3Cancel Phase
-  Scenario: Execute mod3Cancel poller
+	# mod3CancelV2 Phase
+  Scenario: Execute mod3CancelV2 poller
     Given the Execute activatePaymentNotice request scenario executed successfully
-    When job mod3Cancel triggered after 5 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
+    When job mod3CancelV2 triggered after 5 seconds
+    Then verify the HTTP status code of mod3CancelV2 response is 200
 
 @runnable
 	# sendPaymentOutcomeReq phase
   Scenario: Execute sendPaymentOutcome
-    Given the Execute mod3Cancel poller scenario executed successfully
+    Given the Execute mod3CancelV2 poller scenario executed successfully
     And initial XML sendPaymentOutcome
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">

@@ -1,26 +1,23 @@
+import base64 as b64
 import datetime
-import pytz
-from datetime import timedelta
 import json
-from multiprocessing.sharedctypes import Value
 import os
 import random
-from sre_constants import ASSERT
+import threading
 import time
+from datetime import timedelta
+from multiprocessing.sharedctypes import Value
+from sre_constants import ASSERT
 from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
-import base64 as b64
-import json_operations as jo
-import threading
 
+import db_operation as db
+import json_operations as jo
+import pytz
 import requests
+import utils as utils
 from behave import *
 from requests.exceptions import RetryError
-
-
-import utils as utils
-import db_operation as db
-
 
 # Constants
 RESPONSE = "Response"
