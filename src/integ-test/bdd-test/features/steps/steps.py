@@ -1963,7 +1963,8 @@ def step_impl(context, condition, param):
 @step('check value {value1} is {condition} value {value2}')
 def step_impl(context, value1, condition, value2):
 
-    value1 = value1.strip()
+    value1 = str(value1.strip())
+    value2 = str(value2)
 
     value1 = utils.replace_local_variables(value1, context)
     value1 = utils.replace_context_variables(value1, context)
