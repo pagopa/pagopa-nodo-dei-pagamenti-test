@@ -313,7 +313,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             </soapenv:Envelope>
             """
         And wait 21 seconds for expiration
-        When psp sends sendPaymentOutcome to nodo-dei-pagamenti
+        When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
     # check db
