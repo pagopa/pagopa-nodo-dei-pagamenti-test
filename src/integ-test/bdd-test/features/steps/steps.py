@@ -776,6 +776,7 @@ def step_impl(context, job_name, seconds):
     seconds = utils.replace_local_variables(seconds, context)
     time.sleep(int(seconds))
     url_nodo = utils.get_rest_url_nodo(context)
+    print(">>>>>>>>>>>>>>>>>>", url_nodo)
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
     #DA UTILIZZARE IN LOCALE (DECOMMENTARE RIGA 784-785 E COMMENTARE RIGA 787-788)
     #nodo_response = requests.get(
