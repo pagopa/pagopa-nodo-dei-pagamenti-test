@@ -1963,19 +1963,19 @@ def step_impl(context, condition, param):
 @step('check value {value1} is {condition} value {value2}')
 def step_impl(context, value1, condition, value2):
 
-    value1 = str(value1.strip())
-    value2 = str(value2)
-    print("value1: ", value1)
-    print("type value1: ", type(value1))
-    print("value2: ", value2)
-    print("type value2: ", type(value2))
-
     value1 = utils.replace_local_variables(value1, context)
     value1 = utils.replace_context_variables(value1, context)
     value1 = utils.replace_global_variables(value1, context)
     value2 = utils.replace_local_variables(value2, context)
     value2 = utils.replace_context_variables(value2, context)
     value2 = utils.replace_global_variables(value2, context)
+
+    value1 = str(value1.strip())
+    value2 = str(value2)
+    print("value1: ", value1)
+    print("type value1: ", type(value1))
+    print("value2: ", value2)
+    print("type value2: ", type(value2))
 
     if condition == 'equal to':
         assert value1 == value2, f"{value1} != {value2}"
@@ -1987,6 +1987,7 @@ def step_impl(context, value1, condition, value2):
         assert value2 in value1, f"{value1} contains {value2}"
     else:
         assert False
+
 
 @step("calling primitive {primitive1} {restType1} and {primitive2} {restType2} in parallel")
 def step_impl(context, primitive1, primitive2, restType1, restType2):
