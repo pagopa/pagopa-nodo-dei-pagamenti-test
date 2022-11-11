@@ -48,7 +48,6 @@ def requests_retry_session(
 
 
 def get_soap_url_nodo(context, primitive=-1):
-    base_path = "/nodo"
     primitive_mapping = {
         "verificaBollettino": "/node-for-psp/v1",
         "verifyPaymentNotice": "/node-for-psp/v1",
@@ -76,13 +75,13 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoInviaRT": "/nodo-per-psp/v1",
         "nodoPAChiediInformativaPA": "/nodo-per-pa/v1",
     }
-    if "soap_service" in context.config.userdata.get("services").get("nodo-dei-pagamenti"):
+    #"soap_service" in
+    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") == "":
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
             + context.config.userdata.get("services").get(
                 "nodo-dei-pagamenti").get("soap_service")
     else:
-        return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
-            + base_path + primitive_mapping.get(primitive)
+        return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
 
 
 def get_rest_url_nodo(context):
