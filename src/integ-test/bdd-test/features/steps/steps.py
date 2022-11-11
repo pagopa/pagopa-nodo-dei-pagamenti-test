@@ -775,7 +775,7 @@ def step_impl(context, sender, soap_primitive, receiver):
 def step_impl(context, job_name, seconds):
     seconds = utils.replace_local_variables(seconds, context)
     time.sleep(int(seconds))
-    url_nodo = utils.get_rest_url_nodo(context)
+    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
     print(">>>>>>>>>>>>>>>>>>", url_nodo)
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
     #DA UTILIZZARE IN LOCALE (DECOMMENTARE RIGA 784-785 E COMMENTARE RIGA 787-788)
@@ -1406,7 +1406,7 @@ def step_impl(context, param, value):
 
 @step("refresh job {job_name} triggered after 10 seconds")
 def step_impl(context, job_name):
-    url_nodo = utils.get_rest_url_nodo(context)
+    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
     #DA UTILIZZARE IN LOCALE (DECOMMENTARE RIGA 1414-1415 E COMMENTARE RIGA 1417-1418)
     #nodo_response = requests.get(
