@@ -8,7 +8,8 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
 
   Scenario: Execute activatePaymentNotice request
-    Given initial XML activatePaymentNotice
+    Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr# 
+    And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
@@ -21,7 +22,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-      <noticeNumber>#notice_number_old#</noticeNumber>
+      <noticeNumber>$1noticeNumber</noticeNumber>
       </qrCode>
       <amount>10.00</amount>
       <paymentNote>causale</paymentNote>
@@ -34,9 +35,10 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And save activatePaymentNotice response in activatePaymentNotice1
     And saving activatePaymentNotice request in activatePaymentNotice1
 
+@runnable
   Scenario: Execute activatePaymentNotice1 request
     Given the Execute activatePaymentNotice request scenario executed successfully
-    And PSP waits 70 seconds for expiration
+    And wait 70 seconds for expiration
     And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -49,7 +51,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <password>pwdpwdpwd</password>
       <idempotencyKey>$activatePaymentNotice.idempotencyKey</idempotencyKey>
       <qrCode>
-      <fiscalCode>#creditor_institution_code_secondary#</fiscalCode>
+      <fiscalCode>44444444444</fiscalCode>
       <noticeNumber>$activatePaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
       <amount>10.00</amount>
@@ -63,11 +65,8 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And save activatePaymentNotice response in activatePaymentNotice2
     And saving activatePaymentNotice request in activatePaymentNotice2
 
-  #DB check
-  @runnable
-  Scenario: Execute activatePaymentNotice request
-    Given the Execute activatePaymentNotice1 request scenario executed successfully
+    #DB check
     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken1 on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice1.fiscalCode of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken1 on db nodo_online under macro NewMod3
-     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken2 on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken2 on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice2.fiscalCode of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken2 on db nodo_online under macro NewMod3
