@@ -252,9 +252,8 @@ Feature: T103_D_chiediStato_RT_ESITO_SCONOSCIUTO_PA_annullamento
                 </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        When job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 5 seconds
-        Then wait 70 seconds for expiration
+        When job paInviaRt triggered after 5 seconds
+        Then wait 7 seconds for expiration
 
 
      Scenario: Execute nodoChiediStatoRPT
@@ -279,8 +278,8 @@ Feature: T103_D_chiediStato_RT_ESITO_SCONOSCIUTO_PA_annullamento
         Then checks stato contains RT_ESITO_SCONOSCIUTO_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
        
  
