@@ -390,6 +390,12 @@ def step_impl(context, number):
         payload = payload.replace(f'#iUV{number}#', iuv)
         setattr(context, f'{number}iUV', iuv)
 
+    if '#IUV_{number}#' in payload:
+        IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' +  datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+        payload = payload.replace('#IUV_{number}#', IUV_)
+        setattr(context, f'{number}IUV_', IUV_)
+
+
     if f"#ccp{number}#" in payload:
         ccp = str(int(time.time() * 1000))
         payload = payload.replace(f'#ccp{number}#', ccp)
