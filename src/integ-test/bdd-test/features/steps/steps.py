@@ -1972,10 +1972,6 @@ def step_impl(context, value1, condition, value2):
 
     value1 = str(value1.strip())
     value2 = str(value2)
-    print("value1: ", value1)
-    print("type value1: ", type(value1))
-    print("value2: ", value2)
-    print("type value2: ", type(value2))
 
     if condition == 'equal to':
         assert value1 == value2, f"{value1} != {value2}"
@@ -2796,3 +2792,28 @@ def step_impl(context, query_name, json_elem, position, key):
 	
     print(f'{json_elem}: {selected_element}')
     setattr(context, key, selected_element)
+
+
+@step('checking value {value1} is {condition} value {value2}')
+def step_impl(context, value1, condition, value2):
+
+    value1 = utils.replace_local_variables(value1, context)
+    value1 = utils.replace_context_variables(value1, context)
+    value1 = utils.replace_global_variables(value1, context)
+    value2 = utils.replace_local_variables(value2, context)
+    value2 = utils.replace_context_variables(value2, context)
+    value2 = utils.replace_global_variables(value2, context)
+
+    value1 = str(value1.strip())
+    value2 = str(value2)
+
+    if condition == 'equal to':
+        assert value1 == value2, f"{value1} != {value2}"
+    elif condition == 'greater than':
+        assert value1 > value2, f"{value1} <= {value2}"
+    elif condition == 'smaller than':
+        assert value1 < value2, f"{value1} >= {value2}"
+    elif condition == 'containing':
+        assert value2 in value1, f"{value1} contains {value2}"
+    else:
+        assert False
