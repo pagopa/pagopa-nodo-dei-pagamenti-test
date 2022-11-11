@@ -51,7 +51,7 @@ stages:
 
               #replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo-pagamenti/api/v1"
               replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo"
-              replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  ""
+              #replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  ""
               replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  "/nodo-per-pm/v1"
               replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/config/refresh/CONFIG"
 
@@ -179,7 +179,7 @@ stages:
 
               # Lorenzo  
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/activatePaymentNotice $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/sendPaymentOutcome --tags=runnable
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/activatePaymentNotice --tags=runnable
+              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/activatePaymentNotice --tags=runnable
 
               # Alessandro
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/nodoInviaRT/IRTSIN.feature --tags=runnable
