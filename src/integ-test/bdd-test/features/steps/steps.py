@@ -1754,7 +1754,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     else:
         number = int(number)
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
-                 datetime.timedelta(days=number)).strftime('%Y-%m-%d %H:%M')
+                 datetime.timedelta(days=number)).strftime('%Y-%m-%d')
         selected_query = utils.query_json(context, query_name, name_macro).replace(
             "columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
