@@ -49,7 +49,6 @@ stages:
 
               file=$(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/config.json
 
-              #replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo-pagamenti/api/v1"
               replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo"
               #replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  ""
               replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  "/nodo-per-pm/v1"
