@@ -333,4 +333,4 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         # RE
         And verify 2 record for the table RE retrived by the query select_sprV2_new on db re under macro sendPaymentResultV2
-        And checks the value REQ,RESP of the record at column TIPO_EVENTO of the table RE retrived by the query select_sprV2_new on db re under macro sendPaymentResultV2
+        And checks the value REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_sprV2_new on db re under macro sendPaymentResultV2
