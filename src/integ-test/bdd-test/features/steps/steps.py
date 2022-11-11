@@ -780,8 +780,12 @@ def step_impl(context, job_name, seconds):
     time.sleep(int(seconds))
     url_nodo = utils.get_rest_url_nodo(context)
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    #DA UTILIZZARE IN LOCALE (DECOMMENTARE RIGA 784-785 E COMMENTARE RIGA 787-788)
+    #nodo_response = requests.get(
+        #f"{url_nodo}/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
+    #pipeline
     nodo_response = requests.get(
-        f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
+        f"{url_nodo}/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
 
 
@@ -1406,8 +1410,12 @@ def step_impl(context, param, value):
 def step_impl(context, job_name):
     url_nodo = utils.get_rest_url_nodo(context)
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    #DA UTILIZZARE IN LOCALE (DECOMMENTARE RIGA 1414-1415 E COMMENTARE RIGA 1417-1418)
+    #nodo_response = requests.get(
+        #f"{url_nodo}/config/refresh/{job_name}", headers=headers, verify=False)
+    #pipeline
     nodo_response = requests.get(
-        f"{url_nodo}/config/refresh/{job_name}", headers=headers, verify=False)
+        f"{url_nodo}/monitoring/v1/config/refresh/{job_name}", headers=headers, verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
     refresh_response = requests.get(utils.get_refresh_config_url(
         context), headers=headers, verify=False)
