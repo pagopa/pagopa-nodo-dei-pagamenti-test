@@ -76,7 +76,7 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoPAChiediInformativaPA": "/nodo-per-pa/v1",
     }
     #"soap_service" in
-    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") == "":
+    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") == " ":
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
             + context.config.userdata.get("services").get(
                 "nodo-dei-pagamenti").get("soap_service")
