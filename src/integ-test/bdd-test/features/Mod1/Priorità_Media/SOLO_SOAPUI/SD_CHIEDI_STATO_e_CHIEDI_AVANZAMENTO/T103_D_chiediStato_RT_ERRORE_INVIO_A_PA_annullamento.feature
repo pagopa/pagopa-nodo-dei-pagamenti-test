@@ -264,8 +264,8 @@ Feature: T103_D_chiediStato_RT_ERRORE_INVIO_A_PA_annullamento
         Then checks stato contains RT_ERRORE_INVIO_A_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
@@ -291,9 +291,9 @@ Scenario: execution nodoInviaRPT1
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+           <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
