@@ -187,6 +187,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And amount with 8.00 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
+    And restore initial configurations
 
   # IdempotencyCacheClean Phase [IDMP_ACT_23]
   Scenario: Execute idempotencyCacheClean poller

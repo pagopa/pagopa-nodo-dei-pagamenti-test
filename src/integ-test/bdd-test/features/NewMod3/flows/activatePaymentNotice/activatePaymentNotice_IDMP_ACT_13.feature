@@ -4,7 +4,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     Given systems up
     And nodo-dei-pagamenti has config parameter useIdempotency set to true
 
-
+  @runnable
   Scenario: Execute activatePaymentNotice request
     Given initial XML activatePaymentNotice
       """
@@ -32,9 +32,6 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And check faultCode is PPT_PSP_SCONOSCIUTO of activatePaymentNotice response
 
   #DB check
-  @runnable
-  Scenario: DB check
-    Given the Execute activatePaymentNotice request scenario executed successfully
     And check datetime plus number of date 1 of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_act on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_act on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_act on db nodo_online under macro NewMod3

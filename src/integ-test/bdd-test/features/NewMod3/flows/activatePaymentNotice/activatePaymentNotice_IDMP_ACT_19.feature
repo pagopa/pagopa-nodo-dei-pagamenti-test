@@ -35,6 +35,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And save activatePaymentNotice response in activatePaymentNotice1
     And saving activatePaymentNotice request in activatePaymentNotice1
   
+  @runnable
   Scenario: Execute activatePaymentNotice2 request
     Given the Execute activatePaymentNotice request scenario executed successfully 
     And PSP waits expirationTime of activatePaymentNotice expires 
@@ -64,9 +65,6 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
 
   #DB check
-  @runnable
-  Scenario: DB check
-    Given the Execute activatePaymentNotice2 request scenario executed successfully
     And check datetime plus number of date 1 of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3

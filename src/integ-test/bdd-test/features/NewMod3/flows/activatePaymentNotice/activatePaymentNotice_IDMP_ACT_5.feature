@@ -30,6 +30,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
+  @runnable
   Scenario: Execute activatePaymentNotice1 request
     Given the Execute activatePaymentNotice request scenario executed successfully
     And initial XML activatePaymentNotice
@@ -58,9 +59,6 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     Then check outcome is OK of activatePaymentNotice response
 
   #DB check
-  @runnable
-  Scenario: Execute activatePaymentNotice request
-    Given the Execute activatePaymentNotice1 request scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_pay on db nodo_online under macro NewMod3
     And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_pay on db nodo_online under macro NewMod3
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
