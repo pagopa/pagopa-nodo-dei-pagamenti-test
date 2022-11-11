@@ -6,7 +6,7 @@ Feature: Semantic checks for sendPaymentOutcome - OUTCOME KO [SEM_SPO_22]
 
   # activatePaymentNoticeReq phase
   Scenario: Execute activatePaymentNotice request
-    Given initial XML activatePaymentNotice_1
+    Given initial XML activatePaymentNotice
     """      
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
@@ -27,8 +27,8 @@ Feature: Semantic checks for sendPaymentOutcome - OUTCOME KO [SEM_SPO_22]
       </soapenv:Body>
     </soapenv:Envelope>
     """
-    When PSP sends SOAP activatePaymentNotice_1 to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice_1 response
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
     
     # sendPaymentOutcomeReq phase
   Scenario: Execute a sendPaymentOutcome request
@@ -43,7 +43,7 @@ Feature: Semantic checks for sendPaymentOutcome - OUTCOME KO [SEM_SPO_22]
           <idBrokerPSP>#psp#</idBrokerPSP>
           <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
-          <paymentToken>$activatePaymentNotice_1Response.paymentToken</paymentToken>
+          <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
           <outcome>KO</outcome>
           <!--Optional:-->
           <details>
@@ -87,7 +87,7 @@ Feature: Semantic checks for sendPaymentOutcome - OUTCOME KO [SEM_SPO_22]
   # activatePaymentNoticeReq phase 2
   Scenario: Execute a new activatePaymentNotice request
     Given the Execute a sendPaymentOutcome request scenario executed successfully
-    And initial XML activatePaymentNotice_2
+    And initial XML activatePaymentNotice
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
@@ -99,8 +99,8 @@ Feature: Semantic checks for sendPaymentOutcome - OUTCOME KO [SEM_SPO_22]
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
           <qrCode>
-            <fiscalCode>$activatePaymentNotice_1.fiscalCode</fiscalCode>
-            <noticeNumber>$activatePaymentNotice_1.noticeNumber</noticeNumber>
+            <fiscalCode>$activatePaymentNotice.fiscalCode</fiscalCode>
+            <noticeNumber>$activatePaymentNotice.noticeNumber</noticeNumber>
           </qrCode>
           <expirationTime>60000</expirationTime>
           <amount>10.00</amount>
@@ -108,5 +108,5 @@ Feature: Semantic checks for sendPaymentOutcome - OUTCOME KO [SEM_SPO_22]
       </soapenv:Body>
     </soapenv:Envelope>
     """
-    When PSP sends SOAP activatePaymentNotice_2 to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice_2 response
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
