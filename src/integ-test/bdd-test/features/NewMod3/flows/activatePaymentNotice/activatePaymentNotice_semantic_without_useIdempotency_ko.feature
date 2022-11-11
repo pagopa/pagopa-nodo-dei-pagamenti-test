@@ -80,7 +80,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_22.1]
-  @fix
+  @runnable
   Scenario: Execute again activatePaymentNotice request right after default_idempotency_key_validity_minutes has passed
     Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1
     And the Execute activatePaymentNotice request scenario executed successfully
