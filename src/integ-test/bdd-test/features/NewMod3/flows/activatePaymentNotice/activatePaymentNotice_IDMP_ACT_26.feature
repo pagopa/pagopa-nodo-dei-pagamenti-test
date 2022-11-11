@@ -28,3 +28,4 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_paymentToken on db nodo_online under macro NewMod3
+    And restore initial configurations

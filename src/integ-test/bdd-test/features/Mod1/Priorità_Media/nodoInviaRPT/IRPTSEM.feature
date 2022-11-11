@@ -1651,4 +1651,3 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_CANALE_TIMEOUT of nodoInviaRPT response
-

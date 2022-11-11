@@ -6,7 +6,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
 
   # Activate Phase 1
   Scenario: Execute activatePaymentNotice1 request
-    Given initial XML activatePaymentNotice_1
+    Given initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -29,14 +29,15 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
          </soapenv:Body>
       </soapenv:Envelope>
       """
-    When PSP sends SOAP activatePaymentNotice_1 to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice_1 response
-    And call the paymentToken of activatePaymentNotice_1 response as paymentTokenPhase1
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+    And call the paymentToken of activatePaymentNotice response as paymentTokenPhase1
+    And saving activatePaymentNotice request in activatePaymentNotice1
 
   # Activate Phase 2
   Scenario: Execute activatePaymentNotice2 request on different position with different idempotencyKey
     Given the Execute activatePaymentNotice1 request scenario executed successfully
-    And initial XML activatePaymentNotice_2
+    And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -62,6 +63,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP activatePaymentNotice_2 to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice_2 response
     And call the paymentToken of activatePaymentNotice_2 response as paymentTokenPhase2
+    And saving activatePaymentNotice request in activatePaymentNotice2
 
   # Send payment outcome Phase - outcome OK [IDMP_SPO_18]
   Scenario: Execute sendPaymentOutcome request with outcome OK on token of Activate Phase 2

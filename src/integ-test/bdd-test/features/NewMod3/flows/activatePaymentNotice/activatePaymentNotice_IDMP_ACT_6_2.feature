@@ -32,6 +32,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And save activatePaymentNotice response in activatePaymentNotice1
     And saving activatePaymentNotice request in activatePaymentNotice1
 
+  @runnable
   Scenario: Execute activatePaymentNotice1 request
     Given the Execute activatePaymentNotice request scenario executed successfully
     And initial XML activatePaymentNotice
@@ -61,9 +62,6 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNotice response
 
   #DB check
-  @runnable
-  Scenario: Execute activatePaymentNotice request
-    Given the Execute activatePaymentNotice1 request scenario executed successfully
     And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
     And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
     And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_1 on db nodo_online under macro NewMod3
@@ -71,11 +69,4 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And checks the value NotNone of the record at column ID of the table POSITION_ACTIVATE retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT retrived by the query payment_status_pay_only_act1 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_act on db nodo_online under macro NewMod3
-
-
-
-
-
-
-
-
+    And restore initial configurations

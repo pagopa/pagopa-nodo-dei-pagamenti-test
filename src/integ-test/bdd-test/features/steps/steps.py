@@ -741,10 +741,10 @@ def step_impl(context, attribute, value, elem, primitive):
 
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
-    primitive = soap_primitive.split("_")[0]
-    headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+    #primitive = soap_primitive.split("_")[0]
+    headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive,
                'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
-    url_nodo = utils.get_soap_url_nodo(context, primitive)
+    url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
@@ -1754,7 +1754,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     else:
         number = int(number)
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
-                 datetime.timedelta(days=number)).strftime('%Y-%m-%d %H:%M')
+                 datetime.timedelta(days=number)).strftime('%Y-%m-%d')
         selected_query = utils.query_json(context, query_name, name_macro).replace(
             "columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
@@ -1776,7 +1776,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     number = int(number) / 60000
-    value = (datetime.datetime.today() +
+    value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
              datetime.timedelta(minutes=number)).strftime('%Y-%m-%d %H:%M')
     selected_query = utils.query_json(context, query_name, name_macro).replace(
         "columns", column).replace("table_name", table_name)
