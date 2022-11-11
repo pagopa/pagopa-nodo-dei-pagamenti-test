@@ -46,6 +46,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
   Scenario: Execute again activatePaymentNotice request with different fiscalCode
     Given the Execute activatePaymentNotice request scenario executed successfully
     And fiscalCode with #creditor_institution_code_secondary# in activatePaymentNotice
+    And expirationTime with 60000 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     And nodo-dei-pagamenti has config parameter useIdempotency set to false
