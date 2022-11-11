@@ -74,7 +74,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - not us
                         <!--1 to 5 repetitions:-->
                         <transfer>
                             <idTransfer>1</idTransfer>
-                            <transferAmount>3.00</transferAmount>
+                            <transferAmount>10.00</transferAmount>
                             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
                             <IBAN>IT45R0760103200000000001016</IBAN>
                             <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -150,3 +150,4 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - not us
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
+    And restore initial configurations

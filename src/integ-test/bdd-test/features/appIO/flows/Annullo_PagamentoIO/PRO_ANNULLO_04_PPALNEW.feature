@@ -4,7 +4,7 @@ Feature: FLUSSO_APIO_04_PPALNEW
         Given systems up
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
-    Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 8000
+    Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 8000
         And initial XML verifyPaymentNotice
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -100,7 +100,7 @@ Feature: FLUSSO_APIO_04_PPALNEW
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
+        When WISP sends rest POST inoltroEsito/paypal to nodo-dei-pagamenti
             """
             {
                 "idTransazione": "responseKO",

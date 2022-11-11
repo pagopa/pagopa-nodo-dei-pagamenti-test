@@ -39,6 +39,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+    And restore initial configurations
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_20.1]
   @runnable
@@ -48,6 +49,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+    And restore initial configurations
     Examples:
       | elem           | value        | soapUI test            |
       | amount         | 12.00        | amount diverso         |
@@ -67,6 +69,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+    And restore initial configurations
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO SEM_APNR_21.3]
   @runnable
@@ -78,6 +81,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+    And restore initial configurations
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_22.1]
   @runnable
@@ -89,4 +93,4 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
-
+    And restore initial configurations
