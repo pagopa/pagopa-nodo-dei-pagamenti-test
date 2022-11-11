@@ -40,6 +40,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+    And restore initial configurations
 
   # Activate Phase 2 - PPT_ERRORE_IDEMPOTENZA [SEM_APNR_20]
   Scenario: Execute again the activatePaymentNotice request with same idempotencyKey before it expires
@@ -57,6 +58,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNotice response
+    And restore initial configurations
     Examples:
       | elem           | value        | soapUI test            |
       | fiscalCode     | 44444444444  | fiscalCodePA diverso   |
@@ -77,7 +79,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
-
+    And restore initial configurations
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO SEM_APNR_21.1]
   @runnable
@@ -89,6 +91,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+    And restore initial configurations
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_22]
   @runnable
@@ -100,7 +103,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
-
+    And restore initial configurations
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_23.1]
   @runnable
@@ -110,6 +113,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+    And restore initial configurations
 
   # Activate Phase 1 - syntax error: no value of idPSP [IDMP_ACT_15.1]
   Scenario: Execute activatePaymentNotice request with an empty idPSP
@@ -125,6 +129,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And idPSP with #psp# in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
+    And restore initial configurations
 
   # Activate Phase 1 - semantic error: wrong password [IDMP_ACT_15.2]
   Scenario: Execute activatePaymentNotice request with wrong password
@@ -141,6 +146,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNotice response
+    And restore initial configurations
 
   # Activate Phase 2 - different PSP in second activate [IDMP_ACT_16.1]
   @runnable
@@ -152,6 +158,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+    And restore initial configurations
 
   # Activate Phase 2 - different position in second activate [IDMP_ACT_17]
   @runnable
@@ -163,6 +170,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And PSP waits 1 seconds for expiration
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
+    And restore initial configurations
 
 
   # Mod3Cancel Phase - [IDMP_ACT_20]
@@ -196,6 +204,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
+    And restore initial configurations
 
   # Activate Phase 2 - different amount - Not idempotency cache clean [IDMP_ACT_24]
   @runnable

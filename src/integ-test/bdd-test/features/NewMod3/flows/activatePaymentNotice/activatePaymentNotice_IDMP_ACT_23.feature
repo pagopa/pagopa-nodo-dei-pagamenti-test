@@ -70,3 +70,4 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     Then verify the HTTP status code of idempotencyCacheClean response is 200
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken1 on db nodo_online under macro NewMod3
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken2 on db nodo_online under macro NewMod3
+    And restore initial configurations
