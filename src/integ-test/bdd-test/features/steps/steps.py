@@ -1965,6 +1965,10 @@ def step_impl(context, value1, condition, value2):
 
     value1 = str(value1.strip())
     value2 = str(value2)
+    print("value1: ", value1)
+    print("type value1: ", type(value1))
+    print("value2: ", value2)
+    print("type value2: ", type(value2))
 
     value1 = utils.replace_local_variables(value1, context)
     value1 = utils.replace_context_variables(value1, context)
