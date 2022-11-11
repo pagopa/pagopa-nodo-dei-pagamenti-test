@@ -1,7 +1,7 @@
 Feature: flow checks for sendPaymentResult
 
    Background:
-      Given systems up
+      Given systems upp
       And initial XML verifyPaymentNotice
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -272,7 +272,6 @@ Feature: flow checks for sendPaymentResult
       Given the activateIOPayment scenario executed successfully
       When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
       Then check outcome is OK of activateIOPayment response
-      
       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value #psp_AGID# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
 
