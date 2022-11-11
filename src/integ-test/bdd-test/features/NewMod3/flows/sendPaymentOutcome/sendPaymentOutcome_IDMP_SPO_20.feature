@@ -112,6 +112,6 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
       </soapenv:Envelope>
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is KO of sendPaymentOutcome response
+    Then check outcome is OK of sendPaymentOutcome response
     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_psp_1 on db nodo_online under macro NewMod3
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_psp_2 on db nodo_online under macro NewMod3

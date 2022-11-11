@@ -4,6 +4,7 @@ Feature: process tests for 2 RPT da 1 Versamenti
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
         And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
+        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And RPT generation
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -189,7 +190,7 @@ Feature: process tests for 2 RPT da 1 Versamenti
                 <ppt:intestazioneCarrelloPPT>
                     <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                    <identificativoCarrello>#CARRELLO#</identificativoCarrello>
+                    <identificativoCarrello>$1carrello</identificativoCarrello>
                 </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -231,7 +232,7 @@ Feature: process tests for 2 RPT da 1 Versamenti
             </soapenv:Body>
         </soapenv:Envelope>
         """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        #And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
@@ -250,11 +251,11 @@ Feature: process tests for 2 RPT da 1 Versamenti
         And check codiceFiscale is RCCGLD09P09H502E of informazioniPagamento response
         And check oggettoPagamento contains Causali multiple di versamento of informazioniPagamento response
         And check importoTotale contains 24.8 of informazioniPagamento response
-        And check idDominio contains #creditor_institution_code# of informazioniPagamento response
-        And check IUV1 contains $1iuv of informazioniPagamento response
-        And check IUV2 contains $2iuv of informazioniPagamento response
-        And check CCP1 contains CCD01 of informazioniPagamento response
-        And check CCP2 contains CCD02 of informazioniPagamento response
+        And check idDominio contains $nodoInviaCarrelloRPT.identificativoDominio of informazioniPagamento response
+        And check IUV contains $1iuv of informazioniPagamento response
+        And check IUV contains $2iuv of informazioniPagamento response
+        And check CCP contains CCD01 of informazioniPagamento response
+        And check CCP contains CCD02 of informazioniPagamento response
         And check enteBeneficiario contains AZIENDA XXX of informazioniPagamento response
         And check enteBeneficiario contains AZIENDA YYY of informazioniPagamento response
         And check idCarrello contains $nodoInviaCarrelloRPT.identificativoCarrello of informazioniPagamento response

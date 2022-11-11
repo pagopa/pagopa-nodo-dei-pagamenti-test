@@ -1,26 +1,23 @@
+import base64 as b64
 import datetime
-import pytz
-from datetime import timedelta
 import json
-from multiprocessing.sharedctypes import Value
 import os
 import random
-from sre_constants import ASSERT
+import threading
 import time
+from datetime import timedelta
+from multiprocessing.sharedctypes import Value
+from sre_constants import ASSERT
 from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
-import base64 as b64
-import json_operations as jo
-import threading
 
+import db_operation as db
+import json_operations as jo
+import pytz
 import requests
+import utils as utils
 from behave import *
 from requests.exceptions import RetryError
-
-
-import utils as utils
-import db_operation as db
-
 
 # Constants
 RESPONSE = "Response"
@@ -747,10 +744,10 @@ def step_impl(context, attribute, value, elem, primitive):
 
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
-    primitive = soap_primitive.split("_")[0]
-    headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+    #primitive = soap_primitive.split("_")[0]
+    headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive,
                'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
-    url_nodo = utils.get_soap_url_nodo(context, primitive)
+    url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
@@ -784,10 +781,15 @@ def step_impl(context, sender, soap_primitive, receiver):
 def step_impl(context, job_name, seconds):
     seconds = utils.replace_local_variables(seconds, context)
     time.sleep(int(seconds))
-    url_nodo = utils.get_rest_url_nodo(context)
+    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
+    print(">>>>>>>>>>>>>>>>>>", url_nodo)
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    #DA UTILIZZARE IN LOCALE (DECOMMENTARE RIGA 784-785 E COMMENTARE RIGA 787-788)
+    #nodo_response = requests.get(
+        #f"{url_nodo}/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
+    #pipeline
     nodo_response = requests.get(
-        f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
+        f"{url_nodo}/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
 
 
@@ -1410,10 +1412,14 @@ def step_impl(context, param, value):
 
 @step("refresh job {job_name} triggered after 10 seconds")
 def step_impl(context, job_name):
-    url_nodo = utils.get_rest_url_nodo(context)
+    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    #DA UTILIZZARE IN LOCALE (DECOMMENTARE RIGA 1414-1415 E COMMENTARE RIGA 1417-1418)
+    #nodo_response = requests.get(
+        #f"{url_nodo}/config/refresh/{job_name}", headers=headers, verify=False)
+    #pipeline
     nodo_response = requests.get(
-        f"{url_nodo}/config/refresh/{job_name}", headers=headers, verify=False)
+        f"{url_nodo}/monitoring/v1/config/refresh/{job_name}", headers=headers, verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
     refresh_response = requests.get(utils.get_refresh_config_url(
         context), headers=headers, verify=False)
@@ -1760,7 +1766,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     else:
         number = int(number)
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
-                 datetime.timedelta(days=number)).strftime('%Y-%m-%d %H:%M')
+                 datetime.timedelta(days=number)).strftime('%Y-%m-%d')
         selected_query = utils.query_json(context, query_name, name_macro).replace(
             "columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
@@ -1782,7 +1788,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     number = int(number) / 60000
-    value = (datetime.datetime.today() +
+    value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
              datetime.timedelta(minutes=number)).strftime('%Y-%m-%d %H:%M')
     selected_query = utils.query_json(context, query_name, name_macro).replace(
         "columns", column).replace("table_name", table_name)
