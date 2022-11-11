@@ -12,17 +12,20 @@ import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
+
 def random_s():
     import random
     cont = 5
     strNumRand = ''
-    while cont !=0:
-        strNumRand += str(random.randint(0,9))
-        cont -=1
-    return strNumRand 
+    while cont != 0:
+        strNumRand += str(random.randint(0, 9))
+        cont -= 1
+    return strNumRand
+
 
 def current_milli_time():
     return round(time.time() * 1000)
+
 
 def requests_retry_session(
         retries=3,
@@ -55,9 +58,23 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoVerificaRPT": "/nodo-per-psp/v1",
         "nodoAttivaRPT": "/nodo-per-psp/v1",
         "nodoInviaFlussoRendicontazione": "/nodo-per-psp/v1",
-        "pspNotifyPayment": "/psp-for-node/v1",
+        # "pspNotifyPayment": "/psp-for-node/v1",
         "nodoChiediElencoFlussiRendicontazione": "/nodo-per-pa/v1",
         "nodoChiediFlussoRendicontazione": "/nodo-per-pa/v1",
+        "demandPaymentNotice": "/nodo-per-psp/v1",
+        "nodoChiediCatalogoServizi": "/nodo-per-psp/v1",
+        "nodoChiediCatalogoServiziV2": "/nodo-per-psp/v1",
+        "nodoChiediCopiaRT": "/nodo-per-pa/v1",
+        "nodoChiediInformativaPA": "/nodo-per-pa/v1",
+        "nodoChiediListaPendentiRPT": "/nodo-per-pa/v1",
+        "nodoChiediNumeroAvviso": "/nodo-per-psp/v1",
+        "nodoChiediStatoRPT": "/nodo-per-pa/v1",
+        "nodoChiediTemplateInformativaPSP": "/nodo-per-psp/v1",
+        "nodoInviaFlussoRendicontazione": "/nodo-per-psp/v1",
+        "nodoInviaCarrelloRPT": "/nodo-per-pa/v1",
+        "nodoInviaRPT": "/nodo-per-pa/v1",
+        "nodoInviaRT": "/nodo-per-psp/v1",
+        "nodoPAChiediInformativaPA": "/nodo-per-pa/v1",
     }
     if "soap_service" in context.config.userdata.get("services").get("nodo-dei-pagamenti"):
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
@@ -84,10 +101,12 @@ def get_soap_mock_ec(context):
     else:
         return ""
 
+
 def get_soap_mock_ec2(context):
     if context.config.userdata.get('services').get('secondary-mock-ec').get('soap_service') is not None:
         return context.config.userdata.get('services').get('secondary-mock-ec').get('url') \
-            + context.config.userdata.get('services').get('secondary-mock-ec').get('soap_service')
+            + context.config.userdata.get('services').get(
+                'secondary-mock-ec').get('soap_service')
     else:
         return ""
 
@@ -99,10 +118,12 @@ def get_soap_mock_psp(context):
     else:
         return ""
 
+
 def get_soap_mock_psp2(context):
     if context.config.userdata.get('services').get('secondary-mock-psp').get('soap_service') is not None:
         return context.config.userdata.get('services').get('secondary-mock-psp').get('url') \
-            + context.config.userdata.get('services').get('secondary-mock-psp').get('soap_service')
+            + context.config.userdata.get('services').get(
+                'secondary-mock-psp').get('soap_service')
     else:
         return ""
 
@@ -217,7 +238,8 @@ def replace_local_variables(body, context):
             else:
                 document = parseString(saved_elem.content)
                 print(tag)
-            value = document.getElementsByTagNameNS('*',tag)[0].firstChild.data
+            value = document.getElementsByTagNameNS(
+                '*', tag)[0].firstChild.data
         body = body.replace(field, value)
     return body
 
@@ -269,22 +291,26 @@ def single_thread(context, soap_primitive, type):
     primitive = replace_local_variables(primitive, context)
     primitive = replace_context_variables(primitive, context)
     primitive = replace_global_variables(primitive, context)
-  
+
     if type == 'GET':
-        headers = {'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+        headers = {'X-Forwarded-For': '10.82.39.148',
+                   'Host': 'api.dev.platform.pagopa.it:443'}
         url_nodo = f"{get_rest_url_nodo(context)}/{primitive}"
         print(url_nodo)
         soap_response = requests.get(url_nodo, headers=headers, verify=False)
     elif type == 'POST':
-        body = getattr(context,primitive)
-        if 'xml' in getattr(context,primitive):
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+        body = getattr(context, primitive)
+        if 'xml' in getattr(context, primitive):
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+                       'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
             url_nodo = get_soap_url_nodo(context, primitive)
         else:
-            headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+            headers = {'Content-Type': 'application/json',
+                       'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
             url_nodo = f"{get_rest_url_nodo(context)}/{primitive}"
-        soap_response = requests.post(url_nodo, body, headers=headers, verify=False)
-    
+        soap_response = requests.post(
+            url_nodo, body, headers=headers, verify=False)
+
     print("nodo soap_response: ", soap_response.content)
     print(soap_primitive.split("_")[1] + "Response")
     setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
@@ -294,7 +320,8 @@ def threading(context, primitive_list, list_of_type):
     i = 0
     threads = list()
     while i < len(primitive_list):
-        t = Thread(target=single_thread, args=(context, primitive_list[i], list_of_type[i]))
+        t = Thread(target=single_thread, args=(
+            context, primitive_list[i], list_of_type[i]))
         threads.append(t)
         t.start()
         i += 1
@@ -302,11 +329,13 @@ def threading(context, primitive_list, list_of_type):
     for thread in threads:
         thread.join()
 
+
 def threading_delayed(context, primitive_list, list_of_delays, list_of_type):
     i = 0
     threads = list()
     while i < len(primitive_list):
-        t = Thread(target=single_thread, args=(context, primitive_list[i], list_of_type[i]))
+        t = Thread(target=single_thread, args=(
+            context, primitive_list[i], list_of_type[i]))
         threads.append(t)
         time.sleep(list_of_delays[i]/1000)
         t.start()
@@ -314,6 +343,7 @@ def threading_delayed(context, primitive_list, list_of_delays, list_of_type):
 
     for thread in threads:
         thread.join()
+
 
 def json2xml(json_obj, line_padding=""):
     result_list = list()
@@ -330,21 +360,26 @@ def json2xml(json_obj, line_padding=""):
                 for key in sub_obj:
                     sub_sub_obj = sub_obj[key]
                     result_list.append("%s<%s>" % (line_padding, key))
-                    result_list.append(json2xml(sub_sub_obj, "\t" + line_padding))
+                    result_list.append(
+                        json2xml(sub_sub_obj, "\t" + line_padding))
                     result_list.append("%s</%s>" % (line_padding, key))
                 result_list.append("%s</%s>" % (line_padding, tag_name))
             elif type(sub_obj) is list:
                 result_list.append("%s<%s>" % (line_padding, tag_name))
                 if tag_name == 'paymentTokens':
                     for sub_elem in sub_obj:
-                        result_list.append("%s<%s>" % (line_padding, "paymentToken"))
+                        result_list.append("%s<%s>" %
+                                           (line_padding, "paymentToken"))
                         result_list.append(json2xml(sub_elem, line_padding))
-                        result_list.append("%s</%s>" % (line_padding, "paymentToken"))
+                        result_list.append("%s</%s>" %
+                                           (line_padding, "paymentToken"))
                 if tag_name == 'positionslist':
                     for sub_elem in sub_obj:
-                        result_list.append("%s<%s>" % (line_padding, "position"))
+                        result_list.append("%s<%s>" %
+                                           (line_padding, "position"))
                         result_list.append(json2xml(sub_elem, line_padding))
-                        result_list.append("%s</%s>" % (line_padding, "position"))
+                        result_list.append("%s</%s>" %
+                                           (line_padding, "position"))
                 result_list.append("%s</%s>" % (line_padding, tag_name))
             else:
                 result_list.append("%s<%s>" % (line_padding, tag_name))
@@ -355,5 +390,6 @@ def json2xml(json_obj, line_padding=""):
 
 
 def parallel_executor(context, feature_name, scenario):
-    #os.chdir(testenv.PARALLEACTIONS_PATH)
-    behave_main('-i {} -n {} --tags=@test --no-skipped --no-capture'.format(feature_name, scenario))
+    # os.chdir(testenv.PARALLEACTIONS_PATH)
+    behave_main(
+        '-i {} -n {} --tags=@test --no-skipped --no-capture'.format(feature_name, scenario))

@@ -31,6 +31,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
   Scenario: Execute activatePaymentNotice request
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
+    And wait 1 seconds for expiration
 
   # Activate Phase 2 [SEM_APNR_19.1]
   @runnable
@@ -40,21 +41,12 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  # Activate Phase 2 [SEM_APNR_20.1]
-  # TODO modify with api-config
-  # PA_STAZIONE_PA with OBJ_ID = 5266 to set:
-  #   - aux_digit: 3
-  #   - segregazione: 2
-  # STAZIONI with OBJ_ID = 135 to set:
-  #   - ip: localhost
-  #   - port: 8089
-  #   - servizio_pof: servizi/PagamentiTelematiciRPT
-  #   - version: 2
-  #   - servizio_nmp: Y
-  #   -
-  @runnable
+  # [SEM_APNR_20.1]
+  @fix
   Scenario: Execute again activatePaymentNotice request with different fiscalCode
     Given the Execute activatePaymentNotice request scenario executed successfully
+    And fiscalCode with #creditor_institution_code_secondary# in activatePaymentNotice
+    And expirationTime with 60000 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     And nodo-dei-pagamenti has config parameter useIdempotency set to false

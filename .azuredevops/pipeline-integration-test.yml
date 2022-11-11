@@ -2,7 +2,7 @@ pr: none
 trigger: none
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
 parameters:
   - name: env
@@ -12,7 +12,6 @@ parameters:
       - dev
       - sit
     default: sit
-
 
 variables:
   archiveName: nodo-dei-pagamenti-NRT.zip
@@ -25,20 +24,20 @@ stages:
     variables:
       - group: nodo-integration-test-${{ parameters.env }}
     jobs:
-      - job: 
+      - job:
         displayName: "Prepare env (${{ parameters.env }})"
         steps:
           - checkout: self
             clean: true
             persistCredentials: true
-          
+
           - task: AzureKeyVault@2
             inputs:
               connectedServiceName: $(kv-service-connection-${{ parameters.env }})
               keyVaultName: $(az-kv-name-${{ parameters.env }})
-              secretsFilter: '*'
+              secretsFilter: "*"
               runAsPreJob: true
-          
+
           - script: |
               function replace {
                   file=$1
@@ -50,10 +49,10 @@ stages:
 
               file=$(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/config.json
 
-              
-              replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo-pagamenti/api/v1"
-              replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"
-              replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  "/webservices/input"
+
+              #replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo-pagamenti/api/v1"
+              replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo"
+              replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  ""
               replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  ""
               replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/config/refresh/CONFIG"
 
@@ -109,8 +108,8 @@ stages:
               replace $file ".db_configuration.wfesp.port"      $(db-wfesp-port-${{ parameters.env }})
 
               jq . $file
-            displayName: 'Configure Global Properties'
-            
+            displayName: "Configure Global Properties"
+
           - script: |
               sudo apt-get install build-essential unzip
               mkdir $(Build.SourcesDirectory)/oracle
@@ -120,10 +119,10 @@ stages:
               sudo apt update
               sudo apt install libaio1
 
-            displayName: 'Install Oracle Instant Client'
-          
+            displayName: "Install Oracle Instant Client"
+
           - task: ArchiveFiles@2
-            displayName: 'Zip $(archiveName)'
+            displayName: "Zip $(archiveName)"
             inputs:
               rootFolderOrFile: $(Build.SourcesDirectory)
               includeRootFolder: false
@@ -141,20 +140,20 @@ stages:
       - prepare_env
     pool: $(deploy-pool)
     jobs:
-      - job: 
+      - job:
         displayName: "Run integration test (${{ parameters.env }})"
         timeoutInMinutes: 0 # how long to run the job before automatically cancelling. When 0 is specified, the maximum limit is used
         steps:
-          - checkout: none 
+          - checkout: none
 
           - task: DownloadPipelineArtifact@2
             displayName: "Download Artifact $(archiveName)"
             inputs:
               artifact: $(archiveName)
               source: current
-          
+
           - task: ExtractFiles@1
-            displayName: 'Unzip $(archiveName)'
+            displayName: "Unzip $(archiveName)"
             inputs:
               archiveFilePatterns: $(Pipeline.Workspace)/$(archiveName)
               destinationFolder: $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)
@@ -165,8 +164,8 @@ stages:
               sudo sh -c "echo $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
               sudo ldconfig
 
-            displayName: 'Linux ldconfig Command for Oracle Instant Client'
-            
+            displayName: "Linux ldconfig Command for Oracle Instant Client"
+
           - script: |
               export PATH=/usr/bin:/usr/local/bin:$PATH #Add environment variables
               echo 'Install Behave'
@@ -175,29 +174,29 @@ stages:
               whereis behave
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
-             
+
               # Nicolò
-              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO --tags=runnable
-              
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/flows/Annullo_PagamentoIO --tags=fix
+
               # Lorenzo  
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/activatePaymentNotice $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/sendPaymentOutcome --tags=runnable
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/activatePaymentNotice --tags=runnable
+              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/activatePaymentNotice/activatePaymentNotice_semantic_without_useIdempotency_ok.feature --tags=fix
 
               # Alessandro
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/nodoInviaRT/IRTSIN.feature --tags=runnable
-              
+
               # Marisa
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_CHIEDI_STATO_e_CHIEDI_AVANZAMENTO/T102_C_chiediStato_RT_RIFIUTATA_PA_Carrello_sbloccoParcheggio-BUG_590.feature
-              
+
               # Davide
               #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/paSendRT/PSRT_30_new.feature
-            
-            displayName: 'Run integration test'
-        
+
+            displayName: "Run integration test"
+
           - task: PublishTestResults@2
             condition: succeededOrFailed()
             inputs:
-              testResultsFiles: '$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report/*.xml'
+              testResultsFiles: "$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report/*.xml"
               mergeTestResults: true
               testRunTitle: Integration test Nodo $(Build.BuildNumber)
               failTaskOnFailedTests: true
