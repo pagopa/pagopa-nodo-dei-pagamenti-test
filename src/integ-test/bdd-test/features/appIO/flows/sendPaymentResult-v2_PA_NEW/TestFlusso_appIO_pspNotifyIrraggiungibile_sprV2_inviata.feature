@@ -230,7 +230,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
         And the closePaymentV2 scenario executed successfully
         And paymentToken with $activateIOPaymentResponse.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        And PSP isn't reachable
+        # And PSP isn't reachable
         Then check outcome is OK of v2/closepayment response
         And verify the HTTP status code of v2/closepayment response is 200
 
