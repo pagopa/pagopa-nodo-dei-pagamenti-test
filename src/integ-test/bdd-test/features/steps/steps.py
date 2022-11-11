@@ -1970,9 +1970,6 @@ def step_impl(context, value1, condition, value2):
     value2 = utils.replace_context_variables(value2, context)
     value2 = utils.replace_global_variables(value2, context)
 
-    value1 = str(value1.strip())
-    value2 = str(value2)
-
     if condition == 'equal to':
         assert value1 == value2, f"{value1} != {value2}"
     elif condition == 'greater than':
