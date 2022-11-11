@@ -1776,7 +1776,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     number = int(number) / 60000
-    value = (datetime.datetime.today() +
+    value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
              datetime.timedelta(minutes=number)).strftime('%Y-%m-%d %H:%M')
     selected_query = utils.query_json(context, query_name, name_macro).replace(
         "columns", column).replace("table_name", table_name)
