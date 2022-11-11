@@ -1,4 +1,4 @@
-Feature: T101_C_chiediStato_RT_ACCETTATA_PA_Carrello_Annullamento
+Feature: T102_C_chiediStato_RT_RIFIUTATA_PA_Carrello_sbloccoParcheggio-BUG_590
     
     Background:
         Given systems up
@@ -404,21 +404,116 @@ Feature: T101_C_chiediStato_RT_ACCETTATA_PA_Carrello_Annullamento
         #And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
         #And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
 
-     Scenario: Execute nodoNotificaAnnullamento
+    Scenario: Execution Esito Mod1
         Given the RPT generation scenario executed successfully
-        When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of notificaAnnullamento response is 200
-        And check esito is OK of notificaAnnullamento response
-        And wait 7 seconds for expiration 
+        When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
+            """
+            {
+            "idPagamento":"$sessionToken",
+            "identificativoPsp":"#psp#",
+            "tipoVersamento":"BBT",
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#canale#",
+            "tipoOperazione":"web"
+            }
+            """
+        Then check esito is OK of inoltroEsito/mod1 response
+        And check urlRedirectPSP field exists in inoltroEsito/mod1 response
 
-    Scenario: Execute job paInviaRt
-        Given the Execute nodoNotificaAnnullamento scenario executed successfully
-        When job paInviaRt triggered after 5 seconds
-        And wait 70 seconds for expiration
+     Scenario: execution nodoInviaRT
+        Given the Execution Esito Mod1 scenario executed successfully
+        And initial XML paaInviaRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:paaInviaRTRisposta>
+                    <paaInviaRTRisposta>
+                        <fault>
+                        <faultCode>PAA_RT_DUPLICATA</faultCode>
+                        <faultString>tegba</faultString>
+                        <id>#creditor_institution_code#</id>
+                        </fault>
+                        <esito>KO</esito>
+                    </paaInviaRTRisposta>
+                </ws:paaInviaRTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaInviaRT
+        And initial XML nodoInviaRT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:nodoInviaRT>
+                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale#</identificativoCanale>
+                <password>pwdpwdpwd</password>
+                <identificativoPSP>#psp#</identificativoPSP>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                <tipoFirma></tipoFirma>
+                <forzaControlloSegno>1</forzaControlloSegno>
+                <rt>$rtAttachment</rt>
+            </ws:nodoInviaRT>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
+        Then check esito is OK of nodoInviaRT response
+        
 
+      Scenario: execution nodoInviaRT1
+        Given the execution nodoInviaRT scenario executed successfully
+        And initial XML paaInviaRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:paaInviaRTRisposta>
+                    <paaInviaRTRisposta>
+                        <fault>
+                        <faultCode>PAA_RT_DUPLICATA</faultCode>
+                        <faultString>tegba</faultString>
+                        <id>#creditor_institution_code#</id>
+                        </fault>
+                        <esito>KO</esito>
+                    </paaInviaRTRisposta>
+                </ws:paaInviaRTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaInviaRT
+        And initial XML nodoInviaRT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:nodoInviaRT>
+                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale#</identificativoCanale>
+                <password>pwdpwdpwd</password>
+                <identificativoPSP>#psp#</identificativoPSP>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                <identificativoUnivocoVersamento>avanzaErrResponse$1iuv</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>CCD02</codiceContestoPagamento>
+                <tipoFirma></tipoFirma>
+                <forzaControlloSegno>1</forzaControlloSegno>
+                <rt>$rt2Attachment</rt>
+            </ws:nodoInviaRT>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
+        Then check esito is OK of nodoInviaRT response
+        And wait 1 seconds for expiration
+    
      
     Scenario: Execute nodoChiediStatoRPT
-        Given the Execute job paInviaRt scenario executed successfully
+        Given the execution nodoInviaRT1 scenario executed successfully
+        And wait 10 seconds for expiration
         And initial XML nodoChiediStatoRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -436,13 +531,16 @@ Feature: T101_C_chiediStato_RT_ACCETTATA_PA_Carrello_Annullamento
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
+        Then checks stato contains RT_RIFIUTATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
-        And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
+        And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
+        And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And check redirect is 0 of nodoChiediStatoRPT response
+        And check url field not exists in nodoChiediStatoRPT response
 
+        
      Scenario: Execute nodoChiediStatoRPT2
         Given the Execute nodoChiediStatoRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -462,12 +560,119 @@ Feature: T101_C_chiediStato_RT_ACCETTATA_PA_Carrello_Annullamento
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
+        Then checks stato contains RT_RIFIUTATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
-        And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
-        And wait 1 seconds for expiration
+        And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
+        And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And check redirect is 0 of nodoChiediStatoRPT response
+        And check url field not exists in nodoChiediStatoRPT response
+       
+     Scenario: Execute nodoNotificaAnnullamentoPagamento
+        Given the Execute nodoChiediStatoRPT2 scenario executed successfully
+        When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        And wait 5 seconds for expiration
+        Then verify the HTTP status code of notificaAnnullamento response is 404
+        And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
 
-   
+    Scenario: nodoInviaCarrelloRPT duplicato
+        Given the Execute nodoNotificaAnnullamentoPagamento scenario executed successfully
+        And initial XML nodoInviaCarrelloRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header>
+            <ppt:intestazioneCarrelloPPT>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoCarrello>$1carrello</identificativoCarrello>
+            </ppt:intestazioneCarrelloPPT>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:nodoInviaCarrelloRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+            <listaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <rpt>$rptAttachment</rpt>
+            </elementoListaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>avanzaErrResponse$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD02</codiceContestoPagamento>
+            <rpt>$rpt2Attachment</rpt>
+            </elementoListaRPT>
+            </listaRPT>
+            </ws:nodoInviaCarrelloRPT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
+        Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+        And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
+
+    
+
+      Scenario: execution nodoInviaRT2
+        Given the nodoInviaCarrelloRPT duplicato scenario executed successfully
+        And initial XML nodoInviaRT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:nodoInviaRT>
+                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale#</identificativoCanale>
+                <password>pwdpwdpwd</password>
+                <identificativoPSP>#psp#</identificativoPSP>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                <identificativoUnivocoVersamento>avanzaErrResponse$1iuv</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>CCD02</codiceContestoPagamento>
+                <tipoFirma></tipoFirma>
+                <forzaControlloSegno>1</forzaControlloSegno>
+                <rt>$rt2Attachment</rt>
+            </ws:nodoInviaRT>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
+        Then check esito is KO of nodoInviaRT response
+        And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
+
+    Scenario: Execution Esito Mod1.1
+        Given the execution nodoInviaRT2 scenario executed successfully
+        And initial XML pspInviaCarrelloRPT 
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaCarrelloRPTResponse>
+                        <pspInviaCarrelloRPTResponse>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+                        </pspInviaCarrelloRPTResponse>
+                    </ws:pspInviaCarrelloRPTResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
+
+            """
+            {
+            "idPagamento":"$sessionToken",
+            "identificativoPsp":"#psp#",
+            "tipoVersamento":"BBT",
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#canale#",
+            "tipoOperazione":"web"
+            }
+            """
+        Then check esito is OK of inoltroEsito/mod1 response
+        And check urlRedirectPSP field exists in inoltroEsito/mod1 response
