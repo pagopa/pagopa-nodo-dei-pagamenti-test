@@ -55,6 +55,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
   @runnable
   Scenario: Execute again activatePaymentNotice request with different fiscalCode
     Given the Execute activatePaymentNotice request scenario executed successfully
-    And fiscalCode with 44444444444 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
+    And nodo-dei-pagamenti has config parameter useIdempotency set to false
+    And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_act on db nodo_online under macro NewMod3

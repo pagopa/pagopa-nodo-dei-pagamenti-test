@@ -74,7 +74,7 @@ Feature: Checks for concorrential access of Paypal payments err
       And check $ragione_sociale is enteBeneficiario in /informazioniPagamento response
       And check $ragione_sociale is ragioneSociale in /informazioniPagamento response
 
-
+@runnable
    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome error
       Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
       And initial XML sendPaymentOutcome
@@ -124,8 +124,6 @@ Feature: Checks for concorrential access of Paypal payments err
          </soapenv:Body>
          </soapenv:Envelope>
          """
-      
-      @runnable
       When PSP sends rest POST /inoltroEsito/paypal to nodo-dei-pagamenti
          """
          {

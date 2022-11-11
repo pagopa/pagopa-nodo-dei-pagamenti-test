@@ -3,7 +3,8 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
   Background:
     Given systems up
     And nodo-dei-pagamenti has config parameter useIdempotency set to true
-    
+
+@runnable
   Scenario: Execute activatePaymentNotice request
     Given initial XML activatePaymentNotice
       """
@@ -11,7 +12,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>#psp#</idPSP>
+      <idPSP></idPSP>
       <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
@@ -30,9 +31,4 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_SINTASSI_EXTRAXSD of activatePaymentNotice response
-
-  #DB check
-  @runnable
-  Scenario: Execute activatePaymentNotice request
-    Given the Execute activatePaymentNotice request scenario executed successfully
-    And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3    
+    And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_act on db nodo_online under macro NewMod3    

@@ -275,11 +275,11 @@ Feature: process tests for paSendRT
     Then check outcome is OK of activatePaymentNotice response
 
 
-  # Mod3Cancel Phase - [PSRT_17]
-  Scenario: Execute mod3Cancel poller with 3 transfers with expiration time
+  # mod3CancelV2 Phase - [PSRT_17]
+  Scenario: Execute mod3CancelV2 poller with 3 transfers with expiration time
     Given the Execute activatePaymentNotice request with 3 transfers with expiration time scenario executed successfully
-    When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
+    When job mod3CancelV2 triggered after 3 seconds
+    Then verify the HTTP status code of mod3CancelV2 response is 200
     #And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber
 
 
@@ -332,11 +332,11 @@ Feature: process tests for paSendRT
     Then check outcome is OK of activatePaymentNotice response
 
 
-  # Mod3Cancel Phase - [PSRT_18]
-  Scenario: Execute mod3Cancel poller with 3 transfers and broadcast true for secondary EC with expirationTime
+  # mod3CancelV2 Phase - [PSRT_18]
+  Scenario: Execute mod3CancelV2 poller with 3 transfers and broadcast true for secondary EC with expirationTime
     Given the Execute activatePaymentNotice request with 3 transfers and broadcast true for secondary EC with expirationTime scenario executed successfully
-    When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
+    When job mod3CancelV2 triggered after 3 seconds
+    Then verify the HTTP status code of mod3CancelV2 response is 200
     #And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber
 
 
@@ -509,11 +509,11 @@ Feature: process tests for paSendRT
     Then check outcome is OK of activatePaymentNotice response
 
 
-  # Mod3Cancel Phase - [PSRT_16]
-  Scenario: Execute mod3Cancel poller with 1 transfer and broadcast true for 1 station of primary EC with expirationTime
+  # mod3CancelV2 Phase - [PSRT_16]
+  Scenario: Execute mod3CancelV2 poller with 1 transfer and broadcast true for 1 station of primary EC with expirationTime
     Given the Execute activatePaymentNotice request with 1 transfer and broadcast true for 1 station of primary EC with expirationTime scenario executed successfully
-    When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
+    When job mod3CancelV2 triggered after 3 seconds
+    Then verify the HTTP status code of mod3CancelV2 response is 200
     #And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber
 
 
@@ -705,9 +705,9 @@ Feature: process tests for paSendRT
     Then check outcome is OK of activatePaymentNotice response
 
 
-  # Mod3Cancel Phase - [PSRT_29]
-  Scenario: Execute mod3Cancel poller with 3 transfers with expiration time
+  # mod3CancelV2 Phase - [PSRT_29]
+  Scenario: Execute mod3CancelV2 poller with 3 transfers with expiration time
     Given the Execute activatePaymentNotice request with 3 transfers with expiration time scenario executed successfully
-    When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
+    When job mod3CancelV2 triggered after 3 seconds
+    Then verify the HTTP status code of mod3CancelV2 response is 200
     #And check EC receives paSendRT not properly with noticeNumber $activatePaymentNotice.noticeNumber
