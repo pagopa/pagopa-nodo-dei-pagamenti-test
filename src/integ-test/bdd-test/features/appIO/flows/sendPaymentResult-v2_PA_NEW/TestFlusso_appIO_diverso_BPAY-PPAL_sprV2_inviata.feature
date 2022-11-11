@@ -184,7 +184,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-        # And save activateIOPayment response in activateIOPaymentResponse
+        And save activateIOPayment response in activateIOPaymentResponse
 
     # check db
     Scenario: DB check
@@ -289,7 +289,7 @@ Feature:  flow check for sendPaymentResult-v2 request - pagamento con appIO dive
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
             <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
             </uniqueIdentifier>
-            <fullName>SPOname_$activateIOPaymentNoticeResponse.paymentToken</fullName>
+            <fullName>SPOname_$activateIOPaymentResponse.paymentToken</fullName>
             <!--Optional:-->
             <streetName>SPOstreet</streetName>
             <!--Optional:-->
