@@ -100,7 +100,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
       | paymentMethod | cash  | IDMP_SPO_16.2 |
       | streetName    | road  | IDMP_SPO_16.3 |
 
-@fix
+@runnable
   # Send payment outcome Phase 2 [IDMP_SPO_17]
   Scenario: 5. Execute sendPaymentOutcome request after idempotencyKey has expired
     Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
@@ -112,7 +112,6 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
     And restore initial configurations
-
 
 
   # IdempotencyCacheClean Phase [IDMP_SPO_23]
