@@ -2,6 +2,10 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
 
   Background:
     Given systems up
+
+  # Activate Phase
+  Scenario: 1. Execute activatePaymentNotice request
+    Given nodo-dei-pagamenti has config parameter useIdempotency set to true
     And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -17,7 +21,6 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
       <fiscalCode>#creditor_institution_code#</fiscalCode>
       <noticeNumber>#notice_number#</noticeNumber>
       </qrCode>
-      <expirationTime>120000</expirationTime>
       <amount>10.00</amount>
       <dueDate>2021-12-31</dueDate>
       <paymentNote>causale</paymentNote>
@@ -25,10 +28,6 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And nodo-dei-pagamenti has config parameter useIdempotency set to true
-
-  # Activate Phase
-  Scenario: 1. Execute activatePaymentNotice request
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     And call the paymentToken of activatePaymentNotice response as paymentTokenPhase1
@@ -101,16 +100,17 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
       | paymentMethod | cash  | IDMP_SPO_16.2 |
       | streetName    | road  | IDMP_SPO_16.3 |
 
-@runnable
+@fix
   # Send payment outcome Phase 2 [IDMP_SPO_17]
   Scenario: 5. Execute sendPaymentOutcome request after idempotencyKey has expired
     Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
     And the 2. Execute sendPaymentOutcome request scenario executed successfully
-    And wait 65 seconds for expiration
     # settare idempotencykey validity
+    And update through the query idempotency_update with date 1minuteLater under macro update_query on db nodo_online
+    And wait 65 seconds for expiration
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_PAGAMENTO_IN_CORSO of sendPaymentOutcome response
+    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
     And restore initial configurations
 
 
@@ -369,13 +369,40 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
   # Mod3Cancel Phase [IDMP_SPO_31]
   Scenario: 17. Execute mod3Cancel poller
     Given expirationTime with 2000 in activatePaymentNotice
-    And the Execute activatePaymentNotice request scenario executed successfully
-    When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
+    And initial XML activatePaymentNotice
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:activatePaymentNoticeReq>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+      <password>pwdpwdpwd</password>
+      <idempotencyKey>#idempotency_key#</idempotencyKey>
+      <qrCode>
+      <fiscalCode>#creditor_institution_code#</fiscalCode>
+      <noticeNumber>#notice_number#</noticeNumber>
+      </qrCode>
+      <expirationTime>6000</expirationTime>
+      <amount>10.00</amount>
+      <dueDate>2021-12-31</dueDate>
+      <paymentNote>causale</paymentNote>
+      </nod:activatePaymentNoticeReq>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    And save activatePaymentNotice response in activatePaymentNotice1
+    And job mod3CancelV2 triggered after 8 seconds
+    And wait 10 seconds for expiration
+    Then check outcome is OK of activatePaymentNotice response
+    And verify the HTTP status code of mod3CancelV2 response is 200
 
   # Activate Phase 2 [IDMP_SPO_31]
   Scenario: 18. Execute again activatePaymentNotice request
     Given the Execute mod3Cancel poller scenario executed successfully
+    And expirationTime with None in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
@@ -427,7 +454,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
   # Send payment outcome Phase 2 [IDMP_SPO_31]
   Scenario: 20. Execute sendPaymentOutcome request on token of Activate Phase and different idempotencyKey
     Given the Execute sendPaymentOutcome request on token of Activate Phase 2 scenario executed successfully
-    And paymentToken with $activatePaymentNoticeResponse.paymentToken in sendPaymentOutcome
+    And paymentToken with $activatePaymentNotice1Response.paymentToken in sendPaymentOutcome
+    And outcome with KO in sendPaymentOutcome
     And random idempotencyKey having #psp# as idPSP in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response

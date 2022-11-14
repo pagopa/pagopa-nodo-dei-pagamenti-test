@@ -211,9 +211,7 @@ Feature: process tests for paaInviaRT[IRTRES11]
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-
-
-   
+    @runnable
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML paaInviaRT
@@ -230,7 +228,6 @@ Feature: process tests for paaInviaRT[IRTRES11]
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
-
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">

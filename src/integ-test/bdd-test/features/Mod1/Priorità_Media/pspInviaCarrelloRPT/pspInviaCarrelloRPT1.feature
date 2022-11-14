@@ -140,12 +140,12 @@ Feature: process tests for pspInviaCarrelloRPT
             </soapenv:Body>
             </soapenv:Envelope>
             """
-            
             And psp replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
             When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
             Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
             And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
 
+        @runnable
         Scenario: Execute nodoInviaCarrelloRPT request [CRPTRES23]
             Given the RPT generation scenario executed successfully
             And initial XML pspInviaCarrelloRPT
@@ -181,6 +181,7 @@ Feature: process tests for pspInviaCarrelloRPT
             Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
             And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
 
+        @runnable
         Scenario: Execute nodoInviaCarrelloRPT request [CRPTRES24]
             Given the RPT generation scenario executed successfully
             And initial XML pspInviaCarrelloRPT
@@ -215,6 +216,7 @@ Feature: process tests for pspInviaCarrelloRPT
             Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
             And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
 
+        @runnable
         Scenario: Execute nodoInviaCarrelloRPT request [CRPTRES25]
             Given the RPT generation scenario executed successfully
             And initial XML pspInviaCarrelloRPT
@@ -249,6 +251,7 @@ Feature: process tests for pspInviaCarrelloRPT
             Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
             And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
 
+        @runnable
         Scenario: Execute nodoInviaCarrelloRPT request [CRPTRES26]
             Given the RPT generation scenario executed successfully
             And initial XML pspInviaCarrelloRPT
@@ -283,6 +286,7 @@ Feature: process tests for pspInviaCarrelloRPT
             Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
             And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
 
+        @runnable
         Scenario: Execute nodoInviaCarrelloRPT request [CRPTRES27]
             Given the RPT generation scenario executed successfully
             And initial XML pspInviaCarrelloRPT
@@ -317,6 +321,7 @@ Feature: process tests for pspInviaCarrelloRPT
             Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
             And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
 
+        @runnable
         Scenario: Execute nodoInviaCarrelloRPT request [CRPTRES28]
             Given the RPT generation scenario executed successfully
             And initial XML pspInviaCarrelloRPT
@@ -351,6 +356,7 @@ Feature: process tests for pspInviaCarrelloRPT
             Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
             And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
 
+        @runnable
         Scenario: Execute nodoInviaCarrelloRPT request [CRPTRES29]
             Given the RPT generation scenario executed successfully
             And initial XML pspInviaCarrelloRPT
@@ -385,6 +391,7 @@ Feature: process tests for pspInviaCarrelloRPT
             Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
             And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
 
+        @runnable
         Scenario: Execute nodoInviaCarrelloRPT request [CRPTRES30]
             Given the RPT generation scenario executed successfully
             And initial XML pspInviaCarrelloRPT
@@ -419,6 +426,7 @@ Feature: process tests for pspInviaCarrelloRPT
             Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
             And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
 
+        @runnable
         Scenario: Execute nodoInviaCarrelloRPT request [CRPTRES31]
             Given the RPT generation scenario executed successfully
             And initial XML pspInviaCarrelloRPT
@@ -453,6 +461,7 @@ Feature: process tests for pspInviaCarrelloRPT
             Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
             And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
 
+        @runnable
         Scenario: Execute nodoInviaCarrelloRPT request [CRPTRES32]
             Given the RPT generation scenario executed successfully
             And initial XML pspInviaCarrelloRPT

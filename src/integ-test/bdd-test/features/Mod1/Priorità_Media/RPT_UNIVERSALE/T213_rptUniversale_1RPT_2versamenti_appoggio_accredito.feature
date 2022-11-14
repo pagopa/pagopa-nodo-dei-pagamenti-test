@@ -89,7 +89,6 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_appoggio_accredit
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloVersamento>
-
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
@@ -161,6 +160,7 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_appoggio_accredit
         And check totalRows is $sizeConto of listaPSP response
         And check data is $listaConto of listaPSP response
 
+    @runnable
     Scenario: execution nodoChiediListaPSP - altro
         Given the execution nodoChiediListaPSP - conto scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti

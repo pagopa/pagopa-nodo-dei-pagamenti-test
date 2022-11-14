@@ -56,6 +56,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
     And paymentToken exists of activatePaymentNotice response
     And paymentToken length is less than 36 of activatePaymentNotice response
 	
+  
   # Payment Outcome Phase
   Scenario: Execute sendPaymentOutcome request
     Given the activatePaymentNotice scenario executed successfully

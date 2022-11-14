@@ -22,6 +22,7 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
       """
 	 And EC new version
 
+
   # Verify Phase 1
   Scenario: Execute verifyPaymentNotice request
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
@@ -101,12 +102,14 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
+
   Scenario: Execute paSendRT request
     Given the Execute sendPaymentOutcome request scenario executed successfully
     Then check EC receives paSendRT properly
   """
     $verifyPaymentNotice.noticeNumber
   """
+
 
   # Verify Phase 2
   @runnable

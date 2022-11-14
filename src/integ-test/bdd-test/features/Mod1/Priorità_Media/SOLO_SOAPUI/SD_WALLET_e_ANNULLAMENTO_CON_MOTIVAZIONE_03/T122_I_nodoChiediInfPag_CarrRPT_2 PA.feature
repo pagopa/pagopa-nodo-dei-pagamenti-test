@@ -232,7 +232,7 @@ Feature: process tests for 2 RPT da 1 Versamenti
             </soapenv:Body>
         </soapenv:Envelope>
         """
-        #And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
@@ -256,6 +256,6 @@ Feature: process tests for 2 RPT da 1 Versamenti
         And check IUV contains $2iuv of informazioniPagamento response
         And check CCP contains CCD01 of informazioniPagamento response
         And check CCP contains CCD02 of informazioniPagamento response
+        And check idCarrello contains $nodoInviaCarrelloRPT.identificativoCarrello of informazioniPagamento response
         And check enteBeneficiario contains AZIENDA XXX of informazioniPagamento response
         And check enteBeneficiario contains AZIENDA YYY of informazioniPagamento response
-        And check idCarrello contains $nodoInviaCarrelloRPT.identificativoCarrello of informazioniPagamento response

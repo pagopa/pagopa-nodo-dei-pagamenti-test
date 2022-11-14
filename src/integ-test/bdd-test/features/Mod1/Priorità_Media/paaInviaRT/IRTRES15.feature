@@ -210,10 +210,8 @@ Feature: process tests for paaInviaRT[IRTRES15]
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-
-
-
     
+    @runnable
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML paaInviaRT
@@ -256,7 +254,6 @@ Feature: process tests for paaInviaRT[IRTRES15]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoInviaRT response

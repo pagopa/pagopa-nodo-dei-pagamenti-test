@@ -64,9 +64,12 @@ def step_impl(context, primitive):
         my_document = parseString(payload)
         idBrokerPSP = "70000000001"
         if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
-            idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[0].firstChild.data
-        payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
-        payload = payload.replace('#idempotency_key_IOname#', "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
+            idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[
+                0].firstChild.data
+        payload = payload.replace(
+            '#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+        payload = payload.replace(
+            '#idempotency_key_IOname#', "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
 
     if "#timedate#" in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
@@ -80,14 +83,17 @@ def step_impl(context, primitive):
         setattr(context, 'date', date)
 
     if '#yesterday_date#' in payload:
-        yesterday_date = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
+        yesterday_date = (datetime.datetime.now(
+        ) - datetime.timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
         payload = payload.replace('#yesterday_date#', yesterday_date)
         setattr(context, 'yesterday_date', yesterday_date)
 
     if '#identificativoFlusso#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
-        identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
-        payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
+        identificativoFlusso = date + context.config.userdata.get(
+            "global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
+        payload = payload.replace(
+            '#identificativoFlusso#', identificativoFlusso)
         setattr(context, 'identificativoFlusso', identificativoFlusso)
 
     if "#ccp#" in payload:
@@ -142,7 +148,8 @@ def step_impl(context, primitive):
 
     if '#CARRELLO#' in payload:
         CARRELLO = "CARRELLO" + "-" + \
-            str(getattr(context, 'date') + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+            str(getattr(context, 'date') +
+                datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
         payload = payload.replace('#CARRELLO#', CARRELLO)
         setattr(context, 'CARRELLO', CARRELLO)
 
@@ -173,7 +180,7 @@ def step_impl(context, primitive):
 
     if '$rendAttachment' in payload:
         rendAttachment = getattr(context, 'rendAttachment')
-        rendAttachment_b = bytes(rendAttachment, 'ascii')
+        rendAttachment_b = bytes(rendAttachment, 'UTF-8')
         rendAttachment_uni = b64.b64encode(rendAttachment_b)
         rendAttachment_uni = f"{rendAttachment_uni}".split("'")[1]
         payload = payload.replace('$rendAttachment', rendAttachment_uni)
@@ -185,6 +192,7 @@ def step_impl(context, primitive):
         setattr(context, 'carrello', carrello)
 
     setattr(context, primitive, payload)
+
 
 @given('initial JSON {primitive}')
 def step_impl(context, primitive):
@@ -212,10 +220,13 @@ def step_impl(context, primitive):
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
     if '$transaction_id' in payload:
-        payload = payload.replace('$transaction_id', getattr(context, 'transaction_id'))
+        payload = payload.replace(
+            '$transaction_id', getattr(context, 'transaction_id'))
     if '$psp_transaction_id' in payload:
-        payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
+        payload = payload.replace(
+            '$psp_transaction_id', getattr(context, 'psp_transaction_id'))
     setattr(context, primitive, payload)
+
 
 @step('RPT generation')
 def step_impl(context):
@@ -228,8 +239,8 @@ def step_impl(context):
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
 
-    pa = context.config.userdata.get('global_configuration').get('creditor_institution_code')
-
+    pa = context.config.userdata.get(
+        'global_configuration').get('creditor_institution_code')
 
     if "#iuv#" in payload:
         iuv = f"14{str(random.randint(1000000000000, 9999999999999))}"
@@ -260,23 +271,27 @@ def step_impl(context):
         setattr(context, 'timedate', timedate)
 
     if '#IuV#' in payload:
-        iuv = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + '00'
+        iuv = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
+                                                                         2000)) + str(random.randint(1000, 2000)) + '00'
         payload = payload.replace('#IuV#', iuv)
         setattr(context, 'IuV', iuv)
 
     if '#iuv2#' in payload:
-        iuv = 'IUV' + '-' + str(date + '-' + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
+        iuv = 'IUV' + '-' + \
+            str(date + '-' +
+                datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
         payload = payload.replace('#iuv2#', iuv)
         setattr(context, '2iuv', iuv)
-    
+
     if '#IUV_#' in payload:
-        IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' +  datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+        IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' + \
+            datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#IUV_#', IUV_)
         setattr(context, 'IUV_', IUV_)
 
-
     if '#IUV#' in payload:
-        IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+        IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + \
+            datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#IUV#', IUV)
         setattr(context, 'IUV', IUV)
 
@@ -295,28 +310,33 @@ def step_impl(context):
     if '#carrello#' in payload:
         prova = utils.random_s()
         print('############', prova)
-        carrello = pa + "302" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + prova
+        carrello = pa + "302" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + prova
         print(carrello)
         payload = payload.replace('#carrello#', carrello)
         setattr(context, 'carrello', carrello)
 
     if '#carrello1#' in payload:
-        carrello1 = pa + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+        carrello1 = pa + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
+            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
         payload = payload.replace('#carrello1#', carrello1)
         setattr(context, 'carrello1', carrello1)
 
     if '#secCarrello#' in payload:
-        secCarrello = pa + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        secCarrello = pa + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
+            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#secCarrello#', secCarrello)
         setattr(context, 'secCarrello', secCarrello)
 
     if '#thrCarrello#' in payload:
-        thrCarrello = pa + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        thrCarrello = pa + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
+            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#thrCarrello#', thrCarrello)
         setattr(context, 'thrCarrello', thrCarrello)
 
     if '#carrNOTENABLED#' in payload:
-        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
         setattr(context, 'carrNOTENABLED', carrNOTENABLED)
 
@@ -326,16 +346,18 @@ def step_impl(context):
     payload = utils.replace_global_variables(payload, context)
 
     setattr(context, 'rpt', payload)
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
 
     print("RPT generato: ", payload)
     setattr(context, 'rptAttachment', payload)
 
+
 @given('generate {number:d} notice number and iuv with aux digit {aux_digit:d}, segregation code {segregation_code} and application code {application_code}')
 def step_impl(context, number, aux_digit, segregation_code, application_code):
-    segregation_code = utils.replace_global_variables(segregation_code, context)
+    segregation_code = utils.replace_global_variables(
+        segregation_code, context)
     if aux_digit == 0 or aux_digit == 3:
         iuv = f"11{random.randint(10000000000, 99999999999)}00"
         reference_code = application_code if aux_digit == 0 else segregation_code
@@ -348,7 +370,7 @@ def step_impl(context, number, aux_digit, segregation_code, application_code):
         notice_number = f"{aux_digit}{iuv}00"
     else:
         assert False
-    
+
     setattr(context, f"{number}iuv", str(iuv))
     setattr(context, f'{number}noticeNumber', notice_number)
 
@@ -365,17 +387,18 @@ def step_impl(context, number, pa, notice_number):
     carrello = f"{pa}{notice_number}-{utils.random_s()}"
     setattr(context, f'{number}carrello', carrello)
 
+
 @given('RPT{number:d} generation')
 def step_impl(context, number):
     payload = context.text or ""
-    
+
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
-    
+
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    
+
     setattr(context, 'date', date)
     setattr(context, 'timedate', timedate)
 
@@ -386,15 +409,17 @@ def step_impl(context, number):
         setattr(context, f'{number}IUV', IUV)
 
     if f'#iUV{number}#' in payload:
-        iuv = 'IUV2' + '-' + str(date + '-' + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
+        iuv = 'IUV2' + '-' + \
+            str(date + '-' +
+                datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
         payload = payload.replace(f'#iUV{number}#', iuv)
         setattr(context, f'{number}iUV', iuv)
 
     if '#IUV_{number}#' in payload:
-        IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' +  datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+        IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' + \
+            datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#IUV_{number}#', IUV_)
         setattr(context, f'{number}IUV_', IUV_)
-
 
     if f"#ccp{number}#" in payload:
         ccp = str(int(time.time() * 1000))
@@ -428,13 +453,11 @@ def step_impl(context, number):
         payload = payload.replace('$date+1', date)
         setattr(context, '$date+1', date)
 
-   
     if f'#IuV{number}#' in payload:
         IuV = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
                                                                          2000)) + str(random.randint(1000, 2000)) + '00'
         payload = payload.replace(f'#IuV{number}#', IuV)
         setattr(context, f'{number}IuV', IuV)
-
 
     if f'#iuv{number}#' in payload:
         iuv = "IUV" + str(random.randint(0, 10000)) + "-" + \
@@ -478,7 +501,7 @@ def step_impl(context, number):
     #     payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
     #     setattr(context, 'carrNOTENABLED', carrNOTENABLED)
 
-    #if "nodoVerificaRPT_IUV" in payload:
+    # if "nodoVerificaRPT_IUV" in payload:
         # nodoVerificaRPT = getattr(context, 'nodoVerificaRPT')
         # my_document = parseString(nodoVerificaRPT.content)
         # aux_digit = my_document.getElementsByTagName('AuxDigit')
@@ -494,7 +517,7 @@ def step_impl(context, number):
         # setattr(context, 'iuv', iuv)
 
     setattr(context, f'rpt{number}', payload)
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
@@ -502,7 +525,7 @@ def step_impl(context, number):
     setattr(context, f'rpt{number}Attachment', payload)
 
 
-@given ('MB generation')
+@given('MB generation')
 def step_impl(context):
     payload = context.text or ""
 
@@ -511,18 +534,19 @@ def step_impl(context):
     payload = utils.replace_global_variables(payload, context)
 
     if '#iubd#' in payload:
-        iubd = ''+ str(random.randint(10000000, 20000000)) + str(random.randint(10000000, 20000000))
+        iubd = '' + str(random.randint(10000000, 20000000)) + \
+            str(random.randint(10000000, 20000000))
         payload = payload.replace('#iubd#', iubd)
         setattr(context, 'iubd', iubd)
 
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
 
     setattr(context, 'bollo', payload)
 
 
-@given ('MB{number:d} generation')
+@given('MB{number:d} generation')
 def step_impl(context, number):
     payload = context.text or ""
 
@@ -531,11 +555,12 @@ def step_impl(context, number):
     payload = utils.replace_global_variables(payload, context)
 
     if f'#iubd{number}#' in payload:
-        iubd = ''+ str(random.randint(10000000, 20000000)) + str(random.randint(10000000, 20000000))
+        iubd = '' + str(random.randint(10000000, 20000000)) + \
+            str(random.randint(10000000, 20000000))
         payload = payload.replace(f'#iubd{number}#', iubd)
         setattr(context, f'{number}iubd', iubd)
 
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
 
@@ -560,7 +585,8 @@ def step_impl(context, number):
         payload = payload.replace('#date#', date)
 
     if f"#IUV{number}#" in payload:
-        IUV = str(utils.current_milli_time()) + '-' + str(random.randint(0, 100000))
+        IUV = str(utils.current_milli_time()) + \
+            '-' + str(random.randint(0, 100000))
         payload = payload.replace(f'#IUV{number}#', IUV)
         setattr(context, f'{number}IUV', IUV)
 
@@ -576,12 +602,11 @@ def step_impl(context, number):
         setattr(context, "ccp", ccp)
     """
 
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
 
-    
     setattr(context, f'rt{number}Attachment', payload)
 
 
@@ -591,7 +616,7 @@ def step_impl(context):
     payload = utils.replace_global_variables(payload, context)
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
-    
+
     if '#date#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
         payload = payload.replace('#date#', date)
@@ -603,20 +628,20 @@ def step_impl(context):
         payload = payload.replace('#timedate#', timedate)
         setattr(context, 'timedate', timedate)
 
-
     if "#ccp#" in payload:
         ccp = str(utils.current_milli_time())
         payload = payload.replace('#ccp#', ccp)
         setattr(context, "ccp", ccp)
-    
+
     setattr(context, 'rt', payload)
 
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
-    
+
     print("RT generato: ", payload)
     setattr(context, 'rtAttachment', payload)
+
 
 @given('RR generation')
 def step_impl(context):
@@ -633,14 +658,15 @@ def step_impl(context):
         payload = payload.replace('#date#', date)
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
-    
-    payload_b = bytes(payload, 'ascii')
+
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
-    
+
     print("RT generato: ", payload)
     setattr(context, 'rrAttachment', payload)
+
 
 @given('ER generation')
 def step_impl(context):
@@ -657,12 +683,12 @@ def step_impl(context):
         payload = payload.replace('#date#', date)
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
-    
-    payload_b = bytes(payload, 'ascii')
+
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
-    
+
     print("RT generato: ", payload)
     setattr(context, 'erAttachment', payload)
 
@@ -671,7 +697,6 @@ def step_impl(context):
 def step_impl(context):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
-
 
     if '#date#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
@@ -693,19 +718,22 @@ def step_impl(context):
 
     if '#identificativoFlusso#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
-        identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
-        payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
+        identificativoFlusso = date + context.config.userdata.get(
+            "global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
+        payload = payload.replace(
+            '#identificativoFlusso#', identificativoFlusso)
         setattr(context, 'identificativoFlusso', identificativoFlusso)
 
     if '#iuv#' in payload:
-        iuv = "IUV" + str(random.randint(0, 10000)) + "-" + datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
+        iuv = "IUV" + str(random.randint(0, 10000)) + "-" + \
+            datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
         payload = payload.replace('#iuv#', iuv)
         setattr(context, 'iuv', iuv)
 
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
 
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
@@ -724,6 +752,7 @@ def step_impl(context, elem, value, action):
         xml = utils.manipulate_soap_action(
             getattr(context, action), elem, value)
         setattr(context, action, xml)
+
 
 @given('replace {old_tag} tag in {action} with {new_tag}')
 def step_impl(context, old_tag, new_tag, action):
@@ -760,12 +789,13 @@ def step_impl(context, sender, soap_primitive, receiver):
     assert (soap_response.status_code ==
             200), f"status_code {soap_response.status_code}"
 
+
 @step('send, by sender {sender}, soap action {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
-    primitive = soap_primitive.split("_")[0]
-    headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+    #primitive = soap_primitive.split("_")[0]
+    headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive,
                'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
-    url_nodo = utils.get_soap_url_nodo(context, primitive)
+    url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
@@ -776,18 +806,18 @@ def step_impl(context, sender, soap_primitive, receiver):
     setattr(context, soap_primitive + RESPONSE, soap_response)
 
 
-
 @when('job {job_name} triggered after {seconds} seconds')
 def step_impl(context, job_name, seconds):
     seconds = utils.replace_local_variables(seconds, context)
     time.sleep(int(seconds))
-    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
+    url_nodo = context.config.userdata.get(
+        "services").get("nodo-dei-pagamenti").get("url")
     print(">>>>>>>>>>>>>>>>>>", url_nodo)
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
-    #DA UTILIZZARE IN LOCALE (DECOMMENTARE RIGA 784-785 E COMMENTARE RIGA 787-788)
-    #nodo_response = requests.get(
-        #f"{url_nodo}/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
-    #pipeline
+    # DA UTILIZZARE IN LOCALE (DECOMMENTARE RIGA 784-785 E COMMENTARE RIGA 787-788)
+    # nodo_response = requests.get(
+    # f"{url_nodo}/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
+    # pipeline
     nodo_response = requests.get(
         f"{url_nodo}/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
@@ -818,7 +848,8 @@ def step_impl(context, tag, value, primitive):
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
         founded_value = jo.get_value_from_key(json_response, tag)
-        print(f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
+        print(
+            f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
         assert str(founded_value) == value
 
 
@@ -840,7 +871,7 @@ def step_impl(context, tag, value, primitive):
                     'description')[0].firstChild.data)
         data = my_document.getElementsByTagName(tag)[0].firstChild.data
         print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
-        assert value in data 
+        assert value in data
     else:
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
@@ -855,12 +886,11 @@ def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
-        nodeList= my_document.getElementsByTagName(tag)
-        print("#######################",nodeList)
+        nodeList = my_document.getElementsByTagName(tag)
+        print("#######################", nodeList)
         values = [node.childNodes[0].nodeValue for node in nodeList]
         print(values)
         assert value in values
-
 
 
 @then('check {tag} contains {value} of {primitive} response')
@@ -871,10 +901,13 @@ def step_impl(context, tag, value, primitive):
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
-            print("fault code: ", my_document.getElementsByTagName('faultCode')[0].firstChild.data)
-            print("fault string: ", my_document.getElementsByTagName('faultString')[0].firstChild.data)
+            print("fault code: ", my_document.getElementsByTagName(
+                'faultCode')[0].firstChild.data)
+            print("fault string: ", my_document.getElementsByTagName(
+                'faultString')[0].firstChild.data)
             if my_document.getElementsByTagName('description'):
-                print("description: ", my_document.getElementsByTagName('description')[0].firstChild.data)
+                print("description: ", my_document.getElementsByTagName(
+                    'description')[0].firstChild.data)
         data = my_document.getElementsByTagName(tag)[0].firstChild.data
         print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
         assert value in data
@@ -1035,6 +1068,7 @@ def step_impl(context, name):
         [step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
     context.execute_steps(text_step)
 
+
 @step('start from {name} scenario {n:d} times')
 def step_impl(context, name, n):
     if n > 0:
@@ -1044,7 +1078,6 @@ def step_impl(context, name, n):
             text_step = ''.join(
                 [step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
             context.execute_steps(text_step)
-
 
 
 @when(u'{sender} sends rest {method:Method} {service} to {receiver}')
@@ -1110,7 +1143,7 @@ def step_impl(context, mock, destination, primitive):
         print(utils.get_soap_mock_ec2(context))
         response_status_code = utils.save_soap_action(utils.get_soap_mock_ec2(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
-    elif mock == 'PSP': 
+    elif mock == 'PSP':
         print(utils.get_soap_mock_psp(context))
         response_status_code = utils.save_soap_action(utils.get_soap_mock_psp(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
@@ -1252,10 +1285,12 @@ def step_impl(context, primitive, new_primitive):
     print("###########################################################################", soap_request)
     setattr(context, new_primitive, soap_request)
 
+
 @step('random iuv in context')
 def step_impl(context):
     iuv = str(random.randint(1000000000000, 9999999999999))
     setattr(context, "iuv", iuv)
+
 
 @then('{response} response is equal to {response_1} response')
 def step_impl(context, response, response_1):
@@ -1406,18 +1441,19 @@ def step_impl(context, param, value):
     refresh_response = requests.get(utils.get_refresh_config_url(
         context), headers=headers, verify=False)
     time.sleep(5)
-    print('refresh_response: ',refresh_response)
+    print('refresh_response: ', refresh_response)
     assert refresh_response.status_code == 200
 
 
 @step("refresh job {job_name} triggered after 10 seconds")
 def step_impl(context, job_name):
-    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
+    url_nodo = context.config.userdata.get(
+        "services").get("nodo-dei-pagamenti").get("url")
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
-    #DA UTILIZZARE IN LOCALE (DECOMMENTARE RIGA 1414-1415 E COMMENTARE RIGA 1417-1418)
-    #nodo_response = requests.get(
-        #f"{url_nodo}/config/refresh/{job_name}", headers=headers, verify=False)
-    #pipeline
+    # DA UTILIZZARE IN LOCALE (DECOMMENTARE RIGA 1414-1415 E COMMENTARE RIGA 1417-1418)
+    # nodo_response = requests.get(
+    # f"{url_nodo}/config/refresh/{job_name}", headers=headers, verify=False)
+    # pipeline
     nodo_response = requests.get(
         f"{url_nodo}/monitoring/v1/config/refresh/{job_name}", headers=headers, verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
@@ -1440,7 +1476,7 @@ def stemp_impl(context, date, add_remove, minutes):
         date += timedelta(minutes=minutes)
     elif add_remove == 'remove':
         date -= timedelta(minutes=minutes)
-    
+
     setattr(context, 'date', date.strftime("%Y-%m-%d %H:%M:%S"))
 
 
@@ -1452,10 +1488,13 @@ def step_impl(context, query_name, date, macro, db_name):
 
     if date == 'Today':
         #date = str(datetime.datetime.today())
-        date = datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")
+        date = datetime.datetime.today().astimezone(pytz.timezone('Europe/Rome')).strftime("%Y-%m-%d %H:%M:%S")
 
     if date == 'Yesterday':
-        date = str(datetime.date.today() - datetime.timedelta(days=1))
+        date = str(datetime.datetime.today().astimezone(pytz.timezone('Europe/Rome')) - datetime.timedelta(days=1))
+
+    if date == '1minuteLater':
+        date = str(datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(minutes=1))
 
     selected_query = utils.query_json(
         context, query_name, macro).replace('date', date)
@@ -1510,7 +1549,7 @@ def step_impl(context, query_name, param, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
 
-    if position == -1: # il -1 recupera tutti i record
+    if position == -1:  # il -1 recupera tutti i record
         selected_element = [t[0] for t in result_query]
     else:
         selected_element = result_query[0][position]
@@ -1537,6 +1576,7 @@ def step_impl(context, query_name, xml, position, key):
     print(f'{xml}: {selected_element}')
     setattr(context, key, selected_element)
 
+
 @step("through the query {query_name} retrieve xml_no_decode {xml} at position {position:d} and save it under the key {key}")
 def step_impl(context, query_name, xml, position, key):
     result_query = getattr(context, query_name)
@@ -1545,7 +1585,7 @@ def step_impl(context, query_name, xml, position, key):
     selected_element = selected_element.read()
     print(f'{xml}: {selected_element}')
     setattr(context, key, selected_element)
-    
+
 
 @step("with the query {query_name1} check assert beetwen elem {elem1} in position {position1:d} and elem {elem2} with position {position2:d} of the query {query_name2}")
 def stemp_impl(context, query_name1, elem1, position1, elem2, query_name2, position2):
@@ -1780,6 +1820,77 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     assert elem == value
 
 
+@step(u"checks datetime plus number of date {number} of the record at column {column} in the row {row:d} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+def step_impl(context, column, query_name, table_name, db_name, name_macro, number, row):
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+
+    if number == 'default_token_duration_validity_millis':
+        default = int(
+            getattr(context, 'default_token_duration_validity_millis')) / 60000
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
+                 datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[row].strftime('%Y-%m-%d %H:%M')
+
+    elif number == 'default_idempotency_key_validity_minutes':
+        default = int(
+            getattr(context, 'default_idempotency_key_validity_minutes'))
+        print("###################", default)
+
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
+                 datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
+        print(">>>>>>>>>>>>>>>>>>>", value)
+
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[row].strftime('%Y-%m-%d %H:%M')
+
+    elif number == 'Today':
+        value = (datetime.datetime.today()).strftime('%Y-%m-%d')
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[row].strftime('%Y-%m-%d')
+
+    elif 'minutes:' in number:
+        min = int(number.split(':')[1]) / 60000
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
+                 datetime.timedelta(minutes=min)).strftime('%Y-%m-%d %H:%M')
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[row].strftime('%Y-%m-%d %H:%M')
+    else:
+        number = int(number)
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
+                 datetime.timedelta(days=number)).strftime('%Y-%m-%d')
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[row].strftime('%Y-%m-%d')
+
+    db.closeConnection(conn)
+
+    print(f"check expected element: {value}, obtained: {elem}")
+    assert elem == value
+
+
 @step(u"verify datetime plus number of minutes {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
@@ -1816,6 +1927,7 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
     exec_query = db.executeQuery(conn, selected_query)
     print("record query: ", exec_query)
     assert len(exec_query) == number, f"{len(exec_query)}"
+
 
 @step(u"verify if the records for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro} are not null")
 def step_impl(context, query_name, table_name, db_name, name_macro):
@@ -1855,14 +1967,17 @@ def step_impl(context, condition, param):
     print(datetime.timedelta(milliseconds=int(param)))
 
     if condition == 'equal to':
-        assert token_valid_to == token_valid_from + datetime.timedelta(milliseconds=int(param)), f"{token_valid_to} != {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
-    
+        assert token_valid_to == token_valid_from + datetime.timedelta(milliseconds=int(
+            param)), f"{token_valid_to} != {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
+
     elif condition == 'greater than':
-        assert token_valid_to > token_valid_from + datetime.timedelta(milliseconds=int(param)), f"{token_valid_to} <= {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
-    
+        assert token_valid_to > token_valid_from + datetime.timedelta(milliseconds=int(
+            param)), f"{token_valid_to} <= {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
+
     elif condition == 'smaller than':
-        assert token_valid_to < token_valid_from + datetime.timedelta(milliseconds=int(param)), f"{token_valid_to} >= {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
-    
+        assert token_valid_to < token_valid_from + datetime.timedelta(milliseconds=int(
+            param)), f"{token_valid_to} >= {token_valid_from + datetime.timedelta(milliseconds=int(param))}"
+
     else:
         assert False
 
@@ -1892,16 +2007,19 @@ def step_impl(context, value1, condition, value2):
 @step("calling primitive {primitive1} {restType1} and {primitive2} {restType2} in parallel")
 def step_impl(context, primitive1, primitive2, restType1, restType2):
     list_of_primitive = [primitive1, primitive2]
-    list_of_type= [restType1, restType2]
+    list_of_type = [restType1, restType2]
     utils.threading(context, list_of_primitive, list_of_type)
 
-#2 primitives called in parallel, with delay1 applied to primitive2
+# 2 primitives called in parallel, with delay1 applied to primitive2
+
+
 @step("calling primitive {primitive1} {restType1} and {primitive2} {restType2} with {delay1:d} ms delay")
 def step_impl(context, primitive1, primitive2, delay1, restType1, restType2):
     list_of_primitive = [primitive1, primitive2]
-    list_of_type= [restType1, restType2]
+    list_of_type = [restType1, restType2]
     list_of_delays = [0, delay1]
-    utils.threading_delayed(context, list_of_primitive, list_of_delays, list_of_type)
+    utils.threading_delayed(context, list_of_primitive,
+                            list_of_delays, list_of_type)
 
 
 @then("check primitive response {primitive1} and primitive response {primitive2}")
@@ -1958,13 +2076,13 @@ def step_impl(context, primitive1, primitive2):
         assert True
      # AccessiConcorrenziali 3d_ACT_SPO
     elif outcome1 == 'OK' and outcome2 == 'KO' and faultCode2 == 'PPT_TOKEN_SCADUTO':
-        assert True  
+        assert True
     # AccessiConcorrenziali 3e_ACT_SPO
     elif outcome1 == 'KO' and faultCode2 == 'PPT_SEMANTICA' and description2 == 'Activation pending on position':
-        assert True     
+        assert True
      # AccessiConcorrenziali 3e_ACT_SPO
     elif outcome1 == 'KO' and outcome2 == 'KO' and faultCode2 == 'PPT_TOKEN_SCADUTO':
-        assert True  
+        assert True
     else:
         assert False
 
@@ -2520,6 +2638,7 @@ def step_impl(context, url):
     print(f"#################### {url.split('idSession=')[1]}")
     setattr(context, f'sessionToken', url.split('idSession=')[1])
 
+
 @step('retrieve session token {number:d} from {url}')
 def step_impl(context, number, url):
     url = utils.replace_local_variables(url, context)
@@ -2533,6 +2652,7 @@ def step_impl(context, url):
     url = utils.replace_local_variables(url, context)
     print(url)
     setattr(context, 'url', url)
+
 
 @step('replace {old_attribute} content with {new_attribute} content')
 def step_impl(context, old_attribute, new_attribute):
@@ -2574,36 +2694,34 @@ def step_impl(context, causaleVers):
 
     db.closeConnection(conn)
 
+
 @step(u'run in parallel "{feature}", "{scenario}"')
 def step_impl(context, feature, scenario):
     scenari = scenario.split(',')
     i = 0
     threads = list()
-    
+
     t1 = threading.Thread(
-    name='run test parallel',
-    target=utils.parallel_executor,
-    args=[context, feature, scenario[0]])
+        name='run test parallel',
+        target=utils.parallel_executor,
+        args=[context, feature, scenario[0]])
     threads.append(t1)
     t1.start()
 
     t2 = threading.Thread(
-    name='run test parallel',
-    target=utils.parallel_executor,
-    args=[context, feature, scenario[1]])
+        name='run test parallel',
+        target=utils.parallel_executor,
+        args=[context, feature, scenario[1]])
     threads.append(t2)
     t2.start()
-  
+
     t3 = threading.Thread(
-    name='run test parallel',
-    target=utils.parallel_executor,
-    args=[context, feature, scenario[2]])
+        name='run test parallel',
+        target=utils.parallel_executor,
+        args=[context, feature, scenario[2]])
     threads.append(t3)
     t3.start()
-    
-    
-    
-    
+
     # while i < len(scenari):
     #     t = threading.Thread(
     #     name='run test parallel',
@@ -2615,30 +2733,35 @@ def step_impl(context, feature, scenario):
 
     for thread in threads:
         thread.join()
-    
-    
+
+
 @step('export elem {elem} with value {value} in cache')
 def step_impl(context, elem, value):
     print('saving in cache')
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
-    cache = json.load(open(os.path.join(context.config.base_dir + "/../resources/cache.json"),'r'))
+    cache = json.load(
+        open(os.path.join(context.config.base_dir + "/../resources/cache.json"), 'r'))
     with open(os.path.join(context.config.base_dir + '/../resources/cache.json'), 'w') as f:
         cache[elem] = value
         cache = json.dump(cache, f, indent=4)
 
+
 @step('delete cache')
 def step_impl(context):
     print('delete info in cache')
-    #delete cache
+    # delete cache
     os.remove(os.path.join(context.config.base_dir + '/../resources/cache.json'))
+
 
 @step('retrive elements from cache and save it in context')
 def step_impl(context):
     print('retrive info from cache')
-    cache = json.load(open(os.path.join(context.config.base_dir + "/../resources/cache.json"),'r'))
+    cache = json.load(
+        open(os.path.join(context.config.base_dir + "/../resources/cache.json"), 'r'))
     for key, value in cache.items():
         setattr(context, key, value)
+
 
 @step('waiting {seconds} seconds for thread')
 def step_impl(contex, seconds):
