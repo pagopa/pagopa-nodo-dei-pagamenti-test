@@ -1494,7 +1494,7 @@ def step_impl(context, query_name, date, macro, db_name):
         date = str(datetime.datetime.today().astimezone(pytz.timezone('Europe/Rome')) - datetime.timedelta(days=1))
 
     if date == '1minuteLater':
-        date = str(datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(minutes=1))
+        date = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(minutes=1)).strftime("%Y-%m-%d %H:%M:%S")
 
     selected_query = utils.query_json(
         context, query_name, macro).replace('date', date)

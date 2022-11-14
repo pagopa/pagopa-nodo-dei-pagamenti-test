@@ -107,7 +107,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     And the 2. Execute sendPaymentOutcome request scenario executed successfully
     # settare idempotencykey validity
     And update through the query idempotency_update with date 1minuteLater under macro update_query on db nodo_online
-    And wait 65 seconds for expiration
+    And wait 70 seconds for expiration
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
