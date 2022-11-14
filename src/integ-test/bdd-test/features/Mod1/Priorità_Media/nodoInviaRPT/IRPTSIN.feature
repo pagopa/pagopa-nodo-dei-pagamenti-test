@@ -114,75 +114,12 @@ Feature: process tests for nodoInviaRT[IRPTSIN]
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaRPT response
 
     @runnable
-    #IRPTSIN2
-    Scenario: Execute nodoInviaRT (Phase 1_1)
-        Given the RPT generation scenario executed successfully
-        And initial XML nodoInviaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-            <pt:intestazionePPT>
-            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            </pt:intestazionePPT>
-            </soapenv:Header>
-            <soapenv:Body>
-            <ws:nodoInviaRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <tipoFirma></tipoFirma>
-            <rpt>$rptAttachment</rpt>
-            </ws:nodoInviaRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaRPT response
-
-    @runnable
-    #IRPTSIN3
-    Scenario: Execute nodoInviaRT (Phase 1_2)
-        Given the RPT generation scenario executed successfully
-        And initial XML nodoInviaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-            <PPT:intestazionePPT>
-            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            </PPT:intestazionePPT>
-            </soapenv:Header>
-            <soapenv:Body>
-            <ws:nodoInviaRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <tipoFirma></tipoFirma>
-            <rpt>$rptAttachment</rpt>
-            </ws:nodoInviaRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaRPT response
-
-
-    @runnable
     #IRPTSIN4
     Scenario: Execute nodoInviaRT (Phase 1_3)
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
@@ -282,7 +219,7 @@ Feature: process tests for nodoInviaRT[IRPTSIN]
             | codiceContestoPagamento               | as12df57g8q45er69t74yuiop45789asw123 | PPT_SINTASSI_EXTRAXSD | IRPTSIN19   |
             | soapenv:Body                          | None                                 | PPT_SINTASSI_EXTRAXSD | IRPTSIN20   |
             | soapenv:Body                          | Empty                                | PPT_SINTASSI_EXTRAXSD | IRPTSIN21   |
-            | ws:nodoInviaRPT                       | RemoveParent                         | PPT_SYSTEM_ERROR      | IRPTSIN22   |
+            | ws:nodoInviaRPT                       | RemoveParent                         | PPT_SINTASSI_EXTRAXSD | IRPTSIN22   |
             | ws:nodoInviaRPT                       | Empty                                | PPT_SINTASSI_EXTRAXSD | IRPTSIN23   |
             | password                              | None                                 | PPT_SINTASSI_EXTRAXSD | IRPTSIN24   |
             | password                              | Empty                                | PPT_SINTASSI_EXTRAXSD | IRPTSIN25   |
@@ -298,7 +235,7 @@ Feature: process tests for nodoInviaRT[IRPTSIN]
             | identificativoCanale                  | Empty                                | PPT_SINTASSI_EXTRAXSD | IRPTSIN33.1 |
             | identificativoCanale                  | as12df57g8q45er69t74yuiop45789asw123 | PPT_SINTASSI_EXTRAXSD | IRPTSIN34   |
             | rpt                                   | None                                 | PPT_SINTASSI_EXTRAXSD | IRPTSIN37   |
-            | rpt                                   | Empty                                | PPT_SINTASSI_EXTRAXSD | IRPTSIN38   |
+            | rpt                                   | Empty                                | PPT_SINTASSI_XSD      | IRPTSIN38   |
 
     #IRPTSIN39
     Scenario: (phase 3) RPT generation
@@ -513,7 +450,7 @@ Feature: process tests for nodoInviaRT[IRPTSIN]
             </soapenv:Envelope>
             """
         When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check faultCode is XML_STREAM_EXC of nodoInviaRPT response
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaRPT response
 
 
     @runnable
@@ -766,7 +703,7 @@ Feature: process tests for nodoInviaRT[IRPTSIN]
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
@@ -782,7 +719,7 @@ Feature: process tests for nodoInviaRT[IRPTSIN]
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
-            <tipoFirma></tipoFirma>
+            <tipoFirma>1</tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
@@ -812,5 +749,5 @@ Feature: process tests for nodoInviaRT[IRPTSIN]
         Examples:
             | tag       | tagvalue | soapUI test |
             | tipoFirma | None     | IRPTSIN35   |
-            | tipoFirma | Empty    | IRPTSIN45.1 |
+            | tipoFirma | Empty    | IRPTSIN35.1 |
             | tipoFirma | 9        | IRPTSIN36   |
