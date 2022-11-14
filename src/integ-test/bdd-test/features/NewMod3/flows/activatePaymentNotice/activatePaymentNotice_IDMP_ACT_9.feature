@@ -63,6 +63,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNotice response
 
   #DB check
+    And execution query idempotency_cache_act to get value on the table IDEMPOTENCY_CACHE, with the columns TOKEN under macro NewMod3 with db name nodo_online
     And through the query idempotency_cache_act retrieve param paymentToken at position 0 in the row 1 and save it under the key paymentToken
     
     And check datetime plus number of date 0 of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
