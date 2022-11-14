@@ -303,6 +303,29 @@ Feature: flow tests for sendPaymentResultV2
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
 
     @skip
+    Scenario: pspNotifyPayment KO response
+        Given initial XML pspNotifyPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentRes>
+            <outcome>KO</outcome>
+            <!--Optional:-->
+            <fault>
+            <faultCode>CANALE_SEMANTICA</faultCode>
+            <faultString>Errore semantico dal psp</faultString>
+            <id>1</id>
+            <!--Optional:-->
+            <description>Errore dal psp</description>
+            </fault>
+            </pfn:pspNotifyPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
+
+    @skip
     Scenario: sendPaymentOutcome request
         Given initial XML sendPaymentOutcome
             """
@@ -2602,4 +2625,40 @@ Feature: flow tests for sendPaymentResultV2
 
         # POSITION_STATUS_SNAPSHOT
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+    # T_SPR_V2_04
+
+    Scenario: T_SPR_V2_04 (part 1)
+        Given the verifyPaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
+
+        # POSITION_ACTIVATE
+        And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        And the nodoChiediInformazioniPagamento scenario executed successfully
+        # response sprv2 200
+        And the pspNotifyPayment KO response scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        # verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_REFUSED,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS
+        And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And verify 2 record for the table POSITION_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS_SNAPSHOT
+        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
