@@ -1455,10 +1455,10 @@ def step_impl(context, query_name, date, macro, db_name):
         date = datetime.datetime.today().astimezone(pytz.timezone('Europe/Rome')).strftime("%Y-%m-%d %H:%M:%S")
 
     if date == 'Yesterday':
-        date = str(datetime.date.today().astimezone(pytz.timezone('Europe/Rome')) - datetime.timedelta(days=1))
+        date = str(datetime.datetime.today().astimezone(pytz.timezone('Europe/Rome')) - datetime.timedelta(days=1))
 
     if date == '1minuteLater':
-        date = str(datetime.date.today().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(minutes=1))
+        date = str(datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(minutes=1))
 
     selected_query = utils.query_json(
         context, query_name, macro).replace('date', date)
