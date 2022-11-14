@@ -64,6 +64,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is OK of activatePaymentNotice response
     And call the paymentToken of activatePaymentNotice response as paymentTokenPhase2
     And saving activatePaymentNotice request in activatePaymentNotice2
+    And save activatePaymentNotice response in activatePaymentNotice2
 
   # Send payment outcome Phase - outcome OK [IDMP_SPO_18]
   Scenario: Execute sendPaymentOutcome request with outcome OK on token of Activate Phase 2
@@ -177,7 +178,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is OK of activatePaymentNotice1 response
     And verify the paymentToken of the activatePaymentNotice1 response is equals to paymentTokenPhase1
 
-@runnable  
+@fix  
   # Second activate check [IDMP_SPO_19]
   Scenario: Execute again activatePaymentNotice request of Activate Phase 2
     Given the Execute again activatePaymentNotice1 request of Activate Phase 1 scenario executed successfully
