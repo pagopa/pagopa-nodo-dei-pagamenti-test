@@ -1779,7 +1779,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     print(f"check expected element: {value}, obtained: {elem}")
     assert elem == value
 
-@step(u"check datetime plus number of date {number} of the record at column {column} in the row {row:d} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+@step(u"checks datetime plus number of date {number} of the record at column {column} in the row {row:d} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number, row):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
