@@ -26,6 +26,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
       </soapenv:Envelope>
       """
     And nodo-dei-pagamenti has config parameter useIdempotency set to true
+    
 
   # Activate Phase 1
   Scenario: Execute activatePaymentNotice request
@@ -54,6 +55,8 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
   @runnable
   Scenario Outline: Execute again the activatePaymentNotice request with same idempotencyKey before it expires
     Given the Execute activatePaymentNotice request scenario executed successfully
+    And wait 2 seconds for expiration
+    And expirationTime with 60000 in activatePaymentNotice
     And <elem> with <value> in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
