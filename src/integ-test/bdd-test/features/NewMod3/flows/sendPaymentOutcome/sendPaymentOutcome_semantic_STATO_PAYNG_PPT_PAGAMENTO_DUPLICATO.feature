@@ -59,7 +59,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAYING - PPT_PAGAMENT
           <idBrokerPSP>#psp#</idBrokerPSP>
           <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
-          <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
+          <paymentToken>0d066ce936374a5fa7e75cef845ceae6</paymentToken>
           <outcome>OK</outcome>
           <!--Optional:-->
           <details>
