@@ -536,6 +536,8 @@ Feature: flow tests for sendPaymentResultV2
         And check value $XML_DB.PSPCompanyName is equal to value PSP Paolo
         And check value $XML_DB.idChannel is equal to value #canale_IMMEDIATO_MULTIBENEFICIARIO#
         And check value $XML_DB.channelDescription is equal to value WISP
+        And check value $XML_DB.officeName is equal to value $paGetPayment.officeName
+        #check sul payer se presente
         And check value $XML_DB.paymentMethod is equal to value TPAY
         And check value $XML_DB.fee is equal to value 2.00
         And check value $XML_DB.applicationDate is equal to value $sendPaymentOutcome.applicationDate

@@ -225,7 +225,7 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    
+
     # SEM_SPO_7.1
 
     Scenario: SEM_SPO_7.1 (part 1)
@@ -438,14 +438,16 @@ Feature: flux / semantic checks for sendPaymentOutcomeV2
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
 
-    Scenario: SEM_SPO_31 (part 4)
-        Given the SEM_SPO_31 (part 3) scenario executed successfully
-        And updates through the query update_activateio of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with 311011451292109621 under macro NewMod1 on db nodo_online
-        And the sendPaymentOutcomeV2 scenario executed successfully
-        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcomeV2 response
-        And check faultCode is PPT_PAGAMENTO_SCONOSCIUTO of sendPaymentOutcomeV2 response
-        And updates through the query update_noticeidrandom of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with $activateIOPayment.noticeNumber under macro NewMod1 on db nodo_online
+    # scenario che contiene un update del NOTICE_ID: in caso di fallimento, possono crearsi dei problemi con il job mod3CancelV2
+
+    # Scenario: SEM_SPO_31 (part 4)
+    #     Given the SEM_SPO_31 (part 3) scenario executed successfully
+    #     And updates through the query update_activateio of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with 311011451292109621 under macro NewMod1 on db nodo_online
+    #     And the sendPaymentOutcomeV2 scenario executed successfully
+    #     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+    #     Then check outcome is KO of sendPaymentOutcomeV2 response
+    #     And check faultCode is PPT_PAGAMENTO_SCONOSCIUTO of sendPaymentOutcomeV2 response
+    #     And updates through the query update_noticeidrandom of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with $activateIOPayment.noticeNumber under macro NewMod1 on db nodo_online
 
     # SEM_SPO_32
 

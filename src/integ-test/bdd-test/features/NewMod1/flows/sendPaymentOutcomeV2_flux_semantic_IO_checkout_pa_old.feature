@@ -434,7 +434,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
     # SEM_SPO_21
-    
+
     Scenario: SEM_SPO_21
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -521,20 +521,22 @@ Feature: revision checks for sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
+    # scenario che contiene un update del NOTICE_ID: in caso di fallimento, possono crearsi dei problemi con il job mod3CancelV1
+
     # SEM_SPO_31
 
-    Scenario: SEM_SPO_31
-        Given the nodoVerificaRPT scenario executed successfully
-        And the nodoAttivaRPT scenario executed successfully
-        And the nodoInviaRPT scenario executed successfully
-        And the informazioniPagamento scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
-        And the sendPaymentOutcomeV2 scenario executed successfully
-        And updates through the query update_notice_number_from_iuv of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with 311011451292109621 under macro NewMod1 on db nodo_online
-        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcomeV2 response
-        And check faultCode is PPT_PAGAMENTO_SCONOSCIUTO of sendPaymentOutcomeV2 response
-        And updates through the query update_noticeidrandom of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with 002$iuv under macro NewMod1 on db nodo_online
+    # Scenario: SEM_SPO_31
+    #     Given the nodoVerificaRPT scenario executed successfully
+    #     And the nodoAttivaRPT scenario executed successfully
+    #     And the nodoInviaRPT scenario executed successfully
+    #     And the informazioniPagamento scenario executed successfully
+    #     And the closePaymentV2 scenario executed successfully
+    #     And the sendPaymentOutcomeV2 scenario executed successfully
+    #     And updates through the query update_notice_number_from_iuv of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with 311011451292109621 under macro NewMod1 on db nodo_online
+    #     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+    #     Then check outcome is KO of sendPaymentOutcomeV2 response
+    #     And check faultCode is PPT_PAGAMENTO_SCONOSCIUTO of sendPaymentOutcomeV2 response
+    #     And updates through the query update_noticeidrandom of the table POSITION_STATUS_SNAPSHOT the parameter NOTICE_ID with 002$iuv under macro NewMod1 on db nodo_online
 
     # SEM_SPO_32
 
