@@ -29,6 +29,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAYING - PPT_PAGAMENT
     """
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
+    And save activatePaymentNotice response in activatePaymentNotice1
     
   # Mod3Cancel Phase
   Scenario: Execute mod3Cancel poller
@@ -59,7 +60,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAYING - PPT_PAGAMENT
           <idBrokerPSP>#psp#</idBrokerPSP>
           <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
-          <paymentToken>0d066ce936374a5fa7e75cef845ceae6</paymentToken>
+          <paymentToken>$activatePaymentNotice1Response.paymentToken</paymentToken>
           <outcome>OK</outcome>
           <!--Optional:-->
           <details>
