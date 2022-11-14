@@ -27,7 +27,6 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
       Then check outcome is OK of verifyPaymentNotice response
 
 
-
    # Activate Phase
    Scenario: Execute activatePaymentNotice request
       Given initial XML activatePaymentNotice
@@ -55,7 +54,6 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
       Then check outcome is OK of activatePaymentNotice response
       #    And token exists and check
       And paymentToken length is less than 36 of activatePaymentNotice response
-
 
 
    # Payment Outcome Phase
