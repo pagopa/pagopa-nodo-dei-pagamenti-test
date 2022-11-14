@@ -1,4 +1,4 @@
-Feature: process tests for 2 RPT da 1 Versamenti
+Feature: process tests for 2 PA: IBAN
 
     Background:
         Given systems up
@@ -71,7 +71,7 @@ Feature: process tests for 2 RPT da 1 Versamenti
                 <pay_i:datiSingoloVersamento>
                     <pay_i:importoSingoloVersamento>6.20</pay_i:importoSingoloVersamento>
                     <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-                    <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+                    <pay_i:ibanAccredito>IT96R0123451234512345678904</pay_i:ibanAccredito>
                     <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
                     <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
                     <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -159,7 +159,7 @@ Feature: process tests for 2 RPT da 1 Versamenti
                 <pay_i:datiSingoloVersamento>
                     <pay_i:importoSingoloVersamento>6.20</pay_i:importoSingoloVersamento>
                     <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-                    <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+                    <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
                     <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
                     <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
                     <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -259,3 +259,4 @@ Feature: process tests for 2 RPT da 1 Versamenti
         And check idCarrello contains $nodoInviaCarrelloRPT.identificativoCarrello of informazioniPagamento response
         And check enteBeneficiario contains AZIENDA XXX of informazioniPagamento response
         And check enteBeneficiario contains AZIENDA YYY of informazioniPagamento response
+        And check IBAN contains IT96R0123451234512345678904 of informazioniPagamento response
