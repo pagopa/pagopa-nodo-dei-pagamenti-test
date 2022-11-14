@@ -80,7 +80,7 @@ Feature: process tests for T213_rptUniversale_carrello_CONV1_fasciaTwoConvDiffer
             </pay_i:datiSingoloVersamento>
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>5.00</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+            <pay_i:commissioneCaricoPA>2.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
@@ -133,33 +133,39 @@ Feature: process tests for T213_rptUniversale_carrello_CONV1_fasciaTwoConvDiffer
         And through the query version retrieve param version at position 0 and save it under the key version
         And replace lingua content with IT content
         And replace importoTot content with 10.00 content
-        And replace codiceConvenzione content with 1 content
-        #And replace version content with 0 content
+        And replace codiceConvenzione content with CONV1 content
         And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param sizeCarte at position -1 and save it under the key sizeCarte
+        And through the query getPsp_CONV1 retrieve param sizeCarte at position 0 and save it under the key sizeCarte
         And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
         And through the query getPsp_CONV1 retrieve param listaCarte at position -1 and save it under the key listaCarte
         And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param sizeConto at position -1 and save it under the key sizeConto
+        And through the query getPsp_CONV1 retrieve param sizeConto at position 0 and save it under the key sizeConto
         And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
         And through the query getPsp_CONV1 retrieve param listaConto at position -1 and save it under the key listaConto
+        And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPsp_CONV1 retrieve param sizeConto at position 0 and save it under the key sizeAltro
         And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
         And through the query getPsp_CONV1 retrieve param listaAltro at position -1 and save it under the key listaAltro
 
-    Scenario: execution nodoChiediListaPSP - altro
-        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 200
-
     Scenario: execution nodoChiediListaPSP - carte
-        Given the execution nodoChiediListaPSP - altro scenario executed successfully
+        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
+        And check totalRows is $sizeCarte of listaPSP response
 
     Scenario: execution nodoChiediListaPSP - conto
         Given the execution nodoChiediListaPSP - carte scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
+        And check totalRows is $sizeConto of listaPSP response
+
+    Scenario: execution nodoChiediListaPSP - altro
+        Given the execution nodoChiediListaPSP - conto scenario executed successfully
+        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
+        Then verify the HTTP status code of listaPSP response is 200
+        And check totalRows is $sizeAltro of listaPSP response
+
+
 
 
 
