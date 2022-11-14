@@ -81,6 +81,7 @@ Feature: process tests for pspInviaCarrelloRPT[CRPTRES1]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+    @runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
             And initial XML pspInviaCarrelloRPT
@@ -98,7 +99,6 @@ Feature: process tests for pspInviaCarrelloRPT[CRPTRES1]
                         </fault>
                         <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
                         <identificativoCarrello>${idCarrello}</identificativoCarrello>
-                        
                         <listaErroriRPT>
                         <fault>
                             <faultCode>CANALE_FIRMA_SCONOSCIUTA</faultCode>

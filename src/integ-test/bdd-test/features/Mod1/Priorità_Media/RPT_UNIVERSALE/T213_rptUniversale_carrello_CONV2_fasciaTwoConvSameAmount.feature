@@ -156,6 +156,8 @@ Feature: process tests for T213_rptUniversale_carrello_CONV2_fasciaTwoConvSameAm
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
         And check totalRows is 0 of listaPSP response
+
+    @runnable
     Scenario: execution nodoChiediListaPSP - conto
         Given the execution nodoChiediListaPSP - carte scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC&lingua=$lingua to nodo-dei-pagamenti

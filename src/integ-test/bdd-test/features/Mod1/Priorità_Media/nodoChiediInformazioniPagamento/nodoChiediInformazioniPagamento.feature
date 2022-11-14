@@ -114,30 +114,34 @@ Feature: process tests for nodoChiediInformazioniPagamento
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
         
-
+    @runnable
     Scenario: execution nodoChiediInformazioniPagamento - PM_CIP1
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento? to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 400
         And check error is Richiesta non valida of informazioniPagamento response
 
+    @runnable
     Scenario: execution nodoChiediInformazioniPagamento - PM_CIP2
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento= to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 400
         And check error is Richiesta non valida of informazioniPagamento response
 
+    @runnable
     Scenario: execution nodoChiediInformazioniPagamento - PM_CIP3
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=stringa-Alfanumerica-Di-36-Caratteri to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 404
         And check error is Il pagamento non esiste of informazioniPagamento response
 
+    @runnable
     Scenario: execution nodoChiediInformazioniPagamento - PM_CIP4
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken&importoTotale=100 to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
+    @runnable
     Scenario: execution nodoChiediInformazioniPagamento - PM_CIP5
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento;idPagamento=$sessionToken to nodo-dei-pagamenti

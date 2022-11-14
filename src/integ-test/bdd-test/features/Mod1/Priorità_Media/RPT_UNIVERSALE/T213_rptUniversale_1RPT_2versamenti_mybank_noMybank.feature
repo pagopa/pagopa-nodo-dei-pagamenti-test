@@ -89,7 +89,6 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_mybank_noMybank
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloVersamento>
-
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
@@ -101,11 +100,9 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_mybank_noMybank
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -155,6 +152,7 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_mybank_noMybank
         And check totalRows is $sizeConto of listaPSP response
         And check data is $listaConto of listaPSP response
 
+    @runnable
     Scenario: execution nodoChiediListaPSP - altro
         Given the execution nodoChiediListaPSP - conto scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO to nodo-dei-pagamenti

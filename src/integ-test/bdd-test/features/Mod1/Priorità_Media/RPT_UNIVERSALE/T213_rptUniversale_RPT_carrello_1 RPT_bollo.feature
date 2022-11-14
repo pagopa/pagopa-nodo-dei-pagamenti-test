@@ -209,6 +209,7 @@ Feature: flow tests for T213_rptUniversale_RPT - carrello - 1 RPT - bollo
          </pay_i:datiPagamento>
          </pay_i:RT>
          """
+         
    Scenario: Execute nodoInviaCarrelloRPT request
       Given the MB generation scenario executed successfully
       And initial XML nodoInviaCarrelloRPT
@@ -268,7 +269,6 @@ Feature: flow tests for T213_rptUniversale_RPT - carrello - 1 RPT - bollo
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
 
-
    Scenario: execution nodoChiediListaPSP - altro
       Given the Execution nodoChiediInfoPag scenario executed successfully
       When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
@@ -279,6 +279,7 @@ Feature: flow tests for T213_rptUniversale_RPT - carrello - 1 RPT - bollo
       When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
       Then verify the HTTP status code of listaPSP response is 200
 
+   @runnable
    Scenario: execution nodoChiediListaPSP - conto
       Given the execution nodoChiediListaPSP - carte scenario executed successfully
       When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC to nodo-dei-pagamenti

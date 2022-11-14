@@ -139,6 +139,7 @@ Feature: process tests for pspInviaCarrelloRPT
             """
             And psp replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
 
+        @runnable
         Scenario Outline: Check faultCode error on non-existent or invalid field
             Given <field> with <value> in pspInviaCarrelloRPT
             When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
