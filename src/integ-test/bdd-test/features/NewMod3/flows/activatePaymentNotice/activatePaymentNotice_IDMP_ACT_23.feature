@@ -69,7 +69,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
   Scenario: DB check + idempotencyCacheClean
     Given the Execute activatePaymentNotice2 request scenario executed successfully
     When job idempotencyCacheClean triggered after 7 seconds
-    And wait 5 seconds
+    And wait 5 seconds for expiration
     Then verify the HTTP status code of idempotencyCacheClean response is 200
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken1 on db nodo_online under macro NewMod3
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken2 on db nodo_online under macro NewMod3
