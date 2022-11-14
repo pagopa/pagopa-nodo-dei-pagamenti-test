@@ -51,10 +51,11 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNotice response
 
   # Activate Phase 2 - PPT_ERRORE_IDEMPOTENZA [SEM_APNR_20]
-  @runnable
+  @runnable1
   Scenario Outline: Execute again the activatePaymentNotice request with same idempotencyKey before it expires
     Given the Execute activatePaymentNotice request scenario executed successfully
     And <elem> with <value> in activatePaymentNotice
+    And expirationTime with 60000 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNotice response
