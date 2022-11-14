@@ -24,7 +24,7 @@ return `
 	</soapenv:Header>
 	<soapenv:Body>
 		<ws:nodoInviaRPT>
-			<password>pwdpwdpwd</password>
+			<password>password</password>
 			<identificativoPSP>${psp}</identificativoPSP>
 			<identificativoIntermediarioPSP>${intpsp}</identificativoIntermediarioPSP>
 			<identificativoCanale>${chpsp}</identificativoCanale>

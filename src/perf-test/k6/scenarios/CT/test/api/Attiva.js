@@ -17,7 +17,7 @@ return `
 			<identificativoPSP>${psp}</identificativoPSP>
 			<identificativoIntermediarioPSP>${intpsp}</identificativoIntermediarioPSP>
 			<identificativoCanale>${chpsp}</identificativoCanale>
-			<password>pwdpwdpwd</password>
+			<password>password</password>
 			<codiceContestoPagamento>${ccp}</codiceContestoPagamento>
 			<identificativoIntermediarioPSPPagamento>${intpsp}</identificativoIntermediarioPSPPagamento>
 			<identificativoCanalePagamento>${chpsp}</identificativoCanalePagamento>

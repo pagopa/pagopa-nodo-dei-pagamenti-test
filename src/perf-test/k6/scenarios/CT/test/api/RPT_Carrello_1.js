@@ -21,7 +21,7 @@ return `
 	</soapenv:Header>
 	<soapenv:Body>
 		<ws:nodoInviaCarrelloRPT>
-			<password>pwdpwdpwd</password>
+			<password>password</password>
 			<identificativoPSP>${psp}</identificativoPSP>
 			<identificativoIntermediarioPSP>${intpsp}</identificativoIntermediarioPSP>
 			<identificativoCanale>${chpsp_c}</identificativoCanale>

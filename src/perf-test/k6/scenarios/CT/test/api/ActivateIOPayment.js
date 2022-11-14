@@ -26,7 +26,7 @@ export function activateIOPaymentReqBody (psp, pspint, chpsp, cf, noticeNumber, 
          <idPSP>${psp}</idPSP>
          <idBrokerPSP>${pspint}</idBrokerPSP>
          <idChannel>${chpsp}</idChannel>
-         <password>pwdpwdpwd</password>
+         <password>password</password>
          <idempotencyKey>${idempotencyKey}</idempotencyKey>
          <qrCode>
             <fiscalCode>${cf}</fiscalCode>

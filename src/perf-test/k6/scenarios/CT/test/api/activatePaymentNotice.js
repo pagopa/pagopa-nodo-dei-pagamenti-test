@@ -19,7 +19,7 @@ export function activateReqBody (psp, pspint, chpsp, cfpa, noticeNmbr, idempoten
 <idPSP>${psp}</idPSP>
 <idBrokerPSP>${pspint}</idBrokerPSP>
 <idChannel>${chpsp}</idChannel>
-<password>pwdpwdpwd</password>
+<password>password</password>
 <idempotencyKey>${idempotencyKey}</idempotencyKey>
 <qrCode>
 <fiscalCode>${cfpa}</fiscalCode>
