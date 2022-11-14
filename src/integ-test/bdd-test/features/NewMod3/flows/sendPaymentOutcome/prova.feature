@@ -32,9 +32,9 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is OK of activatePaymentNotice response
     And call the paymentToken of activatePaymentNotice response as paymentTokenPhase1
     And saving activatePaymentNotice request in activatePaymentNotice1
+    And save activatePaymentNotice response in activatePaymentNotice1
 
   # Activate Phase 2
-  @fix
   Scenario: Execute activatePaymentNotice2 request on different position with different idempotencyKey
     Given the Execute activatePaymentNotice1 request scenario executed successfully
     And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
@@ -64,10 +64,12 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is OK of activatePaymentNotice response
     And call the paymentToken of activatePaymentNotice response as paymentTokenPhase2
     And saving activatePaymentNotice request in activatePaymentNotice2
+    And save activatePaymentNotice response in activatePaymentNotice2
     And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_psp_1 on db nodo_online under macro NewMod3
     And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_psp_2 on db nodo_online under macro NewMod3
 
  # Send payment outcome Phase - outcome KO [IDMP_SPO_19]
+  @fix
   Scenario: Execute sendPaymentOutcome request with outcome KO on token of Activate Phase 2
     Given the Execute activatePaymentNotice2 request on different position with different idempotencyKey scenario executed successfully
     And initial XML sendPaymentOutcome
@@ -81,8 +83,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
                 <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                 <password>pwdpwdpwd</password>
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
-                <paymentToken>$activatePaymentNotice_2Response.paymentToken</paymentToken>
-                <outcome>OK</outcome>
+                <paymentToken>$activatePaymentNotice1Response.paymentToken</paymentToken>
+                <outcome>KO</outcome>
                 <details>
                     <paymentMethod>creditCard</paymentMethod>
                     <paymentChannel>app</paymentChannel>
@@ -108,9 +110,10 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
         </soapenv:Body>
       </soapenv:Envelope>
     """
-    And outcome with KO in sendPaymentOutcome
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
+    And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_psp_1 on db nodo_online under macro NewMod3
+    And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_psp_2 on db nodo_online under macro NewMod3
     
   # First activate check [IDMP_SPO_19]
   Scenario: Execute again activatePaymentNotice request of Activate Phase 1
