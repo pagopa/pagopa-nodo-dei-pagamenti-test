@@ -364,6 +364,7 @@ Feature: flow tests for sendPaymentResultV2
 
     Scenario: FLUSSO_SPR_01 (part 2)
         Given the FLUSSO_SPR_01 (part 1) scenario executed successfully
+        # response sprv2 200
         And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -400,6 +401,7 @@ Feature: flow tests for sendPaymentResultV2
 
     Scenario: FLUSSO_SPR_02 (part 3)
         Given the FLUSSO_SPR_02 (part 2) scenario executed successfully
+        # response sprv2 200
         And the closePaymentV2 request with 2 paymentToken scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -436,6 +438,7 @@ Feature: flow tests for sendPaymentResultV2
 
     Scenario: FLUSSO_SPR_03 (part 3)
         Given the FLUSSO_SPR_03 (part 2) scenario executed successfully
+        # response sprv2 200
         And the closePaymentV2 request with 2 paymentToken scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -472,6 +475,7 @@ Feature: flow tests for sendPaymentResultV2
 
     Scenario: FLUSSO_SPR_04 (part 3)
         Given the FLUSSO_SPR_04 (part 2) scenario executed successfully
+        # response sprv2 200
         And the closePaymentV2 request with 2 paymentToken scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -500,6 +504,7 @@ Feature: flow tests for sendPaymentResultV2
 
     Scenario: FLUSSO_SPR_05 (part 3)
         Given the FLUSSO_SPR_05 (part 2) scenario executed successfully
+        # response sprv2 200
         And the closePaymentV2 request with 2 paymentToken scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -529,6 +534,7 @@ Feature: flow tests for sendPaymentResultV2
 
     Scenario: FLUSSO_SPR_06 (part 3)
         Given the FLUSSO_SPR_06 (part 2) scenario executed successfully
+        # response sprv2 200
         And the closePaymentV2 request with 2 paymentToken scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -569,6 +575,7 @@ Feature: flow tests for sendPaymentResultV2
 
     Scenario: FLUSSO_SPR_07 (part 4)
         Given the FLUSSO_SPR_07 (part 3) scenario executed successfully
+        # response sprv2 200
         And the closePaymentV2 request with 2 paymentToken scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
@@ -604,6 +611,7 @@ Feature: flow tests for sendPaymentResultV2
 
     Scenario: FLUSSO_SPR_08 (part 4)
         Given the FLUSSO_SPR_08 (part 3) scenario executed successfully
+        # response sprv2 200
         And the closePaymentV2 request with 2 paymentToken scenario executed successfully
         And outcome with KO in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
