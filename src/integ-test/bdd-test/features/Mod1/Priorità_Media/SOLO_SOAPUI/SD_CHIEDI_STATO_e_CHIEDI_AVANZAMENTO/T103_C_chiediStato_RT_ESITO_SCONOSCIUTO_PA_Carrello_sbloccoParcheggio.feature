@@ -472,7 +472,7 @@ Feature: T103_C_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_sbloccoParcheggio
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti 
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
         Then check esito is OK of nodoInviaRT response
         
 
@@ -512,7 +512,7 @@ Feature: T103_C_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_sbloccoParcheggio
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti 
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
         Then check esito is OK of nodoInviaRT response
         And wait 1 seconds for expiration
         
@@ -578,7 +578,6 @@ Feature: T103_C_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_sbloccoParcheggio
      Scenario: Execute nodoNotificaAnnullamentoPagamento
         Given the Execute nodoChiediStatoRPT2 scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        And wait 5 seconds for expiration
         Then verify the HTTP status code of notificaAnnullamento response is 404
         And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
 

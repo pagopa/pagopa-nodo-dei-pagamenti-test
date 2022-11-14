@@ -1,4 +1,4 @@
-Feature: T103_E_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento
+Feature: T103_E_chiediStato_RT_ERRORE_INVIO_A_PA_Carrello_annullamento
     
     Background:
         Given systems up
@@ -337,8 +337,8 @@ Feature: T103_E_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoIntermediarioPA>irraggiungibile</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>irraggiungibile</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
@@ -404,58 +404,19 @@ Feature: T103_E_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento
         #And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
         #And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
     
-    Scenario: Execute nodoChiediStatoRPT
+  Scenario: Execute nodoNotificaAnnullamento
         Given the RPT generation scenario executed successfully
-        And initial XML nodoChiediStatoRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header />
-            <soapenv:Body>
-                <ws:nodoChiediStatoRPT>
-                    <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                    <password>pwdpwdpwd</password>
-                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                </ws:nodoChiediStatoRPT>
-            </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-
-    Scenario: Execute nodoNotificaAnnullamento
-        Given the Execute nodoChiediStatoRPT scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
-         And check esito is OK of notificaAnnullamento response
-        And wait 10 seconds for expiration
-        
-    Scenario: Execute job paInviaRt
+       
+
+     Scenario: Execute job paInviaRt
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
-        And initial XML paaInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                    <soapenv:Header/>
-                    <soapenv:Body>
-                        <ws:paaInviaRTRisposta>
-                            <paaInviaRTRisposta>
-                                <esito>malformata</esito>
-                            </paaInviaRTRisposta>
-                        </ws:paaInviaRTRisposta>
-                    </soapenv:Body>
-                </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job paInviaRt triggered after 5 seconds
         Then wait 7 seconds for expiration
-
-    
-     
-    Scenario: Execute nodoChiediStatoRPT1
+  
+   
+    Scenario: Execute nodoChiediStatoRPT
         Given the Execute job paInviaRt scenario executed successfully
         And initial XML nodoChiediStatoRPT
         """
@@ -474,17 +435,21 @@ Feature: T103_E_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RT_ESITO_SCONOSCIUTO_PA of nodoChiediStatoRPT response
+        Then checks stato contains RT_ERRORE_INVIO_A_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
+        And check redirect is 0 of nodoChiediStatoRPT response
+        And check url field not exists in nodoChiediStatoRPT response
+
+   
         
 
         
      Scenario: Execute nodoChiediStatoRPT2
-        Given the Execute nodoChiediStatoRPT1 scenario executed successfully
+        Given the Execute nodoChiediStatoRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -502,14 +467,17 @@ Feature: T103_E_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RT_ESITO_SCONOSCIUTO_PA of nodoChiediStatoRPT response
+       Then checks stato contains RT_ERRORE_INVIO_A_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
-       And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
+        And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
+        And check redirect is 0 of nodoChiediStatoRPT response
+        And check url field not exists in nodoChiediStatoRPT response
+        And wait 10 seconds for expiration
+
        
-     
 
     Scenario: nodoInviaCarrelloRPT duplicato
         Given the Execute nodoChiediStatoRPT2 scenario executed successfully
@@ -518,17 +486,17 @@ Feature: T103_E_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoIntermediarioPA>irraggiungibile</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>irraggiungibile</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp_AGID#</identificativoPSP>
-            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
