@@ -1,26 +1,23 @@
+import base64 as b64
 import datetime
-import pytz
-from datetime import timedelta
 import json
-from multiprocessing.sharedctypes import Value
 import os
 import random
-from sre_constants import ASSERT
+import threading
 import time
+from datetime import timedelta
+from multiprocessing.sharedctypes import Value
+from sre_constants import ASSERT
 from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
-import base64 as b64
-import json_operations as jo
-import threading
 
+import db_operation as db
+import json_operations as jo
+import pytz
 import requests
+import utils as utils
 from behave import *
 from requests.exceptions import RetryError
-
-
-import utils as utils
-import db_operation as db
-
 
 # Constants
 RESPONSE = "Response"
@@ -176,7 +173,7 @@ def step_impl(context, primitive):
 
     if '$rendAttachment' in payload:
         rendAttachment = getattr(context, 'rendAttachment')
-        rendAttachment_b = bytes(rendAttachment, 'ascii')
+        rendAttachment_b = bytes(rendAttachment, 'UTF-8')
         rendAttachment_uni = b64.b64encode(rendAttachment_b)
         rendAttachment_uni = f"{rendAttachment_uni}".split("'")[1]
         payload = payload.replace('$rendAttachment', rendAttachment_uni)
@@ -329,7 +326,7 @@ def step_impl(context):
     payload = utils.replace_global_variables(payload, context)
 
     setattr(context, 'rpt', payload)
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
 
@@ -392,6 +389,12 @@ def step_impl(context, number):
         iuv = 'IUV2' + '-' + str(date + '-' + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
         payload = payload.replace(f'#iUV{number}#', iuv)
         setattr(context, f'{number}iUV', iuv)
+
+    if '#IUV_{number}#' in payload:
+        IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' +  datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+        payload = payload.replace('#IUV_{number}#', IUV_)
+        setattr(context, f'{number}IUV_', IUV_)
+
 
     if f"#ccp{number}#" in payload:
         ccp = str(int(time.time() * 1000))
@@ -491,7 +494,7 @@ def step_impl(context, number):
         # setattr(context, 'iuv', iuv)
 
     setattr(context, f'rpt{number}', payload)
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
@@ -512,7 +515,7 @@ def step_impl(context):
         payload = payload.replace('#iubd#', iubd)
         setattr(context, 'iubd', iubd)
 
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
 
@@ -532,7 +535,7 @@ def step_impl(context, number):
         payload = payload.replace(f'#iubd{number}#', iubd)
         setattr(context, f'{number}iubd', iubd)
 
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
 
@@ -573,7 +576,7 @@ def step_impl(context, number):
         setattr(context, "ccp", ccp)
     """
 
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
@@ -608,7 +611,7 @@ def step_impl(context):
     
     setattr(context, 'rt', payload)
 
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     
@@ -631,7 +634,7 @@ def step_impl(context):
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
     
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
@@ -655,7 +658,7 @@ def step_impl(context):
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
     
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
@@ -702,7 +705,7 @@ def step_impl(context):
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
 
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
@@ -759,10 +762,10 @@ def step_impl(context, sender, soap_primitive, receiver):
 
 @step('send, by sender {sender}, soap action {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
-    primitive = soap_primitive.split("_")[0]
-    headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
+    #primitive = soap_primitive.split("_")[0]
+    headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive,
                'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
-    url_nodo = utils.get_soap_url_nodo(context, primitive)
+    url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
@@ -778,10 +781,15 @@ def step_impl(context, sender, soap_primitive, receiver):
 def step_impl(context, job_name, seconds):
     seconds = utils.replace_local_variables(seconds, context)
     time.sleep(int(seconds))
-    url_nodo = utils.get_rest_url_nodo(context)
+    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
+    print(">>>>>>>>>>>>>>>>>>", url_nodo)
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    #DA UTILIZZARE IN LOCALE (DECOMMENTARE RIGA 784-785 E COMMENTARE RIGA 787-788)
+    #nodo_response = requests.get(
+        #f"{url_nodo}/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
+    #pipeline
     nodo_response = requests.get(
-        f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
+        f"{url_nodo}/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
 
 
@@ -1404,10 +1412,14 @@ def step_impl(context, param, value):
 
 @step("refresh job {job_name} triggered after 10 seconds")
 def step_impl(context, job_name):
-    url_nodo = utils.get_rest_url_nodo(context)
+    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    #DA UTILIZZARE IN LOCALE (DECOMMENTARE RIGA 1414-1415 E COMMENTARE RIGA 1417-1418)
+    #nodo_response = requests.get(
+        #f"{url_nodo}/config/refresh/{job_name}", headers=headers, verify=False)
+    #pipeline
     nodo_response = requests.get(
-        f"{url_nodo}/config/refresh/{job_name}", headers=headers, verify=False)
+        f"{url_nodo}/monitoring/v1/config/refresh/{job_name}", headers=headers, verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
     refresh_response = requests.get(utils.get_refresh_config_url(
         context), headers=headers, verify=False)
@@ -1761,6 +1773,76 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d')
+
+    db.closeConnection(conn)
+
+    print(f"check expected element: {value}, obtained: {elem}")
+    assert elem == value
+
+@step(u"checks datetime plus number of date {number} of the record at column {column} in the row {row:d} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+def step_impl(context, column, query_name, table_name, db_name, name_macro, number, row):
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+
+    if number == 'default_token_duration_validity_millis':
+        default = int(
+            getattr(context, 'default_token_duration_validity_millis')) / 60000
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
+                 datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[row].strftime('%Y-%m-%d %H:%M')
+
+    elif number == 'default_idempotency_key_validity_minutes':
+        default = int(
+            getattr(context, 'default_idempotency_key_validity_minutes'))
+        print("###################", default)
+
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
+                 datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
+        print(">>>>>>>>>>>>>>>>>>>", value)
+
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[row].strftime('%Y-%m-%d %H:%M')
+
+    elif number == 'Today':
+        value = (datetime.datetime.today()).strftime('%Y-%m-%d')
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[row].strftime('%Y-%m-%d')
+
+    elif 'minutes:' in number:
+        min = int(number.split(':')[1]) / 60000
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
+                 datetime.timedelta(minutes=min)).strftime('%Y-%m-%d %H:%M')
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[row].strftime('%Y-%m-%d %H:%M')
+    else:
+        number = int(number)
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
+                 datetime.timedelta(days=number)).strftime('%Y-%m-%d')
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[row].strftime('%Y-%m-%d')
 
     db.closeConnection(conn)
 

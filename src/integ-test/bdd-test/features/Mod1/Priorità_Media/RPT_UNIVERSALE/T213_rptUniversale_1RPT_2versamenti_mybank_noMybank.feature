@@ -1,4 +1,4 @@
-Feature: process tests for T213_rptUniversale_1RPT_2versamenti_noPoste_noPoste
+Feature: process tests for T213_rptUniversale_1RPT_2versamenti_mybank_noMybank
 
     Background:
         Given systems up
@@ -72,7 +72,7 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_noPoste_noPoste
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -81,9 +81,9 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_noPoste_noPoste
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>2.20</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -94,66 +94,55 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_noPoste_noPoste
             </pay_i:RPT>
             """
 
-    Scenario: Execute nodoInviaCarrelloRPT request
+    Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
-        And initial XML nodoInviaCarrelloRPT
+        And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-            <ppt:intestazioneCarrelloPPT>
+            <ppt:intestazionePPT>
+
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>CART$IUV</identificativoCarrello>
-            </ppt:intestazioneCarrelloPPT>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+
+            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
-            <ws:nodoInviaCarrelloRPT>
+            <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp_AGID#</identificativoPSP>
             <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
-            <listaRPT>
-            <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
-            </elementoListaRPT>
-            </listaRPT>
-            </ws:nodoInviaCarrelloRPT>
+            </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        And check url contains acardste of nodoInviaCarrelloRPT response
-        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
         # DB Check
         And execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
         And through the query version retrieve param version at position 0 and save it under the key version
-        And replace lingua content with IT content
+        #And replace lingua content with IT content
         And replace importoTot content with 4.40 content
-        And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPspCarte retrieve param sizeCarte at position 0 and save it under the key sizeCarte
-        And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPspCarte retrieve param listaCarte at position -1 and save it under the key listaCarte
-        And execution query getPspConto to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPspConto retrieve param sizeConto at position 0 and save it under the key sizeConto
-        And execution query getPspConto to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPspConto retrieve param listaConto at position -1 and save it under the key listaConto
-        And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPspAltro retrieve param sizeConto at position 0 and save it under the key sizeAltro
-        And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPspAltro retrieve param listaAltro at position -1 and save it under the key listaAltro
-
-
-    Scenario: execution informazioniPagamento
-        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-        When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
+        And execution query getPspCarte_noLingua to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPspCarte_noLingua retrieve param sizeCarte at position 0 and save it under the key sizeCarte
+        And execution query getPspCarte_noLingua to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspCarte_noLingua retrieve param listaCarte at position -1 and save it under the key listaCarte
+        And execution query getPspConto_noLingua to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPspConto_noLingua retrieve param sizeConto at position 0 and save it under the key sizeConto
+        And execution query getPspConto_noLingua to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspConto_noLingua retrieve param listaConto at position -1 and save it under the key listaConto
+        And execution query getPspAltro_noLingua to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspAltro_noLingua retrieve param listaAltro at position -1 and save it under the key listaAltro
 
     Scenario: execution nodoChiediListaPSP - carte
-        Given the execution informazioniPagamento scenario executed successfully
+        Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
         And check totalRows is $sizeCarte of listaPSP response
@@ -168,8 +157,6 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_noPoste_noPoste
 
     Scenario: execution nodoChiediListaPSP - altro
         Given the execution nodoChiediListaPSP - conto scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
+        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
-        And check totalRows is $sizeAltro of listaPSP response
-        And check data is $listaAltro of listaPSP response
 

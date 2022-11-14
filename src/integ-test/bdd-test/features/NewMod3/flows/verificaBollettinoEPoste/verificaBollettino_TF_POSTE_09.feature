@@ -90,6 +90,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_09]
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
+
   # Payment Outcome Phase outcome OK
   @runnable
   Scenario: Execute sendPaymentOutcome request

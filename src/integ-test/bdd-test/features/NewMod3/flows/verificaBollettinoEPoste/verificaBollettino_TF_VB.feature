@@ -96,7 +96,6 @@ Feature: flow checks for verificaBollettino
         
 
     # verificaBollettino phase 1 - EC old [TF_VB_06]
-    @runnable
     Scenario: Execute verificaBollettino request OLD (Phase 1)
         Given initial XML verificaBollettino
             """

@@ -57,6 +57,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
     And paymentToken exists of activatePaymentNotice response
     And paymentToken length is less than 36 of activatePaymentNotice response
 
+
   # Mod3Cancel Phase
   Scenario: Execute mod3Cancel poller
     Given the Execute activatePaymentNotice request scenario executed successfully
@@ -110,12 +111,14 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 	
+
   Scenario: Execute paSendRT request
     Given the Execute sendPaymentOutcome request scenario executed successfully
     Then check EC receives paSendRT properly
   """
     $verifyPaymentNotice.noticeNumber
   """
+
 
   # Verify Phase 2
   @runnable

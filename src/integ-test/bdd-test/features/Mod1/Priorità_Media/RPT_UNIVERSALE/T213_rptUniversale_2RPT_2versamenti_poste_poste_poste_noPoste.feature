@@ -235,5 +235,5 @@ Feature: process tests for T213_rptUniversale_2RPT_2versamenti_poste_poste_poste
     Scenario: execution nodoChiediListaPSP - altro
         Given the execution nodoChiediListaPSP - conto scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 500
+        Then verify the HTTP status code of listaPSP response is 200
 

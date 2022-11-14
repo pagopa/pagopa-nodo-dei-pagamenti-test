@@ -1,4 +1,4 @@
-Feature: process tests for T213_rptUniversale_1RPT_2versamenti_noPoste_noPoste
+Feature: flow tests for T213_rptUniversale_RPT - 1 versamenti_noMybank
 
     Background:
         Given systems up
@@ -60,7 +60,7 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_noPoste_noPoste
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>4.40</pay_i:importoTotaleDaVersare>
+            <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
@@ -68,28 +68,16 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_noPoste_noPoste
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>2.20</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>2.20</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
@@ -132,20 +120,17 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_noPoste_noPoste
         And execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
         And through the query version retrieve param version at position 0 and save it under the key version
         And replace lingua content with IT content
-        And replace importoTot content with 4.40 content
-        And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPspCarte retrieve param sizeCarte at position 0 and save it under the key sizeCarte
-        And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPspCarte retrieve param listaCarte at position -1 and save it under the key listaCarte
-        And execution query getPspConto to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPspConto retrieve param sizeConto at position 0 and save it under the key sizeConto
-        And execution query getPspConto to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPspConto retrieve param listaConto at position -1 and save it under the key listaConto
-        And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPspAltro retrieve param sizeConto at position 0 and save it under the key sizeAltro
-        And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPspAltro retrieve param listaAltro at position -1 and save it under the key listaAltro
-
+        And replace importoTot content with 1.50 content
+        And execution query getPspCarte_noLingua to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPspCarte_noLingua retrieve param sizeCarte at position 0 and save it under the key sizeCarte
+        And execution query getPspCarte_noLingua to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspCarte_noLingua retrieve param listaCarte at position -1 and save it under the key listaCarte
+        And execution query getPspConto_noLingua to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPspConto_noLingua retrieve param sizeConto at position 0 and save it under the key sizeConto
+        And execution query getPspConto_noLingua to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspConto_noLingua retrieve param listaConto at position -1 and save it under the key listaConto
+        And execution query getPspAltro_noLingua to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspAltro_noLingua retrieve param listaAltro at position -1 and save it under the key listaAltro
 
     Scenario: execution informazioniPagamento
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
@@ -170,6 +155,4 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_noPoste_noPoste
         Given the execution nodoChiediListaPSP - conto scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
-        And check totalRows is $sizeAltro of listaPSP response
-        And check data is $listaAltro of listaPSP response
 

@@ -27,6 +27,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
+
   # Activate Phase
   Scenario: Execute activatePaymentNotice request
     Given the verifyPaymentNotice scenario executed successfully
@@ -54,7 +55,6 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
     Then check outcome is OK of activatePaymentNotice response
     And paymentToken exists of activatePaymentNotice response
     And paymentToken length is less than 36 of activatePaymentNotice response
-
 
 
    # Verify Phase 2

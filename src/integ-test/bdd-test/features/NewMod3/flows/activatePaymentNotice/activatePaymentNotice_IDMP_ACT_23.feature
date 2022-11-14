@@ -2,11 +2,12 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
 
   Background:
     Given systems up
-    And nodo-dei-pagamenti has config parameter useIdempotency set to true
-    And nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to true
 
   Scenario: Execute activatePaymentNotice request
-    Given initial XML activatePaymentNotice
+    Given nodo-dei-pagamenti has config parameter useIdempotency set to true
+    And nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to true
+    And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
+    And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
@@ -19,7 +20,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-      <noticeNumber>#notice_number_old#</noticeNumber>
+      <noticeNumber>$1noticeNumber</noticeNumber>
       </qrCode>
       <expirationTime>6000</expirationTime>
       <amount>10.00</amount>
@@ -35,6 +36,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
   
   Scenario: Execute activatePaymentNotice2 request
     Given the Execute activatePaymentNotice request scenario executed successfully
+    And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -48,7 +50,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>#notice_number#</noticeNumber>
+      <noticeNumber>$2noticeNumber</noticeNumber>
       </qrCode>
       <expirationTime>6000</expirationTime>
       <amount>10.00</amount>
@@ -66,7 +68,8 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
   @runnable
   Scenario: DB check + idempotencyCacheClean
     Given the Execute activatePaymentNotice2 request scenario executed successfully
-    When job idempotencyCacheClean triggered after 7 seconds
+    When job idempotencyCacheClean triggered after 15 seconds
+    And wait 30 seconds for expiration
     Then verify the HTTP status code of idempotencyCacheClean response is 200
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken1 on db nodo_online under macro NewMod3
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_paymentToken2 on db nodo_online under macro NewMod3
