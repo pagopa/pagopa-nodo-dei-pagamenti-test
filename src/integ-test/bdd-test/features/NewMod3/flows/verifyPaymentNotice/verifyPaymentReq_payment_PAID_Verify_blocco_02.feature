@@ -17,9 +17,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
          <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
          <password>pwdpwdpwd</password>
          <qrCode>
-
          <fiscalCode>#codicePA_old#</fiscalCode>
-
          <noticeNumber>#notice_number_old#</noticeNumber>
          </qrCode>
          </nod:verifyPaymentNoticeReq>
@@ -150,9 +148,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
          <ppt:intestazionePPT>
          <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-
          <identificativoDominio>#codicePA_old#</identificativoDominio>
-
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
          </ppt:intestazionePPT>
@@ -172,6 +168,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
       #  When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti using the token of the activate phase, and with request field <outcome> = PAID
       When ec sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoInviaRPT response
+
 
    # Payment Outcome Phase
    Scenario: Execute sendPaymentOutcome request

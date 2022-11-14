@@ -22,6 +22,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
       """
 	 And EC new version
 
+
   # Verify Phase 1
   Scenario: Execute verifyPaymentNotice request
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
@@ -30,7 +31,8 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
 
   # Activate Phase with expirationTime set to 2000
   Scenario: Execute activatePaymentNotice request
-    Given initial XML activatePaymentNotice
+    Given the Execute verifyPaymentNotice request scenario executed successfully
+    And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -56,6 +58,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
     And paymentToken exists of activatePaymentNotice response
     And paymentToken length is less than 36 of activatePaymentNotice response
 
+
   # mod3CancelV2 Phase
   Scenario: Execute mod3CancelV2 poller
     Given the Execute activatePaymentNotice request scenario executed successfully
@@ -67,7 +70,6 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
   # Verify Phase 2
   @runnable
   Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1
-	# Given the mod3CancelV2 Phase executed successfully
     Given the Execute mod3CancelV2 poller scenario executed successfully
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response

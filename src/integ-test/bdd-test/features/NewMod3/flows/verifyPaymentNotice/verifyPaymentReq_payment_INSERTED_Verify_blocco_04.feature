@@ -146,9 +146,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (payme
          <ppt:intestazionePPT>
          <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-
          <identificativoDominio>#codicePA_old#</identificativoDominio>
-
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
          </ppt:intestazionePPT>
@@ -164,7 +162,6 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (payme
          </ws:nodoInviaRPT>
          </soapenv:Body>
          </soapenv:Envelope>
-
          """
       When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoInviaRPT response
