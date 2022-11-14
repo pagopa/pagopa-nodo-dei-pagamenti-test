@@ -173,7 +173,7 @@ def step_impl(context, primitive):
 
     if '$rendAttachment' in payload:
         rendAttachment = getattr(context, 'rendAttachment')
-        rendAttachment_b = bytes(rendAttachment, 'ascii')
+        rendAttachment_b = bytes(rendAttachment, 'UTF-8')
         rendAttachment_uni = b64.b64encode(rendAttachment_b)
         rendAttachment_uni = f"{rendAttachment_uni}".split("'")[1]
         payload = payload.replace('$rendAttachment', rendAttachment_uni)
@@ -326,7 +326,7 @@ def step_impl(context):
     payload = utils.replace_global_variables(payload, context)
 
     setattr(context, 'rpt', payload)
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
 
@@ -494,7 +494,7 @@ def step_impl(context, number):
         # setattr(context, 'iuv', iuv)
 
     setattr(context, f'rpt{number}', payload)
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
@@ -515,7 +515,7 @@ def step_impl(context):
         payload = payload.replace('#iubd#', iubd)
         setattr(context, 'iubd', iubd)
 
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
 
@@ -535,7 +535,7 @@ def step_impl(context, number):
         payload = payload.replace(f'#iubd{number}#', iubd)
         setattr(context, f'{number}iubd', iubd)
 
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
 
@@ -576,7 +576,7 @@ def step_impl(context, number):
         setattr(context, "ccp", ccp)
     """
 
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
@@ -611,7 +611,7 @@ def step_impl(context):
     
     setattr(context, 'rt', payload)
 
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     
@@ -634,7 +634,7 @@ def step_impl(context):
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
     
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
@@ -658,7 +658,7 @@ def step_impl(context):
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
     
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
@@ -705,7 +705,7 @@ def step_impl(context):
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
 
-    payload_b = bytes(payload, 'ascii')
+    payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)

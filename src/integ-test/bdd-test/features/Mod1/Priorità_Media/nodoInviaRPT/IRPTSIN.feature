@@ -115,7 +115,7 @@ Feature: process tests for nodoInviaRT[IRPTSIN]
 
     @runnable
     #IRPTSIN4
-    Scenario: Execute nodoInviaRT (Phase 1_3)
+    Scenario: Execute nodoInviaRT (Phase 1_2)
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
             """
