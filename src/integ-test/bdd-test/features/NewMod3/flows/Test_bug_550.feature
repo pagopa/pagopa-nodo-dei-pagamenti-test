@@ -22,6 +22,7 @@ Feature: process tests for generazioneRicevute
             """
         And EC old version
 
+
     # Verify phase
     Scenario: Execute verifyPaymentNotice request
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
@@ -62,6 +63,7 @@ Feature: process tests for generazioneRicevute
         And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
         And checks the value N of the record at column ACTIVATION_PENDING of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+
 
     Scenario: Define RPT1
         Given the Execute activatePaymentNotice1 request scenario executed successfully
@@ -143,6 +145,7 @@ Feature: process tests for generazioneRicevute
             </pay_i:RPT>
             """
 
+
     Scenario: Execute nodoInviaRPT1 request
         Given the Define RPT1 scenario executed successfully
         And initial XML nodoInviaRPT
@@ -175,11 +178,13 @@ Feature: process tests for generazioneRicevute
         And check redirect is 0 of nodoInviaRPT response
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
 
+
     # trigger poller annulli
     Scenario: trigger poller annulli
         Given the Execute nodoInviaRPT1 request scenario executed successfully
         When job mod3CancelV1 triggered after 5 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
+
 
     # Activate Phase 2
     Scenario: Execute activatePaymentNotice2 request
@@ -215,6 +220,7 @@ Feature: process tests for generazioneRicevute
         And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
         And checks the value N of the record at column ACTIVATION_PENDING of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+
 
     Scenario: Define RPT2
         Given the Execute activatePaymentNotice2 request scenario executed successfully
@@ -296,6 +302,7 @@ Feature: process tests for generazioneRicevute
             </pay_i:RPT>
             """
 
+
     Scenario: Execute nodoInviaRPT2 request
         Given the Define RPT2 scenario executed successfully
         And initial XML nodoInviaRPT
@@ -328,6 +335,8 @@ Feature: process tests for generazioneRicevute
         And check redirect is 0 of nodoInviaRPT response
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
 
+
+    @runnable
     # Payment Outcome Phase outcome ok
     Scenario: Execute sendPaymentOutcome request
         Given the Execute nodoInviaRPT2 request scenario executed successfully
@@ -370,6 +379,3 @@ Feature: process tests for generazioneRicevute
             """
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-
-
-

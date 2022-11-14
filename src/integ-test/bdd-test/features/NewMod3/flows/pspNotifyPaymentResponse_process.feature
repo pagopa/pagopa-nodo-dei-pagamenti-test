@@ -53,19 +53,17 @@ Feature: process checks for pspNotifyPayment
     """
     And EC new version
 
-
   Scenario: Execute activateIOPayment request
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-    
 
   # nodoChiediInformazioniPagamento phase
   Scenario: Execute nodoChiediInformazioniPagamento request
     Given the Execute activateIOPayment request scenario executed successfully
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
-        
-        
+
+  @runnable
   # nodoInoltraEsitoPagamentoCarte phase - psp Irraggiungibile [PRO_PNP_05]
   Scenario: Check nodoInoltraEsitoPagamentoCarte response contains {"esito" : "KO","errorCode" :  "CONPSP", “descrizione”: "Risposta negativa del Canale"} when psp is unreachable
     Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
@@ -89,7 +87,7 @@ Feature: process checks for pspNotifyPayment
     And check errorCode is CONPSP of inoltroEsito/carta response
     And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response
 
-
+  @runnable
   # nodoInoltraEsitoPagamentoCarte phase - outcome KO [PRO_PNP_03]
   Scenario: Check nodoInoltraEsitoPagamentoCarte response contains { "esito": "KO", "errorCode": "RIFPSP", "descrizione": "Risposta negativa del Canale" } when pspNotifyPaymentResponse is KO
     Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
@@ -132,7 +130,7 @@ Feature: process checks for pspNotifyPayment
     And check errorCode is RIFPSP of inoltroEsito/carta response
     And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response
 
-
+  @runnable
   # nodoInoltraEsitoPagamentoCarte phase - Timeout [PRO_PNP_02]
   Scenario: Check nodoInoltraEsitoPagamentoCarte response contains {"error": "Operazione in timeout"} when pspNotifyPaymentResponse is in timeout
     Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
@@ -143,8 +141,7 @@ Feature: process checks for pspNotifyPayment
       <soapenv:Body>
         <psp:pspNotifyPaymentRes>
           <outcome>OK</outcome>
-          <!--Optional:-->
-          <wait>20</wait>
+          <delay>10000</delay>
         </psp:pspNotifyPaymentRes>
       </soapenv:Body>
     </soapenv:Envelope>
@@ -166,4 +163,3 @@ Feature: process checks for pspNotifyPayment
     """
     Then verify the HTTP status code of inoltroEsito/carta response is 408
     And check error is Operazione in timeout of inoltroEsito/carta response
-

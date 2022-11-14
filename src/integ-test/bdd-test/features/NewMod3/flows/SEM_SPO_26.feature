@@ -33,7 +33,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
 
    # sendPaymentOutcomeReq phase
   Scenario: Execute a sendPaymentOutcome request
-    Given the Execute a new activatePaymentNotice request scenario executed successfully
+    Given the Execute activatePaymentNotice request scenario executed successfully
     And initial XML sendPaymentOutcome_1
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -84,9 +84,10 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
     When PSP sends SOAP sendPaymentOutcome_1 to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome_1 response
 
+  @runnable
   # sendPaymentOutcomeReq phase 2
   Scenario: Execute a new sendPaymentOutcome request
-    Given the Execute a sendPaymentOutcome_1 request scenario executed successfully
+    Given the Execute a sendPaymentOutcome request scenario executed successfully
     And initial XML sendPaymentOutcome_2
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
