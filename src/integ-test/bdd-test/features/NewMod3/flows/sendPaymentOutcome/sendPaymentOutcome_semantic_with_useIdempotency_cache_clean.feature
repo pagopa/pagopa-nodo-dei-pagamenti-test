@@ -174,17 +174,19 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
   # First activate check [IDMP_SPO_19]
   Scenario: Execute again activatePaymentNotice request of Activate Phase 1
     Given the Execute sendPaymentOutcome request with outcome KO on token of Activate Phase 2 scenario executed successfully
-    When PSP sends SOAP activatePaymentNotice1 to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice1 response
-    And verify the paymentToken of the activatePaymentNotice1 response is equals to paymentTokenPhase1
+    And saving activatePaymentNotice1 request in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+    And verify the paymentToken of the activatePaymentNotice response is equals to paymentTokenPhase1
 
 @fix  
   # Second activate check [IDMP_SPO_19]
   Scenario: Execute again activatePaymentNotice request of Activate Phase 2
     Given the Execute again activatePaymentNotice1 request of Activate Phase 1 scenario executed successfully
-    When PSP sends SOAP activatePaymentNotice2 to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice2 response
-    And verify the paymentToken of the activatePaymentNotice2 response is not equals to paymentTokenPhase1
+    And saving activatePaymentNotice2 request in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+    And verify the paymentToken of the activatePaymentNotice response is not equals to paymentTokenPhase1
     And restore initial configurations
 
   # Send payment outcome Phase - Semantic error [IDMP_SPO_20.1]
