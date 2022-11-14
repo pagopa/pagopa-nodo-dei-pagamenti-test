@@ -273,6 +273,36 @@ Feature: flow tests for sendPaymentResultV2
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
 
     @skip
+    Scenario: pspNotifyPayment timeout response
+        Given initial XML pspNotifyPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentRes>
+            <delay>10000</delay>
+            </pfn:pspNotifyPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+
+    @skip
+    Scenario: pspNotifyPayment malformata response
+        Given initial XML pspNotifyPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentRes>
+            <outcome>OO</outcome>
+            </pfn:pspNotifyPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
+
+    @skip
     Scenario: sendPaymentOutcome request
         Given initial XML sendPaymentOutcome
             """
@@ -2452,3 +2482,124 @@ Feature: flow tests for sendPaymentResultV2
         And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
+
+    # T_SPR_V2_01
+
+    Scenario: T_SPR_V2_01
+        Given the verifyPaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
+
+        # POSITION_ACTIVATE
+        And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        And the nodoChiediInformazioniPagamento scenario executed successfully
+        # response sprv2 200
+        And the closePaymentV2 request scenario executed successfully
+        And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        # verificare che la sendpaymentresultv2 non venga inviata
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS_SNAPSHOT
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+    # T_SPR_V2_02
+
+    Scenario: T_SPR_V2_02 (part 1)
+        Given the verifyPaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
+
+        # POSITION_ACTIVATE
+        And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        And the nodoChiediInformazioniPagamento scenario executed successfully
+        # response sprv2 200
+        And the pspNotifyPayment timeout response scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    Scenario: T_SPR_V2_02 (part 2)
+        Given the T_SPR_V2_02 (part 1) scenario executed successfully
+        And wait 12 seconds for expiration
+        And the sendPaymentOutcome request scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+        # verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS
+        And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS_SNAPSHOT
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+    # T_SPR_V2_03
+
+    Scenario: T_SPR_V2_03 (part 1)
+        Given the verifyPaymentNotice scenario executed successfully
+        And the activateIOPayment scenario executed successfully
+
+        # POSITION_ACTIVATE
+        And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        And the nodoChiediInformazioniPagamento scenario executed successfully
+        # response sprv2 200
+        And the pspNotifyPayment malformata response scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    Scenario: T_SPR_V2_03 (part 2)
+        Given the T_SPR_V2_03 (part 1) scenario executed successfully
+        And wait 10 seconds for expiration
+        And the sendPaymentOutcome request scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+        # verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS
+        And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS_SNAPSHOT
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
