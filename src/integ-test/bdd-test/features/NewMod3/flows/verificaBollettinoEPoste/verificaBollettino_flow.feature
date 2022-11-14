@@ -16,9 +16,7 @@ Feature: flow checks for verificaBollettino - EC new
       <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
       <codiceIdRPT>
       <aim:aim128>
-
       <aim:CCPost>#codicePA#</aim:CCPost>
-
       <aim:AuxDigit>3</aim:AuxDigit>
       <aim:CodIUV>11192051789512983</aim:CodIUV>
       </aim:aim128>
@@ -35,7 +33,6 @@ Feature: flow checks for verificaBollettino - EC new
     Then check esito is KO of nodoVerificaRPT response
     And check faultCode is PPT_MULTI_BENEFICIARIO of nodoVerificaRPT response
 
-  @runnable
   # verificaBollettinoReq phase - TF_VB_04
   Scenario: Execute verificaBollettino request
     Given the Execute nodoVerificaRPT request scenario executed successfully
@@ -49,9 +46,7 @@ Feature: flow checks for verificaBollettino - EC new
       <idBrokerPSP>BANCOPOSTA</idBrokerPSP>
       <idChannel>POSTE3</idChannel>
       <password>pwdpwdpwd</password>
-
       <ccPost>#codicePA#</ccPost>
-
       <noticeNumber>#notice_number#</noticeNumber>
       </nod:verificaBollettinoReq>
       </soapenv:Body>
