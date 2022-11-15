@@ -113,24 +113,6 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
     And restore initial configurations
 
-
-  # IdempotencyCacheClean Phase [IDMP_SPO_23]
-  Scenario: 6. Execute idempotencyCacheClean poller
-    Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to true
-    And the 2. Execute sendPaymentOutcome request scenario executed successfully
-    And idempotencyKey valid for 60 seconds
-    When job idempotencyCacheClean triggered after 60 seconds
-    Then verify the HTTP status code of idempotencyCacheClean response is 200
-
-@runnable
-  # Send payment outcome Phase 2 - different paymentMethod [IDMP_SPO_23]
-  Scenario: 7. Execute sendPaymentOutcome request with different paymentMethod
-    Given the 6. Execute idempotencyCacheClean poller scenario executed successfully
-    And paymentMethod with cash in sendPaymentOutcome
-    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
-
 @runnable
   # Send payment outcome Phase 2 - different paymentMethod [IDMP_SPO_24]
   Scenario: 8. Execute sendPaymentOutcome request with different paymentMethod, after waiting 130 seconds
