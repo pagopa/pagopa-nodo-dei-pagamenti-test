@@ -178,7 +178,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
 
-@fix
+@runnable
   # Send payment outcome Phase 2 - different idempotencyKey [IDMP_SPO_27]
   Scenario: 11. Execute again the same sendPaymentOutcome request with a different idempotencyKey
     Given the 2. Execute sendPaymentOutcome request scenario executed successfully
@@ -312,8 +312,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
 
   # Mod3Cancel Phase [IDMP_SPO_31]
   Scenario: 17. Execute mod3Cancel poller
-    Given expirationTime with 2000 in activatePaymentNotice
-    And initial XML activatePaymentNotice
+    Given initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
@@ -394,7 +393,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-@runnable
+@fix
   # Send payment outcome Phase 2 [IDMP_SPO_31]
   Scenario: 20. Execute sendPaymentOutcome request on token of Activate Phase and different idempotencyKey
     Given the Execute sendPaymentOutcome request on token of Activate Phase 2 scenario executed successfully
