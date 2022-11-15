@@ -200,48 +200,11 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
   # Send payment outcome Phase 2 - different idempotencyKey [IDMP_SPO_27]
   Scenario: 11. Execute again the same sendPaymentOutcome request with a different idempotencyKey
     Given the 2. Execute sendPaymentOutcome request scenario executed successfully
-    And initial XML sendPaymentOutcome_1
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:sendPaymentOutcomeReq>
-      <idPSP>#psp#</idPSP>
-      <idBrokerPSP>#psp#</idBrokerPSP>
-      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-      <password>pwdpwdpwd</password>
-      <idempotencyKey>#idempotency_key#</idempotencyKey>
-      <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-      <outcome>OK</outcome>
-      <details>
-      <paymentMethod>creditCard</paymentMethod>
-      <paymentChannel>app</paymentChannel>
-      <fee>2.00</fee>
-      <payer>
-      <uniqueIdentifier>
-      <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
-      </uniqueIdentifier>
-      <fullName>John Doe</fullName>
-      <streetName>street</streetName>
-      <civicNumber>12</civicNumber>
-      <postalCode>89020</postalCode>
-      <city>city</city>
-      <stateProvinceRegion>MI</stateProvinceRegion>
-      <country>IT</country>
-      <e-mail>john.doe@test.it</e-mail>
-      </payer>
-      <applicationDate>2021-10-01</applicationDate>
-      <transferDate>2021-10-02</transferDate>
-      </details>
-      </nod:sendPaymentOutcomeReq>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    When PSP sends SOAP sendPaymentOutcome_1 to nodo-dei-pagamenti
-    Then check outcome is KO of sendPaymentOutcome_1 response
-    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome_1 response
-    And check description is Esito concorde: {"applicationDate":"$sendPaymentOutcome_1.applicationDate","fee":$sendPaymentOutcome_1.fee,"outcome":"$sendPaymentOutcome_1.outcome","payerEntityUniqueIdentifierValue":"$sendPaymentOutcome_1.payerEntityUniqueIdentifierValue","paymentChannel":"$sendPaymentOutcome_1.paymentChannel","paymentMethod":"$sendPaymentOutcome_1.paymentMethod","paymentToken":"$sendPaymentOutcome_1.paymentToken","transferDate":"$sendPaymentOutcome_1.transferDate"} of sendPaymentOutcome_1 response
+    And random idempotencyKey having #psp# as idPSP in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
+    And check description is Esito concorde: {"applicationDate":"$sendPaymentOutcome.applicationDate","fee":$sendPaymentOutcome.fee,"outcome":"$sendPaymentOutcome.outcome","payerEntityUniqueIdentifierValue":"$sendPaymentOutcome.payerEntityUniqueIdentifierValue","paymentChannel":"$sendPaymentOutcome.paymentChannel","paymentMethod":"$sendPaymentOutcome.paymentMethod","paymentToken":"$sendPaymentOutcome.paymentToken","transferDate":"$sendPaymentOutcome.transferDate"} of sendPaymentOutcome response
 
   # Send payment outcome Phase 1 - outcome KO [IDMP_SPO_28]
   Scenario: 12. Execute sendPaymentOutcome request with outcome KO
