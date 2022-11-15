@@ -79,93 +79,92 @@ Feature: process tests for pspInviaCarrelloRPT
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-            And initial XML pspInviaCarrelloRPT
+        And initial XML pspInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-                <ws:pspInviaCarrelloRPTResponse>
-                    <pspInviaCarrelloRPTResponse>
-                        <fault>
-                        <faultCode>CANALE_BUSTA_ERRATA</faultCode>
-                        <faultString>La busta non è corretta</faultString>
-                        <id>IDPSPFNZ</id>
-                        <serial>1</serial>
-                        </fault>
-                        <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                        <identificativoCarrello>$1iuv</identificativoCarrello>
-                        
-                        <listaErroriRPT>
-                        <fault>
-                            <faultCode>CANALE_FIRMA_SCONOSCIUTA</faultCode>
-                            <faultString>La firma è sconosciuta</faultString>
-                            <id>IDPSPFNZ</id>
-                            <serial>1</serial>
-                        </fault>
-                        </listaErroriRPT>
-                    </pspInviaCarrelloRPTResponse>
-                </ws:pspInviaCarrelloRPTResponse>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <fault>
+            <faultCode>CANALE_BUSTA_ERRATA</faultCode>
+            <faultString>La busta non è corretta</faultString>
+            <id>IDPSPFNZ</id>
+            <serial>1</serial>
+            </fault>
+            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
+
+            <listaErroriRPT>
+            <fault>
+            <faultCode>CANALE_FIRMA_SCONOSCIUTA</faultCode>
+            <faultString>La firma è sconosciuta</faultString>
+            <id>IDPSPFNZ</id>
+            <serial>1</serial>
+            </fault>
+            </listaErroriRPT>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-            And initial XML nodoInviaCarrelloRPT
+        And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-                <ppt:intestazioneCarrelloPPT>
-                    <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                    <identificativoCarrello>$1iuv</identificativoCarrello>
-                </ppt:intestazioneCarrelloPPT>
+            <ppt:intestazioneCarrelloPPT>
+            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
+            </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
-                <ws:nodoInviaCarrelloRPT>
-                    <password>pwdpwdpwd</password>
-                    <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canaleRtPush#</identificativoCanale>
-                    <listaRPT>
-                        <!--1 or more repetitions:-->
-                        <elementoListaRPT>
-                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                        <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                        <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                        <rpt>$rptAttachment</rpt>
-                        </elementoListaRPT>
-                    </listaRPT>
-                </ws:nodoInviaCarrelloRPT>
+            <ws:nodoInviaCarrelloRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
+            <listaRPT>
+            <!--1 or more repetitions:-->
+            <elementoListaRPT>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <rpt>$rptAttachment</rpt>
+            </elementoListaRPT>
+            </listaRPT>
+            </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-            And psp replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And psp replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
 
-        @runnable
-        Scenario Outline: Check faultCode error on non-existent or invalid field
-            Given <field> with <value> in pspInviaCarrelloRPT
-            When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-            Then check faultCode is <resp_error> of nodoInviaCarrelloRPT response
-            Examples:
-                | field                          | value                                             | resp_error                   | soapUI test 
-                | soapenv:Body                   | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | CRPTRES3
-                | soapenv:Body                   | None                                              | PPT_CANALE_ERRORE_RESPONSE   | CRPTRES4
-                | ws:pspInviaCarrelloRPTResponse | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | CRPTRES5
-                | fault                          | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | CRPTRES6
-                | faultCode                      | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | CRPTRES8
-                | faultCode                      | CIAO                                              | PPT_CANALE_ERRORE_RESPONSE   | CRPTRES9
-                | faultString                    | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | CRPTRES10
-                | id                             | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | CRPTRES11
-                | serial                         | CIAO                                              | PPT_CANALE_ERRORE_RESPONSE   | CRPTRES12
-                | esitoComplessivoOperazione     | None                                              | PPT_CANALE_ERRORE_RESPONSE   | CRPTRES14
-                | esitoComplessivoOperazione     | CIAO                                              | PPT_CANALE_ERRORE_RESPONSE   | CRPTRES17
-                | listaErroriRPT                 | Empty                                             | PPT_CANALE_ERRORE_RESPONSE   | CRPTRES22
+    @runnable
+    Scenario Outline: Check faultCode error on non-existent or invalid field
+        Given <field> with <value> in pspInviaCarrelloRPT
+        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+        Then check faultCode is <resp_error> of nodoInviaCarrelloRPT response
+        Examples:
+            | field                          | value | resp_error                 |
+            | soapenv:Body                   | Empty | PPT_CANALE_ERRORE_RESPONSE |
+            | soapenv:Body                   | None  | PPT_CANALE_ERRORE_RESPONSE |
+            | ws:pspInviaCarrelloRPTResponse | Empty | PPT_CANALE_ERRORE_RESPONSE |
+            | fault                          | Empty | PPT_CANALE_ERRORE_RESPONSE |
+            | faultCode                      | Empty | PPT_CANALE_ERRORE_RESPONSE |
+            | faultCode                      | CIAO  | PPT_CANALE_ERRORE_RESPONSE |
+            | faultString                    | Empty | PPT_CANALE_ERRORE_RESPONSE |
+            | id                             | Empty | PPT_CANALE_ERRORE_RESPONSE |
+            | serial                         | CIAO  | PPT_CANALE_ERRORE_RESPONSE |
+            | esitoComplessivoOperazione     | None  | PPT_CANALE_ERRORE_RESPONSE |
+            | esitoComplessivoOperazione     | CIAO  | PPT_CANALE_ERRORE_RESPONSE |
+            | listaErroriRPT                 | Empty | PPT_CANALE_ERRORE_RESPONSE |
 
 
-                
-                
-               
 
-                
-                
-                
-                
-                
+
+
+
+
+
+
+

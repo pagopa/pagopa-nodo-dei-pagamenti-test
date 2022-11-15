@@ -812,7 +812,7 @@ def step_impl(context, job_name, seconds):
     time.sleep(int(seconds))
     url_nodo = context.config.userdata.get(
         "services").get("nodo-dei-pagamenti").get("url")
-    print(">>>>>>>>>>>>>>>>>>", url_nodo)
+    print(">>>>>>>>>>>>>>>>>>", f"{url_nodo}/monitoring/v1/jobs/trigger/{job_name}")
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
     # DA UTILIZZARE IN LOCALE (DECOMMENTARE RIGA 784-785 E COMMENTARE RIGA 787-788)
     # nodo_response = requests.get(
