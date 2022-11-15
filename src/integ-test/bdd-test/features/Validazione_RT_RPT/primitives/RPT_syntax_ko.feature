@@ -102,7 +102,7 @@ Feature: Syntax checks for RPT - KO
       </soapenv:Envelope>
       """
     And psp replies to nodo-dei-pagamenti with the pspInviaRPT
-  
+
   Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on invalid RPT tag
     Given <tag> with <tag_value> in RPT
     And RPT generation
@@ -146,6 +146,7 @@ Feature: Syntax checks for RPT - KO
       | RPTSIN6    | pay_i:identificativoDominio            | Empty                                                                       |
       | RPTSIN7    | pay_i:identificativoDominio            | QuestiSono36CaratteriAlfaNumericiTT1                                        |
       | RPTSIN8    | pay_i:identificativoStazioneRichiedente| Empty                                                                       |
+      | RPTSIN8.1  | pay_i:identificativoStazioneRichiedente| None                                                                        |
       | RPTSIN9    | pay_i:identificativoStazioneRichiedente| QuestiSono36CaratteriAlfaNumericiTT1                                        |
       | RPTSIN10   | pay_i:identificativoMessaggioRichiesta | None                                                                        |
       | RPTSIN11   | pay_i:identificativoMessaggioRichiesta | Empty                                                                       |
@@ -160,6 +161,7 @@ Feature: Syntax checks for RPT - KO
       | RPTSIN20   | pay_i:autenticazioneSoggetto           | ABS12                                                                       |
       | RPTSIN21   | pay_i:autenticazioneSoggetto           | USP                                                                         |
       | RPTSIN22   | pay_i:soggettoVersante                 | RemoveParent                                                                |
+      | RPTSIN22.1 | pay_i:soggettoVersante                 | None                                                                        |
       | RPTSIN23   | pay_i:identificativoUnivocoVersante    | None                                                                        |
       | RPTSIN24   | pay_i:identificativoUnivocoVersante    | RemoveParent                                                                |
       | RPTSIN25   | pay_i:tipoIdentificativoUnivoco        | None                                                                        |
@@ -173,6 +175,7 @@ Feature: Syntax checks for RPT - KO
       | RPTSIN33   | pay_i:anagraficaVersante               | Empty                                                                       |
       | RPTSIN34   | pay_i:anagraficaVersante               | QuestiSono71CaratteriAlfaNumericiQuestiSono71CaratteriAlfaNumerici12345     |
       | RPTSIN35   | pay_i:indirizzoVersante                | Empty                                                                       |
+      | RPTSIN35.1 | pay_i:indirizzoVersante                | None                                                                        |
       | RPTSIN36   | pay_i:indirizzoVersante                | QuestiSono71CaratteriAlfaNumericiQuestiSono71CaratteriAlfaNumerici12345     |
       | RPTSIN37   | pay_i:civicoVersante                   | Empty                                                                       |
       | RPTSIN37.1 | pay_i:civicoVersante                   | None                                                                        |
@@ -277,6 +280,7 @@ Feature: Syntax checks for RPT - KO
       | RPTSIN116  | pay_i:importoTotaleDaVersare           | 0.00                                                                        |
       | RPTSIN117  | pay_i:importoTotaleDaVersare           | 199999999.99                                                                |
       | RPTSIN118  | pay_i:importoTotaleDaVersare           | 10.251                                                                      |
+      | RPTSIN118.1| pay_i:importoTotaleDaVersare           | 10.2                                                                        |
       | RPTSIN119  | pay_i:importoTotaleDaVersare           | 10,25                                                                       |
       | RPTSIN120  | pay_i:tipoVersamento                   | None                                                                        |
       | RPTSIN121  | pay_i:tipoVersamento                   | Empty                                                                       |
@@ -288,7 +292,6 @@ Feature: Syntax checks for RPT - KO
       | RPTSIN127  | pay_i:codiceContestoPagamento          | None                                                                        |
       | RPTSIN128  | pay_i:codiceContestoPagamento          | Empty                                                                       |
       | RPTSIN129  | pay_i:codiceContestoPagamento          | QuestiSono36CaratteriAlfaNumericiTT1                                        |
-      
       | RPTSIN134  | pay_i:bicAddebito                      | Empty                                                                       |
       | RPTSIN134.1| pay_i:bicAddebito                      | None                                                                        |
       | RPTSIN135  | pay_i:bicAddebito                      | ABCDEF                                                                      |
@@ -296,6 +299,8 @@ Feature: Syntax checks for RPT - KO
       | RPTSIN137  | pay_i:bicAddebito                      | U2CRITMM                                                                    |
       | RPTSIN138  | pay_i:firmaRicevuta                    | None                                                                        |
       | RPTSIN139  | pay_i:firmaRicevuta                    | Empty                                                                       |
+      | RPTSIN139.1| pay_i:firmaRicevuta                    | 1                                                                           |
+      | RPTSIN139.2| pay_i:firmaRicevuta                    | 3                                                                           |
       | RPTSIN140  | pay_i:firmaRicevuta                    | 33                                                                          |
       | RPTSIN141  | pay_i:firmaRicevuta                    | 4                                                                           |      
       | RPTSIN142  | pay_i:datiSingoloVersamento            | None                                                                        |
@@ -305,12 +310,14 @@ Feature: Syntax checks for RPT - KO
       | RPTSIN148  | pay_i:importoSingoloVersamento         | 0.00                                                                        |
       | RPTSIN149  | pay_i:importoSingoloVersamento         | 199999999.99                                                                |      
       | RPTSIN150  | pay_i:importoSingoloVersamento         | 10.251                                                                      |
+      | RPTSIN150.1  | pay_i:importoSingoloVersamento         | 10.1                                                                      |
       | RPTSIN151  | pay_i:importoSingoloVersamento         | 10,25                                                                       |
       | RPTSIN152  | pay_i:commissioneCaricoPA              | Empty                                                                       |
       | RPTSIN152.1| pay_i:commissioneCaricoPA              | None                                                                        |      
       | RPTSIN153  | pay_i:commissioneCaricoPA              | 22                                                                          |
       | RPTSIN154  | pay_i:commissioneCaricoPA              | a.00                                                                        |
       | RPTSIN155  | pay_i:commissioneCaricoPA              | 1999999999.99                                                               |      
+      | RPTSIN155.1  | pay_i:commissioneCaricoPA              | 199999999999999999.00                                                     |        
       | RPTSIN156  | pay_i:commissioneCaricoPA              | 10.251                                                                      |
       | RPTSIN157  | pay_i:commissioneCaricoPA              | 10,25                                                                       |
       | RPTSIN162  | pay_i:bicAccredito                     | Empty                                                                       |
@@ -338,6 +345,20 @@ Feature: Syntax checks for RPT - KO
       | RPTSIN180  | pay_i:datiSpecificiRiscossione         | QuestiSono141CaratteriAlfaNumericiTT1QuestiSono141CaratteriAlfaNumericiTT1QuestiSono141CaratteriAlfaNumericiTT1QuestiSono141CaratteriAlfaNume |      
       | RPTSIN181  | pay_i:datiSpecificiRiscossione         | 3/abc                                                                       |
       | RPTSIN182  | pay_i:datiSpecificiRiscossione         | 1.abc                                                                       |
+
+      | RPTSIN185  | pay_i:tipoBollo                        | None                                                                        |
+      | RPTSIN186  | pay_i:tipoBollo                        | Empty                                                                       |
+      | RPTSIN187  | pay_i:tipoBollo                        | 011                                                                         |
+      | RPTSIN188  | pay_i:tipoBollo                        | 02                                                                          |
+      | RPTSIN189  | pay_i:hashDocumento                    | None                                                                        |
+      | RPTSIN190  | pay_i:hashDocumento                    | Empty                                                                       |
+      | RPTSIN191  | pay_i:hashDocumento                    | QFPAeGzvbUyv9MTOgYIugs7qvGATXgt3VN5jZVFI[yg=                                |
+      | RPTSIN191.1| pay_i:hashDocumento                    | dGVzdCBkaSBwcm92YSBwZXIgdmVyaWZpY2FyZSBjaGUgbGEgbHVuZ2hlenphIGRlbCBwYXJhbWV0cm8gaGFzaERvY3VtZW50byBub24gc2lhIHBpw7kgbHVuZ2EgZGkgNzAgY2FyYXR0ZXJp
+      | RPTSIN192  | pay_i:provinciaResidenza               | None                                                                        |
+      | RPTSIN193  | pay_i:provinciaResidenza               | Empty                                                                       |
+      | RPTSIN194  | pay_i:provinciaResidenza               | MIT                                                                         |
+      | RPTSIN195  | pay_i:importoSingoloVersamento         | 999999999.99                                                                |
+
 
   Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on invalid RPT tag combination
     Given <tag1> with <tag_value1> in RPT
@@ -386,3 +407,4 @@ Feature: Syntax checks for RPT - KO
       | RPTSIN159  | pay_i:datiMarcaBolloDigitale | None       | pay_i:ibanAccredito         | Empty                                | 
       | RPTSIN160  | pay_i:datiMarcaBolloDigitale | None       | pay_i:ibanAccredito         | QuestiSono36CaratteriAlfaNumericiTT1 | 
       | RPTSIN161  | pay_i:datiMarcaBolloDigitale | None       | pay_i:ibanAccredito         | 1196R0123454321000000012345          | 
+      | RPTSIN183  | pay_i:datiMarcaBolloDigitale | None       | pay_i:ibanAccredito         | 1196R0123454321000000012345          | 
