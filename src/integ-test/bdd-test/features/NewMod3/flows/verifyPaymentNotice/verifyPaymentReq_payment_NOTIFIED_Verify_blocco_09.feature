@@ -3,7 +3,7 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
   Background:
     Given systems up
 
-   Scenario: Executed verifyPaymentNotice
+   Scenario: Executed verifyPaymentNotice request
     Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML verifyPaymentNotice
       """
@@ -30,7 +30,7 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
 
   # Activate Phase
   Scenario: Execute activatePaymentNotice request
-    Given the Execute verifyPaymentNotice request scenario executed successfully
+    Given the Executed verifyPaymentNotice request scenario executed successfully
     And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -114,7 +114,7 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
 
   # Verify Phase 2
   @runnable
-  Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1, few seconds after the Payment Outcome Phase (e.g. 30s)
+  Scenario: Execute verifyPaymentNotice with the same request as Verify Phase 1, few seconds after the Payment Outcome Phase (e.g. 30s)
     Given the Execute sendPaymentOutcome request scenario executed successfully
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
