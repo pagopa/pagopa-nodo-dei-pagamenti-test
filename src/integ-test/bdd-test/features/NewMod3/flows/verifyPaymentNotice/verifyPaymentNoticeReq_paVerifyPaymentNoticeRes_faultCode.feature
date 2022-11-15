@@ -86,9 +86,21 @@ Feature:  semantic checks for paVerifyPaymentNoticeRes faultCode
     And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of verifyPaymentNotice response
 
   # PA in timeout - PRO_VPNR_08
-  @runnable
+  @fix
   Scenario: Check PPT_STAZIONE_INT_PA_TIMEOUT error when paVerifyPaymentRes is in timeout
-    Given EC wait for 30 seconds at paVerifyPaymentNoticeRes
+   #Given EC wait for 30 seconds at paVerifyPaymentNoticeRes
+   Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
+   """
+     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+           <soapenv:Header/>
+           <soapenv:Body>
+              <paf:paVerifyPaymentNoticeRes>
+                 <outcome>OK</outcome>
+                 <delay>10000</delay>
+              </paf:paVerifyPaymentNoticeRes>
+           </soapenv:Body>
+        </soapenv:Envelope>
+   """
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of verifyPaymentNotice response
