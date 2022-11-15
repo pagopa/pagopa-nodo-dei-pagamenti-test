@@ -122,9 +122,9 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
   Scenario: Execute again activatePaymentNotice2 request of Activate Phase 2
     Given the Execute again activatePaymentNotice1 request of Activate Phase 1 scenario executed successfully
     And saving activatePaymentNotice2 request in activatePaymentNotice 
-    When PSP sends SOAP activatePaymentNotice2 to nodo-dei-pagamenti
-    Then check outcome is KO of activatePaymentNotice2 response
-    And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNotice2 response
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNotice response
     And restore initial configurations
 
   # Send payment outcome Phase - Semantic error [IDMP_SPO_20.1]
