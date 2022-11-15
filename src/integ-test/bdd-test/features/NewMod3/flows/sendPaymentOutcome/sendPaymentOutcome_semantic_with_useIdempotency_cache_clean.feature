@@ -115,10 +115,9 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Given the Execute sendPaymentOutcome request with outcome OK on token of Activate Phase 2 scenario executed successfully
     And saving activatePaymentNotice1 request in activatePaymentNotice 
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice1 response
-    And verify the paymentToken of the activatePaymentNotice1 response is equals to paymentTokenPhase1
+    Then check outcome is OK of activatePaymentNotice response
 
-@runnable
+@fix
   # Second activate check [IDMP_SPO_18]
   Scenario: Execute again activatePaymentNotice2 request of Activate Phase 2
     Given the Execute again activatePaymentNotice1 request of Activate Phase 1 scenario executed successfully
