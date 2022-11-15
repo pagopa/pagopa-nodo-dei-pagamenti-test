@@ -1,16 +1,18 @@
-Feature: process tests for pspInviaCarrelloRPT[CRPTRES15]
+Feature: T136_InoltraPagamentoMod2_RPT_BP_KO_SEMANTICA
+
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
 
-   Scenario: RPT generation
+
+    Scenario: RPT generation
         Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#intermediarioPA#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -63,7 +65,7 @@ Feature: process tests for pspInviaCarrelloRPT[CRPTRES15]
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>1651480675647</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -81,54 +83,66 @@ Feature: process tests for pspInviaCarrelloRPT[CRPTRES15]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+
     @runnable
-    Scenario: Execute nodoInviaRPT request
+    #(descriptionValorizzata)
+    Scenario: Execute nodoInviaRT (Phase 1)
         Given the RPT generation scenario executed successfully
-            And initial XML pspInviaCarrelloRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:pspInviaCarrelloRPTResponse>
-                    <pspInviaCarrelloRPTResponse>
-                       
-                        <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                        
-                    </pspInviaCarrelloRPTResponse>
-                </ws:pspInviaCarrelloRPTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-            And initial XML nodoInviaCarrelloRPT
-            """
+        And initial XML nodoInviaRPT
+            """"
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-                <ppt:intestazioneCarrelloPPT>
-                    <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                    <identificativoCarrello>$1iuv</identificativoCarrello>
-                </ppt:intestazioneCarrelloPPT>
+            <ppt:intestazionePPT>
+            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>1651480675647</codiceContestoPagamento>
+            </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
-                <ws:nodoInviaCarrelloRPT>
-                    <password>pwdpwdpwd</password>
-                    <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canaleRtPush#</identificativoCanale>
-                    <listaRPT>
-                        <!--1 or more repetitions:-->
-                        <elementoListaRPT>
-                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                        <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                        <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                        <rpt>$rptAttachment</rpt>
-                        </elementoListaRPT>
-                    </listaRPT>
-                </ws:nodoInviaCarrelloRPT>
+            <ws:nodoInviaRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID#</identificativoCanale>
+            <tipoFirma></tipoFirma>
+            <rpt>$rptAttachment</rpt>
+            </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-            And psp replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
-            When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-            Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
-            And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
+        And pay_i:identificativoUnivocoVersamento with rifSemanticaPsp in nodoInviaRPT
+        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_AUTORIZZAZIONE of nodoInviaRPT response
+
+    #(descriptionNull)
+    Scenario: Execute nodoInviaRT (Phase 2)
+        Given the RPT generation scenario executed successfully
+        And initial XML nodoInviaRPT
+            """"
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header>
+            <ppt:intestazionePPT>
+            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>1651480675647</codiceContestoPagamento>
+            </ppt:intestazionePPT>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:nodoInviaRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID#</identificativoCanale>
+            <tipoFirma></tipoFirma>
+            <rpt>$rptAttachment</rpt>
+            </ws:nodoInviaRPT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And pay_i:identificativoUnivocoVersamento with rifSemanticaPsp in nodoInviaRPT
+        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_AUTORIZZAZIONE of nodoInviaRPT response

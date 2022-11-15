@@ -21,7 +21,6 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
                   <fiscalCode>#creditor_institution_code#</fiscalCode>
                   <noticeNumber>#notice_number#</noticeNumber>
                </qrCode>
-               <expirationTime>120000</expirationTime>
                <amount>10.00</amount>
                <dueDate>2021-12-31</dueDate>
                <paymentNote>causale</paymentNote>
@@ -32,6 +31,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     And call the paymentToken of activatePaymentNotice response as paymentTokenPhase1
+    And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
     And saving activatePaymentNotice request in activatePaymentNotice1
 
   # Activate Phase 2
@@ -113,17 +113,18 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
   # First activate check [IDMP_SPO_18]
   Scenario: Execute again activatePaymentNotice1 request of Activate Phase 1
     Given the Execute sendPaymentOutcome request with outcome OK on token of Activate Phase 2 scenario executed successfully
-    When PSP sends SOAP activatePaymentNotice1 to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice1 response
-    And verify the paymentToken of the activatePaymentNotice1 response is equals to paymentTokenPhase1
+    And saving activatePaymentNotice1 request in activatePaymentNotice 
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
 
 @runnable
   # Second activate check [IDMP_SPO_18]
   Scenario: Execute again activatePaymentNotice2 request of Activate Phase 2
     Given the Execute again activatePaymentNotice1 request of Activate Phase 1 scenario executed successfully
-    When PSP sends SOAP activatePaymentNotice2 to nodo-dei-pagamenti
-    Then check outcome is KO of activatePaymentNotice2 response
-    And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNotice2 response
+    And saving activatePaymentNotice2 request in activatePaymentNotice 
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_PAGAMENTO_DUPLICATO of activatePaymentNotice response
     And restore initial configurations
 
   # Send payment outcome Phase - Semantic error [IDMP_SPO_20.1]
@@ -140,7 +141,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
                 <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                 <password>pwdpwdpwd</password>
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
-                <paymentToken>$activatePaymentNotice_1Response.paymentToken</paymentToken>
+                <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
                 <outcome>OK</outcome>
                 <details>
                     <paymentMethod>creditCard</paymentMethod>
@@ -170,12 +171,13 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_PSP_SCONOSCIUTO of sendPaymentOutcome response
+    And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
+    
 
 @runnable    
   # First activate check [IDMP_SPO_20.1]
   Scenario: Execute again activatePaymentNotice3 request
     Given the Semantic error for sendPaymentOutcome response executed on token of Activate Phase 1 scenario executed successfully
-    When PSP sends SOAP activatePaymentNotice1 to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice1 response
-    And verify the paymentToken of the activatePaymentNotice1 response is equals to paymentTokenPhase1
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
     And restore initial configurations

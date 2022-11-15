@@ -145,7 +145,6 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_poste_noPoste
         And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
         And through the query getPspAltro retrieve param listaAltro at position -1 and save it under the key listaAltro
 
-
     Scenario: execution nodoChiediListaPSP - carte
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
@@ -160,6 +159,7 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_poste_noPoste
         And check totalRows is $sizeConto of listaPSP response
         And check data is $listaConto of listaPSP response
 
+    @runnable
     Scenario: execution nodoChiediListaPSP - altro
         Given the execution nodoChiediListaPSP - conto scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
