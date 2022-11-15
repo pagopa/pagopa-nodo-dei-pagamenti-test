@@ -61,9 +61,8 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
   Scenario: Execute mod3Cancel poller
     Given the Execute activatePaymentNotice request scenario executed successfully
     # When expirationTime inserted in activatePaymentNoticeReq has passed and mod3Cancel poller has been triggered
-    When job mod3CancelV2 triggered after 10 seconds
+    When job mod3CancelV2 triggered after 3 seconds
     Then verify the HTTP status code of mod3CancelV2 response is 200
-    And wait 5 seconds for expiration
 
 
   # Payment Outcome Phase
@@ -108,8 +107,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
       """
    #  When psp sends SOAP sendPaymentOutcomeReq to nodo-dei-pagamenti using the token of the activate phase, and with request field <outcome> = OK
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+    Then check outcome is OK of sendPaymentOutcome response
 	
 
 #   Scenario: Execute paSendRT request
