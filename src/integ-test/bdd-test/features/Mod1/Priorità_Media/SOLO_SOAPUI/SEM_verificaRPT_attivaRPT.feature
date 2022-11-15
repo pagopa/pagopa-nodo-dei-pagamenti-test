@@ -3,6 +3,7 @@ Feature: test for SEM_verificaRPT_AttivaRPT
     Background:
         Given systems up
 
+    @runnable
     #LASCIARE LE VARIABILI IN CHIARO
     Scenario: Execute nodoVerificaRPT [SEM_verificaRPT_AssociazioneVietata]
         Given initial XML nodoVerificaRPT
@@ -32,6 +33,7 @@ Feature: test for SEM_verificaRPT_AttivaRPT
         Then check faultCode is PPT_ERRORE of nodoVerificaRPT response
         Then check esito is KO of nodoVerificaRPT response
 
+    @runnable
     #LASCIARE LE VARIABILI IN CHIARO
     Scenario: Execute nodoVerificaRPT [SEM_attivaRPT_AssociazioneVietata]
         Given initial XML nodoAttivaRPT
