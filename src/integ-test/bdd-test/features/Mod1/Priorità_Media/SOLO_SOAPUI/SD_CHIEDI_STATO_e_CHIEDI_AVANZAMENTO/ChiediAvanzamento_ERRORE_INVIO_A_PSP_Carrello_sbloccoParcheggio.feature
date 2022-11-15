@@ -438,7 +438,8 @@ Feature: ChiediAvanzamento_ERRORE_INVIO_A_PSP_Carrello_sbloccoParcheggio
         And check error is Operazione in timeout of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
         And checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
- 
+        And wait 5 seconds for expiration
+        
  Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execution Esito Carta scenario executed successfully
         And initial XML pspChiediAvanzamentoRPT
