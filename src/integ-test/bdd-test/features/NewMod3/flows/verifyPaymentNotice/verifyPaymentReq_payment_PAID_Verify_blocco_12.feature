@@ -6,7 +6,8 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
 
   # Verify Phase 1
   Scenario: Execute verifyPaymentNotice request
-    Given initial XML verifyPaymentNotice
+    Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+    And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -18,7 +19,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
                <password>pwdpwdpwd</password>
                <qrCode>
                   <fiscalCode>#creditor_institution_code#</fiscalCode>
-                  <noticeNumber>#notice_number#</noticeNumber>
+                  <noticeNumber>$1noticeNumber</noticeNumber>
                </qrCode>
             </nod:verifyPaymentNoticeReq>
          </soapenv:Body>
@@ -46,24 +47,23 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
                   <fiscalCode>$verifyPaymentNotice.fiscalCode</fiscalCode>
                   <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                </qrCode>
-               <expirationTime>2000</expirationTime>
-               <amount>120.00</amount>
+               <expirationTime>6000</expirationTime>
+               <amount>10.00</amount>
+               <paymentNote>responseFull</paymentNote>
             </nod:activatePaymentNoticeReq>
          </soapenv:Body>
       </soapenv:Envelope>
       """    
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-    And paymentToken exists of activatePaymentNotice response
-    And paymentToken length is less than 36 of activatePaymentNotice response
-
 
   # Mod3Cancel Phase
   Scenario: Execute mod3Cancel poller
     Given the Execute activatePaymentNotice request scenario executed successfully
     # When expirationTime inserted in activatePaymentNoticeReq has passed and mod3Cancel poller has been triggered
-    When job mod3CancelV2 triggered after 3 seconds
+    When job mod3CancelV2 triggered after 10 seconds
     Then verify the HTTP status code of mod3CancelV2 response is 200
+    And wait 5 seconds for expiration
 
 
   # Payment Outcome Phase
