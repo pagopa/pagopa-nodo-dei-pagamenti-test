@@ -32,7 +32,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is OK of activatePaymentNotice response
     And call the paymentToken of activatePaymentNotice response as paymentTokenPhase1
     And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
-    
+    And saving activatePaymentNotice request in activatePaymentNotice1
 
   # Activate Phase 2
   Scenario: Execute activatePaymentNotice2 request on different position with different idempotencyKey

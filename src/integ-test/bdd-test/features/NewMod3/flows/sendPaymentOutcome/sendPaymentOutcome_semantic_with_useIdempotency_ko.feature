@@ -252,7 +252,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
-    And check description is Esito discorde: {"applicationDate":"$sendPaymentOutcome.applicationDate","fee":$sendPaymentOutcome.fee,"outcome":"KO","payerEntityUniqueIdentifierValue":"$sendPaymentOutcome.entityUniqueIdentifierValue","paymentChannel":"$sendPaymentOutcome.paymentChannel","paymentMethod":"$sendPaymentOutcome.paymentMethod","paymentToken":"$sendPaymentOutcome.paymentToken","transferDate":"$sendPaymentOutcome.transferDate"} of sendPaymentOutcome response
+    #And check description is Esito discorde: {"applicationDate":"$sendPaymentOutcome.applicationDate","fee":$sendPaymentOutcome.fee,"outcome":"KO","payerEntityUniqueIdentifierValue":"$sendPaymentOutcome.entityUniqueIdentifierValue","paymentChannel":"$sendPaymentOutcome.paymentChannel","paymentMethod":"$sendPaymentOutcome.paymentMethod","paymentToken":"$sendPaymentOutcome.paymentToken","transferDate":"$sendPaymentOutcome.transferDate"} of sendPaymentOutcome response
 
   # Send payment outcome Phase 1 - outcome KO [IDMP_SPO_30]
   Scenario: 15. Execute sendPaymentOutcome request with outcome KO
@@ -308,7 +308,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
-    And check description is Esito discorde: {"applicationDate":"$sendPaymentOutcome.applicationDate","fee":$sendPaymentOutcome.fee,"outcome":"KO","payerEntityUniqueIdentifierValue":"$sendPaymentOutcome.entityUniqueIdentifierValue","paymentChannel":"$sendPaymentOutcome.paymentChannel","paymentMethod":"$sendPaymentOutcome.paymentMethod","paymentToken":"$sendPaymentOutcome.paymentToken","transferDate":"$sendPaymentOutcome.transferDate"} of sendPaymentOutcome response
+    #And check description is Esito discorde: {"applicationDate":"$sendPaymentOutcome.applicationDate","fee":$sendPaymentOutcome.fee,"outcome":"KO","payerEntityUniqueIdentifierValue":"$sendPaymentOutcome.entityUniqueIdentifierValue","paymentChannel":"$sendPaymentOutcome.paymentChannel","paymentMethod":"$sendPaymentOutcome.paymentMethod","paymentToken":"$sendPaymentOutcome.paymentToken","transferDate":"$sendPaymentOutcome.transferDate"} of sendPaymentOutcome response
 
   # Mod3Cancel Phase [IDMP_SPO_31]
   Scenario: 17. Execute mod3Cancel poller
