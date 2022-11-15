@@ -24,10 +24,6 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
       </soapenv:Envelope>
       """
 	 And EC new version
-
-
-  # Verify Phase 1
-  Scenario: Execute verifyPaymentNotice request
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
     
@@ -59,8 +55,6 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
       """
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-    And paymentToken exists of activatePaymentNotice response
-    And paymentToken length is less than 36 of activatePaymentNotice response
 
 	
   # Payment Outcome Phase outcome OK
@@ -106,6 +100,8 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
    #  When psp sends SOAP sendPaymentOutcomeReq to nodo-dei-pagamenti using the token of the activate phase, and with request field <outcome> = OK
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
+    And wait 30 seconds for expiration
+
 
 
 #   Scenario: Execute paSendRT request
