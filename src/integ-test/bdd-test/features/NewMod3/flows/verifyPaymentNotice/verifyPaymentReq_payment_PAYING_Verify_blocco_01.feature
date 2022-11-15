@@ -168,7 +168,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
 
 
    # Verify Phase 2
-   @fix
+   @runnable
    Scenario: Execute verifyPaymentNotice1 request with the same request as Verify Phase 1
       Given the Execute activatePaymentNotice request scenario executed successfully
       When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
