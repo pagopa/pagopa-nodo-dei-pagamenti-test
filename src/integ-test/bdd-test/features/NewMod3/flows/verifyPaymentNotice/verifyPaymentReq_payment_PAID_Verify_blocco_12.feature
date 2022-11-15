@@ -112,18 +112,18 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 	
 
-  Scenario: Execute paSendRT request
-    Given the Execute sendPaymentOutcome request scenario executed successfully
-    Then check EC receives paSendRT properly
-  """
-    $verifyPaymentNotice.noticeNumber
-  """
+#   Scenario: Execute paSendRT request
+#     Given the Execute sendPaymentOutcome request scenario executed successfully
+#     Then check EC receives paSendRT properly
+#   """
+#     $verifyPaymentNotice.noticeNumber
+#   """
 
 
   # Verify Phase 2
   @runnable
   Scenario: Execute a verifyPaymentNotice request with the same request as Verify Phase 1, immediately after the Payment Outcome Phase
-    Given the Execute paSendRT request scenario executed successfully
+    Given the Execute sendPaymentOutcome request scenario executed successfully
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_PAGAMENTO_DUPLICATO of verifyPaymentNotice response
