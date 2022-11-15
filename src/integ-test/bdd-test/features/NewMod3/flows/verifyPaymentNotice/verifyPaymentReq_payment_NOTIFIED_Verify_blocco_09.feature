@@ -2,6 +2,9 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
 
   Background:
     Given systems up
+
+   Scenario: Executed verifyPaymentNotice
+    Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -14,7 +17,7 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
                <password>pwdpwdpwd</password>
                <qrCode>
                   <fiscalCode>#creditor_institution_code#</fiscalCode>
-                  <noticeNumber>#notice_number#</noticeNumber>
+                  <noticeNumber>$1noticeNumber</noticeNumber>
                </qrCode>
             </nod:verifyPaymentNoticeReq>
          </soapenv:Body>
@@ -47,7 +50,9 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
                   <fiscalCode>$verifyPaymentNotice.fiscalCode</fiscalCode>
                   <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                </qrCode>
-               <amount>120.00</amount>
+               <expirationTime>6000</expirationTime>
+               <amount>10.00</amount>
+               <paymentNote>responseFull</paymentNote>
             </nod:activatePaymentNoticeReq>
          </soapenv:Body>
       </soapenv:Envelope>
@@ -103,18 +108,18 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
     Then check outcome is OK of sendPaymentOutcome response
 
 
-  Scenario: Execute paSendRT request
-    Given the Execute sendPaymentOutcome request scenario executed successfully
-    Then check EC receives paSendRT properly
-  """
-    $verifyPaymentNotice.noticeNumber
-  """
+#   Scenario: Execute paSendRT request
+#     Given the Execute sendPaymentOutcome request scenario executed successfully
+#     Then check EC receives paSendRT properly
+#   """
+#     $verifyPaymentNotice.noticeNumber
+#   """
 
 
   # Verify Phase 2
   @runnable
   Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1, few seconds after the Payment Outcome Phase (e.g. 30s)
-    Given the Execute paSendRT request scenario executed successfully
+    Given the Execute sendPaymentOutcome request scenario executed successfully
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_PAGAMENTO_DUPLICATO of verifyPaymentNotice response
