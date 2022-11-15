@@ -173,8 +173,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
   # Mod3Cancel Phase
   Scenario: Execute mod3CancelV1 poller
     Given the Execute nodoInviaRPT request scenario executed successfully
-    When job mod3CancelV1 triggered after 10 seconds
-    And wait 30 seconds for expiration
+    When job mod3CancelV1 triggered after 20 seconds
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
 	
