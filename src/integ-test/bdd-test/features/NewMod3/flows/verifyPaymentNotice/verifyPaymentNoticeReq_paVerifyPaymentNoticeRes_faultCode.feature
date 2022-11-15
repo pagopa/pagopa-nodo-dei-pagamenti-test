@@ -86,7 +86,7 @@ Feature:  semantic checks for paVerifyPaymentNoticeRes faultCode
     And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of verifyPaymentNotice response
 
   # PA in timeout - PRO_VPNR_08
-  @fix
+  @runnable
   Scenario: Check PPT_STAZIONE_INT_PA_TIMEOUT error when paVerifyPaymentRes is in timeout
    #Given EC wait for 30 seconds at paVerifyPaymentNoticeRes
    Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
