@@ -172,7 +172,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_PSP_SCONOSCIUTO of sendPaymentOutcome response
 
-@fix    
+@runnable    
   # First activate check [IDMP_SPO_20.1]
   Scenario: Execute again activatePaymentNotice3 request
     Given the Semantic error for sendPaymentOutcome response executed on token of Activate Phase 1 scenario executed successfully
