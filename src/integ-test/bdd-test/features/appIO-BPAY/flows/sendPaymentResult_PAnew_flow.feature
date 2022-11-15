@@ -573,7 +573,7 @@ Feature: flow checks for sendPaymentResult
       And the activateIOPayment scenario executed successfully
       And expirationTime with 2000 in activateIOPayment
       When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-      Then check outcome is OK of activateIOPayment response    
+      Then check outcome is OK of activateIOPayment response
       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value #psp_AGID# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
 
@@ -621,65 +621,54 @@ Feature: flow checks for sendPaymentResult
 
 
 
+   # T_SPR_09
+   Scenario: T_SPR_09 (activateIOPayment)
+      Given the activateIOPayment scenario executed successfully
+      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+      Then check outcome is OK of activateIOPayment response
+      And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value #psp_AGID# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+
+   Scenario: T_SPR_09 (informazioniPagamento)
+      Given the T_SPR_09 (activateIOPayment) scenario executed successfully
+      When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of informazioniPagamento response is 200
+
+   Scenario: T_SPR_09 (closePayment)
+      Given the T_SPR_09 (informazioniPagamento) scenario executed successfully
+      And the closePayment scenario executed successfully
+      And pspTransactionId with resSPR_2KO in v1/closepayment
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v1/closepayment response is 200
+      And check esito is KO of v1/closepayment response
+#    And wait 70 seconds for expiration
+#    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
+#    And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
+#    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
+#    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
+#    And checks the value None of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query token_psptransactionid on db nodo_online under macro AppIO
 
 
 
+   # T_SPR_10
+   Scenario: T_SPR_10 (activateIOPayment)
+      Given the activateIOPayment scenario executed successfully
+      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+      Then check outcome is OK of activateIOPayment response
+      And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value #psp_AGID# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
 
+   Scenario: T_SPR_10 (informazioniPagamento)
+      Given the T_SPR_10 (activateIOPayment) scenario executed successfully
+      When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of informazioniPagamento response is 200
 
-
-
-
-   # # T_SPR_09
-   # Scenario: T_SPR_09 (activateIOPayment)
-   #    Given the activateIOPayment scenario executed successfully
-   #    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-   #    Then check outcome is OK of activateIOPayment response
-   #    And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-   #    And checks the value #psp_AGID# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-
-   # Scenario: T_SPR_09 (informazioniPagamento)
-   #    Given the T_SPR_09 (activateIOPayment) scenario executed successfully
-   #    When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-   #    Then verify the HTTP status code of informazioniPagamento response is 200
-
-   # Scenario: T_SPR_09 (closePayment)
-   #    Given the T_SPR_09 (informazioniPagamento) scenario executed successfully
-   #    And the closePayment scenario executed successfully
-   #    And pspTransactionId with resSPR_200KO in closePayment
-   #    When PM sends closePayment to nodo-dei-pagamenti
-   #    Then check esito is OK of closePayment response
-   #    And check faultCode is 200 of closePayment response
-   #    And wait 70 seconds for expiration
-   #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-   #    And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-   #    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-   #    And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-   #    And checks the value None of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query token_psptransactionid on db nodo_online under macro AppIO
-
-
-
-#    # T_SPR_10
-
-#    Scenario: T_SPR_10 (activateIOPayment)
-#       Given the activateIOPayment scenario executed successfully
-#       When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-#       Then check outcome is OK of activateIOPayment response
-      
-#       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And check the value AGID_01 of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-
-#    Scenario: T_SPR_10 (informazioniPagamento)
-#       Given the T_SPR_10 (activateIOPayment) scenario executed successfully
-#       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-#       Then verify the HTTP status code of informazioniPagamento response is 200
-
-#    Scenario: T_SPR_10 (closePayment)
-#       Given the T_SPR_10 (informazioniPagamento) scenario executed successfully
-#       And the closePayment scenario executed successfully
-#       And pspTransactionId with resSPR_400 in closePayment
-#       When PM sends closePayment to nodo-dei-pagamenti
-#       Then check esito is OK of closePayment response
-#       And check faultCode is 200 of closePayment response
+   Scenario: T_SPR_10 (closePayment)
+      Given the T_SPR_10 (informazioniPagamento) scenario executed successfully
+      And the closePayment scenario executed successfully
+      And pspTransactionId with resSPR_400 in v1/closepayment
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v1/closepayment response is 400
 #       And wait 70 seconds for expiration
 #       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
 #       And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
@@ -702,28 +691,25 @@ Feature: flow checks for sendPaymentResult
 #       And checks the value closePayment-v1 of the record at column INSERTED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query noticeid_iddominio on db nodo_online under macro AppIO
 #       And checks the value sendPaymentResult-v1 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query noticeid_iddominio on db nodo_online under macro AppIO
 
-#    # T_SPR_11
+   # T_SPR_11
+   Scenario: T_SPR_11 (activateIOPayment)
+      Given the activateIOPayment scenario executed successfully
+      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+      Then check outcome is OK of activateIOPayment response
+      And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value #psp_AGID# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
 
-#    Scenario: T_SPR_11 (activateIOPayment)
-#       Given the activateIOPayment scenario executed successfully
-#       When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-#       Then check outcome is OK of activateIOPayment response
-      
-#       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And check the value AGID_01 of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
+   Scenario: T_SPR_11 (informazioniPagamento)
+      Given the T_SPR_11 (activateIOPayment) scenario executed successfully
+      When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of informazioniPagamento response is 200
 
-#    Scenario: T_SPR_11 (informazioniPagamento)
-#       Given the T_SPR_11 (activateIOPayment) scenario executed successfully
-#       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-#       Then verify the HTTP status code of informazioniPagamento response is 200
-
-#    Scenario: T_SPR_11 (closePayment)
-#       Given the T_SPR_11 (informazioniPagamento) scenario executed successfully
-#       And the closePayment scenario executed successfully
-#       And pspTransactionId with resSPR_404 in closePayment
-#       When PM sends closePayment to nodo-dei-pagamenti
-#       Then check esito is OK of closePayment response
-#       And check faultCode is 200 of closePayment response
+   Scenario: T_SPR_11 (closePayment)
+      Given the T_SPR_11 (informazioniPagamento) scenario executed successfully
+      And the closePayment scenario executed successfully
+      And pspTransactionId with resSPR_404 in v1/closepayment
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v1/closepayment response is 404
 #       And wait 70 seconds for expiration
 #       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
 #       And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
@@ -746,28 +732,25 @@ Feature: flow checks for sendPaymentResult
 #       And checks the value closePayment-v1 of the record at column INSERTED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query noticeid_iddominio on db nodo_online under macro AppIO
 #       And checks the value sendPaymentResult-v1 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query noticeid_iddominio on db nodo_online under macro AppIO
 
-#    # T_SPR_12
+   # T_SPR_12
+   Scenario: T_SPR_12 (activateIOPayment)
+      Given the activateIOPayment scenario executed successfully
+      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+      Then check outcome is OK of activateIOPayment response
+      And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value #psp_AGID# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
 
-#    Scenario: T_SPR_12 (activateIOPayment)
-#       Given the activateIOPayment scenario executed successfully
-#       When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-#       Then check outcome is OK of activateIOPayment response
-      
-#       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And check the value AGID_01 of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
+   Scenario: T_SPR_12 (informazioniPagamento)
+      Given the T_SPR_12 (activateIOPayment) scenario executed successfully
+      When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of informazioniPagamento response is 200
 
-#    Scenario: T_SPR_12 (informazioniPagamento)
-#       Given the T_SPR_12 (activateIOPayment) scenario executed successfully
-#       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-#       Then verify the HTTP status code of informazioniPagamento response is 200
-
-#    Scenario: T_SPR_12 (closePayment)
-#       Given the T_SPR_12 (informazioniPagamento) scenario executed successfully
-#       And the closePayment scenario executed successfully
-#       And pspTransactionId with resSPR_408 in closePayment
-#       When PM sends closePayment to nodo-dei-pagamenti
-#       Then check esito is OK of closePayment response
-#       And check faultCode is 200 of closePayment response
+   Scenario: T_SPR_12 (closePayment)
+      Given the T_SPR_12 (informazioniPagamento) scenario executed successfully
+      And the closePayment scenario executed successfully
+      And pspTransactionId with resSPR_408 in v1/closepayment
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v1/closepayment response is 408
 #       And wait 70 seconds for expiration
 #       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
 #       And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
@@ -790,28 +773,25 @@ Feature: flow checks for sendPaymentResult
 #       And checks the value closePayment-v1 of the record at column INSERTED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query noticeid_iddominio on db nodo_online under macro AppIO
 #       And checks the value sendPaymentResult-v1 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query noticeid_iddominio on db nodo_online under macro AppIO
 
-#    # T_SPR_13
+   # T_SPR_13
+   Scenario: T_SPR_13 (activateIOPayment)
+      Given the activateIOPayment scenario executed successfully
+      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
+      Then check outcome is OK of activateIOPayment response
+      And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
+      And checks the value #psp_AGID# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
 
-#    Scenario: T_SPR_13 (activateIOPayment)
-#       Given the activateIOPayment scenario executed successfully
-#       When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-#       Then check outcome is OK of activateIOPayment response
-      
-#       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And check the value AGID_01 of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
+   Scenario: T_SPR_13 (informazioniPagamento)
+      Given the T_SPR_13 (activateIOPayment) scenario executed successfully
+      When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
+      Then verify the HTTP status code of informazioniPagamento response is 200
 
-#    Scenario: T_SPR_13 (informazioniPagamento)
-#       Given the T_SPR_13 (activateIOPayment) scenario executed successfully
-#       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-#       Then verify the HTTP status code of informazioniPagamento response is 200
-
-#    Scenario: T_SPR_13 (closePayment)
-#       Given the T_SPR_13 (informazioniPagamento) scenario executed successfully
-#       And the closePayment scenario executed successfully
-#       And pspTransactionId with resSPR_422 in closePayment
-#       When PM sends closePayment to nodo-dei-pagamenti
-#       Then check esito is OK of closePayment response
-#       And check faultCode is 200 of closePayment response
+   Scenario: T_SPR_13 (closePayment)
+      Given the T_SPR_13 (informazioniPagamento) scenario executed successfully
+      And the closePayment scenario executed successfully
+      And pspTransactionId with resSPR_422 in v1/closepayment
+      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v1/closepayment response is 422
 #       And wait 70 seconds for expiration
 #       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
 #       And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
@@ -842,7 +822,7 @@ Feature: flow checks for sendPaymentResult
 #       Given the activateIOPayment scenario executed successfully
 #       When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
 #       Then check outcome is OK of activateIOPayment response
-      
+
 #       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
 #       And check the value AGID_01 of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
 
