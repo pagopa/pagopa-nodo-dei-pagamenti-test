@@ -4,6 +4,7 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_KO_SEMANTICA_descriptionValorizzata
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
 
+
     Scenario: RPT generation
         Given RPT generation
             """
