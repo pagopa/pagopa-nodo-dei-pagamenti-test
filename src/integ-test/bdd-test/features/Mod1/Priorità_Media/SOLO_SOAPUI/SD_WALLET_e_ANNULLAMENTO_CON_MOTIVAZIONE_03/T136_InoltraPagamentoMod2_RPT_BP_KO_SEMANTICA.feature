@@ -1,4 +1,4 @@
-Feature: T136_InoltraPagamentoMod2_RPT_BP_KO_SEMANTICA_descriptionValorizzata
+Feature: T136_InoltraPagamentoMod2_RPT_BP_KO_SEMANTICA
 
     Background:
         Given systems up
@@ -85,6 +85,7 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_KO_SEMANTICA_descriptionValorizzata
             """
 
     @runnable
+    #(descriptionValorizzata)
     Scenario: Execute nodoInviaRT (Phase 1)
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -111,7 +112,37 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_KO_SEMANTICA_descriptionValorizzata
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And pay_i:identificativoUnivocoVersamento with rifSemanticaPsp in nodoInviaRPT
         When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaRPT response
+        Then check faultCode is PPT_AUTORIZZAZIONE of nodoInviaRPT response
 
-
+    #(descriptionNull)
+    Scenario: Execute nodoInviaRT (Phase 2)
+        Given the RPT generation scenario executed successfully
+        And initial XML nodoInviaRPT
+            """"
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header>
+            <ppt:intestazionePPT>
+            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>1651480675647</codiceContestoPagamento>
+            </ppt:intestazionePPT>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:nodoInviaRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID#</identificativoCanale>
+            <tipoFirma></tipoFirma>
+            <rpt>$rptAttachment</rpt>
+            </ws:nodoInviaRPT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And pay_i:identificativoUnivocoVersamento with rifSemanticaPsp in nodoInviaRPT
+        When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_AUTORIZZAZIONE of nodoInviaRPT response
