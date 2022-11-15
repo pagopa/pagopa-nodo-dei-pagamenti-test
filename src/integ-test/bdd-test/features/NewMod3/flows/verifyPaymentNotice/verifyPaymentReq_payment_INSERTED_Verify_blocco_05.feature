@@ -2,7 +2,10 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
 
   Background:
     Given systems up
-    And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+
+     # Verify Phase 1
+  Scenario: Execute verifyPaymentNotice request
+    Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -15,17 +18,13 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
                <password>pwdpwdpwd</password>
                <qrCode>
                   <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-                  <noticeNumber>#notice_number_old#</noticeNumber>
+                  <noticeNumber>$1noticeNumber</noticeNumber>
                </qrCode>
             </nod:verifyPaymentNoticeReq>
          </soapenv:Body>
       </soapenv:Envelope>
       """
 	 And EC old version
-
-
-  # Verify Phase 1
-  Scenario: Execute verifyPaymentNotice request
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
     
@@ -120,7 +119,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
       <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
       <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
       <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
-      <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+      <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
       <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
       <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
       <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -151,7 +150,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
          <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
          <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
          </ppt:intestazionePPT>
          </soapenv:Header>
@@ -175,7 +174,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
   Scenario: Execute mod3CancelV1 poller
     Given the Execute nodoInviaRPT request scenario executed successfully
     When job mod3CancelV1 triggered after 10 seconds
-    And wait 20 seconds for expiration
+    And wait 30 seconds for expiration
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
 	
