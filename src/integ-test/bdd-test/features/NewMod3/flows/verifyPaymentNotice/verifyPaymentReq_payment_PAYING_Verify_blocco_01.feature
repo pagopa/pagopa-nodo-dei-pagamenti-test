@@ -5,7 +5,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
 
    # Verify Phase 1
    Scenario: Execute verifyPaymentNotice request
-   Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
+      Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
       And initial XML verifyPaymentNotice
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -58,7 +58,6 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
 
 
    # Payment Outcome Phase
-   @runnable
    Scenario: Execute nodoInviaRPT request
       Given the activatePaymentNotice scenario executed successfully
       And RPT generation
@@ -169,7 +168,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
 
 
    # Verify Phase 2
-   @runnable
+   @fix
    Scenario: Execute verifyPaymentNotice1 request with the same request as Verify Phase 1
       Given the Execute activatePaymentNotice request scenario executed successfully
       When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
