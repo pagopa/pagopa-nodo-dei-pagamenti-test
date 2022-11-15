@@ -120,7 +120,7 @@ Scenario: Execute second sendPaymentOutcome
     
     
 Scenario: Trigger idempotencyCacheClean
-    Given the Execute second sendPaymentOutcome
+    Given the Execute second sendPaymentOutcome scenario executed successfully
     When job idempotencyCacheClean triggered after 75 seconds
     And wait 10 seconds for expiration
     Then verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_psp_1 on db nodo_online under macro NewMod3
