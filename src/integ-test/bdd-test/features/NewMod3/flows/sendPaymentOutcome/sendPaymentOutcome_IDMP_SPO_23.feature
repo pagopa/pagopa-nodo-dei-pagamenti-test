@@ -44,7 +44,7 @@ Background:
       <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
-      <idempotencyKey>#idempotency_key#</idempotencyKey>
+      <idempotencyKey>$activatePaymentNotice.idempotencyKey</idempotencyKey>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
       <outcome>OK</outcome>
       <details>
@@ -106,7 +106,7 @@ Scenario: Execute second activatePaymentNotice
 
 Scenario: Execute second sendPaymentOutcome
     Given the Execute second activatePaymentNotice scenario executed successfully
-    And random idempotencyKey having #psp# as idPSP in sendPaymentOutcome
+    And idempotencyKey with $activatePaymentNotice.idempotencyKey in sendPaymentOutcome
     And paymentToken with $activatePaymentNoticeResponse.paymentToken in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
