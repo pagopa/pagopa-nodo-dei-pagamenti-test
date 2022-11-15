@@ -6,7 +6,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
 
   # ActivatePaymentNoticeReq phase
   Scenario: Execute activatePaymentNotice request
-    Given initial XML activatePaymentNotice_1
+    Given initial XML activatePaymentNotice
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
@@ -27,8 +27,9 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
       </soapenv:Body>
     </soapenv:Envelope>
     """
-    When PSP sends SOAP activatePaymentNotice_1 to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice_1 response
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+    And save activatePaymentNotice response in activatePaymentNotice1
 
   # mod3CancelV2 Phase
   Scenario: Execute mod3CancelV2 poller
@@ -39,29 +40,9 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
   # activatePaymentNoticeReq phase 2
   Scenario: Execute a new activatePaymentNotice request
     Given the Execute mod3CancelV2 poller scenario executed successfully
-    And initial XML activatePaymentNotice_2
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-        <nod:activatePaymentNoticeReq>
-          <idPSP>#psp#</idPSP>
-          <idBrokerPSP>#psp#</idBrokerPSP>
-          <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-          <password>pwdpwdpwd</password>
-          <idempotencyKey>#idempotency_key#</idempotencyKey>
-          <qrCode>
-            <fiscalCode>$activatePaymentNotice_1.fiscalCode</fiscalCode>
-            <noticeNumber>$activatePaymentNotice_1.noticeNumber</noticeNumber>
-          </qrCode>
-          <expirationTime>6000</expirationTime>
-          <amount>10.00</amount>
-        </nod:activatePaymentNoticeReq>
-      </soapenv:Body>
-    </soapenv:Envelope>
-    """
-    When PSP sends SOAP activatePaymentNotice_2 to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice_2 response
+    And random idempotencyKey having #psp# as idPSP in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
 
   # sendPaymentOutcomeReq phase
   Scenario: Execute a sendPaymentOutcome request
@@ -76,7 +57,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
           <idBrokerPSP>#psp#</idBrokerPSP>
           <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
-          <paymentToken>$activatePaymentNotice_2Response.paymentToken</paymentToken>
+          <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
           <outcome>OK</outcome>
           <!--Optional:-->
           <details>
@@ -130,7 +111,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
           <idBrokerPSP>#psp#</idBrokerPSP>
           <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
-          <paymentToken>$activatePaymentNotice_1Response.paymentToken</paymentToken>
+          <paymentToken>$activatePaymentNotice1Response.paymentToken</paymentToken>
           <outcome>OK</outcome>
           <!--Optional:-->
           <details>

@@ -33,6 +33,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is OK of activatePaymentNotice response
     And call the paymentToken of activatePaymentNotice response as paymentTokenPhase1
     And saving activatePaymentNotice request in activatePaymentNotice1
+    And save activatePaymentNotice response in activatePaymentNotice1
 
   # Activate Phase 2
   Scenario: Execute activatePaymentNotice2 request on different position with different idempotencyKey
@@ -140,7 +141,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
                 <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                 <password>pwdpwdpwd</password>
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
-                <paymentToken>$activatePaymentNotice_1Response.paymentToken</paymentToken>
+                <paymentToken>$activatePaymentNotice1Response.paymentToken</paymentToken>
                 <outcome>OK</outcome>
                 <details>
                     <paymentMethod>creditCard</paymentMethod>
@@ -171,7 +172,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_PSP_SCONOSCIUTO of sendPaymentOutcome response
 
-@runnable    
+@fix    
   # First activate check [IDMP_SPO_20.1]
   Scenario: Execute again activatePaymentNotice3 request
     Given the Semantic error for sendPaymentOutcome response executed on token of Activate Phase 1 scenario executed successfully
