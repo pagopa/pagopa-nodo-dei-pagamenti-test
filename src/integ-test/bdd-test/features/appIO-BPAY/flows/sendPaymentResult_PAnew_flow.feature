@@ -662,7 +662,7 @@ Feature: flow checks for sendPaymentResult
       Given the T_SPR_10 (activateIOPayment) scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
-
+   @wip
    Scenario: T_SPR_10 (closePayment)
       Given the T_SPR_10 (informazioniPagamento) scenario executed successfully
       And the closePayment scenario executed successfully
