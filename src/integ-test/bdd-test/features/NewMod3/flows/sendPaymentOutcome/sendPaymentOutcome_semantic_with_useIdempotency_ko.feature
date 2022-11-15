@@ -178,7 +178,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
 
-@fix
+@runnable
   # Send payment outcome Phase 2 - different idempotencyKey [IDMP_SPO_27]
   Scenario: 11. Execute again the same sendPaymentOutcome request with a different idempotencyKey
     Given the 2. Execute sendPaymentOutcome request scenario executed successfully
