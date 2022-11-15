@@ -6,7 +6,8 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
 
    # Verify Phase 1
    Scenario: Execute verifyPaymentNotice request
-      Given initial XML verifyPaymentNotice
+      Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
+      And initial XML verifyPaymentNotice
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
@@ -18,7 +19,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
          <password>pwdpwdpwd</password>
          <qrCode>
          <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-         <noticeNumber>#notice_number_old#</noticeNumber>
+         <noticeNumber>$1noticeNumber</noticeNumber>
          </qrCode>
          </nod:verifyPaymentNoticeReq>
          </soapenv:Body>
@@ -118,7 +119,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
       <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
       <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
       <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
-      <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+      <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
       <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
       <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
       <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -221,6 +222,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
       When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcome response
       And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+      And wait 5 seconds for expiration
 
 
    # Verify Phase 2
