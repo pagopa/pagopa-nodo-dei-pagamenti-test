@@ -30,7 +30,8 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
 
    # Activate Phase
    Scenario: Execute activatePaymentNotice request
-      Given initial XML activatePaymentNotice
+      Given the Execute verifyPaymentNotice request scenario executed successfully
+      And initial XML activatePaymentNotice
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
