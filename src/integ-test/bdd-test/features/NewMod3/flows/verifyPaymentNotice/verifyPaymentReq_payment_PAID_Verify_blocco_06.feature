@@ -149,7 +149,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
          <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
          <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
          <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-         <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
          </ppt:intestazionePPT>
          </soapenv:Header>
