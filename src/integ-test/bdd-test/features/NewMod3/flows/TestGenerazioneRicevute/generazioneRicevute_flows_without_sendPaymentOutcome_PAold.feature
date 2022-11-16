@@ -196,18 +196,18 @@ Feature: process tests for generazioneRicevute
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query rt on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query rt on db nodo_online under macro NewMod3
     #RT_VERSAMENTI
-    And execution query rt_versamenti to get value on the table RT_VERSAMENTI, with the columns s.ID,s.IMPORTO_RT,s.ESITO,s.CAUSALE_VERSAMENTO,s.DATI_SPECIFICI_RISCOSSIONE,s.COMMISSIONE_APPLICATE_PSP,s.FK_RT,s.INSERTED_TIMESTAMP,s.UPDATED_TIMESTAMP under macro NewMod3 with db name nodo_online
+    And execution query rt_versamenti to get value on the table RT_VERSAMENTI, with the columns * under macro NewMod3 with db name nodo_online
     And execution query rpt_versamenti to get value on the table RPT_VERSAMENTI, with the columns s.CAUSALE_VERSAMENTO,s.DATI_SPECIFICI_RISCOSSIONE under macro NewMod3 with db name nodo_online
     And checks the value NotNone of the record at column ID of the table RT retrived by the query rt on db nodo_online under macro NewMod3
     And checks the value 1 of the record at column PROGRESSIVO of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
     And checks the value 0 of the record at column IMPORTO_RT of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
-    And checks the value BATCH_ANNULLAMENTO:TOKEN_SCADUTO of the record at column s.ESITO of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
-    And with the query rt_versamenti check assert beetwen elem CAUSALE_VERSAMENTO in position 3 and elem CAUSALE_VERSAMENTO with position 0 of the query rpt_versamenti
-    And with the query rt_versamenti check assert beetwen elem DATI_SPECIFICI_RISCOSSIONE in position 4 and elem DATI_SPECIFICI_RISCOSSIONE with position 1 of the query rpt_versamenti
-    And checks the value 0 of the record at column s.COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
-    And with the query rt_versamenti check assert beetwen elem FK_RT in position 6 and elem ID with position 13 of the query rt
-    And checks the value NotNone of the record at column s.INSERTED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column s.UPDATED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
+    And checks the value BATCH_ANNULLAMENTO:TOKEN_SCADUTO of the record at column ESITO of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
+    And with the query rt_versamenti check assert beetwen elem CAUSALE_VERSAMENTO in position 4 and elem CAUSALE_VERSAMENTO with position 0 of the query rpt_versamenti
+    And with the query rt_versamenti check assert beetwen elem DATI_SPECIFICI_RISCOSSIONE in position 5 and elem DATI_SPECIFICI_RISCOSSIONE with position 1 of the query rpt_versamenti
+    And checks the value 0 of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
+    And with the query rt_versamenti check assert beetwen elem FK_RT in position 7 and elem ID with position 13 of the query rt
+    And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
     #POSITION_RECEIPT
     And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns RECEIPT_ID,s.NOTICE_ID,s.PA_FISCAL_CODE,s.CREDITOR_REFERENCE_ID,s.PAYMENT_TOKEN,s.OUTCOME,s.PAYMENT_AMOUNT,s.DESCRIPTION,s.COMPANY_NAME,s.OFFICE_NAME,s.DEBTOR_ID,s.PSP_ID,s.PSP_COMPANY_NAME,s.PSP_FISCAL_CODE,s.PSP_VAT_NUMBER,s.CHANNEL_ID,s.CHANNEL_DESCRIPTION,s.PAYER_ID,s.PAYMENT_METHOD,s.FEE,s.PAYMENT_DATE_TIME,s.APPLICATION_DATE,s.TRANSFER_DATE,s.METADATA,s.RT_ID,s.FK_POSITION_PAYMENT,s.ID under macro NewMod3 with db name nodo_online
     And execution query position_service to get value on the table POSITION_SERVICE, with the columns DESCRIPTION,COMPANY_NAME,OFFICE_NAME,DEBTOR_ID under macro NewMod3 with db name nodo_online
