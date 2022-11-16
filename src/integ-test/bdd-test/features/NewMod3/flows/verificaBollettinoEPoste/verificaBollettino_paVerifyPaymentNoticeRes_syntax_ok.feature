@@ -59,7 +59,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
     Then check outcome is OK of verificaBollettino response
     Examples:
       | elem              | value | soapUI test |
-      | soapenv:header    | None  | SIN_VBR_01  |
+      | soapenv:Header    | None  | SIN_VBR_01  |
       | dueDate           | None  | SIN_VBR_25  |
       | detailDescription | None  | SIN_VBR_28  |
       | officeName        | None  | SIN_VBR_44  |
