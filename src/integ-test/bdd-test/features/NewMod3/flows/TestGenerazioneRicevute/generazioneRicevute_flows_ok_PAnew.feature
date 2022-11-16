@@ -164,13 +164,9 @@ Feature: process tests for generazioneRicevute
       </soapenv:Body>
       </soapenv:Envelope>
       """
-
-@runnable
-  # test execution
-  Scenario: Execution test DB_GR_01
-    Given the Execute sendPaymentOutcome request scenario executed successfully
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
+    
     #db check1
     #And check DB_GR_01
     And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns * under macro NewMod3 with db name nodo_online
@@ -201,8 +197,9 @@ Feature: process tests for generazioneRicevute
     And through the query position_receipt retrieve param metadata at position 24 and save it under the key metadata
     And through the query position_receipt retrieve param rtID at position 25 and save it under the key rtID
     And through the query position_receipt retrieve param fk_position_payment at position 26 and save it under the key fk_position_payment
-    
-    
+
+    And checks the value #psp# of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query position_payment on db nodo_online under macro NewMod3
+
     And checks the value $receipt_id of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $notice_id of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
@@ -216,36 +213,145 @@ Feature: process tests for generazioneRicevute
     And checks the value $fee of the record at column FEE of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $id of the record at column ID of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $applicationDate of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
-   
     And checks the value $description of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
+    
+    And checks the value $description of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value $companyName of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value $officeName of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
+    And checks the value $debtorID of the record at column DEBTOR_ID of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
 
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    And checks the value $metadata of the record at column METADATA of the table POSITION_PAYMENT_PLAN retrived by the query position_service on db nodo_online under macro NewMod3
 
-    And through the query position_receipt retrieve param recipient_pa_fiscal_code at position 5 and save it under the key recipient_pa_fiscal_code
-    And through the query position_receipt retrieve param recipient_broker_pa_id at position 6 and save it under the key recipient_broker_pa_id
-    And through the query position_receipt retrieve param recipient_station_id at position 7 and save it under the key recipient_station_id
-    And through the query position_receipt retrieve param status at position 8 and save it under the key status
-    And through the query position_receipt retrieve param fk_position_receip at position 11 and save it under the key fk_position_receip
+    And checks the value $psp_company_name of the record at column RAGIONE_SOCIALE of the table POSITION_SERVICE retrived by the query psp on db nodo_online under macro NewMod3
+    And checks the value $psp_fiscal_code of the record at column CODICE_FISCALE of the table POSITION_SERVICE retrived by the query psp on db nodo_online under macro NewMod3
+    And checks the value $psp_vat_number of the record at column VAT_NUMBER of the table POSITION_SERVICE retrived by the query psp on db nodo_online under macro NewMod3
 
 
+  Scenario: Execute second verifyPaymentNotice request
+    Given the Execute sendPaymentOutcome request scenario executed successfully
+    And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+    And initial XML verifyPaymentNotice
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:verifyPaymentNoticeReq>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+      <password>pwdpwdpwd</password>
+      <qrCode>
+      <fiscalCode>#creditor_institution_code#</fiscalCode>
+      <noticeNumber>$2noticeNumber</noticeNumber>
+      </qrCode>
+      </nod:verifyPaymentNoticeReq>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    And EC new version
+    When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of verifyPaymentNotice response
 
+  Scenario: Execute second activatePaymentNotice request
+    Given the Execute second verifyPaymentNotice request scenario executed successfully
+    And initial XML activatePaymentNotice
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header />
+      <soapenv:Body>
+      <nod:activatePaymentNoticeReq>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+      <password>pwdpwdpwd</password>
+      <idempotencyKey>#idempotency_key#</idempotencyKey>
+      <qrCode>
+      <fiscalCode>#creditor_institution_code#</fiscalCode>
+      <noticeNumber>$2noticeNumber</noticeNumber>
+      </qrCode>
+      <expirationTime>120000</expirationTime>
+      <amount>70.00</amount>
+      <dueDate>2021-12-31</dueDate>
+      <paymentNote>causale</paymentNote>
+      </nod:activatePaymentNoticeReq>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    And initial XML paGetPayment
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+      xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <paf:paGetPaymentRes>
+      <outcome>OK</outcome>
+      <data>
+      <creditorReferenceId>#cod_segr#$2iuv</creditorReferenceId>
+      <paymentAmount>70.00</paymentAmount>
+      <dueDate>2021-12-31</dueDate>
+      <!--Optional:-->
+      <retentionDate>2021-12-31T12:12:12</retentionDate>
+      <!--Optional:-->
+      <lastPayment>1</lastPayment>
+      <description>description</description>
+      <!--Optional:-->
+      <companyName>company</companyName>
+      <!--Optional:-->
+      <officeName>office</officeName>
+      <debtor>
+      <uniqueIdentifier>
+      <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+      <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+      </uniqueIdentifier>
+      <fullName>paGetPaymentName</fullName>
+      <!--Optional:-->
+      <streetName>paGetPaymentStreet</streetName>
+      <!--Optional:-->
+      <civicNumber>paGetPayment99</civicNumber>
+      <!--Optional:-->
+      <postalCode>20155</postalCode>
+      <!--Optional:-->
+      <city>paGetPaymentCity</city>
+      <!--Optional:-->
+      <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
+      <!--Optional:-->
+      <country>IT</country>
+      <!--Optional:-->
+      <e-mail>paGetPayment@test.it</e-mail>
+      </debtor>
+      <!--Optional:-->
+      <transferList>
+      <!--1 to 5 repetitions:-->
+      <transfer>
+      <idTransfer>1</idTransfer>
+      <transferAmount>70.00</transferAmount>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+      <IBAN>IT45R0760103200000000001016</IBAN>
+      <remittanceInformation>testPaGetPayment</remittanceInformation>
+      <transferCategory>paGetPaymentTest</transferCategory>
+      </transfer>
+      </transferList>
+      <!--Optional:-->
+      <metadata>
+      <!--1 to 10 repetitions:-->
+      <mapEntry>
+      <key>1</key>
+      <value>22</value>
+      </mapEntry>
+      </metadata>
+      </data>
+      </paf:paGetPaymentRes>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
+    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
 
+@runnable
   # Payment Outcome Phase outcome OK without paymentchannel
   Scenario: Execute sendPaymentOutcome request
-    Given the Execute activatePaymentNotice request scenario executed successfully
+    Given the Execute second activatePaymentNotice request scenario executed successfully
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -282,14 +388,9 @@ Feature: process tests for generazioneRicevute
       </soapenv:Body>
       </soapenv:Envelope>
       """
-@runnable
-  # test execution
-  Scenario: Execution test DB_GR_01
-    Given the Execute sendPaymentOutcome request scenario executed successfully
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-    #db check1
-    And check DB_GR_01
+
 
 
 
