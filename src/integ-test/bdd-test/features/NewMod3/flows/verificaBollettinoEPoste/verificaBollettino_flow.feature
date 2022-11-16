@@ -2,6 +2,9 @@ Feature: flow checks for verificaBollettino - EC new
 
   Background:
     Given systems up
+
+  Scenario: execute nodoVerificaRPT request
+    Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML nodoVerificaRPT
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -18,7 +21,7 @@ Feature: flow checks for verificaBollettino - EC new
       <aim:aim128>
       <aim:CCPost>#ccPoste#</aim:CCPost>
       <aim:AuxDigit>3</aim:AuxDigit>
-      <aim:CodIUV>11192051789512983</aim:CodIUV>
+      <aim:CodIUV>$1iuv</aim:CodIUV>
       </aim:aim128>
       </codiceIdRPT>
       </ws:nodoVerificaRPT>
@@ -26,16 +29,13 @@ Feature: flow checks for verificaBollettino - EC new
       </soapenv:Envelope>
       """
     And EC new version
-  
-  # nodoVerificaRPTReq phase - TF_VB_04
-  Scenario: Execute nodoVerificaRPT request
     When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
     Then check esito is KO of nodoVerificaRPT response
     And check faultCode is PPT_MULTI_BENEFICIARIO of nodoVerificaRPT response
 
   # verificaBollettinoReq phase - TF_VB_04
   Scenario: Execute verificaBollettino request
-    Given the Execute nodoVerificaRPT request scenario executed successfully
+    Given the execute nodoVerificaRPT request scenario executed successfully
     And initial XML verificaBollettino
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -47,7 +47,7 @@ Feature: flow checks for verificaBollettino - EC new
         <idChannel>#channelPoste#</idChannel>
       <password>pwdpwdpwd</password>
       <ccPost>#ccPoste#</ccPost>
-      <noticeNumber>#notice_number#</noticeNumber>
+      <noticeNumber>$1noticeNumber</noticeNumber>
       </nod:verificaBollettinoReq>
       </soapenv:Body>
       </soapenv:Envelope>
@@ -72,7 +72,7 @@ Feature: flow checks for verificaBollettino - EC new
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>#notice_number#</noticeNumber>
+      <noticeNumber>$1noticeNumber</noticeNumber>
       </qrCode>
       <expirationTime>60000</expirationTime>
       <amount>10.00</amount>

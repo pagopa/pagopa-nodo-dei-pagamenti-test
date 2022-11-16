@@ -7,7 +7,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_01]
 
     # verificaBollettinoReq phase
     Scenario: Execute verificaBollettino request
-        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
         And initial XML paaVerificaRPT
             """
