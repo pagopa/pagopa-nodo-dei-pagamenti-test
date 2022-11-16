@@ -50,7 +50,7 @@ Feature: process tests for generazioneRicevute
       <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
       <expirationTime>6000</expirationTime>
-      <amount>70.00</amount>
+      <amount>10.00</amount>
       <dueDate>2021-12-31</dueDate>
       <paymentNote>causale</paymentNote>
 
