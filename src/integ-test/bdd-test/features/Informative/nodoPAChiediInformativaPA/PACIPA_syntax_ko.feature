@@ -2,6 +2,7 @@ Feature: Syntax checks KO for nodoPAChiediInformativaPA
     Background:
         Given systems up
 
+    @runnable
     Scenario Outline:Check KO for nodoPAChiediInformativaPA
         Given initial XML nodoPAChiediInformativaPA
             """
@@ -20,7 +21,6 @@ Feature: Syntax checks KO for nodoPAChiediInformativaPA
         And <tag> with <tag_value> in nodoPAChiediInformativaPA
         When PSP sends SOAP nodoPAChiediInformativaPA to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoPAChiediInformativaPA response
-
         Examples:
             | tag                                   | tag_value                            | SoapUI   |
             | soapenv:Body                          | Empty                                | PACIPA2  |
@@ -39,7 +39,7 @@ Feature: Syntax checks KO for nodoPAChiediInformativaPA
             | identificativoDominio                 | Empty                                | PACIPA17 |
             | identificativoDominio                 | qertyuop234dcvgtresd567yhbvfrteesd56 | PACIPA18 |
 
-
+    @runnable
     Scenario: Check OK for nodoPAChiediInformativaPA-[PACIPA3]
         Given initial XML nodoPAChiediInformativaPA
             """
@@ -58,6 +58,7 @@ Feature: Syntax checks KO for nodoPAChiediInformativaPA
         When PSP sends SOAP nodoPAChiediInformativaPA to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoPAChiediInformativaPA response
 
+    @runnable
     Scenario: Check OK for nodoPAChiediInformativaPA-[PACIPA5]
         Given initial XML nodoPAChiediInformativaPA
             """
@@ -76,24 +77,7 @@ Feature: Syntax checks KO for nodoPAChiediInformativaPA
         When PSP sends SOAP nodoPAChiediInformativaPA to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoPAChiediInformativaPA response
 
-    Scenario: Check OK for nodoPAChiediInformativaPA-[PACIPA19]
-        Given initial XML nodoPAChiediInformativaPA
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:nodoPAChiediInformativaPA>
-            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>id_station#</identificativoStazioneIntermediarioPA>
-            <password>pwdpwdpwd</password>
-            <<identificativoDominio>#creditor_institution_code#<identificativoDominio>
-            </ws:nodoPAChiediInformativaPA>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When PSP sends SOAP nodoPAChiediInformativaPA to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoPAChiediInformativaPA response
-
+    @runnable
     Scenario:Check OK for nodoPAChiediInformativaPA-[PACIPA1]
         Given initial XML nodoPAChiediInformativaPA
             """
