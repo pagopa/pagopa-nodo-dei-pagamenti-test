@@ -419,18 +419,6 @@ Feature: flow checks for sendPaymentResult
       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
 
-
-
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        And amount with 7002.00 in activatePaymentNoticeV2
-        And paymentMethod with None in activatePaymentNoticeV2
-        And touchPoint with None in activatePaymentNoticeV2
-        And paymentAmount with 7002.00 in paGetPaymentV2
-        And transferAmount with 6802.00 in paGetPaymentV2
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-
-
    Scenario: T_SPR_04 (closePayment)
       Given the T_SPR_04 (informazioniPagamento) scenario executed successfully
       And the pspNotifyPayment KO scenario executed successfully
@@ -624,7 +612,7 @@ Feature: flow checks for sendPaymentResult
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 400
       And check esito is KO of v1/closepayment response
-      And check descrizione is Esito non accettabile a token scaduto
+      And check descrizione is Esito non accettabile a token scaduto of v1/closepayment response
       And nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 3600000
       And wait 5 seconds for expiration
       And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
