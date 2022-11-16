@@ -184,7 +184,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>b194ac590a6848f7923c70b05869774c</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -217,7 +217,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                     <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
+                    <codiceContestoPagamento>b194ac590a6848f7923c70b05869774c</codiceContestoPagamento>
                 </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -233,7 +233,8 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
+        Then check esito is KO of nodoInviaRPT response
+        And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
         #And check redirect is 0 of nodoInviaRPT response
         #And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
         And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
