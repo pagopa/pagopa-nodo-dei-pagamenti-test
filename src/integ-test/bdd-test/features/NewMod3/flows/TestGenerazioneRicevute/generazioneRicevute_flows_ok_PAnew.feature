@@ -211,7 +211,7 @@ Feature: process tests for generazioneRicevute
     And checks the value $payerID of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $paymentMethod of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $fee of the record at column FEE of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
-    And checks the value $id of the record at column ID of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $fk_position_payment of the record at column ID of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $applicationDate of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $description of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
     
