@@ -198,19 +198,20 @@ Feature: process tests for generazioneRicevute [DB_GR_18]
 
     And wait 10 seconds for expiration
     #POSITION_RECEIPT_RECIPIENT query
-    And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-    And execution query position_receipt_recipient to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro NewMod3 with db name nodo_online
-    And through the query position_receipt_recipient retrieve param pa_fiscal_code at position 1 and save it under the key pa_fiscal_code
-    And through the query position_receipt_recipient retrieve param notice_id at position 2 and save it under the key notice_id
-    And through the query position_receipt_recipient retrieve param creditor_reference_id at position 3 and save it under the key creditor_reference_id
-    And through the query position_receipt_recipient retrieve param payment_token at position 4 and save it under the key payment_token
-    And through the query position_receipt_recipient retrieve param recipient_pa_fiscal_code at position 5 and save it under the key recipient_pa_fiscal_code
-    And through the query position_receipt_recipient retrieve param recipient_broker_pa_id at position 6 and save it under the key recipient_broker_pa_id
-    And through the query position_receipt_recipient retrieve param recipient_station_id at position 7 and save it under the key recipient_station_id
-    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
-    And through the query position_receipt_recipient retrieve param fk_position_receipt at position 11 and save it under the key fk_position_receipt
+    And replace paStationId content with #id_station# content
+    And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_2pa on db nodo_online under macro NewMod3
+    And execution query position_receipt_recipient_2pa to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro NewMod3 with db name nodo_online
+    And through the query position_receipt_recipient_2pa retrieve param pa_fiscal_code at position 1 and save it under the key pa_fiscal_code
+    And through the query position_receipt_recipient_2pa retrieve param notice_id at position 2 and save it under the key notice_id
+    And through the query position_receipt_recipient_2pa retrieve param creditor_reference_id at position 3 and save it under the key creditor_reference_id
+    And through the query position_receipt_recipient_2pa retrieve param payment_token at position 4 and save it under the key payment_token
+    And through the query position_receipt_recipient_2pa retrieve param recipient_pa_fiscal_code at position 5 and save it under the key recipient_pa_fiscal_code
+    And through the query position_receipt_recipient_2pa retrieve param recipient_broker_pa_id at position 6 and save it under the key recipient_broker_pa_id
+    And through the query position_receipt_recipient_2pa retrieve param recipient_station_id at position 7 and save it under the key recipient_station_id
+    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_2pa on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_2pa on db nodo_online under macro NewMod3
+    And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_2pa on db nodo_online under macro NewMod3
+    And through the query position_receipt_recipient_2pa retrieve param fk_position_receipt at position 11 and save it under the key fk_position_receipt
     #POSITION_PAYMENT query
     And execution query payment_status to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online
     And through the query payment_status retrieve param pp_pa_fiscal_code at position 1 and save it under the key pp_pa_fiscal_code
