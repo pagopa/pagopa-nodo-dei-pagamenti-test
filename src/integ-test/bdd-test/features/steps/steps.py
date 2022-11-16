@@ -1997,6 +1997,45 @@ def step_impl(context, value1, condition, value2):
     else:
         assert False
 
+@step("through the query {query_name} convert json {json_elem} at position {position:d} to xml and save it under the key {key}")
+def step_impl(context, query_name, json_elem, position, key):
+    result_query = getattr(context, query_name)
+    print(f'{query_name}: {result_query}')
+    selected_element = result_query[0][position]
+    selected_element = selected_element.read()
+    selected_element = selected_element.decode("utf-8")
+    
+    jsonDict = json.loads(selected_element)
+    selected_element = utils.json2xml(jsonDict)
+    selected_element = '<root>' + selected_element + '</root>'	
+	
+    print(f'{json_elem}: {selected_element}')
+    setattr(context, key, selected_element)
+
+
+@step('checking value {value1} is {condition} value {value2}')
+def step_impl(context, value1, condition, value2):
+
+    value1 = utils.replace_local_variables(value1, context)
+    value1 = utils.replace_context_variables(value1, context)
+    value1 = utils.replace_global_variables(value1, context)
+    value2 = utils.replace_local_variables(value2, context)
+    value2 = utils.replace_context_variables(value2, context)
+    value2 = utils.replace_global_variables(value2, context)
+
+    value1 = str(value1.strip())
+    value2 = str(value2)
+
+    if condition == 'equal to':
+        assert value1 == value2, f"{value1} != {value2}"
+    elif condition == 'greater than':
+        assert value1 > value2, f"{value1} <= {value2}"
+    elif condition == 'smaller than':
+        assert value1 < value2, f"{value1} >= {value2}"
+    elif condition == 'containing':
+        assert value2 in value1, f"{value1} contains {value2}"
+    else:
+        assert False
 
 @step("calling primitive {primitive1} {restType1} and {primitive2} {restType2} in parallel")
 def step_impl(context, primitive1, primitive2, restType1, restType2):

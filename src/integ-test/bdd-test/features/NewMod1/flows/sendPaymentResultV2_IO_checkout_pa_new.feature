@@ -719,7 +719,16 @@ Feature: flow tests for sendPaymentResultV2
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
 
-    # aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # FLUSSO_SPR_02_IO
 
@@ -894,7 +903,16 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
-    # aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value KO
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # FLUSSO_SPR_03_IO
 
@@ -1168,7 +1186,16 @@ Feature: flow tests for sendPaymentResultV2
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
 
-    # aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # FLUSSO_SPR_04_IO
 
@@ -1265,7 +1292,16 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
-    # aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value KO
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # FLUSSO_SPR_05_IO
 
@@ -1362,7 +1398,16 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
-    # aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value KO
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # FLUSSO_SPR_06_IO
 
@@ -1422,7 +1467,16 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
 
-    # aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value KO
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # FLUSSO_SPR_07_IO
 
@@ -1483,7 +1537,16 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
 
-    # aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value KO
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # FLUSSO_SPR_08_IO
 
@@ -1760,7 +1823,16 @@ Feature: flow tests for sendPaymentResultV2
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
 
-    # aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # FLUSSO_SPR_09_IO
 
@@ -2037,7 +2109,16 @@ Feature: flow tests for sendPaymentResultV2
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
 
-    # aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # FLUSSO_SPR_10_IO
 
@@ -2314,7 +2395,16 @@ Feature: flow tests for sendPaymentResultV2
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
 
-    # aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # FLUSSO_SPR_11_IO
 
@@ -2591,8 +2681,17 @@ Feature: flow tests for sendPaymentResultV2
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
 
-    # aggiungere DB check
-
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
+    
     # T_SPR_V2_01
 
     Scenario: T_SPR_V2_01
@@ -2609,7 +2708,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        # aggiungere DB check: verificare che la sendpaymentresultv2 non venga inviata
+        # aggiungere DB check sulla request della sprv2: verificare che la sendpaymentresultv2 non venga inviata
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -2651,7 +2750,6 @@ Feature: flow tests for sendPaymentResultV2
         And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-        # aggiungere DB check: verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -2668,6 +2766,17 @@ Feature: flow tests for sendPaymentResultV2
         # POSITION_STATUS_SNAPSHOT
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_03
 
@@ -2693,7 +2802,6 @@ Feature: flow tests for sendPaymentResultV2
         And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-        # aggiungere DB check: verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -2710,6 +2818,17 @@ Feature: flow tests for sendPaymentResultV2
         # POSITION_STATUS_SNAPSHOT
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_04
 
@@ -2728,7 +2847,6 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        # aggiungere DB check: verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_REFUSED,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -2745,6 +2863,17 @@ Feature: flow tests for sendPaymentResultV2
         # POSITION_STATUS_SNAPSHOT
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value KO
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_05
 
@@ -2764,7 +2893,6 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-        # aggiungere DB check: verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
 
         # POSITION_PAYMENT_STATUS
         And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -2842,6 +2970,17 @@ Feature: flow tests for sendPaymentResultV2
         # POSITION_ACTIVATE
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value KO
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_06
 
@@ -3017,7 +3156,16 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
-    # aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value KO
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_07
 
@@ -3043,7 +3191,6 @@ Feature: flow tests for sendPaymentResultV2
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         And wait 3 seconds for expiration
-        # aggiungere DB check: verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
         And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
 
         # POSITION_PAYMENT_STATUS
@@ -3061,6 +3208,17 @@ Feature: flow tests for sendPaymentResultV2
         # POSITION_STATUS_SNAPSHOT
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value KO
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_08
 
@@ -3086,7 +3244,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Unacceptable outcome when token has expired of v2/closepayment response
-        # aggiungere DB check: verificare che la sendpaymentresultv2 non venga inviata
+        # aggiungere DB check sulla request della sprv2: verificare che la sendpaymentresultv2 non venga inviata
         And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
 
         # POSITION_PAYMENT_STATUS
@@ -3150,7 +3308,16 @@ Feature: flow tests for sendPaymentResultV2
         # POSITION_RETRY_SENDPAYMENTRESULT
         And verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
 
-    # aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_10
 
@@ -3205,7 +3372,16 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value sendPaymentResult-v2 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
         And checks the value v2 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
 
-    # aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_11
 
@@ -3260,7 +3436,16 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value sendPaymentResult-v2 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
         And checks the value v2 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
 
-    # aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_12
 
@@ -3315,7 +3500,16 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value sendPaymentResult-v2 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
         And checks the value v2 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
 
-    # aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_13
 
@@ -3370,7 +3564,16 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value sendPaymentResult-v2 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
         And checks the value v2 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
 
-    # aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_14
 
@@ -3433,4 +3636,13 @@ Feature: flow tests for sendPaymentResultV2
         # POSITION_RETRY_SENDPAYMENTRESULT
         And verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under
 
-# aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
+        And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName

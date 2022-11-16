@@ -684,4 +684,14 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value #id_station_old# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
-# aggiungere DB check
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        # aggiungere i DB check corretti
+        # And checking value $XML_RE.description is equal to value $paGetPayment.description
+        # And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
+        # And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
+        # And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
+        # And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
