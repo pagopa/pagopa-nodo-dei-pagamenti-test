@@ -222,7 +222,7 @@ Feature: process tests for generazioneRicevute
 
     And checks the value $psp_company_name of the record at column RAGIONE_SOCIALE of the table PSP retrived by the query psp on db nodo_cfg under macro NewMod3
     And checks the value $psp_fiscal_code of the record at column CODICE_FISCALE of the table PSP retrived by the query psp on db nodo_cfg under macro NewMod3
-    And checks the value $psp_vat_number of the record at column VAT_NUMBER of the table PSP retrived by the query psp on db nodo_cfg under macro NewMod3
+    #And checks the value $psp_vat_number of the record at column VAT_NUMBER of the table PSP retrived by the query psp on db nodo_cfg under macro NewMod3
 
 
   Scenario: Execute second verifyPaymentNotice request
