@@ -42,11 +42,11 @@ Feature: flow checks for verificaBollettino - EC new
       <soapenv:Header/>
       <soapenv:Body>
       <nod:verificaBollettinoReq>
-      <idPSP>POSTE3</idPSP>
-      <idBrokerPSP>BANCOPOSTA</idBrokerPSP>
-      <idChannel>POSTE3</idChannel>
+        <idPSP>#pspPoste#</idPSP>
+        <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+        <idChannel>#channelPoste#</idChannel>
       <password>pwdpwdpwd</password>
-      <ccPost>#codicePA#</ccPost>
+      <ccPost>#ccPoste#</ccPost>
       <noticeNumber>#notice_number#</noticeNumber>
       </nod:verificaBollettinoReq>
       </soapenv:Body>
