@@ -6,8 +6,7 @@ Feature: process tests for generazioneRicevute
   # Verify phase
   Scenario: Execute verifyPaymentNotice (Phase 1)
     Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
-
-
+    And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -19,10 +18,8 @@ Feature: process tests for generazioneRicevute
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
-
       <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-      <noticeNumber>#notice_number_old#</noticeNumber>
-
+      <noticeNumber>$1noticeNumber</noticeNumber>
       </qrCode>
       </nod:verifyPaymentNoticeReq>
       </soapenv:Body>
@@ -45,7 +42,6 @@ Feature: process tests for generazioneRicevute
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
-
       <fiscalCode>#creditor_institution_code_old#</fiscalCode>
       <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
@@ -53,7 +49,6 @@ Feature: process tests for generazioneRicevute
       <amount>10.00</amount>
       <dueDate>2021-12-31</dueDate>
       <paymentNote>causale</paymentNote>
-
       </nod:activatePaymentNoticeReq>
       </soapenv:Body>
       </soapenv:Envelope>
@@ -157,9 +152,7 @@ Feature: process tests for generazioneRicevute
       <nod:sendPaymentOutcomeReq>
       <idPSP>#psp#</idPSP>
       <idBrokerPSP>#psp#</idBrokerPSP>
-
       <idChannel>#canale#</idChannel>
-
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
       <outcome>OK</outcome>
