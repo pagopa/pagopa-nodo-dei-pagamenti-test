@@ -118,7 +118,8 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             """
         And wait 62 seconds for expiration
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
+        Then check outcome is KO of activatePaymentNotice response
+        And check faultCode is PPT_IBAN_ACCREDITO of activatePaymentNotice response
         And restore initial configurations
 
 
