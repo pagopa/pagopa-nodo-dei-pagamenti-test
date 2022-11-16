@@ -6,7 +6,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
 
     # verificaBollettinoReq phase
     Scenario: Execute verificaBollettino request
-        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
         And nodo-dei-pagamenti has config parameter verificabollettino.validity.minutes set to 1
         And initial XML paaVerificaRPT
@@ -51,11 +51,9 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:verificaBollettinoReq>
-
-                    <idPSP>#psp#</idPSP>
-                    <idBrokerPSP>#psp#</idBrokerPSP>
-                    <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-
+                    <idPSP>#pspPoste#</idPSP>
+                    <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+                    <idChannel>#channelPoste#</idChannel>
                     <password>pwdpwdpwd</password>
                     <ccPost>#ccPoste#</ccPost>
                     <noticeNumber>$1noticeNumber</noticeNumber>
@@ -105,11 +103,9 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:activatePaymentNoticeReq>
-
-                    <idPSP>#psp#</idPSP>
-                    <idBrokerPSP>#psp#</idBrokerPSP>
-                    <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-
+                    <idPSP>#pspPoste#</idPSP>
+                    <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+                    <idChannel>#channelPoste#</idChannel>
                     <password>pwdpwdpwd</password>
                     <qrCode>
                         <fiscalCode>#creditor_institution_code_old#</fiscalCode>
@@ -122,7 +118,8 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             """
         And wait 62 seconds for expiration
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
+        Then check outcome is KO of activatePaymentNotice response
+        And check faultCode is PPT_IBAN_ACCREDITO of activatePaymentNotice response
         And restore initial configurations
 
 
@@ -185,9 +182,9 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>BP</pay_i:tipoVersamento>
+            <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>b194ac590a6848f7923c70b05869774c</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -220,7 +217,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                     <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
+                    <codiceContestoPagamento>b194ac590a6848f7923c70b05869774c</codiceContestoPagamento>
                 </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -236,7 +233,9 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
+        Then check esito is KO of nodoInviaRPT response
+        And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
+        And replace iuv content with $1iuv content
         #And check redirect is 0 of nodoInviaRPT response
         #And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
         And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -250,7 +249,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
         And verify 0 record for the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         #And checks the value None of the record at column ID of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
         And verify 0 record for the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
-        And checks the value RPT_RICEVUTA_NODO, RPT_RIFIUTATA_NODO of the record at column STATUS of the table STATI_RPT retrived by the query retry_pa_invia_rpt on db nodo_online under macro NewMod3
+        And checks the value RPT_RICEVUTA_NODO, RPT_RIFIUTATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
         
 

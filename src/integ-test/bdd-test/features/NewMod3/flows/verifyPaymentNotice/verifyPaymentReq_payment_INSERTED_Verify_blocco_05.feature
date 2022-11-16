@@ -157,9 +157,9 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
          <soapenv:Body>
          <ws:nodoInviaRPT>
          <password>pwdpwdpwd</password>
-         <identificativoPSP>#psp#</identificativoPSP>
-         <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-         <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+         <identificativoPSP>15376371009</identificativoPSP>
+         <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
+         <identificativoCanale>15376371009_01</identificativoCanale>
          <tipoFirma></tipoFirma>
          <rpt>$rptAttachment</rpt>
          </ws:nodoInviaRPT>
@@ -178,7 +178,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
 
 
    # Verify Phase 2
-   @fix
+   @runnable
    Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1
       Given the Execute mod3CancelV1 poller scenario executed successfully
       When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti

@@ -2,6 +2,9 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
 
   Background:
     Given systems up
+
+   Scenario: Executed verifyPaymentNotice request
+    Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -14,24 +17,20 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
                <password>pwdpwdpwd</password>
                <qrCode>
                   <fiscalCode>#creditor_institution_code#</fiscalCode>
-                  <noticeNumber>#notice_number#</noticeNumber>
+                  <noticeNumber>$1noticeNumber</noticeNumber>
                </qrCode>
             </nod:verifyPaymentNoticeReq>
          </soapenv:Body>
       </soapenv:Envelope>
       """
 	 And EC new version
-
-
-  # Verify Phase 1
-  Scenario: Execute verifyPaymentNotice request
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
     
 
   # Activate Phase
   Scenario: Execute activatePaymentNotice request
-    Given the Execute verifyPaymentNotice request scenario executed successfully
+    Given the Executed verifyPaymentNotice request scenario executed successfully
     And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -47,15 +46,15 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
                   <fiscalCode>$verifyPaymentNotice.fiscalCode</fiscalCode>
                   <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                </qrCode>
-               <amount>120.00</amount>
+               <expirationTime>6000</expirationTime>
+               <amount>10.00</amount>
+               <paymentNote>responseFull</paymentNote>
             </nod:activatePaymentNoticeReq>
          </soapenv:Body>
       </soapenv:Envelope>
       """
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-    And paymentToken exists of activatePaymentNotice response
-    And paymentToken length is less than 36 of activatePaymentNotice response
 
 	
   # Payment Outcome Phase outcome OK
@@ -101,20 +100,22 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
    #  When psp sends SOAP sendPaymentOutcomeReq to nodo-dei-pagamenti using the token of the activate phase, and with request field <outcome> = OK
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
+    And wait 30 seconds for expiration
 
 
-  Scenario: Execute paSendRT request
-    Given the Execute sendPaymentOutcome request scenario executed successfully
-    Then check EC receives paSendRT properly
-  """
-    $verifyPaymentNotice.noticeNumber
-  """
+
+#   Scenario: Execute paSendRT request
+#     Given the Execute sendPaymentOutcome request scenario executed successfully
+#     Then check EC receives paSendRT properly
+#   """
+#     $verifyPaymentNotice.noticeNumber
+#   """
 
 
   # Verify Phase 2
   @runnable
-  Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1, few seconds after the Payment Outcome Phase (e.g. 30s)
-    Given the Execute paSendRT request scenario executed successfully
+  Scenario: Execute verifyPaymentNotice with the same request as Verify Phase 1, few seconds after the Payment Outcome Phase (e.g. 30s)
+    Given the Execute sendPaymentOutcome request scenario executed successfully
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_PAGAMENTO_DUPLICATO of verifyPaymentNotice response

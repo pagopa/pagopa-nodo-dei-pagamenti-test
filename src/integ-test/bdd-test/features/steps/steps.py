@@ -1148,11 +1148,12 @@ def step_impl(context, mock, destination, primitive):
         response_status_code = utils.save_soap_action(utils.get_soap_mock_psp(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
 
-    else:
+    elif mock == 'PSP2':
         print(utils.get_soap_mock_psp2(context))
         response_status_code = utils.save_soap_action(utils.get_soap_mock_psp2(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
-
+    else:
+        assert False, "Invalid mock"
     assert response_status_code == 200
 
 
@@ -1676,7 +1677,6 @@ def step_impl(context, seconds):
     #  And field VALID_TO set to current time + <seconds> seconds in NODO_ONLINE.IDEMPOTENCY_CACHE table for
     #  sendPaymentOutcome record
     pass
-
 
 @step(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, value, column, query_name, table_name, db_name, name_macro):
