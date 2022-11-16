@@ -219,45 +219,6 @@ Feature: flux tests for closePaymentV2
                 "timestampOperation": "2012-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
                     "key": "#psp_transaction_id#"
-                },
-                "additionalPMInfo": {
-                    "origin": "",
-                    "user": {
-                        "fullName": "John Doe",
-                        "type": "F",
-                        "fiscalCode": "JHNDOE00A01F205N",
-                        "notificationEmail": "john.doe@mail.it",
-                        "userId": 1234,
-                        "userStatus": 11,
-                        "userStatusDescription": "REGISTERED_SPID"
-                    },
-                    "walletItem": {
-                        "idWallet": 1234,
-                        "walletType": "CARD",
-                        "enableableFunctions": [],
-                        "pagoPa": false,
-                        "onboardingChannel": "",
-                        "favourite": false,
-                        "createDate": "",
-                        "info": {
-                            "type": "",
-                            "blurredNumber": "",
-                            "holder": "Mario Rossi",
-                            "expireMonth": "",
-                            "expireYear": "",
-                            "brand": "",
-                            "issuerAbi": "",
-                            "issuerName": "Intesa",
-                            "label": "********234"
-                        },
-                        "authRequest": {
-                            "authOutcome": "KO",
-                            "guid": "77e1c83b-7bb0-437b-bc50-a7a58e5660ac",
-                            "correlationId": "f864d987-3ae2-44a3-bdcb-075554495841",
-                            "error": "Not Authorized",
-                            "auth_code": "99"
-                        }
-                    }
                 }
             }
             """
@@ -281,45 +242,6 @@ Feature: flux tests for closePaymentV2
                 "timestampOperation": "2012-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
                     "key": "#psp_transaction_id#"
-                },
-                "additionalPMInfo": {
-                    "origin": "",
-                    "user": {
-                        "fullName": "John Doe",
-                        "type": "F",
-                        "fiscalCode": "JHNDOE00A01F205N",
-                        "notificationEmail": "john.doe@mail.it",
-                        "userId": 1234,
-                        "userStatus": 11,
-                        "userStatusDescription": "REGISTERED_SPID"
-                    },
-                    "walletItem": {
-                        "idWallet": 1234,
-                        "walletType": "CARD",
-                        "enableableFunctions": [],
-                        "pagoPa": false,
-                        "onboardingChannel": "",
-                        "favourite": false,
-                        "createDate": "",
-                        "info": {
-                            "type": "",
-                            "blurredNumber": "",
-                            "holder": "Mario Rossi",
-                            "expireMonth": "",
-                            "expireYear": "",
-                            "brand": "",
-                            "issuerAbi": "",
-                            "issuerName": "Intesa",
-                            "label": "********234"
-                        },
-                        "authRequest": {
-                            "authOutcome": "KO",
-                            "guid": "77e1c83b-7bb0-437b-bc50-a7a58e5660ac",
-                            "correlationId": "f864d987-3ae2-44a3-bdcb-075554495841",
-                            "error": "Not Authorized",
-                            "auth_code": "99"
-                        }
-                    }
                 }
             }
             """
@@ -1291,7 +1213,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    
+
     Scenario: FLUSSO_CP_05 (part 3)
         Given the FLUSSO_CP_05 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1567,7 +1489,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    
+
     Scenario: FLUSSO_CP_06 (part 3)
         Given the FLUSSO_CP_06 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -2127,7 +2049,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    
+
     Scenario: FLUSSO_CP_09 (part 3)
         Given the FLUSSO_CP_09 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -2521,7 +2443,7 @@ Feature: flux tests for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
         And check description is Outcome already acquired of v2/closepayment response
-    
+
     Scenario: FLUSSO_CP_11 (part 4)
         Given the FLUSSO_CP_11 (part 3) scenario executed successfully
         And wait 5 seconds for expiration
@@ -2921,7 +2843,7 @@ Feature: flux tests for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
         And check description is Outcome already acquired of v2/closepayment response
-    
+
     Scenario: FLUSSO_CP_13 (part 4)
         Given the FLUSSO_CP_13 (part 3) scenario executed successfully
         And wait 5 seconds for expiration
@@ -3394,7 +3316,7 @@ Feature: flux tests for closePaymentV2
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
         And check description is Esito discorde of sendPaymentOutcome response
-    
+
     Scenario: FLUSSO_CP_15 (part 4)
         Given the FLUSSO_CP_15 (part 3) scenario executed successfully
         And outcome with OK in sendPaymentOutcome
@@ -3844,7 +3766,7 @@ Feature: flux tests for closePaymentV2
         And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
-    
+
     Scenario: FLUSSO_CP_16 (part 4)
         Given the FLUSSO_CP_16 (part 3) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -3867,7 +3789,7 @@ Feature: flux tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    
+
     Scenario: FLUSSO_CP_17 (part 2)
         Given the FLUSSO_CP_17 (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -4389,7 +4311,7 @@ Feature: flux tests for closePaymentV2
         And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
-    
+
     Scenario: FLUSSO_CP_18 (part 4)
         Given the FLUSSO_CP_18 (part 3) scenario executed successfully
         And execution query transactionid to get value on the table PM_METADATA, with the columns * under macro NewMod1 with db name nodo_online
@@ -4789,7 +4711,6 @@ Feature: flux tests for closePaymentV2
         And fee with None in v2/closepayment
         And timestampOperation with None in v2/closepayment
         And additionalPaymentInformations with None in v2/closepayment
-        And additionalPMInfo with None in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response

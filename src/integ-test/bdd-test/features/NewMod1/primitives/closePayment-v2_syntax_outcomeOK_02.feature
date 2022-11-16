@@ -22,7 +22,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "key": "#psp_transaction_id#"
                 },
-                "additionalPMInfo": {
+                "transactionDetails": {
                     "origin": "",
                     "user": {
                         "fullName": "John Doe",
@@ -107,8 +107,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | timestampOperation            | 2012-04-23T18:25                                                                                                                                                                                                                                                 | SIN_CPV2_34   |
             | additionalPaymentInformations | None                                                                                                                                                                                                                                                             | SIN_CPV2_35   |
             | additionalPaymentInformations | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_36   |
-            | additionalPMInfo              | None                                                                                                                                                                                                                                                             | PAG-2120      |
-            | additionalPMInfo              | Empty                                                                                                                                                                                                                                                            | PAG-2120      |
+
 
     # syntax check - Invalid field - payment method
     Scenario Outline: Check syntax error on invalid body element value - payment method
@@ -300,45 +299,6 @@ Feature: syntax checks for closePaymentV2 outcome OK
                     "transactionId": "11435230",
                     "outcomePaymentGateway": "EFF",
                     "authorizationCode": "resOK"
-                },
-                "additionalPMInfo": {
-                    "origin": "",
-                    "user": {
-                        "fullName": "John Doe",
-                        "type": "F",
-                        "fiscalCode": "JHNDOE00A01F205N",
-                        "notificationEmail": "john.doe@mail.it",
-                        "userId": 1234,
-                        "userStatus": 11,
-                        "userStatusDescription": "REGISTERED_SPID"
-                    },
-                    "walletItem": {
-                        "idWallet": 1234,
-                        "walletType": "CARD",
-                        "enableableFunctions": [],
-                        "pagoPa": false,
-                        "onboardingChannel": "",
-                        "favourite": false,
-                        "createDate": "",
-                        "info": {
-                            "type": "",
-                            "blurredNumber": "",
-                            "holder": "Mario Rossi",
-                            "expireMonth": "",
-                            "expireYear": "",
-                            "brand": "",
-                            "issuerAbi": "",
-                            "issuerName": "Intesa",
-                            "label": "********234"
-                        },
-                        "authRequest": {
-                            "authOutcome": "KO",
-                            "guid": "77e1c83b-7bb0-437b-bc50-a7a58e5660ac",
-                            "correlationId": "f864d987-3ae2-44a3-bdcb-075554495841",
-                            "error": "Not Authorized",
-                            "auth_code": "99"
-                        }
-                    }
                 }
             }
             """
@@ -375,45 +335,6 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
                     "transactionId": "#transaction_id#"
-                },
-                "additionalPMInfo": {
-                    "origin": "",
-                    "user": {
-                        "fullName": "John Doe",
-                        "type": "F",
-                        "fiscalCode": "JHNDOE00A01F205N",
-                        "notificationEmail": "john.doe@mail.it",
-                        "userId": 1234,
-                        "userStatus": 11,
-                        "userStatusDescription": "REGISTERED_SPID"
-                    },
-                    "walletItem": {
-                        "idWallet": 1234,
-                        "walletType": "CARD",
-                        "enableableFunctions": [],
-                        "pagoPa": false,
-                        "onboardingChannel": "",
-                        "favourite": false,
-                        "createDate": "",
-                        "info": {
-                            "type": "",
-                            "blurredNumber": "",
-                            "holder": "Mario Rossi",
-                            "expireMonth": "",
-                            "expireYear": "",
-                            "brand": "",
-                            "issuerAbi": "",
-                            "issuerName": "Intesa",
-                            "label": "********234"
-                        },
-                        "authRequest": {
-                            "authOutcome": "KO",
-                            "guid": "77e1c83b-7bb0-437b-bc50-a7a58e5660ac",
-                            "correlationId": "f864d987-3ae2-44a3-bdcb-075554495841",
-                            "error": "Not Authorized",
-                            "auth_code": "99"
-                        }
-                    }
                 }
             }
             """
@@ -446,6 +367,9 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | fee                | 2.0                           | SIN_CPV2_30   |
             | fee                | 2                             | SIN_CPV2_30.2 |
             | timestampOperation | 2033-04-23T18:25:43.372+01:00 | SIN_CPV2_34.1 |
+            | transactionDetails | None                          | PAG-2120      |
+            | transactionDetails | Empty                         | PAG-2120      |
+
 
 
     # syntax check - different keys [SIN_CPV2_38.1]
@@ -484,45 +408,6 @@ Feature: syntax checks for closePaymentV2 outcome OK
                     "tag": "resOK",
                     "key1": "EFF",
                     "prova": "resOK"
-                },
-                "additionalPMInfo": {
-                    "origin": "",
-                    "user": {
-                        "fullName": "John Doe",
-                        "type": "F",
-                        "fiscalCode": "JHNDOE00A01F205N",
-                        "notificationEmail": "john.doe@mail.it",
-                        "userId": 1234,
-                        "userStatus": 11,
-                        "userStatusDescription": "REGISTERED_SPID"
-                    },
-                    "walletItem": {
-                        "idWallet": 1234,
-                        "walletType": "CARD",
-                        "enableableFunctions": [],
-                        "pagoPa": false,
-                        "onboardingChannel": "",
-                        "favourite": false,
-                        "createDate": "",
-                        "info": {
-                            "type": "",
-                            "blurredNumber": "",
-                            "holder": "Mario Rossi",
-                            "expireMonth": "",
-                            "expireYear": "",
-                            "brand": "",
-                            "issuerAbi": "",
-                            "issuerName": "Intesa",
-                            "label": "********234"
-                        },
-                        "authRequest": {
-                            "authOutcome": "KO",
-                            "guid": "77e1c83b-7bb0-437b-bc50-a7a58e5660ac",
-                            "correlationId": "f864d987-3ae2-44a3-bdcb-075554495841",
-                            "error": "Not Authorized",
-                            "auth_code": "99"
-                        }
-                    }
                 }
             }
             """
