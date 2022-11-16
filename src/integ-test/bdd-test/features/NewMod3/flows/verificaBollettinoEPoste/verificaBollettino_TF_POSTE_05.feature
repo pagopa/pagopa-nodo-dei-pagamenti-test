@@ -6,7 +6,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
 
     # verificaBollettinoReq phase
     Scenario: Execute verificaBollettino request
-        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
         And nodo-dei-pagamenti has config parameter verificabollettino.validity.minutes set to 1
         And initial XML paaVerificaRPT
@@ -51,11 +51,9 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:verificaBollettinoReq>
-
-                    <idPSP>#psp#</idPSP>
-                    <idBrokerPSP>#psp#</idBrokerPSP>
-                    <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-
+                    <idPSP>#pspPoste#</idPSP>
+                    <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+                    <idChannel>#channelPoste#</idChannel>
                     <password>pwdpwdpwd</password>
                     <ccPost>#ccPoste#</ccPost>
                     <noticeNumber>$1noticeNumber</noticeNumber>
@@ -105,11 +103,9 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:activatePaymentNoticeReq>
-
-                    <idPSP>#psp#</idPSP>
-                    <idBrokerPSP>#psp#</idBrokerPSP>
-                    <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-
+                    <idPSP>#pspPoste#</idPSP>
+                    <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+                    <idChannel>#channelPoste#</idChannel>
                     <password>pwdpwdpwd</password>
                     <qrCode>
                         <fiscalCode>#creditor_institution_code_old#</fiscalCode>
@@ -185,7 +181,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>BP</pay_i:tipoVersamento>
+            <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
