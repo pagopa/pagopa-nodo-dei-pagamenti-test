@@ -719,6 +719,8 @@ Feature: flow tests for sendPaymentResultV2
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
 
+    # aggiungere DB check
+
     # FLUSSO_SPR_02_IO
 
     Scenario: FLUSSO_SPR_02_IO (part 1)
@@ -891,6 +893,8 @@ Feature: flow tests for sendPaymentResultV2
         # POSITION_ACTIVATE
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+    # aggiungere DB check
 
     # FLUSSO_SPR_03_IO
 
@@ -1164,6 +1168,8 @@ Feature: flow tests for sendPaymentResultV2
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
 
+    # aggiungere DB check
+
     # FLUSSO_SPR_04_IO
 
     Scenario: FLUSSO_SPR_04_IO
@@ -1258,6 +1264,8 @@ Feature: flow tests for sendPaymentResultV2
         # POSITION_ACTIVATE
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+    # aggiungere DB check
 
     # FLUSSO_SPR_05_IO
 
@@ -1354,6 +1362,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
+    # aggiungere DB check
+
     # FLUSSO_SPR_06_IO
 
     Scenario: FLUSSO_SPR_06_IO (part 1)
@@ -1411,6 +1421,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value NotNone of the record at column FK_POSITION_SERVICE of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+    # aggiungere DB check
 
     # FLUSSO_SPR_07_IO
 
@@ -1470,6 +1482,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value NotNone of the record at column FK_POSITION_SERVICE of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+    # aggiungere DB check
 
     # FLUSSO_SPR_08_IO
 
@@ -1746,6 +1760,8 @@ Feature: flow tests for sendPaymentResultV2
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
 
+    # aggiungere DB check
+
     # FLUSSO_SPR_09_IO
 
     Scenario: FLUSSO_SPR_09_IO (part 1)
@@ -2020,6 +2036,8 @@ Feature: flow tests for sendPaymentResultV2
         And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
+
+    # aggiungere DB check
 
     # FLUSSO_SPR_10_IO
 
@@ -2296,6 +2314,8 @@ Feature: flow tests for sendPaymentResultV2
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
 
+    # aggiungere DB check
+
     # FLUSSO_SPR_11_IO
 
     Scenario: FLUSSO_SPR_11_IO (part 1)
@@ -2571,6 +2591,8 @@ Feature: flow tests for sendPaymentResultV2
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
 
+    # aggiungere DB check
+
     # T_SPR_V2_01
 
     Scenario: T_SPR_V2_01
@@ -2587,7 +2609,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        # verificare che la sendpaymentresultv2 non venga inviata
+        # aggiungere DB check: verificare che la sendpaymentresultv2 non venga inviata
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -2629,7 +2651,7 @@ Feature: flow tests for sendPaymentResultV2
         And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-        # verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
+        # aggiungere DB check: verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -2671,7 +2693,7 @@ Feature: flow tests for sendPaymentResultV2
         And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-        # verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
+        # aggiungere DB check: verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -2706,7 +2728,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        # verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
+        # aggiungere DB check: verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_REFUSED,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -2742,7 +2764,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-        # verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
+        # aggiungere DB check: verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
 
         # POSITION_PAYMENT_STATUS
         And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -2995,6 +3017,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
+    # aggiungere DB check
+
     # T_SPR_V2_07
 
     Scenario: T_SPR_V2_07 (part 1)
@@ -3019,7 +3043,7 @@ Feature: flow tests for sendPaymentResultV2
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         And wait 3 seconds for expiration
-        # verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
+        # aggiungere DB check: verificare che la sendpaymentresultv2 venga inviata correttamente e che la request contenga i campi attesi
         And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
 
         # POSITION_PAYMENT_STATUS
@@ -3062,7 +3086,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Unacceptable outcome when token has expired of v2/closepayment response
-        # verificare che la sendpaymentresultv2 non venga inviata
+        # aggiungere DB check: verificare che la sendpaymentresultv2 non venga inviata
         And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
 
         # POSITION_PAYMENT_STATUS
@@ -3126,6 +3150,8 @@ Feature: flow tests for sendPaymentResultV2
         # POSITION_RETRY_SENDPAYMENTRESULT
         And verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
 
+    # aggiungere DB check
+
     # T_SPR_V2_10
 
     Scenario: T_SPR_V2_10 (part 1)
@@ -3178,6 +3204,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value sendPaymentOutcome of the record at column INSERTED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
         And checks the value sendPaymentResult-v2 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
         And checks the value v2 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
+
+    # aggiungere DB check
 
     # T_SPR_V2_11
 
@@ -3232,6 +3260,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value sendPaymentResult-v2 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
         And checks the value v2 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
 
+    # aggiungere DB check
+
     # T_SPR_V2_12
 
     Scenario: T_SPR_V2_12 (part 1)
@@ -3285,6 +3315,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value sendPaymentResult-v2 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
         And checks the value v2 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
 
+    # aggiungere DB check
+
     # T_SPR_V2_13
 
     Scenario: T_SPR_V2_13 (part 1)
@@ -3337,6 +3369,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value sendPaymentOutcome of the record at column INSERTED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
         And checks the value sendPaymentResult-v2 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
         And checks the value v2 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
+
+    # aggiungere DB check
 
     # T_SPR_V2_14
 
@@ -3398,3 +3432,5 @@ Feature: flow tests for sendPaymentResultV2
 
         # POSITION_RETRY_SENDPAYMENTRESULT
         And verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under
+
+# aggiungere DB check
