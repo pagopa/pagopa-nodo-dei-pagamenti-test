@@ -218,7 +218,7 @@ Feature: process tests for generazioneRicevute
     And checks the value $officeName of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
     And checks the value $debtorID of the record at column DEBTOR_ID of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
 
-    And checks the value $metadata of the record at column METADATA of the table POSITION_PAYMENT_PLAN retrived by the query position_service on db nodo_online under macro NewMod3
+    #And checks the value $metadata of the record at column METADATA of the table POSITION_PAYMENT_PLAN retrived by the query position_service on db nodo_online under macro NewMod3
 
     And checks the value $psp_company_name of the record at column RAGIONE_SOCIALE of the table POSITION_SERVICE retrived by the query psp on db nodo_online under macro NewMod3
     And checks the value $psp_fiscal_code of the record at column CODICE_FISCALE of the table POSITION_SERVICE retrived by the query psp on db nodo_online under macro NewMod3
