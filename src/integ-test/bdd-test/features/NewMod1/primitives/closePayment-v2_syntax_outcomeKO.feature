@@ -22,7 +22,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
                 "additionalPaymentInformations": {
                     "key": "#psp_transaction_id#"
                 },
-                "additionalPMInfo": {
+                "transactionDetails": {
                     "user": {
                         "fullName": "John Doe",
                         "type": "F",
@@ -199,8 +199,8 @@ Feature: syntax checks for closePaymentV2 outcome KO
             | timestampOperation            | 2033-04-23T18:25:43.372+01:00                                                                                                                                                                                                                                    | SIN_CPV2_34.3 |
             | additionalPaymentInformations | None                                                                                                                                                                                                                                                             | SIN_CPV2_35   |
             | additionalPaymentInformations | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_36   |
-            | additionalPMInfo              | None                                                                                                                                                                                                                                                             | PAG-2120      |
-            | additionalPMInfo              | Empty                                                                                                                                                                                                                                                            | PAG-2120      |
+            | transactionDetails              | None                                                                                                                                                                                                                                                             | PAG-2120      |
+            | transactionDetails              | Empty                                                                                                                                                                                                                                                            | PAG-2120      |
             | key                           | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_37   |
             | key                           | Valore                                                                                                                                                                                                                                                           | SIN_CPV2_40   |
 
@@ -250,7 +250,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
                     "outcomePaymentGateway": "EFF",
                     "authorizationCode": "resOK"
                 },
-                "additionalPMInfo": {
+                "transactionDetails": {
                     "user": {
                         "fullName": "John Doe",
                         "type": "F",
@@ -307,7 +307,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
                     "key1": "EFF",
                     "prova": "resOK"
                 },
-                "additionalPMInfo": {
+                "transactionDetails": {
                     "user": {
                         "fullName": "John Doe",
                         "type": "F",
@@ -354,7 +354,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
                 "additionalPaymentInformations": {
                     "transactionId": "#transaction_id#"
                 },
-                "additionalPMInfo": {
+                "transactionDetails": {
                     "user": {
                         "fullName": "John Doe",
                         "type": "F",

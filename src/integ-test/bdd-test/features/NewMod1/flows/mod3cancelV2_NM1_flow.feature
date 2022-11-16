@@ -134,7 +134,7 @@ Feature: flow checks for mod3CancelV2 in NM1
                 "additionalPaymentInformations": {
                     "key": "12345678"
                 },
-                "additionalPMInfo": {
+                "transactionDetails": {
                     "origin": "",
                     "user": {
                         "fullName": "John Doe",

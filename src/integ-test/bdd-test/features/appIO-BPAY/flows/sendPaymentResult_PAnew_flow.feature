@@ -252,6 +252,21 @@ Feature: flow checks for sendPaymentResult
       And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
    @skip
+   Scenario: pspNotifyPayment KO
+      Given initial XML pspNotifyPayment
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+         <soapenv:Header/>
+         <soapenv:Body>
+         <pfn:pspNotifyPaymentRes>
+         <outcome>KO</outcome>
+         </pfn:pspNotifyPaymentRes>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
+      And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+
+   @skip
    Scenario: pspNotifyPayment irraggiungibile
       Given initial XML pspNotifyPayment
          """
@@ -406,8 +421,8 @@ Feature: flow checks for sendPaymentResult
 
    Scenario: T_SPR_04 (closePayment)
       Given the T_SPR_04 (informazioniPagamento) scenario executed successfully
+      And the pspNotifyPayment KO scenario executed successfully
       And the closePayment scenario executed successfully
-      And outcome with KO in v1/closepayment
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
@@ -430,7 +445,7 @@ Feature: flow checks for sendPaymentResult
 
    # T_SPR_05
    Scenario: T_SPR_05 (activateIOPayment)
-      Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+      Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 1000
       And wait 5 seconds for expiration
       And the activateIOPayment scenario executed successfully
       And expirationTime with 10000 in activateIOPayment
@@ -451,13 +466,13 @@ Feature: flow checks for sendPaymentResult
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-      And wait 5 seconds for expiration
 
    Scenario: T_SPR_05 (mod3CancelV2)
       Given the T_SPR_05 (closePayment) scenario executed successfully
       When job mod3CancelV2 triggered after 20 seconds
-      Then nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
+      Then verify the HTTP status code of mod3CancelV2 response is 200
       And wait 5 seconds for expiration
+      And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
       And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
       And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
@@ -476,7 +491,7 @@ Feature: flow checks for sendPaymentResult
 
    # T_SPR_06
    Scenario: T_SPR_06 (activateIOPayment)
-      Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+      Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 1000
       And wait 5 seconds for expiration
       And the activateIOPayment scenario executed successfully
       And expirationTime with 10000 in activateIOPayment
@@ -502,7 +517,7 @@ Feature: flow checks for sendPaymentResult
    Scenario: T_SPR_06 (mod3CancelV2)
       Given the T_SPR_06 (closePayment) scenario executed successfully
       When job mod3CancelV2 triggered after 5 seconds
-      Then nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
+      Then nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
       And wait 5 seconds for expiration
       And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
@@ -522,7 +537,7 @@ Feature: flow checks for sendPaymentResult
 
    # T_SPR_07
    Scenario: T_SPR_07 (activateIOPayment)
-      Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+      Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 1000
       And wait 5 seconds for expiration
       And the activateIOPayment scenario executed successfully
       And expirationTime with 10000 in activateIOPayment
@@ -548,7 +563,7 @@ Feature: flow checks for sendPaymentResult
    Scenario: T_SPR_07 (mod3CancelV2)
       Given the T_SPR_07 (closePayment) scenario executed successfully
       When job mod3CancelV2 triggered after 5 seconds
-      Then nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
+      Then nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
       And wait 5 seconds for expiration
       And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_SEND_ERROR,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
@@ -568,7 +583,7 @@ Feature: flow checks for sendPaymentResult
 
    # T_SPR_08
    Scenario: T_SPR_08 (activateIOPayment)
-      Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 1000
+      Given nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 1000
       And wait 5 seconds for expiration
       And the activateIOPayment scenario executed successfully
       And expirationTime with 2000 in activateIOPayment
@@ -594,7 +609,7 @@ Feature: flow checks for sendPaymentResult
       Then verify the HTTP status code of v1/closepayment response is 400
       And check esito is KO of v1/closepayment response
       And check descrizione is Esito non accettabile a token scaduto
-      And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 3600000
+      And nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 3600000
       And wait 5 seconds for expiration
       And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
@@ -641,6 +656,7 @@ Feature: flow checks for sendPaymentResult
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is KO of v1/closepayment response
+      #aggiungi trigger del job retry spr al pm
 #    And wait 70 seconds for expiration
 #    And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
 #    And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
@@ -662,13 +678,14 @@ Feature: flow checks for sendPaymentResult
       Given the T_SPR_10 (activateIOPayment) scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
-   @wip
+   
    Scenario: T_SPR_10 (closePayment)
       Given the T_SPR_10 (informazioniPagamento) scenario executed successfully
       And the closePayment scenario executed successfully
       And pspTransactionId with resSPR_400 in v1/closepayment
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 400
+      #aggiungi trigger del job retry spr al pm
 #       And wait 70 seconds for expiration
 #       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
 #       And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO

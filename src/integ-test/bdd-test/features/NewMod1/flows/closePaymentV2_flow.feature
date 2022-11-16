@@ -130,7 +130,7 @@ Feature: flow checks for closePaymentV2
             "additionalPaymentInformations": {
                "key": "#psp_transaction_id#"
             },
-            "additionalPMInfo": {
+            "transactionDetails": {
                "user": {
                   "fullName": "John Doe",
                   "type": "F",

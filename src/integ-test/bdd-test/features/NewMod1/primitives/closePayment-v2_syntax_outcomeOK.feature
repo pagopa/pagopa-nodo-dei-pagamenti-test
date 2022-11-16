@@ -22,7 +22,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "key": "#psp_transaction_id#"
                 },
-                "additionalPMInfo": {
+                "transactionDetails": {
                     "user": {
                         "fullName": "John Doe",
                         "type": "F",
@@ -79,8 +79,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | timestampOperation            | 2012-04-23T18:25                                                                                                                                                                                                                                                 | SIN_CPV2_34   |
             | additionalPaymentInformations | None                                                                                                                                                                                                                                                             | SIN_CPV2_35   |
             | additionalPaymentInformations | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_36   |
-            | additionalPMInfo              | None                                                                                                                                                                                                                                                             | PAG-2120      |
-            | additionalPMInfo              | Empty                                                                                                                                                                                                                                                            | PAG-2120      |
+            | transactionDetails              | None                                                                                                                                                                                                                                                             | PAG-2120      |
+            | transactionDetails              | Empty                                                                                                                                                                                                                                                            | PAG-2120      |
 
     # syntax check - Invalid field - payment method
     Scenario Outline: Check syntax error on invalid body element value - payment method
@@ -273,7 +273,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                     "outcomePaymentGateway": "EFF",
                     "authorizationCode": "resOK"
                 },
-                "additionalPMInfo": {
+                "transactionDetails": {
                     "user": {
                         "fullName": "John Doe",
                         "type": "F",
@@ -320,7 +320,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "transactionId": "#transaction_id#"
                 },
-                "additionalPMInfo": {
+                "transactionDetails": {
                     "user": {
                         "fullName": "John Doe",
                         "type": "F",
@@ -401,7 +401,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                     "key1": "EFF",
                     "prova": "resOK"
                 },
-                "additionalPMInfo": {
+                "transactionDetails": {
                     "user": {
                         "fullName": "John Doe",
                         "type": "F",

@@ -22,7 +22,7 @@ Feature: semantic checks for closePaymentV2
                 "additionalPaymentInformations": {
                     "key": "#psp_transaction_id#"
                 },
-                "additionalPMInfo": {
+                "transactionDetails": {
                     "user": {
                         "fullName": "John Doe",
                         "type": "F",
@@ -307,7 +307,7 @@ Feature: semantic checks for closePaymentV2
                     "outcomePaymentGateway": "EFF",
                     "authorizationCode": "resOK"
                 },
-                "additionalPMInfo": {
+                "transactionDetails": {
                     "user": {
                         "fullName": "John Doe",
                         "type": "F",
@@ -357,7 +357,7 @@ Feature: semantic checks for closePaymentV2
                     "outcomePaymentGateway": "EFF",
                     "authorizationCode": "resOK"
                 },
-                "additionalPMInfo": {
+                "transactionDetails": {
                     "user": {
                         "fullName": "John Doe",
                         "type": "F",

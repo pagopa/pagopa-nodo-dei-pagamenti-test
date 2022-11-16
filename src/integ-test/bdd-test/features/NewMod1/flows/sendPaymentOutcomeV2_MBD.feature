@@ -121,7 +121,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
             "additionalPaymentInformations": {
                "key": "12345678"
             },
-            "additionalPMInfo": {
+            "transactionDetails": {
                "origin": "",
                "user": {
                   "fullName": "John Doe",
