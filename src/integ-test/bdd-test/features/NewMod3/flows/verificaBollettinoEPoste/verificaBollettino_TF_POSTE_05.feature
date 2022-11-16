@@ -235,6 +235,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
+        And replace iuv content with $1iuv content
         #And check redirect is 0 of nodoInviaRPT response
         #And checks the value None of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
         And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
