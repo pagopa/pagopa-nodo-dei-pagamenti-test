@@ -457,12 +457,11 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 200
         And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @wip
+
     Scenario: FLUSSO_SPR_01_IO (part 2)
         Given the FLUSSO_SPR_01_IO (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -733,7 +732,6 @@ Feature: flow tests for sendPaymentResultV2
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
         And the pspNotifyPaymentV2 malformata response scenario executed successfully
-        # response sprv2 200
         And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -907,7 +905,6 @@ Feature: flow tests for sendPaymentResultV2
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
         And the pspNotifyPaymentV2 malformata response scenario executed successfully
-        # response sprv2 200
         And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -1178,7 +1175,6 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 200
         And the pspNotifyPaymentV2 KO response scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -1274,7 +1270,6 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 200
         And the pspNotifyPaymentV2 irraggiungibile response scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -1376,7 +1371,6 @@ Feature: flow tests for sendPaymentResultV2
 
     Scenario: FLUSSO_SPR_06_IO (part 2)
         Given the FLUSSO_SPR_06_IO (part 1) scenario executed successfully
-        # response sprv2 200
         And the pspNotifyPaymentV2 malformata response scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -1435,7 +1429,6 @@ Feature: flow tests for sendPaymentResultV2
 
     Scenario: FLUSSO_SPR_07_IO (part 2)
         Given the FLUSSO_SPR_07_IO (part 1) scenario executed successfully
-        # response sprv2 200
         And the pspNotifyPaymentV2 malformata response scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
         And outcome with KO in v2/closepayment
@@ -1490,13 +1483,12 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 400
         And the closePaymentV2 request scenario executed successfully
         And transactionId with resSPR_400 in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @wip
+
     Scenario: FLUSSO_SPR_08_IO (part 2)
         Given the FLUSSO_SPR_08_IO (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -1766,8 +1758,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 404
         And the closePaymentV2 request scenario executed successfully
+        And transactionId with resSPR_404 in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -2041,8 +2033,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 408
         And the closePaymentV2 request scenario executed successfully
+        And transactionId with resSPR_408 in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -2316,8 +2308,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 422
         And the closePaymentV2 request scenario executed successfully
+        And transactionId with resSPR_422 in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -2590,7 +2582,6 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 200
         And the closePaymentV2 request scenario executed successfully
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -2625,7 +2616,6 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 200
         And the pspNotifyPayment timeout response scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
@@ -2668,7 +2658,6 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 200
         And the pspNotifyPayment malformata response scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
@@ -2711,7 +2700,6 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 200
         And the pspNotifyPayment KO response scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
@@ -2747,7 +2735,6 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 200
         And the pspNotifyPayment irraggiungibile response scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
@@ -2846,7 +2833,6 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 200
         And the pspNotifyPayment malformata response scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
@@ -3021,7 +3007,6 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 200
         And the pspNotifyPayment malformata response scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
@@ -3071,7 +3056,6 @@ Feature: flow tests for sendPaymentResultV2
     Scenario: T_SPR_V2_08 (part 2)
         Given the T_SPR_V2_08 (part 1) scenario executed successfully
         And wait 3 seconds for expiration
-        # response sprv2 200
         And the closePaymentV2 request scenario executed successfully
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -3108,8 +3092,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 200 ko
         And the closePaymentV2 request scenario executed successfully
+        And transactionId with resSPR_2KO in v2/closepayment
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -3153,8 +3137,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 400
         And the closePaymentV2 request scenario executed successfully
+        And transactionId with resSPR_400 in v2/closepayment
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -3206,8 +3190,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 404
         And the closePaymentV2 request scenario executed successfully
+        And transactionId with resSPR_404 in v2/closepayment
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -3259,8 +3243,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 408
         And the closePaymentV2 request scenario executed successfully
+        And transactionId with resSPR_408 in v2/closepayment
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -3312,8 +3296,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 422
         And the closePaymentV2 request scenario executed successfully
+        And transactionId with resSPR_422 in v2/closepayment
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -3365,8 +3349,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
 
         And the nodoChiediInformazioniPagamento scenario executed successfully
-        # response sprv2 400
         And the closePaymentV2 request scenario executed successfully
+        And transactionId with resSPR_400 in v2/closepayment
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -3409,7 +3393,6 @@ Feature: flow tests for sendPaymentResultV2
 
     Scenario: T_SPR_V2_14 (part 3)
         Given the T_SPR_V2_14 (part 2) scenario executed successfully
-        # response sprv2 200
         # And updates through the query update_PAYMENT_TOKEN of the table POSITION_RETRY_SENDPAYMENTRESULT the parameter PSP_TRANSACTION_ID with resSPR_200OK under macro NewMod1 on db nodo_online
         And wait 15 seconds for expiration
 

@@ -391,7 +391,6 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table CD_INFO_PAGAMENTO retrived by the query sessiontoken on db nodo_online under macro NewMod1
 
         And the informazioniPagamento scenario executed successfully
-        # response sprv2 200
         And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
