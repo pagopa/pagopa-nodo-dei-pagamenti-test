@@ -2691,7 +2691,7 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
         And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
         And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
-    
+
     # T_SPR_V2_01
 
     Scenario: T_SPR_V2_01
