@@ -104,7 +104,6 @@ Feature: process tests for generazioneRicevute
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
             </transfer>
-            <transfer>
             </transferList>
             <!--Optional:-->
             <metadata>
