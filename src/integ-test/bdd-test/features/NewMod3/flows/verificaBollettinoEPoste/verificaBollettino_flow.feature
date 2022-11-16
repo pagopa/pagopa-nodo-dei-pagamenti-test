@@ -21,7 +21,7 @@ Feature: flow checks for verificaBollettino - EC new
       <aim:aim128>
       <aim:CCPost>#ccPoste#</aim:CCPost>
       <aim:AuxDigit>3</aim:AuxDigit>
-      <aim:CodIUV>$1iuv</aim:CodIUV>
+      <aim:CodIUV>#cod_segr#$1iuv</aim:CodIUV>
       </aim:aim128>
       </codiceIdRPT>
       </ws:nodoVerificaRPT>
