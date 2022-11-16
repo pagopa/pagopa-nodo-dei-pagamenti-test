@@ -300,7 +300,6 @@ Feature: ChiediAvanzamento_RT_RIFIUTATA_NODO_sbloccoParcheggio
                 <ws:pspInviaRPTResponse>
                     <pspInviaRPTResponse>
                     <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                    
                     </pspInviaRPTResponse>
                 </ws:pspInviaRPTResponse>
             </soapenv:Body>
@@ -323,9 +322,9 @@ Feature: ChiediAvanzamento_RT_RIFIUTATA_NODO_sbloccoParcheggio
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
         And wait 10 seconds for expiration
-        And job paaInviaRT triggered after 5 seconds
+        And job paInviaRT triggered after 5 seconds
         And wait 10 seconds for expiration
-        And verify 0 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+        #And verify 0 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And replace pa content with #creditor_institution_code# content
         And replace iuv content with $2iuv content
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
