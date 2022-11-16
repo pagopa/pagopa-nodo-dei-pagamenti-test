@@ -192,8 +192,8 @@ Feature: process tests for generazioneRicevute
     And through the query position_receipt retrieve param paymentMethod at position 19 and save it under the key paymentMethod
     And through the query position_receipt retrieve param fee at position 20 and save it under the key fee
     And through the query position_receipt retrieve param paymentDateTime at position 21 and save it under the key paymentDateTime
-    And through the query position_receipt retrieve param applicationDate at position 22 and save it under the key applicationDate
-    And through the query position_receipt retrieve param transferDate at position 23 and save it under the key transferDate
+    #And through the query position_receipt retrieve param applicationDate at position 22 and save it under the key applicationDate
+    #And through the query position_receipt retrieve param transferDate at position 23 and save it under the key transferDate
     And through the query position_receipt retrieve param metadata at position 24 and save it under the key metadata
     And through the query position_receipt retrieve param rtID at position 25 and save it under the key rtID
     And through the query position_receipt retrieve param fk_position_payment at position 26 and save it under the key fk_position_payment
@@ -212,9 +212,7 @@ Feature: process tests for generazioneRicevute
     And checks the value $paymentMethod of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $fee of the record at column FEE of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $fk_position_payment of the record at column ID of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
-    And checks the value $applicationDate of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
-    And checks the value $description of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
-    
+    #And checks the value $applicationDate of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
     And checks the value $description of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
     And checks the value $companyName of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
     And checks the value $officeName of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
