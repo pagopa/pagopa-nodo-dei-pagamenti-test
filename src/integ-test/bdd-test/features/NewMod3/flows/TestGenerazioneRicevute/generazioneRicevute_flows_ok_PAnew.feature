@@ -2,6 +2,10 @@ Feature: process tests for generazioneRicevute
 
   Background:
     Given systems up
+
+    # Verify phase
+  Scenario: Execute verifyPaymentNotice request
+    Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -14,16 +18,13 @@ Feature: process tests for generazioneRicevute
       <password>pwdpwdpwd</password>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>#notice_number#</noticeNumber>
+      <noticeNumber>$1noticeNumber</noticeNumber>
       </qrCode>
       </nod:verifyPaymentNoticeReq>
       </soapenv:Body>
       </soapenv:Envelope>
       """
     And EC new version
-
-  # Verify phase
-  Scenario: Execute verifyPaymentNotice request
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
@@ -42,7 +43,7 @@ Feature: process tests for generazioneRicevute
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>#notice_number#</noticeNumber>
+      <noticeNumber>$1noticeNumber</noticeNumber>
       </qrCode>
       <expirationTime>120000</expirationTime>
       <amount>70.00</amount>
@@ -100,7 +101,7 @@ Feature: process tests for generazioneRicevute
       <transfer>
       <idTransfer>1</idTransfer>
       <transferAmount>70.00</transferAmount>
-      <fiscalCodePA>77777777777</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
