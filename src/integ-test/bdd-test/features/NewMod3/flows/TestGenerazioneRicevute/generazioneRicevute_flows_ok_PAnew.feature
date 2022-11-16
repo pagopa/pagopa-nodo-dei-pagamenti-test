@@ -62,7 +62,7 @@ Feature: process tests for generazioneRicevute
       <paf:paGetPaymentRes>
       <outcome>OK</outcome>
       <data>
-      <creditorReferenceId>$iuv</creditorReferenceId>
+      <creditorReferenceId>#cod_segr#$1iuv</creditorReferenceId>
       <paymentAmount>70.00</paymentAmount>
       <dueDate>2021-12-31</dueDate>
       <!--Optional:-->
