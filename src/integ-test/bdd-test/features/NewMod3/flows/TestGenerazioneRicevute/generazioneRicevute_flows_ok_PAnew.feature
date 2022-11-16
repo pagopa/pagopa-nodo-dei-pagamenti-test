@@ -172,7 +172,74 @@ Feature: process tests for generazioneRicevute
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
     #db check1
-    And check DB_GR_01
+    #And check DB_GR_01
+    And execution query position_receipt to get value on the table POSITION_RECEIPT, with the columns * under macro NewMod3 with db name nodo_online
+    And through the query position_receipt retrieve param id at position 0 and save it under the key id
+    And through the query position_receipt retrieve param receipt_id at position 1 and save it under the key receipt_id
+    And through the query position_receipt retrieve param notice_id at position 2 and save it under the key notice_id
+    And through the query position_receipt retrieve param pa_fiscal_code at position 3 and save it under the key pa_fiscal_code
+    And through the query position_receipt retrieve param creditor_reference_id at position 4 and save it under the key creditor_reference_id
+    And through the query position_receipt retrieve param payment_token at position 5 and save it under the key payment_token
+    And through the query position_receipt retrieve param outcome at position 6 and save it under the key outcome
+    And through the query position_receipt retrieve param paymentAmount at position 7 and save it under the key paymentAmount
+    And through the query position_receipt retrieve param description at position 8 and save it under the key description
+    And through the query position_receipt retrieve param companyName at position 9 and save it under the key companyName
+    And through the query position_receipt retrieve param officeName at position 10 and save it under the key officeName
+    And through the query position_receipt retrieve param debtorID at position 11 and save it under the key debtorID
+    And through the query position_receipt retrieve param pspID at position 12 and save it under the key pspID
+    And through the query position_receipt retrieve param psp_fiscal_code at position 13 and save it under the key psp_fiscal_code
+    And through the query position_receipt retrieve param psp_vat_number at position 14 and save it under the key psp_vat_number
+    And through the query position_receipt retrieve param psp_company_name at position 15 and save it under the key psp_company_name
+    And through the query position_receipt retrieve param channelID at position 16 and save it under the key channelID
+    And through the query position_receipt retrieve param channelDescription at position 17 and save it under the key channelDescription
+    And through the query position_receipt retrieve param payerID at position 18 and save it under the key payerID
+    And through the query position_receipt retrieve param paymentMethod at position 19 and save it under the key paymentMethod
+    And through the query position_receipt retrieve param fee at position 20 and save it under the key fee
+    And through the query position_receipt retrieve param paymentDateTime at position 21 and save it under the key paymentDateTime
+    And through the query position_receipt retrieve param applicationDate at position 22 and save it under the key applicationDate
+    And through the query position_receipt retrieve param transferDate at position 23 and save it under the key transferDate
+    And through the query position_receipt retrieve param metadata at position 24 and save it under the key metadata
+    And through the query position_receipt retrieve param rtID at position 25 and save it under the key rtID
+    And through the query position_receipt retrieve param fk_position_payment at position 26 and save it under the key fk_position_payment
+    
+    
+    And checks the value $receipt_id of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $notice_id of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $creditor_reference_id of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $outcome of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $paymentAmount of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $channelID of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $channelDescription of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $payerID of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $paymentMethod of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $fee of the record at column FEE of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $id of the record at column ID of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+    And checks the value $applicationDate of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query position_payment on db nodo_online under macro NewMod3
+   
+    And checks the value $description of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query position_service on db nodo_online under macro NewMod3
+
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    And through the query position_receipt retrieve param recipient_pa_fiscal_code at position 5 and save it under the key recipient_pa_fiscal_code
+    And through the query position_receipt retrieve param recipient_broker_pa_id at position 6 and save it under the key recipient_broker_pa_id
+    And through the query position_receipt retrieve param recipient_station_id at position 7 and save it under the key recipient_station_id
+    And through the query position_receipt retrieve param status at position 8 and save it under the key status
+    And through the query position_receipt retrieve param fk_position_receip at position 11 and save it under the key fk_position_receip
+
 
 
 

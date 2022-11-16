@@ -1678,7 +1678,6 @@ def step_impl(context, seconds):
     #  sendPaymentOutcome record
     pass
 
-
 @step(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, value, column, query_name, table_name, db_name, name_macro):
     db_config = context.config.userdata.get("db_configuration")
