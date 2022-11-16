@@ -205,7 +205,7 @@ Feature: process tests for generazioneRicevute
     And checks the value $recipient_pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $recipient_broker_pa_id of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $recipient_station_id of the record at column STATION_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
-    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIEN retrived by the query position_status_n on db nodo_online under macro NewMod3
+    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $fk_position_receip of the record at column ID of the table POSITION_RECEIPT retrived by the query position_status_n on db nodo_online under macro NewMod3
 
     And checks the value None of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
