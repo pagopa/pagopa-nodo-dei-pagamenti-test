@@ -686,7 +686,7 @@ Feature: flow checks for sendPaymentResult
       And wait 15 seconds for expiration
       And verify 1 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
-      And checks the value $pspTransactionId of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value $psp_transaction_id of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value $activateIOPaymentResponse.paymentToken of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
