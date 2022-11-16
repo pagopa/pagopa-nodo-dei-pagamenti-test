@@ -252,7 +252,7 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
     And checks the value $sendPaymentOutcome.idPSP of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $psp_company_name of the record at column RAGIONE_SOCIALE of the table PSP retrived by the query psp on db nodo_cfg under macro NewMod3
     And checks the value $psp_fiscal_code of the record at column CODICE_FISCALE of the table PSP retrived by the query psp on db nodo_cfg under macro NewMod3
-    And checks the value $psp_vat_number of the record at column VAT_NUMBER of the table PSP retrived by the query psp on db nodo_cfg under macro NewMod3
+    #And checks the value $psp_vat_number of the record at column VAT_NUMBER of the table PSP retrived by the query psp on db nodo_cfg under macro NewMod3
     And checks the value $channel_id of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value NA of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $payer_id of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
