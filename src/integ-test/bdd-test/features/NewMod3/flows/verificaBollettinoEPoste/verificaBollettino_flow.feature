@@ -16,7 +16,7 @@ Feature: flow checks for verificaBollettino - EC new
       <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
       <codiceIdRPT>
       <aim:aim128>
-      <aim:CCPost>#codicePA#</aim:CCPost>
+      <aim:CCPost>#ccPoste#</aim:CCPost>
       <aim:AuxDigit>3</aim:AuxDigit>
       <aim:CodIUV>11192051789512983</aim:CodIUV>
       </aim:aim128>
