@@ -1,9 +1,8 @@
-Feature: T123_ChiediListePSP_Bollo
+Feature: T123_ChiediListePSP_Carr_Bollo
   Background:
-      Given systems up
-
-  Scenario: RPT and RT generation
-    Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
+    Given systems up
+    And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
+    And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
     And MB generation
     """
     <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
@@ -213,54 +212,59 @@ Feature: T123_ChiediListePSP_Bollo
       </pay_i:datiPagamento>
     </pay_i:RT>
     """
-    And initial XML nodoInviaRPT
+
+  Scenario: Execute nodoInviaCarrelloRPT request
+    Given initial XML nodoInviaCarrelloRPT
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-      <soapenv:Header>
-      <ppt:intestazionePPT>
-        <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-        <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-        <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-        <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-      </ppt:intestazionePPT>
-      </soapenv:Header>
-      <soapenv:Body>
-      <ws:nodoInviaRPT>
-        <password>pwdpwdpwd</password>
-        <identificativoPSP>#psp_AGID#</identificativoPSP>
-        <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-        <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
-        <tipoFirma></tipoFirma>
-        <rpt>$rptAttachment</rpt>
-      </ws:nodoInviaRPT>
-      </soapenv:Body>
+        <soapenv:Header>
+            <ppt:intestazioneCarrelloPPT>
+                <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                <identificativoCarrello>$1carrello</identificativoCarrello>
+            </ppt:intestazioneCarrelloPPT>
+        </soapenv:Header>
+        <soapenv:Body>
+            <ws:nodoInviaCarrelloRPT>
+                <password>pwdpwdpwd</password>
+                <identificativoPSP>#psp_AGID#</identificativoPSP>
+                <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+                <listaRPT>
+                    <elementoListaRPT>
+                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                        <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                        <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                        <rpt>$rptAttachment</rpt>
+                    </elementoListaRPT>                                             
+                </listaRPT>
+            </ws:nodoInviaCarrelloRPT>
+        </soapenv:Body>
     </soapenv:Envelope>
     """
-    And initial XML pspInviaRPT
+    And initial XML pspInviaCarrelloRPT
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-      <soapenv:Header/>
-      <soapenv:Body>
-          <ws:pspInviaRPTResponse>
-              <pspInviaRPTResponse>
-                  <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                  <identificativoCarrello>$1iuv</identificativoCarrello>
-                  <parametriPagamentoImmediato>$1iuv</parametriPagamentoImmediato>
-              </pspInviaRPTResponse>
-          </ws:pspInviaRPTResponse>
-      </soapenv:Body>
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:pspInviaCarrelloRPTResponse>
+                <pspInviaCarrelloRPTResponse>
+                    <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                    <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+                    <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+                </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
+        </soapenv:Body>
     </soapenv:Envelope>
     """
-    And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-    When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-    Then check esito is OK of nodoInviaRPT response
-    And check url contains acards of nodoInviaRPT response
-    And check redirect contains 1 of nodoInviaRPT response
-    And retrieve session token from $nodoInviaRPTResponse.url
+    And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+    When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+    Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+    And check url contains acardste of nodoInviaCarrelloRPT response
+    And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
   Scenario: Execution idPagamento
-    Given the RPT and RT generation scenario executed successfully
+    Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
     When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
     And check importo field exists in informazioniPagamento response
