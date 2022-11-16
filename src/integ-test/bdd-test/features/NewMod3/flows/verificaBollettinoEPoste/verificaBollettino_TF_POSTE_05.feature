@@ -205,7 +205,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_05]
 
 
     # nodoInviaRPT phase
-    @fix
+    @runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
