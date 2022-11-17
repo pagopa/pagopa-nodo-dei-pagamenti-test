@@ -326,6 +326,74 @@ Feature: flow tests for sendPaymentResultV2
             """
 
     @skip
+    Scenario: pspNotifyPayment timeout response
+        Given initial XML pspNotifyPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentRes>
+            <delay>10000</delay>
+            </pfn:pspNotifyPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+
+    @skip
+    Scenario: pspNotifyPayment malformata response
+        Given initial XML pspNotifyPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentRes>
+            <outcome>OO</outcome>
+            </pfn:pspNotifyPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+
+    @skip
+    Scenario: pspNotifyPayment KO response
+        Given initial XML pspNotifyPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentRes>
+            <outcome>KO</outcome>
+            <!--Optional:-->
+            <fault>
+            <faultCode>CANALE_SEMANTICA</faultCode>
+            <faultString>Errore semantico dal psp</faultString>
+            <id>1</id>
+            <!--Optional:-->
+            <description>Errore dal psp</description>
+            </fault>
+            </pfn:pspNotifyPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+
+    @skip
+    Scenario: pspNotifyPayment irraggiungibile response
+        Given initial XML pspNotifyPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentRes>
+            <irraggiungibile/>
+            </pfn:pspNotifyPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+
+    @skip
     Scenario: sendPaymentOutcome request
         Given initial XML sendPaymentOutcome
             """
@@ -688,6 +756,302 @@ Feature: flow tests for sendPaymentResultV2
         And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value TPAY
+        And checking value $XML_RE.fiscalCode is equal to value $nodoInviaRPT.pay_i:identificativoDominio
+        And checking value $XML_RE.companyName is equal to value #ragione_sociale#
+        And checking value $XML_RE.debtor is equal to value $nodoInviaRPT.pay_i:codiceIdentificativoUnivoco
+
+    # T_SPR_V2_15
+
+    Scenario: T_SPR_V2_15
+        Given the nodoVerificaRPT scenario executed successfully
+        And the nodoAttivaRPT scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS_SNAPSHOT
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RE
+        And verify 0 record for the table RE retrived by the query sprv2_req_ccp on db re under macro NewMod1
+
+    # T_SPR_V2_16
+
+    Scenario: T_SPR_V2_16 (part 1)
+        Given the nodoVerificaRPT scenario executed successfully
+        And the nodoAttivaRPT scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
+        And the pspNotifyPayment timeout response scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    Scenario: T_SPR_V2_16 (part 2)
+        Given the T_SPR_V2_16 (part 1) scenario executed successfully
+        And wait 12 seconds for expiration
+        And the sendPaymentOutcome request scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID,NOTICE_GENERATED,NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 6 record for the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS
+        And checks the value PAYING,PAID,NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS_SNAPSHOT
+        And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 6 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value TPAY
+        And checking value $XML_RE.fiscalCode is equal to value $nodoInviaRPT.pay_i:identificativoDominio
+        And checking value $XML_RE.companyName is equal to value #ragione_sociale#
+        And checking value $XML_RE.debtor is equal to value $nodoInviaRPT.pay_i:codiceIdentificativoUnivoco
+
+    # T_SPR_V2_17
+
+    Scenario: T_SPR_V2_17 (part 1)
+        Given the nodoVerificaRPT scenario executed successfully
+        And the nodoAttivaRPT scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
+        And the pspNotifyPayment malformata response scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    Scenario: T_SPR_V2_17 (part 2)
+        Given the T_SPR_V2_17 (part 1) scenario executed successfully
+        And wait 10 seconds for expiration
+        And the sendPaymentOutcome request scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID,NOTICE_GENERATED,NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 6 record for the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS
+        And checks the value PAYING,PAID,NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS_SNAPSHOT
+        And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 7 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value TPAY
+        And checking value $XML_RE.fiscalCode is equal to value $nodoInviaRPT.pay_i:identificativoDominio
+        And checking value $XML_RE.companyName is equal to value #ragione_sociale#
+        And checking value $XML_RE.debtor is equal to value $nodoInviaRPT.pay_i:codiceIdentificativoUnivoco
+
+    # T_SPR_V2_18
+
+    Scenario: T_SPR_V2_18
+        Given the nodoVerificaRPT scenario executed successfully
+        And the nodoAttivaRPT scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
+        And the pspNotifyPayment KO response scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_REFUSED,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS
+        And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 2 record for the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS_SNAPSHOT
+        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 7 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value KO
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value TPAY
+        And checking value $XML_RE.fiscalCode is equal to value $nodoInviaRPT.pay_i:identificativoDominio
+        And checking value $XML_RE.companyName is equal to value #ragione_sociale#
+        And checking value $XML_RE.debtor is equal to value $nodoInviaRPT.pay_i:codiceIdentificativoUnivoco
+
+    # T_SPR_V2_19
+
+    Scenario: T_SPR_V2_19
+        Given the nodoVerificaRPT scenario executed successfully
+        And the nodoAttivaRPT scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
+        And the pspNotifyPayment irraggiungibile response scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_SEND_ERROR,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS
+        And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 2 record for the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS_SNAPSHOT
+        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 7 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value KO
+        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.description is equal to value TPAY
+        And checking value $XML_RE.fiscalCode is equal to value $nodoInviaRPT.pay_i:identificativoDominio
+        And checking value $XML_RE.companyName is equal to value #ragione_sociale#
+        And checking value $XML_RE.debtor is equal to value $nodoInviaRPT.pay_i:codiceIdentificativoUnivoco
+
+    # T_SPR_V2_20
+
+    Scenario: T_SPR_V2_20 (part 1)
+        Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 1000
+        And the nodoVerificaRPT scenario executed successfully
+        And the nodoAttivaRPT scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        And the informazioniPagamento scenario executed successfully
+        And the pspNotifyPayment malformata response scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    Scenario: T_SPR_V2_20 (part 2)
+        Given the T_SPR_V2_20 (part 1) scenario executed successfully
+        When job mod3CancelV2 triggered after 0 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
+        And wait 3 seconds for expiration
+        And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS
+        And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 2 record for the table POSITION_STATUS retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS_SNAPSHOT
+        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 7 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RE
+        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value KO
         And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
         And checking value $XML_RE.description is equal to value TPAY
         And checking value $XML_RE.fiscalCode is equal to value $nodoInviaRPT.pay_i:identificativoDominio

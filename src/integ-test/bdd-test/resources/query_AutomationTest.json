@@ -280,6 +280,7 @@
         "update_obj_id": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = '2685736'",
         "sessiontoken": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$sessionToken'",
         "ccp": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$ccp'",
+        "sprv2_req_ccp": "SELECT columns as blob FROM table_name WHERE PAYMENT_TOKEN = '$ccp' AND TIPO_EVENTO = 'sendPaymentResult-v2' AND SOTTO_TIPO_EVENTO = 'REQ'",
         "sprv2_req_spo": "SELECT columns as blob FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcome.paymentToken' AND TIPO_EVENTO = 'sendPaymentResult-v2' AND SOTTO_TIPO_EVENTO = 'REQ'",
         "sprv2_req_spov2": "SELECT columns as blob FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcomeV2.paymentToken' AND TIPO_EVENTO = 'sendPaymentResult-v2' AND SOTTO_TIPO_EVENTO = 'REQ'",
         "pasendrtv2_req_spo": "SELECT columns as blob FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcome.paymentToken' AND TIPO_EVENTO = 'paSendRTV2' AND SOTTO_TIPO_EVENTO = 'REQ'",
