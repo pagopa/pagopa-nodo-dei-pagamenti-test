@@ -1,4 +1,4 @@
-Feature: flow checks for sendPaymentResult
+Feature: flow checks for sendPaymentResult with PA new
 
    Background:
       Given systems up
@@ -418,7 +418,7 @@ Feature: flow checks for sendPaymentResult
       Given the T_SPR_04 (activateIOPayment) scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
-
+   @wip
    Scenario: T_SPR_04 (closePayment)
       Given the T_SPR_04 (informazioniPagamento) scenario executed successfully
       And initial JSON v1/closepayment
@@ -841,11 +841,11 @@ Feature: flow checks for sendPaymentResult
       And checks the value v1 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column REQUEST of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
 
-
+   @wip
    # T_SPR_14
    Scenario: T_SPR_14 (end retry spr)
       Given the T_SPR_13 (retry spr) scenario executed successfully
-      And update through the query update_retry_spr of the table POSITION_RETRY_SENDPAYMENTRESULT the parameter PSP_TRANSACTION_ID with #psp_transaction_id# under macro AppIO on db nodo_online
+      And updates through the query update_retry_spr of the table POSITION_RETRY_SENDPAYMENTRESULT the parameter PSP_TRANSACTION_ID with #psp_transaction_id# under macro AppIO on db nodo_online
       When job positionRetrySendPaymentResult triggered after 65 seconds
       And wait 15 seconds for expiration
       Then verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
