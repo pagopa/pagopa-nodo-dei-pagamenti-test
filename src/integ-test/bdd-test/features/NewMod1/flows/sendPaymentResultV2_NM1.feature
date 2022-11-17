@@ -676,13 +676,7 @@ Feature: flow tests for sendPaymentResultV2
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value OK
-    # aggiungere i DB check corretti
-    # And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcomeV2.paymentToken
-    # And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-    # And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-    # And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-    # And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-    # And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
+        And checking value $XML_RE is containing value [{"paymentToken":"$activatePaymentNoticeV2Response.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"},{"paymentToken":"$activatePaymentNoticeV2NewResponse.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"}]
 
     # FLUSSO_SPR_03
 
@@ -859,13 +853,7 @@ Feature: flow tests for sendPaymentResultV2
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value OK
-    # aggiungere i DB check corretti
-    # And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcomeV2.paymentToken
-    # And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-    # And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-    # And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-    # And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-    # And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
+        And checking value $XML_RE is containing value [{"paymentToken":"$activatePaymentNoticeV2Response.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"},{"paymentToken":"$activatePaymentNoticeV2NewResponse.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"}]
 
     # FLUSSO_SPR_04
 
@@ -914,13 +902,7 @@ Feature: flow tests for sendPaymentResultV2
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value KO
-    # aggiungere i DB check corretti
-    # And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcomeV2.paymentToken
-    # And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-    # And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-    # And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-    # And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-    # And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
+        And checking value $XML_RE is containing value [{"paymentToken":"$activatePaymentNoticeV2Response.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"},{"paymentToken":"$activatePaymentNoticeV2NewResponse.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"}]
 
     # FLUSSO_SPR_05
 
@@ -969,13 +951,7 @@ Feature: flow tests for sendPaymentResultV2
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value KO
-    # aggiungere i DB check corretti
-    # And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcomeV2.paymentToken
-    # And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-    # And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-    # And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-    # And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-    # And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
+        And checking value $XML_RE is containing value [{"paymentToken":"$activatePaymentNoticeV2Response.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"},{"paymentToken":"$activatePaymentNoticeV2NewResponse.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"}]
 
     # FLUSSO_SPR_06
 
@@ -1032,13 +1008,7 @@ Feature: flow tests for sendPaymentResultV2
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value KO
-    # aggiungere i DB check corretti
-    # And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcomeV2.paymentToken
-    # And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-    # And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-    # And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-    # And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-    # And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
+        And checking value $XML_RE is containing value [{"paymentToken":"$activatePaymentNoticeV2Response.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"},{"paymentToken":"$activatePaymentNoticeV2NewResponse.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"}]
 
     # FLUSSO_SPR_07
 
@@ -1093,13 +1063,7 @@ Feature: flow tests for sendPaymentResultV2
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value KO
-    # aggiungere i DB check corretti
-    # And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcomeV2.paymentToken
-    # And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-    # And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-    # And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-    # And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-    # And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
+        And checking value $XML_RE is containing value [{"paymentToken":"$activatePaymentNoticeV2Response.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"},{"paymentToken":"$activatePaymentNoticeV2NewResponse.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"}]
 
     # FLUSSO_SPR_08
 
@@ -1155,13 +1119,7 @@ Feature: flow tests for sendPaymentResultV2
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value KO
-    # aggiungere i DB check corretti
-    # And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcomeV2.paymentToken
-    # And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-    # And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-    # And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-    # And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-    # And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
+        And checking value $XML_RE is containing value [{"paymentToken":"$activatePaymentNoticeV2Response.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"},{"paymentToken":"$activatePaymentNoticeV2NewResponse.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"}]
 
     # FLUSSO_SPR_09
 
@@ -1339,13 +1297,7 @@ Feature: flow tests for sendPaymentResultV2
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value OK
-    # aggiungere i DB check corretti
-    # And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcomeV2.paymentToken
-    # And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-    # And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-    # And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-    # And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-    # And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
+        And checking value $XML_RE is containing value [{"paymentToken":"$activatePaymentNoticeV2Response.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"},{"paymentToken":"$activatePaymentNoticeV2NewResponse.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"}]
 
     # FLUSSO_SPR_10
 
@@ -1523,13 +1475,7 @@ Feature: flow tests for sendPaymentResultV2
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value OK
-    # aggiungere i DB check corretti
-    # And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcomeV2.paymentToken
-    # And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-    # And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-    # And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-    # And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-    # And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
+        And checking value $XML_RE is containing value [{"paymentToken":"$activatePaymentNoticeV2Response.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"},{"paymentToken":"$activatePaymentNoticeV2NewResponse.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"}]
 
     # FLUSSO_SPR_11
 
@@ -1707,13 +1653,7 @@ Feature: flow tests for sendPaymentResultV2
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value OK
-    # aggiungere i DB check corretti
-    # And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcomeV2.paymentToken
-    # And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-    # And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-    # And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-    # And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-    # And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
+        And checking value $XML_RE is containing value [{"paymentToken":"$activatePaymentNoticeV2Response.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"},{"paymentToken":"$activatePaymentNoticeV2NewResponse.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"}]
 
     # FLUSSO_SPR_12
 
@@ -1891,10 +1831,4 @@ Feature: flow tests for sendPaymentResultV2
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value OK
-# aggiungere i DB check corretti
-# And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcomeV2.paymentToken
-# And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-# And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-# And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-# And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-# And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
+        And checking value $XML_RE is containing value [{"paymentToken":"$activatePaymentNoticeV2Response.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"},{"paymentToken":"$activatePaymentNoticeV2NewResponse.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"}]

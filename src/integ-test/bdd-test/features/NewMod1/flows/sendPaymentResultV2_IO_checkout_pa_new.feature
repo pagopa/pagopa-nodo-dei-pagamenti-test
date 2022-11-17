@@ -2708,7 +2708,6 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        # aggiungere DB check sulla request della sprv2: verificare che la sendpaymentresultv2 non venga inviata
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -2725,6 +2724,9 @@ Feature: flow tests for sendPaymentResultV2
         # POSITION_STATUS_SNAPSHOT
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # RE
+        And verify 0 record for the table RE retrived by the query sprv2_req_spo on db re under macro NewMod1
 
     # T_SPR_V2_02
 
@@ -3244,7 +3246,6 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Unacceptable outcome when token has expired of v2/closepayment response
-        # aggiungere DB check sulla request della sprv2: verificare che la sendpaymentresultv2 non venga inviata
         And nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 3600000
 
         # POSITION_PAYMENT_STATUS
@@ -3262,6 +3263,9 @@ Feature: flow tests for sendPaymentResultV2
         # POSITION_STATUS_SNAPSHOT
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
+
+        # RE
+        And verify 0 record for the table RE retrived by the query sprv2_req_spo on db re under macro NewMod1
 
     # T_SPR_V2_09
 

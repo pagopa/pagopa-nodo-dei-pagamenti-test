@@ -689,9 +689,7 @@ Feature: flow tests for sendPaymentResultV2
         And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value OK
         And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
-# aggiungere i DB check corretti
-# And checking value $XML_RE.description is equal to value $paGetPayment.description
-# And checking value $XML_RE.fiscalCode is equal to value $activateIOPayment.fiscalCode
-# And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
-# And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
-# And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
+        And checking value $XML_RE.description is equal to value TPAY
+        And checking value $XML_RE.fiscalCode is equal to value $nodoInviaRPT.pay_i:identificativoDominio
+        And checking value $XML_RE.companyName is equal to value #ragione_sociale#
+        And checking value $XML_RE.debtor is equal to value $nodoInviaRPT.pay_i:codiceIdentificativoUnivoco
