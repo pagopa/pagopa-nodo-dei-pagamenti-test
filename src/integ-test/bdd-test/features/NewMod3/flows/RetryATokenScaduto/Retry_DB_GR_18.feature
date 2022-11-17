@@ -17,7 +17,7 @@ Feature: process tests for Retry_DB_GR_18
       <soapenv:Body>
       <nod:verifyPaymentNoticeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>80000000001</idBrokerPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
@@ -45,7 +45,7 @@ Feature: process tests for Retry_DB_GR_18
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>80000000001</idBrokerPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -85,7 +85,7 @@ Feature: process tests for Retry_DB_GR_18
       <debtor>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>#creditor_institution_code_secondary#</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>paGetPaymentName</fullName>
       <!--Optional:-->
@@ -109,7 +109,7 @@ Feature: process tests for Retry_DB_GR_18
       <transfer>
       <idTransfer>1</idTransfer>
       <transferAmount>10.00</transferAmount>
-      <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -211,7 +211,7 @@ Feature: process tests for Retry_DB_GR_18
     And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     
   
-  @runnable
+  @fix
   Scenario: job refresh pa (2)
     Given the DB check + db update scenario executed successfully
     Then refresh job PA triggered after 10 seconds
