@@ -199,6 +199,7 @@ Feature: process tests for Retry_DB_GR_13
   Scenario: trigger jobs paSendRt
     Given the Execute sendPaymentOutcome request scenario executed successfully
     When job paSendRt triggered after 5 seconds
+    And wait 10 seconds for expiration
     Then verify the HTTP status code of paSendRt response is 200
 
 @runnable
