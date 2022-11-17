@@ -140,7 +140,6 @@ Feature: process tests Retry_DB_GR_01
     And checks the value #psp# of the record at column psp_id of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $ragione_sociale of the record at column psp_company_name of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $codice_fiscale of the record at column psp_fiscal_code of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
-    And checks the value $vat_number of the record at column psp_vat_number of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $channel_id of the record at column channel_id of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $payment_channel of the record at column channel_description of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
     And checks the value $payer_id of the record at column payer_id of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3

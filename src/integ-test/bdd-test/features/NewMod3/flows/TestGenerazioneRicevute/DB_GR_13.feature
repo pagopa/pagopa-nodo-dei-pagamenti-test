@@ -1,4 +1,4 @@
-Feature: process tests for Retry_DB_GR_13
+Feature: process tests for DB_GR_13
 
   Background:
     Given systems up
@@ -6,9 +6,6 @@ Feature: process tests for Retry_DB_GR_13
 
   Scenario: job refresh pa (1)
     Given refresh job PA triggered after 10 seconds
-
-  Scenario: initial verifyPaymentNotice
-    Given the job refresh pa (1) scenario executed successfully
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -16,7 +13,7 @@ Feature: process tests for Retry_DB_GR_13
       <soapenv:Body>
       <nod:verifyPaymentNoticeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>80000000001</idBrokerPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
@@ -27,15 +24,11 @@ Feature: process tests for Retry_DB_GR_13
       </soapenv:Body>
       </soapenv:Envelope>
       """
-
-  # Verify phase
-  Scenario: Execute verifyPaymentNotice request
-    Given the initial verifyPaymentNotice scenario executed successfully
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
   Scenario: Execute activatePaymentNotice request
-    Given the Execute verifyPaymentNotice request scenario executed successfully
+    Given the job refresh pa (1) scenario executed successfully
     And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
@@ -44,7 +37,7 @@ Feature: process tests for Retry_DB_GR_13
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>80000000001</idBrokerPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -52,8 +45,8 @@ Feature: process tests for Retry_DB_GR_13
       <fiscalCode>#creditor_institution_code#</fiscalCode>
       <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
-      <expirationTime>6000</expirationTime>
-      <amount>17.00</amount>
+      <expirationTime>2000</expirationTime>
+      <amount>10.00</amount>
       <dueDate>2021-12-31</dueDate>
       <paymentNote>responseFull3Transfers</paymentNote>
       </nod:activatePaymentNoticeReq>
@@ -70,7 +63,7 @@ Feature: process tests for Retry_DB_GR_13
       <outcome>OK</outcome>
       <data>
       <creditorReferenceId>$iuv</creditorReferenceId>
-      <paymentAmount>17.00</paymentAmount>
+      <paymentAmount>10.00</paymentAmount>
       <dueDate>2021-12-31</dueDate>
       <!--Optional:-->
       <retentionDate>2021-12-31T12:12:12</retentionDate>
@@ -84,7 +77,7 @@ Feature: process tests for Retry_DB_GR_13
       <debtor>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>creditor_institution_code</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>paGetPaymentName</fullName>
       <!--Optional:-->
@@ -107,8 +100,8 @@ Feature: process tests for Retry_DB_GR_13
       <!--1 to 5 repetitions:-->
       <transfer>
       <idTransfer>1</idTransfer>
-      <transferAmount>10.00</transferAmount>
-      <fiscalCodePA>creditor_institution_code_secondary</fiscalCodePA>
+      <transferAmount>5.00</transferAmount>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -123,7 +116,7 @@ Feature: process tests for Retry_DB_GR_13
       </transfer>
       <transfer>
       <idTransfer>3</idTransfer>
-      <transferAmount>4.00</transferAmount>
+      <transferAmount>2.00</transferAmount>
       <fiscalCodePA>90000000002</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
@@ -147,14 +140,15 @@ Feature: process tests for Retry_DB_GR_13
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  #Scenario: Poller Annulli
-  #Given the Execute activatePaymentNotice request scenario executed successfully
-  #When job mod3CancelV2 triggered after 3 seconds
-  #Then verify the HTTP status code of mod3CancelV2 response is 200
+  Scenario: Poller Annulli
+    Given the Execute activatePaymentNotice request scenario executed successfully
+    When job mod3CancelV2 triggered after 3 seconds
+    And wait 5 seconds for expiration
+    Then verify the HTTP status code of mod3CancelV2 response is 200
 
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
-    Given the Execute activatePaymentNotice request scenario executed successfully
+    Given the Poller Annulli scenario executed successfully
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -193,14 +187,18 @@ Feature: process tests for Retry_DB_GR_13
       </soapenv:Envelope>
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is OK of sendPaymentOutcome response
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
 
   Scenario: trigger jobs paSendRt
     Given the Execute sendPaymentOutcome request scenario executed successfully
     When job paSendRt triggered after 5 seconds
+    And wait 10 seconds for expiration
     Then verify the HTTP status code of paSendRt response is 200
 
+
+@runnable
   Scenario: DB check + db update
     Given the trigger jobs paSendRt scenario executed successfully
     And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
@@ -254,9 +252,6 @@ Feature: process tests for Retry_DB_GR_13
     And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And verify 3 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
 
-  @runnable
-  Scenario: job refresh pa (2)
-    Given the DB check + db update scenario executed successfully
     Then refresh job PA triggered after 10 seconds
 
 
