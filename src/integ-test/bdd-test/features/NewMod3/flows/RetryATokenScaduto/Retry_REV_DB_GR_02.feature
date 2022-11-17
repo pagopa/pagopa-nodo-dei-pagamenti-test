@@ -54,7 +54,7 @@ Feature: process tests Retry_REV_DB_GR_02
             """
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-        And PSP waits expirationTime of activatePaymentNotice expires
+        And wait 3 seconds for expiration
 
     # Payment Outcome Phase outcome KO
     @runnable
