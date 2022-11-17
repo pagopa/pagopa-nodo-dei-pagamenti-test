@@ -1,7 +1,6 @@
 Feature: NCAP
 
-    #TODO: FARE ULTERIORI CHECK SUL MESSAGGIO DI RISPOSTA DELLA nodoChiediAvanzamentoPagamento
-
+   
     Background:
         Given systems up
 
