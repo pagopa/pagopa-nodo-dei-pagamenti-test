@@ -2,7 +2,10 @@ Feature: Process tests for retry a token scaduto
 
   Background:
     Given systems up
-    And initial XML activatePaymentNotice
+    
+    #activate phase1
+  Scenario: Execute activatePaymentNotice1 request
+    Given initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
           xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -26,9 +29,6 @@ Feature: Process tests for retry a token scaduto
           </soapenv:Body>
       </soapenv:Envelope>
       """
-    
-    #activate phase1
-  Scenario: Execute activatePaymentNotice1 request
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     And save activatePaymentNotice response in activatePaymentNotice1
@@ -38,6 +38,7 @@ Feature: Process tests for retry a token scaduto
   Scenario: Execute sleep phase1
     Given the Execute activatePaymentNotice1 request scenario executed successfully
     When job mod3CancelV2 triggered after 3 seconds
+    And wait 5 seconds for expiration
     Then verify the HTTP status code of mod3CancelV2 response is 200
 
   Scenario: Execute activatePaymentNotice2 request
@@ -68,11 +69,7 @@ Feature: Process tests for retry a token scaduto
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     And save activatePaymentNotice response in activatePaymentNotice2
-
-  #sleep phase2
-  Scenario: Execute sleep phase2
-    Given the Execute activatePaymentNotice2 request scenario executed successfully
-    Then wait 10 seconds for expiration
+    And wait 10 seconds for expiration
 
 @runnable
 # Payment Outcome Phase outcome OK 
@@ -119,6 +116,7 @@ Feature: Process tests for retry a token scaduto
     #Test1
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
+    And wait 5 seconds for expiration
     #Test2
     And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_payment_retry_05_token1 on db nodo_online under macro NewMod3
     And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_payment_retry_05_token2 on db nodo_online under macro NewMod3
