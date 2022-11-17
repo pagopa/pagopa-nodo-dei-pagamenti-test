@@ -212,7 +212,7 @@ Feature: T123_ChiediListePSP_Carr_Bollo
       </pay_i:datiPagamento>
     </pay_i:RT>
     """
-
+    
   Scenario: Execute nodoInviaCarrelloRPT request
     Given initial XML nodoInviaCarrelloRPT
     """
