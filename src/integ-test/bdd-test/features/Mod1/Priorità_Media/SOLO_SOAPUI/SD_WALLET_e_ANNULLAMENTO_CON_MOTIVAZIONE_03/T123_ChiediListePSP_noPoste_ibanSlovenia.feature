@@ -2,7 +2,7 @@ Feature: T123_ChiediListePSP_noPoste_IbanSlovenia
   Background:
       Given systems up
 
-  Scenario: RPT and RT generation
+  Scenario: RPT generation
     Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
     And RPT generation
     """
@@ -72,7 +72,7 @@ Feature: T123_ChiediListePSP_noPoste_IbanSlovenia
           <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
           <pay_i:ibanAccredito>SI56107601000123438</pay_i:ibanAccredito>
           <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-          <pay_i:ibanAppoggio>IT96R0123451234512345678904</pay_i:ibanAppoggio>
+          <pay_i:ibanAppoggio>SI56107601000123438</pay_i:ibanAppoggio>
           <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
           <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
           <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -86,7 +86,7 @@ Feature: T123_ChiediListePSP_noPoste_IbanSlovenia
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
       <soapenv:Header>
       <ppt:intestazionePPT>
-        <identificativoIntermediarioPA>23232323232</identificativoIntermediarioPA>
+        <identificativoIntermediarioPA>intPaStress23</identificativoIntermediarioPA>
         <identificativoStazioneIntermediarioPA>stazPaStress23</identificativoStazioneIntermediarioPA>
         <identificativoDominio>23232323232</identificativoDominio>
         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
@@ -122,18 +122,13 @@ Feature: T123_ChiediListePSP_noPoste_IbanSlovenia
     """
     And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-    #Then check esito is OK of nodoInviaRPT response
-    Then retrieve session token from $nodoInviaRPTResponse.url
+    Then check esito is OK of nodoInviaRPT response
+    And retrieve session token from $nodoInviaRPTResponse.url
 
   Scenario: Execution nodoChiediInfoPag
-    Given the RPT and RT generation scenario executed successfully
+    Given the RPT generation scenario executed successfully
     When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
-    And check importo field exists in informazioniPagamento response
-    And check ragioneSociale field exists in informazioniPagamento response
-    And check oggettoPagamento field exists in informazioniPagamento response
-    And check urlRedirectEC field exists in informazioniPagamento response
-    And check bolloDigitale is True of informazioniPagamento response   
 
     # DB Check
     And execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
@@ -141,21 +136,20 @@ Feature: T123_ChiediListePSP_noPoste_IbanSlovenia
     And replace importoTot content with 6.20 content
     And replace lingua content with IT content
     # Carte
-    And execution query getPsp_FLAG_bollo to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-    And through the query getPsp_FLAG_bollo retrieve param sizeCarte at position 0 and save it under the key sizeCarte
-    And execution query getPsp_FLAG_bollo to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-    And through the query getPsp_FLAG_bollo retrieve param listaCarte at position -1 and save it under the key listaCarte
+    And execution query getPspCarte_noPoste to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+    And through the query getPspCarte_noPoste retrieve param sizeCarte at position 0 and save it under the key sizeCarte
+    And execution query getPspCarte_noPoste to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+    And through the query getPspCarte_noPoste retrieve param listaCarte at position -1 and save it under the key listaCarte
     # Conto
-    And execution query getPsp_FLAG_bollo to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-    And through the query getPsp_FLAG_bollo retrieve param sizeConto at position 0 and save it under the key sizeConto
-    And execution query getPsp_FLAG_bollo to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-    And through the query getPsp_FLAG_bollo retrieve param listaConto at position -1 and save it under the key listaConto
+    And execution query getPspConto_noPoste to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+    And through the query getPspConto_noPoste retrieve param sizeConto at position 0 and save it under the key sizeConto
+    And execution query getPspConto_noPoste to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+    And through the query getPspConto_noPoste retrieve param listaConto at position -1 and save it under the key listaConto
     # Altro
-    And execution query getPsp_FLAG_bollo to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-    And through the query getPsp_FLAG_bollo retrieve param sizeAltro at position 0 and save it under the key sizeAltro
-    And execution query getPsp_FLAG_bollo to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-    And through the query getPsp_FLAG_bollo retrieve param listaAltro at position -1 and save it under the key listaAltro
-
+    And execution query getPspAltro_noPoste to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+    And through the query getPspAltro_noPoste retrieve param sizeAltro at position 0 and save it under the key sizeAltro
+    And execution query getPspAltro_noPoste to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+    And through the query getPspAltro_noPoste retrieve param listaAltro at position -1 and save it under the key listaAltro
 
   Scenario: execution nodoChiediListaPSP - conto
     Given the Execution nodoChiediInfoPag scenario executed successfully
