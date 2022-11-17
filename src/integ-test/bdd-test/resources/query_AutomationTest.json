@@ -116,8 +116,9 @@
         "pm_session_old_ccp": "SELECT columns FROM PM_SESSION_DATA WHERE ID_SESSIONE = '$ccp'",
         "select_sprV1_prova": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = 'c87c2ea4cb5e43b88dbfb6b0bf7bbe2e' AND TIPO_EVENTO = 'sendPaymentResult-v1' ORDER BY DATA_ORA_EVENTO ASC",
         "select_sprV1_new": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken' AND TIPO_EVENTO = 'sendPaymentResult-v1' ORDER BY DATA_ORA_EVENTO ASC",
+        "select_sprV1_old": "SELECT columns FROM table_name WHERE CODICE_CONTESTO_PAGAMENTO = '$ccp' AND TIPO_EVENTO = 'sendPaymentResult-v1' ORDER BY DATA_ORA_EVENTO ASC",
         "retry_spr": "SELECT columns FROM table_name s where s.PAYMENT_TOKEN= '$activateIOPaymentResponse.paymentToken'",
-        "update_retry_spr": "UPDATE table_name SET param = 'value' WHERE PAYMENT_TOKEN= '$activateIOPaymentResponse.paymentToken'"
+        "retry_spr_old": "SELECT columns FROM table_name s where s.PAYMENT_TOKEN= '$ccp'"
     },
     "AppIOold": {
         "cd_info_pagamento": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInviaRPT.identificativoUnivocoVersamento' AND s.IDENT_DOMINIO = '#creditor_institution_code#'"
