@@ -685,8 +685,8 @@ Feature: flow checks for sendPaymentResult
 
    Scenario: T_SPR_09 (retry spr)
       Given the T_SPR_09 (closePayment) scenario executed successfully
-      When job positionRetrySendPaymentResult triggered after 60 seconds
-      And wait 5 seconds for expiration
+      When job positionRetrySendPaymentResult triggered after 65 seconds
+      And wait 15 seconds for expiration
       Then verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
 
 
@@ -713,8 +713,8 @@ Feature: flow checks for sendPaymentResult
 
    Scenario: T_SPR_10 (retry spr)
       Given the T_SPR_10 (closePayment) scenario executed successfully
-      When job positionRetrySendPaymentResult triggered after 60 seconds
-      And wait 5 seconds for expiration
+      When job positionRetrySendPaymentResult triggered after 65 seconds
+      And wait 15 seconds for expiration
       Then verify 1 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value resSPR_400 of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
@@ -751,8 +751,8 @@ Feature: flow checks for sendPaymentResult
 
    Scenario: T_SPR_11 (retry spr)
       Given the T_SPR_11 (closePayment) scenario executed successfully
-      When job positionRetrySendPaymentResult triggered after 60 seconds
-      And wait 5 seconds for expiration
+      When job positionRetrySendPaymentResult triggered after 65 seconds
+      And wait 15 seconds for expiration
       Then verify 1 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value resSPR_404 of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
@@ -764,6 +764,7 @@ Feature: flow checks for sendPaymentResult
       And checks the value sendPaymentResult-v1 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value v1 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column REQUEST of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+
 
    # T_SPR_12
    Scenario: T_SPR_12 (activateIOPayment)
@@ -788,8 +789,8 @@ Feature: flow checks for sendPaymentResult
 
    Scenario: T_SPR_12 (retry spr)
       Given the T_SPR_12 (closePayment) scenario executed successfully
-      When job positionRetrySendPaymentResult triggered after 60 seconds
-      And wait 5 seconds for expiration
+      When job positionRetrySendPaymentResult triggered after 65 seconds
+      And wait 15 seconds for expiration
       Then verify 1 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value resSPR_408 of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
@@ -801,6 +802,7 @@ Feature: flow checks for sendPaymentResult
       And checks the value sendPaymentResult-v1 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value v1 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column REQUEST of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+
 
    # T_SPR_13
    Scenario: T_SPR_13 (activateIOPayment)
@@ -825,8 +827,8 @@ Feature: flow checks for sendPaymentResult
 
    Scenario: T_SPR_13 (retry spr)
       Given the T_SPR_13 (closePayment) scenario executed successfully
-      When job positionRetrySendPaymentResult triggered after 60 seconds
-      And wait 5 seconds for expiration
+      When job positionRetrySendPaymentResult triggered after 65 seconds
+      And wait 15 seconds for expiration
       Then verify 1 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value resSPR_422 of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
@@ -839,10 +841,11 @@ Feature: flow checks for sendPaymentResult
       And checks the value v1 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column REQUEST of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
 
+
    # T_SPR_14
    Scenario: T_SPR_14 (end retry spr)
       Given the T_SPR_13 (retry spr) scenario executed successfully
       And update through the query update_retry_spr of the table POSITION_RETRY_SENDPAYMENTRESULT the parameter PSP_TRANSACTION_ID with #psp_transaction_id# under macro AppIO on db nodo_online
-      When job positionRetrySendPaymentResult triggered after 60 seconds
-      And wait 5 seconds for expiration
+      When job positionRetrySendPaymentResult triggered after 65 seconds
+      And wait 15 seconds for expiration
       Then verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
