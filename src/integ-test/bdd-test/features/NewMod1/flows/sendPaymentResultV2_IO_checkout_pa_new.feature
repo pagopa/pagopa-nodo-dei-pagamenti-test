@@ -3632,14 +3632,6 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value sendPaymentResult-v2 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
         And checks the value v2 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
 
-    Scenario: T_SPR_V2_14 (part 3)
-        Given the T_SPR_V2_14 (part 2) scenario executed successfully
-        # And updates through the query update_PAYMENT_TOKEN of the table POSITION_RETRY_SENDPAYMENTRESULT the parameter PSP_TRANSACTION_ID with resSPR_200OK under macro NewMod1 on db nodo_online
-        And wait 15 seconds for expiration
-
-        # POSITION_RETRY_SENDPAYMENTRESULT
-        And verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under
-
         # RE
         And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
@@ -3650,3 +3642,11 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.companyName is equal to value $paGetPayment.companyName
         And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
         And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
+
+    Scenario: T_SPR_V2_14 (part 3)
+        Given the T_SPR_V2_14 (part 2) scenario executed successfully
+        And updates through the query update_PAYMENT_TOKEN of the table POSITION_RETRY_SENDPAYMENTRESULT the parameter PSP_TRANSACTION_ID with resSPR_200OK under macro NewMod1 on db nodo_online
+        And wait 15 seconds for expiration
+
+        # POSITION_RETRY_SENDPAYMENTRESULT
+        And verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
