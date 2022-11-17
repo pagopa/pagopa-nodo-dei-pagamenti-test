@@ -349,8 +349,9 @@ Feature: process tests for generazioneRicevute [DB_GR_18]
     And check value $prxpa2_fk_position_receipt is equal to value $pr_id
 
     #POSITION_RECEIPT_XML query
-    And execution query payment_status_pay to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
-    And through the query payment_status_pay retrieve xml prx_xml at position 0 and save it under the key prx_xml
+    And replace paStationId content with #id_station# content
+    And execution query get_receipt_xml_station to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
+    And through the query get_receipt_xml_station retrieve xml prx_xml at position 0 and save it under the key prx_xml
     #POSITION_PAYMENT query
     And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online
     And through the query payment_status_pay retrieve param pp1_broker_pa_id at position 5 and save it under the key pp1_broker_pa_id
