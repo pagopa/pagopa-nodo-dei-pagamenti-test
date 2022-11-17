@@ -160,7 +160,7 @@ Feature: process tests for Retry_DB_GR_18
       <soapenv:Body>
       <nod:sendPaymentOutcomeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>80000000001</idBrokerPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
