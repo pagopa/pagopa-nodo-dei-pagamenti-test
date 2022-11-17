@@ -209,7 +209,7 @@ Feature: process tests for Retry_DB_GR_29
     
    
   
-  @fix
+  @runnable
   Scenario: job refresh pa (2)
     Given the DB check + db update scenario executed successfully
     Then refresh job PA triggered after 10 seconds
