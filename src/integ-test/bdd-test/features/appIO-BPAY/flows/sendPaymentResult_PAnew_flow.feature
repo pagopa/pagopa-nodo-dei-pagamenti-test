@@ -260,6 +260,14 @@ Feature: flow checks for sendPaymentResult with PA new
          <soapenv:Body>
          <pfn:pspNotifyPaymentRes>
          <outcome>KO</outcome>
+         <!--Optional:-->
+         <fault>
+         <faultCode>CANALE_SEMANTICA</faultCode>
+         <faultString>Errore semantico dal psp</faultString>
+         <id>1</id>
+         <!--Optional:-->
+         <description>Errore dal psp</description>
+         </fault>
          </pfn:pspNotifyPaymentRes>
          </soapenv:Body>
          </soapenv:Envelope>
@@ -421,40 +429,8 @@ Feature: flow checks for sendPaymentResult with PA new
    @wip
    Scenario: T_SPR_04 (closePayment)
       Given the T_SPR_04 (informazioniPagamento) scenario executed successfully
-      And initial JSON v1/closepayment
-         """
-         {
-            "paymentTokens": [
-               "$activateIOPaymentResponse.paymentToken"
-            ],
-            "outcome": "OK",
-            "identificativoPsp": "#psp#",
-            "tipoVersamento": "BPAY",
-            "identificativoIntermediario": "#id_broker_psp#",
-            "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-            "pspTransactionId": "#psp_transaction_id#",
-            "totalAmount": 12,
-            "fee": 2,
-            "timestampOperation": "2012-04-23T18:25:43Z",
-            "additionalPaymentInformations": {
-               "transactionId": "#transaction_id#",
-               "outcomePaymentGateway": "EFF",
-               "authorizationCode": "resOK"
-            }
-         }
-         """
-      And initial XML pspNotifyPayment
-         """
-         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-         <soapenv:Header/>
-         <soapenv:Body>
-         <pfn:pspNotifyPaymentRes>
-         <outcome>KO</outcome>
-         </pfn:pspNotifyPaymentRes>
-         </soapenv:Body>
-         </soapenv:Envelope>
-         """
-      And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+      And the pspNotifyPayment KO scenario executed successfully
+      And the closePayment scenario executed successfully
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
@@ -845,7 +821,7 @@ Feature: flow checks for sendPaymentResult with PA new
    # T_SPR_14
    Scenario: T_SPR_14 (end retry spr)
       Given the T_SPR_13 (retry spr) scenario executed successfully
-      And updates through the query update_retry_spr of the table POSITION_RETRY_SENDPAYMENTRESULT the parameter PSP_TRANSACTION_ID with #psp_transaction_id# under macro AppIO on db nodo_online
+      And updates through the query update_retry_spr of the table POSITION_RETRY_SENDPAYMENTRESULT the parameter PSP_TRANSACTION_ID with resSPR_200 under macro AppIO on db nodo_online
       When job positionRetrySendPaymentResult triggered after 65 seconds
       And wait 15 seconds for expiration
       Then verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
