@@ -117,7 +117,7 @@ Feature: process tests for Retry_DB_GR_37
       <transfer>
       <idTransfer>2</idTransfer>
       <transferAmount>3.00</transferAmount>
-      <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -214,7 +214,7 @@ Feature: process tests for Retry_DB_GR_37
     And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     
   
-  @runnable
+  @fix
   Scenario: job refresh pa (2)
     Given the DB check + db update scenario executed successfully
     Then refresh job PA triggered after 10 seconds
