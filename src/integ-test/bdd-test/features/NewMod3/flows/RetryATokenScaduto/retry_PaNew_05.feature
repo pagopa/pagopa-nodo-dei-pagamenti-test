@@ -74,7 +74,7 @@ Feature: Process tests for retry a token scaduto
 @runnable
 # Payment Outcome Phase outcome OK 
   Scenario: Execute sendPaymentOutcome request
-    Given the Execute sleep phase2 scenario executed successfully
+    Given the Execute activatePaymentNotice2 request scenario executed successfully
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">

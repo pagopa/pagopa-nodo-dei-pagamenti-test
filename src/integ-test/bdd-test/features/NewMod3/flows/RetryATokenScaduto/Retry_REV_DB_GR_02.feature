@@ -109,5 +109,5 @@ Feature: process tests Retry_REV_DB_GR_02
             """
 
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcome response
+        Then check outcome is OK of sendPaymentOutcome response
         And verify 0 record for the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
