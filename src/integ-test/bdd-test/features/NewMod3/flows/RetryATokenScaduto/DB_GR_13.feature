@@ -6,9 +6,6 @@ Feature: process tests for Retry_DB_GR_13
 
   Scenario: job refresh pa (1)
     Given refresh job PA triggered after 10 seconds
-
-  Scenario: initial verifyPaymentNotice
-    Given the job refresh pa (1) scenario executed successfully
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -27,15 +24,11 @@ Feature: process tests for Retry_DB_GR_13
       </soapenv:Body>
       </soapenv:Envelope>
       """
-
-  # Verify phase
-  Scenario: Execute verifyPaymentNotice request
-    Given the initial verifyPaymentNotice scenario executed successfully
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
   Scenario: Execute activatePaymentNotice request
-    Given the Execute verifyPaymentNotice request scenario executed successfully
+    Given the job refresh pa (1) scenario executed successfully
     And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
@@ -52,8 +45,8 @@ Feature: process tests for Retry_DB_GR_13
       <fiscalCode>#creditor_institution_code#</fiscalCode>
       <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
-      <expirationTime>6000</expirationTime>
-      <amount>17.00</amount>
+      <expirationTime>2000</expirationTime>
+      <amount>10.00</amount>
       <dueDate>2021-12-31</dueDate>
       <paymentNote>responseFull3Transfers</paymentNote>
       </nod:activatePaymentNoticeReq>
@@ -70,7 +63,7 @@ Feature: process tests for Retry_DB_GR_13
       <outcome>OK</outcome>
       <data>
       <creditorReferenceId>$iuv</creditorReferenceId>
-      <paymentAmount>17.00</paymentAmount>
+      <paymentAmount>10.00</paymentAmount>
       <dueDate>2021-12-31</dueDate>
       <!--Optional:-->
       <retentionDate>2021-12-31T12:12:12</retentionDate>
@@ -107,7 +100,7 @@ Feature: process tests for Retry_DB_GR_13
       <!--1 to 5 repetitions:-->
       <transfer>
       <idTransfer>1</idTransfer>
-      <transferAmount>10.00</transferAmount>
+      <transferAmount>5.00</transferAmount>
       <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -123,7 +116,7 @@ Feature: process tests for Retry_DB_GR_13
       </transfer>
       <transfer>
       <idTransfer>3</idTransfer>
-      <transferAmount>4.00</transferAmount>
+      <transferAmount>2.00</transferAmount>
       <fiscalCodePA>90000000002</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
@@ -147,14 +140,15 @@ Feature: process tests for Retry_DB_GR_13
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  #Scenario: Poller Annulli
-  #Given the Execute activatePaymentNotice request scenario executed successfully
-  #When job mod3CancelV2 triggered after 3 seconds
-  #Then verify the HTTP status code of mod3CancelV2 response is 200
+  Scenario: Poller Annulli
+    Given the Execute activatePaymentNotice request scenario executed successfully
+    When job mod3CancelV2 triggered after 3 seconds
+    And wait 5 seconds for expiration
+    Then verify the HTTP status code of mod3CancelV2 response is 200
 
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
-    Given the Execute activatePaymentNotice request scenario executed successfully
+    Given the Poller Annulli scenario executed successfully
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -205,7 +199,7 @@ Feature: process tests for Retry_DB_GR_13
 @runnable
   Scenario: DB check + db update
     Given the trigger jobs paSendRt scenario executed successfully
-    #And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
     And execution query position_receipt_recipient_status to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro NewMod3 with db name nodo_online
     And through the query position_receipt_recipient_status retrieve param pa_fiscal_code at position 1 and save it under the key pa_fiscal_code
