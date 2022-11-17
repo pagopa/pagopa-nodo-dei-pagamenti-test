@@ -437,9 +437,9 @@ Feature: flow checks for sendPaymentResult with PA old
 
    # T_SPR_15
    Scenario: T_SPR_15 (part 1)
-      Given the activateIOPayment scenario executed successfully
-      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-      Then check outcome is OK of activateIOPayment response
+      Given the nodoAttivaRPT scenario executed successfully
+      When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+      Then check outcome is OK of nodoAttivaRPT response
 
    Scenario: T_SPR_15 (part 2)
       Given the T_SPR_15 (part 1) scenario executed successfully
@@ -475,13 +475,13 @@ Feature: flow checks for sendPaymentResult with PA old
 
 
    # T_SPR_16
-   Scenario: T_SPR_16 (activateIOPayment)
-      Given the activateIOPayment scenario executed successfully
-      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-      Then check outcome is OK of activateIOPayment response
+   Scenario: T_SPR_16 (nodoAttivaRPT)
+      Given the nodoAttivaRPT scenario executed successfully
+      When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+      Then check outcome is OK of nodoAttivaRPT response
 
    Scenario: T_SPR_16 (informazioniPagamento)
-      Given the T_SPR_16 (activateIOPayment) scenario executed successfully
+      Given the T_SPR_16 (nodoAttivaRPT) scenario executed successfully
       And the nodoInviaRPT scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
@@ -523,13 +523,13 @@ Feature: flow checks for sendPaymentResult with PA old
 
 
    # T_SPR_17
-   Scenario: T_SPR_17 (activateIOPayment)
-      Given the activateIOPayment scenario executed successfully
-      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-      Then check outcome is OK of activateIOPayment response
+   Scenario: T_SPR_17 (nodoAttivaRPT)
+      Given the nodoAttivaRPT scenario executed successfully
+      When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+      Then check outcome is OK of nodoAttivaRPT response
 
    Scenario: T_SPR_17 (informazioniPagamento)
-      Given the T_SPR_17 (activateIOPayment) scenario executed successfully
+      Given the T_SPR_17 (nodoAttivaRPT) scenario executed successfully
       And the nodoInviaRPT scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
@@ -571,13 +571,13 @@ Feature: flow checks for sendPaymentResult with PA old
 
 
    # T_SPR_18
-   Scenario: T_SPR_18 (activateIOPayment)
-      Given the activateIOPayment scenario executed successfully
-      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-      Then check outcome is OK of activateIOPayment response
+   Scenario: T_SPR_18 (nodoAttivaRPT)
+      Given the nodoAttivaRPT scenario executed successfully
+      When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+      Then check outcome is OK of nodoAttivaRPT response
 
    Scenario: T_SPR_18 (informazioniPagamento)
-      Given the T_SPR_18 (activateIOPayment) scenario executed successfully
+      Given the T_SPR_18 (nodoAttivaRPT) scenario executed successfully
       And the nodoInviaRPT scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
@@ -612,16 +612,16 @@ Feature: flow checks for sendPaymentResult with PA old
 
 
    # T_SPR_19
-   Scenario: T_SPR_19 (activateIOPayment)
+   Scenario: T_SPR_19 (nodoAttivaRPT)
       Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 1000
       And wait 5 seconds for expiration
-      And the activateIOPayment scenario executed successfully
-      And expirationTime with 10000 in activateIOPayment
-      When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-      Then check outcome is OK of activateIOPayment response
+      And the nodoAttivaRPT scenario executed successfully
+      And expirationTime with 10000 in nodoAttivaRPT
+      When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+      Then check outcome is OK of nodoAttivaRPT response
 
    Scenario: T_SPR_19 (informazioniPagamento)
-      Given the T_SPR_19 (activateIOPayment) scenario executed successfully
+      Given the T_SPR_19 (nodoAttivaRPT) scenario executed successfully
       And the nodoInviaRPT scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
@@ -661,16 +661,16 @@ Feature: flow checks for sendPaymentResult with PA old
 
 
    # # T_SPR_06
-   # Scenario: T_SPR_06 (activateIOPayment)
+   # Scenario: T_SPR_06 (nodoAttivaRPT)
    #    Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 1000
    #    And wait 5 seconds for expiration
-   #    And the activateIOPayment scenario executed successfully
-   #    And expirationTime with 10000 in activateIOPayment
-   #    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-   #    Then check outcome is OK of activateIOPayment response
+   #    And the nodoAttivaRPT scenario executed successfully
+   #    And expirationTime with 10000 in nodoAttivaRPT
+   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+   #    Then check outcome is OK of nodoAttivaRPT response
 
    # Scenario: T_SPR_06 (informazioniPagamento)
-   #    Given the T_SPR_06 (activateIOPayment) scenario executed successfully
+   #    Given the T_SPR_06 (nodoAttivaRPT) scenario executed successfully
    #    And the nodoInviaRPT scenario executed successfully
    #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
    #    Then verify the HTTP status code of informazioniPagamento response is 200
@@ -707,16 +707,16 @@ Feature: flow checks for sendPaymentResult with PA old
 
 
    # # T_SPR_07
-   # Scenario: T_SPR_07 (activateIOPayment)
+   # Scenario: T_SPR_07 (nodoAttivaRPT)
    #    Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 1000
    #    And wait 5 seconds for expiration
-   #    And the activateIOPayment scenario executed successfully
-   #    And expirationTime with 10000 in activateIOPayment
-   #    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-   #    Then check outcome is OK of activateIOPayment response
+   #    And the nodoAttivaRPT scenario executed successfully
+   #    And expirationTime with 10000 in nodoAttivaRPT
+   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+   #    Then check outcome is OK of nodoAttivaRPT response
 
    # Scenario: T_SPR_07 (informazioniPagamento)
-   #    Given the T_SPR_07 (activateIOPayment) scenario executed successfully
+   #    Given the T_SPR_07 (nodoAttivaRPT) scenario executed successfully
    #    And the nodoInviaRPT scenario executed successfully
    #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
    #    Then verify the HTTP status code of informazioniPagamento response is 200
@@ -753,16 +753,16 @@ Feature: flow checks for sendPaymentResult with PA old
 
 
    # # T_SPR_08
-   # Scenario: T_SPR_08 (activateIOPayment)
+   # Scenario: T_SPR_08 (nodoAttivaRPT)
    #    Given nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 1000
    #    And wait 5 seconds for expiration
-   #    And the activateIOPayment scenario executed successfully
-   #    And expirationTime with 2000 in activateIOPayment
-   #    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-   #    Then check outcome is OK of activateIOPayment response
+   #    And the nodoAttivaRPT scenario executed successfully
+   #    And expirationTime with 2000 in nodoAttivaRPT
+   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+   #    Then check outcome is OK of nodoAttivaRPT response
 
    # Scenario: T_SPR_08 (informazioniPagamento)
-   #    Given the T_SPR_08 (activateIOPayment) scenario executed successfully
+   #    Given the T_SPR_08 (nodoAttivaRPT) scenario executed successfully
    #    And the nodoInviaRPT scenario executed successfully
    #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
    #    Then verify the HTTP status code of informazioniPagamento response is 200
@@ -799,13 +799,13 @@ Feature: flow checks for sendPaymentResult with PA old
 
 
    # # T_SPR_09
-   # Scenario: T_SPR_09 (activateIOPayment)
-   #    Given the activateIOPayment scenario executed successfully
-   #    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-   #    Then check outcome is OK of activateIOPayment response
+   # Scenario: T_SPR_09 (nodoAttivaRPT)
+   #    Given the nodoAttivaRPT scenario executed successfully
+   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+   #    Then check outcome is OK of nodoAttivaRPT response
 
    # Scenario: T_SPR_09 (informazioniPagamento)
-   #    Given the T_SPR_09 (activateIOPayment) scenario executed successfully
+   #    Given the T_SPR_09 (nodoAttivaRPT) scenario executed successfully
    #    And the nodoInviaRPT scenario executed successfully
    #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
    #    Then verify the HTTP status code of informazioniPagamento response is 200
@@ -826,13 +826,13 @@ Feature: flow checks for sendPaymentResult with PA old
 
 
    # # T_SPR_10
-   # Scenario: T_SPR_10 (activateIOPayment)
-   #    Given the activateIOPayment scenario executed successfully
-   #    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-   #    Then check outcome is OK of activateIOPayment response
+   # Scenario: T_SPR_10 (nodoAttivaRPT)
+   #    Given the nodoAttivaRPT scenario executed successfully
+   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+   #    Then check outcome is OK of nodoAttivaRPT response
 
    # Scenario: T_SPR_10 (informazioniPagamento)
-   #    Given the T_SPR_10 (activateIOPayment) scenario executed successfully
+   #    Given the T_SPR_10 (nodoAttivaRPT) scenario executed successfully
    #    And the nodoInviaRPT scenario executed successfully
    #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
    #    Then verify the HTTP status code of informazioniPagamento response is 200
@@ -863,13 +863,13 @@ Feature: flow checks for sendPaymentResult with PA old
 
 
    # # T_SPR_11
-   # Scenario: T_SPR_11 (activateIOPayment)
-   #    Given the activateIOPayment scenario executed successfully
-   #    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-   #    Then check outcome is OK of activateIOPayment response
+   # Scenario: T_SPR_11 (nodoAttivaRPT)
+   #    Given the nodoAttivaRPT scenario executed successfully
+   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+   #    Then check outcome is OK of nodoAttivaRPT response
 
    # Scenario: T_SPR_11 (informazioniPagamento)
-   #    Given the T_SPR_11 (activateIOPayment) scenario executed successfully
+   #    Given the T_SPR_11 (nodoAttivaRPT) scenario executed successfully
    #    And the nodoInviaRPT scenario executed successfully
    #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
    #    Then verify the HTTP status code of informazioniPagamento response is 200
@@ -900,13 +900,13 @@ Feature: flow checks for sendPaymentResult with PA old
 
 
    # # T_SPR_12
-   # Scenario: T_SPR_12 (activateIOPayment)
-   #    Given the activateIOPayment scenario executed successfully
-   #    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-   #    Then check outcome is OK of activateIOPayment response
+   # Scenario: T_SPR_12 (nodoAttivaRPT)
+   #    Given the nodoAttivaRPT scenario executed successfully
+   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+   #    Then check outcome is OK of nodoAttivaRPT response
 
    # Scenario: T_SPR_12 (informazioniPagamento)
-   #    Given the T_SPR_12 (activateIOPayment) scenario executed successfully
+   #    Given the T_SPR_12 (nodoAttivaRPT) scenario executed successfully
    #    And the nodoInviaRPT scenario executed successfully
    #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
    #    Then verify the HTTP status code of informazioniPagamento response is 200
@@ -937,13 +937,13 @@ Feature: flow checks for sendPaymentResult with PA old
 
 
    # # T_SPR_13
-   # Scenario: T_SPR_13 (activateIOPayment)
-   #    Given the activateIOPayment scenario executed successfully
-   #    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-   #    Then check outcome is OK of activateIOPayment response
+   # Scenario: T_SPR_13 (nodoAttivaRPT)
+   #    Given the nodoAttivaRPT scenario executed successfully
+   #    When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+   #    Then check outcome is OK of nodoAttivaRPT response
 
    # Scenario: T_SPR_13 (informazioniPagamento)
-   #    Given the T_SPR_13 (activateIOPayment) scenario executed successfully
+   #    Given the T_SPR_13 (nodoAttivaRPT) scenario executed successfully
    #    And the nodoInviaRPT scenario executed successfully
    #    When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
    #    Then verify the HTTP status code of informazioniPagamento response is 200
