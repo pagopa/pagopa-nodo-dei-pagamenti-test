@@ -769,20 +769,15 @@ Feature: flow checks for sendPaymentResult with PA old
       When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoAttivaRPT response
 
-   Scenario: T_SPR_22 (informazioniPagamento)
+   Scenario: T_SPR_22 (annullamentoRptMaiRichiesteDaPm)
       Given the T_SPR_22 (nodoAttivaRPT) scenario executed successfully
       And the nodoInviaRPT scenario executed successfully
-      When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-      Then verify the HTTP status code of informazioniPagamento response is 200
-
-   Scenario: T_SPR_22 (mod3CancelV1)
-      Given the T_SPR_22 (informazioniPagamento) scenario executed successfully
-      When job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
+      When job annullamentoRptMaiRichiesteDaPm triggered after 70 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
       And wait 5 seconds for expiration
 
    Scenario: T_SPR_22 (closePayment)
-      Given the T_SPR_22 (mod3CancelV1) scenario executed successfully
+      Given the T_SPR_22 (annullamentoRptMaiRichiesteDaPm) scenario executed successfully
       And the closePayment scenario executed successfully
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       And job paInviaRt triggered after 5 seconds
