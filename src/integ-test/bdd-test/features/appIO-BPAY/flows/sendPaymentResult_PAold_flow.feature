@@ -510,8 +510,8 @@ Feature: flow checks for sendPaymentResult with PA old
       And checks the value PAYING,PAID,NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
       And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And verify 6 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And verify 7 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 2 record for the table RE retrived by the query select_sprV1_old on db re under macro AppIO
@@ -558,8 +558,8 @@ Feature: flow checks for sendPaymentResult with PA old
       And checks the value PAYING,PAID,NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
       And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And verify 6 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And verify 7 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 2 record for the table RE retrived by the query select_sprV1_old on db re under macro AppIO
@@ -599,8 +599,8 @@ Feature: flow checks for sendPaymentResult with PA old
       And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
       And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And verify 6 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And verify 7 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 2 record for the table RE retrived by the query select_sprV1_old on db re under macro AppIO
@@ -616,7 +616,6 @@ Feature: flow checks for sendPaymentResult with PA old
       Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 1000
       And wait 5 seconds for expiration
       And the nodoAttivaRPT scenario executed successfully
-      And expirationTime with 10000 in nodoAttivaRPT
       When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoAttivaRPT response
 
@@ -649,8 +648,8 @@ Feature: flow checks for sendPaymentResult with PA old
       And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
       And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And verify 6 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And verify 7 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 2 record for the table RE retrived by the query select_sprV1_old on db re under macro AppIO
@@ -666,7 +665,6 @@ Feature: flow checks for sendPaymentResult with PA old
       Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 1000
       And wait 5 seconds for expiration
       And the nodoAttivaRPT scenario executed successfully
-      And expirationTime with 10000 in nodoAttivaRPT
       When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoAttivaRPT response
 
@@ -700,8 +698,8 @@ Feature: flow checks for sendPaymentResult with PA old
       And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
       And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And verify 6 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And verify 7 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 2 record for the table RE retrived by the query select_sprV1_old on db re under macro AppIO
@@ -717,7 +715,6 @@ Feature: flow checks for sendPaymentResult with PA old
       Given nodo-dei-pagamenti DEV has config parameter default_durata_estensione_token_IO set to 1000
       And wait 5 seconds for expiration
       And the nodoAttivaRPT scenario executed successfully
-      And expirationTime with 10000 in nodoAttivaRPT
       When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoAttivaRPT response
 
@@ -751,8 +748,8 @@ Feature: flow checks for sendPaymentResult with PA old
       And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
       And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And verify 6 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And verify 7 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 2 record for the table RE retrived by the query select_sprV1_old on db re under macro AppIO
@@ -768,7 +765,6 @@ Feature: flow checks for sendPaymentResult with PA old
       Given nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 1000
       And wait 5 seconds for expiration
       And the nodoAttivaRPT scenario executed successfully
-      And expirationTime with 2000 in nodoAttivaRPT
       When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoAttivaRPT response
 
@@ -798,8 +794,8 @@ Feature: flow checks for sendPaymentResult with PA old
       And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
       And verify 0 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
       And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-      And verify 6 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And verify 7 record for the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
+      And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 2 record for the table RE retrived by the query select_sprV1_old on db re under macro AppIO
@@ -864,7 +860,7 @@ Feature: flow checks for sendPaymentResult with PA old
       Then verify 1 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value resSPR_400 of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
-      And checks the value $ccp of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
+      And checks the value $sessionToken of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
@@ -901,7 +897,7 @@ Feature: flow checks for sendPaymentResult with PA old
       Then verify 1 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value resSPR_404 of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
-      And checks the value $ccp of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
+      And checks the value $sessionToken of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
@@ -938,7 +934,7 @@ Feature: flow checks for sendPaymentResult with PA old
       Then verify 1 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value resSPR_408 of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
-      And checks the value $ccp of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
+      And checks the value $sessionToken of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
@@ -975,7 +971,7 @@ Feature: flow checks for sendPaymentResult with PA old
       Then verify 1 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value resSPR_422 of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
-      And checks the value $ccp of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
+      And checks the value $sessionToken of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr_old on db nodo_online under macro AppIO
