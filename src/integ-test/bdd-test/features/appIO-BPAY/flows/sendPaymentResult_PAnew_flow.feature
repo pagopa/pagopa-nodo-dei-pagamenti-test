@@ -421,8 +421,39 @@ Feature: flow checks for sendPaymentResult
 
    Scenario: T_SPR_04 (closePayment)
       Given the T_SPR_04 (informazioniPagamento) scenario executed successfully
-      And the pspNotifyPayment KO scenario executed successfully
-      And the closePayment scenario executed successfully
+      And initial JSON v1/closepayment
+         """
+         {
+            "paymentTokens": [
+               "$activateIOPaymentResponse.paymentToken"
+            ],
+            "outcome": "OK",
+            "identificativoPsp": "#psp#",
+            "tipoVersamento": "BPAY",
+            "identificativoIntermediario": "#id_broker_psp#",
+            "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+            "pspTransactionId": "#psp_transaction_id#",
+            "totalAmount": 12,
+            "fee": 2,
+            "timestampOperation": "2012-04-23T18:25:43Z",
+            "additionalPaymentInformations": {
+               "transactionId": "#transaction_id#",
+               "outcomePaymentGateway": "EFF",
+               "authorizationCode": "resOK"
+            }
+         }
+         """
+      And initial XML pspNotifyPayment
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+         <soapenv:Header/>
+         <soapenv:Body>
+         <pfn:pspNotifyPaymentRes>
+         <outcome>KO</outcome>
+         </pfn:pspNotifyPaymentRes>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
       And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
@@ -651,7 +682,7 @@ Feature: flow checks for sendPaymentResult
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @wip
+
    Scenario: T_SPR_09 (retry spr)
       Given the T_SPR_09 (closePayment) scenario executed successfully
       When job positionRetrySendPaymentResult triggered after 10 seconds
@@ -679,14 +710,14 @@ Feature: flow checks for sendPaymentResult
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @wip
+
    Scenario: T_SPR_10 (retry spr)
       Given the T_SPR_10 (closePayment) scenario executed successfully
       When job positionRetrySendPaymentResult triggered after 10 seconds
       And wait 15 seconds for expiration
       And verify 1 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
-      And checks the value $psp_transaction_id of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value resSPR_400 of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value $activateIOPaymentResponse.paymentToken of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
@@ -695,6 +726,7 @@ Feature: flow checks for sendPaymentResult
       And checks the value sendPaymentResult-v1 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value v1 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column REQUEST of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+
 
    # T_SPR_11
    Scenario: T_SPR_11 (activateIOPayment)
@@ -716,27 +748,22 @@ Feature: flow checks for sendPaymentResult
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   #       And wait 70 seconds for expiration
-   #       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-   #       And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-   #       And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-   #       And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-   #       And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value $iuv of the record at column IUV of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value $activateIOPaymentResponse.paymentToken of the record at column CCP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value 11$iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value $closePayment.pspTransactionId of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value 70000000001 of the record at column PSP_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value 77777777777_01 of the record at column STAZIONE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value 70000000001_01 of the record at column CANALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value $activateIOPaymentResponse.paymentToken of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value OK of the record at column OUTCOME of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value closePayment-v1 of the record at column INSERTED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value sendPaymentResult-v1 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
+
+   Scenario: T_SPR_11 (retry spr)
+      Given the T_SPR_11 (closePayment) scenario executed successfully
+      When job positionRetrySendPaymentResult triggered after 10 seconds
+      And wait 15 seconds for expiration
+      And verify 1 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value resSPR_404 of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value $activateIOPaymentResponse.paymentToken of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value closePayment-v1 of the record at column INSERTED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value sendPaymentResult-v1 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value v1 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value NotNone of the record at column REQUEST of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
 
    # T_SPR_12
    Scenario: T_SPR_12 (activateIOPayment)
@@ -758,27 +785,22 @@ Feature: flow checks for sendPaymentResult
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   #       And wait 70 seconds for expiration
-   #       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-   #       And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-   #       And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-   #       And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-   #       And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value $iuv of the record at column IUV of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value $activateIOPaymentResponse.paymentToken of the record at column CCP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value 11$iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value $closePayment.pspTransactionId of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value 70000000001 of the record at column PSP_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value 77777777777_01 of the record at column STAZIONE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value 70000000001_01 of the record at column CANALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value $activateIOPaymentResponse.paymentToken of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value OK of the record at column OUTCOME of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value closePayment-v1 of the record at column INSERTED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-   #       And checks the value sendPaymentResult-v1 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
+
+   Scenario: T_SPR_12 (retry spr)
+      Given the T_SPR_12 (closePayment) scenario executed successfully
+      When job positionRetrySendPaymentResult triggered after 10 seconds
+      And wait 15 seconds for expiration
+      And verify 1 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value resSPR_408 of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value $activateIOPaymentResponse.paymentToken of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value closePayment-v1 of the record at column INSERTED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value sendPaymentResult-v1 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value v1 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value NotNone of the record at column REQUEST of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
 
    # T_SPR_13
    Scenario: T_SPR_13 (activateIOPayment)
@@ -800,83 +822,27 @@ Feature: flow checks for sendPaymentResult
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-#       And wait 70 seconds for expiration
-#       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value $iuv of the record at column IUV of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value $activateIOPaymentResponse.paymentToken of the record at column CCP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value 11$iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value $closePayment.pspTransactionId of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value 70000000001 of the record at column PSP_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value 77777777777_01 of the record at column STAZIONE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value 70000000001_01 of the record at column CANALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value $activateIOPaymentResponse.paymentToken of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value OK of the record at column OUTCOME of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value closePayment-v1 of the record at column INSERTED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value sendPaymentResult-v1 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
 
+   Scenario: T_SPR_13 (retry spr)
+      Given the T_SPR_13 (closePayment) scenario executed successfully
+      When job positionRetrySendPaymentResult triggered after 10 seconds
+      And wait 15 seconds for expiration
+      And verify 1 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value resSPR_422 of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value $activateIOPaymentResponse.paymentToken of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value closePayment-v1 of the record at column INSERTED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value sendPaymentResult-v1 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value v1 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+      And checks the value NotNone of the record at column REQUEST of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
 
-
-#    # T_SPR_14
-
-#    Scenario: T_SPR_14 (activateIOPayment)
-#       Given the activateIOPayment scenario executed successfully
-#       When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-#       Then check outcome is OK of activateIOPayment response
-
-#       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And check the value AGID_01 of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-
-#    Scenario: T_SPR_14 (informazioniPagamento)
-#       Given the T_SPR_14 (activateIOPayment) scenario executed successfully
-#       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-#       Then verify the HTTP status code of informazioniPagamento response is 200
-
-#    Scenario: T_SPR_14 (closePayment)
-#       Given the T_SPR_14 (informazioniPagamento) scenario executed successfully
-#       And the closePayment scenario executed successfully
-#       And pspTransactionId with resSPR_400 in closePayment
-#       When PM sends closePayment to nodo-dei-pagamenti
-#       Then check esito is OK of closePayment response
-#       And check faultCode is 200 of closePayment response
-#       And wait 90 seconds for expiration
-#       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And checks the value NotNone of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value $iuv of the record at column IUV of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value $activateIOPaymentResponse.paymentToken of the record at column CCP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value 11$iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value $closePayment.pspTransactionId of the record at column PSP_TRANSACTION_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value 70000000001 of the record at column PSP_ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value 77777777777_01 of the record at column STAZIONE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value 70000000001_01 of the record at column CANALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value $activateIOPaymentResponse.paymentToken of the record at column ID_SESSIONE_ORIGINALE of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value OK of the record at column OUTCOME of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value closePayment-v1 of the record at column INSERTED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And checks the value sendPaymentResult-v1 of the record at column UPDATED_BY of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-#       And update through the query update_payment_status of the table POSITION_RETRY_SENDPAYMENTRESULT the parameter PSP_TRANSACTION_ID with resSPR_200OK under macro AppIO on db nodo_online
-#       And wait 90 seconds for expiration
-#       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query noticeid_pafiscalcode on db nodo_online under macro AppIO
-#       And checks the value None of the record at column ID of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query payment_status on db nodo_online under macro AppIO
-
-# # da aggiungere in query_AutomationTest.json
-# # "AppIO" : {"noticeid_pafiscalcode": "SELECT columns FROM table_name WHERE NOTICE_ID = '311$iuv' and PA_FISCAL_CODE = '#creditor_institution_code#' ORDER BY ID ASC",
-# #            "token_psptransactionid": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken' and PSP_TRANSACTION_ID = '$closePayment.pspTransactionId' ORDER BY ID ASC",
-# #            "payment_status": "SELECT columns FROM table_name WHERE NOTICE_ID = '311$iuv' and ID_DOMINIO = '#creditor_institution_code#' ORDER BY ID ASC",
-# #            "update_payment_status": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='311$iuv' and ID_DOMINIO = '#creditor_institution_code#'",
+   # T_SPR_14
+   Scenario: T_SPR_14 (end retry spr)
+      Given the T_SPR_13 (retry spr) scenario executed successfully
+      And update through the query update_retry_spr of the table POSITION_RETRY_SENDPAYMENTRESULT the parameter PSP_TRANSACTION_ID with #psp_transaction_id# under macro AppIO on db nodo_online
+      When job positionRetrySendPaymentResult triggered after 10 seconds
+      And wait 15 seconds for expiration
+      And verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
