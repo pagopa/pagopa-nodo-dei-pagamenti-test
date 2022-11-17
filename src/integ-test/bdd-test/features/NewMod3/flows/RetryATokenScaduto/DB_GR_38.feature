@@ -3,7 +3,7 @@ Feature: process tests for DB_GR_38
   Background:
     Given systems up
 
-  Scenario: initial verifyPaymentNotice
+  Scenario: Execute verifyPaymentNotice request
     Given initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
