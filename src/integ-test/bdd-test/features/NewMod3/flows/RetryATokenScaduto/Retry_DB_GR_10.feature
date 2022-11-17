@@ -84,7 +84,7 @@ Feature: process tests for Retry_DB_GR_10
       <debtor>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>#creditor_institution_code_secondary#</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>paGetPaymentName</fullName>
       <!--Optional:-->
@@ -196,7 +196,7 @@ Feature: process tests for Retry_DB_GR_10
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
-  @runnable
+  @fix
   Scenario: DB check + db update
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
