@@ -426,7 +426,7 @@ Feature: flow checks for sendPaymentResult with PA new
       Given the T_SPR_04 (activateIOPayment) scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
-   @wip
+   
    Scenario: T_SPR_04 (closePayment)
       Given the T_SPR_04 (informazioniPagamento) scenario executed successfully
       And the pspNotifyPayment KO scenario executed successfully
@@ -817,11 +817,11 @@ Feature: flow checks for sendPaymentResult with PA new
       And checks the value v1 of the record at column VERSION of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
       And checks the value NotNone of the record at column REQUEST of the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
 
-   @wip
-   # T_SPR_14
-   Scenario: T_SPR_14 (end retry spr)
-      Given the T_SPR_13 (retry spr) scenario executed successfully
-      And updates through the query update_retry_spr of the table POSITION_RETRY_SENDPAYMENTRESULT the parameter PSP_TRANSACTION_ID with resSPR_200 under macro AppIO on db nodo_online
-      When job positionRetrySendPaymentResult triggered after 65 seconds
-      And wait 15 seconds for expiration
-      Then verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
+
+   # T_SPR_14 - Test non eseguibile perché il payload di request della SPR usato nel retry viene creato alla prima chiamata della SPR, quindi il pspTransactionId sarà sempre resSPR_422
+   # Scenario: T_SPR_14 (end retry spr)
+   #    Given the T_SPR_13 (retry spr) scenario executed successfully
+   #    And updates through the query update_retry_spr of the table POSITION_RETRY_SENDPAYMENTRESULT the parameter PSP_TRANSACTION_ID with resSPR_200 under macro AppIO on db nodo_online
+   #    When job positionRetrySendPaymentResult triggered after 65 seconds
+   #    And wait 15 seconds for expiration
+   #    Then verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query retry_spr on db nodo_online under macro AppIO
