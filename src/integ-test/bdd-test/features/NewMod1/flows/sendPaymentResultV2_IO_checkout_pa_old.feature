@@ -947,10 +947,10 @@ Feature: flow tests for sendPaymentResultV2
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # RE
-        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And execution query sprv2_req_ccp to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_ccp convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value KO
-        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.paymentToken is equal to value $ccp
         And checking value $XML_RE.description is equal to value TPAY
         And checking value $XML_RE.fiscalCode is equal to value $nodoInviaRPT.pay_i:identificativoDominio
         And checking value $XML_RE.companyName is equal to value #ragione_sociale#
@@ -994,10 +994,10 @@ Feature: flow tests for sendPaymentResultV2
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # RE
-        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And execution query sprv2_req_ccp to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_ccp convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value KO
-        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.paymentToken is equal to value $ccp
         And checking value $XML_RE.description is equal to value TPAY
         And checking value $XML_RE.fiscalCode is equal to value $nodoInviaRPT.pay_i:identificativoDominio
         And checking value $XML_RE.companyName is equal to value #ragione_sociale#
@@ -1049,10 +1049,10 @@ Feature: flow tests for sendPaymentResultV2
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # RE
-        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And execution query sprv2_req_ccp to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_ccp convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value KO
-        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.paymentToken is equal to value $ccp
         And checking value $XML_RE.description is equal to value TPAY
         And checking value $XML_RE.fiscalCode is equal to value $nodoInviaRPT.pay_i:identificativoDominio
         And checking value $XML_RE.companyName is equal to value #ragione_sociale#
@@ -1104,10 +1104,10 @@ Feature: flow tests for sendPaymentResultV2
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # RE
-        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And execution query sprv2_req_ccp to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_ccp convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value KO
-        And checking value $XML_RE.paymentToken is equal to value $sendPaymentOutcome.paymentToken
+        And checking value $XML_RE.paymentToken is equal to value $ccp
         And checking value $XML_RE.description is equal to value TPAY
         And checking value $XML_RE.fiscalCode is equal to value $nodoInviaRPT.pay_i:identificativoDominio
         And checking value $XML_RE.companyName is equal to value #ragione_sociale#

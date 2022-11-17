@@ -899,8 +899,8 @@ Feature: flow tests for sendPaymentResultV2
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # RE
-        And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And execution query sprv2_req_activatev2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_activatev2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value KO
         And checking value $XML_RE is containing value [{"paymentToken":"$activatePaymentNoticeV2Response.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"},{"paymentToken":"$activatePaymentNoticeV2NewResponse.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"}]
 
@@ -948,8 +948,8 @@ Feature: flow tests for sendPaymentResultV2
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # RE
-        And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And execution query sprv2_req_activatev2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_activatev2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value KO
         And checking value $XML_RE is containing value [{"paymentToken":"$activatePaymentNoticeV2Response.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"},{"paymentToken":"$activatePaymentNoticeV2NewResponse.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"}]
 
@@ -1005,8 +1005,8 @@ Feature: flow tests for sendPaymentResultV2
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # RE
-        And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And execution query sprv2_req_activatev2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_activatev2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value KO
         And checking value $XML_RE is containing value [{"paymentToken":"$activatePaymentNoticeV2Response.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"},{"paymentToken":"$activatePaymentNoticeV2NewResponse.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"}]
 
@@ -1060,8 +1060,8 @@ Feature: flow tests for sendPaymentResultV2
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # RE
-        And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And execution query sprv2_req_activatev2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_activatev2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value KO
         And checking value $XML_RE is containing value [{"paymentToken":"$activatePaymentNoticeV2Response.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"},{"paymentToken":"$activatePaymentNoticeV2NewResponse.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"}]
 
@@ -1116,8 +1116,8 @@ Feature: flow tests for sendPaymentResultV2
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # RE
-        And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And execution query sprv2_req_activatev2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_activatev2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value KO
         And checking value $XML_RE is containing value [{"paymentToken":"$activatePaymentNoticeV2Response.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"},{"paymentToken":"$activatePaymentNoticeV2NewResponse.paymentToken","description":"$paGetPaymentV2.description","fiscalCode":"$activatePaymentNoticeV2.fiscalCode","companyName":"$paGetPaymentV2.companyName","debtor":"$paGetPaymentV2.entityUniqueIdentifierValue","officeName":"$paGetPaymentV2.officeName"}]
 
