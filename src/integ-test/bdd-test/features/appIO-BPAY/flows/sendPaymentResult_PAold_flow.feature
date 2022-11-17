@@ -430,7 +430,7 @@ Feature: flow checks for sendPaymentResult with PA old
          <irraggiungibile/>
          </pfn:pspNotifyPaymentRes>
          </soapenv:Body>
-         </soapenv:Envelope>successfully
+         </soapenv:Envelope>
          """
       And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
@@ -762,7 +762,8 @@ Feature: flow checks for sendPaymentResult with PA old
 
    # T_SPR_22
    Scenario: T_SPR_22 (nodoAttivaRPT)
-      Given nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 1000
+      Given nodo-dei-pagamenti DEV has config parameter scheduler.annullamentoRptMaiRichiesteDaPmPollerMinutesToBack set to 1
+      And nodo-dei-pagamenti DEV has config parameter scheduler.jobName_annullamentoRptMaiRichiesteDaPm.enabled set to true
       And wait 5 seconds for expiration
       And the nodoAttivaRPT scenario executed successfully
       When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
@@ -776,8 +777,8 @@ Feature: flow checks for sendPaymentResult with PA old
 
    Scenario: T_SPR_22 (mod3CancelV1)
       Given the T_SPR_22 (informazioniPagamento) scenario executed successfully
-      When job mod3CancelV1 triggered after 3 seconds
-      Then verify the HTTP status code of mod3CancelV1 response is 200
+      When job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
+      Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
       And wait 5 seconds for expiration
 
    Scenario: T_SPR_22 (closePayment)
@@ -788,7 +789,7 @@ Feature: flow checks for sendPaymentResult with PA old
       Then verify the HTTP status code of v1/closepayment response is 400
       And check esito is KO of v1/closepayment response
       And check descrizione is Esito non accettabile a token scaduto of v1/closepayment response
-      And nodo-dei-pagamenti DEV has config parameter default_durata_token_IO set to 3600000
+      And nodo-dei-pagamenti DEV has config parameter scheduler.annullamentoRptMaiRichiesteDaPmPollerMinutesToBack set to 10
       And wait 5 seconds for expiration
       And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
       And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
