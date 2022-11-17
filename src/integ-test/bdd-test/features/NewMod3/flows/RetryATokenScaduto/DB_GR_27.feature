@@ -153,7 +153,7 @@ Feature: process tests for DB_GR_27
     #Then verify the HTTP status code of mod3CancelV2 response is 200
 
   # Payment Outcome Phase outcome OK
-  @fix
+  @runnable
   Scenario: Execute sendPaymentOutcome request
     Given the Execute activatePaymentNotice request scenario executed successfully
     And initial XML sendPaymentOutcome
