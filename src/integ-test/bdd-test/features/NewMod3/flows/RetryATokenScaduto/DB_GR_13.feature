@@ -16,7 +16,7 @@ Feature: process tests for Retry_DB_GR_13
       <soapenv:Body>
       <nod:verifyPaymentNoticeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>80000000001</idBrokerPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
@@ -44,7 +44,7 @@ Feature: process tests for Retry_DB_GR_13
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
       <idPSP>#psp#</idPSP>
-      <idBrokerPSP>80000000001</idBrokerPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -108,7 +108,7 @@ Feature: process tests for Retry_DB_GR_13
       <transfer>
       <idTransfer>1</idTransfer>
       <transferAmount>10.00</transferAmount>
-      <fiscalCodePA>creditor_institution_code_secondary</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -201,6 +201,7 @@ Feature: process tests for Retry_DB_GR_13
     When job paSendRt triggered after 5 seconds
     Then verify the HTTP status code of paSendRt response is 200
 
+@runnable
   Scenario: DB check + db update
     Given the trigger jobs paSendRt scenario executed successfully
     And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
@@ -254,9 +255,6 @@ Feature: process tests for Retry_DB_GR_13
     And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And verify 3 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
 
-  @runnable
-  Scenario: job refresh pa (2)
-    Given the DB check + db update scenario executed successfully
     Then refresh job PA triggered after 10 seconds
 
 
