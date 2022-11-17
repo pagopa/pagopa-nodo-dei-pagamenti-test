@@ -355,7 +355,7 @@ Feature: flow tests for sendPaymentResultV2
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
     @skip
     Scenario: pspNotifyPayment KO response
@@ -378,7 +378,7 @@ Feature: flow tests for sendPaymentResultV2
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
     @skip
     Scenario: pspNotifyPayment irraggiungibile response
@@ -393,7 +393,7 @@ Feature: flow tests for sendPaymentResultV2
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
     @skip
     Scenario: sendPaymentOutcome request
