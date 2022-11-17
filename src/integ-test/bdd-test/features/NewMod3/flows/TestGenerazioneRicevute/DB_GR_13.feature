@@ -1,4 +1,4 @@
-Feature: process tests for Retry_DB_GR_13
+Feature: process tests for DB_GR_13
 
   Background:
     Given systems up
@@ -101,7 +101,7 @@ Feature: process tests for Retry_DB_GR_13
       <transfer>
       <idTransfer>1</idTransfer>
       <transferAmount>5.00</transferAmount>
-      <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -196,6 +196,7 @@ Feature: process tests for Retry_DB_GR_13
     When job paSendRt triggered after 5 seconds
     And wait 10 seconds for expiration
     Then verify the HTTP status code of paSendRt response is 200
+
 
 @runnable
   Scenario: DB check + db update
