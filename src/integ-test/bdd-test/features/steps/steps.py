@@ -283,6 +283,12 @@ def step_impl(context):
         payload = payload.replace('#iuv2#', iuv)
         setattr(context, '2iuv', iuv)
 
+    if '#IUVspecial#' in payload:
+        IUVspecial = '!ìUV[#à°]_' + \
+            datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3] + '$§'
+        payload = payload.replace('#IUVspecial#', IUVspecial)
+        setattr(context, 'IUVspecial', IUVspecial)
+
     if '#IUV_#' in payload:
         IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' + \
             datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
@@ -420,6 +426,8 @@ def step_impl(context, number):
             datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#IUV_{number}#', IUV_)
         setattr(context, f'{number}IUV_', IUV_)
+
+
 
     if f"#ccp{number}#" in payload:
         ccp = str(int(time.time() * 1000))
