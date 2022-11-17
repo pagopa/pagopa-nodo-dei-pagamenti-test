@@ -5,7 +5,7 @@ Feature: process tests for Retry_DB_GR_07
 
   # Verify phase
   Scenario: Execute verifyPaymentNotice request
-    And initial XML verifyPaymentNotice
+    Given initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
