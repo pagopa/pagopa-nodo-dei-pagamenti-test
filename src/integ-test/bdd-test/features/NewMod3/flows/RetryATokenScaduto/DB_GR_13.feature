@@ -84,7 +84,7 @@ Feature: process tests for Retry_DB_GR_13
       <debtor>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>creditor_institution_code</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>paGetPaymentName</fullName>
       <!--Optional:-->
