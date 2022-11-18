@@ -83,6 +83,7 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And wait 30 seconds for expiration
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
