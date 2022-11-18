@@ -1,4 +1,4 @@
-Feature: T221_NotificaAnnullamento_RPT_RIFPSP
+Feature: T221_NotificaAnnullamento_RPT_noParam
 
     Background:
         Given systems up
@@ -120,15 +120,15 @@ Feature: T221_NotificaAnnullamento_RPT_RIFPSP
 
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execution idPagamento scenario executed successfully
-        When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
+        When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
 
 @runnable
-    Scenario: Execution test T221_NotificaAnnullamento_RPT_CONPSP
+    Scenario: Check DB
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         When job paInviaRt triggered after 5 seconds
         And wait 10 seconds for expiration 
-        Then checks the value Annullato per RPT rifiutata of the record at column ESITO of the table RT retrived by the query esito on db nodo_online under macro Mod1
-        And checks the value RIFPSP of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+        Then checks the value Annullato da WISP of the record at column ESITO of the table RT retrived by the query esito on db nodo_online under macro Mod1
+        And checks the value OTHER of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
         And checks the value RPT of the record at column TIPO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
     

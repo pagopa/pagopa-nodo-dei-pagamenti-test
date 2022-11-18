@@ -3,14 +3,9 @@ Feature: process tests for Retry_DB_GR_13
   Background:
     Given systems up
 
-    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition FK_PA and where value ('13','1201') under macro update_query on db nodo_cfg
-
-
-  Scenario: job refresh pa (1)
-    Given refresh job PA triggered after 10 seconds
-
-  Scenario: initial verifyPaymentNotice
-    Given the job refresh pa (1) scenario executed successfully
+  Scenario: Execute verifyPaymentNotice request
+    Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
+    And refresh job PA triggered after 10 seconds
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -29,11 +24,6 @@ Feature: process tests for Retry_DB_GR_13
       </soapenv:Body>
       </soapenv:Envelope>
       """
-
-
-  # Verify phase
-  Scenario: Execute verifyPaymentNotice request
-    Given the initial verifyPaymentNotice scenario executed successfully
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
@@ -87,7 +77,7 @@ Feature: process tests for Retry_DB_GR_13
       <debtor>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>#creditor_institution_code_secondary#</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>paGetPaymentName</fullName>
       <!--Optional:-->
@@ -111,7 +101,7 @@ Feature: process tests for Retry_DB_GR_13
       <transfer>
       <idTransfer>1</idTransfer>
       <transferAmount>10.00</transferAmount>
-      <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -204,15 +194,12 @@ Feature: process tests for Retry_DB_GR_13
     When job paSendRt triggered after 5 seconds
     Then verify the HTTP status code of paSendRt response is 200
 
+@runnable
   Scenario: DB check + db update
     Given the trigger jobs paSendRt scenario executed successfully
     And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
-
-  @runnable
-  Scenario: job refresh pa (2)
-    Given the DB check + db update scenario executed successfully
-    Then refresh job PA triggered after 10 seconds
+    And refresh job PA triggered after 10 seconds
 
 
 
