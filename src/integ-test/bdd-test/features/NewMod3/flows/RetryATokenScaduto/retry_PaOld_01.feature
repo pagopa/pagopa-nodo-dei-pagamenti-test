@@ -2,7 +2,9 @@ Feature: process tests for retryAtokenScaduto
 
     Background:
         Given systems up
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to false
+
+    Scenario: Execute verifyPaymentNotice request
+        Given nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to false
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And initial XML verifyPaymentNotice
             """
