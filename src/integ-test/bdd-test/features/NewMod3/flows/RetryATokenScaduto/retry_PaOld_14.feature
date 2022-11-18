@@ -250,7 +250,6 @@ Feature: process tests for retryAtokenScaduto
     And checks the value $1iuv of the record at column CREDITOR_REFERENCE_ID of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNoticeResponse.paymentToken-v2 of the record at column PAYMENT_TOKEN of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
-    And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
 
   @runnable
