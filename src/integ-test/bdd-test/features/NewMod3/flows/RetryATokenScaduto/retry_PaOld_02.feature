@@ -196,6 +196,7 @@ Feature: process tests for retryAtokenScaduto
       </soapenv:Envelope>
       """
     And EC replies to nodo-dei-pagamenti with the paaInviaRT
+    And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
     When job paInviaRt triggered after 130 seconds
     Then verify the HTTP status code of paInviaRt response is 200
     And replace iuv content with $1iuv content
@@ -248,3 +249,4 @@ Feature: process tests for retryAtokenScaduto
 
     And checks the value PAYING,PAYING_RPT,CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And restore initial configurations
