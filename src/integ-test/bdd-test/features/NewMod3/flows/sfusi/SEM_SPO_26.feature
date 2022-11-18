@@ -45,7 +45,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
           <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
           <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-          <outcome>OK</outcome>
+          <outcome>KO</outcome>
           <!--Optional:-->
           <details>
             <paymentMethod>creditCard</paymentMethod>
@@ -137,4 +137,4 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
     """
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
+    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
