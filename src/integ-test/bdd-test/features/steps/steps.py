@@ -1463,12 +1463,12 @@ def step_impl(context, job_name):
     #nodo_response = requests.get(
     #f"{url_nodo}nodo-dev/config/refresh/{job_name}", headers=headers, verify=False)
     # pipeline
+    time.sleep(10)
     nodo_response = requests.get(
         f"{url_nodo}/monitoring/v1/config/refresh/{job_name}", headers=headers, verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
     refresh_response = requests.get(utils.get_refresh_config_url(
         context), headers=headers, verify=False)
-    time.sleep(10)
     assert refresh_response.status_code == 200
 
 
