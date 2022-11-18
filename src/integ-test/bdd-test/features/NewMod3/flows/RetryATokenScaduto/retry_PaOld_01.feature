@@ -179,6 +179,7 @@ Feature: process tests for retryAtokenScaduto
     Scenario: DB check
         Given the Execute paInviaRT scenario executed successfully
         And PSP waits 5 seconds for expiration
+        And replace iuv content with $1iuv content
         Then checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
     # Payment Outcome Phase outcome OK
