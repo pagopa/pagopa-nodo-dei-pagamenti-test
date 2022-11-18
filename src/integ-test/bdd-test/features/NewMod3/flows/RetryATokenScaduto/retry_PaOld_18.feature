@@ -172,7 +172,7 @@ Feature: process tests for retryAtokenScaduto
 
   Scenario: trigger paInviaRT + DB check
     Given the Execute poller Annulli scenario executed successfully
-    When job paInviaRt triggered after 20 seconds
+    When job paInviaRt triggered after 30 seconds
     Then verify the HTTP status code of paInviaRt response is 200
     And wait 5 seconds for expiration
     And replace iuv content with $1iuv content
