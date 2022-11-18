@@ -173,7 +173,8 @@ Feature: process tests for retryAtokenScaduto
 
     Scenario: Execute paInviaRT
         Given the Execute poller Annulli scenario executed successfully
-        When job paInviaRt triggered after 130 seconds
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
+        When job paInviaRt triggered after 20 seconds
         Then verify the HTTP status code of paInviaRt response is 200
 
     Scenario: DB check
@@ -230,3 +231,4 @@ Feature: process tests for retryAtokenScaduto
     Scenario: check position_payment_status
         Given the Execute sendPaymentOutcome request scenario executed successfully
         Then checks the value PAYING,PAYING_RPT,CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And restore initial configurations
