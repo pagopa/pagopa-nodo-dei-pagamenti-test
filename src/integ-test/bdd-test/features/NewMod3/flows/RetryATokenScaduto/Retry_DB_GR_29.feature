@@ -9,7 +9,7 @@ Feature: process tests for Retry_DB_GR_29
     Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('11993') under macro update_query on db nodo_cfg
     Then refresh job PA triggered after 10 seconds
 
-  Scenario: initial verifyPaymentNotice
+  Scenario: Execute verifyPaymentNotice request
     Given the job refresh pa (1) scenario executed successfully
     And initial XML verifyPaymentNotice
       """
@@ -29,10 +29,6 @@ Feature: process tests for Retry_DB_GR_29
       </soapenv:Body>
       </soapenv:Envelope>
       """
-
-  # Verify phase
-  Scenario: Execute verifyPaymentNotice request
-    Given the initial verifyPaymentNotice scenario executed successfully
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
@@ -143,7 +139,8 @@ Feature: process tests for Retry_DB_GR_29
 
   Scenario: Poller Annulli
     Given the Execute activatePaymentNotice request scenario executed successfully
-    When job mod3CancelV2 triggered after 1 seconds
+    When job mod3CancelV2 triggered after 3 seconds
+    And wait 5 seconds for expiration
     Then verify the HTTP status code of mod3CancelV2 response is 200
 
   # Payment Outcome Phase outcome OK
