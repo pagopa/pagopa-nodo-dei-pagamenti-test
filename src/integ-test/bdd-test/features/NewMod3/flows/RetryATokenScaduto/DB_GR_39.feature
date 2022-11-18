@@ -4,7 +4,7 @@ Feature: process tests for DB_GR_39
     Given systems up
     
   Scenario: Execute verifyPaymentNotice request
-    Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition FK_PA and where value ('16629') under macro update_query on db nodo_cfg
+    Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('16639') under macro update_query on db nodo_cfg
     And refresh job PA triggered after 10 seconds
     And initial XML verifyPaymentNotice
       """
@@ -228,7 +228,7 @@ Feature: process tests for DB_GR_39
   
     @runnable
   Scenario: job refresh pa (2)
-    Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('16629') under macro update_query on db nodo_cfg
+    Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('16639') under macro update_query on db nodo_cfg
     Then refresh job PA triggered after 10 seconds
   
 
