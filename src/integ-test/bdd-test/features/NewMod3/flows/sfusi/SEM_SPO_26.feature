@@ -82,7 +82,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
     </soapenv:Envelope>
     """
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is KO of sendPaymentOutcome response
+    Then check outcome is OK of sendPaymentOutcome response
 
   @runnable
   # sendPaymentOutcomeReq phase 2
