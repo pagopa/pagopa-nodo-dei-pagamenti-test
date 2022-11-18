@@ -4,7 +4,7 @@ Feature: process checks for pspNotifyPayment
     Given systems up
 
   Scenario: Execute activateIOPayment request
-    And initial XML activateIOPayment
+    Given initial XML activateIOPayment
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
       <soapenv:Header/>
