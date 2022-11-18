@@ -71,7 +71,7 @@ Feature: process tests Retry_REV_DB_GR_02
                         <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                         <password>pwdpwdpwd</password>
                         <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-                        <outcome>OK</outcome>
+                        <outcome>KO</outcome>
                         <!--Optional:-->
                         <details>
                             <paymentMethod>creditCard</paymentMethod>
