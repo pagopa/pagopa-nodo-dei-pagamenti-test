@@ -2,11 +2,11 @@ Feature: process tests for DB_GR_39
 
   Background:
     Given systems up
-    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition FK_PA and where value ('16629') under macro update_query on db nodo_cfg
-    And refresh job PA triggered after 10 seconds
     
   Scenario: Execute verifyPaymentNotice request
-    Given initial XML verifyPaymentNotice
+    Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition FK_PA and where value ('16629') under macro update_query on db nodo_cfg
+    And refresh job PA triggered after 10 seconds
+    And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
@@ -123,11 +123,6 @@ Feature: process tests for DB_GR_39
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-
-  Scenario: Poller Annulli
-    Given the Execute activatePaymentNotice request scenario executed successfully
-    When job mod3CancelV2 triggered after 3 seconds
-    Then verify the HTTP status code of mod3CancelV2 response is 200
 
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
