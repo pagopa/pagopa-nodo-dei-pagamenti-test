@@ -226,3 +226,4 @@ Feature: process tests for retryAtokenScaduto
     Then checks the value PAYING,PAYING_RPT,CANCELLED,PAID_NORPT of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And wait 70 seconds for expiration
     And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And restore initial configurations

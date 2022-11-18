@@ -2,7 +2,10 @@ Feature: process tests for retryAtokenScaduto
 
     Background:
         Given systems up
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to false
+
+    Scenario: Execute verifyPaymentNotice request
+        Given nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to false
+        And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -15,16 +18,12 @@ Feature: process tests for retryAtokenScaduto
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-            <noticeNumber>#notice_number_old#</noticeNumber>
+            <noticeNumber>$1noticeNumber</noticeNumber>
             </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
-
-    # Verify phase
-    Scenario: Execute verifyPaymentNotice request
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
@@ -44,7 +43,7 @@ Feature: process tests for retryAtokenScaduto
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-            <noticeNumber>#notice_number_old#</noticeNumber>
+            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
             <expirationTime>2000</expirationTime>
             <amount>10.00</amount>
@@ -117,7 +116,7 @@ Feature: process tests for retryAtokenScaduto
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -147,16 +146,16 @@ Feature: process tests for retryAtokenScaduto
             <identificativoIntermediarioPA>$activatePaymentNotice.fiscalCode</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>$activatePaymentNotice.fiscalCode</identificativoDominio>
-            <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>15376371009</identificativoPSP>
-            <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
-            <identificativoCanale>15376371009_01</identificativoCanale>
+            <identificativoPSP>#pspFittizio#</identificativoPSP>
+            <identificativoIntermediarioPSP>#pspFittizio#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canaleFittizio#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -174,12 +173,14 @@ Feature: process tests for retryAtokenScaduto
 
     Scenario: Execute paInviaRT
         Given the Execute poller Annulli scenario executed successfully
-        When job paInviaRt triggered after 5 seconds
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
+        When job paInviaRt triggered after 20 seconds
         Then verify the HTTP status code of paInviaRt response is 200
 
     Scenario: DB check
         Given the Execute paInviaRT scenario executed successfully
         And PSP waits 5 seconds for expiration
+        And replace iuv content with $1iuv content
         Then checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
     # Payment Outcome Phase outcome OK
@@ -230,3 +231,4 @@ Feature: process tests for retryAtokenScaduto
     Scenario: check position_payment_status
         Given the Execute sendPaymentOutcome request scenario executed successfully
         Then checks the value PAYING,PAYING_RPT,CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+        And restore initial configurations

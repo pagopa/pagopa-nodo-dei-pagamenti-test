@@ -2,15 +2,12 @@ Feature: process tests for Retry_DB_GR_29
 
   Background:
     Given systems up
-    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
 
 
-  Scenario: job refresh pa (1)
-    Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('11993') under macro update_query on db nodo_cfg
-    Then refresh job PA triggered after 10 seconds
-
-  Scenario: initial verifyPaymentNotice
-    Given the job refresh pa (1) scenario executed successfully
+  Scenario: Execute verifyPaymentNotice request
+    Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
+    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('11993') under macro update_query on db nodo_cfg
+    And refresh job PA triggered after 10 seconds
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -29,10 +26,6 @@ Feature: process tests for Retry_DB_GR_29
       </soapenv:Body>
       </soapenv:Envelope>
       """
-
-  # Verify phase
-  Scenario: Execute verifyPaymentNotice request
-    Given the initial verifyPaymentNotice scenario executed successfully
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
@@ -54,7 +47,7 @@ Feature: process tests for Retry_DB_GR_29
       <fiscalCode>#creditor_institution_code#</fiscalCode>
       <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
-      <expirationTime>6000</expirationTime>
+      <expirationTime>2000</expirationTime>
       <amount>13.00</amount>
       <dueDate>2021-12-31</dueDate>
       <paymentNote>responseFull2Transfers</paymentNote>
@@ -143,7 +136,8 @@ Feature: process tests for Retry_DB_GR_29
 
   Scenario: Poller Annulli
     Given the Execute activatePaymentNotice request scenario executed successfully
-    When job mod3CancelV2 triggered after 1 seconds
+    When job mod3CancelV2 triggered after 3 seconds
+    And wait 5 seconds for expiration
     Then verify the HTTP status code of mod3CancelV2 response is 200
 
   # Payment Outcome Phase outcome OK
@@ -187,7 +181,8 @@ Feature: process tests for Retry_DB_GR_29
       </soapenv:Envelope>
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is OK of sendPaymentOutcome response
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
     
 
    #Scenario: trigger jobs paSendRt
@@ -197,17 +192,16 @@ Feature: process tests for Retry_DB_GR_29
 
   Scenario: DB check + db update
     Given the Execute sendPaymentOutcome request scenario executed successfully
-    And verify 4 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And wait 5 seconds for expiration
+    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status2 on db nodo_online under macro NewMod3
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('11993') under macro update_query on db nodo_cfg
-   And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    
-   
+    And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status2 on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status2 on db nodo_online under macro NewMod3
+    And checks the value $paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status2 on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status2 on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status2 on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status2 on db nodo_online under macro NewMod3
   
   @runnable
   Scenario: job refresh pa (2)

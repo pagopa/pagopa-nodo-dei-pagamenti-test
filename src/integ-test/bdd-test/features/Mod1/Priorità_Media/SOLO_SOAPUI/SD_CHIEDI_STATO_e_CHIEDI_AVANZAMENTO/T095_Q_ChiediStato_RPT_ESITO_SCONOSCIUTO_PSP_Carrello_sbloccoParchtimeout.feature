@@ -195,45 +195,19 @@ Feature: T095_Q_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML pspInviaCarrelloRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTResponse>
-                        <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                             <delay>10000</delay>
-                            <identificativoCarrello>$1carrello</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$1carrello</parametriPagamentoImmediato>
-                        </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTResponse>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        #And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        #And check faultCode is PPT_CANALE_TIMEOUT of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
         # check STATI_RPT table
         And replace pa content with #creditor_institution_code# content
         And replace iuv content with $1iuv content
         And replace noticeNumber content with $1carrello content
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        #And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         And replace iuv content with avanzaErrResponse$1iuv content
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        #check STATI_CARRELLO table
-        #And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO retrived by the query stati_carrello on db nodo_online under macro Mod1
-        #And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query stati_carrello on db nodo_online under macro Mod1
-        # check POSITION_PAYMENT
-        #And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        #And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
-        #And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        #And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
-
+        
    
 
     Scenario: Execution Esito Carta
@@ -309,12 +283,12 @@ Feature: T095_Q_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio
         And check url field not exists in inoltroEsito/carta response
         And replace iuv content with $1iuv content
         And replace noticeNumber content with $1carrello content
-        #And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
+        
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         And replace iuv content with avanzaErrResponse$1iuv content
-        #And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
+        
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        #And verify 1 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
+        
         And wait 30 seconds for expiration
         And checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
         And verify 1 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1

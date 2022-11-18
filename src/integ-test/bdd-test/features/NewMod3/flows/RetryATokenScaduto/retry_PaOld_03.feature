@@ -226,3 +226,4 @@ Feature: process tests for retryAtokenScaduto
     Given the Execute sendPaymentOutcome request scenario executed successfully
     Then checks the value PAYING,PAYING_RPT,CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And restore initial configurations

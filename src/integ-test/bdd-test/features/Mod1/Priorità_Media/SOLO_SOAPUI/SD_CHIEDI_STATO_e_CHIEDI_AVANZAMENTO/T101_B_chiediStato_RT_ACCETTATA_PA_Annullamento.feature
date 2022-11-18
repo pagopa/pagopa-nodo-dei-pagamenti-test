@@ -212,22 +212,8 @@ Feature: T101_B_chiediStato_RT_ACCETTATA_PA_Annullamento
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti 
         Then check esito is OK of nodoInviaRPT response
-        #And check faultCode is PPT_IBAN_NON_CENSITO of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-        # check STATI_RPT table
-        #And replace iuv content with $1iuv content
-        #And replace pa content with #creditor_institution_code# content
-        #And replace noticeNumber content with $1carrello content
-        #And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        #And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        #check STATI_CARRELLO table
-        #And checks the value CART_RICEVUTO_NODO, CART_ACCETTATO_NODO, CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO retrived by the query stati_carrello on db nodo_online under macro Mod1
-        #And checks the value CART_PARCHEGGIATO_NODO of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query stati_carrello on db nodo_online under macro Mod1
-        # check POSITION_PAYMENT
-        #And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        #And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
-        #And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
-        #And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
+       
 
     Scenario: Execute nodoNotificaAnnullamento
         Given the RPT generation scenario executed successfully
