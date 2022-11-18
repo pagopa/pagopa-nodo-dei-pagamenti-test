@@ -2,6 +2,8 @@ Feature: process checks for pspNotifyPayment
 
   Background:
     Given systems up
+
+  Scenario: Execute activateIOPayment request
     And initial XML activateIOPayment
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
@@ -51,9 +53,6 @@ Feature: process checks for pspNotifyPayment
       </soapenv:Body>
     </soapenv:Envelope>
     """
-    And EC new version
-
-  Scenario: Execute activateIOPayment request
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
 
@@ -116,9 +115,9 @@ Feature: process checks for pspNotifyPayment
       "idPagamento":"$activateIOPaymentResponse.paymentToken",
       "RRN":10026669,
       "tipoVersamento":"CP",
-      "identificativoIntermediario":"40000000001",
-      "identificativoPsp":"40000000001",
-      "identificativoCanale":"40000000001_06",
+      "identificativoIntermediario":"#psp#",
+      "identificativoPsp":"#psp#",
+      "identificativoCanale":"#canale#",
       "importoTotalePagato":10.00,
       "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
       "codiceAutorizzativo":"123456",
@@ -152,9 +151,9 @@ Feature: process checks for pspNotifyPayment
       "idPagamento":"$activateIOPaymentResponse.paymentToken",
       "RRN":10026669,
       "tipoVersamento":"CP",
-      "identificativoIntermediario":"40000000001",
-      "identificativoPsp":"40000000001",
-      "identificativoCanale":"40000000001_06",
+      "identificativoIntermediario":"#psp#",
+      "identificativoPsp":"#psp#",
+      "identificativoCanale":"#canale#",
       "importoTotalePagato":10.00,
       "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
       "codiceAutorizzativo":"123456",
