@@ -4,7 +4,7 @@ Feature: process tests for Retry_DB_GR_13
     Given systems up
 
   Scenario: Execute verifyPaymentNotice request
-    Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition FK_PA and where value ('13','1201') under macro update_query on db nodo_cfg
+    Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
     And refresh job PA triggered after 10 seconds
     And initial XML verifyPaymentNotice
       """
