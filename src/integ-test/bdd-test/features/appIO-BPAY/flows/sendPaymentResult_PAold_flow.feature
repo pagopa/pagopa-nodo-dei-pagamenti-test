@@ -775,15 +775,15 @@ Feature: flow checks for sendPaymentResult with PA old
       When job annullamentoRptMaiRichiesteDaPm triggered after 70 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
       And wait 5 seconds for expiration
-
+   @wip
    Scenario: T_SPR_22 (closePayment)
       Given the T_SPR_22 (annullamentoRptMaiRichiesteDaPm) scenario executed successfully
       And the closePayment scenario executed successfully
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       And job paInviaRt triggered after 5 seconds
-      Then verify the HTTP status code of v1/closepayment response is 400
+      Then verify the HTTP status code of v1/closepayment response is 404
       And check esito is KO of v1/closepayment response
-      And check descrizione is Esito non accettabile a token scaduto of v1/closepayment response
+      And check descrizione is Il Pagamento indicato non esiste of v1/closepayment response
       And nodo-dei-pagamenti DEV has config parameter scheduler.annullamentoRptMaiRichiesteDaPmPollerMinutesToBack set to 10
       And wait 5 seconds for expiration
       And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
