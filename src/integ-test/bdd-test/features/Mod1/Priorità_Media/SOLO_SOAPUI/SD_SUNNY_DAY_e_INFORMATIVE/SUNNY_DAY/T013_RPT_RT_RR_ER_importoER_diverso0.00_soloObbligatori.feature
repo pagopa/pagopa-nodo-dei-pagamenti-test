@@ -304,7 +304,7 @@ Feature: T013_RPT_RT_RR_ER_importoER0.00_soloObbligatori
             <pay_i:datiSingolaRevoca>
             <pay_i:singoloImportoRevocato>10.00</pay_i:singoloImportoRevocato>
             <pay_i:identificativoUnivocoRiscossione>$IUV</pay_i:identificativoUnivocoRiscossione>
-            <pay_i:causaleEsito>esito revoca fotocopie pratica</pay_i:causaleEsito>
+            <pay_i:causaleEsito>idRiscossioneER</pay_i:causaleEsito>
             <pay_i:datiAggiuntiviEsito>datiAggiuntiviEsito</pay_i:datiAggiuntiviEsito>
             </pay_i:datiSingolaRevoca>
             </pay_i:datiRevoca>
