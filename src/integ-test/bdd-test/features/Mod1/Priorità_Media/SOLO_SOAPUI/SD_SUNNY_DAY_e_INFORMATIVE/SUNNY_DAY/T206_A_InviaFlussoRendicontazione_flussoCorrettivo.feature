@@ -65,6 +65,7 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
 
     Scenario: Send nodoInviaFlussoRendicontazione1
         Given the Send nodoInviaFlussoRendicontazione primitive scenario executed successfully
+        And wait 60 seconds for expiration
         And initial XML nodoInviaFlussoRendicontazione
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -83,7 +84,7 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And wait 60 seconds for expiration
+      
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
