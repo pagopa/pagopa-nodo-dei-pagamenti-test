@@ -177,6 +177,7 @@ Feature: process tests for retryAtokenScaduto
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
     Given the Execute poller Annulli scenario executed successfully
+    And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryAttivaRpt.enabled set to false
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -250,11 +251,13 @@ Feature: process tests for retryAtokenScaduto
     And checks the value $1iuv of the record at column CREDITOR_REFERENCE_ID of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNoticeResponse.paymentToken-v2 of the record at column PAYMENT_TOKEN of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
+    And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
 
-  @runnable
+  @fix
   Scenario: Execute paRetryAttivaRpt
     Given the Execute paInviaRT scenario executed successfully
+    And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryAttivaRpt.enabled set to true
     When job paRetryAttivaRpt triggered after 5 seconds
     Then verify the HTTP status code of paRetryAttivaRpt response is 200
     And wait 10 seconds for expiration
