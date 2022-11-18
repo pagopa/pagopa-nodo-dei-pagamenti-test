@@ -24,6 +24,7 @@ Feature: process tests for retryAtokenScaduto
       </soapenv:Body>
       </soapenv:Envelope>
       """
+    When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
   # Activate Phase
