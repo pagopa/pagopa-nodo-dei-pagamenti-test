@@ -263,7 +263,7 @@ Feature: process tests for retry a token scaduto
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
+    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
   
   @runnable
   Scenario: DB check
