@@ -176,7 +176,7 @@ Feature: process tests for retryAtokenScaduto
 
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
-    Given the DB check scenario executed successfully
+    Given the Execute poller Annulli scenario executed successfully
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
