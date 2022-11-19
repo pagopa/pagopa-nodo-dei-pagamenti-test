@@ -203,18 +203,18 @@ Feature: process tests for DB_GR_26
 
   Scenario: DB check + db update
     Given the trigger jobs paSendRt scenario executed successfully
-    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
-    And execution query position_receipt_recipient_status to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro NewMod3 with db name nodo_online
-    And through the query position_receipt_recipient_status retrieve param pa_fiscal_code at position 1 and save it under the key pa_fiscal_code
-    And through the query position_receipt_recipient_status retrieve param notice_id at position 2 and save it under the key notice_id
-    And through the query position_receipt_recipient_status retrieve param creditor_reference_id at position 3 and save it under the key creditor_reference_id
-    And through the query position_receipt_recipient_status retrieve param payment_token at position 4 and save it under the key payment_token
-    And through the query position_receipt_recipient_status retrieve param recipient_pa_fiscal_code at position 5 and save it under the key recipient_pa_fiscal_code
-    And through the query position_receipt_recipient_status retrieve param recipient_broker_pa_id at position 6 and save it under the key recipient_broker_pa_id
-    And through the query position_receipt_recipient_status retrieve param recipient_station_id at position 7 and save it under the key recipient_station_id
-    And through the query position_receipt_recipient_status retrieve param status at position 8 and save it under the key status
-    And through the query position_receipt_recipient_status retrieve param fk_position_receipt at position 11 and save it under the key fk_position_receipt
+    And execution query pos_receipt_recipient_status_order_by to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro NewMod3 with db name nodo_online
+    And through the query pos_receipt_recipient_status_order_by retrieve param pa_fiscal_code at position 1 and save it under the key pa_fiscal_code
+    And through the query pos_receipt_recipient_status_order_by retrieve param notice_id at position 2 and save it under the key notice_id
+    And through the query pos_receipt_recipient_status_order_by retrieve param creditor_reference_id at position 3 and save it under the key creditor_reference_id
+    And through the query pos_receipt_recipient_status_order_by retrieve param payment_token at position 4 and save it under the key payment_token
+    And through the query pos_receipt_recipient_status_order_by retrieve param recipient_pa_fiscal_code at position 5 and save it under the key recipient_pa_fiscal_code
+    And through the query pos_receipt_recipient_status_order_by retrieve param recipient_broker_pa_id at position 6 and save it under the key recipient_broker_pa_id
+    And through the query pos_receipt_recipient_status_order_by retrieve param recipient_station_id at position 7 and save it under the key recipient_station_id
+    And through the query pos_receipt_recipient_status_order_by retrieve param status at position 8 and save it under the key status
+    And through the query pos_receipt_recipient_status_order_by retrieve param fk_position_receipt at position 11 and save it under the key fk_position_receipt
     And checks the value $pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $notice_id of the record at column NOTICE_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $creditor_reference_id of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query position_status_n on db nodo_online under macro NewMod3
@@ -225,37 +225,37 @@ Feature: process tests for DB_GR_26
     And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online under macro NewMod3
     And checks the value $fk_position_receipt of the record at column ID of the table POSITION_RECEIPT retrived by the query position_status_n on db nodo_online under macro NewMod3
     # DB Check POSITION_RECEIPT_RECIPIENT_STATUS
-    And execution query position_receipt_recipient_status to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns * under macro NewMod3 with db name nodo_online
-    And through the query position_receipt_recipient_status retrieve param 1pa_fiscal_code at position 1 and save it under the key 1pa_fiscal_code
-    And through the query position_receipt_recipient_status retrieve param 1notice_id at position 2 and save it under the key 1notice_id
-    And through the query position_receipt_recipient_status retrieve param 1creditor_reference_id at position 3 and save it under the key 1creditor_reference_id
-    And through the query position_receipt_recipient_status retrieve param 1payment_token at position 4 and save it under the key 1payment_token
-    And through the query position_receipt_recipient_status retrieve param 1recipient_pa_fiscal_code at position 5 and save it under the key 1recipient_pa_fiscal_code
-    And through the query position_receipt_recipient_status retrieve param 1recipient_broker_pa_id at position 6 and save it under the key 1recipient_broker_pa_id
-    And through the query position_receipt_recipient_status retrieve param 1recipient_station_id at position 7 and save it under the key 1recipient_station_id
-    And through the query position_receipt_recipient_status retrieve param 1status at position 8 and save it under the key 1status
-    And through the query position_receipt_recipient_status retrieve param 1fk_position_receipt_recipient at position 10 and save it under the key 1fk_position_receipt_recipient
-    And checks the value $1pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $1notice_id of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $1creditor_reference_id of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $1payment_token of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $1recipient_pa_fiscal_code of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $1recipient_broker_pa_id of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $1recipient_station_id of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $1fk_position_receipt_recipient of the record at column ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value $recipient_station_id of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
+    And execution query pos_receipt_recipient_status_order_by to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns * under macro NewMod3 with db name nodo_online
+    And through the query pos_receipt_recipient_status_order_by retrieve param 1pa_fiscal_code at position 1 and save it under the key 1pa_fiscal_code
+    And through the query pos_receipt_recipient_status_order_by retrieve param 1notice_id at position 2 and save it under the key 1notice_id
+    And through the query pos_receipt_recipient_status_order_by retrieve param 1creditor_reference_id at position 3 and save it under the key 1creditor_reference_id
+    And through the query pos_receipt_recipient_status_order_by retrieve param 1payment_token at position 4 and save it under the key 1payment_token
+    And through the query pos_receipt_recipient_status_order_by retrieve param 1recipient_pa_fiscal_code at position 5 and save it under the key 1recipient_pa_fiscal_code
+    And through the query pos_receipt_recipient_status_order_by retrieve param 1recipient_broker_pa_id at position 6 and save it under the key 1recipient_broker_pa_id
+    And through the query pos_receipt_recipient_status_order_by retrieve param 1recipient_station_id at position 7 and save it under the key 1recipient_station_id
+    And through the query pos_receipt_recipient_status_order_by retrieve param 1status at position 8 and save it under the key 1status
+    And through the query pos_receipt_recipient_status_order_by retrieve param 1fk_position_receipt_recipient at position 10 and save it under the key 1fk_position_receipt_recipient
+    And checks the value $1pa_fiscal_code of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+    And checks the value $1notice_id of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+    And checks the value $1creditor_reference_id of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+    And checks the value $1payment_token of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_RECIPIENT retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+    And checks the value $1recipient_pa_fiscal_code of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+    And checks the value $1recipient_broker_pa_id of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+    And checks the value $1recipient_station_id of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+    And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+    And checks the value $1fk_position_receipt_recipient of the record at column ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+    And checks the value $paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+    And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+    And checks the value $recipient_station_id of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
+    And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query pos_receipt_recipient_status_order_by on db nodo_online under macro NewMod3
     And verify 3 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
 
 
-  @runnable
+  @fix
   Scenario: job refresh pa (2)
     Given the DB check + db update scenario executed successfully
     Then refresh job PA triggered after 10 seconds
