@@ -18,7 +18,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_errore_response_B]
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
+            <noticeNumber>#notice_number_old#</noticeNumber>
             </qrCode>
             <!--expirationTime>60000</expirationTime-->
             <amount>7.00</amount>

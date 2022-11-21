@@ -148,9 +148,9 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
 
     Scenario: Trigger paInviaRT
         Given the Trigger mod3Cancel scenario executed successfully
-        When job paInviaRT triggered after 5 seconds
+        When job paInviaRt triggered after 5 seconds
         And wait 10 seconds for expiration
-        Then verify the HTTP status code of paInviaRT response is 200
+        Then verify the HTTP status code of paInviaRt response is 200
 
     Scenario: Execute activatePaymentNotice3 request
         Given the Trigger paInviaRT scenario executed successfully

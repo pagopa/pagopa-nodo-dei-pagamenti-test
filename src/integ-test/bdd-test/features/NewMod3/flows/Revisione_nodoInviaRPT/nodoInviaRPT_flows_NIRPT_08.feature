@@ -198,9 +198,9 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazionePPT>
-         <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-         <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
-         <identificativoDominio>44444444444</identificativoDominio>
+         <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+         <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+         <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
          </ppt:intestazionePPT>
@@ -219,15 +219,6 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
          """
       When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoInviaRPT response
-      #And checks the value $activatePaymentNotice.id of the record at column ID of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
-      #And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
-      #And checks the value pagamento multibeneficiario of the record at column DESCRIPTION of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
-      #And checks the value $paaAttivaRPT.companyName of the record at column COMPANY_NAME of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
-      #And checks the value $activatePaymentNotice.officeName of the record at column OFFICE_NAME of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
-      #And checks the value $activatePaymentNotice.debtorIDiniziale of the record at column DEBTOR_ID of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
-      #And checks the value $activatePaymentNotice.insertedTimestamp of the record at column INSERTED_TIMESTAMP of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
-      #And checks the value $activatePaymentNotice.updatedTimestamp of the record at column UPDATED_TIMESTAMP of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
-      #And checks the value $activatePaymentNotice.id1 of the record at column ID of the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
       And verify 1 record for the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
 
 

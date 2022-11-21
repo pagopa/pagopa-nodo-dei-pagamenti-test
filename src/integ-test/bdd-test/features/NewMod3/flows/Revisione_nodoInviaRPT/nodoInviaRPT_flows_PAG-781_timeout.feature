@@ -58,29 +58,13 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
             <soapenv:Body>
             <ws:paaAttivaRPTRisposta>
             <paaAttivaRPTRisposta>
+            <fault>
+            <faultCode>PAA_SEMANTICA_EXTRAXSD</faultCode>
+            <faultString>errore semantico PA</faultString>
+            <id>#creditor_institution_code#</id>
+            <description>Errore semantico emesso dalla PA</description>
+            </fault>
             <esito>KO</esito>
-            <datiPagamentoPA>
-            <importoSingoloVersamento>2.00</importoSingoloVersamento>
-            <ibanAccredito>IT96R0123454321000000012345</ibanAccredito>
-            <bicAccredito>BSCTCH22</bicAccredito>
-            <enteBeneficiario>
-            <pag:identificativoUnivocoBeneficiario>
-            <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
-            <pag:codiceIdentificativoUnivoco>11111111117</pag:codiceIdentificativoUnivoco>
-            </pag:identificativoUnivocoBeneficiario>
-            <pag:denominazioneBeneficiario>AZIENDA XXX</pag:denominazioneBeneficiario>
-            <pag:codiceUnitOperBeneficiario>123</pag:codiceUnitOperBeneficiario>
-            <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>
-            <pag:indirizzoBeneficiario>y</pag:indirizzoBeneficiario>
-            <pag:civicoBeneficiario>j</pag:civicoBeneficiario>
-            <pag:capBeneficiario>gt</pag:capBeneficiario>
-            <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>
-            <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>
-            <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>
-            </enteBeneficiario>
-            <credenzialiPagatore>i</credenzialiPagatore>
-            <causaleVersamento>pagamento fotocopie pratica RPT</causaleVersamento>
-            </datiPagamentoPA>
             </paaAttivaRPTRisposta>
             </ws:paaAttivaRPTRisposta>
             </soapenv:Body>
