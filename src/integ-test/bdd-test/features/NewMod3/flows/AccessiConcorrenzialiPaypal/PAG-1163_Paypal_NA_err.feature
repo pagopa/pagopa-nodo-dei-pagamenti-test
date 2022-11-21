@@ -189,8 +189,8 @@ Feature: PAG-1163_Paypal_NA_err
             <soapenv:Header/>
             <soapenv:Body>
             <pfn:pspNotifyPaymentRes>
-            <delay>8000</delay>
-            <outcome>Malformed</outcome>
+            <delay>10000</delay>
+            <outcome>OK</outcome>
             </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
