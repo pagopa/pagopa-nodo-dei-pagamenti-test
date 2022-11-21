@@ -237,7 +237,7 @@ Feature: Pag-1163_Carta_OLD_OK
         And check CCP is $ccp of informazioniPagamento response
         And check enteBeneficiario field exists in informazioniPagamento response
 
-    @runnable
+    @fix
     Scenario: Execute parallel request
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         And RT generation
@@ -355,7 +355,7 @@ Feature: Pag-1163_Carta_OLD_OK
                 "tipoVersamento": "CP",
                 "identificativoIntermediario": "#psp#",
                 "identificativoCanale": "#canale#",
-                "importoTotalePagato": 10,
+                "importoTotalePagato": 10.00,
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
                 "codiceAutorizzativo": "resTim",
                 "esitoTransazioneCarta": "00"
