@@ -250,7 +250,7 @@ Feature: Pag-1163_Paypal_OLD_OK
          <idBrokerPSP>#psp#</idBrokerPSP>
          <idChannel>#canale#</idChannel>
          <password>pwdpwdpwd</password>
-         <paymentToken>$ccp</paymentToken>
+         <paymentToken>$sessionToken</paymentToken>
          <outcome>OK</outcome>
          <!--Optional:-->
          <details>
