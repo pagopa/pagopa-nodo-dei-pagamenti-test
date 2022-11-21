@@ -436,7 +436,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
         When psp sends soap nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check rt field exists in nodoChiediCopiaRT response
         And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
-    @prova
+    
+    @runnable
     Scenario: Excecute_nodoChiediCopiaRT2
         Given the Excecute nodoChiediCopiaRT scenario executed successfully
         And initial XML nodoChiediCopiaRT
