@@ -1,4 +1,4 @@
-Feature: T016_A_ nodoInviaRPT_Mod1_BBT_noPPI
+Feature: T041_nodoInviaRPT_soloObbligatori_Bollo
 
     Background:
         Given systems up
@@ -62,9 +62,9 @@ Feature: T016_A_ nodoInviaRPT_Mod1_BBT_noPPI
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>noPPI</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
+            <pay_i:tipoVersamento>CP</pay_i:tipoVersamento>
+            <pay_i:identificativoUnivocoVersamento>#IUV1#</pay_i:identificativoUnivocoVersamento>
+            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -90,8 +90,8 @@ Feature: T016_A_ nodoInviaRPT_Mod1_BBT_noPPI
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>noPPI</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -99,7 +99,7 @@ Feature: T016_A_ nodoInviaRPT_Mod1_BBT_noPPI
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rpt1Attachment</rpt>
             </ws:nodoInviaRPT>
@@ -121,6 +121,7 @@ Feature: T016_A_ nodoInviaRPT_Mod1_BBT_noPPI
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And tipoFirma with None in nodoInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
