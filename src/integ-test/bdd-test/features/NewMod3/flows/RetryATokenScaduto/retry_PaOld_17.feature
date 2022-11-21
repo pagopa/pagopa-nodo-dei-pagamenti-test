@@ -47,8 +47,6 @@ Feature: process tests for retryAtokenScaduto
       </qrCode>
       <expirationTime>2000</expirationTime>
       <amount>8.00</amount>
-      <dueDate>2021-12-31</dueDate>
-      <paymentNote>causale</paymentNote>
       </nod:activatePaymentNoticeReq>
       </soapenv:Body>
       </soapenv:Envelope>
@@ -114,7 +112,7 @@ Feature: process tests for retryAtokenScaduto
       </pay_i:enteBeneficiario>
       <pay_i:datiVersamento>
       <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
-      <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
+      <pay_i:importoTotaleDaVersare>8.00</pay_i:importoTotaleDaVersare>
       <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
       <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
       <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
@@ -122,7 +120,7 @@ Feature: process tests for retryAtokenScaduto
       <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
       <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
       <pay_i:datiSingoloVersamento>
-      <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
+      <pay_i:importoSingoloVersamento>8.00</pay_i:importoSingoloVersamento>
       <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
       <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
       <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -173,9 +171,9 @@ Feature: process tests for retryAtokenScaduto
 
   Scenario: trigger paInviaRT + DB check
     Given the Execute poller Annulli scenario executed successfully
-    When job paInviaRt triggered after 3 seconds
+    When job paInviaRt triggered after 5 seconds
     Then verify the HTTP status code of paInviaRt response is 200
-    And wait 5 seconds for expiration
+    And wait 15 seconds for expiration
     And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
   # Payment Outcome Phase outcome OK
@@ -232,7 +230,7 @@ Feature: process tests for retryAtokenScaduto
       <pay_i:identificativoDominio>$activatePaymentNotice.fiscalCode</pay_i:identificativoDominio>
       <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
       </pay_i:dominio>
-      <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
+      <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA02</pay_i:identificativoMessaggioRichiesta>
       <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
       <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
       <pay_i:soggettoVersante>
@@ -280,7 +278,7 @@ Feature: process tests for retryAtokenScaduto
       </pay_i:enteBeneficiario>
       <pay_i:datiVersamento>
       <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
-      <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
+      <pay_i:importoTotaleDaVersare>8.00</pay_i:importoTotaleDaVersare>
       <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
       <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
       <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v2</pay_i:codiceContestoPagamento>
@@ -288,7 +286,7 @@ Feature: process tests for retryAtokenScaduto
       <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
       <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
       <pay_i:datiSingoloVersamento>
-      <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
+      <pay_i:importoSingoloVersamento>8.00</pay_i:importoSingoloVersamento>
       <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
       <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
       <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -332,7 +330,7 @@ Feature: process tests for retryAtokenScaduto
     Then check esito is OK of nodoInviaRPT response
 
   @runnable
-  Scenario: check position_payment
+  Scenario: check position_payment [retry_PaOld_17]
     Given the Execute nodoInviaRPT2 request scenario executed successfully
     And wait 5 seconds for expiration
     #STATI

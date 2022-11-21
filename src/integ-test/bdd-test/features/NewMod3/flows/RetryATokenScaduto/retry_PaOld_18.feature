@@ -332,7 +332,7 @@ Feature: process tests for retryAtokenScaduto
     Then check esito is OK of nodoInviaRPT response
 
   @runnable
-  Scenario: check position_payment
+  Scenario: check position_payment [retry_PaOld_18]
     Given the Execute nodoInviaRPT2 request scenario executed successfully
     And wait 5 seconds for expiration
     #STATI

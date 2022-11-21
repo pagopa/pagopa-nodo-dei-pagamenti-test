@@ -566,6 +566,7 @@ Feature: process tests for paSendRT
   # Send Payment Outcome phase [PSRT_24]
   Scenario: Execute sendPaymentOutcome request with 2 transfers and broadcast true for 2 stations of secondary EC
     Given the Execute activatePaymentNotice request with 2 transfers and broadcast true for 2 stations of secondary EC scenario executed successfully
+    And the Define sendPaymentOutcome scenario executed successfully
     And EC wait for 15 seconds at paSendRT response
     And paymentToken with $activatePaymentNoticeResponse.paymentToken in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti

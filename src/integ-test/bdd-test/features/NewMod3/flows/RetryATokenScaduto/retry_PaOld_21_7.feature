@@ -165,6 +165,7 @@ Feature: process tests for retryAtokenScaduto
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
     And verify 0 record for the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
+    And wait 5 seconds for expiration
     And generic update through the query param_update_generic_where_condition of the table POSITION_ACTIVATE the parameter AMOUNT = '999999999.99', with where condition NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode' under macro update_query on db nodo_online
     And wait 5 seconds for expiration
 
