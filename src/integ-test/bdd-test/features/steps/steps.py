@@ -2073,6 +2073,9 @@ def step_impl(context, primitive1, primitive2):
     # AccessiConcorrenziali 3a_ACT_SPO
     elif outcome1 == 'OK' and faultCode2 == 'PPT_SEMANTICA' and description2 == 'Activation pending on position':
         assert True
+    # DoppiaACT_PA_NEW
+    elif outcome2 == 'OK' and faultCode1 == 'PPT_SEMANTICA' and description1 == 'Activation pending on position':
+        assert True
     # AccessiConcorrenziali 3a_ACT_SPO
     elif outcome1 == 'KO' and faultCode1 == 'PPT_TOKEN_SCADUTO' and outcome2 == 'KO' and faultCode2 == 'PPT_PAGAMENTO_DUPLICATO':
         assert True
