@@ -191,28 +191,46 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_idPsp1_checkPPP
       </soapenv:Body>
     </soapenv:Envelope>
     """
-    And initial XML pspInviaRPT
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-      <soapenv:Header/>
-      <soapenv:Body>
-          <ws:pspInviaRPTResponse>
-              <pspInviaRPTResponse>
-                  <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                  <identificativoCarrello>$1iuv</identificativoCarrello>
-                  <parametriPagamentoImmediato>$1iuv</parametriPagamentoImmediato>
-              </pspInviaRPTResponse>
-          </ws:pspInviaRPTResponse>
-      </soapenv:Body>
-    </soapenv:Envelope>
-    """
-    And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+    # And initial XML pspInviaRPT
+    # """
+    # <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    #   <soapenv:Header/>
+    #   <soapenv:Body>
+    #       <ws:pspInviaRPTResponse>
+    #           <pspInviaRPTResponse>
+    #               <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+    #               <identificativoCarrello>$1iuv</identificativoCarrello>
+    #               <parametriPagamentoImmediato>$1iuv</parametriPagamentoImmediato>
+    #           </pspInviaRPTResponse>
+    #       </ws:pspInviaRPTResponse>
+    #   </soapenv:Body>
+    # </soapenv:Envelope>
+    # """
+    # And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
 
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
       Given the RPT and RT generation scenario executed successfully
+      And initial XML pspInviaCarrelloRPTCarte
+      """
+      <soapenv:Envelope
+      xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+      xmlns:ws="http://ws.pagamenti.telematici.gov/">
+      <soapenv:Header/>
+        <soapenv:Body>
+            <ws:pspInviaCarrelloRPTCarteResponse>
+                <pspInviaCarrelloRPTResponse>
+                    <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                    <identificativoCarrello>$1iuv</identificativoCarrello>
+                    <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
+                </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTCarteResponse>
+        </soapenv:Body>
+      </soapenv:Envelope>
+      """
+      And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
       When WISP/PM sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
       """
       {
