@@ -27,7 +27,7 @@ Feature: Process tests for retry a token scaduto
       </soapenv:Envelope>
       """
     
-    #activate phase1
+  #activate phase1
   Scenario: Execute activatePaymentNotice1 request
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
@@ -37,7 +37,8 @@ Feature: Process tests for retry a token scaduto
   #sleep phase1 + poller annulli
   Scenario: Execute sleep phase1
     Given the Execute activatePaymentNotice1 request scenario executed successfully
-    When job mod3CancelV2 triggered after 3 seconds
+    When job mod3CancelV2 triggered after 5 seconds
+    And wait 5 seconds for expiration
     Then verify the HTTP status code of mod3CancelV2 response is 200
 
   Scenario: Execute activatePaymentNotice2 request
@@ -75,7 +76,7 @@ Feature: Process tests for retry a token scaduto
     Given the Execute activatePaymentNotice2 request scenario executed successfully
     Then wait 10 seconds for expiration
 
-# Payment Outcome Phase outcome OK 
+  # Payment Outcome Phase outcome OK 
   Scenario: Execute sendPaymentOutcome1 request
     Given the Execute sleep phase2 scenario executed successfully
     And initial XML sendPaymentOutcome
@@ -118,9 +119,9 @@ Feature: Process tests for retry a token scaduto
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-   @runnable
-    # Payment Outcome Phase outcome OK 
-  Scenario: Execute sendPaymentOutcome2 request
+  @runnable
+  # Payment Outcome Phase outcome OK 
+  Scenario: Execute sendPaymentOutcome2 request [retry_PaNew_06]
     Given the Execute sendPaymentOutcome1 request scenario executed successfully
     And initial XML sendPaymentOutcome
       """
