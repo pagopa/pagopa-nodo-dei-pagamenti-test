@@ -213,24 +213,6 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_idPsp1_checkPPP
 
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
       Given the RPT and RT generation scenario executed successfully
-      And initial XML pspInviaCarrelloRPTCarte
-      """
-      <soapenv:Envelope
-      xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:ws="http://ws.pagamenti.telematici.gov/">
-      <soapenv:Header/>
-        <soapenv:Body>
-            <ws:pspInviaCarrelloRPTCarteResponse>
-                <pspInviaCarrelloRPTResponse>
-                    <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                    <identificativoCarrello>$1iuv</identificativoCarrello>
-                    <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
-                </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTCarteResponse>
-        </soapenv:Body>
-      </soapenv:Envelope>
-      """
-      And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
       When WISP/PM sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
       """
       {

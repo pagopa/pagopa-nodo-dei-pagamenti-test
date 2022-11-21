@@ -73,7 +73,7 @@ Feature: Checks for concorrential access of Paypal payments OK
       And check $ragione_sociale is enteBeneficiario in /informazioniPagamento response
       And check $ragione_sociale is ragioneSociale in /informazioniPagamento response
 
-
+   @runnable
    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome OK
       Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
       And initial XML sendPaymentOutcome

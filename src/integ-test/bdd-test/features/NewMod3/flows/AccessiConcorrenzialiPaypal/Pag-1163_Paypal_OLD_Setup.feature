@@ -220,6 +220,7 @@ Feature: Pag-1163_Paypal_OLD_Setup
          Then check esito is OK of nodoInviaRPT response
          And retrieve session token from $nodoInviaRPTResponse.url 
 
+      @runnable
       Scenario: Execute nodoChiediInformazioniPagamento request
          Given the RPT generation scenario executed successfully
          When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
