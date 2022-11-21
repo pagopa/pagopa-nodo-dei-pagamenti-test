@@ -186,10 +186,10 @@ Feature: Pag-1163_Paypal_NCAP_KO
             """
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
+            <pfn:pspNotifyPaymentRes>
             <delay>8000</delay>
             <outcome>KO</outcome>
             <fault>
@@ -198,7 +198,7 @@ Feature: Pag-1163_Paypal_NCAP_KO
             <id>1</id>
             <description>Errore dal psp</description>
             </fault>
-            </psp:pspNotifyPaymentRes>
+            </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """

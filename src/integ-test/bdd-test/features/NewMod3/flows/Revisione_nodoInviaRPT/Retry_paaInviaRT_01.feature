@@ -3,7 +3,10 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01]
     Background:
         Given systems up
         And EC old version
-        And initial XML verifyPaymentNotice
+
+    # Verify phase
+    Scenario: Execute verifyPaymentNotice request
+        Given initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -21,9 +24,6 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
-    # Verify phase
-    Scenario: Execute verifyPaymentNotice request
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
@@ -163,6 +163,7 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01]
         Then check esito is OK of nodoInviaRPT response
 
     # Payment Outcome Phase outcome OK
+    @runnable
     Scenario: Execute sendPaymentOutcome request
         Given the Excecute nodoInviaRPT Scenario executed successfully
         And initial XML sendPaymentOutcome
@@ -233,10 +234,7 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01]
         And check outcome is OK of sendPaymentOutcome response
         And wait 65 seconds for expiration
 
-    @runnable
-    Scenario: DB check
-        Given the Execute sendPaymentOutcome request Scenario executed successfully
-        Then checks the value NotNone of the record at column id of the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt_only_ccp on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column id of the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt_only_ccp on db nodo_online under macro NewMod3
 
         And checks the value #creditor_institution_code_old# of the record at column id_dominio of the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt_only_ccp on db nodo_online under macro NewMod3
 
