@@ -175,7 +175,7 @@ Feature: DB checks for nodoChiediEsitoPagamento
                 "tipoVersamento": "CP",
                 "identificativoIntermediario": "#psp#",
                 "identificativoCanale": "#canale#",
-                "importoTotalePagato": 10,
+                "importoTotalePagato": 10.00,
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
                 "codiceAutorizzativo": "sleeKO",
                 "esitoTransazioneCarta": "00"
@@ -186,7 +186,7 @@ Feature: DB checks for nodoChiediEsitoPagamento
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
+            <pfn:pspNotifyPaymentRes>
             <delay>7500</delay>
             <outcome>KO</outcome>
             <fault>
@@ -195,7 +195,7 @@ Feature: DB checks for nodoChiediEsitoPagamento
             <id>1</id>
             <description>Errore dal psp</description>
             </fault>
-            </psp:pspNotifyPaymentRes>
+            </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
