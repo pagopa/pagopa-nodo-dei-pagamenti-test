@@ -114,7 +114,7 @@ Feature: process tests for retryAtokenScaduto
       </pay_i:enteBeneficiario>
       <pay_i:datiVersamento>
       <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
-      <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
+      <pay_i:importoTotaleDaVersare>8.00</pay_i:importoTotaleDaVersare>
       <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
       <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
       <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
@@ -122,7 +122,7 @@ Feature: process tests for retryAtokenScaduto
       <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
       <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
       <pay_i:datiSingoloVersamento>
-      <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
+      <pay_i:importoSingoloVersamento>8.00</pay_i:importoSingoloVersamento>
       <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
       <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
       <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -280,7 +280,7 @@ Feature: process tests for retryAtokenScaduto
       </pay_i:enteBeneficiario>
       <pay_i:datiVersamento>
       <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
-      <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
+      <pay_i:importoTotaleDaVersare>8.00</pay_i:importoTotaleDaVersare>
       <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
       <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
       <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken-v2</pay_i:codiceContestoPagamento>
@@ -288,7 +288,7 @@ Feature: process tests for retryAtokenScaduto
       <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
       <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
       <pay_i:datiSingoloVersamento>
-      <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
+      <pay_i:importoSingoloVersamento>8.00</pay_i:importoSingoloVersamento>
       <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
       <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
       <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -349,7 +349,7 @@ Feature: process tests for retryAtokenScaduto
     And checks the value $activatePaymentNotice.idPSP of the record at column psp_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.idBrokerPSP of the record at column broker_psp_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.idempotencyKey of the record at column idempotency_key of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value 10 of the record at column amount of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value 8 of the record at column amount of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value None of the record at column fee of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value None of the record at column payment_method of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value NA of the record at column payment_channel of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -371,7 +371,7 @@ Feature: process tests for retryAtokenScaduto
     And checks the value $activatePaymentNotice.idPSP of the record at column psp_id of the table POSITION_PAYMENT retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.idBrokerPSP of the record at column broker_psp_id of the table POSITION_PAYMENT retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.idempotencyKey of the record at column idempotency_key of the table POSITION_PAYMENT retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
-    And checks the value 10 of the record at column amount of the table POSITION_PAYMENT retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
+    And checks the value 8 of the record at column amount of the table POSITION_PAYMENT retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
     And checks the value 2 of the record at column fee of the table POSITION_PAYMENT retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
     And checks the value creditCard of the record at column payment_method of the table POSITION_PAYMENT retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
     And checks the value app of the record at column payment_channel of the table POSITION_PAYMENT retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
