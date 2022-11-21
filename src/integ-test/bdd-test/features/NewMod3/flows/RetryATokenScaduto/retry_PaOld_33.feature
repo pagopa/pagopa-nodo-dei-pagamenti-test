@@ -236,7 +236,7 @@ Feature: process tests for retry a token scaduto (retry_PaOld_33)
 
   @runnable
   # test execution
-  Scenario: Execution test rety_PaOld_33
+  Scenario: Execution test retry_PaOld_33
     Given the Execute nodoInviaRPT request scenario executed successfully
     And wait 5 seconds for expiration
     Then execution query payment_status to get value on the table POSITION_PAYMENT, with the columns FK_PAYMENT_PLAN,RPT_ID,AMOUNT,CHANNEL_ID,PAYMENT_CHANNEL,PAYER_ID,PAYMENT_METHOD,FEE,INSERTED_TIMESTAMP,APPLICATION_DATE,TRANSFER_DATE under macro NewMod3 with db name nodo_online
@@ -267,7 +267,7 @@ Feature: process tests for retry a token scaduto (retry_PaOld_33)
     And checks the value None of the record at column CARRELLO_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And with the query payment_status check assert beetwen elem FK_PAYMENT_PLAN in position 0 and elem ID with position 0 of the query position_receipt
-    And verify 0 record for the table RPT retrived by the query rpt_id on db nodo_online under macro NewMod3
+    #And verify 0 record for the table RPT retrived by the query rpt_id on db nodo_online under macro NewMod3
     And checks the value PAYING,PAID_NORPT,PAID,NOTICE_GENERATED,NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_token_v2 on db nodo_online under macro NewMod3
     And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3

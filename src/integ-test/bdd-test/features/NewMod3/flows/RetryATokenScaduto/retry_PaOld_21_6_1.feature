@@ -332,7 +332,7 @@ Feature: process tests for retryAtokenScaduto
     Then check esito is OK of nodoInviaRPT response
 
   @runnable
-  Scenario: DB check
+  Scenario: DB check [retry_PaOld_21_6_1]
     Given the Execute nodoInviaRPT2 request scenario executed successfully
     And wait 5 seconds for expiration
     #STATI
@@ -407,8 +407,8 @@ Feature: process tests for retryAtokenScaduto
     And checks the value $iuv of the record at column creditor_reference_id of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column token1 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNoticeResponse.paymentToken-v2 of the record at column token2 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
-    And execution query payment_status to get value on the table POSITION_PAYMENT, with the columns id under macro NewMod3 with db name nodo_online
-    And through the query payment_status retrieve param id at position 0 and save it under the key id0
+    And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns id under macro NewMod3 with db name nodo_online
+    And through the query payment_status_pay retrieve param id at position 0 and save it under the key id0
     And execution query payment_status_v2 to get value on the table POSITION_PAYMENT, with the columns id under macro NewMod3 with db name nodo_online
     And through the query payment_status_v2 retrieve param id at position 0 and save it under the key id1
     And checks the value $id0 of the record at column fk_payment1 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3

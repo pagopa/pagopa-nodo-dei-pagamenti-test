@@ -200,7 +200,7 @@ Feature: process tests for retry a token scaduto (retry_PaOld_24.1)
 
   @runnable
   # test execution
-  Scenario: Execution test rety_PaOld_24.1
+  Scenario: Execution test retry_PaOld_24.1
     Given the Execute nodoInviaRPT request scenario executed successfully
     And wait 10 seconds for expiration
     Then execution query payment_status to get value on the table POSITION_PAYMENT, with the columns FK_PAYMENT_PLAN,RPT_ID,AMOUNT,CHANNEL_ID,PAYMENT_CHANNEL,PAYER_ID,PAYMENT_METHOD,FEE,INSERTED_TIMESTAMP,APPLICATION_DATE,TRANSFER_DATE under macro NewMod3 with db name nodo_online
@@ -223,7 +223,7 @@ Feature: process tests for retry a token scaduto (retry_PaOld_24.1)
     And checks the value creditCard of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query payment_status_orderby on db nodo_online under macro NewMod3
     And checks the value app of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.transferDate of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value NotNone of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+    #And checks the value NotNone of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $sendPaymentOutcome.applicationDate of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
