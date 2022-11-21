@@ -237,22 +237,6 @@ Feature: T123_ChiediListePSP_Bollo
       </soapenv:Body>
     </soapenv:Envelope>
     """
-    And initial XML pspInviaRPT
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-      <soapenv:Header/>
-      <soapenv:Body>
-          <ws:pspInviaRPTResponse>
-              <pspInviaRPTResponse>
-                  <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                  <identificativoCarrello>$1iuv</identificativoCarrello>
-                  <parametriPagamentoImmediato>$1iuv</parametriPagamentoImmediato>
-              </pspInviaRPTResponse>
-          </ws:pspInviaRPTResponse>
-      </soapenv:Body>
-    </soapenv:Envelope>
-    """
-    And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
     And check url contains acards of nodoInviaRPT response

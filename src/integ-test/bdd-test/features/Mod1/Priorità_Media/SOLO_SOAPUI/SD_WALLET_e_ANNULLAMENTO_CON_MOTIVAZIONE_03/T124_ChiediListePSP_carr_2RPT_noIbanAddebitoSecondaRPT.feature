@@ -191,22 +191,6 @@ Feature: T124_ChiediListePSP_carr_2RPT_noIbanAddebitoSecondaRPT
         </soapenv:Body>
     </soapenv:Envelope>
     """
-    And initial XML pspInviaCarrelloRPT
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ws:pspInviaCarrelloRPTResponse>
-                <pspInviaCarrelloRPTResponse>
-                    <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                    <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-                    <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
-                </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTResponse>
-        </soapenv:Body>
-    </soapenv:Envelope>
-    """
-    And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
     When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
     Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
     And check url contains acardste of nodoInviaCarrelloRPT response
