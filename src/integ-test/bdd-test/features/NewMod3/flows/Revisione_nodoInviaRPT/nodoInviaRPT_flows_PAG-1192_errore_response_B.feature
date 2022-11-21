@@ -20,8 +20,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_errore_response_B]
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
             <noticeNumber>#notice_number_old#</noticeNumber>
             </qrCode>
-            <!--expirationTime>60000</expirationTime-->
-            <amount>7.00</amount>
+            <expirationTime>2000</expirationTime>
+            <amount>10.00</amount>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -29,17 +29,6 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_errore_response_B]
 
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-
-        #CHECK ATTIVAZIONE E CHACHE DI IDEMPOTENZA
-        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value Y of the record at column PAAATTIVARPTERROR of the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
-
-        And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro NewMod3
-
-        And execution query payment_status to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
-        And through the query payment_status retrieve param paymentToken at position 0 and save it under the key paymentToken
-
 
     # test execution
     Scenario: Define RPT
@@ -150,8 +139,28 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_errore_response_B]
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        And job mod3CancelV1 triggered after 5 seconds
+        And wait 5 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
-        And wait 30 seconds for expiration
+
+    Scenario: second activatePaymentNotice
+        Given the Execute nodoInviaRPT scenario executed successfully
+        And expirationTime with None in activatePaymentNotice
+        And amount with 11.00 in activatePaymentNotice
+        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        And wait 40 seconds for expiration
+        Then check outcome is KO of activatePaymentNotice response
+        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNotice response
+
+        #  #CHECK ATTIVAZIONE E CACHE DI IDEMPOTENZA
+        # And checks the value None of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
+        # And checks the value None of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
+        # And checks the value None of the record at column PAAATTIVARPTERROR of the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
+
+        # And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro NewMod3
+
+        # And execution query payment_status to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
+        # And through the query payment_status retrieve param paymentToken at position 0 and save it under the key paymentToken
 
         #CHECK2-RPT ACTIVATIONS
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -338,8 +347,6 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_errore_response_B]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
-
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
