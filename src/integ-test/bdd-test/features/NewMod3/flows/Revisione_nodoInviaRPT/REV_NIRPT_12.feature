@@ -139,9 +139,9 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_12]
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>#codicePA_old#</identificativoIntermediarioPA>
+            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#codicePA_old#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -149,9 +149,9 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_12]
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>15376371009</identificativoPSP>
-            <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
-            <identificativoCanale>15376371009_01</identificativoCanale>
+            <identificativoPSP>#pspFittizio#</identificativoPSP>
+            <identificativoIntermediarioPSP>#pspFittizio#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canaleFittizio#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
