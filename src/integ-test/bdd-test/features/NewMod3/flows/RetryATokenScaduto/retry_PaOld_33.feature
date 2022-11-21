@@ -234,7 +234,7 @@ Feature: process tests for retry a token scaduto (retry_PaOld_33)
     Then check esito is OK of nodoInviaRPT response
     And check redirect is 0 of nodoInviaRPT response
 
-  @fix
+  @runnable
   # test execution
   Scenario: Execution test retry_PaOld_33
     Given the Execute nodoInviaRPT request scenario executed successfully
