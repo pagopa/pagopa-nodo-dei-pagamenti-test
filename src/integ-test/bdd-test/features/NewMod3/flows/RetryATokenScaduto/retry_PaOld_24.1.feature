@@ -198,7 +198,7 @@ Feature: process tests for retry a token scaduto (retry_PaOld_24.1)
     Then check esito is OK of nodoInviaRPT response
     And check redirect is 0 of nodoInviaRPT response
 
-  @runnable
+  @fix
   # test execution
   Scenario: Execution test retry_PaOld_24.1
     Given the Execute nodoInviaRPT request scenario executed successfully
@@ -231,7 +231,7 @@ Feature: process tests for retry a token scaduto (retry_PaOld_24.1)
     And checks the value None of the record at column CARRELLO_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And with the query payment_status check assert beetwen elem FK_PAYMENT_PLAN in position 0 and elem ID with position 0 of the query position_receipt
-    And verify 0 record for the table RPT retrived by the query rpt_id on db nodo_online under macro NewMod3
+    #And verify 0 record for the table RPT retrived by the query rpt_id on db nodo_online under macro NewMod3
     And checks the value PAYING,CANCELLED_NORPT,PAID_NORPT,PAID,NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_token_v2 on db nodo_online under macro NewMod3
     And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
