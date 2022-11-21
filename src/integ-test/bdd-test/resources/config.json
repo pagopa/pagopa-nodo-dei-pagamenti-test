@@ -44,8 +44,6 @@
     "id_station_old": "66666666666_05",
     "creditor_institution_code": "66666666666",
     "creditor_institution_code_old": "66666666666",
-    "creditor_institution_code_secondary": "88888888888",
-    "ragione_sociale": "PA paolo",
     "psp": "60000000001",
     "id_broker_psp": "60000000001",
     "intermediarioPA": "66666666666",
@@ -82,7 +80,9 @@
     "canaleRtPull": "60000000001_06",
     "canaleRtPush": "60000000001_03",
     "canale_DIFFERITO_MOD2": "60000000001_04",
-    "canaleRtPull_sec": "60000000001_03_ONUS"
+    "canaleRtPull_sec": "60000000001_03_ONUS",
+    "creditor_institution_code_secondary": "88888888888",
+    "ragione_sociale": "PA paolo"
   },
   "db_configuration": {
     "nodo_cfg": {

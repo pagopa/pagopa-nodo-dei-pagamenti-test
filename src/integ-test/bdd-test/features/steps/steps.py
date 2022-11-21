@@ -1849,6 +1849,17 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d %H:%M')
+    elif number == 'default_durata_estensione_token_IO':
+        default = int(
+            getattr(context, 'default_durata_estensione_token_IO')) / 60000
+        value = (datetime.datetime.today() +
+                 datetime.timedelta(hours = 1, minutes=default)).strftime('%Y-%m-%d %H:%M')
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[0].strftime('%Y-%m-%d %H:%M')
     elif number == 'Today':
         value = (datetime.datetime.today()).strftime('%Y-%m-%d')
         selected_query = utils.query_json(context, query_name, name_macro).replace(
@@ -1986,6 +1997,44 @@ def step_impl(context, value1, condition, value2):
     else:
         assert False
 
+@step("through the query {query_name} convert json {json_elem} at position {position:d} to xml and save it under the key {key}")
+def step_impl(context, query_name, json_elem, position, key):
+    result_query = getattr(context, query_name)
+    print(f'{query_name}: {result_query}')
+    selected_element = result_query[0][position]
+    selected_element = selected_element.read()
+    selected_element = selected_element.decode("utf-8")
+    
+    jsonDict = json.loads(selected_element)
+    selected_element = utils.json2xml(jsonDict)
+    selected_element = '<root>' + selected_element + '</root>'	
+	
+    print(f'{json_elem}: {selected_element}')
+    setattr(context, key, selected_element)
+
+@step('checking value {value1} is {condition} value {value2}')
+def step_impl(context, value1, condition, value2):
+
+    value1 = utils.replace_local_variables(value1, context)
+    value1 = utils.replace_context_variables(value1, context)
+    value1 = utils.replace_global_variables(value1, context)
+    value2 = utils.replace_local_variables(value2, context)
+    value2 = utils.replace_context_variables(value2, context)
+    value2 = utils.replace_global_variables(value2, context)
+
+    value1 = str(value1.strip())
+    value2 = str(value2)
+
+    if condition == 'equal to':
+        assert value1 == value2, f"{value1} != {value2}"
+    elif condition == 'greater than':
+        assert value1 > value2, f"{value1} <= {value2}"
+    elif condition == 'smaller than':
+        assert value1 < value2, f"{value1} >= {value2}"
+    elif condition == 'containing':
+        assert value2 in value1, f"{value1} contains {value2}"
+    else:
+        assert False
 
 @step("calling primitive {primitive1} {restType1} and {primitive2} {restType2} in parallel")
 def step_impl(context, primitive1, primitive2, restType1, restType2):
@@ -2754,7 +2803,7 @@ def step_impl(contex, seconds):
     while True:
         if datetime.datetime.now() >= endT:
             break
-			
+
 @step(u"under macro {name_macro} on db {db_name} with the query {query_name} verify the value {value} of the record at column {column} of table {table_name}")
 def step_impl(context, name_macro, db_name, query_name, value, column, table_name):
     db_config = context.config.userdata.get("db_configuration")
@@ -2762,12 +2811,11 @@ def step_impl(context, name_macro, db_name, query_name, value, column, table_nam
 
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
-
+        
     selected_query = utils.query_json(context, query_name, name_macro).replace(
         "columns", column).replace("table_name", table_name)
     print(selected_query)
     exec_query = db.executeQuery(conn, selected_query)
-
     query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)
 
@@ -2776,46 +2824,5 @@ def step_impl(context, name_macro, db_name, query_name, value, column, table_nam
     value = utils.replace_context_variables(value, context)
     
     assert value in query_result, f"check expected element: {value}, obtained: {query_result}"
-
-    db.closeConnection(conn)
-
-
-@step("through the query {query_name} convert json {json_elem} at position {position:d} to xml and save it under the key {key}")
-def step_impl(context, query_name, json_elem, position, key):
-    result_query = getattr(context, query_name)
-    print(f'{query_name}: {result_query}')
-    selected_element = result_query[0][position]
-    selected_element = selected_element.read()
-    selected_element = selected_element.decode("utf-8")
     
-    jsonDict = json.loads(selected_element)
-    selected_element = utils.json2xml(jsonDict)
-    selected_element = '<root>' + selected_element + '</root>'	
-	
-    print(f'{json_elem}: {selected_element}')
-    setattr(context, key, selected_element)
-
-
-@step('checking value {value1} is {condition} value {value2}')
-def step_impl(context, value1, condition, value2):
-
-    value1 = utils.replace_local_variables(value1, context)
-    value1 = utils.replace_context_variables(value1, context)
-    value1 = utils.replace_global_variables(value1, context)
-    value2 = utils.replace_local_variables(value2, context)
-    value2 = utils.replace_context_variables(value2, context)
-    value2 = utils.replace_global_variables(value2, context)
-
-    value1 = str(value1.strip())
-    value2 = str(value2)
-
-    if condition == 'equal to':
-        assert value1 == value2, f"{value1} != {value2}"
-    elif condition == 'greater than':
-        assert value1 > value2, f"{value1} <= {value2}"
-    elif condition == 'smaller than':
-        assert value1 < value2, f"{value1} >= {value2}"
-    elif condition == 'containing':
-        assert value2 in value1, f"{value1} contains {value2}"
-    else:
-        assert False
+    db.closeConnection(conn)
