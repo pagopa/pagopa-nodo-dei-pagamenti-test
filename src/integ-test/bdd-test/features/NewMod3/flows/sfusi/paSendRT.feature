@@ -426,6 +426,17 @@ Feature: process tests for paSendRT
 	  When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
+    # Activate phase - 3 transfers in paGetPayment transferList (2 for primary EC and 1 for secondary EC) and broadcast true for 1 station of secondary EC [PSRT_10]
+  Scenario: Execute activatePaymentNotice request with 3 transfer and broadcast true station of secondary EC
+    Given the Execute verifyPaymentNotice request scenario executed successfully
+    And the Define activatePaymentNotice scenario executed successfully
+    And the Define paGetPayment scenario executed successfully
+    And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>2.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>testPaGetPayment</remittanceInformation><transferCategory>paGetPaymentTest</transferCategory></transfer><transfer><idTransfer>2</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>test</remittanceInformation><transferCategory>test</transferCategory></transfer><transfer><idTransfer>3</idTransfer><transferAmount>5.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>test</remittanceInformation><transferCategory>test</transferCategory></transfer></transferList> in paGetPayment
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
+    # TODO And broadcast with true in NODO4_CFG.PA_STAZIONE_PA for OBJ_ID with 1201
+	  When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+
   @runnable
   # Send Payment Outcome phase [PSRT_10]
   Scenario: Execute sendPaymentOutcome request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 1 station of secondary EC
@@ -601,7 +612,7 @@ Feature: process tests for paSendRT
   @runnable
   # Send Payment Outcome phase [PSRT_22]
   Scenario: Execute sendPaymentOutcome request with 3 transfers and broadcast true for secondary EC and outcome KO
-    Given the Execute activatePaymentNotice request with 3 transfers and broadcast false for secondary EC scenario executed successfully
+    Given the Execute activatePaymentNotice request with 3 transfer and broadcast true station of secondary EC scenario executed successfully
     And the Define sendPaymentOutcome scenario executed successfully
     And paymentToken with $activatePaymentNoticeResponse.paymentToken in sendPaymentOutcome
     And outcome with KO in sendPaymentOutcome
@@ -614,6 +625,7 @@ Feature: process tests for paSendRT
   Scenario: Execute activatePaymentNotice request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 2 station of secondary EC
     Given the Execute verifyPaymentNotice request scenario executed successfully
     And the Define activatePaymentNotice scenario executed successfully
+    And the Define paGetPayment scenario executed successfully
     And lastPayment with 0 in paGetPayment
     And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>2.00</transferAmount><fiscalCodePA>77777777777</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>testPaGetPayment</remittanceInformation><transferCategory>paGetPaymentTest</transferCategory></transfer><transfer><idTransfer>2</idTransfer><transferAmount>3.00</transferAmount><fiscalCodePA>44444444444</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>test</remittanceInformation><transferCategory>test</transferCategory></transfer><transfer><idTransfer>3</idTransfer><transferAmount>5.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>test</remittanceInformation><transferCategory>test</transferCategory></transfer></transferList> in paGetPayment
     And EC replies to nodo-dei-pagamenti with the paGetPayment
@@ -679,6 +691,16 @@ Feature: process tests for paSendRT
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     And the Define activatePaymentNotice scenario executed successfully
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+
+  Scenario: Execute activatePaymentNotice request with 1 transfer and 1 broadcast false station of secondary EC
+    Given the Execute verifyPaymentNotice request scenario executed successfully
+    And the Define activatePaymentNotice scenario executed successfully
+    And the Define paGetPayment scenario executed successfully
+    And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>2.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>testPaGetPayment</remittanceInformation><transferCategory>paGetPaymentTest</transferCategory></transfer></transferList> in paGetPayment
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
+    # TODO And broadcast with true in NODO4_CFG.PA_STAZIONE_PA for OBJ_ID with 1201
+	  When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
   @runnable
