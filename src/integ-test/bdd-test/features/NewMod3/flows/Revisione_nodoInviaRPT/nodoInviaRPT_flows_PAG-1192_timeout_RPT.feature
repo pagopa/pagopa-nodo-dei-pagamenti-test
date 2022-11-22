@@ -27,6 +27,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             """
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
+        And saving activatePaymentNotice request in activatePaymentNotice1
 
     # test execution
     Scenario: Define RPT
@@ -214,6 +215,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
         And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNotice response
         And execution query payment_status to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
         And through the query payment_status retrieve param paymentToken at position 0 and save it under the key paymentToken
+        And saving activatePaymentNotice request in activatePaymentNotice2
 
     Scenario: Define RPT3
         Given the Execute activatePaymentNotice3 request scenario executed successfully
@@ -365,7 +367,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
 
         And checks the value $activatePaymentNotice.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
 
-        And checks the value 7 of the record at column AMOUNT of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice1.amout, $activatePaymentNotice2.amout of the record at column AMOUNT of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
 
         #CHECK2-POSITION_TRANSFER
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro NewMod3

@@ -1204,14 +1204,16 @@ def step_impl(context):
         f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment", headers=headers)
 
     paGetPayment = paGetPaymentJson.json()
+    print(">>>>>>>>>>>>>>>>", paGetPayment)
     pspNotifyPayment = pspNotifyPaymentJson.json()
+    print("################", pspNotifyPayment)
 
     # verify transfer list are equal
     paGetPaymentRes_transferList = \
         paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get(
             "data")[0].get("transferList")
     pspNotifyPaymentReq_transferList = \
-        pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
+        pspNotifyPayment.get("request").get("soapenv:Envelope").get("soapenv:Body")[0].get("pfn:pspnotifypaymentreq")[
             0].get("transferlist")
 
     paGetPaymentRes_transferList_sorted = sorted(paGetPaymentRes_transferList, key=lambda transfer: int(
