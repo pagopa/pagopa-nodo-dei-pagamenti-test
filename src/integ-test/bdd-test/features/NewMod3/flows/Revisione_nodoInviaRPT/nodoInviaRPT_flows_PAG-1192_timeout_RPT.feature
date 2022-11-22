@@ -12,7 +12,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
             <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker#</idBrokerPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
             <idChannel>#canale#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
