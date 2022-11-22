@@ -65,7 +65,7 @@ Feature: T002_RT_Annullamento_validazioneXSD
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
                 <pay_i:identificativoUnivocoVersamento>validateXSD</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>#ccp#</pay_i:codiceContestoPagamento>
-                <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
+                <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
                 <pay_i:datiSingoloVersamento>
@@ -168,13 +168,29 @@ Feature: T002_RT_Annullamento_validazioneXSD
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
+        And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaRPTResponse>
+                        <pspInviaRPTResponse>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <identificativoCarrello>validateXSD</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=validateXSD</parametriPagamentoImmediato>
+                        </pspInviaRPTResponse>
+                    </ws:pspInviaRPTResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
 
         And initial XML nodoInviaRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
                 <ppt:intestazionePPT>
-                    <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                    <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                     <identificativoUnivocoVersamento>validateXSD</identificativoUnivocoVersamento>
@@ -193,6 +209,7 @@ Feature: T002_RT_Annullamento_validazioneXSD
             </soapenv:Body>
         </soapenv:Envelope>
         """
+
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
@@ -209,13 +226,13 @@ Feature: T002_RT_Annullamento_validazioneXSD
         And initial XML nodoChiediStatoRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header />
+            <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediStatoRPT>
                     <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
-                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                    <identificativoDominio>#intermediarioPA#</identificativoDominio>
                     <identificativoUnivocoVersamento>validateXSD</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$ccp</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
