@@ -298,6 +298,7 @@ def single_thread(context, soap_primitive, type):
         soap_response = requests.get(url_nodo, headers=headers, verify=False)
     elif type == 'POST':
         body = getattr(context, primitive)
+        print(body)
         if 'xml' in getattr(context, primitive):
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
                        'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
