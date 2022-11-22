@@ -165,7 +165,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
             <noticeNumber>$activatePaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
             <expirationTime>2000</expirationTime>
-            <amount>10.00</amount>
+            <amount>11.00</amount>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>

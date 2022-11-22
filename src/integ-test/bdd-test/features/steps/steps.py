@@ -1211,7 +1211,7 @@ def step_impl(context):
         paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get(
             "data")[0].get("transferList")
     pspNotifyPaymentReq_transferList = \
-        pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
+        pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pfn:pspnotifypaymentreq")[
             0].get("transferlist")
 
     paGetPaymentRes_transferList_sorted = sorted(paGetPaymentRes_transferList, key=lambda transfer: int(
