@@ -3,7 +3,6 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
     Background:
         Given systems up
 
-
     Scenario: RPT generation
         Given RPT generation
             """
