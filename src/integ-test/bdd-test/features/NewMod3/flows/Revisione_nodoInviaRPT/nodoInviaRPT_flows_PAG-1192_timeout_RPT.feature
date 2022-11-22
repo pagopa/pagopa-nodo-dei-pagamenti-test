@@ -13,7 +13,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             <nod:activatePaymentNoticeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#psp#</idBrokerPSP>
-            <idChannel>#canale#</idChannel>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
@@ -117,7 +117,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             <soapenv:Header>
             <ppt:intestazionePPT>
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#canale#</identificativoStazioneIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
@@ -304,7 +304,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             <soapenv:Header>
             <ppt:intestazionePPT>
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#canale#</identificativoStazioneIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
