@@ -638,7 +638,7 @@ Feature: process tests for paSendRT
   Scenario: Execute sendPaymentOutcome request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 2 station of secondary EC
     Given the Execute activatePaymentNotice request with 3 transfers, 2 for primary EC and 1 for secondary EC, and broadcast true for 2 station of secondary EC scenario executed successfully
     And EC wait for 15 seconds at paSendRT response
-    And lastPayment with 0 in paGetPayment
+    And the Define sendPaymentOutcome scenario executed successfully
     And paymentToken with $activatePaymentNoticeResponse.paymentToken in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
@@ -697,7 +697,7 @@ Feature: process tests for paSendRT
     Given the Execute verifyPaymentNotice request scenario executed successfully
     And the Define activatePaymentNotice scenario executed successfully
     And the Define paGetPayment scenario executed successfully
-    And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>2.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>testPaGetPayment</remittanceInformation><transferCategory>paGetPaymentTest</transferCategory></transfer></transferList> in paGetPayment
+    And transferList with <transferList><transfer><idTransfer>1</idTransfer><transferAmount>10.00</transferAmount><fiscalCodePA>90000000001</fiscalCodePA><IBAN>IT45R0760103200000000001016</IBAN><remittanceInformation>testPaGetPayment</remittanceInformation><transferCategory>paGetPaymentTest</transferCategory></transfer></transferList> in paGetPayment
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     # TODO And broadcast with true in NODO4_CFG.PA_STAZIONE_PA for OBJ_ID with 1201
 	  When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
