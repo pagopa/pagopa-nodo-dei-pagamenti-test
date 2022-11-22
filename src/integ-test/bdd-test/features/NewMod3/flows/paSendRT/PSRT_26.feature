@@ -231,6 +231,7 @@ Feature: process tests for paSendRT [PSRT_26]
     @runnable
     Scenario: job paSendRt [PSRT_26]
         Given the Define sendPaymentOutcome scenario executed successfully
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
