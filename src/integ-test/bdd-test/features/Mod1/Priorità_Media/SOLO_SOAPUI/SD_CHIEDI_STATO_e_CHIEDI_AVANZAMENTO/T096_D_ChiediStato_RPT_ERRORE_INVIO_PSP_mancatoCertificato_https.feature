@@ -115,7 +115,7 @@ Feature: T096_D_ChiediStato_RPT_ERRORE_INVIO_PSP_mancatoCertificato_https
   
    
 
-@runnable
+@midRunnable
     Scenario: Execute nodoChiediStatoRPT
         Given the RPT generation scenario executed successfully
         And initial XML nodoChiediStatoRPT

@@ -2,7 +2,7 @@ Feature: T215_nodoChiediSceltaWisp - TASK_491 - CLOSED
 
     Background:
         Given systems up
-@runnable
+@midRunnable
     Scenario: send nodoChiediSceltaWISP
         Given initial XML nodoChiediSceltaWISP
             """

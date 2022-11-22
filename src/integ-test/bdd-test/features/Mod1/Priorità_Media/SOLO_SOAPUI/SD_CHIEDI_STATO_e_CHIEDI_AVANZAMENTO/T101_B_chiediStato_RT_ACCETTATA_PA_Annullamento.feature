@@ -231,7 +231,7 @@ Feature: T101_B_chiediStato_RT_ACCETTATA_PA_Annullamento
  
    
 
-@runnable
+@midRunnable
     Scenario: Execute nodoChiediStatoRPT
         Given the Execute job paInviaRt scenario executed successfully
         And initial XML nodoChiediStatoRPT

@@ -154,7 +154,7 @@ Feature: process tests for T213_rptUniversale_carrello_CONV1_fasciaNessunaConv
         And check totalRows is $sizeCarte of listaPSP response
 
     
-    @runnable
+    @midRunnable
     Scenario: execution nodoChiediListaPSP - conto
         Given the execution nodoChiediListaPSP - carte scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC&lingua=$lingua to nodo-dei-pagamenti

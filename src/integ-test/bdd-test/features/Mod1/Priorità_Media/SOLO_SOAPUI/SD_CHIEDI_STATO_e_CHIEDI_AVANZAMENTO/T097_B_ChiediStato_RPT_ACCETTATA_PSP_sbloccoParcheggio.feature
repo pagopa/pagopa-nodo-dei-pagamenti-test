@@ -146,7 +146,7 @@ Feature: T097_B_ChiediStato_RPT_ACCETTATA_PSP_sbloccoParcheggio
 
    
 
-@runnable
+@midRunnable
     Scenario: Execute nodoChiediStatoRPT
         Given the execution nodoInoltraPagamentoMod1 scenario executed successfully
         And initial XML nodoChiediStatoRPT

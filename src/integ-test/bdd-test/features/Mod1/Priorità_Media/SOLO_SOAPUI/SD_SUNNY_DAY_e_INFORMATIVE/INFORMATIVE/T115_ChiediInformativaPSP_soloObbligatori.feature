@@ -2,7 +2,7 @@ Feature: T115_ChiediInformativaPSP_soloObbligatori
 
     Background:
         Given systems up
-@runnable
+@midRunnable
     Scenario: Send nodoChiediInformativaPSP
         Given initial XML nodoChiediInformativaPSP
             """

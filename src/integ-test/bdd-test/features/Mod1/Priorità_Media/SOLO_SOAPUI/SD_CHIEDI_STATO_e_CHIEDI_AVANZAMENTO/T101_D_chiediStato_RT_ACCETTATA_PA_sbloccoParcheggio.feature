@@ -323,7 +323,7 @@ Feature: T101_D_chiediStato_RT_ACCETTATA_PA_sbloccoParcheggio
         And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
 
     
-@runnable
+@midRunnable
     Scenario: Execute nodoChiediStatoRPT
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         And initial XML nodoChiediStatoRPT

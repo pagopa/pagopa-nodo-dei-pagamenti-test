@@ -152,7 +152,7 @@ Feature: T096_D_ChiediStato_RPT_ERRORE_INVIO_PSP_sbloccoParcheggio_mancatoCertif
 
    
 
-@runnable
+@midRunnable
     Scenario: Execute nodoChiediStatoRPT
         Given the execution nodoInoltraPagamentoMod1 scenario executed successfully
         And initial XML nodoChiediStatoRPT

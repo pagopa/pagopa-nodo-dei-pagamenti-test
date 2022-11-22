@@ -152,7 +152,7 @@ Feature: T096_B_ChiediStato_RPT_ERRORE_INVIO_PSP_sbloccoParcheggio - BUG_482 - C
 
    
 
-@runnable
+@midRunnable
     Scenario: Execute nodoChiediStatoRPT
         Given the execution nodoInoltraPagamentoMod1 scenario executed successfully
         And initial XML nodoChiediStatoRPT

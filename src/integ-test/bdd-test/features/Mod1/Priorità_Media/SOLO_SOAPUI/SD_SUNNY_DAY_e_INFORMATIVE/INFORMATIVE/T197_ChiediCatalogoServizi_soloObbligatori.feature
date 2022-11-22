@@ -2,7 +2,7 @@ Feature: T197_ChiediCatalogoServizi_soloObbligatori
 
     Background:
         Given systems up
-@runnable
+@midRunnable
     Scenario: Send nodoChiediCatalogoServizi
         Given initial XML nodoChiediCatalogoServizi
             """

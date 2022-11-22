@@ -2,7 +2,7 @@ Feature: T106_ChiediInformativaPA_soloObbligatori
 
     Background:
         Given systems up
-@runnable
+@midRunnable
     Scenario: Send nodoChiediInformativaPA
         Given initial XML nodoChiediInformativaPA
             """

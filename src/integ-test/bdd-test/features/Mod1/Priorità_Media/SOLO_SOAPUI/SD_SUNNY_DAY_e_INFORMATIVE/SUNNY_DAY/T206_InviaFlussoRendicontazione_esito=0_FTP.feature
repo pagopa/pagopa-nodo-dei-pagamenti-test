@@ -39,7 +39,7 @@ Feature: T206_InviaFlussoRendicontazione_esito=0_FTP
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-@runnable
+@midRunnable
     Scenario: Send nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione

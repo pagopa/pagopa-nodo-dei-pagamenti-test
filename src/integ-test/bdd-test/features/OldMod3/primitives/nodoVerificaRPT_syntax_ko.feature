@@ -26,7 +26,7 @@ Feature: Syntax check OK for nodoVerificaRPT
             </soapenv:Envelope>
             """
 
-@runnable
+@midRunnable
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
         Given <attribute> set <value> for <elem> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
@@ -36,7 +36,7 @@ Feature: Syntax check OK for nodoVerificaRPT
             | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | VRPTSIN1    |
             | soapenv:Body     | xmlns:ws      | <wss:></wss>                              | VRPTSIN2    |
 
-@runnable
+@midRunnable
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD error on missing or empty body elements
         Given <field> with <value> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
@@ -62,13 +62,13 @@ Feature: Syntax check OK for nodoVerificaRPT
             | codiceContestoPagamento        | None                                 | VRPTSIN19   |
             | codificaInfrastrutturaPSP      | None                                 | VRPTSIN22   |
 
-@runnable    
+@midRunnable    
     Scenario: check faultCode PPT_CODIFICA_PSP_SCONOSCIUTA on empty field codificaInfrastrutturaPSP [VRPTSIN23]
         Given codificaInfrastrutturaPSP with Empty in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_CODIFICA_PSP_SCONOSCIUTA of nodoVerificaRPT response
 
-@runnable    
+@midRunnable    
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD error on missing or empty body elements
         Given <field> with <value> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
@@ -78,7 +78,7 @@ Feature: Syntax check OK for nodoVerificaRPT
             | codiceIdRPT | None               | VRPTSIN24   |
             | codiceIdRPT | Empty              | VRPTSIN25   |
 
-@runnable
+@midRunnable
     Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on missing or empty body elements
         Given <field> with <value> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti

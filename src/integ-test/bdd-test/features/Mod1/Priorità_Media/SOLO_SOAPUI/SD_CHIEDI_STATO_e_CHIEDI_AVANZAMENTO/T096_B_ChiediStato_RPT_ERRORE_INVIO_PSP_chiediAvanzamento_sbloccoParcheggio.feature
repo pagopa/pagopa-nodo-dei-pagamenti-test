@@ -152,7 +152,7 @@ Feature: T096_B_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamento_sbloccoParche
         And wait 11 seconds for expiration
    
 
-@runnable
+@midRunnable
     Scenario: Execute nodoChiediStatoRPT
         Given the execution nodoInoltraPagamentoMod1 scenario executed successfully
         And initial XML nodoChiediStatoRPT

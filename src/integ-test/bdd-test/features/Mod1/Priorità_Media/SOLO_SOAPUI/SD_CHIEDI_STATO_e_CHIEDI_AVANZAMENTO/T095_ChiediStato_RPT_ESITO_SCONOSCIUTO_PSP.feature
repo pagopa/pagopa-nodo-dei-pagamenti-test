@@ -132,7 +132,7 @@ Feature: T095_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
     
    
 
-@runnable
+@midRunnable
     Scenario: Execute nodoChiediStatoRPT
         Given the RPT generation scenario executed successfully
         And initial XML nodoChiediStatoRPT
