@@ -344,7 +344,7 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01]
         And checks the value None of the record at column office_name of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $debtor_id of the record at column debtor_id of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $codice_fiscale of the record at column psp_fiscal_code of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value $vat_number of the record at column psp_vat_number of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
+        #And checks the value $vat_number of the record at column psp_vat_number of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $channel_id of the record at column channel_id of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $payment_channel of the record at column channel_description of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $payer_id of the record at column payer_id of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
