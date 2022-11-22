@@ -483,7 +483,7 @@ Feature: TXX
         #And refresh job PSP triggered after 10 seconds
         #And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
-        
+    
     Scenario: Execute nodoInviaRPT3 (Phase 3)
         Given the Execute nodoInviaRPT2 (Phase 2) scenario executed successfully
         And RPT3 generation
@@ -648,7 +648,7 @@ Feature: TXX
             """
 
         And identificativoUnivocoVersamento with $3iuv in nodoInviaRPT
-        And identificativoCanale with #canaleRtPush# in nodoInviaRPT
+        And identificativoCanale with #canaleRtPull_sec# in nodoInviaRPT
         And rpt with $rpt3Attachment in nodoInviaRPT
         And rt with $rt3Attachment in pspChiediRT
         And identificativoUnivocoVersamento with $3iuv in nodoChiediStatoRPT
