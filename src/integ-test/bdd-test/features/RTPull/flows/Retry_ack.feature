@@ -445,6 +445,7 @@ Feature: RTPull flows
     #Retry ACK syntax KO step1
     Scenario: Execute nodoInviaRPT_synKO
         Given the Execute pspRetryAckNegative job scenario executed successfully
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_pspRetryAckNegative.enabled set to false
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
@@ -471,15 +472,16 @@ Feature: RTPull flows
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
         Then check esito is OK of nodoInviaRPT response
-        And wait 10 seconds for expiration
+        And wait 15 seconds for expiration
 
     @runnable
     #Retry ACK syntax KO step2
     Scenario: Retry ack syntax KO
         Given the Execute nodoInviaRPT_synKO scenario executed successfully
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_pspRetryAckNegative.enabled set to true
         When job pspRetryAckNegative triggered after 5 seconds
-        Then wait 10 seconds for expiration
+        Then wait 15 seconds for expiration
         And execution query getSchedulerPspRetryAckNegativePollerMaxRetry to get value on the table CONFIGURATION_KEYS, with the columns CONFIG_VALUE under macro RTPull with db name nodo_cfg
         And through the query getSchedulerPspRetryAckNegativePollerMaxRetry retrieve param schedulerPspRetryAckNegativePollerMaxRetry at position 0 and save it under the key schedulerPspRetryAckNegativePollerMaxRetry
         And replace ccp content with $nodoInviaRPT.codiceContestoPagamento content
