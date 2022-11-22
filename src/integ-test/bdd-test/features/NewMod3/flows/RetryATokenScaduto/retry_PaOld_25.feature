@@ -158,9 +158,9 @@ Feature: process tests for retry a token scaduto
       <soapenv:Body>
       <ws:nodoInviaRPT>
       <password>pwdpwdpwd</password>
-      <identificativoPSP>15376371009</identificativoPSP>
-      <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
-      <identificativoCanale>15376371009_01</identificativoCanale>
+      <identificativoPSP>#pspFittizio#</identificativoPSP>
+      <identificativoIntermediarioPSP>#pspFittizio#</identificativoIntermediarioPSP>
+      <identificativoCanale>#canaleFittizio#</identificativoCanale>
       <tipoFirma></tipoFirma>
       <rpt>$rptAttachment</rpt>
       </ws:nodoInviaRPT>
@@ -280,7 +280,7 @@ Feature: process tests for retry a token scaduto
     And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query rpt_id on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query rpt_id on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query rpt_id on db nodo_online under macro NewMod3
-    And checks the value 15376371009_01 of the record at column CANALE of the table RT retrived by the query rpt_id on db nodo_online under macro NewMod3
+    And checks the value #canaleFittizio# of the record at column CANALE of the table RT retrived by the query rpt_id on db nodo_online under macro NewMod3
     And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query rpt_id on db nodo_online under macro NewMod3
     And with the query rt_stati check assert beetwen elem ID_RICHIESTA in position 0 and elem ID_MSG_RICH with position 1 of the query rpt_id
     And with the query rt_stati check assert beetwen elem SOMMA_VERSAMENTI in position 1 and elem AMOUNT with position 2 of the query payment_status
