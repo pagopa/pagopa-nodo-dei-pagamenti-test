@@ -271,6 +271,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_errore_response_B]
         Then check rt field exists in nodoChiediCopiaRT response
         And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
         And wait 10 seconds for expiration
+        And replace paymentToken content with $activatePaymentNoticeResponse.paymentToken content
 
 
         #DB_CHECK- POSITION_PAYMENT_STATUS
