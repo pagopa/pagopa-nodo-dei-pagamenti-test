@@ -168,7 +168,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
             <fiscalCode>$activatePaymentNotice.fiscalCode</fiscalCode>
             <noticeNumber>$activatePaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
-            <amount>7.00</amount>
+            <amount>10.00</amount>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
