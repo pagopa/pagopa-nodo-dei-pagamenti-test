@@ -58,7 +58,7 @@ Feature: process tests for retry a token scaduto
     And saving activatePaymentNotice request in activatePaymentNotice2
     And save activatePaymentNotice response in activatePaymentNotice2
 
-    Scenario: Execute poller Annulli
+  Scenario: Execute poller Annulli
     Given the Execute activatePaymentNotice request scenario executed successfully
     When job mod3CancelV1 triggered after 5 seconds
     Then verify the HTTP status code of mod3CancelV1 response is 200
@@ -172,16 +172,12 @@ Feature: process tests for retry a token scaduto
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
 
-
-
   Scenario: trigger paInviaRT + DB check
     Given the Execute nodoInviaRPT request scenario executed successfully
     When job paInviaRt triggered after 3 seconds
     Then verify the HTTP status code of paInviaRt response is 200
-    And wait 5 seconds for expiration
+    And wait 15 seconds for expiration
     And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
-
-  
 
   Scenario: Execute sendPaymentOutcome1 request
     Given the trigger paInviaRT + DB check scenario executed successfully
@@ -336,9 +332,8 @@ Feature: process tests for retry a token scaduto
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
 
-  
-  @runnable
-  Scenario: DB check
+  @fix
+  Scenario: DB check [retry_PaOld_31]
     Given the Execute nodoInviaRPT1 request scenario executed successfully
     And wait 5 seconds for expiration
     #STATI
@@ -358,41 +353,8 @@ Feature: process tests for retry a token scaduto
     And checks the value 2 of the record at column fee of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value creditCard of the record at column payment_method of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value NA of the record at column payment_channel of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    #And checks the value None,NotNone of the record at column transfer_date of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    #And checks the value NotNone of the record at column payer_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    #And checks the value NotNone of the record at column application_date of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    #And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    #And checks the value NotNone of the record at column updated_timestamp of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value MOD3 of the record at column payment_type of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value None of the record at column carrello_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    ##
-    #And checks the value $activatePaymentNotice1.fiscalCode of the record at column pa_fiscal_code of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value $activatePaymentNotice1.noticeNumber of the record at column notice_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value $activatePaymentNotice1Response.paymentToken of the record at column payment_token of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value $activatePaymentNotice1.fiscalCode of the record at column broker_pa_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value 1 of the record at column station_version of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value $activatePaymentNotice1.idPSP of the record at column psp_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value $activatePaymentNotice1.idBrokerPSP of the record at column broker_psp_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value $activatePaymentNotice1.idempotencyKey of the record at column idempotency_key of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value 10 of the record at column amount of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value 2 of the record at column fee of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value creditCard of the record at column payment_method of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value app of the record at column payment_channel of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value NotNone of the record at column transfer_date of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value NotNone of the record at column payer_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value NotNone of the record at column application_date of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value NotNone of the record at column updated_timestamp of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value MOD3 of the record at column payment_type of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #And checks the value None of the record at column carrello_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-    #POSITION_ACTIVATE
-    #And checks the value $activatePaymentNotice1.fiscalCode of the record at column pa_fiscal_code of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
-    #And checks the value $activatePaymentNotice1.noticeNumber of the record at column notice_id of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
-    #And checks the value $activatePaymentNotice1.idempotencyKey of the record at column idempotency_key of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
-    #And checks the value $activatePaymentNotice1Response.paymentToken of the record at column payment_token of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
-    #And checks the value NotNone of the record at column token_valid_from of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
-    #And checks the value NotNone of the record at column token_valid_to of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
-    #And checks the value 8 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
     ##
     And checks the value $activatePaymentNotice2.fiscalCode of the record at column pa_fiscal_code of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice2.noticeNumber of the record at column notice_id of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
@@ -408,22 +370,11 @@ Feature: process tests for retry a token scaduto
     And checks the value $iuv of the record at column creditor_reference_id of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column token1 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNoticeResponse.paymentToken-v2 of the record at column token2 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
-    #And execution query payment_status to get value on the table POSITION_PAYMENT, with the columns id under macro NewMod3 with db name nodo_online
-    #And through the query payment_status retrieve param id at position 0 and save it under the key id0
-    #And execution query payment_status_v2 to get value on the table POSITION_PAYMENT, with the columns id under macro NewMod3 with db name nodo_online
-    #And through the query payment_status_v2 retrieve param id at position 0 and save it under the key id1
-    #And checks the value $id1 of the record at column fk_payment1 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
-    #And checks the value $id0 of the record at column fk_payment2 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
     And execution query payment_status to get value on the table TOKEN_UTILITY, with the columns fk_rpt1 under macro NewMod3 with db name nodo_online
     And through the query payment_status retrieve param fk_rpt1 at position 0 and save it under the key fk_rptid1
     And checks the value $fk_rptid1 of the record at column id of the table RPT retrived by the query rt_stati on db nodo_online under macro NewMod3
     And through the query payment_status retrieve param fk_rpt2 at position 0 and save it under the key fk_rptid2
     And checks the value $fk_rptid2 of the record at column id of the table RPT retrived by the query rt_stati on db nodo_online under macro NewMod3
-    #And execution query rt_stati to get value on the table RPT, with the columns id under macro NewMod3 with db name nodo_online
-    #And through the query rt_stati retrieve param id at position 0 and save it under the key fk_rptid0
-    #And through the query rt_stati retrieve param id at position 1 and save it under the key fk_rptid1
-    #And checks the value $fk_rptid0 of the record at column fk_rpt1 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
-    #And checks the value $fk_rptid1 of the record at column fk_rpt2 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
     #check xml rt-/+ receipt
     # Assigning XML_CONTENT query result to
     And execution query rt_xml to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
@@ -550,4 +501,3 @@ Feature: process tests for retry a token scaduto
     And check value $xml_receipt.pspFiscalCode is equal to value $CODICE_FISCALE
     And check value $xml_receipt.PSPCompanyName is equal to value $RAGIONE_SOCIALE
     And check value $xml_receipt.idChannel is equal to value $CHANNEL_ID
-

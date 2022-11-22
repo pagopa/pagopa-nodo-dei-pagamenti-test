@@ -65,6 +65,7 @@ Feature: process tests for retry a token scaduto
   Scenario: Execute Poller Annulli
     Given the Execute activatePaymentNotice request scenario executed successfully
     When job mod3CancelV1 triggered after 5 seconds
+    And wait 5 seconds for expiration
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
   # Payment Outcome Phase outcome KO
@@ -223,7 +224,7 @@ Feature: process tests for retry a token scaduto
     Then check faultCode is PPT_SEMANTICA of nodoInviaRPT response
     And check description is RPT non attivata of nodoInviaRPT response
 
-  @runnable
+  @fix
   # test execution
   Scenario: Execution test rety_PaOld_20
     Given the Execute sendPaymentOutcome request scenario executed successfully
