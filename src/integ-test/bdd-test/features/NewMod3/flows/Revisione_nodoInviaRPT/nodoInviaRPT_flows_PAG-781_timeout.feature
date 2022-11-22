@@ -238,7 +238,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
         And checks the value $verifyPaymentNotice.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
 
 
-        And checks the value $AMOUNT of the record at column AMOUNT of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice.amount of the record at column AMOUNT of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
 
 
         #CHECK2-POSITION_TRANSFER
