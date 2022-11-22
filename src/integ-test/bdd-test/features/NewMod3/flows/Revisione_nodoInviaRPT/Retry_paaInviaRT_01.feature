@@ -221,7 +221,7 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01]
             <soapenv:Body>
             <ws:paaInviaRTRisposta>
             <paaInviaRTRisposta>
-            <delay>60000</delay>
+            <delay>10000</delay>
             <esito>OK</esito>
             </paaInviaRTRisposta>
             </ws:paaInviaRTRisposta>

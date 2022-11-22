@@ -152,9 +152,9 @@ Feature: process tests for retryAtokenScaduto
       <soapenv:Body>
       <ws:nodoInviaRPT>
       <password>pwdpwdpwd</password>
-      <identificativoPSP>15376371009</identificativoPSP>
-      <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
-      <identificativoCanale>15376371009_01</identificativoCanale>
+      <identificativoPSP>#pspFittizio#</identificativoPSP>
+      <identificativoIntermediarioPSP>#pspFittizio#</identificativoIntermediarioPSP>
+      <identificativoCanale>#canaleFittizio#</identificativoCanale>
       <tipoFirma></tipoFirma>
       <rpt>$rptAttachment</rpt>
       </ws:nodoInviaRPT>
@@ -319,9 +319,9 @@ Feature: process tests for retryAtokenScaduto
       <soapenv:Body>
       <ws:nodoInviaRPT>
       <password>pwdpwdpwd</password>
-      <identificativoPSP>15376371009</identificativoPSP>
-      <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
-      <identificativoCanale>15376371009_01</identificativoCanale>
+      <identificativoPSP>#pspFittizio#</identificativoPSP>
+      <identificativoIntermediarioPSP>#pspFittizio#</identificativoIntermediarioPSP>
+      <identificativoCanale>#canaleFittizio#</identificativoCanale>
       <tipoFirma></tipoFirma>
       <rpt>$rptAttachment</rpt>
       </ws:nodoInviaRPT>
@@ -435,7 +435,7 @@ Feature: process tests for retryAtokenScaduto
     And checks the value 0 of the record at column somma_versamenti of the table RT retrived by the query rt_stati on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column inserted_timestamp of the table RT retrived by the query rt_stati on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column updated_timestamp of the table RT retrived by the query rt_stati on db nodo_online under macro NewMod3
-    And checks the value 15376371009_01 of the record at column canale of the table RT retrived by the query rt_stati on db nodo_online under macro NewMod3
+    And checks the value #canaleFittizio# of the record at column canale of the table RT retrived by the query rt_stati on db nodo_online under macro NewMod3
     And checks the value N of the record at column notifica_processata of the table RT retrived by the query rt_stati on db nodo_online under macro NewMod3
     #RPT_ACTIVATIONS
     And verify 0 record for the table RPT_ACTIVATIONS retrived by the query payment_token_v2 on db nodo_online under macro NewMod3
@@ -469,7 +469,7 @@ Feature: process tests for retryAtokenScaduto
     #checks on XML
     And check value $xml_rt.identificativoDominio is equal to value $xml_rpt.identificativoDominio
     And check value $xml_rt.riferimentoMessaggioRichiesta is equal to value $xml_rpt.identificativoMessaggioRichiesta
-    And check value $xml_rt.codiceIdentificativoUnivoco is equal to value 15376371009
+    And check value $xml_rt.codiceIdentificativoUnivoco is equal to value #pspFittizio#
     And check value $xml_rt.denominazioneBeneficiario is equal to value $xml_rpt.denominazioneBeneficiario
     And check value $xml_rt.anagraficaPagatore is equal to value $xml_rpt.anagraficaPagatore
     And check value $xml_rt.identificativoUnivocoVersamento is equal to value $xml_rpt.identificativoUnivocoVersamento
