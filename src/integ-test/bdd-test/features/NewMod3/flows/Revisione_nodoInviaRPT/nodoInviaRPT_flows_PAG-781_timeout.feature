@@ -65,6 +65,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_timeout]
             <description>Errore semantico emesso dalla PA</description>
             </fault>
             <esito>KO</esito>
+            <delay>10000</delay>
             </paaAttivaRPTRisposta>
             </ws:paaAttivaRPTRisposta>
             </soapenv:Body>
