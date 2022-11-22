@@ -236,7 +236,8 @@ Feature: Pag-1163_Paypal_OLD_OK
       And check IUV is $1iuv of informazioniPagamento response
       And check CCP is $ccp of informazioniPagamento response
       And check enteBeneficiario field exists in informazioniPagamento response
-
+      And wait 5 seconds for expiration
+      
    @runnable
    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome error on old PA
       Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
@@ -313,7 +314,7 @@ Feature: Pag-1163_Paypal_OLD_OK
             </soapenv:Envelope>
             """
         And saving inoltroEsito/paypalJSON request in inoltroEsito/paypal
-        When calling primitive inoltroEsito/paypal_inoltroEsito/paypal POST and sendPaymentOutcome_sendPaymentOutcome POST with 6000 ms delay
+        When calling primitive inoltroEsito/paypal_inoltroEsito/paypal POST and sendPaymentOutcome_sendPaymentOutcome POST with 4000 ms delay
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is OK of inoltroEsito/paypal response
         And check outcome is OK of sendPaymentOutcome response
