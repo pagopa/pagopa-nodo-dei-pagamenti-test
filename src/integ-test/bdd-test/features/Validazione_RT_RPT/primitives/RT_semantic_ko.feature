@@ -81,7 +81,6 @@ Feature: Semantic checks for nodoInviaRT - KO
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -123,6 +122,7 @@ Feature: Semantic checks for nodoInviaRT - KO
             """
         And psp replies to nodo-dei-pagamenti with the pspInviaRPT
 
+    @runnable
     Scenario Outline: Semantic check of nodoInviaRT
         Given initial xml RT
             """
@@ -245,6 +245,7 @@ Feature: Semantic checks for nodoInviaRT - KO
             | SoapUI  | tag                                   | tag_value | error               |
             | RTSEM87 | pay_i:identificativoUnivocoVersamento | $1iuv+_01 | PPT_RPT_SCONOSCIUTA |
 
+    @runnable
     Scenario: Semantic check of nodoInviaRT- RTSEM90
         Given initial xml RT
             """
@@ -365,6 +366,8 @@ Feature: Semantic checks for nodoInviaRT - KO
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_SEMANTICA of nodoInviaRT response
 
+
+    @runnable
     Scenario: Semantic check of nodoInviaRT- RTSEM11
         Given initial xml RT
             """
@@ -479,8 +482,6 @@ Feature: Semantic checks for nodoInviaRT - KO
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
-
         When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response

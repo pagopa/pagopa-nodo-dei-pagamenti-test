@@ -42,7 +42,6 @@ Feature: process tests for RPT-RT bollo
             </Signature>
             </marcaDaBollo>
             """
-
         And RPT generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -134,7 +133,6 @@ Feature: process tests for RPT-RT bollo
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
         And RT generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -276,6 +274,7 @@ Feature: process tests for RPT-RT bollo
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
+    @runnable
     Scenario: Execute nodoInviaRT
         Given the MB generation scenario executed successfully
         And initial XML nodoInviaRT
