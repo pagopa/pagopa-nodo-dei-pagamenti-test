@@ -4,7 +4,8 @@ Feature: process tests for paSendRT [PSRT_26]
         Given systems up
 
     Scenario: Execute verifyPaymentNotice request
-        Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
+        Given nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to false
+        And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
         And refresh job PA triggered after 10 seconds
         And wait 5 seconds for expiration
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
@@ -205,7 +206,6 @@ Feature: process tests for paSendRT [PSRT_26]
             </soapenv:Envelope>
             """
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        #And job paSendRt triggered after 6 seconds
         And wait 10 seconds for expiration
         Then check outcome is OK of sendPaymentOutcome response
         And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
@@ -224,11 +224,12 @@ Feature: process tests for paSendRT [PSRT_26]
 
     Scenario: clean paSendRt queue
         Given the Define sendPaymentOutcome scenario executed successfully
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
     @runnable
-    Scenario: job paSendRt
+    Scenario: job paSendRt [PSRT_26]
         Given the Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT
             """
@@ -248,3 +249,4 @@ Feature: process tests for paSendRT [PSRT_26]
         Then checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        And restore initial configurations
