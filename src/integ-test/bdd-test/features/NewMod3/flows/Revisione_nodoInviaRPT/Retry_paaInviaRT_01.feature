@@ -6,7 +6,8 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01]
 
     # Verify phase
     Scenario: Execute verifyPaymentNotice request
-        Given initial XML verifyPaymentNotice
+        Given nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
+        And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -164,7 +165,7 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01]
 
     # Payment Outcome Phase outcome OK
     @runnable
-    Scenario: Execute sendPaymentOutcome request
+    Scenario: Execute sendPaymentOutcome request [Retry_paaInviaRT_01]
         Given the Excecute nodoInviaRPT Scenario executed successfully
         And initial XML sendPaymentOutcome
             """
@@ -476,3 +477,5 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01]
         And check value $xml_rt.identificativoUnivocoRiscossione is equal to value $PAYMENT_TOKEN
         And check value $xml_rt.causaleVersamento is equal to value $xml_rpt.causaleVersamento
         And check value $xml_rt.datiSpecificiRiscossione is equal to value $xml_rpt.datiSpecificiRiscossione
+
+        And restore initial configurations
