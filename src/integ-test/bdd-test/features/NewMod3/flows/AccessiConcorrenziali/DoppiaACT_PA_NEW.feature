@@ -35,7 +35,7 @@ Feature: process PAG-590_01
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>#cod_segr#$iuv</creditorReferenceId>
+            <creditorReferenceId>$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
