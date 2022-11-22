@@ -94,7 +94,7 @@ Feature: Pag-1163_Paypal_NM3_OK
         And check enteBeneficiario field exists in informazioniPagamento response
 
    @runnable
-    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome OK
+    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome OK [Pag-1163_Paypal_NM3_OK]
         Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
         And initial XML sendPaymentOutcome
             """
@@ -162,13 +162,14 @@ Feature: Pag-1163_Paypal_NM3_OK
             <soapenv:Header/>
             <soapenv:Body>
                 <pfn:pspNotifyPaymentRes>
-                    <delay>8000</delay>
+                    <delay>7000</delay>
                     <outcome>OK</outcome>
                 </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         And saving inoltroEsito/paypalJSON request in inoltroEsito/paypal
+        And wait 5 seconds for expiration
         When calling primitive inoltroEsito/paypal_inoltroEsito/paypal POST and sendPaymentOutcome_sendPaymentOutcome POST with 4000 ms delay
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is OK of inoltroEsito/paypal response
