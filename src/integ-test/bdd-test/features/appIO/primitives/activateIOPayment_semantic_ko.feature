@@ -521,7 +521,6 @@ Feature: Semantic checks for activateIOPayment - KO
       | city                        | Empty                 | SEM_AIPR_21 |
       | city                        | None                  | SEM_AIPR_21 |
       | stateProvinceRegion         | stateProvinceRegion   | SEM_AIPR_21 |
-      | stateProvinceRegion         | Empty                 | SEM_AIPR_21 |
       | stateProvinceRegion         | None                  | SEM_AIPR_21 |
       | country                     | FR                    | SEM_AIPR_21 |
       | country                     | Empty                 | SEM_AIPR_21 |
