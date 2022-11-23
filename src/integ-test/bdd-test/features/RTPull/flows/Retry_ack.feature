@@ -353,6 +353,7 @@ Feature: RTPull flows
     #Retry ACK system error step1
     Scenario: Execute nodoInviaRPT_systemError
         Given the Execute pspRetryAckNegative job scenario executed successfully
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_pspRetryAckNegative.enabled set to false
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
@@ -385,6 +386,7 @@ Feature: RTPull flows
     Scenario: Retry ack system error
         Given the Execute nodoInviaRPT_systemError scenario executed successfully
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_pspRetryAckNegative.enabled set to true
         When job pspRetryAckNegative triggered after 5 seconds
         Then wait 10 seconds for expiration
         And execution query getSchedulerPspRetryAckNegativePollerMaxRetry to get value on the table CONFIGURATION_KEYS, with the columns CONFIG_VALUE under macro RTPull with db name nodo_cfg
@@ -402,6 +404,7 @@ Feature: RTPull flows
     #Retry ACK malformed step1
     Scenario: Execute nodoInviaRPT_malformed
         Given the Execute pspRetryAckNegative job scenario executed successfully
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_pspRetryAckNegative.enabled set to false
         And initial XML pspInviaAckRT
             """
             <soapenv:Envelope
@@ -430,6 +433,7 @@ Feature: RTPull flows
     Scenario: Retry ack malformed
         Given the Execute nodoInviaRPT_malformed scenario executed successfully 
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_pspRetryAckNegative.enabled set to true
         When job pspRetryAckNegative triggered after 5 seconds
         Then wait 10 seconds for expiration
         And execution query getSchedulerPspRetryAckNegativePollerMaxRetry to get value on the table CONFIGURATION_KEYS, with the columns CONFIG_VALUE under macro RTPull with db name nodo_cfg
