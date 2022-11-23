@@ -116,7 +116,7 @@ Feature: process tests for DB_GR_18.1
       <transfer>
       <idTransfer>2</idTransfer>
       <transferAmount>3.00</transferAmount>
-      <fiscalCodePA>66666666666</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -254,7 +254,7 @@ Feature: process tests for DB_GR_18.1
     And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And verify 2 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
 
-  @runnable
+  @fix
   Scenario: job refresh pa (2)
     Given the DB check + db update scenario executed successfully
     Then refresh job PA triggered after 10 seconds
