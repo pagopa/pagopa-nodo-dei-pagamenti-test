@@ -39,7 +39,6 @@ Feature: process tests for accessiConCorrenziali [3a_ACT_SPO]
         And wait 3 seconds for expiration
         Then verify the HTTP status code of mod3CancelV1 response is 200
 
-
     Scenario: Execute second activatePaymentNotice request
         Given the trigger poller annulli scenario executed successfully
         And initial XML activatePaymentNotice

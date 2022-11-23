@@ -125,3 +125,4 @@ Scenario: Execute sendPaymentOutcome2 request
   Scenario: DB check
   Given the Execute sendPaymentOutcome2 request scenario executed successfully
   And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_psp on db nodo_online under macro NewMod3
+  And restore initial configurations
