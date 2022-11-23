@@ -5,7 +5,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
 
 
     Scenario: RPT generation
-        Given nodo-dei-pagamenti has config parameter CONFIG_VALUE set to false
+        Given nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to false
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And RPT1 generation
