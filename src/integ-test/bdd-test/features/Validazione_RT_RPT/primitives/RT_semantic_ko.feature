@@ -121,7 +121,7 @@ Feature: Semantic checks for nodoInviaRT - KO
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And psp replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
 
     Scenario Outline: Semantic check of nodoInviaRT
         Given initial xml RT
