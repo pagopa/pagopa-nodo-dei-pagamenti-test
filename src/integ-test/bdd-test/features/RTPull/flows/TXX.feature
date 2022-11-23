@@ -648,22 +648,22 @@ Feature: TXX
             """
 
         And identificativoUnivocoVersamento with $3iuv in nodoInviaRPT
-        And identificativoCanale with #canaleRtPull_sec# in nodoInviaRPT
+        And identificativoCanale with #canaleRtPush# in nodoInviaRPT
         And rpt with $rpt3Attachment in nodoInviaRPT
         And rt with $rt3Attachment in pspChiediRT
         And identificativoUnivocoVersamento with $3iuv in nodoChiediStatoRPT
         And identificativoCarrello with $3iuv in pspInviaRPT
         And parametriPagamentoImmediato with idBruciatura=$3iuv in pspInviaRPT
         And identificativoUnivocoVersamento with $3iuv in pspChiediListaRT
-        And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
-        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        #And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
+        #And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         And wait 10 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        And job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 10 seconds
-        And wait 10 seconds for expiration
+        #And job pspChiediListaAndChiediRt triggered after 5 seconds
+        #And job paInviaRt triggered after 10 seconds
+        #And wait 10 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
     
@@ -832,22 +832,22 @@ Feature: TXX
             """
         
         And identificativoUnivocoVersamento with $4iuv in nodoInviaRPT
-        And identificativoCanale with #canaleRtPull_sec# in nodoInviaRPT
+        And identificativoCanale with #canaleRtPush# in nodoInviaRPT
         And rpt with $rpt4Attachment in nodoInviaRPT
         And rt with $rt4Attachment in pspChiediRT
         And identificativoUnivocoVersamento with $4iuv in nodoChiediStatoRPT
         And identificativoCarrello with $4iuv in pspInviaRPT
         And parametriPagamentoImmediato with idBruciatura=$4iuv in pspInviaRPT
         And identificativoUnivocoVersamento with $4iuv in pspChiediListaRT
-        And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
-        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        #And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
+        #And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         And wait 10 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        And job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 10 seconds
-        And wait 10 seconds for expiration
+        #And job pspChiediListaAndChiediRt triggered after 5 seconds
+        #And job paInviaRt triggered after 10 seconds
+        #And wait 10 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '7000%' under macro update_query on db nodo_cfg
