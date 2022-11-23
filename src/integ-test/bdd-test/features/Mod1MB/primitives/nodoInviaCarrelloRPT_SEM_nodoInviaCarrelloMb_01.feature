@@ -10,9 +10,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
          <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
          <pay_i:dominio>
-
          <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-
          <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
          </pay_i:dominio>
          <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -145,9 +143,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
          <pay_i:importoTotaleDaVersare>1.50</pay_i:importoTotaleDaVersare>
          <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-
          <pay_i:identificativoUnivocoVersamento>#IuV2#</pay_i:identificativoUnivocoVersamento>
-
          <pay_i:codiceContestoPagamento>$carrello</pay_i:codiceContestoPagamento>
          <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
          <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -175,9 +171,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
          <soapenv:Header>
          <ppt:intestazioneCarrelloPPT>
-
          <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-
          <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
          <identificativoCarrello>#carrello1#</identificativoCarrello>
          </ppt:intestazioneCarrelloPPT>
@@ -190,18 +184,14 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
          <listaRPT>
          <elementoListaRPT>
-
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-
          <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>$carrello</codiceContestoPagamento>
          <rpt>$rptAttachment</rpt>
          </elementoListaRPT>
          <elementoListaRPT>
-
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoUnivocoVersamento>$2IuV</identificativoUnivocoVersamento>
-
          <codiceContestoPagamento>$carrello</codiceContestoPagamento>
          <rpt>$rpt2Attachment</rpt>
          </elementoListaRPT>
@@ -217,10 +207,10 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
       And check faultCode is <error> of nodoInviaCarrelloRPT response
       Examples:
-         | elem                   | value                               | error                   |
-         | identificativoCarrello | 7777777777731101905117516600059410  | PPT_MULTI_BENEFICIARIO  |
-         | identificativoCarrello | #creditor_institution_code_secondary#311017011570102700-48595 | PPT_MULTI_BENEFICIARIO  |
-         | identificativoCarrello | 44444444444311017141190124500-07607 | PPT_MULTI_BENEFICIARIO  |
-         | identificativoCarrello | 7777777777311015321688135500-14816  | PPT_MULTI_BENEFICIARIO  |
-         | identificativoCarrello | 31101473154911720077777777777-23596 | PPT_DOMINIO_SCONOSCIUTO |
+         | elem                   | value                                                         | error                   |
+         | identificativoCarrello | 7777777777731101905117516600059410                            | PPT_MULTI_BENEFICIARIO  |
+         | identificativoCarrello | #creditor_institution_code_secondary#312017011570102700-48595 | PPT_MULTI_BENEFICIARIO  |
+         | identificativoCarrello | 44444444444311017141190124500-07607                           | PPT_MULTI_BENEFICIARIO  |
+         | identificativoCarrello | 7777777777311015321688135500-14816                            | PPT_MULTI_BENEFICIARIO  |
+         | identificativoCarrello | 31101473154911720077777777777-23596                           | PPT_DOMINIO_SCONOSCIUTO |
 

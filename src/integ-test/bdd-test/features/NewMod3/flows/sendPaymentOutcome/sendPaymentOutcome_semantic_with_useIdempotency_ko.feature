@@ -76,7 +76,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-@runnable
+  @runnable
   # Send payment outcome Phase 2 [IDMP_SPO_16.1]
   Scenario: 3. Execute again sendPaymentOutcome request with different idPSP-idBrokerPSP-idChannel before idempotencyKey expires
     Given the 2. Execute sendPaymentOutcome request scenario executed successfully
@@ -87,7 +87,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
 
-@runnable
+  @runnable
   # Send payment outcome Phase 2
   Scenario Outline: 4. Execute again sendPaymentOutcome request with same idempotencyKey before it expires
     Given the 2. Execute sendPaymentOutcome request scenario executed successfully
@@ -100,7 +100,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
       | paymentMethod | cash  | IDMP_SPO_16.2 |
       | streetName    | road  | IDMP_SPO_16.3 |
 
-@runnable
+  @runnable
   # Send payment outcome Phase 2 [IDMP_SPO_17]
   Scenario: 5. Execute sendPaymentOutcome request after idempotencyKey has expired
     Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
@@ -113,17 +113,17 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
     And restore initial configurations
 
-# @runnable
-#   # Send payment outcome Phase 2 - different paymentMethod [IDMP_SPO_24]
-#   Scenario: 8. Execute sendPaymentOutcome request with different paymentMethod, after waiting 130 seconds
-#     Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
-#     And the 2. Execute sendPaymentOutcome request scenario executed successfully
-#     And idempotencyKey valid for 60 seconds
-#     And paymentMethod with cash in sendPaymentOutcome
-#     And PSP waits 180 seconds for expiration
-#     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-#     Then check outcome is KO of sendPaymentOutcome response
-#     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
+  # @runnable
+  #   # Send payment outcome Phase 2 - different paymentMethod [IDMP_SPO_24]
+  #   Scenario: 8. Execute sendPaymentOutcome request with different paymentMethod, after waiting 130 seconds
+  #     Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
+  #     And the 2. Execute sendPaymentOutcome request scenario executed successfully
+  #     And idempotencyKey valid for 60 seconds
+  #     And paymentMethod with cash in sendPaymentOutcome
+  #     And PSP waits 180 seconds for expiration
+  #     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+  #     Then check outcome is KO of sendPaymentOutcome response
+  #     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
 
   # Send payment outcome Phase 1 - no idempotencyKey [IDMP_SPO_26]
   Scenario: 9. Execute sendPaymentOutcome request without idempotencyKey
@@ -170,7 +170,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-@runnable  
+  @runnable
   # Send payment outcome Phase 2 [IDMP_SPO_26]
   Scenario: 10. Execute again the same sendPaymentOutcome request
     Given the 9. Execute sendPaymentOutcome request without idempotencyKey scenario executed successfully
@@ -178,7 +178,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
 
-@runnable
+  @runnable
   # Send payment outcome Phase 2 - different idempotencyKey [IDMP_SPO_27]
   Scenario: 11. Execute again the same sendPaymentOutcome request with a different idempotencyKey
     Given the 2. Execute sendPaymentOutcome request scenario executed successfully
@@ -186,7 +186,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
-    #And check description is Esito concorde: {"applicationDate":"$sendPaymentOutcome.applicationDate","fee":$sendPaymentOutcome.fee,"outcome":"$sendPaymentOutcome.outcome","payerEntityUniqueIdentifierValue":"$sendPaymentOutcome.payerEntityUniqueIdentifierValue","paymentChannel":"$sendPaymentOutcome.paymentChannel","paymentMethod":"$sendPaymentOutcome.paymentMethod","paymentToken":"$sendPaymentOutcome.paymentToken","transferDate":"$sendPaymentOutcome.transferDate"} of sendPaymentOutcome response
+  #And check description is Esito concorde: {"applicationDate":"$sendPaymentOutcome.applicationDate","fee":$sendPaymentOutcome.fee,"outcome":"$sendPaymentOutcome.outcome","payerEntityUniqueIdentifierValue":"$sendPaymentOutcome.payerEntityUniqueIdentifierValue","paymentChannel":"$sendPaymentOutcome.paymentChannel","paymentMethod":"$sendPaymentOutcome.paymentMethod","paymentToken":"$sendPaymentOutcome.paymentToken","transferDate":"$sendPaymentOutcome.transferDate"} of sendPaymentOutcome response
 
   # Send payment outcome Phase 1 - outcome KO [IDMP_SPO_28]
   Scenario: 12. Execute sendPaymentOutcome request with outcome KO
@@ -233,7 +233,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-@runnable
+  @runnable
   # Send payment outcome Phase 2 - different idempotencyKey [IDMP_SPO_28]
   Scenario: 13. Execute again the same sendPaymentOutcome request with outcome KO with a different idempotencyKey
     Given the 12. Execute sendPaymentOutcome request with outcome KO scenario executed successfully
@@ -243,7 +243,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
     And check description is Esito concorde: {"applicationDate":"$sendPaymentOutcome.applicationDate","fee":$sendPaymentOutcome.fee,"outcome":"$sendPaymentOutcome.outcome","payerEntityUniqueIdentifierValue":"$sendPaymentOutcome.entityUniqueIdentifierValue","paymentChannel":"$sendPaymentOutcome.paymentChannel","paymentMethod":"$sendPaymentOutcome.paymentMethod","paymentToken":"$sendPaymentOutcome.paymentToken","transferDate":"$sendPaymentOutcome.transferDate"} of sendPaymentOutcome response
 
-@runnable
+  @runnable
   # Send payment outcome Phase 2 - different idempotencyKey [IDMP_SPO_29]
   Scenario: 14. Execute again the same sendPaymentOutcome request with a different idempotencyKey
     Given the 2. Execute sendPaymentOutcome request scenario executed successfully
@@ -252,7 +252,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
-    #And check description is Esito discorde: {"applicationDate":"$sendPaymentOutcome.applicationDate","fee":$sendPaymentOutcome.fee,"outcome":"KO","payerEntityUniqueIdentifierValue":"$sendPaymentOutcome.entityUniqueIdentifierValue","paymentChannel":"$sendPaymentOutcome.paymentChannel","paymentMethod":"$sendPaymentOutcome.paymentMethod","paymentToken":"$sendPaymentOutcome.paymentToken","transferDate":"$sendPaymentOutcome.transferDate"} of sendPaymentOutcome response
+  #And check description is Esito discorde: {"applicationDate":"$sendPaymentOutcome.applicationDate","fee":$sendPaymentOutcome.fee,"outcome":"KO","payerEntityUniqueIdentifierValue":"$sendPaymentOutcome.entityUniqueIdentifierValue","paymentChannel":"$sendPaymentOutcome.paymentChannel","paymentMethod":"$sendPaymentOutcome.paymentMethod","paymentToken":"$sendPaymentOutcome.paymentToken","transferDate":"$sendPaymentOutcome.transferDate"} of sendPaymentOutcome response
 
   # Send payment outcome Phase 1 - outcome KO [IDMP_SPO_30]
   Scenario: 15. Execute sendPaymentOutcome request with outcome KO
@@ -299,7 +299,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-@runnable
+  @runnable
   # Send payment outcome Phase 2 - different idempotencyKey [IDMP_SPO_30]
   Scenario: 16. Execute again the same sendPaymentOutcome request with outcome OK with a different idempotencyKey
     Given the Execute sendPaymentOutcome request with outcome KO scenario executed successfully
@@ -308,7 +308,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
-    #And check description is Esito discorde: {"applicationDate":"$sendPaymentOutcome.applicationDate","fee":$sendPaymentOutcome.fee,"outcome":"KO","payerEntityUniqueIdentifierValue":"$sendPaymentOutcome.entityUniqueIdentifierValue","paymentChannel":"$sendPaymentOutcome.paymentChannel","paymentMethod":"$sendPaymentOutcome.paymentMethod","paymentToken":"$sendPaymentOutcome.paymentToken","transferDate":"$sendPaymentOutcome.transferDate"} of sendPaymentOutcome response
+  #And check description is Esito discorde: {"applicationDate":"$sendPaymentOutcome.applicationDate","fee":$sendPaymentOutcome.fee,"outcome":"KO","payerEntityUniqueIdentifierValue":"$sendPaymentOutcome.entityUniqueIdentifierValue","paymentChannel":"$sendPaymentOutcome.paymentChannel","paymentMethod":"$sendPaymentOutcome.paymentMethod","paymentToken":"$sendPaymentOutcome.paymentToken","transferDate":"$sendPaymentOutcome.transferDate"} of sendPaymentOutcome response
 
   # Mod3Cancel Phase [IDMP_SPO_31]
   Scenario: 17. Execute mod3Cancel poller
@@ -393,7 +393,6 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-@runnable
   # Send payment outcome Phase 2 [IDMP_SPO_31]
   Scenario: 20. Execute sendPaymentOutcome request on token of Activate Phase and different idempotencyKey
     Given the Execute sendPaymentOutcome request on token of Activate Phase 2 scenario executed successfully
@@ -404,6 +403,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
 
-
-
+  @runnable
+  Scenario: Restore
+    Given the 20. Execute sendPaymentOutcome request on token of Activate Phase and different idempotencyKey scenario executed successfully
+    Then restore initial configurations
 
