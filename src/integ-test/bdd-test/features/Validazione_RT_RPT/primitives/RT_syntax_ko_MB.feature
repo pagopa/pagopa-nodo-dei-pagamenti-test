@@ -161,7 +161,7 @@ Feature: Syntax checks for RT with MB - KO
       """
     And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
 
-  @runnable
+  @midRunnable
   Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on invalid RT tag
     Given initial xml RT
       """

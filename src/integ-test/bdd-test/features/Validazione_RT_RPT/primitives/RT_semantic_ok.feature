@@ -122,7 +122,7 @@ Feature: Semantic checks for nodoInviaRT - OK
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
 
-    @runnable
+    @midRunnable
     Scenario Outline: Semantic check of nodoInviaRT
         Given initial xml RT
             """

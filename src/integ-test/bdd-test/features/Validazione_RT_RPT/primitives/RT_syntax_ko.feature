@@ -122,7 +122,7 @@ Feature: Syntax checks for RT - KO
       """
     And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
 
-  @runnable
+  @midRunnable
   Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on invalid RT tag
     Given initial xml RT
       """
@@ -430,7 +430,7 @@ Feature: Syntax checks for RT - KO
       | RTSIN188 | pay_i:commissioniApplicatePSP           | 10.251                                                                                                                                                                                                                                                    |
       | RTSIN189 | pay_i:commissioniApplicatePSP           | 10,25                                                                                                                                                                                                                                                     |
 
-  @runnable
+  @midRunnable
   Scenario: Check faultCode PPT_SINTASSI_XSD error on invalid RT tag [RTSIN28]
     Given initial xml RT
       """
@@ -548,7 +548,7 @@ Feature: Syntax checks for RT - KO
     Then check esito is KO of nodoInviaRT response
     And check faultCode is PPT_SINTASSI_XSD of nodoInviaRT response
 
-  @runnable
+  @midRunnable
   Scenario: Check faultCode PPT_SINTASSI_XSD error on invalid singoloImportoPagato [RTSIN166]
     Given initial xml RT
       """

@@ -122,7 +122,7 @@ Feature: Semantic checks for nodoInviaRT - KO
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
 
-    @runnable
+    @midRunnable
     Scenario Outline: Semantic check of nodoInviaRT
         Given initial xml RT
             """
@@ -245,7 +245,7 @@ Feature: Semantic checks for nodoInviaRT - KO
             | SoapUI  | tag                                   | tag_value | error               |
             | RTSEM87 | pay_i:identificativoUnivocoVersamento | $1iuv+_01 | PPT_RPT_SCONOSCIUTA |
 
-    @runnable
+    @midRunnable
     Scenario: Semantic check of nodoInviaRT- RTSEM90
         Given initial xml RT
             """
@@ -367,7 +367,7 @@ Feature: Semantic checks for nodoInviaRT - KO
         And check faultCode is PPT_SEMANTICA of nodoInviaRT response
 
 
-    @runnable
+    @midRunnable
     Scenario: Semantic check of nodoInviaRT- RTSEM11
         Given initial xml RT
             """

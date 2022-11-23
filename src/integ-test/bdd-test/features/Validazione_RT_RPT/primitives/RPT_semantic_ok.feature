@@ -3,7 +3,7 @@ Feature: Semantic checks for nodoInviaRPT - OK
     Background:
         Given systems up
     #And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
-    @runnable
+    @midRunnable
     Scenario Outline: Semantic check of nodoInviaRPT
         Given initial xml RPT
             """
