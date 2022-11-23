@@ -247,9 +247,9 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
 
         #DB-CHECK-STATI_RPT_SNAPSHOT
         And replace pa content with #creditor_institution_code# content
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
         And replace pa content with #creditor_institution_code_secondary# content
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
 
         #DB-CHECK-STATI_CARRELLO
         And replace idCarrello content with $nodoInviaCarrelloRPT.identificativoCarrello content
@@ -471,4 +471,4 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
 
         #DB-CHECK-POSITION_STATUS_SNAPSHOT
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
-
+        And restore initial configurations
