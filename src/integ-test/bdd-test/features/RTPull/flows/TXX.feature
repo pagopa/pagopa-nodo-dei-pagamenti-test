@@ -832,7 +832,7 @@ Feature: TXX
             """
         
         And identificativoUnivocoVersamento with $4iuv in nodoInviaRPT
-        And identificativoCanale with #canaleRtPush# in nodoInviaRPT
+        And identificativoCanale with #canaleRtPull_sec# in nodoInviaRPT
         And rpt with $rpt4Attachment in nodoInviaRPT
         And rt with $rt4Attachment in pspChiediRT
         And identificativoUnivocoVersamento with $4iuv in nodoChiediStatoRPT
