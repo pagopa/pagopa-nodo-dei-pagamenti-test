@@ -224,11 +224,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
 
     Scenario: update column valid_to UPDATED_TIMESTAMP
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-        And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        #And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And change date Today to remove minutes 20
         And replace iuv content with $1iuv content
         Then update through the query DB_GEST_ANN_update1 with date $date under macro Mod1Mb on db nodo_online
-        And replace iuv content with $2iuv content
+        #And replace iuv content with $2iuv content
         And replace pa1 content with #creditor_institution_code_secondary# content
         And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
         And wait 10 seconds for expiration
