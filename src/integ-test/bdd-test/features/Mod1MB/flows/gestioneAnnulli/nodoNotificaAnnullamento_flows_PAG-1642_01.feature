@@ -430,6 +430,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
             """
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+        And wait 30 seconds for expiration
 
         #DB-CHECK-STATI_RPT
         And replace iuv content with $1iuv content
