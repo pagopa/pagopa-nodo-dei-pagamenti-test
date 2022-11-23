@@ -159,7 +159,6 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
                 </pay_i:RPT>
             """
         
-
     Scenario: Execute nodoInviaCarrelloRPT
 		Given the RPT generation scenario executed successfully
 		And initial XML nodoInviaCarrelloRPT

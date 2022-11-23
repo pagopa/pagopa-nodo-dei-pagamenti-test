@@ -2,13 +2,12 @@ Feature: process tests for Retry_DB_GR_14
 
   Background:
     Given systems up
-    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
-
-  Scenario: job refresh pa (1)
-    Given refresh job PA triggered after 10 seconds
 
   Scenario: initial verifyPaymentNotice
-    Given the job refresh pa (1) scenario executed successfully
+    Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition BROADCAST and where value ('Y') under macro update_query on db nodo_cfg
+    And wait 5 seconds for expiration
+    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
+    And refresh job PA triggered after 10 seconds
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -149,7 +148,8 @@ Feature: process tests for Retry_DB_GR_14
 
   Scenario: Poller Annulli
     Given the Execute activatePaymentNotice request scenario executed successfully
-    When job mod3CancelV2 triggered after 7 seconds
+    When job mod3CancelV2 triggered after 10 seconds
+    And wait 5 seconds for expiration
     Then verify the HTTP status code of mod3CancelV2 response is 200
 
   # Payment Outcome Phase outcome KO
@@ -196,12 +196,10 @@ Feature: process tests for Retry_DB_GR_14
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
-  Scenario: DB check + db update
+  @runnable
+  Scenario: DB check + db update [Retry_DB_GR_14]
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
-    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
-
-  @runnable
-  Scenario: job refresh pa (2)
-    Given the DB check + db update scenario executed successfully
+    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition BROADCAST and where value ('Y') under macro update_query on db nodo_cfg
     Then refresh job PA triggered after 10 seconds
+    

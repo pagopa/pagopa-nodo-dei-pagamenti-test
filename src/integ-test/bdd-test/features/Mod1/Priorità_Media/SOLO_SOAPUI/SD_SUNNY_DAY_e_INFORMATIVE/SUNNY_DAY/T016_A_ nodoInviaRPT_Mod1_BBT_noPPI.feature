@@ -3,7 +3,7 @@ Feature: T016_A_ nodoInviaRPT_Mod1_BBT_noPPI
     Background:
         Given systems up
 
-    Scenario: RPT generation
+    Scenario: Execute nodoInviaRPT (Phase 1)
         Given RPT1 generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -65,7 +65,7 @@ Feature: T016_A_ nodoInviaRPT_Mod1_BBT_noPPI
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>noPPI</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
+            <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
@@ -82,9 +82,6 @@ Feature: T016_A_ nodoInviaRPT_Mod1_BBT_noPPI
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
-    Scenario: Execute nodoInviaRPT request
-        Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -102,7 +99,7 @@ Feature: T016_A_ nodoInviaRPT_Mod1_BBT_noPPI
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rpt1Attachment</rpt>
             </ws:nodoInviaRPT>
@@ -127,4 +124,5 @@ Feature: T016_A_ nodoInviaRPT_Mod1_BBT_noPPI
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        And check url field exists in nodoInviaRPT response
+        And check redirect is 1 of nodoInviaRPT response
+

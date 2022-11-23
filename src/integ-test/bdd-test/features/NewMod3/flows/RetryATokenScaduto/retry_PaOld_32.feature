@@ -156,9 +156,9 @@ Feature: process tests for retry a token scaduto
       <soapenv:Body>
       <ws:nodoInviaRPT>
       <password>pwdpwdpwd</password>
-      <identificativoPSP>15376371009</identificativoPSP>
-      <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
-      <identificativoCanale>15376371009_01</identificativoCanale>
+      <identificativoPSP>#pspFittizio#</identificativoPSP>
+      <identificativoIntermediarioPSP>#pspFittizio#</identificativoIntermediarioPSP>
+      <identificativoCanale>#canaleFittizio#</identificativoCanale>
       <tipoFirma></tipoFirma>
       <rpt>$rptAttachment</rpt>
       </ws:nodoInviaRPT>
@@ -182,7 +182,6 @@ Feature: process tests for retry a token scaduto
     And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
   
-
   Scenario: Execute sendPaymentOutcome1 request
     Given the trigger paInviaRT + DB check scenario executed successfully
     And initial XML sendPaymentOutcome
@@ -336,7 +335,3 @@ Feature: process tests for retry a token scaduto
       """
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
-
-  
-
-  

@@ -12,8 +12,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
             <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker#</idBrokerPSP>
-            <idChannel>#canale#</idChannel>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code_old#</fiscalCode>
@@ -27,6 +27,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             """
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
+        And saving activatePaymentNotice request in activatePaymentNotice1
 
     # test execution
     Scenario: Define RPT
@@ -117,7 +118,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             <soapenv:Header>
             <ppt:intestazionePPT>
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#canale#</identificativoStazioneIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
@@ -214,6 +215,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
         And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNotice response
         And execution query payment_status to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
         And through the query payment_status retrieve param paymentToken at position 0 and save it under the key paymentToken
+        And saving activatePaymentNotice request in activatePaymentNotice2
 
     Scenario: Define RPT3
         Given the Execute activatePaymentNotice3 request scenario executed successfully
@@ -304,7 +306,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             <soapenv:Header>
             <ppt:intestazionePPT>
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#canale#</identificativoStazioneIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
@@ -365,7 +367,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
 
         And checks the value $activatePaymentNotice.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
 
-        And checks the value 7 of the record at column AMOUNT of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value $activatePaymentNotice1.amout, $activatePaymentNotice2.amout of the record at column AMOUNT of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
 
         #CHECK2-POSITION_TRANSFER
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -428,6 +430,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
         Then check rt field exists in nodoChiediCopiaRT response
         And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
 
+    @runnable
     Scenario: Excecute nodoChiediCopiaRT2
         Given the Excecute nodoChiediCopiaRT scenario executed successfully
         And initial XML nodoChiediCopiaRT

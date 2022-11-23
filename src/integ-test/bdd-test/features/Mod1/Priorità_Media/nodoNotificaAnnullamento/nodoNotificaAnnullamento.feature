@@ -81,7 +81,7 @@ Feature: process tests for nodoNotificaAnnullamento
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    @runnable
+    @midRunnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -112,44 +112,44 @@ Feature: process tests for nodoNotificaAnnullamento
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-    @runnable
+    @midRunnable
     Scenario: execution nodoNotificaAnnullamento - PM_NA1
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento? to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 400
 
-    @runnable
+    @midRunnable
     Scenario: execution nodoChiediListaPSP - PM_NA2
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento= to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 400
 
-    @runnable
+    @midRunnable
     Scenario: execution nodoChiediListaPSP - PM_NA3
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=ciao to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 400
 
-    @runnable
+    @midRunnable
     Scenario: execution nodoChiediListaPSP - PM_NA4
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?importoTotale=100&idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
 
-    @runnable
+    @midRunnable
     Scenario: execution nodoChiediListaPSP - PM_NA5
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagmento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 400
 
-    @runnable
+    @midRunnable
     Scenario: execution nodoChiediListaPSP - PM_NA6
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento;idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 405
     
 
-    @runnable
+    @midRunnable
     Scenario: execution nodoChiediListaPSP - PM_NA7
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento;importoTotale=100?idPagamento=$sessionToken to nodo-dei-pagamenti

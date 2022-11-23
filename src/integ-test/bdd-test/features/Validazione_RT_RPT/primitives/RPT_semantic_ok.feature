@@ -3,6 +3,7 @@ Feature: Semantic checks for nodoInviaRPT - OK
     Background:
         Given systems up
     #And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
+    @runnable
     Scenario Outline: Semantic check of nodoInviaRPT
         Given initial xml RPT
             """
@@ -87,7 +88,6 @@ Feature: Semantic checks for nodoInviaRPT - OK
             """
             $RPT
             """
-
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -124,8 +124,6 @@ Feature: Semantic checks for nodoInviaRPT - OK
             | RTSEM34 | pay_i:provinciaBeneficiario             | None      |
             | RTSEM37 | pay_i:nazioneBeneficiario               | None      |
             | RTSEM43 | pay_i:indirizzoVersante                 | None      |
-
-
         And initial XML pspInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">

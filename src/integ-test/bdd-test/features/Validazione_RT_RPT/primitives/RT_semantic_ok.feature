@@ -81,7 +81,6 @@ Feature: Semantic checks for nodoInviaRT - OK
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -123,6 +122,7 @@ Feature: Semantic checks for nodoInviaRT - OK
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
 
+    @runnable
     Scenario Outline: Semantic check of nodoInviaRT
         Given initial xml RT
             """
@@ -307,4 +307,3 @@ Feature: Semantic checks for nodoInviaRT - OK
             | RTSEM92 | pay_i:causaleVersamento                 | XXXX                                    |
             | RTSEM93 | pay_i:datiSpecificiRiscossione          | 1/def                                   |
             #| RTSEM7  | pay_i:identificativoDominio             | None                                    |
-#59

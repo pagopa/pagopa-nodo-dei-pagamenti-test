@@ -355,7 +355,7 @@ Feature: Pag-1163_Carta_OLD_OK
                 "tipoVersamento": "CP",
                 "identificativoIntermediario": "#psp#",
                 "identificativoCanale": "#canale#",
-                "importoTotalePagato": 10,
+                "importoTotalePagato": 10.00,
                 "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
                 "codiceAutorizzativo": "sleeOK",
                 "esitoTransazioneCarta": "00"

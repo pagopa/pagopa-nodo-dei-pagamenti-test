@@ -62,6 +62,7 @@
         "idempotency_act":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice.idempotencyKey'",
         "idempotency_cache_act":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice.idempotencyKey' AND PSP_ID = '$activatePaymentNotice.idPSP'",
         "idempotency_cache_act_orderby":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice.idempotencyKey' AND PSP_ID = '$activatePaymentNotice.idPSP' ORDER BY ID ASC",
+        "idempotency_cache_act_orderby_desc":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice.idempotencyKey' AND PSP_ID = '$activatePaymentNotice.idPSP' ORDER BY ID DESC",
         "idempotency_key":"SELECT * FROM IDEMPOTENCY_CACHE WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcome.idempotencyKey' AND PSP_ID = '$activatePaymentNotice.idPSP'",
         "idempotency_cache_psp":"SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice.idempotencyKey' AND PSP_ID = '$activatePaymentNotice.idPSP'",
         "idempotency_cache_psp_1" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice1.idempotencyKey' AND PSP_ID = '$activatePaymentNotice1.idPSP'",
@@ -179,7 +180,9 @@
         "getPsp": "SELECT columns from table_name where FK_SNAPSHOT_VERSION = $version AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1,2) AND CARRELLO_CARTE='Y' AND PSP_ID <> 'POSTE1' AND IMPORTO_MINIMO < $importoTot AND IMPORTO_MASSIMO >= $importoTot AND CODICE_CONVENZIONE is null ",
         "chekPlugin": "SELECT columns from table_name c join CANALI_NODO n on n.OBJ_ID=c.FK_CANALI_NODO where c.ID_CANALE='$canaleUsato'",
         "rt_versamenti": "SELECT s.columns FROM table_name s JOIN RT r on s.FK_RT=r.ID  WHERE r.IUV = '$iuv' AND r.CCP= '$ccp' AND r.IDENT_DOMINIO= '$nodoInviaCarrelloRPT.identificativoDominio'",
-        "esito_4iuv_": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV in ('$IUV','$IUV2') AND r.CCP in ('$ccp1','$ccp2') AND r.IDENT_DOMINIO='$pa'"
+        "esito_4iuv_": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV in ('$IUV','$IUV2') AND r.CCP in ('$ccp1','$ccp2') AND r.IDENT_DOMINIO='$pa'",
+        "codice_convenzione": "SELECT columns FROM table_name WHERE ID_CARRELLO = '$idCarrello'"
+
     },
     "RTPull" : {
         "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC",

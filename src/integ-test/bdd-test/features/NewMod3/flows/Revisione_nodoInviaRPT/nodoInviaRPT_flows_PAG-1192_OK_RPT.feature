@@ -168,7 +168,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
             <fiscalCode>$activatePaymentNotice.fiscalCode</fiscalCode>
             <noticeNumber>$activatePaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
-            <amount>7.00</amount>
+            <amount>10.00</amount>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -398,8 +398,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
         And checks the value PAYING, PAYING_RPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_context_payment_token_2 on db nodo_online under macro NewMod3
 
         #DB_CHECK- POSITION_PAYMENT_STATUS_SNAPSHOT
-        And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value N of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value N of the record at column ACTIVATION_PENDING of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
 
         #DB_CHECK- POSITION_STATUS_SNAPSHOT
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3

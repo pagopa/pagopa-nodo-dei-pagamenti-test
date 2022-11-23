@@ -84,7 +84,7 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_KO_SEMANTICA
             </pay_i:RPT>
             """
 
-    @runnable
+    @midRunnable
     #(descriptionValorizzata)
     Scenario: Execute nodoInviaRT (Phase 1)
         Given the RPT generation scenario executed successfully

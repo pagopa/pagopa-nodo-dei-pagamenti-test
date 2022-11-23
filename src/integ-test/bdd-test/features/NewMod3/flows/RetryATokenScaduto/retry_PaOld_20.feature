@@ -65,6 +65,7 @@ Feature: process tests for retry a token scaduto
   Scenario: Execute Poller Annulli
     Given the Execute activatePaymentNotice request scenario executed successfully
     When job mod3CancelV1 triggered after 5 seconds
+    And wait 5 seconds for expiration
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
   # Payment Outcome Phase outcome KO
@@ -209,9 +210,9 @@ Feature: process tests for retry a token scaduto
       <soapenv:Body>
       <ws:nodoInviaRPT>
       <password>pwdpwdpwd</password>
-      <identificativoPSP>15376371009</identificativoPSP>
-      <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
-      <identificativoCanale>15376371009_01</identificativoCanale>
+      <identificativoPSP>#pspFittizio#</identificativoPSP>
+      <identificativoIntermediarioPSP>#pspFittizio#</identificativoIntermediarioPSP>
+      <identificativoCanale>#canaleFittizio#</identificativoCanale>
       <tipoFirma></tipoFirma>
       <rpt>$rptAttachment</rpt>
       </ws:nodoInviaRPT>

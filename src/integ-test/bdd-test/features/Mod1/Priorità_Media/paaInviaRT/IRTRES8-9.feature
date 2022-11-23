@@ -213,7 +213,7 @@ Feature: process tests for paaInviaRT[IRTRES8-9]
 
 
 
-    @runnable
+    @midRunnable
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML paaInviaRT
@@ -255,7 +255,7 @@ Feature: process tests for paaInviaRT[IRTRES8-9]
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoInviaRT response
 
-    @runnable
+    @midRunnable
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML paaInviaRT

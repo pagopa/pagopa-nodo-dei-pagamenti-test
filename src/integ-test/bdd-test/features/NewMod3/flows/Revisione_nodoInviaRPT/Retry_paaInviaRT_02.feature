@@ -24,6 +24,7 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
 
     # Verify phase
     Scenario: Execute verifyPaymentNotice request
+        Given nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
@@ -219,7 +220,7 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
             <soapenv:Body>
             <ws:paaInviaRTRisposta>
             <paaInviaRTRisposta>
-            <delay>30000</delay>
+            <delay>10000</delay>
             <esito>OK</esito>
             </paaInviaRTRisposta>
             </ws:paaInviaRTRisposta>
@@ -233,8 +234,6 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
         And check outcome is OK of sendPaymentOutcome response
         And wait 65 seconds for expiration
 
-
-    @runnable
     Scenario: DB check
         Given the Execute sendPaymentOutcome request Scenario executed successfully
         Then checks the value NotNone of the record at column id of the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt_only_ccp on db nodo_online under macro NewMod3
@@ -346,7 +345,7 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
         And checks the value None of the record at column office_name of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $debtor_id of the record at column debtor_id of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $codice_fiscale of the record at column psp_fiscal_code of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value $vat_number of the record at column psp_vat_number of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
+        #And checks the value $vat_number of the record at column psp_vat_number of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $channel_id of the record at column channel_id of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $payment_channel of the record at column channel_description of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $payer_id of the record at column payer_id of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -479,13 +478,15 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
         And check value $xml_rt.datiSpecificiRiscossione is equal to value $xml_rpt.datiSpecificiRiscossione
 
     Scenario: retry paainviart
-        Given the DB check Scenario executed successfully
+        Given the DB check scenario executed successfully
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
         And wait 15 seconds for expiration
 
-    Scenario: DB check 2
-        Given the retry paainviart Scenario executed successfully
+    @runnable
+    Scenario: DB check 2 [Retry_paaInviaRT_02]
+        Given the retry paainviart scenario executed successfully
         Then verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt_only_ccp on db nodo_online under macro NewMod3
         #DB CHECK-POSITION_PAYMENT_STATUS
         And checks the value PAYING, PAYING_RPT, PAID, NOTICE_GENERATED, NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -592,7 +593,7 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
         And checks the value None of the record at column office_name of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $debtor_id of the record at column debtor_id of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $codice_fiscale of the record at column psp_fiscal_code of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value $vat_number of the record at column psp_vat_number of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
+        #And checks the value $vat_number of the record at column psp_vat_number of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $channel_id of the record at column channel_id of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $payment_channel of the record at column channel_description of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $payer_id of the record at column payer_id of the table POSITION_RECEIPT retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -614,3 +615,5 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
         And checks the value $station_id of the record at column recipient_station_id of the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column xml of the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
+
+        And restore initial configurations

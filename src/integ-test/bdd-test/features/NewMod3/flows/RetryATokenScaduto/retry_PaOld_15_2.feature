@@ -153,9 +153,9 @@ Feature: process tests for retryAtokenScaduto
       <soapenv:Body>
       <ws:nodoInviaRPT>
       <password>pwdpwdpwd</password>
-      <identificativoPSP>15376371009</identificativoPSP>
-      <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
-      <identificativoCanale>15376371009_01</identificativoCanale>
+      <identificativoPSP>#pspFittizio#</identificativoPSP>
+      <identificativoIntermediarioPSP>#pspFittizio#</identificativoIntermediarioPSP>
+      <identificativoCanale>#canaleFittizio#</identificativoCanale>
       <tipoFirma></tipoFirma>
       <rpt>$rptAttachment</rpt>
       </ws:nodoInviaRPT>
@@ -228,7 +228,7 @@ Feature: process tests for retryAtokenScaduto
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
   @runnable
-  Scenario: check position_payment
+  Scenario: check position_payment [retry_PaOld_15_2]
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And wait 5 seconds for expiration
     #STATI
@@ -249,17 +249,17 @@ Feature: process tests for retryAtokenScaduto
     And checks the value $activatePaymentNotice.idBrokerPSP of the record at column broker_psp_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.idempotencyKey of the record at column idempotency_key of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value 10 of the record at column amount of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value None of the record at column fee of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value None of the record at column payment_method of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value NA of the record at column payment_channel of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value None of the record at column transfer_date of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value None of the record at column payer_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value None of the record at column application_date of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value None of the record at column fee of the table POSITION_PAYMENT retrived by the query payment_status_orderby on db nodo_online under macro NewMod3
+    And checks the value None of the record at column payment_method of the table POSITION_PAYMENT retrived by the query payment_status_orderby on db nodo_online under macro NewMod3
+    And checks the value NA of the record at column payment_channel of the table POSITION_PAYMENT retrived by the query payment_status_orderby on db nodo_online under macro NewMod3
+    And checks the value None of the record at column transfer_date of the table POSITION_PAYMENT retrived by the query payment_status_orderby on db nodo_online under macro NewMod3
+    And checks the value None of the record at column payer_id of the table POSITION_PAYMENT retrived by the query payment_status_orderby on db nodo_online under macro NewMod3
+    And checks the value None of the record at column application_date of the table POSITION_PAYMENT retrived by the query payment_status_orderby on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column updated_timestamp of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value MOD3 of the record at column payment_type of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value None of the record at column carrello_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value None of the record at column original_payment_token of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+    And checks the value None of the record at column carrello_id of the table POSITION_PAYMENT retrived by the query payment_status_orderby on db nodo_online under macro NewMod3
+    And checks the value None of the record at column original_payment_token of the table POSITION_PAYMENT retrived by the query payment_status_orderby on db nodo_online under macro NewMod3
     ##
     And checks the value $activatePaymentNotice.fiscalCode of the record at column pa_fiscal_code of the table POSITION_PAYMENT retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.noticeNumber of the record at column notice_id of the table POSITION_PAYMENT retrived by the query payment_status_v2 on db nodo_online under macro NewMod3
@@ -332,7 +332,7 @@ Feature: process tests for retryAtokenScaduto
     And checks the value 0 of the record at column somma_versamenti of the table RT retrived by the query rt_stati on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column inserted_timestamp of the table RT retrived by the query rt_stati on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column updated_timestamp of the table RT retrived by the query rt_stati on db nodo_online under macro NewMod3
-    And checks the value 15376371009_01 of the record at column canale of the table RT retrived by the query rt_stati on db nodo_online under macro NewMod3
+    And checks the value #canaleFittizio# of the record at column canale of the table RT retrived by the query rt_stati on db nodo_online under macro NewMod3
     And checks the value N of the record at column notifica_processata of the table RT retrived by the query rt_stati on db nodo_online under macro NewMod3
     #RPT_ACTIVATIONS
     And checks the value $iuv of the record at column creditor_reference_id of the table RPT_ACTIVATIONS retrived by the query payment_token_v2 on db nodo_online under macro NewMod3

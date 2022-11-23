@@ -259,7 +259,7 @@ Feature: T0XX_N_RPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 10 seconds
+        And job paInviaRt triggered after 20 seconds
         And wait 130 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
@@ -440,7 +440,7 @@ Feature: T0XX_N_RPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 10 seconds
+        And job paInviaRt triggered after 20 seconds
         And wait 130 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
@@ -622,7 +622,7 @@ Feature: T0XX_N_RPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 10 seconds
+        And job paInviaRt triggered after 20 seconds
         And wait 130 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response

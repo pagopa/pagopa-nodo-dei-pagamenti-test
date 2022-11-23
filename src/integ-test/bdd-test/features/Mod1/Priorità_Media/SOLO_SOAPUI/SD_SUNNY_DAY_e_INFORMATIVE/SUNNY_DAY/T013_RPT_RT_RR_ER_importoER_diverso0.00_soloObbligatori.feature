@@ -390,7 +390,7 @@ Feature: T013_RPT_RT_RR_ER_importoER0.00_soloObbligatori
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaRichiestaStorno>
-            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>

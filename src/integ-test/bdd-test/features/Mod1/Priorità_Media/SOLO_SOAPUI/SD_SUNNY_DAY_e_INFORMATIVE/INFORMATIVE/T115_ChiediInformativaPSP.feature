@@ -2,7 +2,7 @@ Feature: T115_ChiediInformativaPSP
 
     Background:
         Given systems up
-@runnable
+@midRunnable
     Scenario: Send nodoChiediInformativaPSP with CDI
         Given initial XML nodoChiediInformativaPSP
             """

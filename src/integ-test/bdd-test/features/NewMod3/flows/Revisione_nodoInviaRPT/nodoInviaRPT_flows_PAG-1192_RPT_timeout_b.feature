@@ -12,7 +12,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
             <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker#</idBrokerPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
@@ -157,7 +157,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
             <soapenv:Body>
             <nod:activatePaymentNoticeReq>
             <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker#</idBrokerPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
@@ -165,7 +165,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
             <noticeNumber>$activatePaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
             <expirationTime>2000</expirationTime>
-            <amount>10.00</amount>
+            <amount>11.00</amount>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -436,7 +436,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
         When psp sends soap nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check rt field exists in nodoChiediCopiaRT response
         And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
-    @prova
+    
+    @runnable
     Scenario: Excecute_nodoChiediCopiaRT2
         Given the Excecute nodoChiediCopiaRT scenario executed successfully
         And initial XML nodoChiediCopiaRT

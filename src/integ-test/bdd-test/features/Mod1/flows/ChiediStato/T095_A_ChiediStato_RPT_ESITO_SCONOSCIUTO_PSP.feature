@@ -3,7 +3,6 @@ Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
     Background:
         Given systems up
 
-
     Scenario: RPT generation
         Given RPT generation
             """
@@ -307,7 +306,6 @@ Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response

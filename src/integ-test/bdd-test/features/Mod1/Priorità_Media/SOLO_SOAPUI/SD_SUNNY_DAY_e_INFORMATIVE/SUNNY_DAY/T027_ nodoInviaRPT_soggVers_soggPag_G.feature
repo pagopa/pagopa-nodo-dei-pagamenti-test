@@ -82,7 +82,7 @@ Feature: T027_ nodoInviaRPT_soggVers_soggPag_G
             </pay_i:RPT>
             """
 
-    @runnable
+    @midRunnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT

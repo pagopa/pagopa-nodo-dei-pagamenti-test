@@ -5,7 +5,7 @@ Feature: process tests for REGR_retryTokenScaduto_OK
     And EC old version
 
   Scenario: Execute verifyPaymentNotice request
-    Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
+    Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
     And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
     And initial XML verifyPaymentNotice
       """
@@ -155,9 +155,9 @@ Feature: process tests for REGR_retryTokenScaduto_OK
       <soapenv:Body>
       <ws:nodoInviaRPT>
       <password>pwdpwdpwd</password>
-      <identificativoPSP>15376371009</identificativoPSP>
-      <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
-      <identificativoCanale>15376371009_01</identificativoCanale>
+      <identificativoPSP>#pspFittizio#</identificativoPSP>
+      <identificativoIntermediarioPSP>#pspFittizio#</identificativoIntermediarioPSP>
+      <identificativoCanale>#canaleFittizio#</identificativoCanale>
       <tipoFirma></tipoFirma>
       <rpt>$rpt1Attachment</rpt>
       </ws:nodoInviaRPT>
@@ -315,9 +315,9 @@ Feature: process tests for REGR_retryTokenScaduto_OK
       <soapenv:Body>
       <ws:nodoInviaRPT>
       <password>pwdpwdpwd</password>
-      <identificativoPSP>15376371009</identificativoPSP>
-      <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
-      <identificativoCanale>15376371009_01</identificativoCanale>
+      <identificativoPSP>#pspFittizio#</identificativoPSP>
+      <identificativoIntermediarioPSP>#pspFittizio#</identificativoIntermediarioPSP>
+      <identificativoCanale>#canaleFittizio#</identificativoCanale>
       <tipoFirma></tipoFirma>
       <rpt>$rpt2Attachment</rpt>
       </ws:nodoInviaRPT>
