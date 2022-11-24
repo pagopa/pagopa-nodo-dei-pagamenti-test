@@ -161,7 +161,7 @@ Feature: Syntax checks for RT with MB - KO
       """
     And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
 
-  @runnable
+  @midRunnable
   Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on invalid RT tag
     Given initial xml RT
       """
@@ -290,6 +290,6 @@ Feature: Syntax checks for RT with MB - KO
       | RTSIN195 | pay_i:tipoAllegatoRicevuta | ABD           |
       | RTSIN196 | pay_i:tipoAllegatoRicevuta | B             |
       | RTSIN197 | pay_i:testoAllegato        | None          |
-# | RTSIN198  | pay_i:testoAllegato                       | Empty           |
-# | RTSIN199  | pay_i:testoAllegato                       | Empty           |
+      | RTSIN198 | pay_i:testoAllegato        | Empty         |
+      | RTSIN199 | pay_i:testoAllegato        | prova         |
 

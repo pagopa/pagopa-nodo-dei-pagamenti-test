@@ -102,7 +102,7 @@ Feature: FLUSSO_APIO_20_PPALNEW
         """
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is OK of inoltroEsito/paypal response
-    @
+    
     Scenario: Execute sendPaymentOutcome (Phase 4)
         Given the Execute nodoInoltroEsitoPayPal (Phase 3.1) scenario executed successfully
         And initial XML sendPaymentOutcome

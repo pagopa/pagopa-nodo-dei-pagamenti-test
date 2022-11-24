@@ -1478,7 +1478,7 @@ def step_impl(context, job_name):
 def stemp_impl(context, date, add_remove, minutes):
 
     if date == 'Today':
-        date = datetime.datetime.today()
+        date = datetime.datetime.today().astimezone(pytz.timezone('Europe/Rome'))
     else:
         date = utils.replace_local_variables(date, context)
         date = utils.replace_context_variables(date, context)
@@ -1533,6 +1533,7 @@ def step_impl(context):
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
     refresh_response = requests.get(utils.get_refresh_config_url(
         context), headers=headers, verify=False)
+    time.sleep(10)
     assert refresh_response.status_code == 200
 
 

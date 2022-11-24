@@ -122,7 +122,7 @@ Feature: Syntax checks for RT - KO
       """
     And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
 
-  @runnable
+  @midRunnable
   Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on invalid RT tag
     Given initial xml RT
       """
@@ -266,7 +266,7 @@ Feature: Syntax checks for RT - KO
       | RTSIN22  | pay_i:riferimentoDataRichiesta          | Empty                                                                                                                                                                                                                                                     |
       | RTSIN23  | pay_i:riferimentoDataRichiesta          | 2001-12-31T12                                                                                                                                                                                                                                             |
       | RTSIN24  | pay_i:riferimentoDataRichiesta          | 12-31                                                                                                                                                                                                                                                     |
-      #| RTSIN25   | pay_i:riferimentoDataRichiesta           | 2001-12-31 |
+      | RTSIN25  | pay_i:riferimentoDataRichiesta          | 20011231                                                                                                                                                                                                                                                  |
       | RTSIN26  | pay_i:istitutoAttestante                | None                                                                                                                                                                                                                                                      |
       | RTSIN27  | pay_i:identificativoUnivocoAttestante   | None                                                                                                                                                                                                                                                      |
       | RTSIN29  | pay_i:tipoIdentificativoUnivoco         | None                                                                                                                                                                                                                                                      |
@@ -303,7 +303,7 @@ Feature: Syntax checks for RT - KO
       | RTSIN60  | pay_i:tipoIdentificativoUnivoco         | None                                                                                                                                                                                                                                                      |
       | RTSIN61  | pay_i:tipoIdentificativoUnivoco         | Empty                                                                                                                                                                                                                                                     |
       | RTSIN62  | pay_i:tipoIdentificativoUnivoco         | PP                                                                                                                                                                                                                                                        |
-      #| RTSIN63    | pay_i:tipoIdentificativoUnivoco          | A          |
+      | RTSIN63  | pay_i:tipoIdentificativoUnivoco         | A                                                                                                                                                                                                                                                         |
       | RTSIN64  | pay_i:codiceIdentificativoUnivoco       | None                                                                                                                                                                                                                                                      |
       | RTSIN65  | pay_i:codiceIdentificativoUnivoco       | Empty                                                                                                                                                                                                                                                     |
       | RTSIN66  | pay_i:codiceIdentificativoUnivoco       | QuestiSono36CaratteriAlfaNumericiTT1                                                                                                                                                                                                                      |
@@ -316,7 +316,7 @@ Feature: Syntax checks for RT - KO
       | RTSIN73  | pay_i:denomUnitOperBeneficiario         | QuestiSono71CaratteriAlfaNumericiQuestiSono71CaratteriAlfaNumerici12345                                                                                                                                                                                   |
       | RTSIN74  | pay_i:indirizzoBeneficiario             | Empty                                                                                                                                                                                                                                                     |
       | RTSIN75  | pay_i:indirizzoBeneficiario             | QuestiSono71CaratteriAlfaNumericiQuestiSono71CaratteriAlfaNumerici12345                                                                                                                                                                                   |
-      #| RTSIN76    | pay_i:indirizzoBeneficiario              | None       |
+      | RTSIN76  | pay_i:civicoBeneficiario                | Empty                                                                                                                                                                                                                                                     |       
       | RTSIN77  | pay_i:civicoBeneficiario                | Sono17CaratteAlfa                                                                                                                                                                                                                                         |
       | RTSIN78  | pay_i:capBeneficiario                   | Empty                                                                                                                                                                                                                                                     |
       | RTSIN79  | pay_i:capBeneficiario                   | Sono17CaratteAlfa                                                                                                                                                                                                                                         |
@@ -332,7 +332,7 @@ Feature: Syntax checks for RT - KO
       | RTSIN89  | pay_i:identificativoUnivocoVersante     | RemoveParent                                                                                                                                                                                                                                              |
       | RTSIN90  | pay_i:tipoIdentificativoUnivoco         | Empty                                                                                                                                                                                                                                                     |
       | RTSIN91  | pay_i:tipoIdentificativoUnivoco         | PP                                                                                                                                                                                                                                                        |
-      #| RTSIN92   | pay_i:tipoIdentificativoUnivoco          | A          |
+      | RTSIN92  | pay_i:tipoIdentificativoUnivoco         | A                                                                                                                                                                                                                                                         |
       | RTSIN93  | pay_i:codiceIdentificativoUnivoco       | None                                                                                                                                                                                                                                                      |
       | RTSIN94  | pay_i:codiceIdentificativoUnivoco       | Empty                                                                                                                                                                                                                                                     |
       | RTSIN95  | pay_i:codiceIdentificativoUnivoco       | QuestiSono36CaratteriAlfaNumericiTT1                                                                                                                                                                                                                      |
@@ -425,12 +425,12 @@ Feature: Syntax checks for RT - KO
       | RTSIN183 | pay_i:datiSpecificiRiscossione          | QuestiSono141CaratteriAlfaNumericiQuestiSono141CaratteriAlfaNumericiQuestiSono141CaratteriAlfaNumericiQuestiSono141CaratteriAlfaNumerici12345                                                                                                             |
       | RTSIN184 | pay_i:commissioniApplicatePSP           | Empty                                                                                                                                                                                                                                                     |
       | RTSIN185 | pay_i:commissioniApplicatePSP           | 22                                                                                                                                                                                                                                                        |
-      #| RTSIN186|  pay_i:commissioniApplicatePSP                | 0.00                                 |
-      #| RTSIN187|  pay_i:commissioniApplicatePSP                | 199999999.99                         |
+      | RTSIN186 | pay_i:commissioniApplicatePSP           | 0.00                                                                                                                                                                                                                                                      |
+      | RTSIN187 | pay_i:commissioniApplicatePSP           | 199999999.99                                                                                                                                                                                                                                              |
       | RTSIN188 | pay_i:commissioniApplicatePSP           | 10.251                                                                                                                                                                                                                                                    |
       | RTSIN189 | pay_i:commissioniApplicatePSP           | 10,25                                                                                                                                                                                                                                                     |
 
-  @runnable
+  @midRunnable
   Scenario: Check faultCode PPT_SINTASSI_XSD error on invalid RT tag [RTSIN28]
     Given initial xml RT
       """
@@ -548,7 +548,7 @@ Feature: Syntax checks for RT - KO
     Then check esito is KO of nodoInviaRT response
     And check faultCode is PPT_SINTASSI_XSD of nodoInviaRT response
 
-  @runnable
+  @midRunnable
   Scenario: Check faultCode PPT_SINTASSI_XSD error on invalid singoloImportoPagato [RTSIN166]
     Given initial xml RT
       """

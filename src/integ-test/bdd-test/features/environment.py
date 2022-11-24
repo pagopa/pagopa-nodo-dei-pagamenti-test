@@ -3,6 +3,7 @@ import steps.db_operation as db
 from behave.model import Table
 import os, cx_Oracle, requests
 import steps.utils as utils
+import time
 
 
 def before_all(context):
@@ -79,3 +80,7 @@ def config_ec(context):
         payload = reader.read().replace('#creditor_institution_code#', creditor_institution_code)
 
         context.apiconfig.create_creditor_institution(payload)
+
+def after_scenario(context, scenario):
+    time.sleep(2)
+    print("eseguito dopo lo scenario")

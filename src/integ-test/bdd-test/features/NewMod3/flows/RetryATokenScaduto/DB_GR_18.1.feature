@@ -116,7 +116,7 @@ Feature: process tests for DB_GR_18.1
       <transfer>
       <idTransfer>2</idTransfer>
       <transferAmount>3.00</transferAmount>
-      <fiscalCodePA>66666666666</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>

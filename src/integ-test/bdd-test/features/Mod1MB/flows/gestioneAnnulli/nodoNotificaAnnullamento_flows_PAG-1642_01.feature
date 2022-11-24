@@ -4,7 +4,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
         Given systems up
 
     Scenario: RPT generation
-        Given nodo-dei-pagamenti has config parameter CONFIG_VALUE set to false
+        Given nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to false
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And RPT1 generation
@@ -247,9 +247,9 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
 
         #DB-CHECK-STATI_RPT_SNAPSHOT
         And replace pa content with #creditor_institution_code# content
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
         And replace pa content with #creditor_institution_code_secondary# content
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
 
         #DB-CHECK-STATI_CARRELLO
         And replace idCarrello content with $nodoInviaCarrelloRPT.identificativoCarrello content
@@ -268,11 +268,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
 
         #DB-CHECK-POSITION_STATUS
         And execution query by_notice_number_and_pa to get value on the table POSITION_PAYMENT_STATUS, with the columns NOTICE_ID under macro Mod1Mb with db name nodo_online
-        And through the query DB_GEST_ANN_stati_position_payment_status retrieve param NOTICE_ID at position 0 and save it under the key NOTICE_ID
-        And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
+        And through the query by_notice_number_and_pa retrieve param NOTICE_ID at position 0 and save it under the key NOTICE_ID
+        And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
         #DB-CHECK-POSITION_STATUS_SNAPSHOT
-        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
+        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
 
     Scenario: Execute activateIOPayment
@@ -430,6 +430,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
             """
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+        And wait 30 seconds for expiration
 
         #DB-CHECK-STATI_RPT
         And replace iuv content with $1iuv content
@@ -471,4 +472,4 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
 
         #DB-CHECK-POSITION_STATUS_SNAPSHOT
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
-
+        And restore initial configurations

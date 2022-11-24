@@ -330,7 +330,7 @@ Feature: Semantic checks for activateIOPayment - KO
     And check faultCode is PPT_AUTORIZZAZIONE of activateIOPayment response
     And check description is Configurazione intermediario-canale non corretta of activateIOPayment response
 
-  @runnable
+  
   Scenario: Execute activateIOPayment (Phase 1)
     Given generate 4 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML activateIOPayment
@@ -339,9 +339,9 @@ Feature: Semantic checks for activateIOPayment - KO
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activateIOPaymentReq>
-      <idPSP>#psp_AGID#</idPSP>
-      <idBrokerPSP>#broker_AGID#</idBrokerPSP>
-      <idChannel>#canale_AGID#</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <!--Optional:-->
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -350,7 +350,7 @@ Feature: Semantic checks for activateIOPayment - KO
       <noticeNumber>$4noticeNumber</noticeNumber>
       </qrCode>
       <!--Optional:-->
-      <expirationTime>20000</expirationTime>
+      <expirationTime>60000</expirationTime>
       <amount>10.00</amount>
       <!--Optional:-->
       <dueDate>2021-12-12</dueDate>
@@ -360,7 +360,7 @@ Feature: Semantic checks for activateIOPayment - KO
       <payer>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>name</fullName>
       <!--Optional:-->
@@ -405,7 +405,7 @@ Feature: Semantic checks for activateIOPayment - KO
       <debtor>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>paGetPaymentName</fullName>
       <!--Optional:-->
@@ -481,53 +481,44 @@ Feature: Semantic checks for activateIOPayment - KO
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
 
-  @runnable
+  @heloo
   # [SEM_AIPR_21]
   Scenario Outline: Check PPT_ERRORE_IDEMPOTENZA error on idempotencyKey validity (Phase 2)
     Given nodo-dei-pagamenti has config parameter useIdempotency set to true
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
     And <tag> with <tag_value> in activateIOPayment
-    And wait 3 seconds for expiration
+    And wait 2 seconds for expiration
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activateIOPayment response
     Examples:
       | tag                         | tag_value             | soapUI test |
       | noticeNumber                | 302119138889055636    | SEM_AIPR_21 |
-      | fiscalCode                  | 90000000001           | SEM_AIPR_21 |
+      | fiscalCode                  | 88888888888           | SEM_AIPR_21 |
       | amount                      | 15.12                 | SEM_AIPR_21 |
       | dueDate                     | 2021-12-31            | SEM_AIPR_21 |
       | dueDate                     | None                  | SEM_AIPR_21 |
       | paymentNote                 | test_1                | SEM_AIPR_21 |
-      | paymentNote                 | Empty                 | SEM_AIPR_21 |
       | paymentNote                 | None                  | SEM_AIPR_21 |
       | expirationTime              | 123456                | SEM_AIPR_21 |
-      | expirationTime              | Empty                 | SEM_AIPR_21 |
       | expirationTime              | None                  | SEM_AIPR_21 |
       | payer                       | None                  | SEM_AIPR_21 |
       | entityUniqueIdentifierType  | F                     | SEM_AIPR_21 |
       | entityUniqueIdentifierValue | 55555555555           | SEM_AIPR_21 |
       | fullName                    | name_1                | SEM_AIPR_21 |
       | streetName                  | streetName            | SEM_AIPR_21 |
-      | streetName                  | Empty                 | SEM_AIPR_21 |
       | streetName                  | None                  | SEM_AIPR_21 |
       | civicNumber                 | civicNumber           | SEM_AIPR_21 |
-      | civicNumber                 | Empty                 | SEM_AIPR_21 |
       | civicNumber                 | None                  | SEM_AIPR_21 |
       | postalCode                  | postalCode            | SEM_AIPR_21 |
-      | postalCode                  | Empty                 | SEM_AIPR_21 |
       | postalCode                  | None                  | SEM_AIPR_21 |
       | city                        | new_city              | SEM_AIPR_21 |
-      | city                        | Empty                 | SEM_AIPR_21 |
       | city                        | None                  | SEM_AIPR_21 |
       | stateProvinceRegion         | stateProvinceRegion   | SEM_AIPR_21 |
-      | stateProvinceRegion         | Empty                 | SEM_AIPR_21 |
       | stateProvinceRegion         | None                  | SEM_AIPR_21 |
       | country                     | FR                    | SEM_AIPR_21 |
-      | country                     | Empty                 | SEM_AIPR_21 |
       | country                     | None                  | SEM_AIPR_21 |
       | e-mail                      | test1@prova.gmail.com | SEM_AIPR_21 |
-      | e-mail                      | Empty                 | SEM_AIPR_21 |
       | e-mail                      | None                  | SEM_AIPR_21 |
 
   @runnable

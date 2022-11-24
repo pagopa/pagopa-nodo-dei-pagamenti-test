@@ -133,3 +133,4 @@ Scenario: execute third sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
+    And restore initial configurations

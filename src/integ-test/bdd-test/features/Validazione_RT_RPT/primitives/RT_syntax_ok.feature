@@ -120,8 +120,10 @@ Feature: Syntax checks for RT - OK
       </soapenv:Envelope>
       """
     And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+    When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+    Then check esito is OK of nodoInviaRPT response
 
-  @runnable
+  @midRunnable
   Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on invalid RT tag
     Given initial xml RT
       """
@@ -273,4 +275,4 @@ Feature: Syntax checks for RT - OK
       | RTSIN138.1 | pay_i:nazionePagatore                   | None      |
       | RTSIN140.1 | pay_i:e-mailPagatore                    | None      |
       | RTSIN169.1 | pay_i:esitoSingoloPagamento             | None      |
-# | RTSIN190.1| pay_i:allegatoRicevuta                   | None       |
+      | RTSIN190.1 | pay_i:allegatoRicevuta                  | None      |

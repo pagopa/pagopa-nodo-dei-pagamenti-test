@@ -242,6 +242,7 @@ Feature: process tests for paSendRT [PSRT_23]
     @runnable
     Scenario: job refresh pa (2)
         Given the DB check + db update scenario executed successfully
+        And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
         Then refresh job PA triggered after 10 seconds
 
 
