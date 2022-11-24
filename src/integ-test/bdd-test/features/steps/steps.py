@@ -798,7 +798,7 @@ def step_impl(context, sender, soap_primitive, receiver):
 
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
-    idempotency = db.executeQuery(conn, "select * from nodo4_cfg.configuration_keys where config_key = 'useIdempotency'")[0]
+    idempotency = db.executeQuery(conn, "select * from configuration_keys where config_key = 'useIdempotency'")[0]
     print(idempotency)
 
     assert (soap_response.status_code ==
