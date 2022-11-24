@@ -339,9 +339,9 @@ Feature: Semantic checks for activateIOPayment - KO
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activateIOPaymentReq>
-      <idPSP>#psp_AGID#</idPSP>
-      <idBrokerPSP>#broker_AGID#</idBrokerPSP>
-      <idChannel>#canale_AGID#</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <!--Optional:-->
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -499,34 +499,26 @@ Feature: Semantic checks for activateIOPayment - KO
       | dueDate                     | 2021-12-31            | SEM_AIPR_21 |
       | dueDate                     | None                  | SEM_AIPR_21 |
       | paymentNote                 | test_1                | SEM_AIPR_21 |
-      | paymentNote                 | Empty                 | SEM_AIPR_21 |
       | paymentNote                 | None                  | SEM_AIPR_21 |
       | expirationTime              | 123456                | SEM_AIPR_21 |
-      | expirationTime              | Empty                 | SEM_AIPR_21 |
       | expirationTime              | None                  | SEM_AIPR_21 |
       | payer                       | None                  | SEM_AIPR_21 |
       | entityUniqueIdentifierType  | F                     | SEM_AIPR_21 |
       | entityUniqueIdentifierValue | 55555555555           | SEM_AIPR_21 |
       | fullName                    | name_1                | SEM_AIPR_21 |
       | streetName                  | streetName            | SEM_AIPR_21 |
-      | streetName                  | Empty                 | SEM_AIPR_21 |
       | streetName                  | None                  | SEM_AIPR_21 |
       | civicNumber                 | civicNumber           | SEM_AIPR_21 |
-      | civicNumber                 | Empty                 | SEM_AIPR_21 |
       | civicNumber                 | None                  | SEM_AIPR_21 |
       | postalCode                  | postalCode            | SEM_AIPR_21 |
-      | postalCode                  | Empty                 | SEM_AIPR_21 |
       | postalCode                  | None                  | SEM_AIPR_21 |
       | city                        | new_city              | SEM_AIPR_21 |
-      | city                        | Empty                 | SEM_AIPR_21 |
       | city                        | None                  | SEM_AIPR_21 |
       | stateProvinceRegion         | stateProvinceRegion   | SEM_AIPR_21 |
       | stateProvinceRegion         | None                  | SEM_AIPR_21 |
       | country                     | FR                    | SEM_AIPR_21 |
-      | country                     | Empty                 | SEM_AIPR_21 |
       | country                     | None                  | SEM_AIPR_21 |
       | e-mail                      | test1@prova.gmail.com | SEM_AIPR_21 |
-      | e-mail                      | Empty                 | SEM_AIPR_21 |
       | e-mail                      | None                  | SEM_AIPR_21 |
 
   @runnable
