@@ -65,7 +65,7 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoChiediCopiaRT": "/nodo-per-pa/v1",
         "nodoChiediInformativaPA": "/nodo-per-pa/v1",
         "nodoChiediListaPendentiRPT": "/nodo-per-pa/v1",
-        "nodoChiediNumeroAvviso": "/nodo-per-psp/v1",
+        "nodoChiediNumeroAvviso": "/nodo-per-psp-richiesta-avvisi/v1",
         "nodoChiediStatoRPT": "/nodo-per-pa/v1",
         "nodoChiediTemplateInformativaPSP": "/nodo-per-psp/v1",
         "nodoInviaFlussoRendicontazione": "/nodo-per-psp/v1",
