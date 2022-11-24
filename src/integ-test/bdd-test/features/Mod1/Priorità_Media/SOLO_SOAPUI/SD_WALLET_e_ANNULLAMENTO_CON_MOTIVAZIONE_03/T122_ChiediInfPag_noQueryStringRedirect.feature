@@ -2,9 +2,7 @@ Feature: process tests for chiediInformazioniPagamento noQueryStringRedirect
 
     Background:
         Given systems up
-
-    Scenario: RPT generation
-        Given RPT generation
+        And RPT generation
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -83,8 +81,7 @@ Feature: process tests for chiediInformazioniPagamento noQueryStringRedirect
         """
 
     Scenario: Execute nodoInviaRPT request
-        Given the RPT generation scenario executed successfully
-        And initial XML nodoInviaRPT
+        Given initial XML nodoInviaRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
@@ -113,7 +110,7 @@ Feature: process tests for chiediInformazioniPagamento noQueryStringRedirect
         And check url field exists in nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-    Scenario: Execution nodoChiediInfoPag
+    Scenario: Execute nodoChiediInfoPag request
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200

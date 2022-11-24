@@ -452,7 +452,7 @@ Feature: process tests for 5 RPT da 1 VersamentO
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
     
-    Scenario: Execution idPagamento
+    Scenario: Execute nodoChiediInfoPag request
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200

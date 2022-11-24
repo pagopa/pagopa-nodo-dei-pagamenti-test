@@ -229,7 +229,7 @@ Feature: process tests for 2 RPT da 3 Versamenti
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
     
-    Scenario: Execution idPagamento
+    Scenario: Execute nodoChiediInfoPag request
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
@@ -240,8 +240,8 @@ Feature: process tests for 2 RPT da 3 Versamenti
         And check bolloDigitale is False of informazioniPagamento response     
         And check codiceFiscale is VERGLD09P09H502E of informazioniPagamento response
         
-    Scenario: Execute nodoChiediAvanzamentoPagamento
-        Given the Execution idPagamento scenario executed successfully
+    Scenario: Execute nodoChiediAvanzamentoPagamento request
+        Given the Execute nodoChiediInfoPag request scenario executed successfully
         When WISP sends rest GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is PARKED of avanzamentoPagamento response
