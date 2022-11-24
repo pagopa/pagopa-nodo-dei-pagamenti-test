@@ -330,7 +330,7 @@ Feature: Semantic checks for activateIOPayment - KO
     And check faultCode is PPT_AUTORIZZAZIONE of activateIOPayment response
     And check description is Configurazione intermediario-canale non corretta of activateIOPayment response
 
-  @runnable
+  
   Scenario: Execute activateIOPayment (Phase 1)
     Given generate 4 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML activateIOPayment
