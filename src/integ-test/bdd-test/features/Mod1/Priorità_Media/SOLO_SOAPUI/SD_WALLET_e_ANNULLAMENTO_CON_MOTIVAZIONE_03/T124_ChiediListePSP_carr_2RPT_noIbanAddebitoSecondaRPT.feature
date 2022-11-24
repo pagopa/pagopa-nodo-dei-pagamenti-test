@@ -196,7 +196,7 @@ Feature: T124_ChiediListePSP_carr_2RPT_noIbanAddebitoSecondaRPT
     And check url contains acardste of nodoInviaCarrelloRPT response
     And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-  Scenario: Execution nodoChiediInfoPag
+  Scenario: Execute nodoChiediInfoPag request
     Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
     When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
@@ -212,8 +212,8 @@ Feature: T124_ChiediListePSP_carr_2RPT_noIbanAddebitoSecondaRPT
     And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
     And through the query getPspCarte retrieve param listaCarte at position -1 and save it under the key listaCarte
 
-  Scenario: execution nodoChiediListaPSP - Carte
-    Given the Execution nodoChiediInfoPag scenario executed successfully
+  Scenario: Execute nodoChiediListaPSP - Carte
+    Given the Execute nodoChiediInfoPag request scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE&lingua=$lingua to nodo-dei-pagamenti
     Then verify the HTTP status code of listaPSP response is 200
     And check totalRows is $sizeCarte of listaPSP response

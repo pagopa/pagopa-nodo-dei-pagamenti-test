@@ -247,7 +247,7 @@ Feature: T123_ChiediListePSP_Carr_Bollo
     And check url contains acardste of nodoInviaCarrelloRPT response
     And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-  Scenario: Execution idPagamento
+  Scenario: Execute nodoChiediInfoPag request
     Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
     When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
@@ -281,22 +281,22 @@ Feature: T123_ChiediListePSP_Carr_Bollo
     And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
     And through the query getPspAltro retrieve param listaAltro at position -1 and save it under the key listaAltro
     
-  Scenario: execution nodoChiediListaPSP - conto
-    Given the Execution idPagamento scenario executed successfully
+  Scenario: Execute nodoChiediListaPSP - conto
+    Given the Execute nodoChiediInfoPag request scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC&lingua=$lingua to nodo-dei-pagamenti
     Then verify the HTTP status code of listaPSP response is 200
     And check totalRows is $sizeConto of listaPSP response
     And check data is $listaConto of listaPSP response
 
-  Scenario: execution nodoChiediListaPSP - altro
-    Given the execution nodoChiediListaPSP - conto scenario executed successfully
+  Scenario: Execute nodoChiediListaPSP - altro
+    Given the Execute nodoChiediListaPSP - conto scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
     Then verify the HTTP status code of listaPSP response is 200
     And check totalRows is $sizeAltro of listaPSP response
     And check data is $listaAltro of listaPSP response
 
-  Scenario: execution nodoChiediListaPSP - carte
-    Given the execution nodoChiediListaPSP - altro scenario executed successfully
+  Scenario: Execute nodoChiediListaPSP - carte
+    Given the Execute nodoChiediListaPSP - altro scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE&lingua=$lingua to nodo-dei-pagamenti
     Then verify the HTTP status code of listaPSP response is 200
     And check totalRows is $sizeCarte of listaPSP response
