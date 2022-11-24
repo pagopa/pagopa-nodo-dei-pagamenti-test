@@ -350,7 +350,7 @@ Feature: Semantic checks for activateIOPayment - KO
       <noticeNumber>$4noticeNumber</noticeNumber>
       </qrCode>
       <!--Optional:-->
-      <expirationTime>20000</expirationTime>
+      <expirationTime>60000</expirationTime>
       <amount>10.00</amount>
       <!--Optional:-->
       <dueDate>2021-12-12</dueDate>
@@ -360,7 +360,7 @@ Feature: Semantic checks for activateIOPayment - KO
       <payer>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>name</fullName>
       <!--Optional:-->
@@ -405,7 +405,7 @@ Feature: Semantic checks for activateIOPayment - KO
       <debtor>
       <uniqueIdentifier>
       <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-      <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+      <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
       </uniqueIdentifier>
       <fullName>paGetPaymentName</fullName>
       <!--Optional:-->
@@ -487,7 +487,7 @@ Feature: Semantic checks for activateIOPayment - KO
     Given nodo-dei-pagamenti has config parameter useIdempotency set to true
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
     And <tag> with <tag_value> in activateIOPayment
-    And wait 3 seconds for expiration
+    And wait 2 seconds for expiration
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activateIOPayment response
