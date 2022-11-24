@@ -273,4 +273,4 @@ Feature: Syntax checks for RT - OK
       | RTSIN138.1 | pay_i:nazionePagatore                   | None      |
       | RTSIN140.1 | pay_i:e-mailPagatore                    | None      |
       | RTSIN169.1 | pay_i:esitoSingoloPagamento             | None      |
-# | RTSIN190.1| pay_i:allegatoRicevuta                   | None       |
+      | RTSIN190.1 | pay_i:allegatoRicevuta                  | None      |
