@@ -184,7 +184,7 @@ stages:
 
               # Lorenzo  
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto --tags=runnable
-              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_semantic_ko.feature --tags=heloo
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_semantic_ko.feature --tags=heloo
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/FAULTBEAN_ESTESO/T220_chiediNumeroAvviso_faultBeanEsteso.feature --tags=runnable
               
               # Damiano
@@ -194,7 +194,7 @@ stages:
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/nodoInviaRT/IRTSIN.feature --tags=runnable
 
               # Marisa
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_WALLET_e_ANNULLAMENTO_CON_MOTIVAZIONE_03/T221_notificaAnnullamento_carrello_2RPT_SESSCA.feature
+             #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_WALLET_e_ANNULLAMENTO_CON_MOTIVAZIONE_03/T221_notificaAnnullamento_carrello_2RPT_SESSCA.feature
 
               # Davide
               #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/paSendRT/PSRT_30_new.feature
