@@ -487,14 +487,14 @@ Feature: Semantic checks for activateIOPayment - KO
     Given nodo-dei-pagamenti has config parameter useIdempotency set to true
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
     And <tag> with <tag_value> in activateIOPayment
-    And wait 10 seconds for expiration
+    And wait 3 seconds for expiration
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activateIOPayment response
     Examples:
       | tag                         | tag_value             | soapUI test |
       | noticeNumber                | 302119138889055636    | SEM_AIPR_21 |
-      | fiscalCode                  | 90000000001           | SEM_AIPR_21 |
+      | fiscalCode                  | 88888888888           | SEM_AIPR_21 |
       | amount                      | 15.12                 | SEM_AIPR_21 |
       | dueDate                     | 2021-12-31            | SEM_AIPR_21 |
       | dueDate                     | None                  | SEM_AIPR_21 |
