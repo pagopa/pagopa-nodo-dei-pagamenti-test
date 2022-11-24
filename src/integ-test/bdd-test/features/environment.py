@@ -81,6 +81,6 @@ def config_ec(context):
 
         context.apiconfig.create_creditor_institution(payload)
 
-def after_scenario(context):
+def after_scenario(context, scenario):
     time.sleep(2)
     print("eseguito dopo lo scenario")
