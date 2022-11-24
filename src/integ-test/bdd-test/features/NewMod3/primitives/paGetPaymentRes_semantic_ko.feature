@@ -98,9 +98,9 @@ Feature:  semantic checks for paGetPaymentRes - KO
 			"""
 		And <tag> with <tag_value> in paGetPayment
 		And EC replies to nodo-dei-pagamenti with the paGetPayment
-		When PSP sends SOAP activatePaymentNoticeReq to nodo-dei-pagamenti
-		Then check outcome is KO of activatePaymentNoticeReq response
-		And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeReq response
+		When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+		Then check outcome is KO of activatePaymentNotice response
+		And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNotice response
 		Examples:
 			| tag          | tag_value                   | soapUI test |
 			| fiscalCodePA | 10000000000                 | SEM_PGPR_03 |
