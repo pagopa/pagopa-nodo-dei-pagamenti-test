@@ -4,3 +4,4 @@
 /.classpath
 /.project
 /target
+src/perf-test/k6/scenarios/CT/test/output
