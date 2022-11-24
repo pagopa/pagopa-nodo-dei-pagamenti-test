@@ -793,6 +793,8 @@ def step_impl(context, sender, soap_primitive, receiver):
     print(soap_response.content.decode('utf-8'))
     print(soap_response.status_code)
     setattr(context, soap_primitive + RESPONSE, soap_response)
+    idempotency = db.executeQuery("select * from nodo4_cfg.configuration_keys where config_key = 'useIdempotency'")[0]
+    print(">>>>>>>>>>>>>>>>>>", idempotency)
 
     assert (soap_response.status_code ==
             200), f"status_code {soap_response.status_code}"
