@@ -325,6 +325,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        And job paInviaRt triggered after 30 seconds
+        And waiting 40 seconds for thread
         Then check esito is OK of nodoInviaRPT response
 
         #CHECK2-RPT ACTIVATIONS
