@@ -662,8 +662,8 @@ Feature: gestioneReceiptMb_10
         Given the Check POSITION_RETRY_PA_SEND_RT table scenario executed successfully
         And wait 60 seconds for expiration
         And nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 2
-        When job paSendRt triggered after 5 seconds
-        And wait 15 seconds for expiration
+        When job paSendRt triggered after 20 seconds
+        And wait 130 seconds for expiration
         And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_payment_token retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
         And through the query by_notice_number_and_payment_token retrieve param noticeID1 at position 2 and save it under the key noticeID1
