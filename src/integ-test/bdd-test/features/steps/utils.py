@@ -73,6 +73,7 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoInviaRPT": "/nodo-per-pa/v1",
         "nodoInviaRT": "/nodo-per-psp/v1",
         #"nodoChiediSceltaWISP":"//v1",
+        "nodoPAChiediInformativaPA": "/nodo-per-pa/v1"
     }
    
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") == " ":
