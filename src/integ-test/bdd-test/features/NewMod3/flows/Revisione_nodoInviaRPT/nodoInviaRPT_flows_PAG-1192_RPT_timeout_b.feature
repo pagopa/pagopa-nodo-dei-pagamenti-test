@@ -207,7 +207,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-        When send, by sender psp, soap action activatePaymentNotice to nodo-dei-pagamenti
+        When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then execution query payment_status_pay_act1 to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
         And through the query payment_status_pay_act1 retrieve param paymentToken at position 0 and save it under the key paymentToken
         And RPT generation
@@ -269,7 +269,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>$paymentToken</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -296,7 +296,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$paymentToken</codiceContestoPagamento>
+            <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
