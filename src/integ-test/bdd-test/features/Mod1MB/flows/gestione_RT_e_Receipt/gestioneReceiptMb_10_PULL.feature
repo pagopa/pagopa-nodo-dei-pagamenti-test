@@ -441,7 +441,7 @@ Feature: gestioneReceiptMb_10_PULL
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
@@ -449,7 +449,7 @@ Feature: gestioneReceiptMb_10_PULL
                 "identificativoPsp": "#psp#",
                 "tipoVersamento": "BBT",
                 "identificativoIntermediario": "#psp#",
-                "identificativoCanale": "#psp#_06",
+                "identificativoCanale": "#canaleRtPull_sec#",
                 "tipoOperazione": "mobile",
                 "mobileToken": "123ABC456"
             }
@@ -491,8 +491,8 @@ Feature: gestioneReceiptMb_10_PULL
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 7 seconds
         #And job paInviaRt triggered after 10 seconds
         #And job paSendRt triggered after 10 seconds
@@ -533,8 +533,8 @@ Feature: gestioneReceiptMb_10_PULL
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         When job pspChiediListaAndChiediRt triggered after 7 seconds
         And job paInviaRt triggered after 10 seconds
