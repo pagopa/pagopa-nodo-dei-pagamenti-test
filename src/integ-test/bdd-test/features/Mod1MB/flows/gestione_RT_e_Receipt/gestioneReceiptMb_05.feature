@@ -558,24 +558,24 @@ Feature: gestioneReceiptMb_05
         #extraction from POSITION_RECEIPT_RECIPIENT table
         And replace $paymentToken content with $1carrello content
         #row 1
-        And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro Mod1Mb with db name nodo_online
-        And through the query by_notice_number_and_payment_token retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
-        And through the query by_notice_number_and_payment_token retrieve param noticeID1 at position 2 and save it under the key noticeID1
-        And through the query by_notice_number_and_payment_token retrieve param creditorReferenceId1 at position 3 and save it under the key creditorReferenceId1
-        And through the query by_notice_number_and_payment_token retrieve param paymentToken1 at position 4 and save it under the key paymentToken1
-        And through the query by_notice_number_and_payment_token retrieve param recipientPA1 at position 5 and save it under the key recipientPA1
-        And through the query by_notice_number_and_payment_token retrieve param recipientBroker1 at position 6 and save it under the key recipientBroker1
-        And through the query by_notice_number_and_payment_token retrieve param recipientStation1 at position 7 and save it under the key recipientStation1
-        And through the query by_notice_number_and_payment_token retrieve param status1 at position 8 and save it under the key status1
+        And execution query by_notice_number_and_payment_token_orderby_receiptStation to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro Mod1Mb with db name nodo_online
+        And through the query by_notice_number_and_payment_token_orderby_receiptStation retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
+        And through the query by_notice_number_and_payment_token_orderby_receiptStation retrieve param noticeID1 at position 2 and save it under the key noticeID1
+        And through the query by_notice_number_and_payment_token_orderby_receiptStation retrieve param creditorReferenceId1 at position 3 and save it under the key creditorReferenceId1
+        And through the query by_notice_number_and_payment_token_orderby_receiptStation retrieve param paymentToken1 at position 4 and save it under the key paymentToken1
+        And through the query by_notice_number_and_payment_token_orderby_receiptStation retrieve param recipientPA1 at position 5 and save it under the key recipientPA1
+        And through the query by_notice_number_and_payment_token_orderby_receiptStation retrieve param recipientBroker1 at position 6 and save it under the key recipientBroker1
+        And through the query by_notice_number_and_payment_token_orderby_receiptStation retrieve param recipientStation1 at position 7 and save it under the key recipientStation1
+        And through the query by_notice_number_and_payment_token_orderby_receiptStation retrieve param status1 at position 8 and save it under the key status1
         #row2
-        And through the query by_notice_number_and_payment_token retrieve param paFiscalCode2 at position 1 in the row 1 and save it under the key paFiscalCode2
-        And through the query by_notice_number_and_payment_token retrieve param noticeID2 at position 2 in the row 1 and save it under the key noticeID2
-        And through the query by_notice_number_and_payment_token retrieve param creditorReferenceId2 at position 3 in the row 1 and save it under the key creditorReferenceId2
-        And through the query by_notice_number_and_payment_token retrieve param paymentToken2 at position 4 in the row 1 and save it under the key paymentToken2
-        And through the query by_notice_number_and_payment_token retrieve param recipientPA2 at position 5 in the row 1 and save it under the key recipientPA2
-        And through the query by_notice_number_and_payment_token retrieve param recipientBroker2 at position 6 in the row 1 and save it under the key recipientBroker2
-        And through the query by_notice_number_and_payment_token retrieve param recipientStation2 at position 7 in the row 1 and save it under the key recipientStation2
-        And through the query by_notice_number_and_payment_token retrieve param status2 at position 8 in the row 1 and save it under the key status2
+        And through the query by_notice_number_and_payment_token_orderby_receiptStation retrieve param paFiscalCode2 at position 1 in the row 1 and save it under the key paFiscalCode2
+        And through the query by_notice_number_and_payment_token_orderby_receiptStation retrieve param noticeID2 at position 2 in the row 1 and save it under the key noticeID2
+        And through the query by_notice_number_and_payment_token_orderby_receiptStation retrieve param creditorReferenceId2 at position 3 in the row 1 and save it under the key creditorReferenceId2
+        And through the query by_notice_number_and_payment_token_orderby_receiptStation retrieve param paymentToken2 at position 4 in the row 1 and save it under the key paymentToken2
+        And through the query by_notice_number_and_payment_token_orderby_receiptStation retrieve param recipientPA2 at position 5 in the row 1 and save it under the key recipientPA2
+        And through the query by_notice_number_and_payment_token_orderby_receiptStation retrieve param recipientBroker2 at position 6 in the row 1 and save it under the key recipientBroker2
+        And through the query by_notice_number_and_payment_token_orderby_receiptStation retrieve param recipientStation2 at position 7 in the row 1 and save it under the key recipientStation2
+        And through the query by_notice_number_and_payment_token_orderby_receiptStation retrieve param status2 at position 8 in the row 1 and save it under the key status2
         
 
         #checks
