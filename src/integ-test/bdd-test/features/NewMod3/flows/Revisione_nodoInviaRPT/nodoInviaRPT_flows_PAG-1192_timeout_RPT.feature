@@ -142,15 +142,15 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
 
     Scenario: Trigger mod3Cancel
         Given the Excecute nodoInviaRPT scenario executed successfully
-        When job mod3CancelV1 triggered after 5 seconds
-        And wait 10 seconds for expiration
+        When job mod3CancelV1 triggered after 15 seconds
+        And wait 15 seconds for expiration
         Then verify the HTTP status code of mod3CancelV1 response is 200
 
     Scenario: Trigger paInviaRT
         Given the Trigger mod3Cancel scenario executed successfully
-        When job paInviaRT triggered after 5 seconds
-        And wait 10 seconds for expiration
-        Then verify the HTTP status code of paInviaRT response is 200
+        When job paInviaRt triggered after 15 seconds
+        And wait 15 seconds for expiration
+        Then verify the HTTP status code of paInviaRt response is 200
 
     Scenario: Execute activatePaymentNotice3 request
         Given the Trigger paInviaRT scenario executed successfully
@@ -181,7 +181,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
             <ws:paaAttivaRPTRisposta>
             <paaAttivaRPTRisposta>
             <esito>KO</esito>
-            <delay>60000</delay>
+            <delay>10000</delay>
             <datiPagamentoPA>
             <importoSingoloVersamento>2.00</importoSingoloVersamento>
             <ibanAccredito>IT96R0123454321000000012345</ibanAccredito>
@@ -213,8 +213,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNotice response
-        And execution query payment_status to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
-        And through the query payment_status retrieve param paymentToken at position 0 and save it under the key paymentToken
+        And execution query payment_status_orderbydesc to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
+        And through the query payment_status_orderbydesc retrieve param paymentToken at position 0 and save it under the key paymentToken
         And saving activatePaymentNotice request in activatePaymentNotice2
 
     Scenario: Define RPT3
