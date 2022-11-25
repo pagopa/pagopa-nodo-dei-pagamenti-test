@@ -208,8 +208,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
             """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
-        Then execution query payment_status_pay_act1 to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
-        And through the query payment_status_pay_act1 retrieve param paymentToken at position 0 and save it under the key paymentToken
+        Then execution query payment_status_orderbydesc to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
+        And through the query payment_status_orderbydesc retrieve param paymentToken at position 0 and save it under the key paymentToken
         And RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
