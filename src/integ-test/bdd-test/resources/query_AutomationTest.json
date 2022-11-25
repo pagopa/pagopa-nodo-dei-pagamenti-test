@@ -181,7 +181,8 @@
         "chekPlugin": "SELECT columns from table_name c join CANALI_NODO n on n.OBJ_ID=c.FK_CANALI_NODO where c.ID_CANALE='$canaleUsato'",
         "rt_versamenti": "SELECT s.columns FROM table_name s JOIN RT r on s.FK_RT=r.ID  WHERE r.IUV = '$iuv' AND r.CCP= '$ccp' AND r.IDENT_DOMINIO= '$nodoInviaCarrelloRPT.identificativoDominio'",
         "esito_4iuv_": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV in ('$IUV','$IUV2') AND r.CCP in ('$ccp1','$ccp2') AND r.IDENT_DOMINIO='$pa'",
-        "codice_convenzione": "SELECT columns FROM table_name WHERE ID_CARRELLO = '$idCarrello'"
+        "codice_convenzione": "SELECT columns FROM table_name WHERE ID_CARRELLO = '$idCarrello'",
+        "ID_Serv_Plugin": "SELECT columns from table_name c join CANALI_NODO n on n.OBJ_ID=c.FK_CANALI_NODO where c.ID_CANALE='$canaleUsato'"
 
     },
     "RTPull" : {

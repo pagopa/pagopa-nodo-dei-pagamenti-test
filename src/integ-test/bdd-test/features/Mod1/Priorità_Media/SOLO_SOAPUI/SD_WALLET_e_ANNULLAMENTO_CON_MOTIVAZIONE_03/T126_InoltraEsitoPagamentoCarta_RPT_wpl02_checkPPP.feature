@@ -1,4 +1,4 @@
-Feature: T126_InoltraEsitoPagamentoCarta_RPT_idPsp1_checkPPP
+Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
@@ -192,37 +192,39 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_idPsp1_checkPPP
     """
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
+    And check url field exists in nodoInviaRPT response 
     And check url contains acards of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
     #DB Check
-    And replace canaleUsato content with WFESP_01_gabri content
-    And checks the value idPsp1 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query ID_Serv_Plugin on db nodo_cfg under macro Mod1
+    And replace canaleUsato content with WFESP_02_gabri content
+    And checks the value wpl02 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query ID_Serv_Plugin on db nodo_cfg under macro Mod1
 
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
     Given the Execute nodoInviaRPT request scenario executed successfully
-    And initial XML pspInviaCarrelloRPTCarte
+    And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
     """
-    <soapenv:Envelope
-    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
     <soapenv:Header/>
-      <soapenv:Body>
-          <ws:pspInviaCarrelloRPTCarteResponse>
-              <pspInviaCarrelloRPTResponse>
-                  <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                  <identificativoCarrello>$1iuv</identificativoCarrello>
-                  <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
-              </pspInviaCarrelloRPTResponse>
-          </ws:pspInviaCarrelloRPTCarteResponse>
-      </soapenv:Body>
+    <soapenv:Body>
+        <pfn:pspNotifyPaymentRes>
+        <outcome>KO</outcome>
+        <!--Optional:-->
+        <fault>
+            <faultCode>CANALE_SEMANTICA</faultCode>
+            <faultString>Errore semantico dal psp</faultString>
+            <id>1</id>
+            <!--Optional:-->
+            <description>Errore dal psp</description>
+        </fault>
+        </pfn:pspNotifyPaymentRes>
+    </soapenv:Body>
     </soapenv:Envelope>
     """
-    And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
     When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
     """
     {
       "idPagamento":"$sessionToken",
-      "RRN":14499255,
+      "RRN":17881573,
       "identificativoPsp":"WFESP",
       "tipoVersamento":"CP",
       "identificativoIntermediario":"WFESP",
@@ -233,8 +235,8 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_idPsp1_checkPPP
       "esitoTransazioneCarta":"00"
     }
     """
-    Then verify the HTTP status code of inoltroEsito/carta response is 200
-    And check esito is OK of inoltroEsito/carta response 
+    #TO DO
+    Then check errorCode is RIFPSP of inoltroEsito/carta response
 
   Scenario: Execute nodoChiediStatoRPT request
     Given the Execute nodoInoltraEsitoPagamentoCarta request scenario executed successfully
@@ -255,9 +257,9 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_idPsp1_checkPPP
     </soapenv:Envelope>
     """
     When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-    Then checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
-    And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+    Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
     And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
+    And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
     And check redirect is 0 of nodoChiediStatoRPT response
 
   Scenario: Execute nodoInviaRT request
