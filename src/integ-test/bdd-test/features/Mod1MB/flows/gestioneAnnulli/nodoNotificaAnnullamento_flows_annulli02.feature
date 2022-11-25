@@ -222,8 +222,8 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_02]
   Scenario: Execute nodoNotificaAnnullamento
     Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
     When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-    And job paInviaRt triggered after 20 seconds
-    And wait 20 seconds for expiration
+    #And job paInviaRt triggered after 20 seconds
+    #And wait 20 seconds for expiration
     Then verify the HTTP status code of notificaAnnullamento response is 200
     And wait 10 seconds for expiration
 
