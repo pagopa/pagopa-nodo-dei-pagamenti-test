@@ -162,7 +162,7 @@ Feature: Pag-1163_Paypal_NM3_OK
             <soapenv:Header/>
             <soapenv:Body>
                 <pfn:pspNotifyPaymentRes>
-                    <delay>7000</delay>
+                    <delay>3000</delay>
                     <outcome>OK</outcome>
                 </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
@@ -170,8 +170,7 @@ Feature: Pag-1163_Paypal_NM3_OK
             """
         And saving inoltroEsito/paypalJSON request in inoltroEsito/paypal
         And wait 5 seconds for expiration
-        #When calling primitive inoltroEsito/paypal_inoltroEsito/paypal POST and sendPaymentOutcome_sendPaymentOutcome POST with 4000 ms delay
-        When calling primitive sendPaymentOutcome_sendPaymentOutcome POST and inoltroEsito/paypal_inoltroEsito/paypal POST with 3000 ms delay
+        When calling primitive inoltroEsito/paypal_inoltroEsito/paypal POST and sendPaymentOutcome_sendPaymentOutcome POST with 4000 ms delay
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is OK of inoltroEsito/paypal response
         And check outcome is OK of sendPaymentOutcome response
