@@ -71,6 +71,7 @@
         "idempotency_cache_paymentToken1" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice1.idempotencyKey' AND PSP_ID = '$activatePaymentNotice1.idPSP' AND TOKEN = '$activatePaymentNotice1Response.paymentToken'",
         "idempotency_cache_paymentToken2" : "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNotice2.idempotencyKey' AND PSP_ID = '$activatePaymentNotice2.idPSP' AND TOKEN = '$activatePaymentNotice2Response.paymentToken'",
         "idempotency_paymentToken" : "SELECT columns FROM table_name WHERE TOKEN = '$activatePaymentNoticeResponse.paymentToken'",
+        "idempotency_paymentToken_2" : "SELECT columns FROM table_name WHERE TOKEN = '$paymentToken'",
         "verifica_bollettino":"SELECT columns FROM table_name WHERE NOTICE_ID ='$verificaBollettino.noticeNumber' AND CCPOST = '$verificaBollettino.ccPost'",
         "pos_subj_deb": "SELECT columns FROM table_name su JOIN POSITION_SERVICE se ON su.ID = se.DEBTOR_ID WHERE se.PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and se.NOTICE_ID='$activatePaymentNotice.noticeNumber' and su.SUBJECT_TYPE='DEBTOR'",
         "pos_subj_payer": "SELECT columns FROM table_name su JOIN POSITION_SERVICE se ON su.ID = se.DEBTOR_ID WHERE se.PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and se.NOTICE_ID='$activatePaymentNotice.noticeNumber' and su.SUBJECT_TYPE='PAYER'",

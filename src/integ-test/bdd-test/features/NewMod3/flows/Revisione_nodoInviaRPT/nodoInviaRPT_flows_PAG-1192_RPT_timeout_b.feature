@@ -322,10 +322,10 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
         Given the Execute activatePaymentNotice3 request scenario executed successfully
         And waiting 40 seconds for thread
         #RPT_ACTIVATIONS
-        Then checks the value None of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken on db nodo_online under macro NewMod3
-        And checks the value None of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken on db nodo_online under macro NewMod3
-        And checks the value None of the record at column PAAATTIVARPTERROR of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken on db nodo_online under macro NewMod3
-        And checks the value None of the record at column PAYMENT_TOKEN of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken on db nodo_online under macro NewMod3
+        Then checks the value None of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken_2 on db nodo_online under macro NewMod3
+        And checks the value None of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken_2 on db nodo_online under macro NewMod3
+        And checks the value None of the record at column PAAATTIVARPTERROR of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken_2 on db nodo_online under macro NewMod3
+        And checks the value None of the record at column PAYMENT_TOKEN of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken_2 on db nodo_online under macro NewMod3
         #POSITION_PAYMENT
         And checks the value $activatePaymentNotice1.fiscalCode of the record at column pa_fiscal_code of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice1.noticeNumber of the record at column notice_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
