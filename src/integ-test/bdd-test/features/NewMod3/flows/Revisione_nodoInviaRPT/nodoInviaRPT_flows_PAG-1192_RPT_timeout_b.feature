@@ -320,6 +320,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
 
     Scenario: DB check
         Given the Execute activatePaymentNotice3 request scenario executed successfully
+        When job paInviaRt triggered after 30 seconds
         And waiting 40 seconds for thread
         #RPT_ACTIVATIONS
         Then verify 0 record for the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken_2 on db nodo_online under macro NewMod3
