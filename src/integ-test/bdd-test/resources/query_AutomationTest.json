@@ -39,6 +39,7 @@
         "rpt_activision-v2": "SELECT columns FROM table_name  where PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken-v2'",
         "rt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$activatePaymentNoticeResponse.paymentToken' AND IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "rt_v1": "SELECT columns FROM table_name WHERE CCP= '$activatePaymentNotice1Response.paymentToken' AND IDENT_DOMINIO= '$activatePaymentNotice1.fiscalCode'",
+        "rt_v2": "SELECT columns FROM table_name WHERE CCP= '$activatePaymentNotice1Response.paymentToken' AND ID_DOMINIO= '$activatePaymentNotice1.fiscalCode'",
         "rt_vers_join":"SELECT s.columns FROM table_name s JOIN RT r on s.FK_RT=r.ID  WHERE r.IUV = '$iuv' AND r.CCP= '$activatePaymentNoticeResponse.paymentToken' AND r.IDENT_DOMINIO= '$activatePaymentNoticeResponse.fiscalCode'",
         "rpt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$activatePaymentNoticeResponse.paymentToken' AND IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "rt_versamenti": "SELECT s.columns FROM table_name s JOIN RT r on s.FK_RT=r.ID  WHERE r.IUV = '$iuv' AND r.CCP= '$activatePaymentNoticeResponse.paymentToken' AND r.IDENT_DOMINIO= '$activatePaymentNotice.fiscalCode'",
