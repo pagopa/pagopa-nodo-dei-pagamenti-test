@@ -529,9 +529,6 @@ Feature: gestioneReceiptMb_08_PULL
         And check value $noticeID1 is equal to value $expNoticeID
         And check value $creditorReferenceId1 is equal to value $expCreditorReferenceID
         And check value $paymentToken1 is equal to value $expPaymentToken
-        And check value $recipientPA1 is equal to value $expFiscalCode
-        And check value $recipientBroker1 is equal to value $expBrokerPA
-        And check value $recipientStation1 is equal to value $expStationID
 
         #extraction from POSITION_RECEIPT_XML
         And execution query by_notice_number_and_payment_token_orderby_receiptStation to get value on the table POSITION_RECEIPT_XML, with the columns * under macro Mod1Mb with db name nodo_online
@@ -548,6 +545,3 @@ Feature: gestioneReceiptMb_08_PULL
         And check value $noticeID1 is equal to value $expNoticeID
         And check value $creditorReferenceId1 is equal to value $expCreditorReferenceID
         And check value $paymentToken1 is equal to value $expPaymentToken
-        And check value $recipientPA1 is equal to value $expFiscalCode
-        And check value $recipientBroker1 is equal to value $expBrokerPA
-        And check value $recipientStation1 is equal to value $expStationID
