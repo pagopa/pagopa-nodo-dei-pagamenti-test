@@ -89,7 +89,6 @@ Feature: process tests for T213_rptUniversale_carrello_CONV2_fasciaTwoConvSameAm
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloVersamento>
-
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
@@ -153,14 +152,13 @@ Feature: process tests for T213_rptUniversale_carrello_CONV2_fasciaTwoConvSameAm
         Then verify the HTTP status code of listaPSP response is 200
         And check totalRows is $sizeCarte of listaPSP response
 
-
-    @midRunnable
     Scenario: execution nodoChiediListaPSP - conto
         Given the execution nodoChiediListaPSP - carte scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
         And check totalRows is $sizeConto of listaPSP response
 
+    @midRunnable
     Scenario: execution nodoChiediListaPSP - altro
         Given the execution nodoChiediListaPSP - conto scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti

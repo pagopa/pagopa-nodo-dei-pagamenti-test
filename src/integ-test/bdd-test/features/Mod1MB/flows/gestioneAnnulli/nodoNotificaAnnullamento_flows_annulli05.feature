@@ -234,6 +234,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_05]
 
    Scenario: Execute nodoNotificaAnnullamento
       Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
+      And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
       When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
       And job paInviaRt triggered after 20 seconds
       And wait 20 seconds for expiration
@@ -525,6 +526,4 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_05]
 
       #DB-CHECK-POSITION_STATUS_SNAPSHOT
       And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
-
-
-
+      And restore initial configurations

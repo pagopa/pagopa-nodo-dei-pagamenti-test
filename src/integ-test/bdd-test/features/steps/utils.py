@@ -63,7 +63,7 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoChiediCatalogoServizi": "/nodo-per-psp-richiesta-avvisi/v1",
         "nodoChiediCatalogoServiziV2": "/nodo-per-psp/v1",
         "nodoChiediCopiaRT": "/nodo-per-pa/v1",
-        "nodoChiediInformativaPA": "/nodo-per-pa/v1",
+        "nodoChiediInformativaPA": "/nodo-per-psp/v1",
         "nodoChiediListaPendentiRPT": "/nodo-per-pa/v1",
         "nodoChiediNumeroAvviso": "/nodo-per-psp-richiesta-avvisi/v1",
         "nodoChiediStatoRPT": "/nodo-per-pa/v1",
@@ -72,7 +72,8 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoInviaCarrelloRPT": "/nodo-per-pa/v1",
         "nodoInviaRPT": "/nodo-per-pa/v1",
         "nodoInviaRT": "/nodo-per-psp/v1",
-        "nodoPAChiediInformativaPA": "/nodo-per-pa/v1",
+        #"nodoChiediSceltaWISP":"//v1",
+        "nodoPAChiediInformativaPA": "/nodo-per-pa/v1"
     }
    
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") == " ":

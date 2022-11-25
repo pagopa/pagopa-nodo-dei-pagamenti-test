@@ -492,8 +492,9 @@ Feature: gestioneRTMb_04
         """
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
         When job pspChiediListaAndChiediRt triggered after 7 seconds
-        And job paInviaRt triggered after 10 seconds
+        And job paInviaRt triggered after 15 seconds
         And wait 130 seconds for expiration
 
 

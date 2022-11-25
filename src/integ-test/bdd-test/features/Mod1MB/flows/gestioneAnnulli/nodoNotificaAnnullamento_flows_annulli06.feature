@@ -233,6 +233,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
 
    Scenario: Trigger annullamentoRptMaiRichiesteDaPm
       Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully
+      And nodo-dei-pagamenti has config parameter scheduler.jobName_annullamentoRptMaiRichiesteDaPm.enabled set to true
       When job annullamentoRptMaiRichiesteDaPm triggered after 10 seconds
       And wait 130 seconds for expiration
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
@@ -240,6 +241,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
 
    Scenario: Trigger paInviaRT
       Given the Trigger annullamentoRptMaiRichiesteDaPm scenario executed successfully
+      And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
       When job paInviaRt triggered after 5 seconds
       And wait 10 seconds for expiration
       Then verify the HTTP status code of paInviaRt response is 200
@@ -532,6 +534,4 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
 
       #DB-CHECK-POSITION_STATUS_SNAPSHOT
       And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
-
-
-
+      And restore initial configurations

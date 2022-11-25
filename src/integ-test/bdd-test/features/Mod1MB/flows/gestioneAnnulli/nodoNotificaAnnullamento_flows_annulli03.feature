@@ -232,14 +232,16 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
 
    Scenario: Trigger annullamentoRptMaiRichiesteDaPm
       Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully
-      When job annullamentoRptMaiRichiesteDaPm triggered after 10 seconds
-      And wait 130 seconds for expiration
+      And nodo-dei-pagamenti has config parameter scheduler.jobName_annullamentoRptMaiRichiesteDaPm.enabled set to true
+      When job annullamentoRptMaiRichiesteDaPm triggered after 15 seconds
+      And wait 10 seconds for expiration
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
 
 @runnable
    Scenario: Trigger paInviaRT
       Given the Trigger annullamentoRptMaiRichiesteDaPm scenario executed successfully
-      When job paInviaRt triggered after 5 seconds
+      And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
+      When job paInviaRt triggered after 15 seconds
       And wait 10 seconds for expiration
       Then verify the HTTP status code of paInviaRt response is 200
       

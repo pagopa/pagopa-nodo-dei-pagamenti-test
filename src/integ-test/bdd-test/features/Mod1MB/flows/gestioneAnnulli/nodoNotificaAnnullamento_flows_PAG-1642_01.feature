@@ -360,6 +360,17 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
 
     Scenario: Execute nodoInoltroEsitoCarta
         Given the Execute nodoChiediInformazioniPagamento1 scenario executed successfully
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <pfn:pspNotifyPaymentRes>
+                    <outcome>OK</outcome>
+                </pfn:pspNotifyPaymentRes>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
