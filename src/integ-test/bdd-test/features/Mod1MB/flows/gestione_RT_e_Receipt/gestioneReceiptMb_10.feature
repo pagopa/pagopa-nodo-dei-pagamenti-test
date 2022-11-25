@@ -633,7 +633,6 @@ Feature: gestioneReceiptMb_10
     Scenario: Check POSITION_RETRY_PA_SEND_RT table
         Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
         And wait 120 seconds for expiration
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         And EC2 replies to nodo-dei-pagamenti with the paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -646,6 +645,7 @@ Feature: gestioneReceiptMb_10
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         When job paSendRt triggered after 5 seconds
         And wait 15 seconds for expiration
         #check POSITION_RETRY_PA_SEND_RT table
