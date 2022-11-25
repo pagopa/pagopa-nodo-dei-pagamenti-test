@@ -55,7 +55,7 @@ Feature: Pag-1163_Paypal_NM3_OK
                         <payer>
                             <uniqueIdentifier>
                                 <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                                <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
+                                <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
                             </uniqueIdentifier>
                             <fullName>Full name</fullName>
                             <!--Optional:-->
@@ -118,7 +118,7 @@ Feature: Pag-1163_Paypal_NM3_OK
             <payer>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
             </uniqueIdentifier>
             <fullName>SPOname</fullName>
             <!--Optional:-->
