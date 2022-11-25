@@ -348,7 +348,7 @@ Feature: gestioneReceiptMb_08_PULL
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
@@ -356,7 +356,7 @@ Feature: gestioneReceiptMb_08_PULL
             "identificativoPsp":"#psp#",
             "tipoVersamento":"BBT",
             "identificativoIntermediario":"#psp#",
-            "identificativoCanale":"#canaleRtPull#",
+            "identificativoCanale":"#canaleRtPull_sec#",
             "tipoOperazione":"mobile",
             "mobileToken":"123ABC456"
             }
@@ -364,7 +364,7 @@ Feature: gestioneReceiptMb_08_PULL
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
 
-@runnable
+@fix
     Scenario: job pspChiediRT (Phase 4)
         Given the Execute nodoInoltroEsitoMod1 (Phase 3) scenario executed successfully
         And initial XML pspChiediListaRT
@@ -399,8 +399,8 @@ Feature: gestioneReceiptMb_08_PULL
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 7 seconds
         And job paInviaRt triggered after 10 seconds
         Then wait 15 seconds for expiration
@@ -529,9 +529,9 @@ Feature: gestioneReceiptMb_08_PULL
         And check value $noticeID1 is equal to value $expNoticeID
         And check value $creditorReferenceId1 is equal to value $expCreditorReferenceID
         And check value $paymentToken1 is equal to value $expPaymentToken
-        And check value $recipientPA1 is equal to value $pa1
-        And check value $recipientBroker1 is equal to value $pa1
-        And check value $recipientStation1 is equal to value #id_station_secondary#
+        And check value $recipientPA1 is equal to value $expFiscalCode
+        And check value $recipientBroker1 is equal to value $expBrokerPA
+        And check value $recipientStation1 is equal to value $expStationID
 
         #extraction from POSITION_RECEIPT_XML
         And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_XML, with the columns * under macro Mod1Mb with db name nodo_online
@@ -548,6 +548,6 @@ Feature: gestioneReceiptMb_08_PULL
         And check value $noticeID1 is equal to value $expNoticeID
         And check value $creditorReferenceId1 is equal to value $expCreditorReferenceID
         And check value $paymentToken1 is equal to value $expPaymentToken
-        And check value $recipientPA1 is equal to value #creditor_institution_code_secondary#
-        And check value $recipientBroker1 is equal to value #creditor_institution_code_secondary#
-        And check value $recipientStation1 is equal to value #id_station_secondary#
+        And check value $recipientPA1 is equal to value $expFiscalCode
+        And check value $recipientBroker1 is equal to value $expBrokerPA
+        And check value $recipientStation1 is equal to value $expStationID
