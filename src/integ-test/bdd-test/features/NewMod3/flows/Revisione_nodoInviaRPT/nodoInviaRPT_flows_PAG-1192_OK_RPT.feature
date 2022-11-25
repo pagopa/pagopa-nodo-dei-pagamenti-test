@@ -142,14 +142,14 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
     # Activate phase
     Scenario: Trigger mod3Cancel
         Given the Excecute nodoInviaRPT scenario executed successfully
-        When job mod3CancelV1 triggered after 5 seconds
-        And wait 10 seconds for expiration
+        When job mod3CancelV1 triggered after 10 seconds
+        And wait 15 seconds for expiration
         Then verify the HTTP status code of mod3CancelV1 response is 200
 
     Scenario: Trigger paInviaRT
         Given the Trigger mod3Cancel scenario executed successfully
-        When job paInviaRt triggered after 5 seconds
-        And wait 10 seconds for expiration
+        When job paInviaRt triggered after 10 seconds
+        And wait 15 seconds for expiration
         Then verify the HTTP status code of paInviaRt response is 200
 
     Scenario: Execute activatePaymentNotice3 request
