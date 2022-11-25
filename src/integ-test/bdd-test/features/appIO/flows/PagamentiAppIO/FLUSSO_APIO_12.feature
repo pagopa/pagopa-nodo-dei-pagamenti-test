@@ -170,7 +170,6 @@ Scenario: Check nodoInoltroEsitoCarta1 response after nodoInoltroEsitoCarta
         <soapenv:Body>
             <pfn:pspNotifyPaymentRes>
                 <outcome>OK</outcome>
-                <delay>8000</delay>
             </pfn:pspNotifyPaymentRes>
         </soapenv:Body>
     </soapenv:Envelope>
