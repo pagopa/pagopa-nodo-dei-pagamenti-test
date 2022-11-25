@@ -4,14 +4,15 @@ Feature: gestioneReceiptMb_10
         Given systems up
 
     Scenario: clean paSendRt queue
-        When job paSendRt triggered after 1 seconds
+        Given nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
+        When job paSendRt triggered after 5 seconds
         And wait 15 seconds for expiration
 
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given the clean paSendRt queue scenario executed successfully
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to false
         And nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 1
-        And generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code -
+        And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And generate 2 cart with PA #creditor_institution_code_secondary# and notice number $1noticeNumber
         And replace pa1 content with #creditor_institution_code_secondary# content
@@ -248,7 +249,7 @@ Feature: gestioneReceiptMb_10
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>ACCEPTED</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>2012-03-02</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>IUV_2021-11-15_13:55:13.038</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>causale RT pull</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloPagamento>
