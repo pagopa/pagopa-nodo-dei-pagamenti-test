@@ -374,9 +374,9 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
         And checks the value $activatePaymentNotice2.noticeNumber of the record at column notice_id of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value None of the record at column idempotency_key of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value $paymentToken of the record at column payment_token of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-        And checks the value NotNone of the record at column token_valid_from of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        #And checks the value NotNone of the record at column token_valid_from of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column token_valid_to of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-        And checks the value 10 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        #And checks the value 10 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         #POSITION_PAYMENT_PLAN
         And checks the value $activatePaymentNotice1.fiscalCode of the record at column pa_fiscal_code of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice1.noticeNumber of the record at column notice_id of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
