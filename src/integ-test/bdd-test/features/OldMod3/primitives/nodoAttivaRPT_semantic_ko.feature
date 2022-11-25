@@ -75,14 +75,14 @@ Feature: Semantic checks KO for nodoAttivaRPT
             </soapenv:Body>
             </soapenv:Envelope>
             """
-@runnable
+@midRunnable
   # identificativoPSP value check: identificativoPSP not in configuration [ARPTSEM1]
   Scenario: Check PPT_PSP_SCONOSCIUTO error on non-existent psp
     Given identificativoPSP with pspUnknown in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_PSP_SCONOSCIUTO of nodoAttivaRPT response
 
-@runnable
+@midRunnable
   # identificativoPSP value check: identificativoPSP disabled [ARPTSEM2]
   Scenario: Check PPT_PSP_DISABILITATO error on disabled
     Given identificativoPSP with NOT_ENABLED in nodoAttivaRPT
