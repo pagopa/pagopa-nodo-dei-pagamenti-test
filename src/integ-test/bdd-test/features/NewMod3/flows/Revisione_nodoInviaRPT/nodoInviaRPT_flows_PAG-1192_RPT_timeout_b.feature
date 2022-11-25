@@ -143,8 +143,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
 
     Scenario: Trigger mod3Cancel
         Given the Excecute nodoInviaRPT scenario executed successfully
-        When job mod3CancelV1 triggered after 5 seconds
-        Then wait 5 seconds for expiration
+        When job mod3CancelV1 triggered after 15 seconds
+        Then wait 15 seconds for expiration
         And verify the HTTP status code of mod3CancelV1 response is 200
     #END SETUP
 
@@ -415,7 +415,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
         #STATI_RPT
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_ANNULLATA_NODO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column stato of the table STATI_RPT retrived by the query rt_v1 on db nodo_online under macro NewMod3
 
-    Scenario: Excecute nodoChiediCopiaRT
+    Scenario: Execute nodoChiediCopiaRT
         Given the DB check scenario executed successfully
         And initial XML nodoChiediCopiaRT
             """
@@ -438,8 +438,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
         And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
     
     @runnable
-    Scenario: Excecute_nodoChiediCopiaRT2
-        Given the Excecute nodoChiediCopiaRT scenario executed successfully
+    Scenario: Execute_nodoChiediCopiaRT2
+        Given the Execute nodoChiediCopiaRT scenario executed successfully
         And initial XML nodoChiediCopiaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
