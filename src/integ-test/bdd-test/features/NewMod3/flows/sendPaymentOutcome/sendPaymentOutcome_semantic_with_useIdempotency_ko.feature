@@ -393,6 +393,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
+  @runnable
   # Send payment outcome Phase 2 [IDMP_SPO_31]
   Scenario: 20. Execute sendPaymentOutcome request on token of Activate Phase and different idempotencyKey
     Given the Execute sendPaymentOutcome request on token of Activate Phase 2 scenario executed successfully
@@ -402,9 +403,5 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
-
-  @runnable
-  Scenario: Restore
-    Given the 20. Execute sendPaymentOutcome request on token of Activate Phase and different idempotencyKey scenario executed successfully
-    Then restore initial configurations
+    And restore initial configurations
 

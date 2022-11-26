@@ -232,7 +232,7 @@ Feature: process tests for retryAtokenScaduto
     And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
 
   @runnable
-  Scenario: Execute paInviaRT
+  Scenario: Execute paInviaRT [retry_PaOld_12]
     Given the check position_payment_status scenario executed successfully
     When job paInviaRt triggered after 5 seconds
     Then verify the HTTP status code of paInviaRt response is 200

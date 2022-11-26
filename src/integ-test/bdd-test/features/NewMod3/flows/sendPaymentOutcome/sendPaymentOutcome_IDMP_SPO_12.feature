@@ -3,7 +3,6 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
   Background:
     Given systems up
 
-
   # Activate Phase
   Scenario: Execute activatePaymentNotice request
     Given  initial XML activatePaymentNotice

@@ -745,5 +745,4 @@ Feature: gestioneReceiptMb_10_PULL
         And check value $recipientPA1 is equal to value $pa1
         And check value $recipientBroker1 is equal to value $pa1
         And check value $recipientStation1 is equal to value #id_station_secondary#
-
         And restore initial configurations

@@ -176,7 +176,7 @@ Feature: process tests for retryAtokenScaduto
 
 @runnable
   # Payment Outcome Phase outcome OK
-  Scenario: Execute sendPaymentOutcome request
+  Scenario: Execute sendPaymentOutcome request [retry_PaOld_08]
     Given the Execute poller Annulli scenario executed successfully
     And initial XML sendPaymentOutcome
       """
@@ -218,7 +218,6 @@ Feature: process tests for retryAtokenScaduto
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
-
     And wait 5 seconds for expiration
     And checks the value PAYING,PAYING_RPT,CANCELLED,PAID_NORPT of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $1iuv of the record at column CREDITOR_REFERENCE_ID of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
