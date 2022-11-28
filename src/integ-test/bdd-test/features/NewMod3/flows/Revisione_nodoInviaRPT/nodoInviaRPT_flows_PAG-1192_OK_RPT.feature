@@ -142,14 +142,14 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
     # Activate phase
     Scenario: Trigger mod3Cancel
         Given the Excecute nodoInviaRPT scenario executed successfully
-        When job mod3CancelV1 triggered after 5 seconds
-        And wait 10 seconds for expiration
+        When job mod3CancelV1 triggered after 10 seconds
+        And wait 15 seconds for expiration
         Then verify the HTTP status code of mod3CancelV1 response is 200
 
     Scenario: Trigger paInviaRT
         Given the Trigger mod3Cancel scenario executed successfully
-        When job paInviaRt triggered after 5 seconds
-        And wait 10 seconds for expiration
+        When job paInviaRt triggered after 10 seconds
+        And wait 15 seconds for expiration
         Then verify the HTTP status code of paInviaRt response is 200
 
     Scenario: Execute activatePaymentNotice3 request
@@ -397,18 +397,15 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
         And checks the value PAYING, PAYING_RPT, CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value PAYING, PAYING_RPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_context_payment_token_2 on db nodo_online under macro NewMod3
 
-        #DB_CHECK- POSITION_PAYMENT_STATUS_SNAPSHOT
+        #DB_CHECK- POSITION_STATUS_SNAPSHOT
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value N of the record at column ACTIVATION_PENDING of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
-
-        #DB_CHECK- POSITION_STATUS_SNAPSHOT
-        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
 
         #DB_CHECK- POSITION_STATUS
         And checks the value PAYING, INSERTED, PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
 
         #DB_CHECK- STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO_MOD3, RPT_ANNULLATA_NODO, RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query by_context_payment_token on db nodo_online under macro NewMod3
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO_MOD3, RPT_ANNULLATA_NODO, RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query by_context_payment_token_3 on db nodo_online under macro NewMod3
 
         #DB_CHECK- STATI_RPT_SNAPSHOT
-        And checks the value RT_ACCETTATA_PA, RPT_PARCHEGGIATA_NODO_MOD3 of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query by_context_payment_token on db nodo_online under macro NewMod3
+        And checks the value RT_ACCETTATA_PA, RPT_PARCHEGGIATA_NODO_MOD3 of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query by_context_payment_token_3 on db nodo_online under macro NewMod3

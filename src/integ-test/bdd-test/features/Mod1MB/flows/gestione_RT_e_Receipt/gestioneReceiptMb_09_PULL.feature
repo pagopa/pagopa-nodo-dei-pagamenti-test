@@ -3,8 +3,14 @@ Feature: gestioneReceiptMb_09_PULL
     Background:
         Given systems up
 
+    Scenario: clean paSendRt queue
+        Given nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 1
+        When job paSendRt triggered after 10 seconds
+        And wait 15 seconds for expiration
+
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
-        Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code -
+        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to false
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And replace pa1 content with #creditor_institution_code_secondary# content
         And RPT1 generation
@@ -344,7 +350,7 @@ Feature: gestioneReceiptMb_09_PULL
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
@@ -352,7 +358,7 @@ Feature: gestioneReceiptMb_09_PULL
             "identificativoPsp":"#psp#",
             "tipoVersamento":"BBT",
             "identificativoIntermediario":"#psp#",
-            "identificativoCanale":"#canaleRtPull#",
+            "identificativoCanale":"#canaleRtPull_sec#",
             "tipoOperazione":"mobile",
             "mobileToken":"123ABC456"
             }
@@ -395,8 +401,8 @@ Feature: gestioneReceiptMb_09_PULL
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 7 seconds
         Then wait 15 seconds for expiration
 
@@ -559,8 +565,7 @@ Feature: gestioneReceiptMb_09_PULL
     Scenario: Check POSITION_RETRY_PA_SEND_RT table
         Given the job pspChiediRT (Phase 4) scenario executed successfully
         And wait 60 seconds for expiration
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
-        And EC replies to nodo-dei-pagamenti with the paSendRT
+        And EC2 replies to nodo-dei-pagamenti with the paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Header />
@@ -572,6 +577,7 @@ Feature: gestioneReceiptMb_09_PULL
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         When job paSendRt triggered after 5 seconds
         And wait 15 seconds for expiration
         #check POSITION_RETRY_PA_SEND_RT table

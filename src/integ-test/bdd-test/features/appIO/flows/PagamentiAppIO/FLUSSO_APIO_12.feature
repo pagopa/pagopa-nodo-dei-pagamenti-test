@@ -93,7 +93,8 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
         <soapenv:Header/>
         <soapenv:Body>
             <pfn:pspNotifyPaymentRes>
-                <outcome>Response malformata</outcome>
+                <delay>10000</delay>
+                <outcome>OK</outcome>
             </pfn:pspNotifyPaymentRes>
         </soapenv:Body>
     </soapenv:Envelope>
@@ -159,10 +160,10 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
     And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
 @runnable
-Scenario: Check nodoInoltroEsitoCarta1 response after nodoInoltroEsitoCarta
-    Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
-    And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 6000
+Scenario: Check nodoInoltroEsitoCarta1 response after nodoInoltroEsitoCarta [FLUSSO_APIO_12]
+    Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 6000
     And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+    And the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
     And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">

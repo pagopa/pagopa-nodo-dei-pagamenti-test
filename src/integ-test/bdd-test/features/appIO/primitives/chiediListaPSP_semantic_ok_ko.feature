@@ -87,13 +87,13 @@ Feature: Semantic checks for chiediListaPSP primitive
 
     @runnable
      # [PRO_CLPSP_14]
-    Scenario: Check semantic correctness - OK
+    Scenario: Check semantic correctness - OK [PRO_CLPSP_14]
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends rest GET listaPSP?percorsoPagamento=CARTE&idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
 
     @runnable
-    Scenario Outline: Check semantic correctness - KO
+    Scenario Outline: Check semantic correctness - KO [outline PRO_CLPSP_07-14]
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends rest GET <service> to nodo-dei-pagamenti
         Then check error is <value> of listaPSP response

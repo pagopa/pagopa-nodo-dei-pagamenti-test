@@ -3,7 +3,6 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
   Background:
     Given systems up
 
-@runnable
   # Activate Phase
   Scenario: Execute activatePaymentNotice request
     Given  initial XML activatePaymentNotice
@@ -32,6 +31,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
+  @runnable
   # Send payment outcome Phase
   Scenario: Execute sendPaymentOutcome request
     Given the Execute activatePaymentNotice request scenario executed successfully

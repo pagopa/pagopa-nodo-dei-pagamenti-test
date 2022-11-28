@@ -8,21 +8,20 @@ Feature: T003_nodoInviaRT_esito=0_ibanSloveno
     Scenario: RPT generation
         Given RPT1 generation
             """
-            <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_2_0.xsd ">
-            <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
+            <?xml version="1.0" encoding="UTF-8"?>
+            <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
+            <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
             <pay_i:identificativoDominio>23232323232</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>stazPaStress23</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
-            <pay_i:identificativoMessaggioRichiesta>idMsgRichiesta</pay_i:identificativoMessaggioRichiesta>
+            <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
             <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
             <pay_i:soggettoVersante>
             <pay_i:identificativoUnivocoVersante>
             <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501E</pay_i:codiceIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H502E</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoVersante>
             <pay_i:anagraficaVersante>Gesualdo;Riccitelli</pay_i:anagraficaVersante>
             <pay_i:indirizzoVersante>via del gesu</pay_i:indirizzoVersante>
@@ -31,6 +30,7 @@ Feature: T003_nodoInviaRT_esito=0_ibanSloveno
             <pay_i:localitaVersante>Roma</pay_i:localitaVersante>
             <pay_i:provinciaVersante>RM</pay_i:provinciaVersante>
             <pay_i:nazioneVersante>IT</pay_i:nazioneVersante>
+            <pay_i:e-mailVersante>gesualdo.riccitelli@poste.it</pay_i:e-mailVersante>
             </pay_i:soggettoVersante>
             <pay_i:soggettoPagatore>
             <pay_i:identificativoUnivocoPagatore>
@@ -44,6 +44,7 @@ Feature: T003_nodoInviaRT_esito=0_ibanSloveno
             <pay_i:localitaPagatore>Roma</pay_i:localitaPagatore>
             <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
             <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
+            <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
             </pay_i:soggettoPagatore>
             <pay_i:enteBeneficiario>
             <pay_i:identificativoUnivocoBeneficiario>
@@ -55,7 +56,7 @@ Feature: T003_nodoInviaRT_esito=0_ibanSloveno
             <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
             <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
             <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
-            <pay_i:capBeneficiario>00123</pay_i:capBeneficiario>
+            <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
             <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
             <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
@@ -63,10 +64,10 @@ Feature: T003_nodoInviaRT_esito=0_ibanSloveno
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
+            <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>#IUV1#</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
+            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
@@ -86,23 +87,23 @@ Feature: T003_nodoInviaRT_esito=0_ibanSloveno
         And RT1 generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
-            <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0.xsd ">
+            <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>23232323232</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
-            <pay_i:identificativoMessaggioRicevuta>TR0001_20120302-10:37:52.0264-F098</pay_i:identificativoMessaggioRicevuta>
-            <pay_i:dataOraMessaggioRicevuta>2012-03-02T10:37:52</pay_i:dataOraMessaggioRicevuta>
-            <pay_i:riferimentoMessaggioRichiesta>TR0001_20120302-10:37:52.0264-F098</pay_i:riferimentoMessaggioRichiesta>
-            <pay_i:riferimentoDataRichiesta>2012-01-26</pay_i:riferimentoDataRichiesta>
+            <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
+            <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
+            <pay_i:riferimentoMessaggioRichiesta>RiferimentoMessaggioRichiesta</pay_i:riferimentoMessaggioRichiesta>
+            <pay_i:riferimentoDataRichiesta>2001-01-01</pay_i:riferimentoDataRichiesta>
             <pay_i:istitutoAttestante>
             <pay_i:identificativoUnivocoAttestante>
             <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>CodiceIdentific</pay_i:codiceIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>IDPSPFNZ</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoAttestante>
             <pay_i:denominazioneAttestante>DenominazioneAttestante</pay_i:denominazioneAttestante>
-            <pay_i:codiceUnitOperAttestante>CodiceUOA</pay_i:codiceUnitOperAttestante>
+            <pay_i:codiceUnitOperAttestante>CodiceUnitOperAttestante</pay_i:codiceUnitOperAttestante>
             <pay_i:denomUnitOperAttestante>DenomUnitOperAttestante</pay_i:denomUnitOperAttestante>
             <pay_i:indirizzoAttestante>IndirizzoAttestante</pay_i:indirizzoAttestante>
             <pay_i:civicoAttestante>11</pay_i:civicoAttestante>
@@ -121,7 +122,7 @@ Feature: T003_nodoInviaRT_esito=0_ibanSloveno
             <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
             <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
             <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
-            <pay_i:capBeneficiario>00123</pay_i:capBeneficiario>
+            <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
             <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
             <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
@@ -129,7 +130,7 @@ Feature: T003_nodoInviaRT_esito=0_ibanSloveno
             <pay_i:soggettoVersante>
             <pay_i:identificativoUnivocoVersante>
             <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501F</pay_i:codiceIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H502E</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoVersante>
             <pay_i:anagraficaVersante>Gesualdo;Riccitelli</pay_i:anagraficaVersante>
             <pay_i:indirizzoVersante>via del gesu</pay_i:indirizzoVersante>
@@ -138,6 +139,7 @@ Feature: T003_nodoInviaRT_esito=0_ibanSloveno
             <pay_i:localitaVersante>Roma</pay_i:localitaVersante>
             <pay_i:provinciaVersante>RM</pay_i:provinciaVersante>
             <pay_i:nazioneVersante>IT</pay_i:nazioneVersante>
+            <pay_i:e-mailVersante>gesualdo.riccitelli@poste.it</pay_i:e-mailVersante>
             </pay_i:soggettoVersante>
             <pay_i:soggettoPagatore>
             <pay_i:identificativoUnivocoPagatore>
@@ -161,10 +163,11 @@ Feature: T003_nodoInviaRT_esito=0_ibanSloveno
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
-            <pay_i:dataEsitoSingoloPagamento>2012-03-02</pay_i:dataEsitoSingoloPagamento>
+            <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
             <pay_i:identificativoUnivocoRiscossione>$1IUV</pay_i:identificativoUnivocoRiscossione>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+            <pay_i:commissioniApplicatePSP>0.12</pay_i:commissioniApplicatePSP>
             </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
@@ -184,14 +187,15 @@ Feature: T003_nodoInviaRT_esito=0_ibanSloveno
             <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp_AGID#</identificativoPSP>
-            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>23232323232</identificativoDominio>
             <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <!--tipoFirma></tipoFirma-->
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>

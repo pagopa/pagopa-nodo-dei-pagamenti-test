@@ -307,7 +307,7 @@ Feature: Pag-1163_Paypal_OLD_OK
             <soapenv:Header/>
             <soapenv:Body>
                 <pfn:pspNotifyPaymentRes>
-                    <delay>8000</delay>
+                    <delay>3000</delay>
                     <outcome>OK</outcome>
                 </pfn:pspNotifyPaymentRes>
             </soapenv:Body>

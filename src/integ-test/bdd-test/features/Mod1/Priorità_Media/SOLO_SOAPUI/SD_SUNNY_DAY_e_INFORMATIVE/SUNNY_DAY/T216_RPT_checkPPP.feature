@@ -1,11 +1,13 @@
-Feature: process tests for nodoChiediInformazioniPagamento
+Feature: T216_RPT_checkPPP
 
     Background:
         Given systems up
 
+
     Scenario: RPT generation
-        Given RPT generation
+        Given RPT1 generation
             """
+            <?xml version="1.0" encoding="UTF-8"?>
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
@@ -60,15 +62,15 @@ Feature: process tests for nodoChiediInformazioniPagamento
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>6.20</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+            <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
+            <pay_i:tipoVersamento>CP</pay_i:tipoVersamento>
+            <pay_i:identificativoUnivocoVersamento>checkPPP</pay_i:identificativoUnivocoVersamento>
+            <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>6.20</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -82,8 +84,6 @@ Feature: process tests for nodoChiediInformazioniPagamento
             </pay_i:RPT>
             """
 
-    Scenario: Execute nodoInviaRPT request
-        Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -92,58 +92,37 @@ Feature: process tests for nodoChiediInformazioniPagamento
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>checkPPP</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp_AGID#</identificativoPSP>
-            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+            <identificativoPSP>POSTE3</identificativoPSP>
+            <identificativoIntermediarioPSP>#brokerPspPoste#</identificativoIntermediarioPSP>
+            <identificativoCanale>POSTE3</identificativoCanale>
             <tipoFirma></tipoFirma>
-            <rpt>$rptAttachment</rpt>
+            <rpt>$rpt1Attachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    @midRunnable
-    Scenario: execution nodoChiediInformazioniPagamento - PM_CIP1
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET informazioniPagamento? to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 400
-        And check error is Richiesta non valida of informazioniPagamento response
-
-    @midRunnable
-    Scenario: execution nodoChiediInformazioniPagamento - PM_CIP2
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET informazioniPagamento?idPagamento= to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 400
-        And check error is Richiesta non valida of informazioniPagamento response
-
-    @midRunnable
-    Scenario: execution nodoChiediInformazioniPagamento - PM_CIP3
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET informazioniPagamento?idPagamento=stringa-Alfanumerica-Di-36-Caratteri to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 404
-        And check error is Il pagamento non esiste of informazioniPagamento response
-
-    @midRunnable
-    Scenario: execution nodoChiediInformazioniPagamento - PM_CIP4
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken&importoTotale=100 to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-
-# @midRunnable
-# Scenario: execution nodoChiediInformazioniPagamento - PM_CIP5
-#     Given the Execute nodoInviaRPT request scenario executed successfully
-#     When WISP sends rest GET informazioniPagamento;idPagamento=$sessionToken to nodo-dei-pagamenti
-#     Then verify the HTTP status code of informazioniPagamento response is 405
-
-
-

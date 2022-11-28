@@ -234,11 +234,8 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01]
         Then verify the HTTP status code of paInviaRt response is 200
         And check outcome is OK of sendPaymentOutcome response
         And wait 65 seconds for expiration
-
         And checks the value NotNone of the record at column id of the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt_only_ccp on db nodo_online under macro NewMod3
-
         And checks the value #creditor_institution_code_old# of the record at column id_dominio of the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt_only_ccp on db nodo_online under macro NewMod3
-
         #DB CHECK-POSITION_PAYMENT_STATUS
         And checks the value PAYING, PAYING_RPT, PAID, NOTICE_GENERATED, NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
         #DB CHECK-POSITION_PAYMENT_STATUS_SNAPSHOT

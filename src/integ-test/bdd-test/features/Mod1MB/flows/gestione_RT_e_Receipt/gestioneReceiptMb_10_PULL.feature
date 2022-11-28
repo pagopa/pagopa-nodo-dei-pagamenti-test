@@ -4,6 +4,7 @@ Feature: gestioneReceiptMb_10_PULL
         Given systems up
 
     Scenario: clean paSendRt queue
+        Given nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         When job paSendRt triggered after 1 seconds
         And wait 15 seconds for expiration
 
@@ -441,7 +442,7 @@ Feature: gestioneReceiptMb_10_PULL
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
@@ -449,7 +450,7 @@ Feature: gestioneReceiptMb_10_PULL
                 "identificativoPsp": "#psp#",
                 "tipoVersamento": "BBT",
                 "identificativoIntermediario": "#psp#",
-                "identificativoCanale": "#psp#_06",
+                "identificativoCanale": "#canaleRtPull_sec#",
                 "tipoOperazione": "mobile",
                 "mobileToken": "123ABC456"
             }
@@ -491,8 +492,8 @@ Feature: gestioneReceiptMb_10_PULL
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 7 seconds
         #And job paInviaRt triggered after 10 seconds
         #And job paSendRt triggered after 10 seconds
@@ -533,9 +534,9 @@ Feature: gestioneReceiptMb_10_PULL
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        #And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         When job pspChiediListaAndChiediRt triggered after 7 seconds
         And job paInviaRt triggered after 10 seconds
         #And job paSendRt triggered after 10 seconds
@@ -696,7 +697,7 @@ Feature: gestioneReceiptMb_10_PULL
     Scenario: Check POSITION_RETRY_PA_SEND_RT table
         Given the job pspChiediRT (Phase 4.1) scenario executed successfully
         And wait 120 seconds for expiration
-        #And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         And EC2 replies to nodo-dei-pagamenti with the paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -709,8 +710,8 @@ Feature: gestioneReceiptMb_10_PULL
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When job paSendRt triggered after 5 seconds
-        And wait 15 seconds for expiration
+        When job paSendRt triggered after 15 seconds
+        And wait 30 seconds for expiration
         #check POSITION_RETRY_PA_SEND_RT table
         Then checks the value #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -718,14 +719,14 @@ Feature: gestioneReceiptMb_10_PULL
         And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And restore initial configurations
 
 @runnable
     Scenario: Checks
         Given the Check POSITION_RETRY_PA_SEND_RT table scenario executed successfully
+        And nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 2
         And wait 60 seconds for expiration
         When job paSendRt triggered after 5 seconds
-        And wait 15 seconds for expiration
+        And wait 400 seconds for expiration
         And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_payment_token retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
         And through the query by_notice_number_and_payment_token retrieve param noticeID1 at position 2 and save it under the key noticeID1
@@ -737,16 +738,11 @@ Feature: gestioneReceiptMb_10_PULL
         And through the query by_notice_number_and_payment_token retrieve param status1 at position 8 and save it under the key status1
 
         #checks
-        And check value $paFiscalCode1 is equal to value $expFiscalCode
+        Then check value $paFiscalCode1 is equal to value $expFiscalCode
         And check value $noticeID1 is equal to value $expNoticeID
         And check value $creditorReferenceId1 is equal to value $expCreditorReferenceID
         And check value $paymentToken1 is equal to value $expPaymentToken
         And check value $recipientPA1 is equal to value $pa1
         And check value $recipientBroker1 is equal to value $pa1
         And check value $recipientStation1 is equal to value #id_station_secondary#
-
-        And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value PAYING, PAID, NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And verify 0 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+        And restore initial configurations

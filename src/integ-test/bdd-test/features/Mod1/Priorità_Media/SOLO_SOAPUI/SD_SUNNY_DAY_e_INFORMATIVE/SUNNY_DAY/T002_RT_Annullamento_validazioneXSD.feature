@@ -241,7 +241,7 @@ Feature: T002_RT_Annullamento_validazioneXSD
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         And job paInviaRt triggered after 7 seconds
-        And wait 7 seconds for expiration
+        And wait 15 seconds for expiration
         Then checks stato contains RPT_ACCETTATA_PA of nodoChiediStatoRPT response
         Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response

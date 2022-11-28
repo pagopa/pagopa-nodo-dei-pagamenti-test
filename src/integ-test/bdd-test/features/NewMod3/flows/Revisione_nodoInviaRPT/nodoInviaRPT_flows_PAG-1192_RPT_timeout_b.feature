@@ -143,8 +143,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
 
     Scenario: Trigger mod3Cancel
         Given the Excecute nodoInviaRPT scenario executed successfully
-        When job mod3CancelV1 triggered after 5 seconds
-        Then wait 5 seconds for expiration
+        When job mod3CancelV1 triggered after 15 seconds
+        Then wait 15 seconds for expiration
         And verify the HTTP status code of mod3CancelV1 response is 200
     #END SETUP
 
@@ -207,9 +207,9 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-        When send, by sender psp, soap action activatePaymentNotice to nodo-dei-pagamenti
-        Then execution query payment_status_pay_act1 to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
-        And through the query payment_status_pay_act1 retrieve param paymentToken at position 0 and save it under the key paymentToken
+        When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
+        Then execution query payment_status_orderbydesc to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
+        And through the query payment_status_orderbydesc retrieve param paymentToken at position 0 and save it under the key paymentToken
         And RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -320,12 +320,10 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
 
     Scenario: DB check
         Given the Execute activatePaymentNotice3 request scenario executed successfully
+        When job paInviaRt triggered after 30 seconds
         And waiting 40 seconds for thread
         #RPT_ACTIVATIONS
-        Then checks the value None of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken on db nodo_online under macro NewMod3
-        And checks the value None of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken on db nodo_online under macro NewMod3
-        And checks the value None of the record at column PAAATTIVARPTERROR of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken on db nodo_online under macro NewMod3
-        And checks the value None of the record at column PAYMENT_TOKEN of the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken on db nodo_online under macro NewMod3
+        Then verify 0 record for the table RPT_ACTIVATIONS retrived by the query idempotency_paymentToken_2 on db nodo_online under macro NewMod3
         #POSITION_PAYMENT
         And checks the value $activatePaymentNotice1.fiscalCode of the record at column pa_fiscal_code of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice1.noticeNumber of the record at column notice_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -349,7 +347,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
         ##
         And checks the value $activatePaymentNotice2.fiscalCode of the record at column pa_fiscal_code of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice2.noticeNumber of the record at column notice_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-        And checks the value $activatePaymentNotice2Response.paymentToken of the record at column payment_token of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value $paymentToken of the record at column payment_token of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice2.fiscalCode of the record at column broker_pa_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value 1 of the record at column station_version of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice2.idPSP of the record at column psp_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
@@ -359,9 +357,6 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
         And checks the value None of the record at column fee of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value None of the record at column payment_method of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value NA of the record at column payment_channel of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-        And checks the value NotNone of the record at column transfer_date of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-        And checks the value NotNone of the record at column payer_id of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-        And checks the value NotNone of the record at column application_date of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column inserted_timestamp of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column updated_timestamp of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value MOD3 of the record at column payment_type of the table POSITION_PAYMENT retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
@@ -371,18 +366,18 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
         And checks the value $activatePaymentNotice1.fiscalCode of the record at column pa_fiscal_code of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice1.noticeNumber of the record at column notice_id of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
         And checks the value None of the record at column idempotency_key of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value $paymentToken of the record at column payment_token of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value NotNone of the record at column token_valid_from of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value $paymentToken of the record at column payment_token of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value NotNone of the record at column token_valid_from of the table POSITION_ACTIVATE retrived by the query payment_status_orderby on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column token_valid_to of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
-        And checks the value 10 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value 10 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status_orderby on db nodo_online under macro NewMod3
         ##
-        And checks the value $activatePaymentNotice2.fiscalCode of the record at column pa_fiscal_code of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMNewMod3od3
+        And checks the value $activatePaymentNotice2.fiscalCode of the record at column pa_fiscal_code of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice2.noticeNumber of the record at column notice_id of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value None of the record at column idempotency_key of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-        And checks the value $activatePaymentNotice2Response.paymentToken of the record at column payment_token of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-        And checks the value NotNone of the record at column token_valid_from of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        And checks the value $paymentToken of the record at column payment_token of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        #And checks the value NotNone of the record at column token_valid_from of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column token_valid_to of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
-        And checks the value 10 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
+        #And checks the value 10 of the record at column amount of the table POSITION_ACTIVATE retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         #POSITION_PAYMENT_PLAN
         And checks the value $activatePaymentNotice1.fiscalCode of the record at column pa_fiscal_code of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
         And checks the value $activatePaymentNotice1.noticeNumber of the record at column notice_id of the table POSITION_PAYMENT_PLAN retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
@@ -413,9 +408,9 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
         #POSITION_STATUS
         And checks the value PAYING,INSERTED,INSERTED of the record at column status of the table POSITION_STATUS retrived by the query payment_status_only_act1 on db nodo_online under macro NewMod3
         #STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_ANNULLATA_NODO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column stato of the table STATI_RPT retrived by the query rt_v1 on db nodo_online under macro NewMod3
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_ANNULLATA_NODO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column stato of the table STATI_RPT retrived by the query rt_v2 on db nodo_online under macro NewMod3
 
-    Scenario: Excecute nodoChiediCopiaRT
+    Scenario: Execute nodoChiediCopiaRT
         Given the DB check scenario executed successfully
         And initial XML nodoChiediCopiaRT
             """
@@ -438,8 +433,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
         And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
     
     @runnable
-    Scenario: Excecute_nodoChiediCopiaRT2
-        Given the Excecute nodoChiediCopiaRT scenario executed successfully
+    Scenario: Execute_nodoChiediCopiaRT2
+        Given the Execute nodoChiediCopiaRT scenario executed successfully
         And initial XML nodoChiediCopiaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">

@@ -477,17 +477,14 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
         And check value $xml_rt.causaleVersamento is equal to value $xml_rpt.causaleVersamento
         And check value $xml_rt.datiSpecificiRiscossione is equal to value $xml_rpt.datiSpecificiRiscossione
 
-    Scenario: retry paainviart
+    @runnable
+    Scenario: retry paainviart [Retry_paaInviaRT_02]
         Given the DB check scenario executed successfully
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true
         When job paRetryPaInviaRtNegative triggered after 5 seconds
         Then verify the HTTP status code of paRetryPaInviaRtNegative response is 200
         And wait 15 seconds for expiration
-
-    @runnable
-    Scenario: DB check 2 [Retry_paaInviaRT_02]
-        Given the retry paainviart scenario executed successfully
-        Then verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt_only_ccp on db nodo_online under macro NewMod3
+        And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query retry_pa_invia_rt_only_ccp on db nodo_online under macro NewMod3
         #DB CHECK-POSITION_PAYMENT_STATUS
         And checks the value PAYING, PAYING_RPT, PAID, NOTICE_GENERATED, NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
         #DB CHECK-POSITION_PAYMENT_STATUS_SNAPSHOT

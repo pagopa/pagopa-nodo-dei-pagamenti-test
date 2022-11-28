@@ -6,6 +6,7 @@ Feature: PRO_ANNULLO_06
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 6000
         And nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_annullamentoRptMaiRichiesteDaPm.enabled set to true
         And initial XML verifyPaymentNotice
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -87,7 +88,7 @@ Feature: PRO_ANNULLO_06
         And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
  @runnable       
-    Scenario: Execute activateIOPayment1 (Phase 3)
+    Scenario: Execute activateIOPayment1 (Phase 3) [PRO_ANNULLO_06]
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         And wait 10 seconds for expiration

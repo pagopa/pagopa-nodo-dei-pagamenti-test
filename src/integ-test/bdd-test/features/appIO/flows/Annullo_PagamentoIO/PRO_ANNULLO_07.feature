@@ -5,6 +5,7 @@ Feature: PRO_ANNULLO_07
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_annullamentoRptMaiRichiesteDaPm.enabled set to true
         And initial XML verifyPaymentNotice
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -88,7 +89,7 @@ Feature: PRO_ANNULLO_07
         And restore initial configurations
     
     @runnable
-    Scenario: Execute activateIOPayment1 (Phase 3)
+    Scenario: Execute activateIOPayment1 (Phase 3) [PRO_ANNULLO_07]
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response

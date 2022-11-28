@@ -233,7 +233,7 @@ Feature: process tests for retryAtokenScaduto
     And generic update through the query param_update_generic_where_condition of the table POSITION_ACTIVATE the parameter AMOUNT = '3', with where condition PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' AND NOTICE_ID='$activatePaymentNotice.noticeNumber' AND PAYMENT_TOKEN='$activatePaymentNoticeResponse.paymentToken-v2' under macro update_query on db nodo_online
 
   @runnable
-  Scenario: Execute paInviaRT
+  Scenario: Execute paInviaRT [retry_PaOld_13]
     Given the check position_payment_status scenario executed successfully
     When job paInviaRt triggered after 5 seconds
     Then verify the HTTP status code of paInviaRt response is 200

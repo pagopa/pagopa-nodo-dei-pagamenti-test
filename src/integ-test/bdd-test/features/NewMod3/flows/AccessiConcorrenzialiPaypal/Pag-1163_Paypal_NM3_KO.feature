@@ -180,4 +180,3 @@ Feature: Pag-1163_Paypal_NM3_KO
         And check errorCode is RIFPSP of inoltroEsito/paypal response
         And check descrizione is Risposta negativa del Canale of inoltroEsito/paypal response
         And check outcome is KO of sendPaymentOutcome response
-        And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response

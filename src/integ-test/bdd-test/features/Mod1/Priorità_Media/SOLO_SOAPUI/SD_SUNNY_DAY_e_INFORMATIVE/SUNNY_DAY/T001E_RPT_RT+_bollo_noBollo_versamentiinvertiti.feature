@@ -1,4 +1,4 @@
-Feature: T001C_DYNAMIC_RPTconBollo_RT+_bollo_noBollo
+Feature: T001E_RPT_RT+_bollo_noBollo_versamentiinvertiti
 
     Background:
         Given systems up
@@ -11,7 +11,7 @@ Feature: T001C_DYNAMIC_RPTconBollo_RT+_bollo_noBollo
             <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
             <PSP>
             <CodiceFiscale>12345678901</CodiceFiscale>
-            <Denominazione>#psp#</Denominazione>
+            <Denominazione>idPsp1</Denominazione>
             </PSP>
             <IUBD>#iubd1#</IUBD>
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
