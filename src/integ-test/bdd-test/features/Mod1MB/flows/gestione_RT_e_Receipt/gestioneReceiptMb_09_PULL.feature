@@ -344,7 +344,7 @@ Feature: gestioneReceiptMb_09_PULL
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
@@ -352,7 +352,7 @@ Feature: gestioneReceiptMb_09_PULL
             "identificativoPsp":"#psp#",
             "tipoVersamento":"BBT",
             "identificativoIntermediario":"#psp#",
-            "identificativoCanale":"#canaleRtPull#",
+            "identificativoCanale":"#canaleRtPull_sec#",
             "tipoOperazione":"mobile",
             "mobileToken":"123ABC456"
             }
@@ -395,8 +395,8 @@ Feature: gestioneReceiptMb_09_PULL
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 7 seconds
         Then wait 15 seconds for expiration
 
