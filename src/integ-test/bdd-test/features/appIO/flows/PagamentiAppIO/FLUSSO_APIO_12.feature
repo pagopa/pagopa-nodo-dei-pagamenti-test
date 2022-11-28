@@ -179,7 +179,7 @@ Scenario: Check nodoInoltroEsitoCarta1 response after nodoInoltroEsitoCarta [FLU
     And WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
     """
     {
-        "RRN":10026669,
+        "RRN":10026670,
         "tipoVersamento":"CP",
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
         "identificativoIntermediario":"#psp#",
