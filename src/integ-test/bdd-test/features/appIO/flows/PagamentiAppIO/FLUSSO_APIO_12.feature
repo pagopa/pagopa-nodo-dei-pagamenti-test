@@ -93,7 +93,8 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
         <soapenv:Header/>
         <soapenv:Body>
             <pfn:pspNotifyPaymentRes>
-                <outcome>Response malformata</outcome>
+                <delay>10000</delay>
+                <outcome>OK</outcome>
             </pfn:pspNotifyPaymentRes>
         </soapenv:Body>
     </soapenv:Envelope>
@@ -179,7 +180,7 @@ Scenario: Check nodoInoltroEsitoCarta1 response after nodoInoltroEsitoCarta [FLU
     And WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
     """
     {
-        "RRN":10026670,
+        "RRN":10026669,
         "tipoVersamento":"CP",
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
         "identificativoIntermediario":"#psp#",
