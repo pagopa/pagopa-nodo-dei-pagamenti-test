@@ -99,9 +99,9 @@ Feature: T216_RPT_checkPPP
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>POSTE3</identificativoPSP>
+            <identificativoPSP>POSTE1</identificativoPSP>
             <identificativoIntermediarioPSP>#brokerPspPoste#</identificativoIntermediarioPSP>
-            <identificativoCanale>POSTE3</identificativoCanale>
+            <identificativoCanale>POSTE1</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rpt1Attachment</rpt>
             </ws:nodoInviaRPT>

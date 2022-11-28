@@ -1,11 +1,13 @@
-Feature: T016_nodoInviaRPT_latoPSP_validazioneXSD
+Feature: T216_carrello_checkPPP
+
 
     Background:
         Given systems up
 
-    Scenario: Execute nodoInviaRPT (Phase 1)
+    Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given RPT generation
             """
+            <?xml version="1.0" encoding="UTF-8"?>
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
@@ -13,7 +15,7 @@ Feature: T016_nodoInviaRPT_latoPSP_validazioneXSD
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-            <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
+            <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
             <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
             <pay_i:soggettoVersante>
             <pay_i:identificativoUnivocoVersante>
@@ -59,69 +61,83 @@ Feature: T016_nodoInviaRPT_latoPSP_validazioneXSD
             <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
-            <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>validateXSD</pay_i:identificativoUnivocoVersamento>
+            <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+            <pay_i:importoTotaleDaVersare>12.40</pay_i:importoTotaleDaVersare>
+            <pay_i:tipoVersamento>BP</pay_i:tipoVersamento>
+            <pay_i:identificativoUnivocoVersamento>checkPPI</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>#ccp#</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
+            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>6.20</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocòpìé pratica RPT</pay_i:causaleVersamento>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
+            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+            </pay_i:datiSingoloVersamento>
+            <pay_i:datiSingoloVersamento>
+            <pay_i:importoSingoloVersamento>6.20</pay_i:importoSingoloVersamento>
+            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
+            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-        And initial XML nodoInviaRPT
+
+        And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-            <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+            <ppt:intestazioneCarrelloPPT>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>validateXSD</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$ccp</codiceContestoPagamento>
-            </ppt:intestazionePPT>
+            <identificativoCarrello>CART$ccp</identificativoCarrello>
+            </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
-            <ws:nodoInviaRPT>
+            <ws:nodoInviaCarrelloRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <tipoFirma></tipoFirma>
+            <identificativoPSP>POSTE1</identificativoPSP>
+            <identificativoIntermediarioPSP>#brokerPspPoste#</identificativoIntermediarioPSP>
+            <identificativoCanale>POSTE1</identificativoCanale>
+            <listaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>checkPPI</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$ccp</codiceContestoPagamento>
             <rpt>$rptAttachment</rpt>
-            </ws:nodoInviaRPT>
+            </elementoListaRPT>
+            </listaRPT>
+            </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML pspInviaRPT
+        And initial XML pspInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-            <ws:pspInviaRPTResponse>
-            <pspInviaRPTResponse>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-            </pspInviaRPTResponse>
-            </ws:pspInviaRPTResponse>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And check redirect is 1 of nodoInviaRPT response
-        
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response

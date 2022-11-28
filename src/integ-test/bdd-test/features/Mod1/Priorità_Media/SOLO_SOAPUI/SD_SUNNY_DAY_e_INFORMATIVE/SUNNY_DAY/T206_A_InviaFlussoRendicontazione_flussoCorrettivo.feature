@@ -50,7 +50,7 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <ws:nodoInviaFlussoRendicontazione>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoCanale>#canaleRtPush</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
@@ -65,7 +65,6 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
 
     Scenario: Send nodoInviaFlussoRendicontazione1
         Given the Send nodoInviaFlussoRendicontazione primitive scenario executed successfully
-        And wait 60 seconds for expiration
         And initial XML nodoInviaFlussoRendicontazione
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
