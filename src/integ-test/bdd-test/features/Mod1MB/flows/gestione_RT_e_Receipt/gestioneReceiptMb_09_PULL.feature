@@ -3,6 +3,11 @@ Feature: gestioneReceiptMb_09_PULL
     Background:
         Given systems up
 
+    Scenario: clean paSendRt queue
+        Given nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 1
+        When job paSendRt triggered after 10 seconds
+        And wait 15 seconds for expiration
+
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to false
@@ -560,7 +565,7 @@ Feature: gestioneReceiptMb_09_PULL
     Scenario: Check POSITION_RETRY_PA_SEND_RT table
         Given the job pspChiediRT (Phase 4) scenario executed successfully
         And wait 60 seconds for expiration
-        And EC replies to nodo-dei-pagamenti with the paSendRT
+        And EC2 replies to nodo-dei-pagamenti with the paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Header />
