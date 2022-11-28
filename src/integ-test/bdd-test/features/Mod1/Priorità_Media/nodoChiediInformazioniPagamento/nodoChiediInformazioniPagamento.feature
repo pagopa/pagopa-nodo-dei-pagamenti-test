@@ -139,11 +139,11 @@ Feature: process tests for nodoChiediInformazioniPagamento
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken&importoTotale=100 to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-    @midRunnable
-    Scenario: execution nodoChiediInformazioniPagamento - PM_CIP5
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET informazioniPagamento;idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 405
+# @midRunnable
+# Scenario: execution nodoChiediInformazioniPagamento - PM_CIP5
+#     Given the Execute nodoInviaRPT request scenario executed successfully
+#     When WISP sends rest GET informazioniPagamento;idPagamento=$sessionToken to nodo-dei-pagamenti
+#     Then verify the HTTP status code of informazioniPagamento response is 405
 
 
 
