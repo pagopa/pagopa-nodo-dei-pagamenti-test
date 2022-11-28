@@ -858,6 +858,7 @@ Feature: process tests for paSendRT [PSRT_30]
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paSendRT
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to false
         And initial XML sendPaymentOutcome
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -939,6 +940,7 @@ Feature: process tests for paSendRT [PSRT_30]
         # Scenario: 24 job refresh pa (2)
         #     Given the 24 DB check + db update scenario executed successfully
         Then refresh job PA triggered after 10 seconds
+        And restore initial configurations
 
 
     # PSRT_26
