@@ -250,26 +250,27 @@ Feature: T101_F_chiediStato_RT_ACCETTATA_PA_Annullamento_bollo
       When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
       Then verify the HTTP status code of notificaAnnullamento response is 200
       And check esito is OK of notificaAnnullamento response
-      And wait 70 seconds for expiration
+      
 
    Scenario: Execute nodoChiediStatoRPT
       Given the Execute nodoNotificaAnnullamento scenario executed successfully
+      And wait 70 seconds for expiration
       And initial XML nodoChiediStatoRPT
-         """
-         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-         <soapenv:Header/>
-         <soapenv:Body>
-             <ws:nodoChiediStatoRPT>
-               <identificativoIntermediarioPA>#creditor_institution_code#<identificativoIntermediarioPA>
-               <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-               <password>pwdpwdpwd</password>
-               <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-               <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-               <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            </ws:nodoChiediStatoRPT>
-         </soapenv:Body>
-         </soapenv:Envelope>
-         """
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header />
+            <soapenv:Body>
+                <ws:nodoChiediStatoRPT>
+                    <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                    <password>pwdpwdpwd</password>
+                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                    <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                </ws:nodoChiediStatoRPT>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
       When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
       Then checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
       And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
@@ -279,5 +280,8 @@ Feature: T101_F_chiediStato_RT_ACCETTATA_PA_Annullamento_bollo
       And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
       And check redirect is 0 of nodoChiediStatoRPT response
       And check url field not exists in nodoChiediStatoRPT response
+      And replace iuv content with $IUV content
+      And replace pa content with #creditor_institution_code# content
+      And replace ccp content with CCD01 content
       And checks the value Annullato per RPT rifiutata of the record at column ESITO of the table RT retrived by the query esito on db nodo_online under macro Mod1
       And checks the value RIFPSP of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
