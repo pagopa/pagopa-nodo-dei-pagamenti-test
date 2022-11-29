@@ -186,7 +186,7 @@ Feature: process tests for paaInviaRT[IRTRES1]
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPush#</identificativoCanale>
+            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rpt1Attachment</rpt>
             </ws:nodoInviaRPT>
@@ -237,7 +237,7 @@ Feature: process tests for paaInviaRT[IRTRES1]
             <soapenv:Body>
             <ws:nodoInviaRT>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPush#</identificativoCanale>
+            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
@@ -251,5 +251,5 @@ Feature: process tests for paaInviaRT[IRTRES1]
             </soapenv:Envelope>
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRT response
+        Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_SYSTEM_ERROR of nodoInviaRT response
