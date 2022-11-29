@@ -1,5 +1,4 @@
-Feature: T104_ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParcheggio
-    
+Feature: ChiediAvanzamento_RTdellaSeconda
     Background:
         Given systems up
 
@@ -332,6 +331,7 @@ Feature: T104_ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParcheggio
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
+
 		And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -392,7 +392,6 @@ Feature: T104_ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParcheggio
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         And replace iuv content with avanzaErrResponse$1iuv content
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        
     
      Scenario: Execution Esito Carta
         Given the RPT generation scenario executed successfully
@@ -403,8 +402,7 @@ Feature: T104_ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParcheggio
             <soapenv:Body>
             <ws:pspInviaCarrelloRPTCarteResponse>
             <pspInviaCarrelloRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <delay>30000</delay>
+            <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
             </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
             </soapenv:Body>
@@ -429,49 +427,60 @@ Feature: T104_ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParcheggio
         And check error is Operazione in timeout of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
         And checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-        And wait 30 seconds for expiration
-        And checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-
- 
-
-Scenario: Execution Esito Carta1
+        And verify 1 record for the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
+       
+    Scenario: execution nodoInviaRT2
         Given the Execution Esito Carta scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
+        And initial XML nodoInviaRT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:nodoInviaRT>
+                <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                <identificativoCanale>#canale#</identificativoCanale>
+                <password>pwdpwdpwd</password>
+                <identificativoPSP>#psp#</identificativoPSP>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                <identificativoUnivocoVersamento>avanzaErrResponse$1iuv</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>CCD02</codiceContestoPagamento>
+                <tipoFirma></tipoFirma>
+                <forzaControlloSegno>1</forzaControlloSegno>
+                <rt>$rt2Attachment</rt>
+            </ws:nodoInviaRT>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And initial XML paaInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaCarrelloRPTCarteResponse>
-            <pspInviaCarrelloRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTCarteResponse>
-            </soapenv:Body>
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:paaInviaRTRisposta>
+                        <paaInviaRTRisposta>
+                            <esito>OK</esito>
+                        </paaInviaRTRisposta>
+                    </ws:paaInviaRTRisposta>
+                </soapenv:Body>
             </soapenv:Envelope>
             """
-        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
-            """
-            {
-            "idPagamento": "$sessionToken",
-            "RRN":123456789,
-            "identificativoPsp": "#psp#",
-            "tipoVersamento": "CP",
-            "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#",
-            "esitoTransazioneCarta": "123456", 
-            "importoTotalePagato": 11.11,
-            "timestampOperazione": "2012-04-23T18:25:43.001Z",
-            "codiceAutorizzativo": "123212"
-            }
-            """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is OK of inoltroEsito/carta response
-        And check url field not exists in inoltroEsito/carta response
-        # check STATI_RPT table
+        And EC replies to nodo-dei-pagamenti with the paaInviaRT
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
+        Then check esito is OK of nodoInviaRT response
+        And checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+        And verify 0 record for the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
+        
+     Scenario: clean pspChiediAvanzamentoRPT queue
+        Given the execution nodoInviaRT2 scenario executed successfully
+        When job pspChiediAvanzamentoRpt triggered after 5 seconds
+        And wait 10 seconds for expiration
+        And checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
         And replace pa content with #creditor_institution_code# content
         And replace iuv content with $1iuv content
-        And replace noticeNumber content with $1carrello content
-        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
+        And replace 1ccp content with CCD01 content
+        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
+        And replace pa content with #creditor_institution_code# content
         And replace iuv content with avanzaErrResponse$1iuv content
-        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-  
+        And replace 1ccp content with CCD02 content
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
+        And verify 0 record for the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
