@@ -62,7 +62,7 @@ def step_impl(context, primitive):
 
     if len(payload) > 0:
         my_document = parseString(payload)
-        idBrokerPSP = "60000000001"
+        idBrokerPSP = "70000000001"
         if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
             idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[
                 0].firstChild.data

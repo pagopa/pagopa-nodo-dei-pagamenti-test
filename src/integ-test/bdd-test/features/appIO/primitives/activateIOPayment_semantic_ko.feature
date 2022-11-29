@@ -339,9 +339,9 @@ Feature: Semantic checks for activateIOPayment - KO
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activateIOPaymentReq>
-      <idPSP>#psp#</idPSP>
-      <idBrokerPSP>#psp#</idBrokerPSP>
-      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+      <idPSP>70000000001</idPSP>
+      <idBrokerPSP>70000000001</idBrokerPSP>
+      <idChannel>70000000001_01</idChannel>
       <password>pwdpwdpwd</password>
       <!--Optional:-->
       <idempotencyKey>#idempotency_key#</idempotencyKey>
