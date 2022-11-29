@@ -706,22 +706,22 @@ Feature: process tests for nodoInoltraPagamentoMod1
             """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
 
-    @midRunnable
-    Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_28
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
-            """
-            {
-            "idPagamento":"$sessionToken",
-            "identificativoPsp":,
-            "tipoVersamento":"BBT",
-            "identificativoIntermediario":"#psp#",
-            "identificativoCanale": "#canale#",
-            "tipoOperazione":"web"
-            }
-            """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 422
-        And check error is Tipo Operazione invalido of inoltroEsito/mod1 response
+    # @midRunnable
+    # Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_28
+    #     Given the Execute nodoInviaRPT request scenario executed successfully
+    #     When WISP sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
+    #         """
+    #         {
+    #         "idPagamento":"$sessionToken",
+    #         "identificativoPsp":,
+    #         "tipoVersamento":"BBT",
+    #         "identificativoIntermediario":"#psp#",
+    #         "identificativoCanale": "#canale#",
+    #         "tipoOperazione":"web"
+    #         }
+    #         """
+    #     Then verify the HTTP status code of inoltroEsito/mod1 response is 422
+    #     And check error is Tipo Operazione invalido of inoltroEsito/mod1 response
 
     @midRunnable
     Scenario: execution nodoInoltraPagamentoMod1 - PM_IPM1_29

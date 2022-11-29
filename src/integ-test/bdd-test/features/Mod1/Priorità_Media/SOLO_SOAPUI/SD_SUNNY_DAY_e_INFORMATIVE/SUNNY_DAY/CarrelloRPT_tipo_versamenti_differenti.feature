@@ -137,7 +137,9 @@ Feature: CarrelloRPT_tipo_versamenti_differenti
 
         Examples:
             | SoapUI                  | tag                  | tag_value |
-            | T070_CarrelloRPT_CP     | pay_i:tipoVersamento | CP        |
-            | T068_A_CarrelloRPT_OBEP | pay_i:tipoVersamento | OBEP      |
-            | T071_CarrelloRPT_PO     | pay_i:tipoVersamento | PO        |
+            | T067_CarrelloRPT_BBT    | pay_i:tipoVersamento | BBT       |
             | T068_CarrelloRPT_BP     | pay_i:tipoVersamento | BP        |
+            | T068_A_CarrelloRPT_OBEP | pay_i:tipoVersamento | OBEP      |
+            | T069_CarrelloRPT_AD     | pay_i:tipoVersamento | AD        |
+            | T070_CarrelloRPT_CP     | pay_i:tipoVersamento | CP        |
+            | T071_CarrelloRPT_PO     | pay_i:tipoVersamento | PO        |
