@@ -604,7 +604,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
             <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
             <codiceIdRPT>
               <bc:BarCode>
-                <bc:Gln>1234567890122</bc:Gln>
+                <bc:Gln>7777777777777</bc:Gln>
                 <!--<bc:CodStazPA>11</bc:CodStazPA>-->
                 <bc:AuxDigit>2</bc:AuxDigit>
                 <bc:CodIUV>55222222222222222</bc:CodIUV>
