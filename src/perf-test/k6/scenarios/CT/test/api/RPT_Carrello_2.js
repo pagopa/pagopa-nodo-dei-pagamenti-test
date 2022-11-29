@@ -21,10 +21,10 @@ return `
 	</soapenv:Header>
 	<soapenv:Body>
 		<ws:nodoInviaCarrelloRPT>
-			<password>password</password>
+			<password>pwdpwdpwd</password>
 			<identificativoPSP>AGID_01</identificativoPSP>
 			<identificativoIntermediarioPSP>97735020584</identificativoIntermediarioPSP>
-			<identificativoCanale>97735020584_03</identificativoCanale>
+			<identificativoCanale>97735020584_02</identificativoCanale>
 			<listaRPT>
 				<elementoListaRPT>
 					<identificativoDominio>${pa}</identificativoDominio>
@@ -57,14 +57,14 @@ export function RPT_Carrello_2(baseUrl,rndAnagPa,iuvs) {
  
  for(var i=0; i< iuvs.length;i++){
 	
- let rptEncoded = rptUtil.getRptCEncoded(rndAnagPa.PA, rndAnagPa.STAZPA, iuvs[i]);
+ let rptEncoded = rptUtil.getRptBBTEncoded(rndAnagPa.PA, rndAnagPa.STAZPA, iuvs[i]);
  rptEncodeds.push(rptEncoded);
  }
   
  const res = http.post(
     baseUrl,
     rptReqBody(rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuvs, rptEncodeds),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaCarrelloRPT' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaCarrelloRPT', 'x-forwarded-for':'10.6.189.192' } ,
 	tags: { RPT_Carrello_2: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );

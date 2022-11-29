@@ -15,8 +15,8 @@ return `
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
 	<soapenv:Header>
 		<ppt:intestazionePPT>
-			<identificativoIntermediarioPA>${pa}</identificativoIntermediarioPA>
-			<identificativoStazioneIntermediarioPA>${pa}</identificativoStazioneIntermediarioPA>
+			<identificativoIntermediarioPA>${intpa}</identificativoIntermediarioPA>
+			<identificativoStazioneIntermediarioPA>${stazpa}</identificativoStazioneIntermediarioPA>
 			<identificativoDominio>${pa}</identificativoDominio>
 			<identificativoUnivocoVersamento>${creditorReferenceId}</identificativoUnivocoVersamento>
 			<codiceContestoPagamento>${paymentToken}</codiceContestoPagamento>
@@ -24,10 +24,10 @@ return `
 	</soapenv:Header>
 	<soapenv:Body>
 		<ws:nodoInviaRPT>
-			<password>password</password>
-                                                 <identificativoPSP>40000000001</identificativoPSP>
-                                                 <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-                                                 <identificativoCanale>40000000001_01</identificativoCanale>
+			<password>pwdpwdpwd</password>
+             <identificativoPSP>15376371009</identificativoPSP>
+             <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
+             <identificativoCanale>15376371009_01</identificativoCanale>
 			<tipoFirma/>
 			<rpt>${rptEncoded}</rpt>
 		</ws:nodoInviaRPT>
@@ -41,16 +41,17 @@ return `
 			*/
 };
 
-export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId) {
+export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, importoTotaleDaVersare) {
  
   //console.log("paymToken="+paymentToken); 
   //console.log("creditorReferenceId="+creditorReferenceId); 
-  let rptEncoded = rptUtil.getRptEncoded(rndAnagPaNew.PA, rndAnagPaNew.STAZPA, creditorReferenceId, paymentToken);
+  console.debug("RPT_SEMPLICE PA "+ rndAnagPaNew.PA);
+  let rptEncoded = rptUtil.getRptEncoded(rndAnagPaNew.PA, rndAnagPaNew.STAZPA, creditorReferenceId, paymentToken, importoTotaleDaVersare);
   
  const res = http.post(
     baseUrl,
     rptSempliceN3ReqBody(rndAnagPaNew.PA, rndAnagPaNew.INTPA, rndAnagPaNew.STAZPA,paymentToken, creditorReferenceId, rptEncoded),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRPT' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRPT', 'x-forwarded-for':'10.6.189.192' } ,
 	tags: { RPT_Semplice_N3: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );

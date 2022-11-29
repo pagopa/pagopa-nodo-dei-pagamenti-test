@@ -4,30 +4,29 @@ import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 
 
-
 export const activatePaymentNotice_Trend = new Trend('activatePaymentNotice');
 export const All_Trend = new Trend('ALL');
 
 export function activateReqBody (psp, pspint, chpsp, cfpa, noticeNmbr, idempotencyKey) {
   //console.log("noticeNmbr="+noticeNmbr+" |psp="+psp+" |pspint="+pspint+" |chpsp="+chpsp+" |idempotencyKey="+idempotencyKey+" |cfpa="+cfpa);
 	
-	return `
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+	return `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
 <soapenv:Header/>
 <soapenv:Body>
 <nod:activatePaymentNoticeReq>
 <idPSP>${psp}</idPSP>
 <idBrokerPSP>${pspint}</idBrokerPSP>
 <idChannel>${chpsp}</idChannel>
-<password>password</password>
+<password>pwdpwdpwd</password>
 <idempotencyKey>${idempotencyKey}</idempotencyKey>
 <qrCode>
 <fiscalCode>${cfpa}</fiscalCode>
 <noticeNumber>${noticeNmbr}</noticeNumber>
 </qrCode>
-<expirationTime>60000</expirationTime>
+<expirationTime>5000</expirationTime>
 <amount>10.00</amount>
-<paymentNote>responseFull</paymentNote>
+<dueDate>2056-01-26</dueDate>
+<paymentNote>Test payment</paymentNote>
 </nod:activatePaymentNoticeReq>
 </soapenv:Body>
 </soapenv:Envelope>`};
@@ -37,7 +36,7 @@ export function activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,id
  //console.log( activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey));
  let res=http.post(baseUrl,
     activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'activatePaymentNotice' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'activatePaymentNotice'} ,
 	tags: { activatePaymentNotice: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );
@@ -101,6 +100,8 @@ export function activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,id
   script = doc.find('creditorReferenceId');
   creditorReferenceId = script.text();
   result.creditorReferenceId=creditorReferenceId;
+  script = doc.find('totalAmount');
+  result.amount = script.text();
   }catch(error){}
 
 /*

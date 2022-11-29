@@ -25,7 +25,7 @@ var dd_ = String(tomorrow.getDate()).padStart(2, '0');
 var mm_ = String(tomorrow.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy_ = tomorrow.getFullYear();
 tomorrow = yyyy_ + '-' + mm_ + '-' + dd_;
-//<password>password</password>
+//<password>pwdpwdpwd</password>
 return `
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
    <soapenv:Header/>
@@ -34,7 +34,7 @@ return `
          <idPSP>${psp}</idPSP>
          <idBrokerPSP>${intpsp}</idBrokerPSP>
          <idChannel>${chpsp}</idChannel>
-         <password>password</password>
+         <password>pwdpwdpwd</password>
          <paymentToken>${paymentToken}</paymentToken>
          <outcome>OK</outcome>
          <details>

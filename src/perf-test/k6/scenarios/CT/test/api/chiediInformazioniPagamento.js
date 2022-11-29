@@ -11,7 +11,7 @@ export const All_Trend = new Trend('ALL');
 export function chiediInformazioniPagamento(baseUrl,paymentToken, rndAnagPa) {
  
  let res=http.get(baseUrl+'/informazioniPagamento?idPagamento='+paymentToken,
-    { headers: { 'Content-Type': 'application/json', 'Host': 'api.dev.platform.pagopa.it' } ,
+    { headers: { 'Content-Type': 'application/json', 'Host': 'api.prf.platform.pagopa.it' } ,
 	tags: { chiediInformazioniPagamento: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );

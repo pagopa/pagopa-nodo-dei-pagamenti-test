@@ -18,7 +18,7 @@ export function activateReqBody (psp, pspint, chpsp, cfpa, noticeNmbr, idempoten
 <idPSP>${psp}</idPSP>
 <idBrokerPSP>${pspint}</idBrokerPSP>
 <idChannel>${chpsp}</idChannel>
-<password>password</password>
+<password>pwdpwdpwd</password>
 <idempotencyKey>${idempotencyKey}</idempotencyKey>
 <qrCode>
 <fiscalCode>${cfpa}</fiscalCode>
@@ -26,6 +26,7 @@ export function activateReqBody (psp, pspint, chpsp, cfpa, noticeNmbr, idempoten
 </qrCode>
 <expirationTime>60000</expirationTime>
 <amount>10.00</amount>
+<dueDate>2056-01-27</dueDate>
 <paymentNote>responseFull</paymentNote>
 </nod:activatePaymentNoticeReq>
 </soapenv:Body>

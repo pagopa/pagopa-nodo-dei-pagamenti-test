@@ -8,7 +8,7 @@ export const Attiva_Trend = new Trend('Attiva');
 export const All_Trend = new Trend('ALL');
 
 export function AttivaReqBody(psp, intpsp, chpsp, cfpa, iuv,ccp){
-//<password>password</password>
+//<password>pwdpwdpwd</password>
 return `
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
 	<soapenv:Header/>
@@ -17,7 +17,7 @@ return `
 			<identificativoPSP>${psp}</identificativoPSP>
 			<identificativoIntermediarioPSP>${intpsp}</identificativoIntermediarioPSP>
 			<identificativoCanale>${chpsp}</identificativoCanale>
-			<password>password</password>
+			<password>pwdpwdpwd</password>
 			<codiceContestoPagamento>${ccp}</codiceContestoPagamento>
 			<identificativoIntermediarioPSPPagamento>${intpsp}</identificativoIntermediarioPSPPagamento>
 			<identificativoCanalePagamento>${chpsp}</identificativoCanalePagamento>
@@ -76,7 +76,7 @@ export function Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, ccp) {
  const res = http.post(
     baseUrl,
     AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, ccp),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'Attiva' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoAttivaRPT', 'x-forwarded-for':'10.6.189.192' } ,
 	tags: { Attiva: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
@@ -129,7 +129,9 @@ export function Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, ccp) {
   let doc = parseHTML(res.body);
   let script = doc.find('esito');
   outcome = script.text();
-  }catch(error){}
+  }catch(error){
+	console.log("ERROR "+ res.body);
+}
 
 
   /*if(outcome=='KO'){

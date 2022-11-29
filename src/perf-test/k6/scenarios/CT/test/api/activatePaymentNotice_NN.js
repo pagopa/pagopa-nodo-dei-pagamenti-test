@@ -25,7 +25,7 @@ today = yyyy + '-' + mm + '-' + dd;
          <idPSP>${psp}</idPSP>
          <idBrokerPSP>${pspint}</idBrokerPSP>
          <idChannel>${chpsp}</idChannel>
-         <password>password</password>
+         <password>pwdpwdpwd</password>
          <idempotencyKey>${idempotencyKey}</idempotencyKey>
          <qrCode>
             <fiscalCode>${cfpa}</fiscalCode>
@@ -44,7 +44,7 @@ export function activatePaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr
  
  let res=http.post(baseUrl,
     activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey, paymentNote),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'activatePaymentNotice' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'activatePaymentNotice', 'x-forwarded-for':'10.6.189.192' } ,
 	tags: { activatePaymentNotice_NN: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );

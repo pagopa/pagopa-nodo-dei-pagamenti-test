@@ -17,7 +17,7 @@ return `
 <idPSP>${psp}</idPSP>
 <idBrokerPSP>${intpsp}</idBrokerPSP>
 <idChannel>${chpsp}</idChannel>
-<password>password</password>
+<password>pwdpwdpwd</password>
 <qrCode>
 <fiscalCode>${cfpa}</fiscalCode>
 <noticeNumber>${noticeNmbr}</noticeNumber>

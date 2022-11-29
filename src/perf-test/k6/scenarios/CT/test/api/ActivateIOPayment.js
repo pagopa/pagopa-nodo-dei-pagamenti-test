@@ -26,7 +26,7 @@ export function activateIOPaymentReqBody (psp, pspint, chpsp, cf, noticeNumber, 
          <idPSP>${psp}</idPSP>
          <idBrokerPSP>${pspint}</idBrokerPSP>
          <idChannel>${chpsp}</idChannel>
-         <password>password</password>
+         <password>pwdpwdpwd</password>
          <idempotencyKey>${idempotencyKey}</idempotencyKey>
          <qrCode>
             <fiscalCode>${cf}</fiscalCode>
@@ -45,7 +45,7 @@ export function ActivateIOPayment(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,ide
  
  let res=http.post(baseUrl,
     activateIOPaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPaNew.CF , noticeNmbr, idempotencyKey),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'ActivateIOPayment'} ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'activateIOPayment'} ,
 	tags: { ActivateIOPayment: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );

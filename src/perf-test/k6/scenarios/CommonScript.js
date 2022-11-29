@@ -338,4 +338,13 @@ for(var i = 0; i < jsonArray.length; i++) {
   return str;
     
 }
+
+// Idempotency
+export function genIdempotencyKey(){
+	let key1='';
+	let key2 = Math.round((Math.pow(36, 10 + 1) - Math.random() * Math.pow(36, 10))).toString(36).slice(1);
+	for (var i = 11; i > 0; --i) key1 += chars[Math.floor(Math.random() * chars.length)];
+	let returnValue=key1+"_"+key2;
+	return returnValue;
+}
 	

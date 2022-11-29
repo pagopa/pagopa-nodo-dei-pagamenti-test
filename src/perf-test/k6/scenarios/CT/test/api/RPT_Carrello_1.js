@@ -21,7 +21,7 @@ return `
 	</soapenv:Header>
 	<soapenv:Body>
 		<ws:nodoInviaCarrelloRPT>
-			<password>password</password>
+			<password>pwdpwdpwd</password>
 			<identificativoPSP>${psp}</identificativoPSP>
 			<identificativoIntermediarioPSP>${intpsp}</identificativoIntermediarioPSP>
 			<identificativoCanale>${chpsp_c}</identificativoCanale>
@@ -50,7 +50,7 @@ export function RPT_Carrello_1(baseUrl,rndAnagPsp,rndAnagPa,iuvs) {
  const res = http.post(
     baseUrl,
     rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuvs, rptEncoded),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaCarrelloRPT' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaCarrelloRPT', 'x-forwarded-for':'10.6.189.192' } ,
 	tags: { RPT_Carrello_1: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );

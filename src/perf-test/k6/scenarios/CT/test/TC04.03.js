@@ -1,13 +1,11 @@
-import { check, fail } from 'k6';
+import { check } from 'k6';
 //import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
-import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 import { chiediInformazioniPagamento } from './api/chiediInformazioniPagamento.js';
 import { inoltraEsitoPagamentoCarta } from './api/inoltraEsitoPagamentoCarta.js';
 import { ActivateIOPayment } from './api/ActivateIOPayment.js';
 import { sendPaymentOutput } from './api/sendPaymentOutput.js';
-import * as outputUtil from './util/output_util.js';
 import * as inputDataUtil from './util/input_data_util.js';
 //import * as test_selector from '../../test_selector.js';
 

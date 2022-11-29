@@ -17,7 +17,7 @@ return `
 		<ws:nodoInviaRT>
 			<identificativoIntermediarioPSP>${intpsp}</identificativoIntermediarioPSP>
 			<identificativoCanale>${chpsp_c}</identificativoCanale>
-			<password>password</password>
+			<password>pwdpwdpwd</password>
 			<identificativoPSP>${psp}</identificativoPSP>
 			<identificativoDominio>${pa}</identificativoDominio>
 			<identificativoUnivocoVersamento>${iuv}</identificativoUnivocoVersamento>

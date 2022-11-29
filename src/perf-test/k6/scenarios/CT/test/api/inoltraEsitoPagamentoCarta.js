@@ -41,7 +41,7 @@ export function inoltraEsitoPagamentoCarta(baseUrl,rndAnagPsp,paymentToken, fiel
     baseUrl+'/inoltroEsito/carta',
     JSON.stringify(body),
     //JSON.stringify(rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken)),
-    { headers: { 'Content-Type': 'application/json', 'Host': 'api.dev.platform.pagopa.it'  } ,
+    { headers: { 'Content-Type': 'application/json', 'Host': 'api.prf.platform.pagopa.it'  } ,
 	tags: { inoltraEsitoPagamentoCarta: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );

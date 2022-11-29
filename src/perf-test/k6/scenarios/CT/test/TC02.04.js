@@ -2,7 +2,6 @@ import { check, fail } from 'k6';
 //import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
-import { jUnit, textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 import { sendPaymentOutput } from './api/sendPaymentOutput.js';
 import { activatePaymentNotice } from './api/activatePaymentNotice.js';
 import { RPT_Semplice_N3 } from './api/RPT_Semplice_N3.js';
@@ -22,21 +21,10 @@ const csvBaseUrl = new SharedArray('baseUrl', function () {
 const chars = '0123456789';
 // NoticeNumber
 export function genNoticeNumber(){
-	let noticeNumber='311';
+	let noticeNumber='111';
 	for (var i = 15; i > 0; --i) noticeNumber += chars[Math.floor(Math.random() * chars.length)];
 	return noticeNumber;
 }
-
-// Idempotency
-export function genIdempotencyKey(){
-	let key1='';
-	let key2 = Math.round((Math.pow(36, 10 + 1) - Math.random() * Math.pow(36, 10))).toString(36).slice(1);
-	for (var i = 11; i > 0; --i) key1 += chars[Math.floor(Math.random() * chars.length)];
-	let returnValue=key1+"_"+key2;
-	return returnValue;
-}
-
-
 
 //const scalini= run.getScalini[0]; 
 
@@ -147,15 +135,15 @@ export function total() {
   let rndAnagPaNew = inputDataUtil.getAnagPaNew();
   let rndAnagPsp = inputDataUtil.getAnagPsp();
   let noticeNmbr = genNoticeNumber();
-  let idempotencyKey = genIdempotencyKey();
+  let idempotencyKey = common.genIdempotencyKey();
     
    
   let res = activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
   let paymentToken=res.paymentToken;
   let creditorReferenceId=res.creditorReferenceId;
-
-
-  res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId);
+  let importoTotaleDaVersare = undefined;
+  console.debug("IMPORTO TOTALE: " + importoTotaleDaVersare);
+  res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, importoTotaleDaVersare);
 
 
   res = sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken);

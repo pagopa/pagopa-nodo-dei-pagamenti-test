@@ -8,7 +8,7 @@ import { Trend } from 'k6/metrics';
 export const verifyPaymentNotice_NN_Trend = new Trend('verifyPaymentNotice_NN');
 export const All_Trend = new Trend('ALL');
 
-//<password>password</password>
+//<password>pwdpwdpwd</password>
 export function verifyReqBody(psp, intpsp, chpsp, cfpa, noticeNmbr){
 return `
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -18,7 +18,7 @@ return `
          <idPSP>${psp}</idPSP>
          <idBrokerPSP>${intpsp}</idBrokerPSP>
          <idChannel>${chpsp}</idChannel>
-         <password>password</password>
+         <password>pwdpwdpwd</password>
          <qrCode>
             <fiscalCode>${cfpa}</fiscalCode>
             <noticeNumber>${noticeNmbr}</noticeNumber>
@@ -35,7 +35,7 @@ export function verifyPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,i
  const res = http.post(
     baseUrl,
     verifyReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'verifyPaymentNotice' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'verifyPaymentNotice', 'x-forwarded-for':'10.6.189.192' } ,
 	tags: { verifyPaymentNotice_NN: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );

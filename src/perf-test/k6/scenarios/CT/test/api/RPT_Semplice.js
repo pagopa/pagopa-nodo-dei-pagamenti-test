@@ -24,7 +24,7 @@ return `
 	</soapenv:Header>
 	<soapenv:Body>
 		<ws:nodoInviaRPT>
-			<password>password</password>
+			<password>pwdpwdpwd</password>
 			<identificativoPSP>${psp}</identificativoPSP>
 			<identificativoIntermediarioPSP>${intpsp}</identificativoIntermediarioPSP>
 			<identificativoCanale>${chpsp}</identificativoCanale>
@@ -44,7 +44,7 @@ export function RPT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
  const res = http.post(
     baseUrl,
     rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuv, rptEncoded),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRPT' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRPT', 'x-forwarded-for':'10.6.189.192' } ,
 	tags: { RPT_Semplice: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );

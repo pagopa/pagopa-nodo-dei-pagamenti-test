@@ -33,7 +33,7 @@ return `
          <idPSP>${psp}</idPSP>
          <idBrokerPSP>${intpsp}</idBrokerPSP>
          <idChannel>${chpsp}</idChannel>
-         <password>password</password>
+         <password>pwdpwdpwd</password>
          <paymentToken>${paymentToken}</paymentToken>
          <outcome>OK</outcome>
          <details>

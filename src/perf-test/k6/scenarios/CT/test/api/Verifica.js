@@ -17,7 +17,7 @@ return `
 			<identificativoPSP>${psp}</identificativoPSP>
 			<identificativoIntermediarioPSP>${intpsp}</identificativoIntermediarioPSP>
 			<identificativoCanale>${chpsp}</identificativoCanale>
-			<password>password</password>
+			<password>pwdpwdpwd</password>
 			<codiceContestoPagamento>PERFORMANCE</codiceContestoPagamento>
 			<codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
 			<codiceIdRPT>
@@ -38,7 +38,7 @@ export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit, valueToAsse
  const res = http.post(
     baseUrl,
     verificaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, auxDigit),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'nodoVerificaRPT'} ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'nodoVerificaRPT', 'x-forwarded-for':'10.6.189.192'} ,
 	tags: { Verifica: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
@@ -88,10 +88,13 @@ export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit, valueToAsse
    );
 
   let outcome='';
+  let faultCode='';
   try{
   const doc = parseHTML(res.body);
   const script = doc.find('esito');
+  const scriptFaultCode = doc.find('faultCode');
   outcome = script.text();
+  faultCode = scriptFaultCode.text();
   }catch(error){}
   /*if(outcome=='KO'){
   console.log("VERIfica REQuest----------------"+verificaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, auxDigit)); 
@@ -102,7 +105,7 @@ export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit, valueToAsse
     res,
     {
       //'Verifica:ok_rate': (r) => r.status == 200,
-	  'Verifica:ok_rate': (r) => outcome == valueToAssert,
+	  'Verifica:ok_rate': (r) => outcome == valueToAssert || faultCode == valueToAssert,
     },
     { Verifica: 'ok_rate', ALL:'ok_rate' }
 	);
@@ -111,11 +114,11 @@ export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit, valueToAsse
     res,
     {
       //'Verifica:ko_rate': (r) => r.status !== 200,
-	  'Verifica:ko_rate': (r) => outcome !== valueToAssert,
+	  'Verifica:ko_rate': (r) => outcome !== valueToAssert && faultCode !== valueToAssert,
     },
     { Verifica: 'ko_rate', ALL:'ko_rate' }
   )){
-	fail("outcome != "+valueToAssert + " : "+outcome);
+	fail("outcome != "+valueToAssert + " : "+outcome + " faultCode: "+faultCode);
 }
   
   return res;

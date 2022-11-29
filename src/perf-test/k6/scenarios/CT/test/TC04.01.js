@@ -121,10 +121,11 @@ export const options = {
 
 export function genIuv(){
 	
-	let iuv = Math.random()*100000000000000000;
+	let iuv = Math.random()*1000000000000000; //TODO IUV DEVE iniziare per 11 ed acere lunghezza 17 nel caso di auxdigit = 3
 	iuv = iuv.toString().split('.')[0];
-	let user ="";
+	let user ="11";
 	let returnValue=user+iuv;
+	console.debug("IUV GENERATO: "+ returnValue);
     return returnValue;
 
 }

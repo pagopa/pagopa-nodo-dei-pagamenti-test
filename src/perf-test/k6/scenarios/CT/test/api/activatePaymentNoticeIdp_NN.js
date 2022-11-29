@@ -24,7 +24,7 @@ today = yyyy + '-' + mm + '-' + dd;
          <idPSP>${psp}</idPSP>
          <idBrokerPSP>${pspint}</idBrokerPSP>
          <idChannel>${chpsp}</idChannel>
-         <password>password</password>
+         <password>pwdpwdpwd</password>
          <idempotencyKey>${idempotencyKey}</idempotencyKey>
          <qrCode>
             <fiscalCode>${cfpa}</fiscalCode>

@@ -24,7 +24,7 @@ export function genNoticeNumber(){
 	if(noticeNumber.length==14){
 		noticeNumber="0"+noticeNumber;
 	}*/
-	let noticeNumber='311';
+	let noticeNumber='111';
 	for (var i = 15; i > 0; --i) noticeNumber += chars[Math.floor(Math.random() * chars.length)];
 	//let returnValue = "311"+noticeNumber.toString().split('.')[0];
 	//console.log("noticeNumber="+returnValue);
@@ -183,7 +183,6 @@ export function total() {
     let creditorReferenceId=res.creditorReferenceId;
 
 
- 
   res = sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken);
 
 
