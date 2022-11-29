@@ -926,7 +926,7 @@ Feature: T001_CARRELLO_5_RPT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        And job pspChiediListaAndChiediRt triggered after 5 seconds
+        And job pspChiediListaAndChiediRt triggered after 15 seconds
         #And job paaInviaRT triggered after 10 seconds
         #And wait 5 seconds for expiration
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
@@ -937,7 +937,7 @@ Feature: T001_CARRELLO_5_RPT
         And rt with $rt2Attachment in pspChiediRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
-        When job pspChiediListaAndChiediRt triggered after 5 seconds
+        When job pspChiediListaAndChiediRt triggered after 15 seconds
         #And wait 5 seconds for expiration
     
     Scenario: third pspChiediListaAndChiediRt trigger
@@ -946,7 +946,7 @@ Feature: T001_CARRELLO_5_RPT
         And rt with $rt3Attachment in pspChiediRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
-        When job pspChiediListaAndChiediRt triggered after 5 seconds
+        When job pspChiediListaAndChiediRt triggered after 15 seconds
         #And wait 5 seconds for expiration
     
     Scenario: fourth pspChiediListaAndChiediRt trigger
@@ -955,7 +955,7 @@ Feature: T001_CARRELLO_5_RPT
         And rt with $rt4Attachment in pspChiediRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
-        When job pspChiediListaAndChiediRt triggered after 5 seconds
+        When job pspChiediListaAndChiediRt triggered after 15 seconds
         #And wait 5 seconds for expiration
 @runnable
     Scenario: fifth pspChiediListaAndChiediRt trigger
@@ -964,8 +964,8 @@ Feature: T001_CARRELLO_5_RPT
         And rt with $rt5Attachment in pspChiediRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
-        When job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 10 seconds
+        When job pspChiediListaAndChiediRt triggered after 15 seconds
+        And job paInviaRt triggered after 20 seconds
         And wait 130 seconds for expiration
         #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
         #And refresh job PSP triggered after 10 seconds

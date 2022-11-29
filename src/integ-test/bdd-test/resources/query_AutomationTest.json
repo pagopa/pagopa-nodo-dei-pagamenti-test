@@ -215,7 +215,7 @@
         "updated_timestamp" : "UPDATE POSITION_PAYMENT_PLAN SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD') WHERE NOTICE_ID = $1noticeNumber AND PA_FISCAL_CODE = $pa"
     },
     "RendicontazioneFTPeBollo":{
-        "rendicontazione": "SELECT columns FROM table_name WHERE ID_FLUSSO = '$identificativoFlusso' AND DOMINIO = '$pa'",
+        "rendicontazione": "SELECT columns FROM table_name WHERE ID_FLUSSO = '$identificativoFlusso' AND DOMINIO = '$pa' AND ORDER BY ID DESC",
         "send_queue": "SELECT s.columns FROM table_name s JOIN RENDICONTAZIONE r ON s.ID = r.FK_SFTP_FILE WHERE r.ID_FLUSSO = '$identificativoFlusso' AND r.DOMINIO = '$pa' ",
         "binary_file": "SELECT s.columns FROM table_name s JOIN RENDICONTAZIONE r ON s.ID = r.FK_BINARY_FILE WHERE r.ID_FLUSSO = '$identificativoFlusso' AND r.DOMINIO = '$pa' ",
         "send_queue1": "SELECT s.columns FROM table_name s JOIN RENDICONTAZIONE r ON s.ID = r.FK_SFTP_FILE WHERE r.ID_FLUSSO = '$identificativoFlusso' "
