@@ -339,9 +339,9 @@ Feature: Semantic checks for activateIOPayment - KO
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activateIOPaymentReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <!--Optional:-->
       <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -487,7 +487,7 @@ Feature: Semantic checks for activateIOPayment - KO
     Given nodo-dei-pagamenti has config parameter useIdempotency set to true
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
     And <tag> with <tag_value> in activateIOPayment
-    And wait 2 seconds for expiration
+    And wait 10 seconds for expiration
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activateIOPayment response
