@@ -103,9 +103,8 @@ stages:
                 
                 #Aggiunta integrazione influxdb-grafana
                 #k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://10.101.132.117:8086/k6database
-                telnet 10.101.132.117 8086
-                telnet 10.101.132.118 8086
-                ping 10.101.132.117 8086
+
+                ping 10.101.132.117
               }
               echo env selected:
               echo ${{ parameters.env }}
