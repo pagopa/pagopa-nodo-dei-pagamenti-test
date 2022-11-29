@@ -187,7 +187,7 @@ Feature: process tests for paaInviaRT[IRTRES1]
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
-            <tipoFirma></tipoFirma>
+            <tipoFirma/>
             <rpt>$rpt1Attachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
