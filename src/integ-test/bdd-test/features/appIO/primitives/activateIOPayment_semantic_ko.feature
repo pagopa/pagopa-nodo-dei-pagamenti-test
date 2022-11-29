@@ -481,7 +481,7 @@ Feature: Semantic checks for activateIOPayment - KO
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     And restore initial configurations
 
-  @runnable
+  @fix
   # [SEM_AIPR_21]
   Scenario Outline: Check PPT_ERRORE_IDEMPOTENZA error on idempotencyKey validity (Phase 2)
     Given nodo-dei-pagamenti has config parameter useIdempotency set to true
