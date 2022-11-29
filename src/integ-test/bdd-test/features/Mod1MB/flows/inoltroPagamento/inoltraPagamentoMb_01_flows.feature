@@ -6,8 +6,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
 
    # [inoltropagamentoMb_01]
    Scenario: RPT generation
-      Given nodo-dei-pagamenti has config parameter CONFIG_VALUE set to false
-      And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+      Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
       And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
       And RPT1 generation
          """
