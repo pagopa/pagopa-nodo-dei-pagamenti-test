@@ -145,20 +145,19 @@ Feature: process tests for pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check faultCode is <resp_error> of nodoInviaCarrelloRPT response
         Examples:
-            | field                          | value | resp_error                 |
-            | soapenv:Body                   | Empty | PPT_CANALE_ERRORE_RESPONSE |
-            | soapenv:Body                   | None  | PPT_CANALE_ERRORE_RESPONSE |
-            | ws:pspInviaCarrelloRPTResponse | Empty | PPT_CANALE_ERRORE_RESPONSE |
-            | fault                          | Empty | PPT_CANALE_ERRORE_RESPONSE |
-            | faultCode                      | Empty | PPT_CANALE_ERRORE_RESPONSE |
-            | faultCode                      | CIAO  | PPT_CANALE_ERRORE_RESPONSE |
-            | faultString                    | Empty | PPT_CANALE_ERRORE_RESPONSE |
-            | id                             | Empty | PPT_CANALE_ERRORE_RESPONSE |
-            | serial                         | CIAO  | PPT_CANALE_ERRORE_RESPONSE |
-            | esitoComplessivoOperazione     | None  | PPT_CANALE_ERRORE_RESPONSE |
-            | esitoComplessivoOperazione     | CIAO  | PPT_CANALE_ERRORE_RESPONSE |
-            | listaErroriRPT                 | Empty | PPT_CANALE_ERRORE_RESPONSE |
-
+            | field                          | value | resp_error                 | soapUI test |
+            | soapenv:Body                   | Empty | PPT_CANALE_ERRORE_RESPONSE | CRPTRES3    |
+            | soapenv:Body                   | None  | PPT_CANALE_ERRORE_RESPONSE | CRPTRES4    |
+            | ws:pspInviaCarrelloRPTResponse | Empty | PPT_CANALE_ERRORE_RESPONSE | CRPTRES5    |
+            | fault                          | Empty | PPT_CANALE_ERRORE_RESPONSE | CRPTRES6    |
+            | faultCode                      | Empty | PPT_CANALE_ERRORE_RESPONSE | CRPTRES8    |
+            | faultCode                      | CIAO  | PPT_CANALE_ERRORE_RESPONSE | CRPTRES9    |
+            | faultString                    | Empty | PPT_CANALE_ERRORE_RESPONSE | CRPTRES10   |
+            | id                             | Empty | PPT_CANALE_ERRORE_RESPONSE | CRPTRES11   |
+            | serial                         | CIAO  | PPT_CANALE_ERRORE_RESPONSE | CRPTRES12   |
+            | esitoComplessivoOperazione     | None  | PPT_CANALE_ERRORE_RESPONSE | CRPTRES14   |
+            | esitoComplessivoOperazione     | CIAO  | PPT_CANALE_ERRORE_RESPONSE | CRPTRES17   |
+            | listaErroriRPT                 | Empty | PPT_CANALE_ERRORE_RESPONSE | CRPTRES22   |
 
 
 
