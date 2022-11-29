@@ -239,9 +239,14 @@ Feature: T101_F_chiediStato_RT_ACCETTATA_PA_Annullamento_bollo
       Then check esito is OK of nodoInviaRPT response
       And check url contains acardste of nodoInviaRPT response
       And retrieve session token from $nodoInviaRPTResponse.url
+
+   Scenario: Execute job paInviaRt
+        Given the Execute nodoInviaRPT request scenario executed successfully
+        When job paInviaRt triggered after 5 seconds
+        And wait 10 seconds for expiration
      
    Scenario: Execute nodoNotificaAnnullamento
-      Given the Execute nodoInviaRPT request scenario executed successfully
+      Given the Execute job paInviaRt scenario executed successfully
       When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
       Then verify the HTTP status code of notificaAnnullamento response is 200
       And check esito is OK of notificaAnnullamento response
@@ -252,17 +257,17 @@ Feature: T101_F_chiediStato_RT_ACCETTATA_PA_Annullamento_bollo
       And initial XML nodoChiediStatoRPT
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-               <soapenv:Header />
-               <soapenv:Body>
-                  <ws:nodoChiediStatoRPT>
-                     <identificativoIntermediarioPA>#creditor_institution_code#<identificativoIntermediarioPA>
-                     <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                     <password>pwdpwdpwd</password>
-                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                     <identificativoUnivocoVersamento>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoUnivocoVersamento>
-                     <codiceContestoPagamento>$nodoInviaRPT.codiceContestoPagamento</codiceContestoPagamento>
-                  </ws:nodoChiediStatoRPT>
-               </soapenv:Body>
+         <soapenv:Header/>
+         <soapenv:Body>
+             <ws:nodoChiediStatoRPT>
+               <identificativoIntermediarioPA>#creditor_institution_code#<identificativoIntermediarioPA>
+               <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+               <password>pwdpwdpwd</password>
+               <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+               <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+               <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            </ws:nodoChiediStatoRPT>
+         </soapenv:Body>
          </soapenv:Envelope>
          """
       When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
