@@ -257,17 +257,17 @@ Feature: T101_F_chiediStato_RT_ACCETTATA_PA_Annullamento_bollo
       And initial XML nodoChiediStatoRPT
          """
          <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-         <soapenv:Header/>
-         <soapenv:Body>
-             <ws:nodoChiediStatoRPT>
-               <identificativoIntermediarioPA>#creditor_institution_code#<identificativoIntermediarioPA>
-               <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-               <password>pwdpwdpwd</password>
-               <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-               <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-               <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            </ws:nodoChiediStatoRPT>
-         </soapenv:Body>
+            <soapenv:Header />
+            <soapenv:Body>
+               <ws:nodoChiediStatoRPT>
+                  <identificativoIntermediarioPA>#creditor_institution_code#<identificativoIntermediarioPA>
+                  <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                  <password>pwdpwdpwd</password>
+                  <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                  <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                  <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+               </ws:nodoChiediStatoRPT>
+            </soapenv:Body>
          </soapenv:Envelope>
          """
       When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
