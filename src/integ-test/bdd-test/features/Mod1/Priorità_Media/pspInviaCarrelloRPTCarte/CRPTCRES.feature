@@ -84,7 +84,7 @@ Feature: process tests for pspInviaCarrelloRPTCarte
             </pay_i:RPT>
             """
 
-    Scenario: Execute nodoInviaRPT request
+    Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
             """
@@ -120,7 +120,7 @@ Feature: process tests for pspInviaCarrelloRPTCarte
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
     @midRunnable
-    Scenario: Execution Esito Carta
+    Scenario Outline: Execution Esito Carta
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And initial XML pspInviaCarrelloRPTCarte
             """
