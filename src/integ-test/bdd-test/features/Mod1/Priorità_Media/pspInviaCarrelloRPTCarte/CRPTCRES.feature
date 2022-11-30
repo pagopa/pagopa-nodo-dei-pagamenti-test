@@ -84,7 +84,7 @@ Feature: process tests for pspInviaCarrelloRPTCarte
             </pay_i:RPT>
             """
     
-    Scenario: Execute nodoInviaRPT request
+    Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML pspInviaCarrelloRPT
             """
@@ -137,16 +137,16 @@ Feature: process tests for pspInviaCarrelloRPTCarte
 
     @midRunnable
     Scenario: Execution Esito Carta
-        Given the Execute nodoInviaRPT request scenario executed successfully
+        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
-        """
+            """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
                 <soapenv:Header/>
                 <soapenv:Body>
                     <ws:pspInviaCarrelloRPTCarteResponse>
                         <pspInviaCarrelloRPTResponse>
                             <fault>
-                            <faultCode>PPT_CANALE_ERRORE_RESPONSE</faultCode>
+                            <faultCode>CANALE_RPT_DUPLICATA</faultCode>
                             <faultString>bgdhbazhyt</faultString>
                             <id>idPsp1</id>
                             </fault>
@@ -155,12 +155,12 @@ Feature: process tests for pspInviaCarrelloRPTCarte
                     </ws:pspInviaCarrelloRPTCarteResponse>
                 </soapenv:Body>
             </soapenv:Envelope>
-        """
+            """
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
-        """
-        {
+            """
+            {
             "idPagamento": "$sessionToken",
-            "RRN":123456789,
+            "RRN":10026669,
             "identificativoPsp": "#psp#",
             "tipoVersamento": "CP",
             "identificativoIntermediario": "#psp#",
@@ -169,8 +169,9 @@ Feature: process tests for pspInviaCarrelloRPTCarte
             "importoTotalePagato": 11.11,
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
             "codiceAutorizzativo": "123212"
-        }
-        """
+            }
+             """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is KO of inoltroEsito/carta response
-        And check error is PPT_CANALE_ERRORE_RESPONSE of inoltroEsito/carta response
+        And check url field not exists in inoltroEsito/carta response
+        And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response 
