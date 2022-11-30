@@ -202,7 +202,7 @@ Feature: T003_nodoInviaRT_esito=0_validazioneXSD
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativocanaleRtPush>#canale#</identificativocanaleRtPush>
+            <identificativocanale>#canaleRtPush#</identificativocanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -224,7 +224,7 @@ Feature: T003_nodoInviaRT_esito=0_validazioneXSD
             <soapenv:Body>
             <ws:nodoInviaRT>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativocanaleRtPush>#canaleRtPush#</identificativocanaleRtPush>
+            <identificativocanale>#canaleRtPush#</identificativocanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>$nodoInviaRPT.identificativoDominio</identificativoDominio>
@@ -234,28 +234,6 @@ Feature: T003_nodoInviaRT_esito=0_validazioneXSD
             <forzaControlloSegno>1</forzaControlloSegno>
             <rt>$rtAttachment</rt>
             </ws:nodoInviaRT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paaInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaInviaRTRisposta>
-            <paaInviaRTRisposta>
-            <!--Optional:-->
-            <fault>
-            <faultCode>PAA_SEMANTICA_XSD</faultCode>
-            <faultString>semantica RT non valida </faultString>
-            <id>mockPa</id>
-            <!--Optional:-->
-            <description>test</description>
-            </fault>
-            <!--Optional:-->
-            <esito>KO</esito>
-            </paaInviaRTRisposta>
-            </ws:paaInviaRTRisposta>
             </soapenv:Body>
             </soapenv:Envelope>
             """
