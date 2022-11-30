@@ -4,8 +4,9 @@ Feature: process tests for pspInviaCarrelloRPTCarte
         
 
     Scenario: RPT generation
-        Given RPT generation
-        And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
+        And RPT generation
+
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
