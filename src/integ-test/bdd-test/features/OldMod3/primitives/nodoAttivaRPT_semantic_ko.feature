@@ -585,7 +585,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
     Then check faultCode is PPT_SEMANTICA of nodoAttivaRPT response
 
-  @fix
+  @midRunnable
   Scenario: check PPT_STAZIONE_INT_PA_SERVIZIO_NON_ATTIVO [ARPTSEM31]
     Given generate 1 notice number and iuv with aux digit 3, segregation code #code_segr# and application code NA
     Given initial XML nodoAttivaRPT
