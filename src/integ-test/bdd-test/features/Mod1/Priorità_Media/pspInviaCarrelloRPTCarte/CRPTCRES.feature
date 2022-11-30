@@ -1,7 +1,7 @@
 Feature: process tests for pspInviaCarrelloRPTCarte
     Background:
         Given systems up
-        
+
 
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
@@ -83,7 +83,7 @@ Feature: process tests for pspInviaCarrelloRPTCarte
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    
+
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -120,34 +120,34 @@ Feature: process tests for pspInviaCarrelloRPTCarte
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
     @midRunnable
-    Scenario: Execution Esito Carta
+    Scenario Outline: Execution Esito Carta
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-        And initial XML pspInviaCarrelloRPTCarte 
+        And initial XML pspInviaCarrelloRPTCarte
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTCarteResponse>
-                        <pspInviaCarrelloRPTResponse>
-                            <fault>
-                                <faultCode>CANALE_RPT_DUPLICATA</faultCode>
-                                <faultString>bgdhbazhyt</faultString>
-                                <id>idPsp1</id>
-                                <serial>1</serial>
-                            </fault>
-                            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                            <identificativoCarrello>$1iuv</identificativoCarrello>
-                            <listaErroriRPT>
-                                <fault>
-                                <faultCode>CANALE_FIRMA_SCONOSCIUTA</faultCode>
-                                <faultString>La firma è sconosciuta</faultString>
-                                <id>IDPSPFNZ</id>
-                                <serial>1</serial>
-                                </fault>
-                            </listaErroriRPT>
-                        </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTCarteResponse>
-                </soapenv:Body>
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTCarteResponse>
+            <pspInviaCarrelloRPTResponse>
+            <fault>
+            <faultCode>CANALE_RPT_DUPLICATA</faultCode>
+            <faultString>bgdhbazhyt</faultString>
+            <id>idPsp1</id>
+            <serial>1</serial>
+            </fault>
+            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
+            <listaErroriRPT>
+            <fault>
+            <faultCode>CANALE_FIRMA_SCONOSCIUTA</faultCode>
+            <faultString>La firma è sconosciuta</faultString>
+            <id>IDPSPFNZ</id>
+            <serial>1</serial>
+            </fault>
+            </listaErroriRPT>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTCarteResponse>
+            </soapenv:Body>
             </soapenv:Envelope>
             """
         And <tag> with <value> in pspInviaCarrelloRPTCarte
@@ -155,30 +155,30 @@ Feature: process tests for pspInviaCarrelloRPTCarte
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
-            "idPagamento": "$sessionToken",
-            "RRN":10026669,
-            "identificativoPsp": "#psp#",
-            "tipoVersamento": "CP",
-            "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#",
-            "esitoTransazioneCarta": "123456", 
-            "importoTotalePagato": 11.11,
-            "timestampOperazione": "2012-04-23T18:25:43.001Z",
-            "codiceAutorizzativo": "123212"
+                "idPagamento": "$sessionToken",
+                "RRN": 123456789,
+                "identificativoPsp": "#psp#",
+                "tipoVersamento": "CP",
+                "identificativoIntermediario": "#psp#",
+                "identificativoCanale": "#canale#",
+                "esitoTransazioneCarta": "123456",
+                "importoTotalePagato": 11.11,
+                "timestampOperazione": "2012-04-23T18:25:43.001Z",
+                "codiceAutorizzativo": "123212"
             }
             """
         Then check descrizione is Risposta negativa del Canale of inoltroEsito/carta response
         Examples:
             | tag                            | value | soapUI test |
-            | soapenv:Body                   | Empty | CRPTCRES3    |
-            | soapenv:Body                   | None  | CRPTCRES4    |
-            | ws:pspInviaCarrelloRPTResponse | Empty | CRPTCRES5    |
-            | fault                          | Empty | CRPTCRES6    |
-            | faultCode                      | Empty | CRPTCRES8    |
-            | faultCode                      | CIAO  | CRPTCRES9    |
-            | faultString                    | Empty | CRPTCRES10   |
-            | id                             | Empty | CRPTCRES11   |
-            | serial                         | CIAO  | CRPTCRES12   |
-            | esitoComplessivoOperazione     | None  | CRPTCRES14   |
-            | esitoComplessivoOperazione     | CIAO  | CRPTCRES17   |
-            | listaErroriRPT                 | Empty | CRPTCRES22   |
+            | soapenv:Body                   | Empty | CRPTCRES3   |
+            | soapenv:Body                   | None  | CRPTCRES4   |
+            | ws:pspInviaCarrelloRPTResponse | Empty | CRPTCRES5   |
+            | fault                          | Empty | CRPTCRES6   |
+            | faultCode                      | Empty | CRPTCRES8   |
+            | faultCode                      | CIAO  | CRPTCRES9   |
+            | faultString                    | Empty | CRPTCRES10  |
+            | id                             | Empty | CRPTCRES11  |
+            | serial                         | CIAO  | CRPTCRES12  |
+            | esitoComplessivoOperazione     | None  | CRPTCRES14  |
+            | esitoComplessivoOperazione     | CIAO  | CRPTCRES17  |
+            | listaErroriRPT                 | Empty | CRPTCRES22  |
