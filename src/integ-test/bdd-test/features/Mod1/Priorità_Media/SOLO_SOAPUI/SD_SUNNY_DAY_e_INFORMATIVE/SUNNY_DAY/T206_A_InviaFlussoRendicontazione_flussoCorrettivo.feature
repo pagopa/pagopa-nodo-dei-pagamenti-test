@@ -53,7 +53,7 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <identificativoCanale>40000000001_03</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
+            <identificativoFlusso>$identificativoFlussoOld</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
             </ws:nodoInviaFlussoRendicontazione>
@@ -114,7 +114,7 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <identificativoCanale>40000000001_03</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
+            <identificativoFlusso>$identificativoFlussoOld</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
             </ws:nodoInviaFlussoRendicontazione>
@@ -138,7 +138,7 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <password>pwdpwdpwd</password>
             <identificativoDominio>44444444444</identificativoDominio>
             <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
+            <identificativoFlusso>$identificativoFlussoOld</identificativoFlusso>
             </ws:nodoChiediFlussoRendicontazione>
             </soapenv:Body>
             </soapenv:Envelope>
