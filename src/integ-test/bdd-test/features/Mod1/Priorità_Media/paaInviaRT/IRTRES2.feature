@@ -1,4 +1,4 @@
-Feature: process tests for paaInviaRT[IRTRES1]
+Feature: process tests for paaInviaRT [IRTRES2]
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code #cod_segr# and application code NA
@@ -213,14 +213,12 @@ Feature: process tests for paaInviaRT[IRTRES1]
         Then check esito is OK of nodoInviaRPT response
     
     @midRunnable
-    Scenario: Execute nodoInviaRT
+    Scenario: Execute nodoInviaRT [IRTRES2]
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML paaInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
-            <soapenv:Body>
-            </soapenv:Body>
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
