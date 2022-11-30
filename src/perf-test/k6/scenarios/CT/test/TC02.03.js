@@ -161,34 +161,20 @@ export function total() {
   let rndAnagPa = inputDataUtil.getAnagPa();
   let rndAnagPaNew = inputDataUtil.getAnagPaNew();
   let noticeNmbr = genNoticeNumber();
-  let idempotencyKey = genIdempotencyKey();
+  let idempotencyKey = common.genIdempotencyKey();
     
    
-   	let res = activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
-
-   /*let outcome='';
-   let paymentToken='';
-   let creditorReferenceId='';
-   try{
-   let doc = parseHTML(res.body);
-   let script = doc.find('outcome');
-   outcome = script.text();
-   script = doc.find('paymentToken');
-   paymentToken = script.text();
-   script = doc.find('creditorReferenceId');
-   creditorReferenceId = script.text();
-   }catch(error){}*/
-     
+   	let res = activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);    
     let paymentToken=res.paymentToken;
     let creditorReferenceId=res.creditorReferenceId;
-
+	let importoTotaleDaVersare = res.amount;
 
   res = sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken);
 
 
 
-  console.log('prima di rpt='+paymentToken);
-  res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId);
+  console.log('prima di rpt='+paymentToken+ " importo da versare "+  importoTotaleDaVersare);
+  res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, importoTotaleDaVersare);
 
   
 }

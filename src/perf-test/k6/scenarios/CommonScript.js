@@ -341,6 +341,7 @@ for(var i = 0; i < jsonArray.length; i++) {
 
 // Idempotency
 export function genIdempotencyKey(){
+	const chars = '0123456789';
 	let key1='';
 	let key2 = Math.round((Math.pow(36, 10 + 1) - Math.random() * Math.pow(36, 10))).toString(36).slice(1);
 	for (var i = 11; i > 0; --i) key1 += chars[Math.floor(Math.random() * chars.length)];

@@ -258,8 +258,14 @@ export const options = {
   
 }; 
 
-
 var baseUrl = "";
+var rndAnagPspGlobal = undefined;
+var rndAnagPaNewGlobal = undefined;
+var noticeNmbrGlobal = undefined;
+var paymentNoteGlobal = undefined;
+var paymentTokenGlobal = undefined;
+var creditorReferenceIdGlobal = undefined;
+var amountGlobal = undefined;
 
 export function total() {
 
@@ -335,9 +341,11 @@ function randomIdp_NN(){
 
 function executeIdp_NN(rndAnagPsp, rndAnagPaNew, noticeNmbr, paymentNote){
   var idx_NN = randomIdp();
-  var args = "'"+rndAnagPsp+"','"+ rndAnagPaNew+"','"+ noticeNmbr+"','" +paymentNote +"'";
- 
-  return eval('idp_NN'+idx_NN+'('+args+')');
+  rndAnagPspGlobal = rndAnagPsp;
+  rndAnagPaNewGlobal = rndAnagPaNew;
+  noticeNmbrGlobal = noticeNmbr;
+  paymentNoteGlobal = paymentNote;
+  return eval('idp_NN'+idx_NN+'()');
 }
 
 
@@ -348,11 +356,14 @@ function randomOro(){
 }
 
 
-function executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId){
+function executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId, amount){
   var ido = randomOro();
-  var args = "'"+rndAnagPsp+"','"+ rndAnagPaNew+"','"+ paymentToken+"','" +creditorReferenceId +"'";
- 
-  eval('oro'+ido+'('+args+')');
+  rndAnagPspGlobal = rndAnagPsp;
+  rndAnagPaNewGlobal = rndAnagPaNew;
+  paymentTokenGlobal = paymentToken;
+  creditorReferenceIdGlobal = creditorReferenceId;
+  amountGlobal = amount;
+  eval('oro'+ido+'()');
 }
 
 
@@ -485,10 +496,10 @@ function idp4() {
 
 
 function oro1(rndAnagPsp,rndAnagPaNew, paymentToken, creditorReferenceId) {
-    OR(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId);
+    OR(rndAnagPspGlobal, rndAnagPaNewGlobal, paymentTokenGlobal, creditorReferenceIdGlobal);
 }
 function oro2(rndAnagPsp, rndAnagPaNew,paymentToken, creditorReferenceId) {
-    RO(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId);
+    RO(rndAnagPspGlobal, rndAnagPaNewGlobal, paymentTokenGlobal, creditorReferenceIdGlobal);
 }
 
 
@@ -560,17 +571,16 @@ executeTransfMod4();
 
 
 function idp_NN1(rndAnagPsp, rndAnagPaNew, noticeNmbr, paymentNote){
-	
-	return rndActivatePaymentNotice(rndAnagPsp, rndAnagPaNew, noticeNmbr);
+	return rndActivatePaymentNotice(rndAnagPspGlobal, rndAnagPaNewGlobal, noticeNmbrGlobal);
 }
 function idp_NN2(rndAnagPsp, rndAnagPaNew, noticeNmbr, paymentNote){
-	return rndActivatePaymentNotice(rndAnagPsp, rndAnagPaNew, noticeNmbr);
+	return rndActivatePaymentNotice(rndAnagPspGlobal, rndAnagPaNewGlobal, noticeNmbrGlobal);
 }
 function idp_NN3(rndAnagPsp, rndAnagPaNew, noticeNmbr, paymentNote){
-	return rndActivatePaymentNotice(rndAnagPsp, rndAnagPaNew, noticeNmbr);
+	return rndActivatePaymentNotice(rndAnagPspGlobal, rndAnagPaNewGlobal, noticeNmbrGlobal);
 }
 function idp_NN4(rndAnagPsp, rndAnagPaNew, noticeNmbr, paymentNote){
-	return rndActivatePaymentNoticeIdp(rndAnagPsp, rndAnagPaNew, noticeNmbr);
+	return rndActivatePaymentNoticeIdp(rndAnagPspGlobal, rndAnagPaNewGlobal, noticeNmbrGlobal);
 }
 
 
@@ -593,7 +603,7 @@ function verifyAndActivate(){
   let creditorReferenceId=res.creditorReferenceId;
 
 
-  executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId);
+  executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId, res.amount);
 }
 
 
@@ -603,13 +613,13 @@ function verifyAndActivateIdp(){
   let rndAnagPsp = inputDataUtil.getAnagPsp();
   let rndAnagPaNew = inputDataUtil.getAnagPaNew();
   let noticeNmbr = genNoticeNumber();
-  let idempotencyKey = genIdempotencyKey();
+  let idempotencyKey = common.genIdempotencyKey();
 
 
   let res = verifyPaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
 
 	
-  res = activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
+  //res = activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
 
 
   res = activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
@@ -617,7 +627,7 @@ function verifyAndActivateIdp(){
   let creditorReferenceId=res.creditorReferenceId;
 
 	
-  executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId);
+  executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId, res.amount);
 }
 	
 
@@ -694,19 +704,22 @@ export function rpt5() {
 
 
 export function OR(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId) {
-
+	console.debug("###OR PSP " + JSON.stringify(rndAnagPsp));
+	console.debug("###OR PA " + JSON.stringify(rndAnagPaNew));
+	console.debug("##OR AMOUNT "+ amountGlobal);
 	
  	let res = sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken);
 
-	res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId);
+	res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew, paymentToken, creditorReferenceId, amountGlobal);
 
 }
 
 
 export function RO(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId) {
-
-   	
-    let res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId);
+	console.debug("###RO PSP " + JSON.stringify(rndAnagPsp));
+	console.debug("###RO PA " + JSON.stringify(rndAnagPaNew));
+   	console.debug("##RO AMOUNT "+ amountGlobal);
+    let res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew, paymentToken, creditorReferenceId, amountGlobal);
 
 	res = sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken);
 

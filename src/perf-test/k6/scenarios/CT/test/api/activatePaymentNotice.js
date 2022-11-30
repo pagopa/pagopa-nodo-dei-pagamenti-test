@@ -102,6 +102,7 @@ export function activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,id
   result.creditorReferenceId=creditorReferenceId;
   script = doc.find('totalAmount');
   result.amount = script.text();
+  console.debug("activatePaymentNotice totalAmount: "+result.amount);
   }catch(error){}
 
 /*

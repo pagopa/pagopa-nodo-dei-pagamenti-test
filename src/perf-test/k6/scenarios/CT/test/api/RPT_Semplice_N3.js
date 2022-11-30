@@ -45,7 +45,8 @@ export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorRefer
  
   //console.log("paymToken="+paymentToken); 
   //console.log("creditorReferenceId="+creditorReferenceId); 
-  console.debug("RPT_SEMPLICE PA "+ rndAnagPaNew.PA);
+  console.debug("RPT_Semplice_N3 PA "+ rndAnagPaNew.PA);
+  console.debug("RPT_Semplice_N3 importoTotaleDaVersare "+ importoTotaleDaVersare);
   let rptEncoded = rptUtil.getRptEncoded(rndAnagPaNew.PA, rndAnagPaNew.STAZPA, creditorReferenceId, paymentToken, importoTotaleDaVersare);
   
  const res = http.post(

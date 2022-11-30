@@ -1,4 +1,4 @@
-import { check, fail } from 'k6';
+import { check } from 'k6';
 //import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
@@ -33,18 +33,6 @@ export function genNoticeNumber(){
 	for (var i = 15; i > 0; --i) noticeNumber += chars[Math.floor(Math.random() * chars.length)];
 	return noticeNumber;
 }
-
-// Idempotency
-export function genIdempotencyKey(){
-	let key1='';
-	let key2 = Math.round((Math.pow(36, 10 + 1) - Math.random() * Math.pow(36, 10))).toString(36).slice(1);
-	for (var i = 11; i > 0; --i) key1 += chars[Math.floor(Math.random() * chars.length)];
-	let returnValue=key1+"_"+key2;
-	return returnValue;
-}
-
-
-
 
 export const getScalini = new SharedArray('scalini', function () {
 	
@@ -378,7 +366,7 @@ function verifyAndActivate(){
   let rndAnagPsp = inputDataUtil.getAnagPsp();
   let rndAnagPaNew = inputDataUtil.getAnagPaNew();
   let noticeNmbr = genNoticeNumber();
-  let idempotencyKey = genIdempotencyKey();
+  let idempotencyKey = common.genIdempotencyKey();
 
 
   let res = verifyPaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
@@ -399,7 +387,7 @@ function verifyAndActivateIdp(){
   let rndAnagPsp = inputDataUtil.getAnagPsp();
   let rndAnagPaNew = inputDataUtil.getAnagPaNew();
   let noticeNmbr = genNoticeNumber();
-  let idempotencyKey = genIdempotencyKey();
+  let idempotencyKey = common.genIdempotencyKey();
 
 
   let res = verifyPaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
