@@ -18,6 +18,7 @@ import * as inputDataUtil from './util/input_data_util.js';
 import * as iuvUtil from './util/iuv_util.js';
 
 
+var amountGlobal = undefined;
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
   
@@ -263,6 +264,9 @@ function executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId)
   var args = "'"+rndAnagPsp.PSP+"','"+ rndAnagPsp.INTPSP+"','"+ rndAnagPsp.CHPSP+"','"
   + rndAnagPaNew.PA+"','"+ rndAnagPaNew.INTPA+"','"+ rndAnagPaNew.STAZPA+"','" +paymentToken+"','" +creditorReferenceId +"'"; //
   //console.log("executeOro+=oro"+ido+"("+args+")");
+  console.debug("@@@@@EXECUTE ORO ARGS "+ args);
+  console.debug("@@@@@EXECUTE ORO creditorReferenceId "+ creditorReferenceId);
+  console.debug("@@@@@EXECUTE ORO paymentToken "+ paymentToken);
   eval("oro"+ido+"("+args+")");
 }
 
@@ -375,7 +379,7 @@ function verifyAndActivate(){
   res = activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
   let paymentToken=res.paymentToken;
   let creditorReferenceId=res.creditorReferenceId;
-
+	amountGlobal = res.amount;
 	
   executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId);
 }
@@ -392,18 +396,16 @@ function verifyAndActivateIdp(){
 
   let res = verifyPaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
 
-
-  res = activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
   let paymentToken=res.paymentToken;
   let creditorReferenceId=res.creditorReferenceId;
 
 
   res = activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
-  paymentToken=res.paymentToken;
+  amountGlobal = res.amount;
   creditorReferenceId=res.creditorReferenceId;
-		
+	console.debug("### verifyAndActivateIdp "+ creditorReferenceId);		
 
-  executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId);
+  executeOro(rndAnagPsp, rndAnagPaNew, res.paymentToken, creditorReferenceId);
 }
 	
 
@@ -487,7 +489,7 @@ export function OR(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId) 
  	let res = sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken);
 
 
-	res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId);
+	res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, amountGlobal);
 
 }
 
@@ -496,7 +498,7 @@ export function OR(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId) 
 export function RO(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId) {
 
    	
-    let res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId);
+    let res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, amountGlobal);
 
 
 	res = sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken);

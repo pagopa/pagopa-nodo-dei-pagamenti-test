@@ -141,7 +141,7 @@ export function total() {
   let res = activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
   let paymentToken=res.paymentToken;
   let creditorReferenceId=res.creditorReferenceId;
-  let importoTotaleDaVersare = undefined;
+  let importoTotaleDaVersare = res.amount;
   console.debug("IMPORTO TOTALE: " + importoTotaleDaVersare);
   res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, importoTotaleDaVersare);
 

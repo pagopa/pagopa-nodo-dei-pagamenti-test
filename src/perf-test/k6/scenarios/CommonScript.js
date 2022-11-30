@@ -1,4 +1,5 @@
 import { jUnit, textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
+import { randomIntBetween, randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export function handleSummary(data, path,test) {
   console.log('Preparing the end-of-test summary...');
@@ -341,11 +342,15 @@ for(var i = 0; i < jsonArray.length; i++) {
 
 // Idempotency
 export function genIdempotencyKey(){
-	const chars = '0123456789';
+	let key1 = randomIntBetween(10000000000, 99999999999);
+	let key2 = randomString(10, `abcdefghijklmnopqrstuvwxyz0123456789`);
+	/*const chars = '0123456789';
 	let key1='';
 	let key2 = Math.round((Math.pow(36, 10 + 1) - Math.random() * Math.pow(36, 10))).toString(36).slice(1);
 	for (var i = 11; i > 0; --i) key1 += chars[Math.floor(Math.random() * chars.length)];
-	let returnValue=key1+"_"+key2;
-	return returnValue;
+	let returnValue=key1+"_"+key2;*/
+	let result = key1+"_"+key2;
+	console.log("genIdempotencyKey "+ result);
+	return result;
 }
 	

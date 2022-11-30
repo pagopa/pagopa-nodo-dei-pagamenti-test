@@ -81,12 +81,20 @@ export function activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPa,noticeNm
    },
    { activatePaymentNotice_IDMP: 'over_sla1000', ALL:'over_sla1000' }
    );
-
+  let result={};
   let outcome='';
+
   try{
   let doc = parseHTML(res.body);
   let script = doc.find('outcome');
   outcome = script.text();
+  script = doc.find('paymentToken');
+  result.paymentToken = script.text();
+  script = doc.find('totalAmount');
+  result.amount = script.text();
+  script = doc.find('creditorReferenceId');
+  creditorReferenceId = script.text();
+  result.creditorReferenceId=creditorReferenceId;
   }catch(error){}
   /*
   if(outcome=='KO'){
@@ -112,5 +120,5 @@ export function activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPa,noticeNm
 	fail('outcome != ok '+ outcome);
 	}
    
-     return res;
+     return result;
 }
