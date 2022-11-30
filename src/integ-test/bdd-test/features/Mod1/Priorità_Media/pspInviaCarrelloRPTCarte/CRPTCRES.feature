@@ -136,7 +136,6 @@ Feature: process tests for pspInviaCarrelloRPTCarte
             <serial>1</serial>
             </fault>
             <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-            <identificativoCarrello>$1iuv</identificativoCarrello>
             <listaErroriRPT>
             <fault>
             <faultCode>CANALE_FIRMA_SCONOSCIUTA</faultCode>

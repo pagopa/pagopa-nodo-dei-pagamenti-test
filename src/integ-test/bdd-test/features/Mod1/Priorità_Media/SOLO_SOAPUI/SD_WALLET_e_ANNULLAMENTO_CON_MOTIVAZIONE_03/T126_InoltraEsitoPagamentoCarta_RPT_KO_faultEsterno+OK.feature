@@ -1,7 +1,8 @@
-Feature: T126_InoltraEsitoPagamentoCarta_RPT_ProxyError502
+Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_faultEsterno+OK
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
+    And replace $1iuv content with RPTdaRifPsp_faultEsterno_OK content
     And RPT generation
     """
     <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/"
@@ -63,7 +64,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_ProxyError502
         <pay_i:importoTotaleDaVersare>15.00</pay_i:importoTotaleDaVersare>
         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
         <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-        <pay_i:codiceContestoPagamento>erroreProxy502</pay_i:codiceContestoPagamento>
+        <pay_i:codiceContestoPagamento>16514801269711</pay_i:codiceContestoPagamento>
         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
         <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -157,7 +158,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_ProxyError502
         <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
         <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
         <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-        <pay_i:CodiceContestoPagamento>erroreProxy502</pay_i:CodiceContestoPagamento>
+        <pay_i:CodiceContestoPagamento>16514801269711</pay_i:CodiceContestoPagamento>
         <pay_i:datiSingoloPagamento>
           <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
           <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
@@ -180,7 +181,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_ProxyError502
         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-        <codiceContestoPagamento>erroreProxy502</codiceContestoPagamento>
+        <codiceContestoPagamento>16514801269711</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
       <soapenv:Body>
@@ -205,19 +206,15 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_ProxyError502
     Given the Execute nodoInviaRPT request scenario executed successfully
     And initial XML pspInviaCarrelloRPTCarte
     """
-    <soapenv:Envelope
-    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:ws="http://ws.pagamenti.telematici.gov/">
-    <soapenv:Header/>
-      <soapenv:Body>
-          <ws:pspInviaCarrelloRPTCarteResponse>
-              <pspInviaCarrelloRPTResponse>
-                  <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                  <identificativoCarrello>$1iuv</identificativoCarrello>
-                  <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
-              </pspInviaCarrelloRPTResponse>
-          </ws:pspInviaCarrelloRPTCarteResponse>
-      </soapenv:Body>
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:pspInviaCarrelloRPTCarteResponse>
+                <pspInviaCarrelloRPTResponse>
+                    <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTCarteResponse>
+        </soapenv:Body>
     </soapenv:Envelope>
     """
     And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
@@ -235,10 +232,11 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_ProxyError502
       "timestampOperazione": "2012-04-23T18:25:43.001Z",
       "codiceAutorizzativo": "123212"}
     """
-    Then check substring timeout in error content of inoltroEsito/carta response 
+    Then verify the HTTP status code of inoltroEsito/carta response is 408
+    And check substring timeout in error content of inoltroEsito/carta response 
     And check url field not exists in inoltroEsito/carta response
     And check redirect field not exists in inoltroEsito/carta response
-  
+    
   Scenario: Execute nodoChiediStatoRPT request
     Given the Execute nodoInoltraEsitoPagamentoCarta request scenario executed successfully
     And initial XML nodoChiediStatoRPT
@@ -252,7 +250,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_ProxyError502
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>erroreProxy502</codiceContestoPagamento>
+            <codiceContestoPagamento>16514801269711</codiceContestoPagamento>
           </ws:nodoChiediStatoRPT>
       </soapenv:Body>
     </soapenv:Envelope>
@@ -266,6 +264,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_ProxyError502
   Scenario: Execute nodoChiediAvanzamentoPagamento
     Given the Execute nodoChiediStatoRPT request scenario executed successfully
     When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+    Then verify the HTTP status code of avanzamentoPagamento response is 200
     Then verify the HTTP status code of avanzamentoPagamento response is 200
     And check esito field exists in avanzamentoPagamento response
     And check esito is ACK_UNKNOWN of avanzamentoPagamento response
@@ -284,7 +283,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_ProxyError502
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>erroreProxy502</codiceContestoPagamento>
+            <codiceContestoPagamento>16514801269711</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
           <rt>$rtAttachment</rt>
@@ -294,50 +293,3 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_ProxyError502
     """
     When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRT response
-
-  Scenario: Execute nodoInoltraEsitoPagamentoCarta2 request
-    Given the Execute nodoInviaRT request scenario executed successfully
-    And initial XML pspInviaCarrelloRPTCarte
-    """
-    <soapenv:Envelope
-    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:ws="http://ws.pagamenti.telematici.gov/">
-    <soapenv:Header/>
-      <soapenv:Body>
-          <ws:pspInviaCarrelloRPTCarteResponse>
-              <pspInviaCarrelloRPTResponse>
-                  <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                  <identificativoCarrello>$1iuv</identificativoCarrello>
-                  <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
-              </pspInviaCarrelloRPTResponse>
-          </ws:pspInviaCarrelloRPTCarteResponse>
-      </soapenv:Body>
-    </soapenv:Envelope>
-    """
-    And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
-    When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
-    """
-    {
-      "idPagamento":"$sessionToken",
-      "RRN":1749810,
-      "identificativoPsp":"#psp#",
-      "tipoVersamento":"CP",
-      "identificativoIntermediario":"#psp#",
-      "identificativoCanale":"#canale#",
-      "esitoTransazioneCarta": "123456", 
-      "importoTotalePagato": 11.11,
-      "timestampOperazione": "2012-04-23T18:25:43.001Z",
-      "codiceAutorizzativo": "123212"}
-    """
-    Then verify the HTTP status code of inoltroEsito/carta response is 200
-    And check esito field exists in inoltroEsito/carta response
-    And check esito is OK of inoltroEsito/carta response
-    And check url field not exists in inoltroEsito/carta response
-    And check redirect field not exists in inoltroEsito/carta response
-  
-  Scenario: Execute nodoChiediAvanzamentoPagamento 2
-    Given the Execute nodoInoltraEsitoPagamentoCarta2 request scenario executed successfully
-    When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-    Then verify the HTTP status code of avanzamentoPagamento response is 200
-    And check esito field exists in avanzamentoPagamento response
-    And check esito is OK of avanzamentoPagamento response
