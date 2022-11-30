@@ -217,6 +217,8 @@ Feature: T002_RT_Annullamento_validazioneXSD
     Scenario: Execute nodoNotificaAnnullamento
         Given the RPT generation scenario executed successfully
         When WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        And job paInviaRt triggered after 20 seconds
+        And wait 20 seconds for expiration
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And check esito is OK of notificaAnnullamento response
         And wait 7 seconds for expiration 
