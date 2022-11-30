@@ -6,8 +6,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
 
    # [inoltropagamentoMb_01]
    Scenario: RPT generation
-      Given nodo-dei-pagamenti has config parameter CONFIG_VALUE set to false
-      And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+      Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
       And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
       And RPT1 generation
          """
@@ -236,6 +235,20 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
 
    Scenario: Execute nodoInoltraEsitoCarta
       Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
+      And initial XML pspInviaCarrelloRPTCarte
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaCarrelloRPTCarteResponse>
+                        <pspInviaCarrelloRPTResponse>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                        </pspInviaCarrelloRPTResponse>
+                    </ws:pspInviaCarrelloRPTCarteResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+      """
+      And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
       When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
          """
          {

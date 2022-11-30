@@ -186,7 +186,8 @@
         "rt_versamenti": "SELECT s.columns FROM table_name s JOIN RT r on s.FK_RT=r.ID  WHERE r.IUV = '$iuv' AND r.CCP= '$ccp' AND r.IDENT_DOMINIO= '$nodoInviaCarrelloRPT.identificativoDominio'",
         "esito_4iuv_": "SELECT v.columns FROM table_name r JOIN RT_VERSAMENTI v ON v.FK_RT=r.ID WHERE r.IUV in ('$IUV','$IUV2') AND r.CCP in ('$ccp1','$ccp2') AND r.IDENT_DOMINIO='$pa'",
         "codice_convenzione": "SELECT columns FROM table_name WHERE ID_CARRELLO = '$idCarrello'",
-        "ID_Serv_Plugin": "SELECT columns from table_name c join CANALI_NODO n on n.OBJ_ID=c.FK_CANALI_NODO where c.ID_CANALE='$canaleUsato'"
+        "ID_Serv_Plugin": "SELECT columns from table_name c join CANALI_NODO n on n.OBJ_ID=c.FK_CANALI_NODO where c.ID_CANALE='$canaleUsato'",
+        "sblocco_parcheggio":"SELECT columns FROM table_name WHERE IUV='$iuv' AND CCP= '$ccp' AND ID_DOMINIO='$pa' ORDER BY INSERTED_TIMESTAMP"
 
     },
     "RTPull" : {
@@ -215,7 +216,7 @@
         "updated_timestamp" : "UPDATE POSITION_PAYMENT_PLAN SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD') WHERE NOTICE_ID = $1noticeNumber AND PA_FISCAL_CODE = $pa"
     },
     "RendicontazioneFTPeBollo":{
-        "rendicontazione": "SELECT columns FROM table_name WHERE ID_FLUSSO = '$identificativoFlusso' AND DOMINIO = '$pa'",
+        "rendicontazione": "SELECT columns FROM table_name WHERE ID_FLUSSO = '$identificativoFlusso' AND DOMINIO = '$pa' ORDER BY ID DESC",
         "send_queue": "SELECT s.columns FROM table_name s JOIN RENDICONTAZIONE r ON s.ID = r.FK_SFTP_FILE WHERE r.ID_FLUSSO = '$identificativoFlusso' AND r.DOMINIO = '$pa' ",
         "binary_file": "SELECT s.columns FROM table_name s JOIN RENDICONTAZIONE r ON s.ID = r.FK_BINARY_FILE WHERE r.ID_FLUSSO = '$identificativoFlusso' AND r.DOMINIO = '$pa' ",
         "send_queue1": "SELECT s.columns FROM table_name s JOIN RENDICONTAZIONE r ON s.ID = r.FK_SFTP_FILE WHERE r.ID_FLUSSO = '$identificativoFlusso' "

@@ -13,7 +13,7 @@ Feature: T116_ChiediNumeroAvviso_targa_tipo=1
             <ws:nodoChiediNumeroAvviso>
                 <identificativoPSP>#psp#</identificativoPSP>
                 <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoCanale>#canale#</identificativoCanale>
+                <identificativoCanale>#canaleRtPush#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <idServizio>00001</idServizio>
                 <idDominioErogatoreServizio>#creditor_institution_code#</idDominioErogatoreServizio>

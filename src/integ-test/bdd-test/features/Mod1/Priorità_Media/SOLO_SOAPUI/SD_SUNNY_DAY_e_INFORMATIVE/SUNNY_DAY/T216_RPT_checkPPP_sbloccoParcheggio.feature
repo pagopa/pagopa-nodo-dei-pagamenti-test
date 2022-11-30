@@ -1,13 +1,17 @@
-Feature: process tests for pspInviaCarrelloRPT
+Feature: T216_RPT_checkPPI_sbloccoParcheggio
+
     Background:
         Given systems up
-        And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
-        And RPT generation
+
+
+    Scenario: RPT generation
+        Given RPT1 generation
             """
+            <?xml version="1.0" encoding="UTF-8"?>
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#intermediarioPA#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -59,10 +63,10 @@ Feature: process tests for pspInviaCarrelloRPT
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
+            <pay_i:tipoVersamento>CP</pay_i:tipoVersamento>
+            <pay_i:identificativoUnivocoVersamento>checkPPI</pay_i:identificativoUnivocoVersamento>
+            <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
+            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
@@ -73,97 +77,58 @@ Feature: process tests for pspInviaCarrelloRPT
             <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>0/abc</pay_i:datiSpecificiRiscossione>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
+            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-        And initial XML pspInviaCarrelloRPT
+
+        And initial XML nodoInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header>
+            <ppt:intestazionePPT>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>checkPPI</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+            </ppt:intestazionePPT>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:nodoInviaRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+            <tipoFirma></tipoFirma>
+            <rpt>$rpt1Attachment</rpt>
+            </ws:nodoInviaRPT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML pspInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-            <ws:pspInviaCarrelloRPTResponse>
-            <pspInviaCarrelloRPTResponse>
-            <fault>
-            <faultCode>CANALE_BUSTA_ERRATA</faultCode>
-            <faultString>La busta non è corretta</faultString>
-            <id>IDPSPFNZ</id>
-            <serial>1</serial>
-            </fault>
-            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-            <identificativoCarrello>$1iuv</identificativoCarrello>
-
-            <listaErroriRPT>
-            <fault>
-            <faultCode>CANALE_FIRMA_SCONOSCIUTA</faultCode>
-            <faultString>La firma è sconosciuta</faultString>
-            <id>IDPSPFNZ</id>
-            <serial>1</serial>
-            </fault>
-            </listaErroriRPT>
-            </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTResponse>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML nodoInviaCarrelloRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-            <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$1iuv</identificativoCarrello>
-            </ppt:intestazioneCarrelloPPT>
-            </soapenv:Header>
-            <soapenv:Body>
-            <ws:nodoInviaCarrelloRPT>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPush#</identificativoCanale>
-            <listaRPT>
-            <!--1 or more repetitions:-->
-            <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
-            </elementoListaRPT>
-            </listaRPT>
-            </ws:nodoInviaCarrelloRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And psp replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
-
-    @midRunnable
-    Scenario Outline: Check faultCode error on non-existent or invalid field
-        Given <field> with <value> in pspInviaCarrelloRPT
-        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check faultCode is <resp_error> of nodoInviaCarrelloRPT response
-        Examples:
-            | field                          | value | resp_error                 | soapUI test |
-            | soapenv:Body                   | Empty | PPT_CANALE_ERRORE_RESPONSE | CRPTRES3    |
-            | soapenv:Body                   | None  | PPT_CANALE_ERRORE_RESPONSE | CRPTRES4    |
-            | ws:pspInviaCarrelloRPTResponse | Empty | PPT_CANALE_ERRORE_RESPONSE | CRPTRES5    |
-            | fault                          | Empty | PPT_CANALE_ERRORE_RESPONSE | CRPTRES6    |
-            | faultCode                      | Empty | PPT_CANALE_ERRORE_RESPONSE | CRPTRES8    |
-            | faultCode                      | CIAO  | PPT_CANALE_ERRORE_RESPONSE | CRPTRES9    |
-            | faultString                    | Empty | PPT_CANALE_ERRORE_RESPONSE | CRPTRES10   |
-            | id                             | Empty | PPT_CANALE_ERRORE_RESPONSE | CRPTRES11   |
-            | serial                         | CIAO  | PPT_CANALE_ERRORE_RESPONSE | CRPTRES12   |
-            | esitoComplessivoOperazione     | None  | PPT_CANALE_ERRORE_RESPONSE | CRPTRES14   |
-            | esitoComplessivoOperazione     | CIAO  | PPT_CANALE_ERRORE_RESPONSE | CRPTRES17   |
-            | listaErroriRPT                 | Empty | PPT_CANALE_ERRORE_RESPONSE | CRPTRES22   |
-
-
-
-
-
-
-
-
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        #DB-CHECK
+        And replace iuv content with checkPPI content 
+        And replace ccp content with $1ccp content
+        And replace pa content with #creditor_institution_code# content
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query sblocco_parcheggio on db nodo_online under macro Mod1
 

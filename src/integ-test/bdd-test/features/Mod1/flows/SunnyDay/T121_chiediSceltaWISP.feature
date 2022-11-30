@@ -2,7 +2,7 @@ Feature: process test for nodoChiediSceltaWISP
 
     Background:
         Given systems up
-@runnable
+@apim
     Scenario: send nodoChiediSceltaWISP
         Given initial XML nodoChiediSceltaWISP
             """
