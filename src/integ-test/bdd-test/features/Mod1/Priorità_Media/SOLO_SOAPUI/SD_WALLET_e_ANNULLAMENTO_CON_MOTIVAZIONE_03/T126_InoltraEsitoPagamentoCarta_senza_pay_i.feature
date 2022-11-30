@@ -79,7 +79,6 @@ Feature: T126_InoltraEsitoPagamentoCarta_senza_pay_i
       </datiVersamento>
     </RPT>
     """
-
   Scenario: Execute nodoInviaRPT request
     Given initial XML nodoInviaRPT
     """
@@ -151,7 +150,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_senza_pay_i
       "esitoTransazioneCarta":"00"
     }
     """
-    Then verify the HTTP status code of inoltroEsito/carta response is 200
+    Then check esito field exists in inoltroEsito/carta response
     And check esito is OK of inoltroEsito/carta response 
     And check url field not exists in inoltroEsito/carta response
     And check redirect field not exists in inoltroEsito/carta response
