@@ -690,7 +690,7 @@ Feature: Semantic checks for nodoInviaRT - KO
             <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
-            <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
+            <pay_i:esitoSingoloPagamento>ACCEPTED</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
             <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
@@ -727,7 +727,8 @@ Feature: Semantic checks for nodoInviaRT - KO
             """
         When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is KO of nodoInviaRT response
+        Then check esito is OK of nodoInviaRPT response
+        And check esito is KO of nodoInviaRT response
         And check faultCode is <error> of nodoInviaRT response
         Examples:
             | test   | tag_value     | error                    |

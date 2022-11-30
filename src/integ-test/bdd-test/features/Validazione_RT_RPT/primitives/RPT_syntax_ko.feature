@@ -138,7 +138,7 @@ Feature: Syntax checks for RPT - KO
     Then check esito is KO of nodoInviaRPT response
     And check faultCode is PPT_SINTASSI_XSD of nodoInviaRPT response
     Examples: 
-      | SoapUI    | tag                                     | tag_value                                                                   |
+      | SoapUI     | tag                                    | tag_value                                                                   |
       | RPTSIN1    | pay_i:versioneOggetto                  | None                                                                        |
       | RPTSIN2    | pay_i:versioneOggetto                  | Empty                                                                       |
       | RPTSIN3    | pay_i:versioneOggetto                  | Sono17CaratteAlfa                                                           |

@@ -112,18 +112,6 @@ Feature: Semantic checks for nodoInviaRPT - OK
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        Examples:
-            | SoapUI  | tag                                     | tag_value |
-            | RTSEM7  | pay_i:identificativoStazioneRichiedente | None      |
-            | RTSEM16 | pay_i:codiceUnitOperBeneficiario        | None      |
-            | RTSEM19 | pay_i:denomUnitOperBeneficiario         | None      |
-            | RTSEM22 | pay_i:indirizzoBeneficiario             | None      |
-            | RTSEM25 | pay_i:civicoBeneficiario                | None      |
-            | RTSEM28 | pay_i:civicoBeneficiario                | None      |
-            | RTSEM31 | pay_i:localitaBeneficiario              | None      |
-            | RTSEM34 | pay_i:provinciaBeneficiario             | None      |
-            | RTSEM37 | pay_i:nazioneBeneficiario               | None      |
-            | RTSEM43 | pay_i:indirizzoVersante                 | None      |
         And initial XML pspInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -140,8 +128,6 @@ Feature: Semantic checks for nodoInviaRPT - OK
             </soapenv:Envelope>
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-
-
         And RT generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -253,3 +239,15 @@ Feature: Semantic checks for nodoInviaRPT - OK
         When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
+        Examples:
+            | SoapUI  | tag                                     | tag_value |
+            | RTSEM7  | pay_i:identificativoStazioneRichiedente | None      |
+            | RTSEM16 | pay_i:codiceUnitOperBeneficiario        | None      |
+            | RTSEM19 | pay_i:denomUnitOperBeneficiario         | None      |
+            | RTSEM22 | pay_i:indirizzoBeneficiario             | None      |
+            | RTSEM25 | pay_i:civicoBeneficiario                | None      |
+            | RTSEM28 | pay_i:civicoBeneficiario                | None      |
+            | RTSEM31 | pay_i:localitaBeneficiario              | None      |
+            | RTSEM34 | pay_i:provinciaBeneficiario             | None      |
+            | RTSEM37 | pay_i:nazioneBeneficiario               | None      |
+            | RTSEM43 | pay_i:indirizzoVersante                 | None      |
