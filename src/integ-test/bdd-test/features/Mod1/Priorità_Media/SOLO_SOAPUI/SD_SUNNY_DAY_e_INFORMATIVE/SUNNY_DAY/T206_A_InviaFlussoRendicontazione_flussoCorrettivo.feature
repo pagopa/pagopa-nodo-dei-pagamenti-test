@@ -1,5 +1,5 @@
 Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
-
+#Non sostituire i valori di psp e pa
     Background:
         Given systems up
 
@@ -48,11 +48,11 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaFlussoRendicontazione>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPush#</identificativoCanale>
+            <identificativoPSP>40000000001</identificativoPSP>
+            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
+            <identificativoCanale>40000000001_03</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoDominio>44444444444</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -109,11 +109,11 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaFlussoRendicontazione>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoPSP>40000000001</identificativoPSP>
+            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
+            <identificativoCanale>40000000001_03</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoDominio>44444444444</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -133,11 +133,11 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoChiediFlussoRendicontazione>
-            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoDominio>44444444444</identificativoDominio>
+            <identificativoPSP>40000000001</identificativoPSP>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             </ws:nodoChiediFlussoRendicontazione>
             </soapenv:Body>
