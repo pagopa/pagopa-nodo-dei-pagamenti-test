@@ -64,7 +64,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_nessunFault+KO
         <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
         <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-        <pay_i:codiceContestoPagamento>16696516032071</pay_i:codiceContestoPagamento>
+        <pay_i:codiceContestoPagamento>16514801066631</pay_i:codiceContestoPagamento>
         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
         <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -158,7 +158,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_nessunFault+KO
         <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
         <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
         <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-        <pay_i:CodiceContestoPagamento>16696516032071</pay_i:CodiceContestoPagamento>
+        <pay_i:CodiceContestoPagamento>16514801066631</pay_i:CodiceContestoPagamento>
         <pay_i:datiSingoloPagamento>
           <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
           <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
@@ -180,7 +180,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_nessunFault+KO
         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-        <codiceContestoPagamento>16696516032071</codiceContestoPagamento>
+        <codiceContestoPagamento>16514801066631</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
       <soapenv:Body>
@@ -197,6 +197,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_nessunFault+KO
     """
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
+    And check url field exists in nodoInviaRPT response
     And check url contains acards of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
 
@@ -209,11 +210,6 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_nessunFault+KO
         <soapenv:Body>
             <ws:pspInviaCarrelloRPTCarteResponse>
                 <pspInviaCarrelloRPTResponse>
-                    <fault>
-                    <faultCode>CANALE_RPT_DUPLICATA</faultCode>
-                    <faultString>HGCCJCHG</faultString>
-                    <id>idPsp1</id>
-                    </fault>
                     <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
                 </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
@@ -237,7 +233,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_nessunFault+KO
     }
     """
     Then verify the HTTP status code of inoltroEsito/carta response is 408
-    And check esito is Operazione in timeout of inoltroEsito/carta response
+    And check error is Operazione in timeout of inoltroEsito/carta response
     And check url field not exists in inoltroEsito/carta response
     And check redirect field not exists in inoltroEsito/carta response
   
@@ -254,7 +250,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_nessunFault+KO
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>16696516032071</codiceContestoPagamento>
+            <codiceContestoPagamento>16514801066631</codiceContestoPagamento>
           </ws:nodoChiediStatoRPT>
       </soapenv:Body>
     </soapenv:Envelope>
@@ -270,7 +266,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_nessunFault+KO
     When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
     Then verify the HTTP status code of avanzamentoPagamento response is 200
     And check esito field exists in avanzamentoPagamento response
-    And check esito is KO of avanzamentoPagamento response
+    And check esito is ACK_UNKNOWN of avanzamentoPagamento response
 
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
@@ -286,7 +282,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_nessunFault+KO
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>16696516032071</codiceContestoPagamento>
+            <codiceContestoPagamento>16514801066631</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
           <rt>$rtAttachment</rt>
@@ -295,45 +291,4 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_nessunFault+KO
     </soapenv:Envelope>
     """
     When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
-    Then check esito is KO of nodoInviaRT response
-
- Scenario: Execute nodoInoltraEsitoPagamentoCarta2 request
-    Given the Execute nodoInviaRT request scenario executed successfully
-    And initial XML pspInviaCarrelloRPTCarte
-    """
-    <soapenv:Envelope
-    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:ws="http://ws.pagamenti.telematici.gov/">
-    <soapenv:Header/>
-      <soapenv:Body>
-          <ws:pspInviaCarrelloRPTCarteResponse>
-              <pspInviaCarrelloRPTResponse>
-                  <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                  <identificativoCarrello>$1iuv</identificativoCarrello>
-                  <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
-              </pspInviaCarrelloRPTResponse>
-          </ws:pspInviaCarrelloRPTCarteResponse>
-      </soapenv:Body>
-    </soapenv:Envelope>
-    """
-    And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
-    When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
-    """
-    {
-      "idPagamento":"$sessionToken",
-      "RRN":1749810,
-      "identificativoPsp":"#psp#",
-      "tipoVersamento":"CP",
-      "identificativoIntermediario":"#psp#",
-      "identificativoCanale":"#canale#",
-      "importoTotalePagato":12.31,
-      "timestampOperazione":"2018-02-08T17:06:03.100+01:00",
-      "codiceAutorizzativo":"123456",
-      "esitoTransazioneCarta":"00"}
-    """
-    Then verify the HTTP status code of inoltroEsito/carta response is 200
-    And check esito field exists in inoltroEsito/carta response
-    And check esito is KO of inoltroEsito/carta response
-    And check url field not exists in inoltroEsito/carta response
-    And check redirect field not exists in inoltroEsito/carta response
-    And check substring KO1 in descrizione content of inoltroEsito/carta response
+    Then check esito is OK of nodoInviaRT response
