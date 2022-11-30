@@ -90,15 +90,15 @@ def step_impl(context, primitive):
 
     if '#identificativoFlusso#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
-        identificativoFlussoOld = date + 40000000001 + "-" + str(random.randint(0, 10000))
+        identificativoFlusso = identificativoFlusso = date + context.config.userdata.get(
+            "global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
         payload = payload.replace(
             '#identificativoFlusso#', identificativoFlusso)
         setattr(context, 'identificativoFlusso', identificativoFlusso)
 
     if '#identificativoFlussoOld#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
-        identificativoFlussoOld = date + context.config.userdata.get(
-            "global_configuration").get("40000000001") + "-" + str(random.randint(0, 10000))
+        identificativoFlussoOld = date + "40000000001" + "-" + str(random.randint(0, 10000))
         payload = payload.replace(
             '#identificativoFlussoOld#', identificativoFlussoOld)
         setattr(context, 'identificativoFlussoOld', identificativoFlussoOld)
@@ -741,7 +741,7 @@ def step_impl(context):
 
     if '#identificativoFlussoOld#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
-        identificativoFlussoOld = date + 40000000001 + "-" + str(random.randint(0, 10000))
+        identificativoFlussoOld = date + "40000000001" + "-" + str(random.randint(0, 10000))
         payload = payload.replace(
             '#identificativoFlussoOld#', identificativoFlussoOld)
         setattr(context, 'identificativoFlussoOld', identificativoFlussoOld)
