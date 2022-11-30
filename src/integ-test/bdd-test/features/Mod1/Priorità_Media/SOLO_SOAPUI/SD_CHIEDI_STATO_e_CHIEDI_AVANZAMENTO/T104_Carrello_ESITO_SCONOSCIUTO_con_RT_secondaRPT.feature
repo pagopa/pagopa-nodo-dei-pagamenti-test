@@ -1,4 +1,4 @@
-Feature: T104_Carrello_ESITO_SCONOSCIUTO_con_RT
+Feature: T104_Carrello_ESITO_SCONOSCIUTO_con_RT_secondaRPT
    Background:
       Given systems up
 
@@ -567,11 +567,11 @@ Feature: T104_Carrello_ESITO_SCONOSCIUTO_con_RT
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>#psp#</identificativoPSP>
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>$2IUV</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                     <tipoFirma></tipoFirma>
                     <forzaControlloSegno>1</forzaControlloSegno>
-                    <rt>$rtAttachment</rt>
+                    <rt>$rt2Attachment</rt>
                 </ws:nodoInviaRT>
                 </soapenv:Body>
             </soapenv:Envelope>
@@ -581,9 +581,9 @@ Feature: T104_Carrello_ESITO_SCONOSCIUTO_con_RT
         And wait 11 seconds for expiration
         # check STATI_RPT table
         And replace pa content with #creditor_institution_code# content
-        And replace iuv content with $1iuv content
+        And replace iuv content with $2IUV content
         And replace noticeNumber content with $1carrello content
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-        And replace iuv content with $2IUV content
+        And replace iuv content with $1iuv content
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         And checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query stati_carrello on db nodo_online under macro Mod1
