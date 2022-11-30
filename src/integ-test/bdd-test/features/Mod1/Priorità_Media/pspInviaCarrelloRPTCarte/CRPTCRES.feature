@@ -129,7 +129,7 @@ Feature: process tests for pspInviaCarrelloRPTCarte
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And psp replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
