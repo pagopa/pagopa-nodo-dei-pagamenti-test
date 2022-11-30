@@ -122,7 +122,7 @@ Feature: process tests for pspInviaCarrelloRPTCarte
     @midRunnable
     Scenario: Execution Esito Carta
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
+        And initial XML pspInviaCarrelloRPTCarte 
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
                 <soapenv:Header/>
@@ -130,16 +130,28 @@ Feature: process tests for pspInviaCarrelloRPTCarte
                     <ws:pspInviaCarrelloRPTCarteResponse>
                         <pspInviaCarrelloRPTResponse>
                             <fault>
-                            <faultCode>CANALE_RPT_DUPLICATA</faultCode>
-                            <faultString>bgdhbazhyt</faultString>
-                            <id>idPsp1</id>
+                                <faultCode>CANALE_RPT_DUPLICATA</faultCode>
+                                <faultString>bgdhbazhyt</faultString>
+                                <id>idPsp1</id>
+                                <serial>1</serial>
                             </fault>
                             <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                            <identificativoCarrello>$1iuv</identificativoCarrello>
+                            <listaErroriRPT>
+                                <fault>
+                                <faultCode>CANALE_FIRMA_SCONOSCIUTA</faultCode>
+                                <faultString>La firma è sconosciuta</faultString>
+                                <id>IDPSPFNZ</id>
+                                <serial>1</serial>
+                                </fault>
+                            </listaErroriRPT>
                         </pspInviaCarrelloRPTResponse>
                     </ws:pspInviaCarrelloRPTCarteResponse>
                 </soapenv:Body>
             </soapenv:Envelope>
             """
+        And <tag> with <value> in pspInviaCarrelloRPTCarte
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
@@ -154,8 +166,19 @@ Feature: process tests for pspInviaCarrelloRPTCarte
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
             "codiceAutorizzativo": "123212"
             }
-             """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is KO of inoltroEsito/carta response
-        And check url field not exists in inoltroEsito/carta response
-        And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response 
+            """
+        Then check descrizione is Risposta negativa del Canale of inoltroEsito/carta response
+        Examples:
+            | tag                            | value | soapUI test |
+            | soapenv:Body                   | Empty | CRPTCRES3    |
+            | soapenv:Body                   | None  | CRPTCRES4    |
+            | ws:pspInviaCarrelloRPTResponse | Empty | CRPTCRES5    |
+            | fault                          | Empty | CRPTCRES6    |
+            | faultCode                      | Empty | CRPTCRES8    |
+            | faultCode                      | CIAO  | CRPTCRES9    |
+            | faultString                    | Empty | CRPTCRES10   |
+            | id                             | Empty | CRPTCRES11   |
+            | serial                         | CIAO  | CRPTCRES12   |
+            | esitoComplessivoOperazione     | None  | CRPTCRES14   |
+            | esitoComplessivoOperazione     | CIAO  | CRPTCRES17   |
+            | listaErroriRPT                 | Empty | CRPTCRES22   |
