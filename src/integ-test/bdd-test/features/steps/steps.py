@@ -90,7 +90,7 @@ def step_impl(context, primitive):
 
     if '#identificativoFlusso#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
-        identificativoFlusso = date + context.config.userdata.get(
+        identificativoFlusso = identificativoFlusso = date + context.config.userdata.get(
             "global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
         payload = payload.replace(
             '#identificativoFlusso#', identificativoFlusso)
