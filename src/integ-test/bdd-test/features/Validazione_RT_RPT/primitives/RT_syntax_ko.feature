@@ -113,14 +113,16 @@ Feature: Syntax checks for RT - KO
       <ws:pspInviaRPTResponse>
       <pspInviaRPTResponse>
       <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-      <identificativoCarrello>$1iuv</identificativoCarrello>
-      <parametriPagamentoImmediato>$1iuv</parametriPagamentoImmediato>
+      <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+      <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
       </pspInviaRPTResponse>
       </ws:pspInviaRPTResponse>
       </soapenv:Body>
       </soapenv:Envelope>
       """
     And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+    When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+    Then check esito is OK of nodoInviaRPT response
 
   @midRunnable
   Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on invalid RT tag
@@ -316,7 +318,7 @@ Feature: Syntax checks for RT - KO
       | RTSIN73  | pay_i:denomUnitOperBeneficiario         | QuestiSono71CaratteriAlfaNumericiQuestiSono71CaratteriAlfaNumerici12345                                                                                                                                                                                   |
       | RTSIN74  | pay_i:indirizzoBeneficiario             | Empty                                                                                                                                                                                                                                                     |
       | RTSIN75  | pay_i:indirizzoBeneficiario             | QuestiSono71CaratteriAlfaNumericiQuestiSono71CaratteriAlfaNumerici12345                                                                                                                                                                                   |
-      | RTSIN76  | pay_i:civicoBeneficiario                | Empty                                                                                                                                                                                                                                                     |       
+      | RTSIN76  | pay_i:civicoBeneficiario                | Empty                                                                                                                                                                                                                                                     |
       | RTSIN77  | pay_i:civicoBeneficiario                | Sono17CaratteAlfa                                                                                                                                                                                                                                         |
       | RTSIN78  | pay_i:capBeneficiario                   | Empty                                                                                                                                                                                                                                                     |
       | RTSIN79  | pay_i:capBeneficiario                   | Sono17CaratteAlfa                                                                                                                                                                                                                                         |

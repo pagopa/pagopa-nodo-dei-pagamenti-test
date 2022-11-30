@@ -2,7 +2,9 @@ Feature: Syntax checks for RT with MB - KO
 
   Background:
     Given systems up
-    And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
+
+  Scenario: Execute nodoInviaRPT
+    Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
     And MB generation
       """
       <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
@@ -27,7 +29,7 @@ Feature: Syntax checks for RT with MB - KO
       <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
       </Transforms>
       <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
-      <DigestValue>IzdMHSaGk1GC71oRUrJPXY+5MMgwpEbHQSgRXASVwLM=</DigestValue>
+      <DigestValue>wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</DigestValue>
       </Reference>
       </SignedInfo>
       <SignatureValue>tSO5SByNpadbzbPvUn5T99ajU4hHdqJLVyr4u8P8WSB5xc9K7Szmw/fo5SYXYaPS6A/DzPlchM95 fgFMZ3VYByqtA+Vc7WgX8aIOEVOrM6eXqx8+kc4g/jgm/9EQyUmXGP+RBvx2Sg0uim04aDdB7Ffd UIi6Q5vjjna1rhNvZIkBEjCV++f+wbL9qpFLt8E2N+bOq9Y0wcTUBHiICrxXvDBDUj1X7Ckbu0/Y KVRJck6cE5rpoQB6DjxdEn5DEUgmzR/UZEwtA1BK3cVRiOsaszx8bXEIwGHe4fvvzxJOHIqgL4ct jj1DoI5m2xGoobQ3rG6Pf3HEwFXLw9x83OykDA==</SignatureValue>
@@ -96,7 +98,7 @@ Feature: Syntax checks for RT with MB - KO
       <pay_i:datiVersamento>
       <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
       <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-      <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
+      <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
       <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
       <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
       <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
@@ -145,25 +147,30 @@ Feature: Syntax checks for RT with MB - KO
       </soapenv:Envelope>
       """
     And initial XML pspInviaRPT
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <ws:pspInviaRPTResponse>
-      <pspInviaRPTResponse>
-      <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-      <identificativoCarrello>$1iuv</identificativoCarrello>
-      <parametriPagamentoImmediato>$1iuv</parametriPagamentoImmediato>
-      </pspInviaRPTResponse>
-      </ws:pspInviaRPTResponse>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+                <pspInviaRPTResponse>
+                    <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                    <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+                    <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+        </soapenv:Body>
+    </soapenv:Envelope>
+    """
     And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+    When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+    Then check esito is OK of nodoInviaRPT response
+
+  
 
   @midRunnable
   Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on invalid RT tag
-    Given initial xml RT
+    Given the Execute nodoInviaRPT scenario executed successfully
+    And initial xml RT
       """
       <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0.xsd ">
       <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
