@@ -15,7 +15,7 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <pay_i:istitutoMittente>
             <pay_i:identificativoUnivocoMittente>
             <pay_i:tipoIdentificativoUnivoco>B</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>#psp#</pay_i:codiceIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>40000000001</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoMittente>
             <pay_i:denominazioneMittente>denMitt_1</pay_i:denominazioneMittente>
             </pay_i:istitutoMittente>
@@ -76,7 +76,7 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <pay_i:istitutoMittente>
             <pay_i:identificativoUnivocoMittente>
             <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>#psp#</pay_i:codiceIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>40000000001</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoMittente>
             <pay_i:denominazioneMittente>denMitt_1</pay_i:denominazioneMittente>
             </pay_i:istitutoMittente>
