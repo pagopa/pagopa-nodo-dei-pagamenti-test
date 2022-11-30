@@ -739,7 +739,7 @@ def step_impl(context):
             '#identificativoFlusso#', identificativoFlusso)
         setattr(context, 'identificativoFlusso', identificativoFlusso)
 
-     if '#identificativoFlussoOld#' in payload:
+    if '#identificativoFlussoOld#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
         identificativoFlussoOld = date + 40000000001 + "-" + str(random.randint(0, 10000))
         payload = payload.replace(
