@@ -1,8 +1,8 @@
-Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO
+Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_nessunFault+KO
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
-    And replace $1iuv content with RPTdaRifPsp content
+    And replace $1iuv content with RPTdaRifPsp_nessunFault content
     And RPT generation
     """
     <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/"
@@ -231,15 +231,13 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO
     "identificativoIntermediario": "#psp#",
     "identificativoCanale": "#canale#",
     "esitoTransazioneCarta": "123456", 
-    "importoTotalePagato": 11.11,
+    "importoTotalePagato": 12.31,
     "timestampOperazione": "2012-04-23T18:25:43.001Z",
-    "codiceAutorizzativo": "123212"
+    "codiceAutorizzativo": "00"
     }
     """
-    Then verify the HTTP status code of inoltroEsito/carta response is 200
-    And check esito is KO of inoltroEsito/carta response
-    And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response
-    And check errorCode is RIFPSP of inoltroEsito/carta response
+    Then verify the HTTP status code of inoltroEsito/carta response is 408
+    And check esito is Operazione in timeout of inoltroEsito/carta response
     And check url field not exists in inoltroEsito/carta response
     And check redirect field not exists in inoltroEsito/carta response
   
@@ -262,17 +260,17 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO
     </soapenv:Envelope>
     """
     When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-    Then checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
+    Then checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
     And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
     And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
     And check url field not exists in nodoChiediStatoRPT response
   
   Scenario: Execute nodoChiediAvanzamentoPagamento
     Given the Execute nodoChiediStatoRPT request scenario executed successfully
-    When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti  
+    When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
     Then verify the HTTP status code of avanzamentoPagamento response is 200
     And check esito field exists in avanzamentoPagamento response
-    And check esito is ACK_UNKNOWN of avanzamentoPagamento response
+    And check esito is KO of avanzamentoPagamento response
 
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
@@ -298,3 +296,44 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO
     """
     When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
     Then check esito is KO of nodoInviaRT response
+
+ Scenario: Execute nodoInoltraEsitoPagamentoCarta2 request
+    Given the Execute nodoInviaRT request scenario executed successfully
+    And initial XML pspInviaCarrelloRPTCarte
+    """
+    <soapenv:Envelope
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:ws="http://ws.pagamenti.telematici.gov/">
+    <soapenv:Header/>
+      <soapenv:Body>
+          <ws:pspInviaCarrelloRPTCarteResponse>
+              <pspInviaCarrelloRPTResponse>
+                  <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                  <identificativoCarrello>$1iuv</identificativoCarrello>
+                  <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
+              </pspInviaCarrelloRPTResponse>
+          </ws:pspInviaCarrelloRPTCarteResponse>
+      </soapenv:Body>
+    </soapenv:Envelope>
+    """
+    And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
+    When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+    """
+    {
+      "idPagamento":"$sessionToken",
+      "RRN":1749810,
+      "identificativoPsp":"#psp#",
+      "tipoVersamento":"CP",
+      "identificativoIntermediario":"#psp#",
+      "identificativoCanale":"#canale#",
+      "importoTotalePagato":12.31,
+      "timestampOperazione":"2018-02-08T17:06:03.100+01:00",
+      "codiceAutorizzativo":"123456",
+      "esitoTransazioneCarta":"00"}
+    """
+    Then verify the HTTP status code of inoltroEsito/carta response is 200
+    And check esito field exists in inoltroEsito/carta response
+    And check esito is KO of inoltroEsito/carta response
+    And check url field not exists in inoltroEsito/carta response
+    And check redirect field not exists in inoltroEsito/carta response
+    And check substring KO1 in descrizione content of inoltroEsito/carta response
