@@ -202,7 +202,7 @@ Feature: T003_nodoInviaRT_esito=0_validazioneXSD
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativocanale>#canaleRtPush#</identificativocanale>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -224,7 +224,7 @@ Feature: T003_nodoInviaRT_esito=0_validazioneXSD
             <soapenv:Body>
             <ws:nodoInviaRT>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativocanale>#canaleRtPush#</identificativocanale>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>$nodoInviaRPT.identificativoDominio</identificativoDominio>
