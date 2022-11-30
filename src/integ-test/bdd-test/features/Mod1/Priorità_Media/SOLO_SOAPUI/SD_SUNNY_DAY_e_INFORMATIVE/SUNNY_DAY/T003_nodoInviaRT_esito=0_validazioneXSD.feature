@@ -168,21 +168,7 @@ Feature: T003_nodoInviaRT_esito=0_validazioneXSD
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-       And initial XML pspInviaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaRPTResponse>
-                        <pspInviaRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>validateXSD</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=validateXSD</parametriPagamentoImmediato>
-                        </pspInviaRPTResponse>
-                    </ws:pspInviaRPTResponse>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
+       
         
         And initial XML nodoInviaRPT
             """
@@ -206,6 +192,21 @@ Feature: T003_nodoInviaRT_esito=0_validazioneXSD
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaRPTResponse>
+                        <pspInviaRPTResponse>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <identificativoCarrello>validateXSD</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=validateXSD</parametriPagamentoImmediato>
+                        </pspInviaRPTResponse>
+                    </ws:pspInviaRPTResponse>
+                </soapenv:Body>
             </soapenv:Envelope>
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
