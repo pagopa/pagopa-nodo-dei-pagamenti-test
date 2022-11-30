@@ -201,25 +201,25 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
 
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
     Given the Execute nodoInviaRPT request scenario executed successfully
-    And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+    And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
     """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-    <soapenv:Header/>
-    <soapenv:Body>
-        <pfn:pspNotifyPaymentRes>
-        <outcome>KO</outcome>
-        <!--Optional:-->
-        <fault>
-            <faultCode>CANALE_SEMANTICA</faultCode>
-            <faultString>Errore semantico dal psp</faultString>
-            <id>1</id>
-            <!--Optional:-->
-            <description>Errore dal psp</description>
-        </fault>
-        </pfn:pspNotifyPaymentRes>
-    </soapenv:Body>
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:pspInviaCarrelloRPTCarteResponse>
+                <pspInviaCarrelloRPTResponse>
+                    <fault>
+                    <faultCode>CANALE_RPT_DUPLICATA</faultCode>
+                    <faultString>HGCCJCHG</faultString>
+                    <id>idPsp1</id>
+                    </fault>
+                    <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTCarteResponse>
+        </soapenv:Body>
     </soapenv:Envelope>
     """
+    And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
     When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
     """
     {
@@ -235,7 +235,6 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
       "esitoTransazioneCarta":"00"
     }
     """
-    #TO DO
     Then check errorCode is RIFPSP of inoltroEsito/carta response
 
   Scenario: Execute nodoChiediStatoRPT request
@@ -259,7 +258,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
     Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
     And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-    And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
+    #And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
     And check redirect is 0 of nodoChiediStatoRPT response
 
   Scenario: Execute nodoInviaRT request
@@ -270,10 +269,10 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     <soapenv:Header/>
     <soapenv:Body>
       <ws:nodoInviaRT>
-         <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-         <identificativoCanale>#canale#</identificativoCanale>
+         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+         <identificativoCanale>#canale_AGID#</identificativoCanale>
          <password>pwdpwdpwd</password>
-         <identificativoPSP>#psp#</identificativoPSP>
+         <identificativoPSP>#psp_AGID#</identificativoPSP>
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
          <codiceContestoPagamento>checkNoPPP</codiceContestoPagamento>
