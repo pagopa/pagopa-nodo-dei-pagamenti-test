@@ -1,5 +1,5 @@
 Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
-#Non sostituire i valori di psp e pa
+
     Background:
         Given systems up
 
@@ -8,14 +8,14 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             """
             <pay_i:FlussoRiversamento xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ FlussoRendicontazione_v_1_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
-            <pay_i:identificativoFlusso>#identificativoFlussoOld#</pay_i:identificativoFlusso>
+            <pay_i:identificativoFlusso>#identificativoFlusso#</pay_i:identificativoFlusso>
             <pay_i:dataOraFlusso>#timedate#</pay_i:dataOraFlusso>
             <pay_i:identificativoUnivocoRegolamento>#iuv#</pay_i:identificativoUnivocoRegolamento>
             <pay_i:dataRegolamento>#date#</pay_i:dataRegolamento>
             <pay_i:istitutoMittente>
             <pay_i:identificativoUnivocoMittente>
             <pay_i:tipoIdentificativoUnivoco>B</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>40000000001</pay_i:codiceIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>#psp#</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoMittente>
             <pay_i:denominazioneMittente>denMitt_1</pay_i:denominazioneMittente>
             </pay_i:istitutoMittente>
@@ -48,12 +48,12 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaFlussoRendicontazione>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_03</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoFlusso>$identificativoFlussoOld</identificativoFlusso>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
             </ws:nodoInviaFlussoRendicontazione>
@@ -69,14 +69,14 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             """
             <pay_i:FlussoRiversamento xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ FlussoRendicontazione_v_1_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
-            <pay_i:identificativoFlusso>#identificativoFlussoOld#</pay_i:identificativoFlusso>
+            <pay_i:identificativoFlusso>#identificativoFlusso#</pay_i:identificativoFlusso>
             <pay_i:dataOraFlusso>#timedate#</pay_i:dataOraFlusso>
             <pay_i:identificativoUnivocoRegolamento>#iuv#</pay_i:identificativoUnivocoRegolamento>
             <pay_i:dataRegolamento>#date#</pay_i:dataRegolamento>
             <pay_i:istitutoMittente>
             <pay_i:identificativoUnivocoMittente>
             <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>40000000001</pay_i:codiceIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>#psp#</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoMittente>
             <pay_i:denominazioneMittente>denMitt_1</pay_i:denominazioneMittente>
             </pay_i:istitutoMittente>
@@ -109,12 +109,12 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoInviaFlussoRendicontazione>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoIntermediarioPSP>40000000001</identificativoIntermediarioPSP>
-            <identificativoCanale>40000000001_03</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoFlusso>$identificativoFlussoOld</identificativoFlusso>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
             </ws:nodoInviaFlussoRendicontazione>
@@ -133,12 +133,12 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoChiediFlussoRendicontazione>
-            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoPSP>40000000001</identificativoPSP>
-            <identificativoFlusso>$identificativoFlussoOld</identificativoFlusso>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             </ws:nodoChiediFlussoRendicontazione>
             </soapenv:Body>
             </soapenv:Envelope>
