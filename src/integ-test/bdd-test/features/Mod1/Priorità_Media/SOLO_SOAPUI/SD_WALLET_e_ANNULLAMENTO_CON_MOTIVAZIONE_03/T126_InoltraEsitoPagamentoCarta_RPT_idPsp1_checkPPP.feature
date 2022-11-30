@@ -192,6 +192,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_idPsp1_checkPPP
     """
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
+    And check url field exists in nodoInviaRPT response
     And check url contains acards of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
     #DB Check
@@ -233,8 +234,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_idPsp1_checkPPP
       "esitoTransazioneCarta":"00"
     }
     """
-    Then verify the HTTP status code of inoltroEsito/carta response is 200
-    And check esito is OK of inoltroEsito/carta response 
+    Then check esito is OK of inoltroEsito/carta response 
 
   Scenario: Execute nodoChiediStatoRPT request
     Given the Execute nodoInoltraEsitoPagamentoCarta request scenario executed successfully
