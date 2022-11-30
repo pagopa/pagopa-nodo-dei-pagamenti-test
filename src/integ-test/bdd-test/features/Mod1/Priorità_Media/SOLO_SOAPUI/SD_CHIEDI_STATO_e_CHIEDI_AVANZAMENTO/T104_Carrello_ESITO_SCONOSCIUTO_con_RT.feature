@@ -518,7 +518,7 @@ Feature: T104_Carrello_ESITO_SCONOSCIUTO_con_RT
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>#psp#</identificativoPSP>
                     <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
+                    <identificativoCanale>#canaleRtPush#</identificativoCanale>
                     <listaRPT>
                         <elementoListaRPT>
                         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
@@ -542,6 +542,20 @@ Feature: T104_Carrello_ESITO_SCONOSCIUTO_con_RT
         
    Scenario: Execute nodoInviaRT
         Given the MB generation scenario executed successfully
+        And initial XML paaInviaRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:paaInviaRTRisposta>
+                        <paaInviaRTRisposta>
+                            <esito>OK</esito>
+                        </paaInviaRTRisposta>
+                    </ws:paaInviaRTRisposta>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -551,13 +565,13 @@ Feature: T104_Carrello_ESITO_SCONOSCIUTO_con_RT
                     <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
                     <identificativoCanale>#canaleRtPush#</identificativoCanale>
                     <password>pwdpwdpwd</password>
-                    <identificativoPSP>idPsp1</identificativoPSP>
+                    <identificativoPSP>#psp#</identificativoPSP>
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                     <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                     <tipoFirma></tipoFirma>
                     <forzaControlloSegno>1</forzaControlloSegno>
-                <rt>$rtAttachment</rt>
+                    <rt>$rtAttachment</rt>
                 </ws:nodoInviaRT>
                 </soapenv:Body>
             </soapenv:Envelope>
