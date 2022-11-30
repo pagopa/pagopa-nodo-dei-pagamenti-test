@@ -571,7 +571,7 @@ Feature: T104_Carrello_ESITO_SCONOSCIUTO_con_RT_secondaRPT
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                     <tipoFirma></tipoFirma>
                     <forzaControlloSegno>1</forzaControlloSegno>
-                    <rt>$rtAttachment</rt>
+                    <rt>$rt2Attachment</rt>
                 </ws:nodoInviaRT>
                 </soapenv:Body>
             </soapenv:Envelope>
