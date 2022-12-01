@@ -213,15 +213,7 @@ Feature: T140_RPT_bollo_CARTE
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti 
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-        And replace lingua content with DE content
-        And replace importoTot content with 6.20 content
-        And execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
-        And through the query version retrieve param version at position 0 and save it under the key version
-        And execution query getPspCarte_noPoste to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPspCarte_noPoste retrieve param sizeCarte at position 0 and save it under the key sizeCarte
-        And execution query getPspCarte_noPoste to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPspCarte_noPoste retrieve param listaCarte at position -1 and save it under the key listaCarte
-
+        
      Scenario: Execute nodoChiediInfoPag request
         Given the RPT generation scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -236,8 +228,8 @@ Feature: T140_RPT_bollo_CARTE
         Given the Execute nodoChiediInfoPag request scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=2000&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
-        And check totalRows is $sizeCarte of listaPSP response
-        And check data is $listaCarte of listaPSP response
+        And check totalRows field exists in listaPSP response
+        And check data field exists in listaPSP response
     
      Scenario: Execution Esito Carta
         Given the Execute nodoChiediListaPSP - carte scenario executed successfully
