@@ -340,7 +340,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
                     <ppt:intestazioneCarrelloPPT>
                         <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
                         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                        <identificativoCarrello>$1carrello</identificativoCarrello>
+                        <identificativoCarrello>$1iuv</identificativoCarrello>
                     </ppt:intestazioneCarrelloPPT>
                 </soapenv:Header>
                 <soapenv:Body>
