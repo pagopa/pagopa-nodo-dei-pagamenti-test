@@ -516,9 +516,9 @@ Feature: T122_K_ChiediInformazioniPagamento_CarrelloRPT_Bollo
             <soapenv:Body>
                 <ws:nodoInviaCarrelloRPT>
                     <password>pwdpwdpwd</password>
-                    <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canaleRtPush#</identificativoCanale>
+                    <identificativoPSP>#psp_AGID#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
                     <listaRPT>
                         <elementoListaRPT>
                         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
@@ -580,7 +580,7 @@ Feature: T122_K_ChiediInformazioniPagamento_CarrelloRPT_Bollo
             "identificativoPsp": "idPsp1",
             "tipoVersamento": "BP",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#",
+            "identificativoCanale": "#canaleRtPush#",
             "tipoOperazione": "web",
             "mobileToken":"123ABC456"
          }
