@@ -386,10 +386,6 @@ Feature: T122_O_ChiediInformazioniPagamento_CarrelloRPT_Bollo_IBAN
                     <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-                    <pay_i:allegatoRicevuta>
-                        <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
-                        <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
-                    </pay_i:allegatoRicevuta>
                 </pay_i:datiSingoloPagamento>
                 <pay_i:datiSingoloPagamento>
                     <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
@@ -487,6 +483,10 @@ Feature: T122_O_ChiediInformazioniPagamento_CarrelloRPT_Bollo_IBAN
                     <pay_i:identificativoUnivocoRiscossione>$2IUV</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+                    <pay_i:allegatoRicevuta>
+                        <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
+                        <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
+                    </pay_i:allegatoRicevuta>
                 </pay_i:datiSingoloPagamento>
                 <pay_i:datiSingoloPagamento>
                     <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
