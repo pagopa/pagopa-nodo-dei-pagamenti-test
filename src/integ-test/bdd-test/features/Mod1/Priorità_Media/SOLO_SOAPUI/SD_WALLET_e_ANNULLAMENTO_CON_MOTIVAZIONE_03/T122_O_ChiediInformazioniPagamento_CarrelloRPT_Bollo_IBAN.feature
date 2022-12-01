@@ -485,7 +485,7 @@ Feature: T122_O_ChiediInformazioniPagamento_CarrelloRPT_Bollo_IBAN
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                     <pay_i:allegatoRicevuta>
                         <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
-                        <pay_i:testoAllegato>$2bollo</pay_i:testoAllegato>
+                        <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
                     </pay_i:allegatoRicevuta>
                 </pay_i:datiSingoloPagamento>
                 <pay_i:datiSingoloPagamento>
