@@ -569,7 +569,7 @@ Feature: T122_K_ChiediInformazioniPagamento_CarrelloRPT_Bollo
             "identificativoPsp": "#psp#",
             "tipoVersamento": "BP",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canaleRtPush#",
+            "identificativoCanale": "#canale#",
             "tipoOperazione": "web",
             "mobileToken":"123ABC456"
          }
