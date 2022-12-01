@@ -537,6 +537,22 @@ Feature: T122_K_ChiediInformazioniPagamento_CarrelloRPT_Bollo
             </soapenv:Body>
             </soapenv:Envelope>
             """
+     And initial XML pspInviaCarrelloRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:pspInviaCarrelloRPTResponse>
+                    <pspInviaCarrelloRPTResponse>
+                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                        <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+                        <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+                    </pspInviaCarrelloRPTResponse>
+                </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
+    And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
     When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
     Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
     And check url contains acardste of nodoInviaCarrelloRPT response
@@ -562,16 +578,15 @@ Feature: T122_K_ChiediInformazioniPagamento_CarrelloRPT_Bollo
 
   Scenario: execution nodoInoltraPagamentoMod1
         Given the Execute nodoChiediListaPSP - carte scenario executed successfully
-        When WISP sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
+        When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
          """
          {
             "idPagamento":"$sessionToken",
             "identificativoPsp": "#psp#",
             "tipoVersamento": "BP",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#",
-            "tipoOperazione": "mobile",
-            "mobileToken": "123ABC456"
+            "identificativoCanale": "#canaleRtPush#",
+            "tipoOperazione": "web"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
