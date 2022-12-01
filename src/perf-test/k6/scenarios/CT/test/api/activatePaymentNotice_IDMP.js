@@ -83,7 +83,7 @@ export function activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPa,noticeNm
    );
   let result={};
   let outcome='';
-
+	let creditorReferenceId = undefined;
   try{
   let doc = parseHTML(res.body);
   let script = doc.find('outcome');
@@ -119,6 +119,6 @@ export function activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPa,noticeNm
   )){
 	fail('outcome != ok '+ outcome);
 	}
-   
+   console.debug("activatePaymentNotice_IDMP creditorReferenceId" + creditorReferenceId);
      return result;
 }

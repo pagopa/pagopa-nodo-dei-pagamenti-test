@@ -35,7 +35,7 @@ const csvBaseUrl = new SharedArray('baseUrl', function () {
 const chars = '0123456789';
 // NoticeNumber
 export function genNoticeNumber(){
-	let noticeNumber='311';
+	let noticeNumber='111';
 	for (var i = 15; i > 0; --i) noticeNumber += chars[Math.floor(Math.random() * chars.length)];
 	return noticeNumber;
 }
@@ -357,6 +357,7 @@ function randomOro(){
 
 
 function executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId, amount){
+	console.debug("executeOro creditorReferenceId "+ creditorReferenceId);
   var ido = randomOro();
   rndAnagPspGlobal = rndAnagPsp;
   rndAnagPaNewGlobal = rndAnagPaNew;
@@ -600,9 +601,10 @@ function verifyAndActivate(){
 
   res = activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
   let paymentToken=res.paymentToken;
+  console.debug("verifyAndActivate paymentToken "+ paymentToken);
   let creditorReferenceId=res.creditorReferenceId;
 
-
+	console.debug("verifyAndActivate calling executeOro with creditorReferenceId = "+ creditorReferenceId);
   executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId, res.amount);
 }
 
@@ -623,10 +625,12 @@ function verifyAndActivateIdp(){
 
 
   res = activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
-  let paymentToken=res.paymentToken;
+  let paymentToken = res.paymentToken;
+  console.debug("verifyAndActivateIdp paymentToken "+ paymentToken);
+  paymentTokenGlobal = paymentToken;
   let creditorReferenceId=res.creditorReferenceId;
 
-	
+	console.debug("verifyAverifyAndActivateIdp calling executeOro with creditorReferenceId = "+ creditorReferenceId);
   executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId, res.amount);
 }
 	
@@ -707,7 +711,9 @@ export function OR(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId) 
 	console.debug("###OR PSP " + JSON.stringify(rndAnagPsp));
 	console.debug("###OR PA " + JSON.stringify(rndAnagPaNew));
 	console.debug("##OR AMOUNT "+ amountGlobal);
-	
+   	console.debug("##OR paymentToken "+ paymentToken);
+	console.debug("##OR AMOUNT "+ amountGlobal);
+	console.debug("##OR creditorReferenceId "+ creditorReferenceId);
  	let res = sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken);
 
 	res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew, paymentToken, creditorReferenceId, amountGlobal);
@@ -719,6 +725,8 @@ export function RO(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId) 
 	console.debug("###RO PSP " + JSON.stringify(rndAnagPsp));
 	console.debug("###RO PA " + JSON.stringify(rndAnagPaNew));
    	console.debug("##RO AMOUNT "+ amountGlobal);
+   	console.debug("##RO paymentToken "+ paymentToken);
+   	console.debug("##RO creditorReferenceId "+ creditorReferenceId);
     let res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew, paymentToken, creditorReferenceId, amountGlobal);
 
 	res = sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken);
@@ -739,8 +747,8 @@ function sd2Transf(){
 
 
   let paymentToken = executeIdp_NN(rndAnagPsp, rndAnagPaNew, noticeNmbr, 2);
-  
-    
+  paymentTokenGlobal = paymentToken;
+  console.debug("sd2Transf paymentToken "+ paymentToken);
   res = sendPaymentOutput_NN(baseUrl,rndAnagPsp,paymentToken);
 
 }
@@ -760,8 +768,8 @@ function sd2TransfMod4(){
 
 
   let paymentToken = executeIdp_NN(rndAnagPsp, rndAnagPaNew, noticeNmbr, 2);
-
-
+	console.debug("sd2TransfMod4 paymentToken "+ paymentToken);
+	paymentTokenGlobal = paymentToken;
   res = sendPaymentOutput_NN(baseUrl,rndAnagPsp,paymentToken);
 
 }
@@ -781,8 +789,8 @@ function sd5Transf(){
 
   
   let paymentToken = executeIdp_NN(rndAnagPsp, rndAnagPaNew, noticeNmbr, 5);
-  
-  
+  console.debug("sd5Transf paymentToken"+ paymentToken);
+  paymentTokenGlobal = paymentToken;
   res = sendPaymentOutput_NN(baseUrl,rndAnagPsp,paymentToken);
 
 }
@@ -800,8 +808,8 @@ function sd5TransfMod4(){
 
 
   let paymentToken = executeIdp_NN(rndAnagPsp, rndAnagPaNew, noticeNmbr, 5);
-
-
+	console.debug("sd5TransfMod4 paymentToken"+ paymentToken);
+	paymentTokenGlobal = paymentToken;
   res = sendPaymentOutput_NN(baseUrl,rndAnagPsp,paymentToken);
 
 }
@@ -815,7 +823,8 @@ function rndActivatePaymentNotice(rndAnagPsp, rndAnagPaNew, noticeNmbr, paymentN
   
   let res = activatePaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey, paymentNote);
   let paymentToken=res.paymentToken;
-
+	console.debug("rndActivatePaymentNotice paymentToken "+ paymentToken);
+	paymentTokenGlobal = paymentToken;
   return paymentToken;
 }
 
@@ -833,8 +842,8 @@ function rndActivatePaymentNoticeIdp(rndAnagPsp, rndAnagPaNew, noticeNmbr, payme
 
   res = activatePaymentNoticeIdp_NN(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey, paymentNote);
   let paymentToken=res.paymentToken;
-
-
+	console.debug("rndActivatePaymentNoticeIdp paymentToken "+ paymentToken);
+	paymentTokenGlobal = paymentToken;
   return paymentToken;
 }
 
