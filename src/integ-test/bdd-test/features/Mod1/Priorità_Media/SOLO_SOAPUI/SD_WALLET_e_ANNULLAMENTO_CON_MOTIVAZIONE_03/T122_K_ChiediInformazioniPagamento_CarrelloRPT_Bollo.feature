@@ -551,25 +551,14 @@ Feature: T122_K_ChiediInformazioniPagamento_CarrelloRPT_Bollo
     And check oggettoPagamento field exists in informazioniPagamento response
     And check urlRedirectEC field exists in informazioniPagamento response
     
-    # DB Check
-    And execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
-    And through the query version retrieve param version at position 0 and save it under the key version
-    And replace lingua content with IT content
-    And replace importoTot content with 10.0 content
-    
-    # Carte
-    And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-    And through the query getPspCarte retrieve param sizeCarte at position 0 and save it under the key sizeCarte
-    And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-    And through the query getPspCarte retrieve param listaCarte at position -1 and save it under the key listaCarte
+   
     
    
   Scenario: Execute nodoChiediListaPSP - carte
     Given the Execute nodoChiediInfoPag request scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=2000&percorsoPagamento=CARTE to nodo-dei-pagamenti
     Then verify the HTTP status code of listaPSP response is 200
-    And check totalRows is $sizeCarte of listaPSP response
-    And check data is $listaCarte of listaPSP response
+   
 
   Scenario: execution nodoInoltraPagamentoMod1
         Given the Execute nodoChiediListaPSP - carte scenario executed successfully
