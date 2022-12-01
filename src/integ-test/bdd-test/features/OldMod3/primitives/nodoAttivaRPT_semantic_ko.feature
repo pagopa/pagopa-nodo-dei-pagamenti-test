@@ -300,7 +300,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
   Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on identificativoStazioneIntermediarioPA disabled
     Given aim:AuxDigit with 3 in nodoAttivaRPT
     And aim:CodStazPA with None in nodoAttivaRPT
-    And aim:CodIUV with 14017241417113000 in nodoAttivaRPT 
+    And aim:CodIUV with 16017241417113000 in nodoAttivaRPT 
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
     Then check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of nodoAttivaRPT response
 
@@ -650,7 +650,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
             <ws:paaAttivaRPTRisposta>
                 <paaAttivaRPTRisposta>
                     <esito>OK</esito>
-                    <delay>10000</delay>
+                    <irraggiungibile/>
                 </paaAttivaRPTRisposta>
             </ws:paaAttivaRPTRisposta>
         </soapenv:Body>
@@ -658,4 +658,4 @@ Feature: Semantic checks KO for nodoAttivaRPT
     """
     When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check esito is KO of nodoAttivaRPT response
-    And check faultCode is PPT_STAZIONE_INT_PA_SERVIZIO_NON_ATTIVO of nodoAttivaRPT response  
+    And check faultCode is PPT_STAZIONE_INT_PA_SERVIZIO_NON_ATTIVO of nodoAttivaRPT response

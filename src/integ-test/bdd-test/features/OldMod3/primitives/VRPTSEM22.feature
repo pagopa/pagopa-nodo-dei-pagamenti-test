@@ -16,7 +16,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
                 <password>pwdpwdpwd</password>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
-                <codiceIdRPT><bc:BarCode><bc:Gln>#creditor_institution_code_old#</bc:Gln><!--<bc:CodStazPA>11</bc:CodStazPA>--> <bc:AuxDigit>2</bc:AuxDigit><bc:CodIUV>55222222222222222</bc:CodIUV></bc:BarCode></codiceIdRPT>
+                <codiceIdRPT><bc:BarCode><bc:Gln>1234567890122</bc:Gln><!--<bc:CodStazPA>11</bc:CodStazPA>--> <bc:AuxDigit>2</bc:AuxDigit><bc:CodIUV>55222222222222222</bc:CodIUV></bc:BarCode></codiceIdRPT>
                 </ws:nodoVerificaRPT>
             </soapenv:Body>
         </soapenv:Envelope>
