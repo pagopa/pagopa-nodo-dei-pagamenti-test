@@ -452,7 +452,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
             }
              """
         Then check esito is KO of inoltroEsito/mod2 response
-        And check esito is KO_SEMANTICA of inoltroEsito/mod2 response
+        And check descrizione is Risposta negativa del Canale of inoltroEsito/mod2 response
 
 
     Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 4)
