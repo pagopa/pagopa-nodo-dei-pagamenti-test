@@ -194,7 +194,6 @@ Feature: T122_O_ChiediInformazioniPagamento_CarrelloRPT_Bollo_IBAN
                 <pay_i:datiSingoloVersamento>
                     <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
                     <pay_i:commissioneCaricoPA>10.00</pay_i:commissioneCaricoPA>
-                    <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
                     <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
                     <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
                     <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -276,13 +275,17 @@ Feature: T122_O_ChiediInformazioniPagamento_CarrelloRPT_Bollo_IBAN
                 <pay_i:datiSingoloVersamento>
                     <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
                     <pay_i:commissioneCaricoPA>10.00</pay_i:commissioneCaricoPA>
-                    <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
                     <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
                     <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
                     <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
                     <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
                     <pay_i:causaleVersamento>RPT 2 versamento 1</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+                    <pay_i:datiMarcaBolloDigitale>
+                    <pay_i:tipoBollo>01</pay_i:tipoBollo>
+                    <pay_i:hashDocumento>4HpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</pay_i:hashDocumento>
+                    <pay_i:provinciaResidenza>MI</pay_i:provinciaResidenza>
+                    </pay_i:datiMarcaBolloDigitale>
                 </pay_i:datiSingoloVersamento>
                 <pay_i:datiSingoloVersamento>
                     <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
