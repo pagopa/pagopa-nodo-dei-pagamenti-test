@@ -2,6 +2,7 @@ Feature: Semantic checks KO for nodoPAChiediInformativaPA
     Background:
         Given systems up
     
+    @midRunnable
     Scenario: Check PACIPASEM8
     Given initial XML nodoPAChiediInformativaPA
         """

@@ -2,6 +2,7 @@ Feature: Semantic checks KO for nodoChiediCatalogoServizi
     Background:
         Given systems up
     
+    @midRunnable
     Scenario: Check SEM_NCCS_05
     Given initial XML nodoChiediCatalogoServizi
         """
