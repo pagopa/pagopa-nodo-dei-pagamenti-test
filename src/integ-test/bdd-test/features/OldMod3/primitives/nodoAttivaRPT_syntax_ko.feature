@@ -8,7 +8,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
             <soapenv:Body>
             <ws:nodoAttivaRPT>
             <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#id_broker#</identificativoIntermediarioPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
@@ -252,4 +252,4 @@ Feature: Syntax checks KO for nodoAttivaRPT
     Scenario: Check faultCode PPT_AUTORIZZAZIONE error on invalid body element value [ARPTSIN29]
          Given codificaInfrastrutturaPSP with empty in nodoAttivaRPT
          When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-         Then check faultCode is PPT_AUTORIZZAZIONE of nodoAttivaRPT response
+         Then check faultCode is PPT_CODIFICA_PSP_SCONOSCIUTA of nodoAttivaRPT response
