@@ -142,7 +142,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
             <pay_i:importoTotaleDaVersare>5.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#CCP2#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>$1ccp1</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -320,7 +320,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
             <pay_i:codiceEsitoPagamento>1</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>$2CCP</pay_i:CodiceContestoPagamento>
+            <pay_i:CodiceContestoPagamento>$1ccp1</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
@@ -339,7 +339,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
                     <ppt:intestazioneCarrelloPPT>
                         <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
                         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                        <identificativoCarrello>$1carrello</identificativoCarrello>
+                        <identificativoCarrello>$1ccp</identificativoCarrello>
                     </ppt:intestazioneCarrelloPPT>
                 </soapenv:Header>
                 <soapenv:Body>
@@ -358,7 +358,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
                             <elementoListaRPT>
                                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                                 <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                                <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
+                                <codiceContestoPagamento>$1ccp1</codiceContestoPagamento>
                                 <rpt>$rpt2Attachment</rpt>
                             </elementoListaRPT>
                         </listaRPT>
@@ -459,7 +459,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
                     <identificativoPSP>#psp#</identificativoPSP>
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                     <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
+                    <codiceContestoPagamento>$1ccp1</codiceContestoPagamento>
                     <tipoFirma></tipoFirma>
                     <forzaControlloSegno>1</forzaControlloSegno>
                     <rt>$rt2Attachment</rt>
