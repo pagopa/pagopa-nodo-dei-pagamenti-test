@@ -412,7 +412,6 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 2)
