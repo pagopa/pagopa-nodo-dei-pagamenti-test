@@ -570,8 +570,8 @@ Feature: T122_K_ChiediInformazioniPagamento_CarrelloRPT_Bollo
             "tipoVersamento": "BP",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canaleRtPush#",
-            "tipoOperazione": "web",
-            "mobileToken":"123ABC456"
+            "tipoOperazione": "web"
+       
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
