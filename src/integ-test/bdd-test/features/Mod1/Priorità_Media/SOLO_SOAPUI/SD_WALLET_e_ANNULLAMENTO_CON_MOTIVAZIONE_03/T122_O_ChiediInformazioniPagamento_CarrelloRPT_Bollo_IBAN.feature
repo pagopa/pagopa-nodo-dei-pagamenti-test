@@ -16,9 +16,9 @@ Feature: T122_O_ChiediInformazioniPagamento_CarrelloRPT_Bollo_IBAN
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
             <Importo>10.00</Importo>
             <TipoBollo>01</TipoBollo>
-            <ImprontaDocumento>
+           <ImprontaDocumento>
                 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
-                <ns2:DigestValue>1HpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</ns2:DigestValue>
+                <ns2:DigestValue>2HpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</ns2:DigestValue>
             </ImprontaDocumento>
             <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
                 <SignedInfo>
@@ -53,9 +53,9 @@ Feature: T122_O_ChiediInformazioniPagamento_CarrelloRPT_Bollo_IBAN
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
             <Importo>10.00</Importo>
             <TipoBollo>01</TipoBollo>
-            <ImprontaDocumento>
+             <ImprontaDocumento>
                 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
-                <ns2:DigestValue>2HpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</ns2:DigestValue>
+                <ns2:DigestValue>3HpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</ns2:DigestValue>
             </ImprontaDocumento>
             <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
                 <SignedInfo>
