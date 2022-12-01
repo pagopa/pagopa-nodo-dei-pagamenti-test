@@ -8,7 +8,7 @@ Feature: Syntax check OK for nodoVerificaRPT
             <soapenv:Body>
             <ws:nodoVerificaRPT>
             <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#id_broker#</identificativoIntermediarioPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
@@ -62,13 +62,13 @@ Feature: Syntax check OK for nodoVerificaRPT
             | codiceContestoPagamento        | None                                 | VRPTSIN19   |
             | codificaInfrastrutturaPSP      | None                                 | VRPTSIN22   |
 
-@midRunnable    
+@midRunnable
     Scenario: check faultCode PPT_CODIFICA_PSP_SCONOSCIUTA on empty field codificaInfrastrutturaPSP [VRPTSIN23]
         Given codificaInfrastrutturaPSP with Empty in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_CODIFICA_PSP_SCONOSCIUTA of nodoVerificaRPT response
 
-@midRunnable    
+@midRunnable
     Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD error on missing or empty body elements
         Given <field> with <value> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
@@ -92,3 +92,13 @@ Feature: Syntax check OK for nodoVerificaRPT
             | bc:AuxDigit | 03                 | VRPTSIN30   |
             | bc:CodIUV   | Empty              | VRPTSIN31   |
             | bc:CodIUV   | 123456789012345678 | VRPTSIN32   |
+
+@midRunnable
+    Scenario Outline: Check faultCode PPT_SINTASSI_EXTRAXSD error on missing or empty body elements
+        Given <field> with <value> in nodoVerificaRPT
+        When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoVerificaRPT response
+        Examples:
+            | field                  | value                                              | soapUI test |
+            | codiceContestoPagamento| None                                               | VRPTSIN20   |
+            | codiceContestoPagamento| QuestiSono36CaratteriAlfaNumericiTT1               | VRPTSIN21   |

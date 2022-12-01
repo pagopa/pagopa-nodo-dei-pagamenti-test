@@ -1,14 +1,16 @@
-Feature: T002_RT_Annullamento_validazioneXSD
+Feature: T140_RPT_bollo_CARTE
 
-
+    
     Background:
         Given systems up
 
     Scenario: RPT generation
-        Given RPT generation
+        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
+        And RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
-            <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
+            <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
                 <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
                 <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
@@ -63,21 +65,21 @@ Feature: T002_RT_Annullamento_validazioneXSD
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-                <pay_i:identificativoUnivocoVersamento>validateXSD</pay_i:identificativoUnivocoVersamento>
-                <pay_i:codiceContestoPagamento>#ccp#</pay_i:codiceContestoPagamento>
-                <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
+                <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+                <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+                <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
                 <pay_i:datiSingoloVersamento>
-                    <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
-                    <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-                    <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
-                    <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-                    <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
-                    <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-                    <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-                    <pay_i:causaleVersamento>causaleVersRPT</pay_i:causaleVersamento>
-                    <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+                <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
+                <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+                <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito> 
+                <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+                <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio> 
+                <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+                <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+                <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+                <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                 </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
             </pay_i:RPT>
@@ -155,101 +157,111 @@ Feature: T002_RT_Annullamento_validazioneXSD
             <pay_i:datiPagamento>
                 <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
                 <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-                <pay_i:identificativoUnivocoVersamento>validateXSD</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
                 <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
                 <pay_i:datiSingoloPagamento>
                     <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
                     <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
                     <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
-                    <pay_i:identificativoUnivocoRiscossione>validateXSD</pay_i:identificativoUnivocoRiscossione>
+                    <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                 </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-        And initial XML pspInviaRPT
+		And initial XML nodoInviaRPT
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaRPTResponse>
-                        <pspInviaRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>validateXSD</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=validateXSD</parametriPagamentoImmediato>
-                        </pspInviaRPTResponse>
-                    </ws:pspInviaRPTResponse>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        
-
-        And initial XML nodoInviaRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
-                <ppt:intestazionePPT>
-                    <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                    <identificativoUnivocoVersamento>validateXSD</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$ccp</codiceContestoPagamento>
-                </ppt:intestazionePPT>
+            <ppt:intestazionePPT>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
-                <ws:nodoInviaRPT>
-                    <password>pwdpwdpwd</password>
-                    <identificativoPSP>#psp_AGID#</identificativoPSP>
-                    <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
-                    <tipoFirma></tipoFirma>
-                    <rpt>$rptAttachment</rpt>
-                </ws:nodoInviaRPT>
+            <ws:nodoInviaRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+            <tipoFirma></tipoFirma>
+            <rpt>$rptAttachment</rpt>
+            </ws:nodoInviaRPT>
             </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-
-    Scenario: Execute nodoNotificaAnnullamento
-        Given the RPT generation scenario executed successfully
-        When WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        And job paInviaRt triggered after 20 seconds
-        And wait 20 seconds for expiration
-        Then verify the HTTP status code of notificaAnnullamento response is 200
-        And check esito is OK of notificaAnnullamento response
-        And wait 7 seconds for expiration 
-        
-    Scenario: Execute nodoChiediStatoRPT (Phase 2)
-        Given the Execute nodoNotificaAnnullamento scenario executed successfully
-        And initial XML nodoChiediStatoRPT
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            </soapenv:Envelope>
+            """
+         And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-                <ws:nodoChiediStatoRPT>
-                    <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-                    <password>pwdpwdpwd</password>
-                    <identificativoDominio>#intermediarioPA#</identificativoDominio>
-                    <identificativoUnivocoVersamento>validateXSD</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>$ccp</codiceContestoPagamento>
-                </ws:nodoChiediStatoRPT>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
             </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        And job paInviaRt triggered after 7 seconds
-        And wait 15 seconds for expiration
-        Then checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
-        Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
-        And check redirect is 0 of nodoChiediStatoRPT response
-        And check url field not exists in nodoChiediStatoRPT response
-        And wait 10 seconds for expiration
-        And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti 
+        Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
+        
+     Scenario: Execute nodoChiediInfoPag request
+        Given the RPT generation scenario executed successfully
+        When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 200
+        And check importo field exists in informazioniPagamento response
+        And check ragioneSociale field exists in informazioniPagamento response
+        And check oggettoPagamento field exists in informazioniPagamento response
+        And check urlRedirectEC field exists in informazioniPagamento response
+        And check bolloDigitale field exists in informazioniPagamento response
+       
+     Scenario: Execute nodoChiediListaPSP - carte
+        Given the Execute nodoChiediInfoPag request scenario executed successfully
+        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=2000&percorsoPagamento=CARTE to nodo-dei-pagamenti
+        Then verify the HTTP status code of listaPSP response is 200
+        And check totalRows field exists in listaPSP response
+        And check data field exists in listaPSP response
+    
+     Scenario: Execution Esito Carta
+        Given the Execute nodoChiediListaPSP - carte scenario executed successfully
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTCarteResponse>
+            <pspInviaCarrelloRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTCarteResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+            """
+            {
+            "idPagamento": "$sessionToken",
+            "RRN":123456789,
+            "identificativoPsp": "#psp#",
+            "tipoVersamento": "CP",
+            "identificativoIntermediario": "#psp#",
+            "identificativoCanale": "#canale#",
+            "esitoTransazioneCarta": "123456", 
+            "importoTotalePagato": 11.11,
+            "timestampOperazione": "2012-04-23T18:25:43.001Z",
+            "codiceAutorizzativo": "123212",
+            "esitoTransazioneCarta":"00"
+            }
+            """
+        Then verify the HTTP status code of inoltroEsito/carta response is 200
+        And check esito is OK of inoltroEsito/carta response
+        

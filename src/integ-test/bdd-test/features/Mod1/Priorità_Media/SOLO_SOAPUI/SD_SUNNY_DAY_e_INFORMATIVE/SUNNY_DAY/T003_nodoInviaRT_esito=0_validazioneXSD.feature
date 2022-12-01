@@ -168,23 +168,8 @@ Feature: T003_nodoInviaRT_esito=0_validazioneXSD
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-        And initial XML pspInviaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaRPTResponse>
-            <pspInviaRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>validateXSD</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=validateXSD</parametriPagamentoImmediato>
-            </pspInviaRPTResponse>
-            </ws:pspInviaRPTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-
+       
+        
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -202,14 +187,29 @@ Feature: T003_nodoInviaRT_esito=0_validazioneXSD
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativocanaleRtPush>#canale#</identificativocanaleRtPush>
+            <identificativoCanale>#canale#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
+        And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaRPTResponse>
+                        <pspInviaRPTResponse>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <identificativoCarrello>validateXSD</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=validateXSD</parametriPagamentoImmediato>
+                        </pspInviaRPTResponse>
+                    </ws:pspInviaRPTResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
@@ -224,7 +224,7 @@ Feature: T003_nodoInviaRT_esito=0_validazioneXSD
             <soapenv:Body>
             <ws:nodoInviaRT>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativocanaleRtPush>#canaleRtPush#</identificativocanaleRtPush>
+            <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>$nodoInviaRPT.identificativoDominio</identificativoDominio>
@@ -234,28 +234,6 @@ Feature: T003_nodoInviaRT_esito=0_validazioneXSD
             <forzaControlloSegno>1</forzaControlloSegno>
             <rt>$rtAttachment</rt>
             </ws:nodoInviaRT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paaInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaInviaRTRisposta>
-            <paaInviaRTRisposta>
-            <!--Optional:-->
-            <fault>
-            <faultCode>PAA_SEMANTICA_XSD</faultCode>
-            <faultString>semantica RT non valida </faultString>
-            <id>mockPa</id>
-            <!--Optional:-->
-            <description>test</description>
-            </fault>
-            <!--Optional:-->
-            <esito>KO</esito>
-            </paaInviaRTRisposta>
-            </ws:paaInviaRTRisposta>
             </soapenv:Body>
             </soapenv:Envelope>
             """
