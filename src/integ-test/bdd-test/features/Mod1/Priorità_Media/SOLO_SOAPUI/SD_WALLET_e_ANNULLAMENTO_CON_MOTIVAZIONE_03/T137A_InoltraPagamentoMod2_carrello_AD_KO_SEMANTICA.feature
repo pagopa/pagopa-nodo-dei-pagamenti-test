@@ -416,7 +416,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
 
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=&importoTotale=1000&percorsoPagamento=CARTE to nodo-dei-pagamenti
+        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=1000&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
     Scenario: Execute nodoInoltroEsitoMod2 (Phase 3)
