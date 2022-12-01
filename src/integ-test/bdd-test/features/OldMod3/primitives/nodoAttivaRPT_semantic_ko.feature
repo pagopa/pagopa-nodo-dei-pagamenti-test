@@ -166,23 +166,6 @@ Feature: Semantic checks KO for nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_CODIFICA_PSP_SCONOSCIUTA of nodoAttivaRPT response
 
-
-####################### 14/09/2022 #######################
-
-  # # IUV value check: IUV dimension check  [ARPTSEM13]
-  # Scenario: Check PPT_SEMANTICA error on wrong IUV dimension
-  #   Given bc:AuxDigit with 0 in nodoAttivaRPT
-  #   And bc:CodIUV with abeft54bd8opr321 in nodoAttivaRPT 
-  #   When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-  #   Then check faultCode is PPT_SEMANTICA of nodoAttivaRPT response
-
-  # # IUV value check: IUV dimension check  [ARPTSEM14]
-  # Scenario: Check PPT_SEMANTICA error on wrong IUV dimension
-  #   Given bc:AuxDigit with 2 in nodoAttivaRPT
-  #   And bc:CodIUV with abeft54bd8opr32114 in nodoAttivaRPT 
-  #   When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-  #   Then check faultCode is PPT_SEMANTICA of nodoAttivaRPT response
-
 @midRunnable
   # IUV value check: IUV dimension check 
   Scenario Outline: Check PPT_SEMANTICA error on wrong IUV dimension
@@ -414,16 +397,6 @@ Feature: Semantic checks KO for nodoAttivaRPT
     Given identificativoCanale with #canale# in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
     Then check faultCode is PPT_AUTORIZZAZIONE of nodoAttivaRPT response 
-  #Scenario Outline: Check PPT_SEMANTICA error 
-  #  Given <elem> with <value> in nodoAttivaRPT
-  #  And <tag> with <tag_value> in nodoAttivaRPT 
-  #  And <tag1> with <tag_value1> in nodoAttivaRPT 
-  #  When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-  #  Then check faultCode is PPT_SEMANTICA of nodoAttivaRPT response
-  #  Examples:
-  #    | elem        | value             | tag         | tag_value   | tag1           | tag_value1             | SoapUI    |
-  #    | bc:Gln      | 9000000000111     | bc:AuxDigit | 2           | bc:CodIUV      | 123456789012345        | ARPTSEM29 |
-  #    | bc:Gln      | 9000000000111     | bc:AuxDigit | 0           | bc:CodStazPA   | None                   | ARPTSEM30 |
 
 @midRunnable
   # Check PPT_SEMANTICA error [ARPTSEM29]
