@@ -575,7 +575,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
             <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
             <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-            <codiceIdRPT><qrc:QrCode>  <qrc:CF>#creditor_institution_code#</qrc:CF> <qrc:CodStazPA>02</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>010551696163500</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
+            <codiceIdRPT><qrc:QrCode>  <qrc:CF>#creditor_institution_code_secondary#</qrc:CF>  <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>028251821137900</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
             <datiPagamentoPSP>
                 <importoSingoloVersamento>10.00</importoSingoloVersamento>
                 <!--Optional:-->
