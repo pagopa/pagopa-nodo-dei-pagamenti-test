@@ -50,10 +50,52 @@ Feature: Semantic checks KO for nodoVerificaRPT
             | field_1      | value_1 | field_2    | value_2           |   faultCode                              |soapUI test |
             | qrc:AuxDigit | 0       | qrc:CodIUV | 12345678901234567 |  PPT_SEMANTICA                           |VRPTSEM9    |
             | qrc:AuxDigit | 1       | qrc:CodIUV | 123456789012345   |  PPT_SEMANTICA                           |VRPTSEM10   |
-            | qrc:AuxDigit | 2       | qrc:CF     | 32                |  PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO  |VRPTSEM22   |
+            #| qrc:AuxDigit | 2       | qrc:CF     | 32                |  PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO  |VRPTSEM22   |
 
 @midRunnable
-    Scenario Outline: Check faultCode error on invalid iuv
+    Scenario: Check faultCode error PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO [VRPTSEM22]
+        Given initial XML paaVerificaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:paaVerificaRPTRisposta>
+            <paaVerificaRPTRisposta>
+            <delay>10000</delay>
+            <esito>OK</esito>
+            <datiPagamentoPA>
+            <importoSingoloVersamento>1.00</importoSingoloVersamento>
+            <ibanAccredito>IT45R0760103200#ccPoste#</ibanAccredito>
+            <bicAccredito>BSCTCH22</bicAccredito>
+            <enteBeneficiario>
+            <pag:identificativoUnivocoBeneficiario>
+            <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+            <pag:codiceIdentificativoUnivoco>#id_station_old#</pag:codiceIdentificativoUnivoco>
+            </pag:identificativoUnivocoBeneficiario>
+            <pag:denominazioneBeneficiario>f6</pag:denominazioneBeneficiario>
+            <pag:codiceUnitOperBeneficiario>r6</pag:codiceUnitOperBeneficiario>
+            <pag:denomUnitOperBeneficiario>yr</pag:denomUnitOperBeneficiario>
+            <pag:indirizzoBeneficiario>\"paaVerificaRPT\"</pag:indirizzoBeneficiario>
+            <pag:civicoBeneficiario>ut</pag:civicoBeneficiario>
+            <pag:capBeneficiario>jyr</pag:capBeneficiario>
+            <pag:localitaBeneficiario>yj</pag:localitaBeneficiario>
+            <pag:provinciaBeneficiario>h8</pag:provinciaBeneficiario>
+            <pag:nazioneBeneficiario>IT</pag:nazioneBeneficiario>
+            </enteBeneficiario>
+            <credenzialiPagatore>of8</credenzialiPagatore>
+            <causaleVersamento>paaVerificaRPT</causaleVersamento>
+            </datiPagamentoPA>
+            </paaVerificaRPTRisposta>
+            </ws:paaVerificaRPTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
+        When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
+        Then check faultCode is PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO of nodoVerificaRPT response
+
+@midRunnable
+    Scenario Outline: Check faultCode error on invalid iuv [VRPTSEM11]
         Given <field_1> with <value_1> in nodoVerificaRPT
         And <field_2> with <value_2> in nodoVerificaRPT
         And <field_3> with <value_3> in nodoVerificaRPT
@@ -65,7 +107,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
             | qrc:AuxDigit | 3       | qrc:CodStazPA   | None       | qrc:CodIUV       |00012711162144900|qrc:CF  |#id_broker_old#|PPT_STAZIONE_INT_PA_SCONOSCIUTA  |VRPTSEM11   |
 
 @midRunnable
-    Scenario: Check faultCode error PPT_DOMINIO_SCONOSCIUTO [VRPTSEM13]
+    Scenario: Check faultCode error PPT_INTERMEDIARIO_PA_DISABILITATO [VRPTSEM13]
         Given initial XML nodoVerificaRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -78,13 +120,13 @@ Feature: Semantic checks KO for nodoVerificaRPT
                 <password>pwdpwdpwd</password>
                 <codiceContestoPagamento>130191402011917</codiceContestoPagamento>
                 <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-                <codiceIdRPT><qrc:QrCode>  <qrc:CF>11223344551</qrc:CF> <qrc:CodStazPA>02</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>015261508179300</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
+                <codiceIdRPT><qrc:QrCode>  <qrc:CF>#creditor_institution_code#</qrc:CF> <qrc:CodStazPA>10</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>015261508179300</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
             </ws:nodoVerificaRPT>
         </soapenv:Body>
         </soapenv:Envelope>
         """
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoVerificaRPT response
+        Then check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of nodoVerificaRPT response
 
 @midRunnable
     Scenario: Check faultCode error PPT_STAZIONE_INT_PA_SCONOSCIUTA [VRPTSEM15]
@@ -143,7 +185,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
         Then check faultCode is PPT_AUTORIZZAZIONE of nodoVerificaRPT response
 
 @midRunnable
-    Scenario: Check PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE error on unreachable station [VRPTSEM21]
+    Scenario: Check PPT_AUTORIZZAZIONE error on unreachable station [VRPTSEM21]
         Given initial XML nodoVerificaRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -162,4 +204,4 @@ Feature: Semantic checks KO for nodoVerificaRPT
         </soapenv:Envelope>
         """
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of nodoVerificaRPT response
+        Then check faultCode is PPT_AUTORIZZAZIONE of nodoVerificaRPT response
