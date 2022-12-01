@@ -5,14 +5,14 @@ Feature: T122_O_ChiediInformazioniPagamento_CarrelloRPT_Bollo_IBAN
     Scenario: MB generation
       Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code NA
       And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-      And MB generation
+      And MB2 generation
          """
             <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
             <PSP>
                 <CodiceFiscale>12345678901</CodiceFiscale>
                 <Denominazione>idPsp1</Denominazione>
             </PSP>
-            <IUBD>#iubd#</IUBD>
+            <IUBD>#iubd2#</IUBD>
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
             <Importo>10.00</Importo>
             <TipoBollo>01</TipoBollo>
@@ -42,14 +42,14 @@ Feature: T122_O_ChiediInformazioniPagamento_CarrelloRPT_Bollo_IBAN
             </Signature>
             </marcaDaBollo>
             """
-      And MB2 generation
+      And MB3 generation
             """
             <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
             <PSP>
                 <CodiceFiscale>12345678901</CodiceFiscale>
                 <Denominazione>idPsp1</Denominazione>
             </PSP>
-            <IUBD>#iubd2#</IUBD>
+            <IUBD>#iubd3#</IUBD>
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
             <Importo>10.00</Importo>
             <TipoBollo>01</TipoBollo>
@@ -396,7 +396,7 @@ Feature: T122_O_ChiediInformazioniPagamento_CarrelloRPT_Bollo_IBAN
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                     <pay_i:allegatoRicevuta>
                         <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
-                        <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
+                        <pay_i:testoAllegato>$2bollo</pay_i:testoAllegato>
                     </pay_i:allegatoRicevuta>
                 </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
@@ -485,7 +485,7 @@ Feature: T122_O_ChiediInformazioniPagamento_CarrelloRPT_Bollo_IBAN
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                     <pay_i:allegatoRicevuta>
                         <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
-                        <pay_i:testoAllegato>$2bollo</pay_i:testoAllegato>
+                        <pay_i:testoAllegato>$3bollo</pay_i:testoAllegato>
                     </pay_i:allegatoRicevuta>
                 </pay_i:datiSingoloPagamento>
                 <pay_i:datiSingoloPagamento>
