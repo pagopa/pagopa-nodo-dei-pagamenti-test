@@ -83,6 +83,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+        And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And RPT2 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -141,7 +142,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>5.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -319,13 +320,13 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
             <pay_i:datiPagamento>
             <pay_i:codiceEsitoPagamento>1</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:CodiceContestoPagamento>$1carrello</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>2012-03-02</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoRiscossione>$2iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>causale RT pull</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloPagamento>
@@ -357,7 +358,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
                             </elementoListaRPT>
                             <elementoListaRPT>
                                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                                <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                                <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
                                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                                 <rpt>$rpt2Attachment</rpt>
                             </elementoListaRPT>
@@ -458,7 +459,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
                     <password>pwdpwdpwd</password>
                     <identificativoPSP>#psp#</identificativoPSP>
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                     <tipoFirma></tipoFirma>
                     <forzaControlloSegno>1</forzaControlloSegno>
