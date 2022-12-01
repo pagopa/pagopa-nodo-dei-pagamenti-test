@@ -50,7 +50,6 @@ Feature: Semantic checks KO for nodoVerificaRPT
             | field_1      | value_1 | field_2    | value_2           |   faultCode                              |soapUI test |
             | qrc:AuxDigit | 0       | qrc:CodIUV | 12345678901234567 |  PPT_SEMANTICA                           |VRPTSEM9    |
             | qrc:AuxDigit | 1       | qrc:CodIUV | 123456789012345   |  PPT_SEMANTICA                           |VRPTSEM10   |
-            | qrc:AuxDigit | 2       | qrc:CF     | 32                |  PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO  |VRPTSEM22   |
 
 @midRunnable
     Scenario Outline: Check faultCode error on invalid iuv
@@ -63,9 +62,10 @@ Feature: Semantic checks KO for nodoVerificaRPT
         Examples:
             | field_1      | value_1 | field_2         | value_2    | field_3          |value_3          |field_4 |value_4        | resp_error                      |soapUI test |
             | qrc:AuxDigit | 3       | qrc:CodStazPA   | None       | qrc:CodIUV       |00012711162144900|qrc:CF  |#id_broker_old#|PPT_STAZIONE_INT_PA_SCONOSCIUTA  |VRPTSEM11   |
+            | qrc:AuxDigit | 3       | qrc:CodStazPA   | 02         | qrc:CodIUV       |00012711162144900|qrc:CF  |#id_broker_old#|PPT_SEMANTICA                    |VRPTSEM12   |
 
 @midRunnable
-    Scenario: Check faultCode error PPT_DOMINIO_SCONOSCIUTO [VRPTSEM13]
+    Scenario: Check faultCode error PPT_INTERMEDIARIO_PA_DISABILITATO [VRPTSEM13]
         Given initial XML nodoVerificaRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -78,13 +78,13 @@ Feature: Semantic checks KO for nodoVerificaRPT
                 <password>pwdpwdpwd</password>
                 <codiceContestoPagamento>130191402011917</codiceContestoPagamento>
                 <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-                <codiceIdRPT><qrc:QrCode>  <qrc:CF>11223344551</qrc:CF> <qrc:CodStazPA>02</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>015261508179300</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
+                <codiceIdRPT><qrc:QrCode>  <qrc:CF>#creditor_institution_code#</qrc:CF> <qrc:CodStazPA>10</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>015261508179300</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
             </ws:nodoVerificaRPT>
         </soapenv:Body>
         </soapenv:Envelope>
         """
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoVerificaRPT response
+        Then check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of nodoVerificaRPT response
 
 @midRunnable
     Scenario: Check faultCode error PPT_STAZIONE_INT_PA_SCONOSCIUTA [VRPTSEM15]
@@ -143,7 +143,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
         Then check faultCode is PPT_AUTORIZZAZIONE of nodoVerificaRPT response
 
 @midRunnable
-    Scenario: Check PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE error on unreachable station [VRPTSEM21]
+    Scenario: Check PPT_AUTORIZZAZIONE error on unreachable station [VRPTSEM21]
         Given initial XML nodoVerificaRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -162,4 +162,4 @@ Feature: Semantic checks KO for nodoVerificaRPT
         </soapenv:Envelope>
         """
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of nodoVerificaRPT response
+        Then check faultCode is PPT_AUTORIZZAZIONE of nodoVerificaRPT response
