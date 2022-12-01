@@ -574,14 +574,8 @@ Feature: Semantic checks KO for nodoAttivaRPT
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
             <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
-            <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
-            <codiceIdRPT>
-              <bc:BarCode>
-                <bc:Gln>7777777777777</bc:Gln>
-                <!--<bc:CodStazPA>11</bc:CodStazPA>-->
-                <bc:AuxDigit>2</bc:AuxDigit>
-                <bc:CodIUV>55222222222222222</bc:CodIUV>
-              </bc:BarCode>
+            <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
+            <codiceIdRPT><qrc:QrCode>  <qrc:CF>#creditor_institution_code#</qrc:CF> <qrc:CodStazPA>02</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>010551696163500</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
             </codiceIdRPT>
             <datiPagamentoPSP>
                 <importoSingoloVersamento>10.00</importoSingoloVersamento>
