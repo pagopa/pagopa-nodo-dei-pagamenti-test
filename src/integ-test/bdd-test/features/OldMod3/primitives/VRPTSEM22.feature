@@ -15,8 +15,8 @@ Feature: Semantic checks KO for nodoVerificaRPT
                 <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
-                <codiceIdRPT><bc:BarCode><bc:Gln>#creditor_institution_code_secondary#</bc:Gln><bc:CodStazPA>22</bc:CodStazPA> <bc:AuxDigit>0</bc:AuxDigit><bc:CodIUV>552222222222222</bc:CodIUV></bc:BarCode></codiceIdRPT>
+                <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
+            <codiceIdRPT><qrc:QrCode>  <qrc:CF>#creditor_institution_code_secondary#</qrc:CF> <qrc:CodStazPA>22</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>010551696163500</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
                 </ws:nodoVerificaRPT>
             </soapenv:Body>
         </soapenv:Envelope>
