@@ -20,7 +20,7 @@ variables:
 
 stages:
   - stage: prepare_env
-    displayName: "Prepare env (${{ parameters.env }} )"
+    displayName: "Prepare env (${{ parameters.env }})"
     variables:
       - group: nodo-integration-test-${{ parameters.env }}
     jobs:
