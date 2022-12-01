@@ -113,13 +113,11 @@ Feature: Syntax checks KO for nodoAttivaRPT
         <soapenv:Body>
             <ws:paaVerificaRPTRisposta>
                 <paaVerificaRPTRisposta>
-                    <!--<fault>
-        -->
+                    <!--<fault>-->
                     <faultCode>PAA_FIRMA_INDISPONIBILE</faultCode>
                     <faultString>Errore</faultString>
                     <id>#creditor_institution_code_secondary#</id>
-                    <!--</fault>
-        -->
+                    <!--</fault>-->
                     <esito>KO</esito>
                     <datiPagamentoPA>
                     <importoSingoloVersamento>12</importoSingoloVersamento>
@@ -180,8 +178,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
                     <!--<datiPagamentoPA>
                     <importoSingoloVersamento>12</importoSingoloVersamento>
                     <causaleVersamento>Prova</causaleVersamento>               
-                    </datiPagamentoPA>
-        -->
+                    </datiPagamentoPA>-->
                 </paaVerificaRPTRisposta>
             </ws:paaVerificaRPTRisposta>
         </soapenv:Body>
