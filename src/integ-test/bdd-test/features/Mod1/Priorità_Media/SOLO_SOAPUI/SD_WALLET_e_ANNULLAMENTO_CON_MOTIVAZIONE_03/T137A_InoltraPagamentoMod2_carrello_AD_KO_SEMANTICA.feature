@@ -414,13 +414,13 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-    Scenario: Execute nodoChiediInformazioniPagamento (Phase 2)
+    Scenario: Execute listaPSP (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=1000&percorsoPagamento=CARTE to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
+        Then verify the HTTP status code of listaPSP response is 200
 
     Scenario: Execute nodoInoltroEsitoMod2 (Phase 3)
-        Given the Execute nodoChiediInformazioniPagamento (Phase 2) scenario executed successfully
+        Given the Execute listaPSP (Phase 2) scenario executed successfully
         And initial XML pspInviaCarrelloRPT
         """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
