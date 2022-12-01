@@ -20,7 +20,7 @@ variables:
 
 stages:
   - stage: prepare_env
-    displayName: "Prepare env (${{ parameters.env }})"
+    displayName: "Prepare env (${{ parameters.env }} )"
     variables:
       - group: nodo-integration-test-${{ parameters.env }}
     jobs:
@@ -180,7 +180,26 @@ stages:
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
 
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features --tags=runnable
+              # Nicolò
+              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/OldMod3/primitives/nodoAttivaRPT_semantic_ko.feature --tags=fix
+
+              # Lorenzo  
+              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto --tags=runnable
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/OldMod3 --tags=midRunnable
+              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/primitives/activatePaymentNotice_syntax_ko.feature --tags=runnable
+              
+              # Damiano
+              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/paaInviaRT/IRTRES1.feature
+
+              # Alessandro
+              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/nodoInviaRT/IRTSIN.feature --tags=runnable
+
+              # Marisa
+              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_CHIEDI_STATO_e_CHIEDI_AVANZAMENTO/T101_chiediStato_RT_REVOCATA_tipoRevoca=1.feature
+              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_SUNNY_DAY_e_INFORMATIVE/SUNNY_DAY/T003_nodoInviaRT_esito=0_validazioneXSD.feature
+
+              # Davide
+              #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/paSendRT/PSRT_30_new.feature
 
             displayName: "Run integration test"
 
