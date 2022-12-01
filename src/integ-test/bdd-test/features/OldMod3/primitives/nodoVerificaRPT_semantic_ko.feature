@@ -8,7 +8,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
             <soapenv:Body>
             <ws:nodoVerificaRPT>
             <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#id_broker#</identificativoIntermediarioPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
