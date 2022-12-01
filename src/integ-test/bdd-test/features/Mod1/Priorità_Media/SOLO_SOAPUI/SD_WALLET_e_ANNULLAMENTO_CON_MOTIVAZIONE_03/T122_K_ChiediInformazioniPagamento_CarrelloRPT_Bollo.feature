@@ -566,12 +566,12 @@ Feature: T122_K_ChiediInformazioniPagamento_CarrelloRPT_Bollo
          """
          {
             "idPagamento":"$sessionToken",
-            "identificativoPsp": "idPsp1",
+            "identificativoPsp": "#psp#",
             "tipoVersamento": "BP",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canaleRtPush#",
-            "tipoOperazione": "web"
-       
+            "identificativoCanale": "#canale#",
+            "tipoOperazione": "mobile",
+            "mobileToken": "123ABC456"
          }
          """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
