@@ -190,11 +190,6 @@ Feature: T122_O_ChiediInformazioniPagamento_CarrelloRPT_Bollo_IBAN
                     <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
                     <pay_i:causaleVersamento>RPT 1 versamento 1</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-                    <pay_i:datiMarcaBolloDigitale>
-                    <pay_i:tipoBollo>01</pay_i:tipoBollo>
-                    <pay_i:hashDocumento>1HpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</pay_i:hashDocumento>
-                    <pay_i:provinciaResidenza>MI</pay_i:provinciaResidenza>
-                    </pay_i:datiMarcaBolloDigitale>
                 </pay_i:datiSingoloVersamento>
                 <pay_i:datiSingoloVersamento>
                     <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
