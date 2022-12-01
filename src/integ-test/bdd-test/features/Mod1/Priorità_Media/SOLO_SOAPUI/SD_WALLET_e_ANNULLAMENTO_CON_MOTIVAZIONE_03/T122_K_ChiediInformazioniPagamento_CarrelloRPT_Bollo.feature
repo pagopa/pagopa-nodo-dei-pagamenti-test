@@ -566,7 +566,7 @@ Feature: T122_K_ChiediInformazioniPagamento_CarrelloRPT_Bollo
          """
          {
             "idPagamento":"$sessionToken",
-            "identificativoPsp": "idPsp1",
+            "identificativoPsp": "#psp#",
             "tipoVersamento": "BP",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canaleRtPush#",
