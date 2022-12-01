@@ -213,6 +213,8 @@ Feature: T140_RPT_bollo_CARTE
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti 
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
+        And replace lingua content with DE content
+        And replace importoTot content with 6.20 content
         And execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
         And through the query version retrieve param version at position 0 and save it under the key version
         And execution query getPspCarte_noPoste to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
