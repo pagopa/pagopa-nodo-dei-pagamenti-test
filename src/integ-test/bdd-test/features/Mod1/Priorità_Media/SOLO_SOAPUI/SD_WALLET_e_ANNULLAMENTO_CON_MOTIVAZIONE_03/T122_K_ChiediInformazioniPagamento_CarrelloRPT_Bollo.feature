@@ -662,7 +662,7 @@ Feature: T122_K_ChiediInformazioniPagamento_CarrelloRPT_Bollo
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                     <tipoFirma></tipoFirma>
                     <forzaControlloSegno>1</forzaControlloSegno>
-                    <rt>$rtAttachment</rt>
+                    <rt>$rt2Attachment</rt>
                 </ws:nodoInviaRT>
                 </soapenv:Body>
             </soapenv:Envelope>
