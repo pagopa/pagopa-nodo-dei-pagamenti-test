@@ -8,7 +8,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
             <soapenv:Body>
             <ws:nodoAttivaRPT>
             <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#id_broker#</identificativoIntermediarioPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
