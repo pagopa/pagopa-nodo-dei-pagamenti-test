@@ -80,6 +80,10 @@ Feature: T142_RPT_bollo_mod1
                 <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
                 <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
                 <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+                <pay_i:datiMarcaBolloDigitale>
+                <pay_i:hashDocumento>ZDaHibNC/LSH8cNHAWzaWTiW4BZ+lqelKM1lEuU0Kew=</pay_i:hashDocumento>
+                <pay_i:tipoBollo>01</pay_i:tipoBollo>
+                </pay_i:datiMarcaBolloDigitale>
                 </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
             </pay_i:RPT>
@@ -166,6 +170,7 @@ Feature: T142_RPT_bollo_mod1
                     <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+                    
                 </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
