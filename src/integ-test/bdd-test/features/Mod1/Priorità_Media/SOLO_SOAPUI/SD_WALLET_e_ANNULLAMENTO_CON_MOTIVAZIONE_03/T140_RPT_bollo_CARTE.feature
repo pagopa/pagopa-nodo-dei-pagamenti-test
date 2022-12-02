@@ -166,6 +166,10 @@ Feature: T140_RPT_bollo_CARTE
                     <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+                    <pay_i:datiMarcaBolloDigitale>
+                    <pay_i:hashDocumento>ZDaHibNC/LSH8cNHAWzaWTiW4BZ+lqelKM1lEuU0Kew=</pay_i:hashDocumento>
+                    <pay_i:tipoBollo>01</pay_i:tipoBollo>
+                    </pay_i:datiMarcaBolloDigitale>
                 </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
