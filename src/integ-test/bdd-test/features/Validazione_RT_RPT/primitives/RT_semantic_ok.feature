@@ -302,7 +302,6 @@ Feature: Semantic checks for nodoInviaRT - OK
             | RTSEM83 | pay_i:e-mailPagatore                    | GesualdoModificato.riccitelli@poste.it  |
             | RTSEM84 | pay_i:e-mailPagatore                    | None                                    |
             | RTSEM86 | pay_i:importoTotalePagato               | 150.00                                  |
-            | RTSEM88 | pay_i:CodiceContestoPagamento           | CCG01                                   |
             | RTSEM92 | pay_i:causaleVersamento                 | XXXX                                    |
             | RTSEM93 | pay_i:datiSpecificiRiscossione          | 1/def                                   |
             #| RTSEM7  | pay_i:identificativoDominio             | None
