@@ -238,6 +238,7 @@ Feature: T142_RPT_bollo_mod1
     
      Scenario: Execution Esito Mod1
         Given the Execute nodoChiediListaPSP - carte scenario executed successfully
+        #non toccare i valori
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -255,10 +256,10 @@ Feature: T142_RPT_bollo_mod1
             """
             {
             "idPagamento": "$sessionToken",
-            "identificativoPsp": "#psp#",
+            "identificativoPsp": "40000000001",
             "tipoVersamento": "BBT",
-            "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#",
+            "identificativoIntermediario": "40000000001",
+            "identificativoCanale": "40000000001_03",
             "tipoOperazione":"mobile",
             "mobileToken":"123ABC456"
             }
