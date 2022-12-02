@@ -239,17 +239,13 @@ Feature: T143_carrello_bollo_mod1
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
-            "idPagamento": "$sessionToken",
-            "RRN":123456789,
-            "identificativoPsp": "40000000001",
-            "tipoVersamento": "CP",
-            "identificativoIntermediario": "40000000001",
-            "identificativoCanale": "40000000001_03",
-            "esitoTransazioneCarta": "123456", 
-            "importoTotalePagato": 11.11,
-            "timestampOperazione": "2012-04-23T18:25:43.001Z",
-            "codiceAutorizzativo": "123212",
-            "esitoTransazioneCarta":"00"
+                "idPagamento": "$sessionToken",
+                "identificativoPsp": "40000000001",
+                "tipoVersamento": "BBT",
+                "identificativoIntermediario": "40000000001",
+                "identificativoCanale": "40000000001_03",
+                "tipoOperazione":"mobile",
+                "mobileToken":"123ABC456"
             }
             """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
