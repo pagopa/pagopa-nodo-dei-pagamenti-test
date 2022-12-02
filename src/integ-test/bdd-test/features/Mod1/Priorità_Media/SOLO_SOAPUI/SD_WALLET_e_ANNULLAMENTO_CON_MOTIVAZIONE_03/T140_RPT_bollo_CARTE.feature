@@ -250,6 +250,7 @@ Feature: T140_RPT_bollo_CARTE
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        #non toccare i valori
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
