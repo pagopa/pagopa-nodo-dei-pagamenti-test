@@ -276,9 +276,9 @@ Feature: Syntax checks for RT - OK
       | RTSIN140.1 | pay_i:e-mailPagatore                    | None      |
       | RTSIN169.1 | pay_i:esitoSingoloPagamento             | None      |
 
-    @midRunnable
-    Scenario: Check OK on None RT with MB [190.1]
-      Given MB generation
+  @midRunnable
+  Scenario: Check OK on None RT with MB [190.1]
+    Given MB generation
       """
       <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
       <PSP>
@@ -315,7 +315,7 @@ Feature: Syntax checks for RT - OK
       </Signature>
       </marcaDaBollo>
       """
-      And initial XML RT
+    And initial XML RT
       """
       <?xml version="1.0" encoding="UTF-8"?>
       <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -432,6 +432,6 @@ Feature: Syntax checks for RT - OK
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    
+
     When psp sends SOAP nodoInviaRT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRT response
