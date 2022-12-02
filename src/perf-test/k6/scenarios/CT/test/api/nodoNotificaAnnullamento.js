@@ -61,7 +61,8 @@ export function nodoNotificaAnnullamento(baseUrl,paymentToken) {
   const outcome = script.text();*/
   let outcome='';
   try{
-  outcome= res["esito"];
+	let jsonBody = JSON.parse(res.body);
+  outcome= jsonBody["esito"];
   }catch(error){}
 
 

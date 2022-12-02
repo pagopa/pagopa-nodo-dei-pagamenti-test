@@ -1,6 +1,5 @@
 import http from 'k6/http';
 import { check, fail } from 'k6';
-import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 
 
@@ -11,7 +10,7 @@ export const All_Trend = new Trend('ALL');
 export function chiediInformazioniPagamento(baseUrl,paymentToken, rndAnagPa) {
  
  let res=http.get(baseUrl+'/informazioniPagamento?idPagamento='+paymentToken,
-    { headers: { 'Content-Type': 'application/json', 'Host': 'api.prf.platform.pagopa.it' } ,
+    { headers: { 'Content-Type': 'application/json'/*, 'Host': 'api.prf.platform.pagopa.it'*/ } ,
 	tags: { chiediInformazioniPagamento: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );
@@ -83,17 +82,15 @@ export function chiediInformazioniPagamento(baseUrl,paymentToken, rndAnagPa) {
    result.ragioneSocialeExtr=ragioneSocialeExtr;
    try{
    pa = rndAnagPa.PA;
-   ragioneSocialeExtr=res["ragioneSociale"];
+   let jsonResponse = JSON.parse(res.body);
+   ragioneSocialeExtr=jsonResponse.ragioneSociale;
    result.ragioneSocialeExtr=ragioneSocialeExtr;
+   
+   result.importoTotale = parseFloat(jsonResponse.importoTotale).toFixed(2);
    }catch(error){}
 
-     console.debug(ragioneSocialeExtr+"---"+ rndAnagPa.PA);
-   // console.log("ragioneSocialeExtr="+ragioneSocialeExtr);
-  // console.log(res.body);
-  if(ragioneSocialeExtr!==pa){
-   console.debug("chiediInfoPagamento RESPONSE----------------"+res.body+"---"+rndAnagPa.PA);
-  }
-
+     console.debug("importoTotale: "+result.importoTotale);
+     console.debug("ragionesociale---pa: "+ragioneSocialeExtr+"---"+ rndAnagPa.PA);
    
    check(
     res,

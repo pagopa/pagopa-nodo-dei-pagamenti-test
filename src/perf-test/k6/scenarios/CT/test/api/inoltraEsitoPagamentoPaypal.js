@@ -146,16 +146,17 @@ export function inoltraEsitoPagamentoPaypal(baseUrl,rndAnagPsp,paymentToken,valu
    );
    
    //const outcome= res.json().form.esito;
-
+	let jsonBody = JSON.parse(res.body);
    let outcome='';
    if(valueToAssert!== '408'){
    try{
-   outcome=res["esito"];
+	
+   outcome=jsonBody["esito"];
    }catch(error){}
    }else{
    outcome=res.status;
    }
-
+	console.debug("OUTCOME: "+ outcome + " valueToAssert "+ valueToAssert);
 
    check(
     res,
@@ -170,7 +171,7 @@ export function inoltraEsitoPagamentoPaypal(baseUrl,rndAnagPsp,paymentToken,valu
     res,
     {
      
-	  'inoltraEsitoPagamentoPaypal:ko_rate': (r) => outcome !== valueToAssert,
+	  'inoltraEsitoPagamentoPaypal:ko_rate': (r) => outcome != valueToAssert,
     },
     { inoltraEsitoPagamentoPaypal: 'ko_rate', ALL:'ko_rate'}
   )){

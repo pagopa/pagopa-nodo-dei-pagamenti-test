@@ -8,7 +8,7 @@ import { Attiva } from './api/Attiva.js';
 import { sendPaymentOutput } from './api/sendPaymentOutput.js';
 import { RPT } from './api/RPT.js';
 import * as inputDataUtil from './util/input_data_util.js';
-//import * as test_selector from '../../test_selector.js';
+import { randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 
 
@@ -146,18 +146,10 @@ export const options = {
 
 
 export function genIuv(){
-	/*
-	let iuv = Math.random()*100000000000000000;
-	iuv = iuv.toString().split('.')[0];
-	let user ="";
-	let returnValue=user+iuv;
-    return returnValue;*/
-    let iuv = Math.random()*1000000000000000; //TODO IUV DEVE iniziare per 11 ed acere lunghezza 17 nel caso di auxdigit = 3
-	iuv = iuv.toString().split('.')[0];
-	let user ="11";
-	let returnValue=user+iuv;
-	console.debug("IUV GENERATO: "+ returnValue);
-    return returnValue;
+	let iuv = randomString(15, `0123456789`);
+	iuv = '11'+iuv;
+	console.debug("IUV GENERATO: "+ iuv);
+	return iuv;
 
 }
 
@@ -212,19 +204,19 @@ export function total() {
   
   
   res = RPT(baseSoapUrl,rndAnagPaNew,iuv,ccp);
-  let paymentToken=res.paymentToken;
-
+  let paymentToken=res.paymentToken;  //codiceContestoPagamento
+	console.debug("paymentToken from RPT " + paymentToken);
 
 
   res = chiediInformazioniPagamento(baseRestUrl,paymentToken, rndAnagPaNew);
 
   
     
-  res =  inoltraEsitoPagamentoPaypal(baseRestUrl,rndAnagPsp,paymentToken,'esito','OK');
+  res =  inoltraEsitoPagamentoPaypal(baseRestUrl,rndAnagPsp,paymentToken,'OK');
 
 
   
-  res = sendPaymentOutput(baseSoapUrl,rndAnagPsp,paymentToken);
+  res = sendPaymentOutput(baseSoapUrl,rndAnagPsp,ccp);
 
 }
 

@@ -166,7 +166,7 @@ export function total() {
 
   
  
-    res =  inoltraEsitoPagamentoPaypal(baseRestUrl,rndAnagPsp,paymentToken,'esito','OK');
+    res =  inoltraEsitoPagamentoPaypal(baseRestUrl,rndAnagPsp,paymentToken,'OK');
 
 	
 	

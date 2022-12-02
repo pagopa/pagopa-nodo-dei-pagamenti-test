@@ -1,12 +1,11 @@
 import { check } from 'k6';
-//import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
 import { ActivateIOPayment } from './api/ActivateIOPayment.js';
 import { Verifica } from './api/Verifica.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
-//import * as test_selector from '../../test_selector.js';
+import { randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
@@ -119,13 +118,10 @@ export const options = {
 
 
 export function genIuv(){
-	
-	let iuv = Math.random()*1000000000000000; //TODO IUV DEVE iniziare per 11 ed acere lunghezza 17 nel caso di auxdigit = 3
-	iuv = iuv.toString().split('.')[0];
-	let user ="11";
-	let returnValue=user+iuv;
-	console.debug("IUV GENERATO: "+ returnValue);
-    return returnValue;
+	let iuv = randomString(15, `0123456789`);
+	iuv = '11'+iuv;
+	console.debug("IUV GENERATO: "+ iuv);
+	return iuv;
 
 }
 

@@ -162,7 +162,7 @@ export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transacti
 
    let esito='';
    try{
-   esito= res["esito"];
+   esito= JSON.parse(res.body)["esito"];
    }catch(error){}
 
 

@@ -209,11 +209,8 @@ export function total() {
     res = chiediInformazioniPagamento(baseRestUrl,paymentToken, rndAnagPa);
 
  
- 
-    res = inoltraEsitoPagamentoCarta(baseRestUrl,rndAnagPsp,paymentToken, 'esito', '408');
-
-
-	
+ 	let importoTotale = res.importoTotale; 
+    res = inoltraEsitoPagamentoCarta(baseRestUrl,rndAnagPsp,paymentToken, 'esito', '408', importoTotale);
 	
 	res = nodoChiediAvanzamentoPagamento_Pre(baseRestUrl,paymentToken);
 

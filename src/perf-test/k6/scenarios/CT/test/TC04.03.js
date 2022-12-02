@@ -162,14 +162,14 @@ export function total() {
   let res = ActivateIOPayment(baseSoapUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
   let paymentToken= res.paymentToken;
 
-
+	console.debug("paymentToken from ActivateIOPayment " + paymentToken);
   
   res = chiediInformazioniPagamento(baseRestUrl,paymentToken, rndAnagPaNew);
   //let ragioneSocialeExtr=result.ragioneSocialeExtr;
   
   
-    
-  res = inoltraEsitoPagamentoCarta(baseRestUrl,rndAnagPsp,paymentToken, 'esito','OK');
+  let importoTotale = res.importoTotale;  
+  res = inoltraEsitoPagamentoCarta(baseRestUrl,rndAnagPsp,paymentToken, 'esito','OK', importoTotale);
 
   
   

@@ -24,22 +24,26 @@ return `
 `
 };
 
-export function inoltraEsitoPagamentoCarta(baseUrl,rndAnagPsp,paymentToken, fieldToAssert,valueToAssert) {
- 
- let body={"idPagamento":paymentToken,
-          "RRN":15465081,
-          "identificativoPsp":rndAnagPsp.PSP,
-          "tipoVersamento":"CP",
-          "identificativoIntermediario":rndAnagPsp.INTPSP,
-          "identificativoCanale":rndAnagPsp.CHPSP_C,
-          "importoTotalePagato":1.00,
-          "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
-          "codiceAutorizzativo":"123456",
-          "esitoTransazioneCarta":"00"};
+export function inoltraEsitoPagamentoCarta(baseUrl,rndAnagPsp,paymentToken, fieldToAssert,valueToAssert, importoTotale) {
+	
+ console.debug("inoltraEsitoPagamentoCarta importoTotale "+ importoTotale + " type "+ typeof importoTotale)
+ let body=
+ 	`{
+		\"idPagamento\":\"${paymentToken}\", 
+		\"RRN\":15465081, 
+		\"identificativoPsp\":\"${rndAnagPsp.PSP}\",
+		\"tipoVersamento\":\"CP\",
+		\"identificativoIntermediario\":\"${rndAnagPsp.INTPSP}\",
+		\"identificativoCanale\":\"${rndAnagPsp.CHPSP_C}\",
+		\"importoTotalePagato\":${importoTotale},
+		\"timestampOperazione\":\"2021-07-09T17:06:03.100+01:00\",
+		\"codiceAutorizzativo\":\"123456\",
+		\"esitoTransazioneCarta\":\"00\"
+	}`;
 
  const res = http.post(
     baseUrl+'/inoltroEsito/carta',
-    JSON.stringify(body),
+    body,
     //JSON.stringify(rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken)),
     { headers: { 'Content-Type': 'application/json', 'Host': 'api.prf.platform.pagopa.it'  } ,
 	tags: { inoltraEsitoPagamentoCarta: 'http_req_duration', ALL: 'http_req_duration'}
@@ -91,7 +95,8 @@ export function inoltraEsitoPagamentoCarta(baseUrl,rndAnagPsp,paymentToken, fiel
 
    let outcome='';
    try{
-   outcome= res[fieldToAssert];
+	let bodyJson = JSON.parse(res.body);
+   outcome= bodyJson[fieldToAssert];
    }catch(error){}
 
   /*console.log("inoltraEsitoPagamento="+res.body);

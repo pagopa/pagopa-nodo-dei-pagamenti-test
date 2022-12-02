@@ -165,7 +165,6 @@ export function total() {
       }
   }
   
-    let rndAnagPsp = inputDataUtil.getAnagPsp();
 	let rndAnagPa = inputDataUtil.getAnagPa();
     let rndAnagPaNew = inputDataUtil.getAnagPaNew();
        
@@ -178,7 +177,7 @@ export function total() {
 
 
    
-    res = chiediInformazioniPagamento(baseRestUrl,paymentToken, rndAnagPaNew);
+    res = chiediInformazioniPagamento(baseRestUrl,paymentToken, rndAnagPa);
 	 
     /*doc = parseHTML(res.body);
     script = doc.find('outcome');

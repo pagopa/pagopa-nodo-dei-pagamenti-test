@@ -182,15 +182,13 @@ export function total() {
    
   let res =  RPT_Carrello_2(baseSoapUrl,rndAnagPa,iuvArray);
   let paymentToken=res.paymentToken;
-
+	console.debug("paymentToken from RPT_Carrello_2 "+ paymentToken);
 
   
   res = chiediInformazioniPagamento(baseRestUrl,paymentToken, rndAnagPa);
-  let ragioneSocialeExtr=res.ragioneSocialeExtr;
-
-
-
-  res = inoltraEsitoPagamentoCarta(baseRestUrl,rndAnagPsp,paymentToken,'esito','OK');
+  
+  let importoTotale = res.importoTotale;
+  res = inoltraEsitoPagamentoCarta(baseRestUrl,rndAnagPsp,paymentToken,'esito','OK', importoTotale);
 
 
   
