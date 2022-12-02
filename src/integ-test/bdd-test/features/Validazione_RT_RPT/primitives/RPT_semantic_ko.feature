@@ -356,7 +356,7 @@ Scenario: Check faultCode PPT_SEMANTICA error on invalid RPT tag [RPTSEM17]
               <password>pwdpwdpwd</password>
               <identificativoPSP>#psp#</identificativoPSP>
               <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-              <identificativoCanale>#canale#</identificativoCanale>
+              <identificativoCanale>#canaleRtPush#</identificativoCanale>
               <tipoFirma></tipoFirma>
               <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
