@@ -408,3 +408,5 @@ Feature: Syntax checks for RPT - KO
       | RPTSIN160  | pay_i:datiMarcaBolloDigitale | None       | pay_i:ibanAccredito         | QuestiSono36CaratteriAlfaNumericiTT1 | 
       | RPTSIN161  | pay_i:datiMarcaBolloDigitale | None       | pay_i:ibanAccredito         | 1196R0123454321000000012345          | 
       | RPTSIN183  | pay_i:datiMarcaBolloDigitale | None       | pay_i:ibanAccredito         | 1196R0123454321000000012345          | 
+      | RPTSEM10   | pay_i:tipoVersamento         | AD         | pay_i:firmaRicevuta         | 3                                    |
+      | RPTSEM11   | pay_i:tipoVersamento         | PO         | pay_i:firmaRicevuta         | 1                                    |

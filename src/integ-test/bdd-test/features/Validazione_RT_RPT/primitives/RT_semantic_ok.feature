@@ -244,7 +244,6 @@ Feature: Semantic checks for nodoInviaRT - OK
         Examples:
             | SoapUI  | tag                                     | tag_value                               |
             | RTSEM1  | pay_i:versioneOggetto                   | 6.0                                     |
-            | RTSEM4  | pay_i:identificativoDominio             | 90000000002                             |
             | RTSEM5  | pay_i:identificativoStazioneRichiedente | 90000000002_01
             | RTSEM6  | pay_i:identificativoStazioneRichiedente | None                                    |
             | RTSEM9  | pay_i:dataOraMessaggioRicevuta          | 2017-09-14T11:24:10                     |
@@ -301,7 +300,6 @@ Feature: Semantic checks for nodoInviaRT - OK
             | RTSEM81 | pay_i:nazionePagatore                   | None                                    |
             | RTSEM83 | pay_i:e-mailPagatore                    | GesualdoModificato.riccitelli@poste.it  |
             | RTSEM84 | pay_i:e-mailPagatore                    | None                                    |
-            | RTSEM86 | pay_i:importoTotalePagato               | 150.00                                  |
             | RTSEM92 | pay_i:causaleVersamento                 | XXXX                                    |
             | RTSEM93 | pay_i:datiSpecificiRiscossione          | 1/def                                   |
             #| RTSEM7  | pay_i:identificativoDominio             | None
@@ -1296,5 +1294,3 @@ Feature: Semantic checks for nodoInviaRT - OK
         And EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And check esito is OK of nodoInviaRT response
-
-    
