@@ -73,16 +73,16 @@ Feature: T142_RPT_bollo_mod1
                 <pay_i:datiSingoloVersamento>
                 <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
                 <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-                <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito> 
                 <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
                 <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio> 
                 <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
                 <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
                 <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
                 <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-                <pay_i:datiMarcaBolloDigitale>
-                <pay_i:hashDocumento>ZDaHibNC/LSH8cNHAWzaWTiW4BZ+lqelKM1lEuU0Kew=</pay_i:hashDocumento>
+                 <pay_i:datiMarcaBolloDigitale>
                 <pay_i:tipoBollo>01</pay_i:tipoBollo>
+                <pay_i:hashDocumento>ZDaHibNC/LSH8cNHAWzaWTiW4BZ+lqelKM1lEuU0Kew=</pay_i:hashDocumento>
+                <pay_i:provinciaResidenza>MI</pay_i:provinciaResidenza>
                 </pay_i:datiMarcaBolloDigitale>
                 </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>

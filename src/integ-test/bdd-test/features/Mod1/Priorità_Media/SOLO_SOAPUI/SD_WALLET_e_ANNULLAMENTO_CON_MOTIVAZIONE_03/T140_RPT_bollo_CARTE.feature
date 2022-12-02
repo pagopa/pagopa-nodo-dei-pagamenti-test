@@ -258,7 +258,7 @@ Feature: T140_RPT_bollo_CARTE
             "identificativoPsp": "idPsp1",
             "tipoVersamento": "CP",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#",
+            "identificativoCanale": "#canaleRtPush#",
             "esitoTransazioneCarta": "123456", 
             "importoTotalePagato": 11.11,
             "timestampOperazione": "2012-04-23T18:25:43.001Z",
