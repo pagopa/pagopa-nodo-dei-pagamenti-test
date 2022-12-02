@@ -1,4 +1,4 @@
-Feature: T142_RPT_bollo_mod1
+Feature: T144_RPT_bollo_mod2
 
     
     Background:
@@ -231,7 +231,7 @@ Feature: T142_RPT_bollo_mod1
         And check totalRows field exists in listaPSP response
         And check data field exists in listaPSP response
     
-     Scenario: Execution Esito Mod1
+     Scenario: Execution Esito Mod2
         Given the Execute nodoChiediListaPSP - carte scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
             """
@@ -246,19 +246,17 @@ Feature: T142_RPT_bollo_mod1
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
+        When WISP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti
             """
             {
             "idPagamento": "$sessionToken",
             "identificativoPsp": "#psp#",
-            "tipoVersamento": "BBT",
+            "tipoVersamento": "BP",
             "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale#",
-            "tipoOperazione":"mobile",
-            "mobileToken":"123ABC456"
+            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-        And check esito is OK of inoltroEsito/mod1 response
-        And check urlRedirectPSP field exists in inoltroEsito/mod1 response
+        Then verify the HTTP status code of inoltroEsito/mod2 response is 200
+        And check esito is OK of inoltroEsito/mod2 response
+        And check url field not exists in inoltroEsito/mod2 response
         
