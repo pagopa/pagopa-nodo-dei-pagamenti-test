@@ -255,7 +255,7 @@ Feature: T140_RPT_bollo_CARTE
             {
             "idPagamento": "$sessionToken",
             "RRN":123456789,
-            "identificativoPsp": "idPsp1",
+            "identificativoPsp": "40000000001",
             "tipoVersamento": "CP",
             "identificativoIntermediario": "40000000001",
             "identificativoCanale": "40000000001_03",
