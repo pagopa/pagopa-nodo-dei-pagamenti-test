@@ -1,4 +1,4 @@
-Feature: T140_RPT_bollo_CARTE
+Feature: T144_RPT_bollo_mod2
 
     
     Background:
@@ -235,7 +235,7 @@ Feature: T140_RPT_bollo_CARTE
         And check totalRows field exists in listaPSP response
         And check data field exists in listaPSP response
     
-     Scenario: Execution Esito Carta
+     Scenario: Execution Esito Mod2
         Given the Execute nodoChiediListaPSP - carte scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
             """
@@ -250,23 +250,17 @@ Feature: T140_RPT_bollo_CARTE
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        #non toccare i valori
-        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+        When WISP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti
             """
             {
             "idPagamento": "$sessionToken",
-            "RRN":123456789,
-            "identificativoPsp": "40000000001",
-            "tipoVersamento": "CP",
-            "identificativoIntermediario": "40000000001",
-            "identificativoCanale": "40000000001_03",
-            "esitoTransazioneCarta": "123456", 
-            "importoTotalePagato": 11.11,
-            "timestampOperazione": "2012-04-23T18:25:43.001Z",
-            "codiceAutorizzativo": "123212",
-            "esitoTransazioneCarta":"00"
+            "identificativoPsp": "#psp#",
+            "tipoVersamento": "BP",
+            "identificativoIntermediario": "#psp#",
+            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is OK of inoltroEsito/carta response
+        Then verify the HTTP status code of inoltroEsito/mod2 response is 200
+        And check esito is OK of inoltroEsito/mod2 response
+        And check url field not exists in inoltroEsito/mod2 response
         

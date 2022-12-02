@@ -1,4 +1,4 @@
-Feature: T140_RPT_bollo_CARTE
+Feature: T142_RPT_bollo_mod1
 
     
     Background:
@@ -79,7 +79,7 @@ Feature: T140_RPT_bollo_CARTE
                 <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
                 <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
                 <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-                <pay_i:datiMarcaBolloDigitale>
+                 <pay_i:datiMarcaBolloDigitale>
                 <pay_i:tipoBollo>01</pay_i:tipoBollo>
                 <pay_i:hashDocumento>ZDaHibNC/LSH8cNHAWzaWTiW4BZ+lqelKM1lEuU0Kew=</pay_i:hashDocumento>
                 <pay_i:provinciaResidenza>MI</pay_i:provinciaResidenza>
@@ -170,6 +170,7 @@ Feature: T140_RPT_bollo_CARTE
                     <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+                    
                 </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
@@ -235,8 +236,9 @@ Feature: T140_RPT_bollo_CARTE
         And check totalRows field exists in listaPSP response
         And check data field exists in listaPSP response
     
-     Scenario: Execution Esito Carta
+     Scenario: Execution Esito Mod1
         Given the Execute nodoChiediListaPSP - carte scenario executed successfully
+        #non toccare i valori
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -250,23 +252,19 @@ Feature: T140_RPT_bollo_CARTE
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        #non toccare i valori
-        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+        When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
             "idPagamento": "$sessionToken",
-            "RRN":123456789,
             "identificativoPsp": "40000000001",
-            "tipoVersamento": "CP",
+            "tipoVersamento": "BBT",
             "identificativoIntermediario": "40000000001",
             "identificativoCanale": "40000000001_03",
-            "esitoTransazioneCarta": "123456", 
-            "importoTotalePagato": 11.11,
-            "timestampOperazione": "2012-04-23T18:25:43.001Z",
-            "codiceAutorizzativo": "123212",
-            "esitoTransazioneCarta":"00"
+            "tipoOperazione":"mobile",
+            "mobileToken":"123ABC456"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is OK of inoltroEsito/carta response
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+        And check esito is OK of inoltroEsito/mod1 response
+        And check urlRedirectPSP field exists in inoltroEsito/mod1 response
         

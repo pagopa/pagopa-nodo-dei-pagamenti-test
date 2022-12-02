@@ -487,7 +487,7 @@ Feature: Semantic checks for nodoInviaRT - KO
         And check faultCode is PPT_SEMANTICA of nodoInviaRT response
 
     @midRunnable
-    Scenario Outline: Semantic checks
+    Scenario: Semantic checks [RTSEM3]
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
         And initial XML RPT
             """
@@ -567,7 +567,7 @@ Feature: Semantic checks for nodoInviaRT - KO
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-        And pay_i:identificativoDominio with <tag_value> in RPT
+        And pay_i:identificativoDominio with #paDisabled# in RPT
         And RPT generation
             """
             $RPT
@@ -596,6 +596,7 @@ Feature: Semantic checks for nodoInviaRT - KO
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And identificativoDominio with #paDisabled# in nodoInviaRPT
         And initial XML pspInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -700,7 +701,7 @@ Feature: Semantic checks for nodoInviaRT - KO
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-        And pay_i:identificativoDominio with <tag_value> in RT
+        And pay_i:identificativoDominio with #paDisabled# in RT
         And RT generation
             """
             $RT
@@ -725,15 +726,15 @@ Feature: Semantic checks for nodoInviaRT - KO
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        # And identificativoIntermediarioPA with #paDisabled# in nodoInviaRPT
+        And identificativoDominio with #paDisabled# in nodoInviaRT    
         When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
+        Then check esito is KO of nodoInviaRPT response
+        And check faultCode is PPT_DOMINIO_DISABILITATO of nodoInviaRPT response
         And check esito is KO of nodoInviaRT response
-        And check faultCode is <error> of nodoInviaRT response
-        Examples:
-            | test   | tag_value     | error                    |
-            | RTSEM2 | unknownDomain | PPT_SEMANTICA            |
-            | RTSEM3 | #paDisabled#  | PPT_DOMINIO_DISABILITATO |
+        And check faultCode is PPT_DOMINIO_DISABILITATO of nodoInviaRT response
+        And check description is Dominio disabilitato. of nodoInviaRT response
 
     #[RTSEM8]
     Scenario: Execute nodoInviaRPT (Phase 1) [RTSEM8]

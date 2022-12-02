@@ -1,4 +1,4 @@
-Feature: T140_RPT_bollo_CARTE
+Feature: T152_RPT2versamenti
 
     
     Background:
@@ -71,19 +71,26 @@ Feature: T140_RPT_bollo_CARTE
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
                 <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
                 <pay_i:datiSingoloVersamento>
-                <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
+                <pay_i:importoSingoloVersamento>6.00</pay_i:importoSingoloVersamento>
                 <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+                <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito> 
                 <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
                 <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio> 
                 <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
                 <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
                 <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
                 <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-                <pay_i:datiMarcaBolloDigitale>
-                <pay_i:tipoBollo>01</pay_i:tipoBollo>
-                <pay_i:hashDocumento>ZDaHibNC/LSH8cNHAWzaWTiW4BZ+lqelKM1lEuU0Kew=</pay_i:hashDocumento>
-                <pay_i:provinciaResidenza>MI</pay_i:provinciaResidenza>
-                </pay_i:datiMarcaBolloDigitale>
+                </pay_i:datiSingoloVersamento>
+                <pay_i:datiSingoloVersamento>
+                <pay_i:importoSingoloVersamento>4.00</pay_i:importoSingoloVersamento>
+                <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+                <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito> 
+                <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+                <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio> 
+                <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+                <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+                <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+                <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                 </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
             </pay_i:RPT>
@@ -218,24 +225,16 @@ Feature: T140_RPT_bollo_CARTE
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
         
-     Scenario: Execute nodoChiediInfoPag request
-        Given the RPT generation scenario executed successfully
-        When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-        And check importo field exists in informazioniPagamento response
-        And check ragioneSociale field exists in informazioniPagamento response
-        And check oggettoPagamento field exists in informazioniPagamento response
-        And check urlRedirectEC field exists in informazioniPagamento response
-        And check bolloDigitale field exists in informazioniPagamento response
+    
        
      Scenario: Execute nodoChiediListaPSP - carte
-        Given the Execute nodoChiediInfoPag request scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=2000&percorsoPagamento=CARTE to nodo-dei-pagamenti
+        Given the RPT generation scenario executed successfully
+        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=1000&percorsoPagamento=CC to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
         And check totalRows field exists in listaPSP response
         And check data field exists in listaPSP response
     
-     Scenario: Execution Esito Carta
+     Scenario: Execution Esito Mod1
         Given the Execute nodoChiediListaPSP - carte scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
             """
@@ -250,23 +249,19 @@ Feature: T140_RPT_bollo_CARTE
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        #non toccare i valori
-        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+        When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
             "idPagamento": "$sessionToken",
-            "RRN":123456789,
-            "identificativoPsp": "40000000001",
-            "tipoVersamento": "CP",
-            "identificativoIntermediario": "40000000001",
-            "identificativoCanale": "40000000001_03",
-            "esitoTransazioneCarta": "123456", 
-            "importoTotalePagato": 11.11,
-            "timestampOperazione": "2012-04-23T18:25:43.001Z",
-            "codiceAutorizzativo": "123212",
-            "esitoTransazioneCarta":"00"
+            "identificativoPsp": "#psp#",
+            "tipoVersamento": "BBT",
+            "identificativoIntermediario": "#psp#",
+            "identificativoCanale": "#canale#",
+            "tipoOperazione":"mobile",
+            "mobileToken":"123ABC456"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is OK of inoltroEsito/carta response
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+        And check esito is OK of inoltroEsito/mod1 response
+        And check urlRedirectPSP field exists in inoltroEsito/mod1 response
         
