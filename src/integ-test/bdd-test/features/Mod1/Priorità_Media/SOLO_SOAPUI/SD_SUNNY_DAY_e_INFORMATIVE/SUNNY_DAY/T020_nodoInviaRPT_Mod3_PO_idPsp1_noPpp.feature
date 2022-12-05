@@ -2,9 +2,9 @@ Feature: T020_nodoInviaRPT_Mod3_PO_idPsp1_noPpp
 
     Background:
         Given systems up
-
+    #non toccare i valori
     Scenario: Execute nodoInviaRPT (Phase 1)
-        Given replace canaleUsato content with #canale32# content
+        Given replace canaleUsato content with 40000000002_01 content
         And checks the value idPsp1 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query chekPlugin on db nodo_cfg under macro Mod1
         And RPT1 generation
             """
@@ -12,8 +12,8 @@ Feature: T020_nodoInviaRPT_Mod3_PO_idPsp1_noPpp
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>44444444444</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>44444444444_02</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -89,9 +89,9 @@ Feature: T020_nodoInviaRPT_Mod3_PO_idPsp1_noPpp
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>44444444444_02</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>44444444444</identificativoDominio>
             <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>checkNoPPP</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -99,9 +99,9 @@ Feature: T020_nodoInviaRPT_Mod3_PO_idPsp1_noPpp
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale32#</identificativoCanale>
+            <identificativoPSP>40000000001</identificativoPSP>
+            <identificativoIntermediarioPSP>40000000002</identificativoIntermediarioPSP>
+            <identificativoCanale>40000000002_01</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rpt1Attachment</rpt>
             </ws:nodoInviaRPT>
