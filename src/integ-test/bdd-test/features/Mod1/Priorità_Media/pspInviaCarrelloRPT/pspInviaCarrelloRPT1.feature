@@ -111,6 +111,8 @@ Feature: process tests for pspInviaCarrelloRPT
             </soapenv:Body>
             </soapenv:Envelope>
             """
+
+    @midRunnable
     Scenario: Execute nodoInviaCarrelloRPT request [CRPTRES16]
         Given the RPT generation scenario executed successfully
         And initial XML pspInviaCarrelloRPT
