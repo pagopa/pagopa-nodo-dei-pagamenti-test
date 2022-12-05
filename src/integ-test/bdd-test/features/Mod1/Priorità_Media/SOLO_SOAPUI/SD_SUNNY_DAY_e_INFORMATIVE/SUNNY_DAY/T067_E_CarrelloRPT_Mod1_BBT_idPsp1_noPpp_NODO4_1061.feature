@@ -119,9 +119,4 @@ Feature: T067_E_CarrelloRPT_Mod1_BBT_idPsp1_noPpp_NODO4_1061
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_CANALE_ERRORE of nodoInviaCarrelloRPT response
-        And check description is [
-      originalFaultCode: CANALE_PPP_ASSENTI
-      originalFaultString: pspInviaRPT con ppp errati
-      originalDescription: 
-      serial:
-      ] of nodoInviaCarrelloRPT response
+        And checks description contains originalFaultCode: CANALE_PPP_ASSENTI of nodoInviaCarrelloRPT response
