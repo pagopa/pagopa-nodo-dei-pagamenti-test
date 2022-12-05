@@ -3,7 +3,7 @@ Feature: T003_nodoInviaRT_esito=0_specialChar
     Background:
         Given systems up
 
-    Scenario: Execute nodoInviaRPT (Phase 1)
+    Scenario: Execute nodoInviaRPT
         Given RPT generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -212,8 +212,8 @@ Feature: T003_nodoInviaRT_esito=0_specialChar
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    Scenario: Execute nodoInviaRT (Phase 2)
-        Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
+    Scenario: Execute nodoInviaRT
+        Given the Execute nodoInviaRPT scenario executed successfully
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">

@@ -214,6 +214,7 @@ Feature: T003_nodoInviaRT_esito=0_checkPaaInviaRT
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaRPT scenario executed successfully
@@ -239,6 +240,7 @@ Feature: T003_nodoInviaRT_esito=0_checkPaaInviaRT
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
+        And replace sessionExpected content with $sessionToken content
         And checks the value #id_station# of the record at column STAZ_INTERMEDIARIOPA of the table RPT retrived by the query get_staz_inter_pa on db nodo_online under macro Mod1
 
 
