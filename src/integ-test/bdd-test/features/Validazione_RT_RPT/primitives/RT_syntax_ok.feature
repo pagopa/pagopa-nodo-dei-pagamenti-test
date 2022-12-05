@@ -277,7 +277,10 @@ Feature: Syntax checks for RT - OK
       | RTSIN169.1 | pay_i:esitoSingoloPagamento             | None      |
 
   @midRunnable
+<<<<<<< HEAD
   # [190.1]
+=======
+>>>>>>> b4e88d02368d694914546e75cb41061157f2bb34
   Scenario: Check OK on None RT with MB [RTSIN190.1]
     Given MB generation
       """

@@ -736,8 +736,7 @@ Feature: Semantic checks for nodoInviaRT - KO
         And check faultCode is PPT_DOMINIO_DISABILITATO of nodoInviaRT response
         And check description is Dominio disabilitato. of nodoInviaRT response
 
-    #[RTSEM8]
-    Scenario: Execute nodoInviaRPT (Phase 1) [RTSEM8]
+    Scenario: Execute nodoInviaRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
         And initial XML RPT
             """

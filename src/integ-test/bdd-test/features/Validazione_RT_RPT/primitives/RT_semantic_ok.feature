@@ -261,6 +261,7 @@ Feature: Semantic checks for nodoInviaRT - OK
             | RTSEM26 | pay_i:capBeneficiario                   | XX111                                   |
             | RTSEM27 | pay_i:capBeneficiario                   | None                                    |
             | RTSEM28 | pay_i:localitaBeneficiario              | XX111                                   |
+            | RTSEM29 | pay_i:localitaBeneficiario              | Napoli                                  |
             | RTSEM30 | pay_i:localitaBeneficiario              | None                                    |
             | RTSEM32 | pay_i:provinciaBeneficiario             | XX                                      |
             | RTSEM33 | pay_i:provinciaBeneficiario             | None                                    |
