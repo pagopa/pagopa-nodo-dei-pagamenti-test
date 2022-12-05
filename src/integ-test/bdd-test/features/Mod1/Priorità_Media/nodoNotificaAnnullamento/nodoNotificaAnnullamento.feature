@@ -81,7 +81,7 @@ Feature: process tests for nodoNotificaAnnullamento
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    @midRunnable
+
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
