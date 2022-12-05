@@ -306,7 +306,7 @@ Feature: T216_carrello_checkPPP_sbloccoParcheggio
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
     Scenario: Execute nodoChiediStatoRPT2
-        Given Execute nodoInviaCarrelloRPT duplicato scenario executed successfully
+        Given the Execute nodoInviaCarrelloRPT duplicato scenario executed successfully
         And initial XML nodoChiediStatoRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
