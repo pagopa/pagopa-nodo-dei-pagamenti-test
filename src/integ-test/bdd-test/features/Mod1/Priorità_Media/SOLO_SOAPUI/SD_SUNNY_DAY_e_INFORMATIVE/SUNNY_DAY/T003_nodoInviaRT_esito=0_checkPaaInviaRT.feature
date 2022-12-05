@@ -239,5 +239,6 @@ Feature: T003_nodoInviaRT_esito=0_checkPaaInviaRT
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
+        And checks the value #id_station# of the record at column STAZ_INTERMEDIARIOPA of the table RPT retrived by the query get_staz_inter_pa on db nodo_online under macro Mod1
 
 
