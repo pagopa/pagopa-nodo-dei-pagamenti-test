@@ -64,7 +64,7 @@ Feature: T003_nodoInviaRT_esito=0_specialChar
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>#IUVspecial#</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#IUVspecial#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -155,13 +155,13 @@ Feature: T003_nodoInviaRT_esito=0_specialChar
             <pay_i:datiPagamento>
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-            <pay_i:identificativoUnivocoVersamento>$IUVspecial</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
+            <pay_i:identificativoUnivocoVersamento>#IUVspecial#</pay_i:identificativoUnivocoVersamento>
+            <pay_i:CodiceContestoPagamento>#IUVspecial#</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>35 càrattérì spec!@li va# °u£ me$§;</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>$IUVspecial</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoRiscossione>#IUVspecial#</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>Mèttiamocì 70 caratteri stràni che Dév@no e$§ere accet+ati #*[]!, ora?Mèttiamocì 70 caratteri stràni che Dév@no e$§ere accet+ati #*[]!, ora?</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             <pay_i:commissioniApplicatePSP>0.12</pay_i:commissioniApplicatePSP>
@@ -177,8 +177,8 @@ Feature: T003_nodoInviaRT_esito=0_specialChar
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$IUVspecial</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>#IUVspecial#</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>#IUVspecial#</ccodiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -225,8 +225,8 @@ Feature: T003_nodoInviaRT_esito=0_specialChar
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$IUVspecial</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>#IUVspecial#</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>#IUVspecial#</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
             <rt>$rtAttachment</rt>
