@@ -81,7 +81,7 @@ Feature: process tests for nodoNotificaAnnullamento
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
+    @midRunnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -116,7 +116,7 @@ Feature: process tests for nodoNotificaAnnullamento
     Scenario: execution nodoNotificaAnnullamento - PM_NA1
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento? to nodo-dei-pagamenti
-        Then verify the HTTP status code of notificaAnnullamento response is 400
+        Then verify the HTTP status code of notificaAnnullamento response is 404
 
     @midRunnable
     Scenario: execution nodoChiediListaPSP - PM_NA2
@@ -140,17 +140,4 @@ Feature: process tests for nodoNotificaAnnullamento
     Scenario: execution nodoChiediListaPSP - PM_NA5
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagmento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of notificaAnnullamento response is 400
-
-    @midRunnable
-    Scenario: execution nodoChiediListaPSP - PM_NA6
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET notificaAnnullamento;idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of notificaAnnullamento response is 405
-    
-
-    @midRunnable
-    Scenario: execution nodoChiediListaPSP - PM_NA7
-        Given the Execute nodoInviaRPT request scenario executed successfully
-        When WISP sends rest GET notificaAnnullamento;importoTotale=100?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of notificaAnnullamento response is 405
+        Then verify the HTTP status code of notificaAnnullamento response is 404
