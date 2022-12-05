@@ -204,8 +204,8 @@ Feature: T003_nodoInviaRT_esito=0_checkPaaInviaRT
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            <identificativoCarrello>$1ccp</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=checkPaaInviaRT</parametriPagamentoImmediato>
             </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>
             </soapenv:Body>
