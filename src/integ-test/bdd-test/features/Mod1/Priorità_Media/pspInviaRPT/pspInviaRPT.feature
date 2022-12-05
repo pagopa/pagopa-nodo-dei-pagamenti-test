@@ -129,7 +129,7 @@ Feature: process tests for pspInviaRT[IRPTRES2]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-            And psp replies to nodo-dei-pagamenti with the pspInviaRPT
+            And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
 
         @midRunnable
         Scenario Outline: Check faultCode error on non-existent or invalid field
