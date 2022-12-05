@@ -404,4 +404,27 @@ Feature: T013_RPT_RT_RR_ER_importoER0.00_soloObbligatori
         When EC sends SOAP nodoInviaRichiestaStorno to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRichiestaStorno response
 
+     Scenario: Execute nodoInviaEsitoStorno
+        Given the Execute nodoInviaRichiestaStorno scenario executed successfully
+        And initial XML nodoInviaEsitoStorno
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:nodoInviaEsitoStorno>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canaleRtPush#</identificativoCanale>
+                    <password>pwdpwdpwd</password>
+                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                    <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                    <er>$erAttachment</er>
+                </ws:nodoInviaEsitoStorno>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When EC sends SOAP nodoInviaEsitoStorno to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaEsitoStorno response
+
 
