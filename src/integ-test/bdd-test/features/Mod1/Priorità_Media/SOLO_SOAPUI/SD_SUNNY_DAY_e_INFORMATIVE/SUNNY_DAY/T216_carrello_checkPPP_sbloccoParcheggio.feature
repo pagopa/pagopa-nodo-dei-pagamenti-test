@@ -213,7 +213,7 @@ Feature: T216_carrello_checkPPP_sbloccoParcheggio
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
+        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
         #DB-CHECK
         And replace iuv content with checkPPI content 
         And replace ccp content with $ccp content
