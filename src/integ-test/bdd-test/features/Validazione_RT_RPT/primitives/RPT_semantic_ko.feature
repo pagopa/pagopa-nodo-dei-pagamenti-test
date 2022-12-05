@@ -100,10 +100,9 @@ Feature: Syntax checks for SEMANTIC RPT
     And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
 
 
-#----------------------------------------------------------------------------------------------------
-# faultCode PPT_AUTORIZZAZIONE
-#----------------------------------------------------------------------------------------------------
+
 @midRunnable
+# [RPTSEM7]
 Scenario: Check faultCode PPT_AUTORIZZAZIONE error on invalid RPT tag [RPTSEM7]
     Given pay_i:tipoVersamento with PO in RPT
     And RPT generation
@@ -139,10 +138,9 @@ Scenario: Check faultCode PPT_AUTORIZZAZIONE error on invalid RPT tag [RPTSEM7]
     And check faultCode is PPT_AUTORIZZAZIONE of nodoInviaRPT response
 
 
-#----------------------------------------------------------------------------------------------------
-# faultCode PPT_SEMANTICA
-#----------------------------------------------------------------------------------------------------
+
 @midRunnable
+# [RPTSEM18]
 Scenario: Check faultCode PPT_SEMANTICA error on invalid RPT tag [RPTSEM18]
     Given pay_i:ibanAccredito with None in RPT
     And RPT generation
@@ -213,10 +211,9 @@ Scenario: Check faultCode PPT_SEMANTICA error on invalid RPT tag combination [RP
     Then check esito is KO of nodoInviaRPT response
     And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
 
-#----------------------------------------------------------------------------------------------------
-# faultCode PPT_IBAN_NON_CENSITO
-#----------------------------------------------------------------------------------------------------
+
 @midRunnable
+# [RPTSEM16]
 Scenario: Check faultCode PPT_IBAN_NON_CENSITO error on invalid RPT tag [RPTSEM16]
     Given pay_i:ibanAccredito with IT96R0123454321000000012345ZZ in RPT
     And RPT generation
@@ -251,10 +248,9 @@ Scenario: Check faultCode PPT_IBAN_NON_CENSITO error on invalid RPT tag [RPTSEM1
     Then check esito is KO of nodoInviaRPT response
     And check faultCode is PPT_IBAN_NON_CENSITO of nodoInviaRPT response
 
-#----------------------------------------------------------------------------------------------------
-# faultCode PPT_SEMANTICA
-#----------------------------------------------------------------------------------------------------
+
 @midRunnable
+# [RPTSEM17]
 Scenario: Check faultCode PPT_SEMANTICA error on invalid RPT tag [RPTSEM17]
     Given RPT generation
       """
@@ -368,10 +364,8 @@ Scenario: Check faultCode PPT_SEMANTICA error on invalid RPT tag [RPTSEM17]
     And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
 
 
-#----------------------------------------------------------------------------------------------------
-# faultCode PPT_SEMANTICA [RPTSEM12]
-#----------------------------------------------------------------------------------------------------
 @midRunnable
+# [RPTSEM12]
 Scenario: 2 datiSingoloVersamento + tipoVersamento = PO [RPTSEM12]
     Given RPT generation
     """
