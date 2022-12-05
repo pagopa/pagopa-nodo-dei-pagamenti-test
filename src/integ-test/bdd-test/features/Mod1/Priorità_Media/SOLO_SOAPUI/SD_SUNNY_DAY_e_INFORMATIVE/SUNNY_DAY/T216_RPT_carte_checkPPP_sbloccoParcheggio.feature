@@ -190,7 +190,7 @@ Feature: T216_RPT_carte_checkPPP_sbloccoParcheggio
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>checkPPI</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>checkPPP</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
