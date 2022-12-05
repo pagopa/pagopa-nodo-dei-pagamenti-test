@@ -6,7 +6,7 @@ Feature: T020_nodoInviaRPT_Mod3_PO_idPsp1_noPpp
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given replace canaleUsato content with 40000000002_01 content
         And checks the value idPsp1 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query chekPlugin on db nodo_cfg under macro Mod1
-        And RPT1 generation
+        And RPT generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -65,7 +65,7 @@ Feature: T020_nodoInviaRPT_Mod3_PO_idPsp1_noPpp
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>AD</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>#IUV1#</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>checkNoPPP</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -92,7 +92,7 @@ Feature: T020_nodoInviaRPT_Mod3_PO_idPsp1_noPpp
             <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>44444444444_02</identificativoStazioneIntermediarioPA>
             <identificativoDominio>44444444444</identificativoDominio>
-            <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>checkNoPPP</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
