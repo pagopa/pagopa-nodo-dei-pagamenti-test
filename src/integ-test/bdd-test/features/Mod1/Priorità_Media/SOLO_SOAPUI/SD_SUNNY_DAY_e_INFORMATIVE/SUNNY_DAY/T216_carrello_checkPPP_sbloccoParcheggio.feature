@@ -167,7 +167,7 @@ Feature: T216_carrello_checkPPP_sbloccoParcheggio
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_o1</identificativoStazioneIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$ccp</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
@@ -273,7 +273,7 @@ Feature: T216_carrello_checkPPP_sbloccoParcheggio
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>44444444444_o1</identificativoStazioneIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$ccp</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
