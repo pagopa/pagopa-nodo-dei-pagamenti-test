@@ -231,6 +231,7 @@ Feature: process tests for nodoInviaRT[IRTSIN]
             | identificativoPSP               | aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | PPT_SINTASSI_EXTRAXSD | IRTSIN6     |
             | identificativoCanale            | None                                 | PPT_SINTASSI_EXTRAXSD | IRTSIN7     |
             | identificativoCanale            | Empty                                | PPT_SINTASSI_EXTRAXSD | IRTSIN8     |
+            | identificativoCanale            | aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | PPT_SINTASSI_EXTRAXSD | IRTSIN9     |
             | password                        | None                                 | PPT_SINTASSI_EXTRAXSD | IRTSIN10    |
             | password                        | Empty                                | PPT_SINTASSI_EXTRAXSD | IRTSIN11    |
             | password                        | pwdpwdp                              | PPT_SINTASSI_EXTRAXSD | IRTSIN12    |
