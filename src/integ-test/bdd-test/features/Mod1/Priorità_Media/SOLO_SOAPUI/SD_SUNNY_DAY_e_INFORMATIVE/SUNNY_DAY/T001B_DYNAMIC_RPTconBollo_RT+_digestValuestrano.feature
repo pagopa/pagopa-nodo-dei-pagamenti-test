@@ -11,7 +11,7 @@ Feature: T001B_DYNAMIC_RPTconBollo_RT+_digestValuestrano
             <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
             <PSP>
             <CodiceFiscale>12345678901</CodiceFiscale>
-            <Denominazione>60000000001</Denominazione>
+            <Denominazione>#psp#</Denominazione>
             </PSP>
             <IUBD>#iubd#</IUBD>
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
@@ -590,7 +590,7 @@ Feature: T001B_DYNAMIC_RPTconBollo_RT+_digestValuestrano
 
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInoltroEsitoMod1 scenario executed successfully
-        And initial XMl nodoInviaRT
+        And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
@@ -601,7 +601,7 @@ Feature: T001B_DYNAMIC_RPTconBollo_RT+_digestValuestrano
             <password>pwdpwdpwd</password>
             <identificativoPSP>idPsp1</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>$2IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
