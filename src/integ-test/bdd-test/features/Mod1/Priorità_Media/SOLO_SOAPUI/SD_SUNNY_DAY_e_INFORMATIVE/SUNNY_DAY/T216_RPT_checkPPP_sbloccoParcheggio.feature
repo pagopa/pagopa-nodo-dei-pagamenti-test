@@ -163,8 +163,8 @@ Feature: T216_RPT_checkPPI_sbloccoParcheggio
                     <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                    <identificativoUnivocoVersamento>checkPPI</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
             </soapenv:Body>
         </soapenv:Envelope>
@@ -218,8 +218,8 @@ Feature: T216_RPT_checkPPI_sbloccoParcheggio
                     <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                    <identificativoUnivocoVersamento>checkPPI</identificativoUnivocoVersamento>
+                    <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
             </soapenv:Body>
         </soapenv:Envelope>
