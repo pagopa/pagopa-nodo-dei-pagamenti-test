@@ -126,6 +126,7 @@ Feature: T216_RPT_checkPPI_sbloccoParcheggio
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
         #DB-CHECK
         And replace iuv content with checkPPI content 
         And replace ccp content with $1ccp content
