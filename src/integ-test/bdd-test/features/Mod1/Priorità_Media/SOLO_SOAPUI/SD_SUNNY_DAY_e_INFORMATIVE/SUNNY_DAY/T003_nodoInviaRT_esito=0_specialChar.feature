@@ -177,8 +177,8 @@ Feature: T003_nodoInviaRT_esito=0_specialChar
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>#IUVspecial#</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>#IUVspecial#</ccodiceContestoPagamento>
+            <identificativoUnivocoVersamento>$IUVspecial</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$IUVspecial</ccodiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -225,8 +225,8 @@ Feature: T003_nodoInviaRT_esito=0_specialChar
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>#IUVspecial#</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>#IUVspecial#</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>$IUVspecial</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$IUVspecial</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
             <rt>$rtAttachment</rt>
