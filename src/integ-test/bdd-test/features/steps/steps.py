@@ -168,6 +168,13 @@ def step_impl(context, primitive):
         payload = payload.replace('#carrelloMills#', carrello)
         setattr(context, 'carrelloMills', carrello)
 
+    if '#ccp3#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        timedate = date + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
+        ccp3 = str(random.randint(0, 10000)) + timedate
+        payload = payload.replace('#ccp3#', ccp3)
+        setattr(context, 'ccp3', ccp3)
+
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
 
