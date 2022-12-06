@@ -1,4 +1,4 @@
-Feature: T016_nodoInviaRPT_latoPSP_validazioneXSD
+Feature: T016_B_ nodoInviaRPT_Mod1_BBT_noIdCart
 
     Background:
         Given systems up
@@ -62,8 +62,8 @@ Feature: T016_nodoInviaRPT_latoPSP_validazioneXSD
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>validateXSD</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#sdf#</pay_i:codiceContestoPagamento>
+            <pay_i:identificativoUnivocoVersamento>noIdCart</pay_i:identificativoUnivocoVersamento>
+            <pay_i:codiceContestoPagamento>#mills_time#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -89,8 +89,8 @@ Feature: T016_nodoInviaRPT_latoPSP_validazioneXSD
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>validateXSD</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$sdf</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>noIdCart</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$mills_time</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>

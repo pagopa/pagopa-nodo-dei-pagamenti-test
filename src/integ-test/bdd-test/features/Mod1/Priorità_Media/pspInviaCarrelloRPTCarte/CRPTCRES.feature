@@ -173,18 +173,237 @@ Feature: process tests for pspInviaCarrelloRPTCarte
                 "codiceAutorizzativo": "123212"
             }
             """
-        Then check descrizione is Risposta negativa del Canale of inoltroEsito/carta response
+        Then verify the HTTP status code of inoltroEsito/carta response is <status>
+        And check <description> is <response_tagvalue> of inoltroEsito/carta response
         Examples:
-            | tag                            | value | soapUI test |
-            | soapenv:Body                   | Empty | CRPTCRES3   |
-            | soapenv:Body                   | None  | CRPTCRES4   |
-            | ws:pspInviaCarrelloRPTResponse | Empty | CRPTCRES5   |
-            | fault                          | Empty | CRPTCRES6   |
-            | faultCode                      | Empty | CRPTCRES8   |
-            | faultCode                      | CIAO  | CRPTCRES9   |
-            | faultString                    | Empty | CRPTCRES10  |
-            | id                             | Empty | CRPTCRES11  |
-            #| serial                         | CIAO  | CRPTCRES12  |
-            | esitoComplessivoOperazione     | None  | CRPTCRES14  |
-            | esitoComplessivoOperazione     | CIAO  | CRPTCRES17  |
-            #| listaErroriRPT                 | Empty | CRPTCRES22  |
+            | tag                                 | value | status | description | response_tagvalue            | soapUI test |
+            | soapenv:Body                        | Empty | 408    | error       | Operazione in timeout        | CRPTCRES3   |
+            | soapenv:Body                        | None  | 408    | error       | Operazione in timeout        | CRPTCRES4   |
+            | ws:pspInviaCarrelloRPTCarteResponse | Empty | 408    | error       | Operazione in timeout        | CRPTCRES5   |
+            | fault                               | Empty | 408    | error       | Operazione in timeout        | CRPTCRES6   |
+            | faultCode                           | Empty | 200    | descrizione | Risposta negativa del Canale | CRPTCRES8   |
+            | faultCode                           | CIAO  | 200    | descrizione | Risposta negativa del Canale | CRPTCRES9   |
+            | faultString                         | Empty | 200    | descrizione | Risposta negativa del Canale | CRPTCRES10  |
+            | id                                  | Empty | 200    | descrizione | Risposta negativa del Canale | CRPTCRES11  |
+            | esitoComplessivoOperazione          | None  | 408    | error       | Operazione in timeout        | CRPTCRES12  |
+            | fault                               | None  | 408    | error       | Operazione in timeout        | CRPTCRES13  |
+            | esitoComplessivoOperazione          | CIAO  | 408    | error       | Operazione in timeout        | CRPTCRES15  |
+
+
+    @midRunnable
+    # [CRPTCRES1]
+    Scenario: Execution second rest Esito Carta
+        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTCarteResponse>
+            <pspInviaCarrelloRPTResponse>
+            <fault>
+            <faultCode>CANALE_RPT_DUPLICATA</faultCode>
+            <faultString>bgdhbazhyt</faultString>
+            <id>idPsp1</id>
+            </fault>
+            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTCarteResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+
+            """
+
+            {
+
+                "idPagamento": "$sessionToken",
+
+                "RRN": 10026669,
+
+                "identificativoPsp": "#psp#",
+
+                "tipoVersamento": "CP",
+
+                "identificativoIntermediario": "#psp#",
+
+                "identificativoCanale": "#canale#",
+
+                "esitoTransazioneCarta": "123456",
+
+                "importoTotalePagato": 11.11,
+
+                "timestampOperazione": "2012-04-23T18:25:43.001Z",
+
+                "codiceAutorizzativo": "123212"
+
+            }
+
+            """
+        Then verify the HTTP status code of inoltroEsito/carta response is 408
+        And check error is Operazione in timeout of inoltroEsito/carta response
+
+    @midRunnable
+    # [CRPTCRES2]
+    Scenario: Execution third rest Esito Carta
+        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header>
+            <prova>ciao</prova>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTCarteResponse>
+            <pspInviaCarrelloRPTResponse>
+            <fault>
+            <faultCode>CANALE_RPT_DUPLICATA</faultCode>
+            <faultString>bgdhbazhyt</faultString>
+            <id>idPsp1</id>
+            </fault>
+            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTCarteResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+
+            """
+
+            {
+
+                "idPagamento": "$sessionToken",
+
+                "RRN": 10026669,
+
+                "identificativoPsp": "#psp#",
+
+                "tipoVersamento": "CP",
+
+                "identificativoIntermediario": "#psp#",
+
+                "identificativoCanale": "#canale#",
+
+                "esitoTransazioneCarta": "123456",
+
+                "importoTotalePagato": 11.11,
+
+                "timestampOperazione": "2012-04-23T18:25:43.001Z",
+
+                "codiceAutorizzativo": "123212"
+
+            }
+
+            """
+        Then verify the HTTP status code of inoltroEsito/carta response is 408
+        And check error is Operazione in timeout of inoltroEsito/carta response
+
+
+    @midRunnable
+    # [CRPTCRES7]
+    Scenario: Execution fourth rest Esito Carta
+        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTCarteResponse>
+            <pspInviaCarrelloRPTResponse>
+            <faultCode>CANALE_RPT_DUPLICATA</faultCode>
+            <faultString>bgdhbazhyt</faultString>
+            <id>idPsp1</id>
+            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTCarteResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+
+            """
+
+            {
+
+                "idPagamento": "$sessionToken",
+
+                "RRN": 10026669,
+
+                "identificativoPsp": "#psp#",
+
+                "tipoVersamento": "CP",
+
+                "identificativoIntermediario": "#psp#",
+
+                "identificativoCanale": "#canale#",
+
+                "esitoTransazioneCarta": "123456",
+
+                "importoTotalePagato": 11.11,
+
+                "timestampOperazione": "2012-04-23T18:25:43.001Z",
+
+                "codiceAutorizzativo": "123212"
+
+            }
+
+            """
+        Then verify the HTTP status code of inoltroEsito/carta response is 408
+        And check error is Operazione in timeout of inoltroEsito/carta response
+
+
+    @midRunnable
+    # [CRPTCRES14]
+    Scenario: Execution fifth rest Esito Carta
+        Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTCarteResponse>
+            <pspInviaCarrelloRPTResponse>
+            <fault>
+            <faultCode>CANALE_RPT_DUPLICATA</faultCode>
+            <faultString>bgdhbazhyt</faultString>
+            <id>idPsp1</id>
+            </fault>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTCarteResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+
+            """
+
+            {
+
+                "idPagamento": "$sessionToken",
+
+                "RRN": 10026669,
+
+                "identificativoPsp": "#psp#",
+
+                "tipoVersamento": "CP",
+
+                "identificativoIntermediario": "#psp#",
+
+                "identificativoCanale": "#canale#",
+
+                "esitoTransazioneCarta": "123456",
+
+                "importoTotalePagato": 11.11,
+
+                "timestampOperazione": "2012-04-23T18:25:43.001Z",
+
+                "codiceAutorizzativo": "123212"
+
+            }
+
+            """
+        Then verify the HTTP status code of inoltroEsito/carta response is 408
+        And check error is Operazione in timeout of inoltroEsito/carta response

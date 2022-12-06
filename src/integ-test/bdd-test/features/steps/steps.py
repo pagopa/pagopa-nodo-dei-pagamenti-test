@@ -355,6 +355,16 @@ def step_impl(context):
 
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
+    
+    if '#sdf#' in payload:
+        timedate = date + datetime.datetime.now().strftime("-%H:%M:%S.%f")[:-3]
+        payload = payload.replace('#sdf#', timedate)
+        setattr(context, 'sdf', timedate)
+
+    if '#mills_time#' in payload:
+        timedate_mills= timedate * 1000
+        payload = payload.replace('#mills_time#', timedate_mills)
+        setattr(context, 'mills_time', timedate_mills)
 
     payload = utils.replace_global_variables(payload, context)
 
@@ -1751,6 +1761,18 @@ def step_impl(context, query_name, table_name, param, value, where_condition, va
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
+
+@step("delete with the query {query_name} from the table {table_name} the parameters where the condition are {where_condition}under macro {macro} on db {db_name}")
+def step_impl(context, query_name, table_name, where_condition, macro, db_name):
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('where_condition', where_condition)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    exec_query = db.executeQuery(conn, selected_query)
+    db.closeConnection(conn)
+
 
 
 @step("generic update through the query {query_name} of the table {table_name} the parameter {param}, with where condition {where_condition} under macro {macro} on db {db_name}")
