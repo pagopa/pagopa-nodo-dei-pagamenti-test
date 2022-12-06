@@ -240,7 +240,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartUgualeInoltro
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>CARTcheckConv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
+            <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
@@ -328,7 +328,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartUgualeInoltro
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
+            <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
