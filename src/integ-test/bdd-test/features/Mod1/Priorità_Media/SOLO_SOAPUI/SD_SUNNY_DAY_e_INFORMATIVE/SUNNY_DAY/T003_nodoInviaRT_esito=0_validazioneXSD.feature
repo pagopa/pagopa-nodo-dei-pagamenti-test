@@ -202,8 +202,8 @@ Feature: T003_nodoInviaRT_esito=0_validazioneXSD
                     <ws:pspInviaRPTResponse>
                         <pspInviaRPTResponse>
                             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>validateXSD</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=validateXSD</parametriPagamentoImmediato>
+                            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
                         </pspInviaRPTResponse>
                     </ws:pspInviaRPTResponse>
                 </soapenv:Body>

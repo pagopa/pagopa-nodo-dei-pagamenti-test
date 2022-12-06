@@ -277,7 +277,11 @@ Feature: Syntax checks for RT - OK
       | RTSIN169.1 | pay_i:esitoSingoloPagamento             | None      |
 
   @midRunnable
-  Scenario: Check OK on None RT with MB [190.1]
+<<<<<<< HEAD
+  # [190.1]
+=======
+>>>>>>> b4e88d02368d694914546e75cb41061157f2bb34
+  Scenario: Check OK on None RT with MB [RTSIN190.1]
     Given MB generation
       """
       <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">

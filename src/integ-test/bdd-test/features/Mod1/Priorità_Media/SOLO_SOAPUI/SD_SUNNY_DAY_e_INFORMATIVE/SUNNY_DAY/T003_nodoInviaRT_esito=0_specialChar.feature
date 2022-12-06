@@ -3,7 +3,7 @@ Feature: T003_nodoInviaRT_esito=0_specialChar
     Background:
         Given systems up
 
-    Scenario: Execute nodoInviaRPT (Phase 1)
+    Scenario: Execute nodoInviaRPT
         Given RPT generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -64,7 +64,7 @@ Feature: T003_nodoInviaRT_esito=0_specialChar
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>#IUVspecial#</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#IUVspecial#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -88,7 +88,7 @@ Feature: T003_nodoInviaRT_esito=0_specialChar
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>Quì 16 càrattèri</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>35 càrattérì spec!@li va# °u£ me$§;</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -155,13 +155,13 @@ Feature: T003_nodoInviaRT_esito=0_specialChar
             <pay_i:datiPagamento>
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-            <pay_i:identificativoUnivocoVersamento>$IUVspecial</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>$IUVspecial</pay_i:CodiceContestoPagamento>
+            <pay_i:identificativoUnivocoVersamento>#IUVspecial#</pay_i:identificativoUnivocoVersamento>
+            <pay_i:CodiceContestoPagamento>#IUVspecial#</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>35 càrattérì spec!@li va# °u£ me$§;</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>$IUVspecial</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoRiscossione>#IUVspecial#</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>Mèttiamocì 70 caratteri stràni che Dév@no e$§ere accet+ati #*[]!, ora?Mèttiamocì 70 caratteri stràni che Dév@no e$§ere accet+ati #*[]!, ora?</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             <pay_i:commissioniApplicatePSP>0.12</pay_i:commissioniApplicatePSP>
@@ -178,7 +178,7 @@ Feature: T003_nodoInviaRT_esito=0_specialChar
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$IUVspecial</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$IUVspecial</codiceContestoPagamento>
+            <codiceContestoPagamento>$IUVspecial</ccodiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -212,8 +212,8 @@ Feature: T003_nodoInviaRT_esito=0_specialChar
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    Scenario: Execute nodoInviaRT (Phase 2)
-        Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
+    Scenario: Execute nodoInviaRT
+        Given the Execute nodoInviaRPT scenario executed successfully
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -225,8 +225,8 @@ Feature: T003_nodoInviaRT_esito=0_specialChar
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>validateXSD</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$ccp</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>$IUVspecial</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$IUVspecial</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
             <rt>$rtAttachment</rt>

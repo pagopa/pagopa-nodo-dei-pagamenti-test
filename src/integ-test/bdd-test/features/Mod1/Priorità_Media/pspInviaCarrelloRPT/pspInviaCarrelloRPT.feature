@@ -137,7 +137,7 @@ Feature: process tests for pspInviaCarrelloRPT
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And psp replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
 
     @midRunnable
     Scenario Outline: Check faultCode error on non-existent or invalid field

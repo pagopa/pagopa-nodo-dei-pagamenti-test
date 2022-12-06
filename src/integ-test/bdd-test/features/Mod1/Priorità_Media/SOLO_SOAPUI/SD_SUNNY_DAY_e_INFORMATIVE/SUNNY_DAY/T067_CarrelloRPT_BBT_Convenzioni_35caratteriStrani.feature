@@ -1,4 +1,4 @@
-Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA
+Feature: T067_CarrelloRPT_BBT_Convenzioni_35caratteriStrani
 
     Background:
         Given systems up
@@ -166,7 +166,6 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA
                     <pay_i:identificativoUnivocoRiscossione>$1IUV</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-                    <pay_i:commissioniApplicatePA>1.00</pay_i:commissioniApplicatePA>
                 </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
@@ -196,7 +195,7 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
-            <codiceConvenzione>codiceConvenzione$1IUV</codiceConvenzione>
+            <codiceConvenzione>car@tter!§tr£%| ? #[]o'a=?-_°ç+*e^'</codiceConvenzione>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -223,30 +222,6 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA
         #DB check
         And replace idCarrello content with $1carrello content
         And wait 20 seconds for expiration 
-        And checks the value codiceConvenzione$1IUV of the record at column CODICE_CONVENZIONE of the table CARRELLO retrived by the query codice_convenzione on db nodo_online under macro Mod1
+        And checks the value $nodoInviaCarrelloRPT.codiceConvenzione of the record at column CODICE_CONVENZIONE of the table CARRELLO retrived by the query codice_convenzione on db nodo_online under macro Mod1
 
-        Scenario: Execute nodoInviaRT
-        Given the Execute nodoInviaCarrelloRPT scenario executed successfully
-        And initial XMl nodoInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:nodoInviaRT>
-                        <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                        <identificativoCanale>#canale#</identificativoCanale>
-                        <password>pwdpwdpwd</password>
-                        <identificativoPSP>#psp#</identificativoPSP>
-                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                        <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
-                        <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                        <tipoFirma></tipoFirma>
-                        <forzaControlloSegno>1</forzaControlloSegno>
-                        <rt>$rtAttachment</rt>
-                    </ws:nodoInviaRT>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
         
-        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRT response

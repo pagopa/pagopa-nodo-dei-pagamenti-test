@@ -1,4 +1,4 @@
-Feature: process tests for pspInviaRT[IRPTRES2]
+Feature: process tests for pspInviaRT
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -129,7 +129,7 @@ Feature: process tests for pspInviaRT[IRPTRES2]
             </soapenv:Body>
             </soapenv:Envelope>
             """
-            And psp replies to nodo-dei-pagamenti with the pspInviaRPT
+            And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
 
         @midRunnable
         Scenario Outline: Check faultCode error on non-existent or invalid field

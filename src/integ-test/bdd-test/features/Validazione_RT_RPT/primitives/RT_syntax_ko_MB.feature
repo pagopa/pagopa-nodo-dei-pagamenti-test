@@ -139,7 +139,7 @@ Feature: Syntax checks for RT with MB - KO
       <password>pwdpwdpwd</password>
       <identificativoPSP>#psp#</identificativoPSP>
       <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-      <identificativoCanale>#canale#</identificativoCanale>
+      <identificativoCanale>#canaleRtPush#</identificativoCanale>
       <tipoFirma></tipoFirma>
       <rpt>$rptAttachment</rpt>
       </ws:nodoInviaRPT>
@@ -271,7 +271,7 @@ Feature: Syntax checks for RT with MB - KO
       <soapenv:Body>
       <ws:nodoInviaRT>
       <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-      <identificativoCanale>#canale#</identificativoCanale>
+      <identificativoCanale>#canaleRtPush#</identificativoCanale>
       <password>pwdpwdpwd</password>
       <identificativoPSP>#psp#</identificativoPSP>
       <identificativoDominio>#creditor_institution_code#</identificativoDominio>

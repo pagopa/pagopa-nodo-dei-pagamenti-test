@@ -82,7 +82,6 @@ Feature: process tests for nodoInoltraPagamentoMod2
             </pay_i:RPT>
             """
     
-    @midRunnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT

@@ -1,4 +1,4 @@
-Feature: T216_carrello_checkPPP_sbloccoParcheggio
+Feature: T216_carrello_carte_checkPPP_sbloccoParcheggio
     #non toccare i valori
     Background:
         Given systems up
@@ -220,26 +220,30 @@ Feature: T216_carrello_checkPPP_sbloccoParcheggio
         And replace pa content with 44444444444 content
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query sblocco_parcheggio on db nodo_online under macro Mod1
 
-     Scenario: Execution Esito Mod1
+     Scenario: Execution Esito Carta
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
-        When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
+        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
                 "idPagamento": "$sessionToken",
+                "RRN":12166335,
                 "identificativoPsp": "POSTE1",
-                "tipoVersamento": "BP",
+                "tipoVersamento": "CP",
                 "identificativoIntermediario": "BANCOPOSTA",
                 "identificativoCanale": "POSTE1",
-                "tipoOperazione":"web"
+                "esitoTransazioneCarta": "123456", 
+                "importoTotalePagato": 11.11,
+                "timestampOperazione": "2012-04-23T18:25:43.001Z",
+                "codiceAutorizzativo": "123212"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-        And check esito is OK of inoltroEsito/mod1 response
-        And check urlRedirectPSP field exists in inoltroEsito/mod1 response
+        Then verify the HTTP status code of inoltroEsito/carta response is 200
+        And check esito is OK of inoltroEsito/carta response
+        And check url field not exists in inoltroEsito/carta response
 
 
     Scenario: Execute nodoChiediStatoRPT
-        Given the Execution Esito Mod1 scenario executed successfully
+        Given the Execution Esito Carta scenario executed successfully
         And initial XML nodoChiediStatoRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">

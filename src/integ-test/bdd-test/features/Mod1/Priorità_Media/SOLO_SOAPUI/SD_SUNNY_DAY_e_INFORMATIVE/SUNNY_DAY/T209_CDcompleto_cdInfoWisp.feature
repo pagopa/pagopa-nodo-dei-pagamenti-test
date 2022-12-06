@@ -2,7 +2,7 @@ Feature: T209_CDcompleto_cdInfoWisp
 
 Background:
     Given systems up
-    And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+    And generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code NA
     And RPT1 generation
         """
         <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -209,8 +209,28 @@ Scenario: attivaRPT phase
 Scenario: check nodoInviaRPT response
     Given the attivaRPT phase scenario executed successfully
     When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-    And retrieve session token from $nodoInviaRPTResponse.url
     Then check esito is OK of nodoInviaRPT response 
-    And checks the value $sessionToken of the record at column ID_SESSIONE of the table CD_INFO_PAGAMENTO retrived by the query cd_info_pagamento on db nodo_online under macro AppIOold
+    And retrieve session token from $nodoInviaRPTResponse.url
 
-
+Scenario: send nodoChiediSceltaWISP
+        Given the check nodoInviaRPT response scenario executed successfully 
+        And initial XML nodoChiediSceltaWISP
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <ws:nodoChiediSceltaWISP>
+                    <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                    <password>pwdpwdpwd</password>
+                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                    <keyPA>1307201616361259051cb66f9ac190df6ec</keyPA>
+                    <keyWISP>5cc7f140475743938a65021deb74c66b18062923</keyWISP>
+                </ws:nodoChiediSceltaWISP>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When EC sends SOAP nodoChiediSceltaWISP to nodo-dei-pagamenti
+        Then check effettuazioneScelta is CD_ARRIVATA of nodoChiediSceltaWISP response
+       
+    
