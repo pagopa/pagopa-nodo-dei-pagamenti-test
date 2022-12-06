@@ -67,12 +67,12 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartConv_inoltroNoConv
             <pay_i:importoTotaleDaVersare>15.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>CARTcheckConv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>6.00</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>15.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -240,7 +240,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartConv_inoltroNoConv
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>CARTcheckConv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
+            <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
@@ -328,12 +328,12 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartConv_inoltroNoConv
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
+            <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>$2iuv</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoRiscossione>CARTcheckConv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloPagamento>
@@ -360,14 +360,14 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartConv_inoltroNoConv
             <!--1 or more repetitions:-->
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>CARTcheckConv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
@@ -399,6 +399,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartConv_inoltroNoConv
     Scenario: Execute inoltroEsito/mod1 (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         When PSP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
+        """
         {
             "idPagamento":"$sessionToken",
             "identificativoPsp":"#psp#",
@@ -407,15 +408,16 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartConv_inoltroNoConv
             "identificativoCanale":"#canale#",
             "tipoOperazione":"web",
         }
+        """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
         And replace sessionExpected content with $sessionToken content
         And checks the value CONV1 of the record at column CODICE_CONVENZIONE of the table CARRELLO retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
-        And checks the value CONV1 of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
+        And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
 
     Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 3)
         Given the Execute inoltroEsito/mod1 (Phase 2) scenario executed successfully
-        When PSP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken
+        When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is OK of avanzamentoPagamento response
 
@@ -432,8 +434,8 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartConv_inoltroNoConv
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>CARTcheckConv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
             <rt>$rt1Attachment</rt>
