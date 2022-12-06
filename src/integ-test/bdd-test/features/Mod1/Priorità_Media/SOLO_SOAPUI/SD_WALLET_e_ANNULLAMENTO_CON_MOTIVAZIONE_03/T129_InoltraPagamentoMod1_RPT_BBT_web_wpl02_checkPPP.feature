@@ -4,8 +4,8 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_idPsp1_checkPPP
         Given systems up
 
     Scenario: Execute nodoInviaRPT request
-        Given replace canaleUsato content with WFESP_02_gabri content
-        And checks the value wpl02 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query checkPlugin on db nodo_cfg under macro Mod1
+        Given replace canaleUsato content with WFESP_01_LS content
+        And checks the value idPsp1 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query checkPlugin on db nodo_cfg under macro Mod1
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And RPT1 generation
             """
