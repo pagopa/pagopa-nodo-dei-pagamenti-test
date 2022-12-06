@@ -252,7 +252,7 @@ Feature: T153_InviaCarrelloRPT_2PA
                 <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
             </pay_i:soggettoPagatore>
             <pay_i:datiPagamento>
-                <pay_i:codiceEsitoPagamento>1</pay_i:codiceEsitoPagamento>
+                <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
                 <pay_i:importoTotalePagato>12.40</pay_i:importoTotalePagato>
                 <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
                 <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
@@ -338,7 +338,7 @@ Feature: T153_InviaCarrelloRPT_2PA
                 <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
             </pay_i:soggettoPagatore>
             <pay_i:datiPagamento>
-                <pay_i:codiceEsitoPagamento>1</pay_i:codiceEsitoPagamento>
+                <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
                 <pay_i:importoTotalePagato>12.40</pay_i:importoTotalePagato>
                 <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
                 <pay_i:CodiceContestoPagamento>CCD02</pay_i:CodiceContestoPagamento>
