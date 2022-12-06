@@ -128,5 +128,5 @@ stages:
             inputs:
               action: 'deploy'
               kubernetesServiceConnection: u87-aks-pci-uat-self-connection-nodo
-              namespace: nodo-prf
+              namespace: mock-ec-prf
               manifests: $(Pipeline.Workspace)/$(appVersion)-${{ parameters.env }}-manifest-app/*.yaml
