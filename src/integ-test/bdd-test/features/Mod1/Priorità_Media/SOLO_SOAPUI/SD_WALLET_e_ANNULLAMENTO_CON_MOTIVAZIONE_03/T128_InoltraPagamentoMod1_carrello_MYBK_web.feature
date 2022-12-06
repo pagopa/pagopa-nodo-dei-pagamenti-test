@@ -327,7 +327,7 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
         <pay_i:CodiceContestoPagamento>$2ccp</pay_i:CodiceContestoPagamento>
         <pay_i:datiSingoloPagamento>
           <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
-          <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
+          <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
           <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
           <pay_i:identificativoUnivocoRiscossione>newMybank</pay_i:identificativoUnivocoRiscossione>
           <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -438,7 +438,7 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
-          <rt>$rtAttachment</rt>
+          <rt>$rt1Attachment</rt>
           </ws:nodoInviaRT>
       </soapenv:Body>
     </soapenv:Envelope>
@@ -463,7 +463,7 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
             <codiceContestoPagamento>$2ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
-          <rt>$rtAttachment</rt>
+          <rt>$rt2Attachment</rt>
           </ws:nodoInviaRT>
       </soapenv:Body>
     </soapenv:Envelope>
