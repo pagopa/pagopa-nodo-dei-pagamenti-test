@@ -435,7 +435,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartDiversoInoltro
     Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 5)
         Given the Execute nodoChiediStatoRPT (Phase 4) scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code is 200 of avanzamentoPagamento response
+        Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is OK of avanzamentoPagamento response
 
     Scenario: Execute nodoInoltroEsitoCarta 1 (Phase 6)
@@ -455,7 +455,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartDiversoInoltro
                 "codiceAutorizzativo": "123212"
             }
             """
-        Then verify the HTTP status code is 200 of inoltroEsito/carta response
+        Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
 
     Scenario: Execute nodoInviaRT (Phase 7)
