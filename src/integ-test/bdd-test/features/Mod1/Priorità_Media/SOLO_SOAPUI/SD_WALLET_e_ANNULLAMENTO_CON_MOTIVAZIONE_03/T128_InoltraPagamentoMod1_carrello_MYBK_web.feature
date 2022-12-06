@@ -3,6 +3,7 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
     And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
+    And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
     And initial XML RPT_XML
     """
     <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/"
