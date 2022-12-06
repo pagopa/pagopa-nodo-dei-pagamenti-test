@@ -438,7 +438,7 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
-          <rt>$rt1Attachment</rt>
+          <rt>$rtAttachment</rt>
           </ws:nodoInviaRT>
       </soapenv:Body>
     </soapenv:Envelope>
