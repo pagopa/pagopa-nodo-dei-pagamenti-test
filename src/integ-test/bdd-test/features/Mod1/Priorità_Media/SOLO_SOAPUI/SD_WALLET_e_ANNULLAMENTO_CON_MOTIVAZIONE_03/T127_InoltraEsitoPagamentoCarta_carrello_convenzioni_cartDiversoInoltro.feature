@@ -362,7 +362,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartDiversoInoltro
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>CARTcheckConv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
+            <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
