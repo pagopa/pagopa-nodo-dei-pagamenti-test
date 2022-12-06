@@ -240,7 +240,7 @@ Feature: T128_InoltraPagamentoMod1_RPT_MYBK_web_senzaBuyerBank
     Then checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
     And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
     And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-    And check url field not exists in nodoChiediStatoRPT response
+    And check url field exists in nodoChiediStatoRPT response
   
   Scenario: Execute nodoChiediAvanzamentoPagamento
     Given the Execute nodoChiediStatoRPT request scenario executed successfully
