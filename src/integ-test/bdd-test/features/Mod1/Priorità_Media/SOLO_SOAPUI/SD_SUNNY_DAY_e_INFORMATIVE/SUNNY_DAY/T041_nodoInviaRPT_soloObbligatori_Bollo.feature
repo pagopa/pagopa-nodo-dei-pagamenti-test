@@ -62,7 +62,7 @@ Feature: T041_nodoInviaRPT_soloObbligatori_Bollo
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>CP</pay_i:tipoVersamento>
+            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>#IUV1#</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
@@ -100,7 +100,7 @@ Feature: T041_nodoInviaRPT_soloObbligatori_Bollo
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canaleRtPush#</identificativoCanale>
-            <tipoFirma></tipoFirma>
+            <!--tipoFirma></tipoFirma-->
             <rpt>$rpt1Attachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
@@ -121,7 +121,6 @@ Feature: T041_nodoInviaRPT_soloObbligatori_Bollo
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And tipoFirma with None in nodoInviaRPT
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
