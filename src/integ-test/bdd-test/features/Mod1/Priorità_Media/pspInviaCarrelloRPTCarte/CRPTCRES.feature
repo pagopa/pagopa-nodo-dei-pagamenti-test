@@ -173,7 +173,7 @@ Feature: process tests for pspInviaCarrelloRPTCarte
                 "codiceAutorizzativo": "123212"
             }
             """
-        Then verify the HTTP status code is <status> of inoltroEsito/carta response
+        Then verify the HTTP status code of inoltroEsito/carta response is <status>
         And check <description> is <response_tagvalue> of inoltroEsito/carta response
         Examples:
             | tag                            | value | status | description | response_tagvalue            | soapUI test |
