@@ -1,4 +1,4 @@
-T217_Quadrature
+Feature: T217_Quadrature
    Background:
       Given systems up
 
