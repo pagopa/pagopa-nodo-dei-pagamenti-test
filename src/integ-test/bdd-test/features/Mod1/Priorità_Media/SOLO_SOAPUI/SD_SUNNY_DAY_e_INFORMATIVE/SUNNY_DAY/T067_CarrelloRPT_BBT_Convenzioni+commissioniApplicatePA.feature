@@ -156,7 +156,7 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA
             </pay_i:soggettoPagatore>
             <pay_i:datiPagamento>
                 <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
-                <pay_i:importoTotalePagato>20.00</pay_i:importoTotalePagato>
+                <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
                 <pay_i:identificativoUnivocoVersamento>$1IUV</pay_i:identificativoUnivocoVersamento>
                 <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
                 <pay_i:datiSingoloPagamento>
