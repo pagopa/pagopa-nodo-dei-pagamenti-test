@@ -206,13 +206,13 @@ Feature: T128_InoltraPagamentoMod1_RPT_MYBK_web
     When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
     """
     {
-     buyerBank":"CT000002", 
-    "idPagamento": "$sessionToken",
-    "identificativoPsp": "#psp#",
-    "tipoVersamento": "MYBK",
-    "identificativoIntermediario": "#psp#",
-    "identificativoCanale": "#canale#",
-    "tipoOperazione":"web"
+      "buyerBank":"CT000002", 
+      "idPagamento": "$sessionToken",
+      "identificativoPsp": "#psp#",
+      "tipoVersamento": "MYBK",
+      "identificativoIntermediario": "#psp#",
+      "identificativoCanale": "#canale#",
+      "tipoOperazione":"web"
     }
     """
     Then verify the HTTP status code of inoltroEsito/mod1 response is 200
