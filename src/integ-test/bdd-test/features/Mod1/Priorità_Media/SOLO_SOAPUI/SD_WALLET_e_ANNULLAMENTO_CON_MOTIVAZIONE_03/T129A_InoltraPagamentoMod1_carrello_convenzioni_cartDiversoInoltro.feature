@@ -418,7 +418,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartDiversoInoltro
 
     Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 3)
         Given the Execute inoltroEsito/mod1 (Phase 2) scenario executed successfully
-        When PSP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken
+        When PSP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is OK of avanzamentoPagamento response
 
