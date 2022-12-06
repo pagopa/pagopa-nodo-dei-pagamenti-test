@@ -281,7 +281,7 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_KO_PSP
             <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
-            <rt>$rtAttachment</rt>
+            <rt>$rt1Attachment</rt>
             </ws:nodoInviaRT>
             </soapenv:Body>
             </soapenv:Envelope>
