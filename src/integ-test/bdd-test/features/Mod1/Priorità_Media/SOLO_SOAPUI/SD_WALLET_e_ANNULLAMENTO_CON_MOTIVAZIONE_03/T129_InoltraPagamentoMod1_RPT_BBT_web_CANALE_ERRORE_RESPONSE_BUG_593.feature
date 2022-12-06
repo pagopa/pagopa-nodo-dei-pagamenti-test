@@ -1,4 +1,4 @@
-Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_CANALE_ERRORE_RESPONSE - BUG_593
+Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_CANALE_ERRORE_RESPONSE_BUG_593
 
     Background:
         Given systems up
@@ -62,7 +62,7 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_CANALE_ERRORE_RESPONSE - BUG_593
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-                <pay_i:identificativoUnivocoVersamento>avanzaErrResponse</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>timeoutPsp</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>#CCP1#</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -154,13 +154,13 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_CANALE_ERRORE_RESPONSE - BUG_593
             <pay_i:datiPagamento>
                 <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
                 <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-                <pay_i:identificativoUnivocoVersamento>avanzaErrResponse</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>timeoutPsp</pay_i:identificativoUnivocoVersamento>
                 <pay_i:CodiceContestoPagamento>$1CCP</pay_i:CodiceContestoPagamento>
                 <pay_i:datiSingoloPagamento>
                     <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
                     <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
                     <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
-                    <pay_i:identificativoUnivocoRiscossione>avanzaErrResponse</pay_i:identificativoUnivocoRiscossione>
+                    <pay_i:identificativoUnivocoRiscossione>timeoutPsp</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                 </pay_i:datiSingoloPagamento>
@@ -175,7 +175,7 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_CANALE_ERRORE_RESPONSE - BUG_593
                     <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-                    <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>timeoutPsp</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
                 </ppt:intestazionePPT>
             </soapenv:Header>
@@ -226,7 +226,8 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_CANALE_ERRORE_RESPONSE - BUG_593
             "tipoOperazione":"web"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 408
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+        And check errorCode is UNKPSP of inoltroEsito/mod1 response
         And check descrizione is Operazione in timeout of inoltroEsito/mod1 response
 
 
@@ -242,7 +243,7 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_CANALE_ERRORE_RESPONSE - BUG_593
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-                    <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>timeoutPsp</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
             </soapenv:Body>
@@ -273,7 +274,7 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_CANALE_ERRORE_RESPONSE - BUG_593
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>timeoutPsp</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
