@@ -237,9 +237,9 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA
                         <identificativoCanale>#canale#</identificativoCanale>
                         <password>pwdpwdpwd</password>
                         <identificativoPSP>#psp#</identificativoPSP>
-                        <identificativoDominio>$nodoInviaRPT.identificativoDominio</identificativoDominio>
-                        <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                        <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+                        <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                        <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
+                        <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                         <tipoFirma></tipoFirma>
                         <forzaControlloSegno>1</forzaControlloSegno>
                         <rt>$rt1Attachment</rt>
