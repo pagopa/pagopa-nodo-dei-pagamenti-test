@@ -359,7 +359,7 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
                   <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                   <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
                   <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
-                  <rpt>$rptAttachment</rpt>
+                  <rpt>$rpt1Attachment</rpt>
                 </elementoListaRPT>
                 <elementoListaRPT>
                   <identificativoDominio>#creditor_institution_code#</identificativoDominio>
