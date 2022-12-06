@@ -361,6 +361,11 @@ def step_impl(context):
         payload = payload.replace('#sdf#', timedate)
         setattr(context, 'sdf', timedate)
 
+    if '#mills_time#' in payload:
+        timedate_mills= timedate * 1000
+        payload = payload.replace('#mills_time#', timedate_mills)
+        setattr(context, 'mills_time', timedate_mills)
+
     payload = utils.replace_global_variables(payload, context)
 
     setattr(context, 'rpt', payload)
