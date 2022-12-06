@@ -211,7 +211,7 @@ Feature: T128_InoltraPagamentoMod1_RPT_MYBK_web
       "identificativoPsp": "#psp#",
       "tipoVersamento": "MYBK",
       "identificativoIntermediario": "#psp#",
-      "identificativoCanale": "#canale#",
+      "identificativoCanale": "#canaleRtPush#",
       "tipoOperazione":"web"
     }
     """
