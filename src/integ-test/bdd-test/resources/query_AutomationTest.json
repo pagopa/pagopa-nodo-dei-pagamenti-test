@@ -195,6 +195,7 @@
         "ID_Serv_Plugin": "SELECT columns from table_name c join CANALI_NODO n on n.OBJ_ID=c.FK_CANALI_NODO where c.ID_CANALE='$canaleUsato'",
         "sblocco_parcheggio":"SELECT columns FROM table_name WHERE IUV='$iuv' AND CCP= '$ccp' AND ID_DOMINIO='$pa' ORDER BY INSERTED_TIMESTAMP",
         "codice_convenzione_session": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$sessionExpected'",
+        "checkPlugin": "SELECT columns from table_name c join CANALI_NODO n on n.OBJ_ID=c.FK_CANALI_NODO where c.ID_CANALE='$canaleUsato'",
         "get_staz_inter_pa": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$sessionExpected' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1)"
     },
     "RTPull" : {
