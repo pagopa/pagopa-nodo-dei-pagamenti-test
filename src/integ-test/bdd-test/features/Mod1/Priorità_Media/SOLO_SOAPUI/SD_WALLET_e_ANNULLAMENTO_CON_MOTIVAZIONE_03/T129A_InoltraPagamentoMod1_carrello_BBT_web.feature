@@ -384,6 +384,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web
     Scenario: Execute inoltroEsito/mod1 (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         When PSP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
+        """
         {
             "idPagamento":"$sessionToken",
             "identificativoPsp":"#psp#",
@@ -392,6 +393,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web
             "identificativoCanale":"#canale#",
             "tipoOperazione":"web"
         }
+        """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
 
