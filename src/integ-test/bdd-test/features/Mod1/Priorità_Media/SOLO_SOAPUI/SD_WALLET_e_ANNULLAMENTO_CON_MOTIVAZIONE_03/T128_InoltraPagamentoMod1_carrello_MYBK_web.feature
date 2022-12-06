@@ -65,7 +65,7 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
         <pay_i:importoTotaleDaVersare>15.00</pay_i:importoTotaleDaVersare>
         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
         <pay_i:identificativoUnivocoVersamento>newMybank</pay_i:identificativoUnivocoVersamento>
-        <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+        <pay_i:codiceContestoPagamento>#ccp#</pay_i:codiceContestoPagamento>
         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
         <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -148,7 +148,7 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
         <pay_i:importoTotaleDaVersare>5.00</pay_i:importoTotaleDaVersare>
         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
         <pay_i:identificativoUnivocoVersamento>newMybank</pay_i:identificativoUnivocoVersamento>
-        <pay_i:codiceContestoPagamento>CCD02</pay_i:codiceContestoPagamento>
+        <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
         <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -242,7 +242,7 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
         <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
         <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
         <pay_i:identificativoUnivocoVersamento>newMybank</pay_i:identificativoUnivocoVersamento>
-        <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
+        <pay_i:CodiceContestoPagamento>$ccp</pay_i:CodiceContestoPagamento>
         <pay_i:datiSingoloPagamento>
           <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
           <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
@@ -330,7 +330,7 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
         <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
         <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
         <pay_i:identificativoUnivocoVersamento>newMybank</pay_i:identificativoUnivocoVersamento>
-        <pay_i:CodiceContestoPagamento>CCD02</pay_i:CodiceContestoPagamento>
+        <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
         <pay_i:datiSingoloPagamento>
           <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
           <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
@@ -364,13 +364,13 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
                 <elementoListaRPT>
                   <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                   <identificativoUnivocoVersamento>newMybank</identificativoUnivocoVersamento>
-                  <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                  <codiceContestoPagamento>$ccp</codiceContestoPagamento>
                   <rpt>$rptAttachment</rpt>
                 </elementoListaRPT>
                 <elementoListaRPT>
                   <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                   <identificativoUnivocoVersamento>newMybank</identificativoUnivocoVersamento>
-                  <codiceContestoPagamento>CCD02</codiceContestoPagamento>
+                  <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                   <rpt>$rpt2Attachment</rpt>
                 </elementoListaRPT>
             </listaRPT>
@@ -441,7 +441,7 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>newMybank</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <codiceContestoPagamento>$ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
           <rt>$rtAttachment</rt>
@@ -466,7 +466,7 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>newMybank</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD02</codiceContestoPagamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
           <rt>$rtAttachment</rt>
