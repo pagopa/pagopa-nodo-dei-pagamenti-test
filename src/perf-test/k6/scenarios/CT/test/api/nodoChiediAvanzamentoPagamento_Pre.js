@@ -60,7 +60,7 @@ export function nodoChiediAvanzamentoPagamento_Pre(baseUrl,paymentToken) {
 
   let outcome='';
   try{
-  outcome= res["esito"];
+  outcome= JSON.parse(res.body)["esito"];
   }catch(error){}
 
 
@@ -76,7 +76,7 @@ export function nodoChiediAvanzamentoPagamento_Pre(baseUrl,paymentToken) {
 	if(check(
     res,
     {
-      'nodoChiediAvanzamentoPagamento_Pre:ko_rate': (r) => outcome !== 'ACK_UNKNOWN',
+      'nodoChiediAvanzamentoPagamento_Pre:ko_rate': (r) => outcome != 'ACK_UNKNOWN',
     },
     { nodoChiediAvanzamentoPagamento_Pre: 'ko_rate', ALL:'ko_rate' }
   )){

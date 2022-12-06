@@ -52,7 +52,7 @@ return `
 `
 };
 
-export function inoltraEsitoPagamentoPaypal(baseUrl,rndAnagPsp,paymentToken,valueToAssert) {
+export function inoltraEsitoPagamentoPaypal(baseUrl,rndAnagPsp,paymentToken,valueToAssert, transactionId) {
 
  var dt = new Date();
  let ms = dt.getMilliseconds();
@@ -85,7 +85,7 @@ export function inoltraEsitoPagamentoPaypal(baseUrl,rndAnagPsp,paymentToken,valu
 
 
  let body={"idPagamento":paymentToken,
-          "idTransazione":"194111124612",
+          "idTransazione":transactionId,
           "idTransazionePsp":"0000000000142559120608",
           "identificativoPsp": rndAnagPsp.PSP,
           "identificativoIntermediario": rndAnagPsp.INTPSP,

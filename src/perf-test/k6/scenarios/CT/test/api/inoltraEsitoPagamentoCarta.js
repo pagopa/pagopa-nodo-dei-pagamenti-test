@@ -24,13 +24,13 @@ return `
 `
 };
 
-export function inoltraEsitoPagamentoCarta(baseUrl,rndAnagPsp,paymentToken, fieldToAssert,valueToAssert, importoTotale) {
+export function inoltraEsitoPagamentoCarta(baseUrl,rndAnagPsp,paymentToken, fieldToAssert,valueToAssert, importoTotale,rrn) {
 	
  console.debug("inoltraEsitoPagamentoCarta importoTotale "+ importoTotale + " type "+ typeof importoTotale)
  let body=
  	`{
 		\"idPagamento\":\"${paymentToken}\", 
-		\"RRN\":15465081, 
+		\"RRN\":${rrn}, 
 		\"identificativoPsp\":\"${rndAnagPsp.PSP}\",
 		\"tipoVersamento\":\"CP\",
 		\"identificativoIntermediario\":\"${rndAnagPsp.INTPSP}\",
@@ -95,8 +95,15 @@ export function inoltraEsitoPagamentoCarta(baseUrl,rndAnagPsp,paymentToken, fiel
 
    let outcome='';
    try{
-	let bodyJson = JSON.parse(res.body);
-   outcome= bodyJson[fieldToAssert];
+	if(valueToAssert != '408'){
+		let bodyJson = JSON.parse(res.body);
+   		outcome= bodyJson[fieldToAssert];
+	}
+	else{
+		console.debug("res status is "+res.status)
+		outcome = res.status;
+	}
+	
    }catch(error){}
 
   /*console.log("inoltraEsitoPagamento="+res.body);
@@ -118,11 +125,11 @@ export function inoltraEsitoPagamentoCarta(baseUrl,rndAnagPsp,paymentToken, fiel
     res,
     {
      
-	  'inoltraEsitoPagamentoCarta:ko_rate': (r) => outcome !== valueToAssert,
+	  'inoltraEsitoPagamentoCarta:ko_rate': (r) => outcome != valueToAssert,
     },
     { inoltraEsitoPagamentoCarta: 'ko_rate', ALL: 'ko_rate' }
   )){
-	fail("outcome != ok: "+outcome);
+	fail("outcome != "+ valueToAssert + ": "+outcome);
 	}
   
   return res;

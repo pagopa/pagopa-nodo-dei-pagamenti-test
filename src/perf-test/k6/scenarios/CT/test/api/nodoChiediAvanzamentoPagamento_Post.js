@@ -60,7 +60,7 @@ export function nodoChiediAvanzamentoPagamento_Post(baseUrl,paymentToken) {
 
   let outcome='';
   try{
-  outcome= res["esito"];
+  outcome= JSON.parse(res.body)["esito"];
   }catch(error){}
 
 

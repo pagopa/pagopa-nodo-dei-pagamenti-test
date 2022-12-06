@@ -25,6 +25,7 @@ parameters:
       - rampa_10_100_10
       - rampa_30_300_10
       - rampa_50_500_10
+      - rampa_50_500_10_1
 variables:
   artifactName: TestPT
 
@@ -61,7 +62,7 @@ stages:
       - job: k6_run_scripts
         displayName: "k6 run scripts"
         pool: pagopa-agent-pool-uat
-        
+        timeoutInMinutes: 0 #Timeout
         steps:
           - checkout: none    
                        

@@ -169,7 +169,7 @@ export function total() {
   
   
   let importoTotale = res.importoTotale;  
-  res = inoltraEsitoPagamentoCarta(baseRestUrl,rndAnagPsp,paymentToken, 'esito','OK', importoTotale);
+  res = inoltraEsitoPagamentoCarta(baseRestUrl,rndAnagPsp,paymentToken, 'esito','OK', importoTotale, 15465081);
 
   
   
