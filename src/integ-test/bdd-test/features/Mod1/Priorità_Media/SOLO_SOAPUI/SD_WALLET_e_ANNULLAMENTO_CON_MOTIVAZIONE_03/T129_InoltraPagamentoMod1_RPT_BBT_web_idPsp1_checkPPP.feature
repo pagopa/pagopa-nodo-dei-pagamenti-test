@@ -123,7 +123,7 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_idPsp1_checkPPP
                         <ws:pspInviaRPTResponse>
                             <pspInviaRPTResponse>
                                 <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                                <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+                                <identificativoCarrello>$nodoInviaRPT.identificativoPSP</identificativoCarrello>
                                 <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
                             </pspInviaRPTResponse>
                         </ws:pspInviaRPTResponse>
