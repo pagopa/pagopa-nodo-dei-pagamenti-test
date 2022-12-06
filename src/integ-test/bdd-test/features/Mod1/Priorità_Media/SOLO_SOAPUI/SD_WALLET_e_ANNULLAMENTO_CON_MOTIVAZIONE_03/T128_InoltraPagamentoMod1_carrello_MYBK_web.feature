@@ -388,8 +388,8 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
                     <ws:pspInviaCarrelloRPTResponse>
                         <pspInviaCarrelloRPTResponse>
                             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                            <identificativoCarrello>$1carrello</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
                         </pspInviaCarrelloRPTResponse>
                     </ws:pspInviaCarrelloRPTResponse>
                 </soapenv:Body>
