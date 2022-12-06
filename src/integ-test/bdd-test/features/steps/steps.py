@@ -363,7 +363,7 @@ def step_impl(context):
 
     if '#mills_time#' in payload:
         millisec = str(int(time.time() * 1000))
-        payload = payload.replace('#mills_time#', ccp)
+        payload = payload.replace('#mills_time#', millisec)
         setattr(context, 'mills_time', millisec)
 
     payload = utils.replace_global_variables(payload, context)
