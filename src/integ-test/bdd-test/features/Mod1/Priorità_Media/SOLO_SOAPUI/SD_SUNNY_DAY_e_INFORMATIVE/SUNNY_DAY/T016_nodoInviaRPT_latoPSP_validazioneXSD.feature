@@ -63,7 +63,7 @@ Feature: T016_nodoInviaRPT_latoPSP_validazioneXSD
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>validateXSD</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#sdf#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -90,7 +90,7 @@ Feature: T016_nodoInviaRPT_latoPSP_validazioneXSD
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>validateXSD</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$ccp</codiceContestoPagamento>
+            <codiceContestoPagamento>$sdf</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -98,7 +98,7 @@ Feature: T016_nodoInviaRPT_latoPSP_validazioneXSD
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
