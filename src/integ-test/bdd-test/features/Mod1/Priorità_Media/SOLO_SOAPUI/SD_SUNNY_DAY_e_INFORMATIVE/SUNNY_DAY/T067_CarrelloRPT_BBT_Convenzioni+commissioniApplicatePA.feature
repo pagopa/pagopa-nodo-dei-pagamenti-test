@@ -179,7 +179,7 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>#carrelloMills#</identificativoCarrello>
+            <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -220,7 +220,7 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url field exists in nodoInviaCarrelloRPT response
         #DB check
-        And replace idCarrello content with #carrelloMills# content
+        And replace idCarrello content with $1carrello content
         And wait 20 seconds for expiration 
         And checks the value codiceConvenzione of the record at column CODICE_CONVENZIONE of the table CARRELLO retrived by the query codice_convenzione on db nodo_online under macro Mod1
 
