@@ -196,6 +196,7 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
+            <codiceConvenzione>codiceConvenzione$1IUV</codiceConvenzione>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -222,7 +223,7 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA
         #DB check
         And replace idCarrello content with $1carrello content
         And wait 20 seconds for expiration 
-        And checks the value codiceConvenzione of the record at column CODICE_CONVENZIONE of the table CARRELLO retrived by the query codice_convenzione on db nodo_online under macro Mod1
+        And checks the value codiceConvenzione$1IUV of the record at column CODICE_CONVENZIONE of the table CARRELLO retrived by the query codice_convenzione on db nodo_online under macro Mod1
 
         Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
