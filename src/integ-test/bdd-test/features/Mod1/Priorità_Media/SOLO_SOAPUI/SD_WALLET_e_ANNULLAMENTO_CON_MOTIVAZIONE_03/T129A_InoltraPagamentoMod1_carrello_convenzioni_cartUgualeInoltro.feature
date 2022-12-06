@@ -399,6 +399,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartUgualeInoltro
     Scenario: Execute inoltroEsito/mod1 (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         When PSP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
+        """
         {
             "idPagamento":"$sessionToken",
             "identificativoPsp":"#psp#",
@@ -408,6 +409,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartUgualeInoltro
             "tipoOperazione":"web",
             "codiceConvenzione":"CONV1"
         }
+        """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
         And replace sessionExpected content with $sessionToken content
@@ -416,7 +418,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartUgualeInoltro
 
     Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 3)
         Given the Execute inoltroEsito/mod1 (Phase 2) scenario executed successfully
-        When PSP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken
+        When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is OK of avanzamentoPagamento response
 
