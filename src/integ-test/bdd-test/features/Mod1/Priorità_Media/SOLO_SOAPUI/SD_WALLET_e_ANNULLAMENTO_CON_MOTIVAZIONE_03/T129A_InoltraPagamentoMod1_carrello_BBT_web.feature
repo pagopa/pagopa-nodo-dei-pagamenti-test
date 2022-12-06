@@ -379,7 +379,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web
             """
         When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        And retrieve session token from $nodoInviaCarrelloRPT response
+        And retrieve session token from $nodoInviaCarrelloRPT.url response
 
     Scenario: Execute inoltroEsito/mod1 (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
