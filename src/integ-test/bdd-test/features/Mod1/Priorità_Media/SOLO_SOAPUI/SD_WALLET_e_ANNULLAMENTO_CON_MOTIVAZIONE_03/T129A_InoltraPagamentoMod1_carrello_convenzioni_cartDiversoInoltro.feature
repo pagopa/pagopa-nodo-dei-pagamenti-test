@@ -333,7 +333,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartDiversoInoltro
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>$2iuv</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoRiscossione>CARTcheckConv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloPagamento>
@@ -360,7 +360,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartDiversoInoltro
             <!--1 or more repetitions:-->
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>CARTcheckConv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
