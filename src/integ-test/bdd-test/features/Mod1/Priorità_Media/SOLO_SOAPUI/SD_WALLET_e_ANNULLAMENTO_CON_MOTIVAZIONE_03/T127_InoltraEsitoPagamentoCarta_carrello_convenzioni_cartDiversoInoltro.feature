@@ -381,7 +381,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartDiversoInoltro
         And retrieve session token from $nodoInviaCarrelloRPT response
 
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 2)
-        Given the Execute nodoInviaCarrelloRPT (Phase 2) scenario executed successfully
+        Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then veirfy the HTTP status code of informazioniPagamento response is 200
 
