@@ -210,7 +210,7 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA
             <pspInviaCarrelloRPTResponse>
             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
             <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
             </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTResponse>
             </soapenv:Body>
