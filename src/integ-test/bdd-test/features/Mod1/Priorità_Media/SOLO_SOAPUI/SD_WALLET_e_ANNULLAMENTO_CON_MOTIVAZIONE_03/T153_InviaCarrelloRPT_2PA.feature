@@ -346,7 +346,7 @@ Feature: T153_InviaCarrelloRPT_2PA
                     <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
                     <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
                     <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
-                    <pay_i:identificativoUnivocoRiscossione>$2iUV</pay_i:identificativoUnivocoRiscossione>
+                    <pay_i:identificativoUnivocoRiscossione>$2iuv</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                 </pay_i:datiSingoloPagamento>
