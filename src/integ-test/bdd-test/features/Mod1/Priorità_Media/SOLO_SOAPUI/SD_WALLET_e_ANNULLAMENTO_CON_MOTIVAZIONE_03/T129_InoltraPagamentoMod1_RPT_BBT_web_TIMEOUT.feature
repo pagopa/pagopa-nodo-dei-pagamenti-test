@@ -1,4 +1,4 @@
-Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_KO_PSP
+Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_TIMEOUT
 
     Background:
         Given systems up
@@ -62,7 +62,7 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_KO_PSP
                 <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
                 <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
                 <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-                <pay_i:identificativoUnivocoVersamento>RPTdaRifPsp</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>timeoutPsp</pay_i:identificativoUnivocoVersamento>
                 <pay_i:codiceContestoPagamento>#CCP1#</pay_i:codiceContestoPagamento>
                 <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
                 <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -154,13 +154,13 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_KO_PSP
             <pay_i:datiPagamento>
                 <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
                 <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-                <pay_i:identificativoUnivocoVersamento>RPTdaRifPsp</pay_i:identificativoUnivocoVersamento>
+                <pay_i:identificativoUnivocoVersamento>timeoutPsp</pay_i:identificativoUnivocoVersamento>
                 <pay_i:CodiceContestoPagamento>$1CCP</pay_i:CodiceContestoPagamento>
                 <pay_i:datiSingoloPagamento>
                     <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
                     <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
                     <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
-                    <pay_i:identificativoUnivocoRiscossione>RPTdaRifPsp</pay_i:identificativoUnivocoRiscossione>
+                    <pay_i:identificativoUnivocoRiscossione>timeoutPsp</pay_i:identificativoUnivocoRiscossione>
                     <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
                 </pay_i:datiSingoloPagamento>
@@ -175,7 +175,7 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_KO_PSP
                     <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-                    <identificativoUnivocoVersamento>RPTdaRifPsp</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>timeoutPsp</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
                 </ppt:intestazionePPT>
             </soapenv:Header>
@@ -203,18 +203,14 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_KO_PSP
                 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
                 <soapenv:Header/>
                 <soapenv:Body>
-                    <ws:pspInviaRPTResponse>
-                        <pspInviaRPTResponse>
-                            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                            <listaErroriRPT>
-                            <fault>
-                                <faultCode>CANALE_SYSTEM_ERROR</faultCode>
-                                <faultString>system error</faultString>
-                                <id>wrapper</id>
-                            </fault>
-                            </listaErroriRPT>
-                        </pspInviaRPTResponse>
-                    </ws:pspInviaRPTResponse>
+                <ws:pspInviaRPTResponse>
+                <pspInviaRPTResponse>
+                <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                <delay>10000</delay>
+                <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+                <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                </pspInviaRPTResponse>
+                </ws:pspInviaRPTResponse>
                 </soapenv:Body>
                 </soapenv:Envelope>
                 """
@@ -231,8 +227,8 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_KO_PSP
             }
             """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-        And check esito is KO of inoltroEsito/mod1 response
-        And check descrizione is Risposta negativa del Canale of inoltroEsito/mod1 response
+        And check errorCode is UNKPSP of inoltroEsito/mod1 response
+        And check descrizione is Operazione in timeout of inoltroEsito/mod1 response
 
 
     Scenario: Execute nodoChiediStatoRPT request
@@ -247,7 +243,7 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_KO_PSP
                     <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-                    <identificativoUnivocoVersamento>RPTdaRifPsp</identificativoUnivocoVersamento>
+                    <identificativoUnivocoVersamento>timeoutPsp</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
             </soapenv:Body>
@@ -256,13 +252,13 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_KO_PSP
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
+        And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
 
     Scenario: Execute nodoChiediAvanzamentoPagamento
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
-        And check esito is KO of avanzamentoPagamento response
+        And check esito is ACK_UNKNOWN of avanzamentoPagamento response
 
     @midRunnable
     Scenario: Execute nodoInviaRT request
@@ -278,7 +274,7 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_KO_PSP
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>RPTdaRifPsp</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>timeoutPsp</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
@@ -288,4 +284,4 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_KO_PSP
             </soapenv:Envelope>
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is KO of nodoInviaRT response
+        Then check esito is OK of nodoInviaRT response
