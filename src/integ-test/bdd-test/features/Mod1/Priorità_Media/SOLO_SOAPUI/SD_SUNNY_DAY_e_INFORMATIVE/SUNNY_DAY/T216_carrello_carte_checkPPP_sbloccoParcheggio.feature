@@ -239,11 +239,11 @@ Feature: T216_carrello_carte_checkPPP_sbloccoParcheggio
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
-        And check urlRedirectPSP field exists in inoltroEsito/carta response
+        And check url field not exists in inoltroEsito/carta response
 
 
     Scenario: Execute nodoChiediStatoRPT
-        Given the Execution Esito Mod1 scenario executed successfully
+        Given the Execution Esito Carta scenario executed successfully
         And initial XML nodoChiediStatoRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
