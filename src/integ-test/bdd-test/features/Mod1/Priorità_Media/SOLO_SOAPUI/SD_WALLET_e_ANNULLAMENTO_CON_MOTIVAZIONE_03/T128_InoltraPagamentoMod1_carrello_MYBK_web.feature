@@ -327,7 +327,7 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
         <pay_i:CodiceContestoPagamento>$2ccp</pay_i:CodiceContestoPagamento>
         <pay_i:datiSingoloPagamento>
           <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
-          <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
+          <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
           <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
           <pay_i:identificativoUnivocoRiscossione>newMybank</pay_i:identificativoUnivocoRiscossione>
           <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -411,7 +411,7 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
     Then verify the HTTP status code of inoltroEsito/mod1 response is 200
     And check esito is OK of inoltroEsito/mod1 response
     And check urlRedirectPSP field exists in inoltroEsito/mod1 response
-    And checks the value IDVS=CT000002 of the record at column PARAMETRI_PROFILO_PAGAMENTO of the table RPT retrived by the query parametri_profilo_pagamento on db wfesp under macro wfesp
+    And checks the value IDVS=CT000002 of the record at column PARAMETRI_PROFILO_PAGAMENTO of the table CARRELLO_RPT retrived by the query parametri_profilo_pagamento on db wfesp under macro wfesp
   
   
   Scenario: Execute nodoChiediAvanzamentoPagamento
@@ -434,11 +434,11 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>newMybank</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$ccp</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
-          <rt>$rtAttachment</rt>
+          <rt>$rt1Attachment</rt>
           </ws:nodoInviaRT>
       </soapenv:Body>
     </soapenv:Envelope>
@@ -459,11 +459,11 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>newMybank</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$2ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
-          <rt>$rtAttachment</rt>
+          <rt>$rt2Attachment</rt>
           </ws:nodoInviaRT>
       </soapenv:Body>
     </soapenv:Envelope>
