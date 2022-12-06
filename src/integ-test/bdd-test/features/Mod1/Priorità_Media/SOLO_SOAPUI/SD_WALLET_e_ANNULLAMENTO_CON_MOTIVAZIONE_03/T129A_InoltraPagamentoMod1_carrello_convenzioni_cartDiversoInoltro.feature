@@ -64,7 +64,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartDiversoInoltro
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>15.00</pay_i:importoTotaleDaVersare>
+            <pay_i:importoTotaleDaVersare>6.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>CARTcheckConv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
