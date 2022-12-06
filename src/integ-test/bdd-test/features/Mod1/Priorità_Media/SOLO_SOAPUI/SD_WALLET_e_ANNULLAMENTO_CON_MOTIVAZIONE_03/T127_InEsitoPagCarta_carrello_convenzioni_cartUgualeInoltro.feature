@@ -3,9 +3,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
     And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
-    And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-    And replace $1iuv content with CARTcheckConv content
-    And RPT generation
+    And initial XML RPT_XML
     """
     <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -16,7 +14,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
         <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
       </pay_i:dominio>
       <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-      <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
+      <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
       <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
       <pay_i:soggettoVersante>
         <pay_i:identificativoUnivocoVersante>
@@ -62,11 +60,11 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
         <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
       </pay_i:enteBeneficiario>
       <pay_i:datiVersamento>
-        <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+        <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
         <pay_i:importoTotaleDaVersare>15.00</pay_i:importoTotaleDaVersare>
         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-        <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-        <pay_i:codiceContestoPagamento>4783-2022-05-02-10:31:46.146</pay_i:codiceContestoPagamento>
+        <pay_i:identificativoUnivocoVersamento>CARTcheckConv</pay_i:identificativoUnivocoVersamento>
+        <pay_i:codiceContestoPagamento>#ccp3#</pay_i:codiceContestoPagamento>
         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
         <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -84,6 +82,10 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
       </pay_i:datiVersamento>
     </pay_i:RPT>
     """
+    And RPT generation 
+    """
+    $RPT_XML
+    """
     And RPT2 generation
     """
     <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/"
@@ -95,7 +97,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
         <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
       </pay_i:dominio>
       <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-      <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
+      <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
       <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
       <pay_i:soggettoVersante>
         <pay_i:identificativoUnivocoVersante>
@@ -141,11 +143,11 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
         <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
       </pay_i:enteBeneficiario>
       <pay_i:datiVersamento>
-        <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+        <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
         <pay_i:importoTotaleDaVersare>5.00</pay_i:importoTotaleDaVersare>
         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
         <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
-        <pay_i:codiceContestoPagamento>4783-2022-05-02-10:31:46.146</pay_i:codiceContestoPagamento>
+        <pay_i:codiceContestoPagamento>$RPT_XML.codiceContestoPagamento</pay_i:codiceContestoPagamento>
         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
         <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -174,9 +176,9 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
         <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
       </pay_i:dominio>
       <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
-      <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
+      <pay_i:dataOraMessaggioRicevuta>2001-12-31T12:00:00</pay_i:dataOraMessaggioRicevuta>
       <pay_i:riferimentoMessaggioRichiesta>RiferimentoMessaggioRichiesta</pay_i:riferimentoMessaggioRichiesta>
-      <pay_i:riferimentoDataRichiesta>#date#</pay_i:riferimentoDataRichiesta>
+      <pay_i:riferimentoDataRichiesta>2001-01-01</pay_i:riferimentoDataRichiesta>
       <pay_i:istitutoAttestante>
         <pay_i:identificativoUnivocoAttestante>
           <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
@@ -238,14 +240,14 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
       <pay_i:datiPagamento>
         <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
         <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-        <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-        <pay_i:CodiceContestoPagamento>4783-2022-05-02-10:31:46.146</pay_i:CodiceContestoPagamento>
+        <pay_i:identificativoUnivocoVersamento>CARTcheckConv</pay_i:identificativoUnivocoVersamento>
+        <pay_i:CodiceContestoPagamento>$RPT_XML.codiceContestoPagamento</pay_i:CodiceContestoPagamento>
         <pay_i:datiSingoloPagamento>
           <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
           <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
-          <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
-          <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
-          <pay_i:causaleVersamento>pagamento fotocopie pratica RT1</pay_i:causaleVersamento>
+          <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
+          <pay_i:identificativoUnivocoRiscossione>CARTcheckConv</pay_i:identificativoUnivocoRiscossione>
+          <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
           <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
         </pay_i:datiSingoloPagamento>
       </pay_i:datiPagamento>
@@ -262,9 +264,9 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
         <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
       </pay_i:dominio>
       <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
-      <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
+      <pay_i:dataOraMessaggioRicevuta>2001-12-31T12:00:00</pay_i:dataOraMessaggioRicevuta>
       <pay_i:riferimentoMessaggioRichiesta>RiferimentoMessaggioRichiesta</pay_i:riferimentoMessaggioRichiesta>
-      <pay_i:riferimentoDataRichiesta>#date#</pay_i:riferimentoDataRichiesta>
+      <pay_i:riferimentoDataRichiesta>2001-01-01</pay_i:riferimentoDataRichiesta>
       <pay_i:istitutoAttestante>
         <pay_i:identificativoUnivocoAttestante>
           <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
@@ -327,27 +329,27 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
         <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
         <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
         <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
-        <pay_i:CodiceContestoPagamento>4783-2022-05-02-10:31:46.146</pay_i:CodiceContestoPagamento>
+        <pay_i:CodiceContestoPagamento>$RPT_XML.codiceContestoPagamento</pay_i:CodiceContestoPagamento>
         <pay_i:datiSingoloPagamento>
           <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
           <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
-          <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
-          <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
-          <pay_i:causaleVersamento>pagamento fotocopie pratica RT2</pay_i:causaleVersamento>
+          <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
+          <pay_i:identificativoUnivocoRiscossione>CARTcheckConv</pay_i:identificativoUnivocoRiscossione>
+          <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
           <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
         </pay_i:datiSingoloPagamento>
       </pay_i:datiPagamento>
     </pay_i:RT>
     """
   Scenario: Execute nodoInviaCarrelloRPT request
-    And initial XML nodoInviaCarrelloRPT
+    Given initial XML nodoInviaCarrelloRPT
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
       <soapenv:Header>
           <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>CART4783-2022-05-02-10:31:46.146</identificativoCarrello>
+            <identificativoCarrello>CART$RPT_XML.codiceContestoPagamento</identificativoCarrello>
           </ppt:intestazioneCarrelloPPT>
       </soapenv:Header>
       <soapenv:Body>
@@ -360,14 +362,14 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
                 <!--1 or more repetitions:-->
                 <elementoListaRPT>
                   <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                  <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                  <codiceContestoPagamento>4783-2022-05-02-10:31:46.146</codiceContestoPagamento>
+                  <identificativoUnivocoVersamento>CARTcheckConv</identificativoUnivocoVersamento>
+                  <codiceContestoPagamento>$RPT_XML.codiceContestoPagamento</codiceContestoPagamento>
                   <rpt>$rptAttachment</rpt>
                 </elementoListaRPT>
                 <elementoListaRPT>
                   <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                   <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
-                  <codiceContestoPagamento>4783-2022-05-02-10:31:46.146</codiceContestoPagamento>
+                  <codiceContestoPagamento>$RPT_XML.codiceContestoPagamento</codiceContestoPagamento>
                   <rpt>$rpt2Attachment</rpt>
                 </elementoListaRPT>
             </listaRPT>
@@ -377,11 +379,10 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
     </soapenv:Envelope>
     """
     When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-    Then check esito is OK of nodoInviaCarrelloRPT response
+    Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
     And check url field exists in nodoInviaCarrelloRPT response
     And check url contains acards of nodoInviaCarrelloRPT response
     And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-  
 
   Scenario: Execute informazioniPagamento request
     Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
@@ -394,7 +395,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
     And check urlRedirectEC field exists in informazioniPagamento response
 
   Scenario: Execute nodoInoltraEsitoPagamentoCarta1 request
-    Given the Execute nodoInviaRPT request scenario executed successfully
+    Given the Execute informazioniPagamento request scenario executed successfully
     And initial XML pspInviaCarrelloRPTCarte
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -402,7 +403,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
         <soapenv:Body>
             <ws:pspInviaCarrelloRPTCarteResponse>
                 <pspInviaCarrelloRPTResponse>
-                    <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                    <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
                 </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
         </soapenv:Body>
@@ -433,7 +434,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
     And checks the value CONV1 of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
 
   Scenario: Execute nodoChiediStatoRPT request
-    Given the Execute nodoInoltraEsitoPagamentoCarta request scenario executed successfully
+    Given the DB check scenario executed successfully
     And initial XML nodoChiediStatoRPT
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -444,8 +445,8 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>16514801269711</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>CARTcheckConv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$RPT_XML.codiceContestoPagamento</codiceContestoPagamento>
           </ws:nodoChiediStatoRPT>
       </soapenv:Body>
     </soapenv:Envelope>
@@ -462,7 +463,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
     And check esito is OK of avanzamentoPagamento response
 
   Scenario: Execute nodoInoltraEsitoPagamentoCarta1 request
-    Given the Execute nodoInviaRPT request scenario executed successfully
+    Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
     And initial XML pspInviaCarrelloRPTCarte
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -506,8 +507,8 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>16514801269711</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>CARTcheckConv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$RPT_XML.codiceContestoPagamento</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
           <rt>$rtAttachment</rt>
@@ -532,7 +533,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>16514801269711</codiceContestoPagamento>
+            <codiceContestoPagamento>$RPT_XML.codiceContestoPagamento</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
           <rt>$rt2Attachment</rt>
