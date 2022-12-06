@@ -253,11 +253,11 @@ Feature: T153_InviaCarrelloRPT_2PA
             </pay_i:soggettoPagatore>
             <pay_i:datiPagamento>
                 <pay_i:codiceEsitoPagamento>1</pay_i:codiceEsitoPagamento>
-                <pay_i:importoTotalePagato>fallisci!</pay_i:importoTotalePagato>
+                <pay_i:importoTotalePagato>12.40</pay_i:importoTotalePagato>
                 <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
                 <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
                 <pay_i:datiSingoloPagamento>
-                    <pay_i:singoloImportoPagato>fallisci!</pay_i:singoloImportoPagato>
+                    <pay_i:singoloImportoPagato>12.40</pay_i:singoloImportoPagato>
                     <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
                     <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
                     <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
@@ -339,11 +339,11 @@ Feature: T153_InviaCarrelloRPT_2PA
             </pay_i:soggettoPagatore>
             <pay_i:datiPagamento>
                 <pay_i:codiceEsitoPagamento>1</pay_i:codiceEsitoPagamento>
-                <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
+                <pay_i:importoTotalePagato>12.40</pay_i:importoTotalePagato>
                 <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
                 <pay_i:CodiceContestoPagamento>CCD02</pay_i:CodiceContestoPagamento>
                 <pay_i:datiSingoloPagamento>
-                    <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
+                    <pay_i:singoloImportoPagato>12.40</pay_i:singoloImportoPagato>
                     <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
                     <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
                     <pay_i:identificativoUnivocoRiscossione>$2iuv</pay_i:identificativoUnivocoRiscossione>
