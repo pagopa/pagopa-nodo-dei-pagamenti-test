@@ -117,24 +117,22 @@ Feature: T129_InoltraPagamentoMod1_senza_pay_i
 
   Scenario: Execute nodoInoltraEsitoPagamentoMod1 request
     Given the Execute nodoInviaRPT request scenario executed successfully
-    And initial XML pspInviaCarrelloRPTCarte
-    """
-    <soapenv:Envelope
-    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:ws="http://ws.pagamenti.telematici.gov/">
-    <soapenv:Header/>
-      <soapenv:Body>
-          <ws:pspInviaCarrelloRPTCarteResponse>
-              <pspInviaCarrelloRPTResponse>
-                  <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                  <identificativoCarrello>$1iuv</identificativoCarrello>
-                  <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
-              </pspInviaCarrelloRPTResponse>
-          </ws:pspInviaCarrelloRPTCarteResponse>
-      </soapenv:Body>
-    </soapenv:Envelope>
-    """
-    And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
+    And initial XML pspInviaRPT 
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaRPTResponse>
+                        <pspInviaRPTResponse>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                        </pspInviaRPTResponse>
+                    </ws:pspInviaRPTResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
     """
     {
