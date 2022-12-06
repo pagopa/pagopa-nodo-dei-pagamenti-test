@@ -1,8 +1,8 @@
-Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
+Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartConv_inoltroNoConv
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
-    And replace $1iuv content with CARTcheckConv content
+    And replace $1iuv content with RPTcheckConv content
     And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
     And initial XML RPT_XML
     """
@@ -422,17 +422,18 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
     "esitoTransazioneCarta": "00", 
     "importoTotalePagato": 11.11,
     "timestampOperazione": "2012-04-23T18:25:43.001Z",
-    "codiceAutorizzativo": "123212",
-    "codiceConvenzione":"CONV1"}
+    "codiceAutorizzativo": "123212"}
     """
-    Then check url field not exists in inoltroEsito/carta response
+    Then check esito field exists in inoltroEsito/carta response
+    And check esito is OK of inoltroEsito/carta response
+    And check url field not exists in inoltroEsito/carta response
     And check redirect field not exists in inoltroEsito/carta response
 
   Scenario: DB check
     Given the Execute nodoInoltraEsitoPagamentoCarta1 request scenario executed successfully
     Then replace sessionExpected content with $sessionToken content
     And checks the value CONV1 of the record at column CODICE_CONVENZIONE of the table CARRELLO retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
-    And checks the value CONV1 of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
+    And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
 
   Scenario: Execute nodoChiediStatoRPT request
     Given the DB check scenario executed successfully
@@ -492,7 +493,9 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
     "timestampOperazione": "2012-04-23T18:25:43.001Z",
     "codiceAutorizzativo": "123212"}
     """
-    Then check url field not exists in inoltroEsito/carta response
+    Then check esito field exists in inoltroEsito/carta response
+    And check esito is OK of inoltroEsito/carta response
+    And check url field not exists in inoltroEsito/carta response
     And check redirect field not exists in inoltroEsito/carta response
 
   Scenario: Execute nodoInviaRT1 request
