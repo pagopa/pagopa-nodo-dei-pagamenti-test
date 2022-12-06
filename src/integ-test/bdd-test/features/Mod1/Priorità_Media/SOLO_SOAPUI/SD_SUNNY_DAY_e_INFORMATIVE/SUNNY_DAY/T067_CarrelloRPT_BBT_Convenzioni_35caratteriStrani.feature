@@ -195,7 +195,7 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni_35caratteriStrani
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
-            <codiceConvenzione>ca'r@tte'r! §tr£%| ? #[]o'a'=?-_°ç+*e'^'</codiceConvenzione>
+            <codiceConvenzione>car@tter!§tr£%| ? #[]o'a=?-_°ç+*e^'</codiceConvenzione>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
