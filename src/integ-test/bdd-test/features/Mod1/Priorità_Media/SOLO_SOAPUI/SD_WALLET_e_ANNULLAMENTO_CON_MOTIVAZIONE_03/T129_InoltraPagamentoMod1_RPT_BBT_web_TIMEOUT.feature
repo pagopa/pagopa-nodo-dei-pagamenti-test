@@ -226,8 +226,9 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_TIMEOUT
             "tipoOperazione":"web"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 408
-        And check error is Operazione in timeout of inoltroEsito/mod1 response
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+        And check errorCode is UNKPSP of inoltroEsito/mod1 response
+        And check descrizione is Operazione in timeout of inoltroEsito/mod1 response
 
 
     Scenario: Execute nodoChiediStatoRPT request
