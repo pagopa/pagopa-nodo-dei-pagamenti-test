@@ -374,7 +374,6 @@ Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
                   <rpt>$rpt2Attachment</rpt>
                 </elementoListaRPT>
             </listaRPT>
-            <codiceConvenzione>CONV1</codiceConvenzione>
           </ws:nodoInviaCarrelloRPT>
       </soapenv:Body>
     </soapenv:Envelope>
