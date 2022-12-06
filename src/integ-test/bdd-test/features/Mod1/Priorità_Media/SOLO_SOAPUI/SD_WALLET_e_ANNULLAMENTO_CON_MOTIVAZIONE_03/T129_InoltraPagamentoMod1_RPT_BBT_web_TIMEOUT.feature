@@ -258,7 +258,7 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_TIMEOUT
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
-        And check esito is KO of avanzamentoPagamento response
+        And check esito is ACK_UNKNOWN of avanzamentoPagamento response
 
     @midRunnable
     Scenario: Execute nodoInviaRT request
