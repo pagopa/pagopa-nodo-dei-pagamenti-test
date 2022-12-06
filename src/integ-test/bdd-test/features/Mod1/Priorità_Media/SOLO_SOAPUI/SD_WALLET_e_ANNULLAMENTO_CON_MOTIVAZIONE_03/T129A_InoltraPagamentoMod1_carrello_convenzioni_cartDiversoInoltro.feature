@@ -406,13 +406,13 @@ Feature: T129A_InoltraPagamentoMod1_carrello_convenzioni_cartDiversoInoltro
             "identificativoIntermediario":"#psp#",
             "identificativoCanale":"#canale#",
             "tipoOperazione":"web",
-            "codiceConvenzione":"CONV1"
+            "codiceConvenzione":"CONV2"
         }
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
         And replace sessionExpected content with $sessionToken content
         And checks the value CONV1 of the record at column CODICE_CONVENZIONE of the table CARRELLO retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
-        And checks the value CONV1 of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
+        And checks the value CONV2 of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
 
     Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 3)
         Given the Execute inoltroEsito/mod1 (Phase 2) scenario executed successfully
