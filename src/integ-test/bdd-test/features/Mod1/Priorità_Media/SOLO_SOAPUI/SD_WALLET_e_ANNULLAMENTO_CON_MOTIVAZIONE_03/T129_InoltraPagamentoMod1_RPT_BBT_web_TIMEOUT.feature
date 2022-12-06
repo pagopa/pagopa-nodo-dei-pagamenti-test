@@ -259,6 +259,7 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_TIMEOUT
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is KO of avanzamentoPagamento response
 
+    @midRunnable
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
         And initial XML nodoInviaRT
