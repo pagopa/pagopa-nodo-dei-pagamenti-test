@@ -347,7 +347,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartDiversoInoltro
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$1cart</identificativoCarrello>
+            <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -362,7 +362,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartDiversoInoltro
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>CARTcheckConv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
+            <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
