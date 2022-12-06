@@ -203,6 +203,22 @@ Feature: T128_InoltraPagamentoMod1_RPT_MYBK_web
 
   Scenario: Execute nodoInoltraEsitoPagamentoMod1 request
     Given the Execute nodoInviaRPT request scenario executed successfully
+     And initial XML pspInviaRPT 
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaRPTResponse>
+                        <pspInviaRPTResponse>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                        </pspInviaRPTResponse>
+                    </ws:pspInviaRPTResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
     """
     {
@@ -211,7 +227,7 @@ Feature: T128_InoltraPagamentoMod1_RPT_MYBK_web
       "identificativoPsp": "#psp#",
       "tipoVersamento": "MYBK",
       "identificativoIntermediario": "#psp#",
-      "identificativoCanale": "#canaleRtPush#",
+      "identificativoCanale": "#canale#",
       "tipoOperazione":"web"
     }
     """
@@ -222,7 +238,7 @@ Feature: T128_InoltraPagamentoMod1_RPT_MYBK_web
     And checks the value IDVS=CT000002 of the record at column PARAMETRI_PROFILO_PAGAMENTO of the table RPT retrived by the query parametri_profilo_pagamento on db wfesp under macro wfesp
   
   Scenario: Execute nodoChiediStatoRPT request
-    Given the Execute nodoInoltraEsitoPagamentoCarta request scenario executed successfully
+    Given the Execute nodoInoltraEsitoPagamentoMod1 request scenario executed successfully
     And initial XML nodoChiediStatoRPT
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
