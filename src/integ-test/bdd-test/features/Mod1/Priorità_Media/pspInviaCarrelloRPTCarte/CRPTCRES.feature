@@ -133,18 +133,8 @@ Feature: process tests for pspInviaCarrelloRPTCarte
             <faultCode>CANALE_RPT_DUPLICATA</faultCode>
             <faultString>bgdhbazhyt</faultString>
             <id>idPsp1</id>
-            <serial>1</serial>
             </fault>
             <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-            <identificativoCarrello>$1iuv</identificativoCarrello>
-            <listaErroriRPT>
-            <fault>
-            <faultCode>CANALE_FIRMA_SCONOSCIUTA</faultCode>
-            <faultString>La firma è sconosciuta</faultString>
-            <id>IDPSPFNZ</id>
-            <serial>1</serial>
-            </fault>
-            </listaErroriRPT>
             </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
             </soapenv:Body>
@@ -178,7 +168,7 @@ Feature: process tests for pspInviaCarrelloRPTCarte
             | faultCode                      | CIAO  | CRPTCRES9   |
             | faultString                    | Empty | CRPTCRES10  |
             | id                             | Empty | CRPTCRES11  |
-            | serial                         | CIAO  | CRPTCRES12  |
+            #| serial                         | CIAO  | CRPTCRES12  |
             | esitoComplessivoOperazione     | None  | CRPTCRES14  |
             | esitoComplessivoOperazione     | CIAO  | CRPTCRES17  |
-            | listaErroriRPT                 | Empty | CRPTCRES22  |
+            #| listaErroriRPT                 | Empty | CRPTCRES22  |
