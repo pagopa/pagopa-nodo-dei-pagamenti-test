@@ -241,5 +241,8 @@
     },
     "informative":{
         "cds_servizio": "SELECT columns FROM table_name WHERE VERSIONE = 1"
+    },
+    "wfesp":{
+        "parametri_profilo_pagamento": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$sessionToken'"
     }
 }
