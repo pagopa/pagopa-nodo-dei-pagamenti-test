@@ -233,7 +233,6 @@ Feature: T128_InoltraPagamentoMod1_RPT_MYBK_web
     """
     Then verify the HTTP status code of inoltroEsito/mod1 response is 200
     And check esito is OK of inoltroEsito/mod1 response
-    And check url field exists in inoltroEsito/mod1 response
     And check urlRedirectPSP field exists in inoltroEsito/mod1 response
     And checks the value IDVS=CT000002 of the record at column PARAMETRI_PROFILO_PAGAMENTO of the table RPT retrived by the query parametri_profilo_pagamento on db wfesp under macro wfesp
   
