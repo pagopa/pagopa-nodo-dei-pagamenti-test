@@ -1,4 +1,4 @@
-Feature: T016_A_ nodoInviaRPT_Mod1_BBT_noPPI
+Feature: T015_RPT_RT_RR_ER - importoER=0.00_soloObbligatori
 
     Background:
         Given systems up
