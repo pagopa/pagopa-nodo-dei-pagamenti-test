@@ -5,7 +5,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_wpl02_checkPPP
 
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given replace canaleUsato content with WFESP_01_LS content
-        And checks the value idPsp1 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query checkPlugin on dn nodo_cfg under macro Mod1
+        And checks the value idPsp1 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query checkPlugin on db nodo_cfg under macro Mod1
         And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $2noticeNumber
         And RPT1 generation
