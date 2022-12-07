@@ -140,7 +140,7 @@ Feature: T135_InoltraPagamentoMod2_senza_pay_i
       "identificativoPsp":"#psp#",
       "tipoVersamento":"AD",
       "identificativoIntermediario":"#psp#",
-      "identificativoCanale":"#canale#"
+      "identificativoCanale":"#canale_DIFFERITO_MOD2#"
     }
     """
     Then check esito field exists in inoltroEsito/mod2 response
