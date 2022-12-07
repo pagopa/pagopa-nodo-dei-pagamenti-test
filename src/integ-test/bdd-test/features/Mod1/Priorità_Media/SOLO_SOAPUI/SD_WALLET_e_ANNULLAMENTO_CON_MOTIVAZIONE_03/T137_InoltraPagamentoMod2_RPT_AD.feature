@@ -1,4 +1,4 @@
-Feature: T135_InoltraPagamentoMod2_RPT_KO_convenzioni
+Feature: T137_InoltraPagamentoMod2_RPT_AD
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
@@ -202,22 +202,35 @@ Feature: T135_InoltraPagamentoMod2_RPT_KO_convenzioni
 
   Scenario: Execute nodoInoltraEsitoPagamentoMod2 request
     Given the Execute nodoInviaRPT request scenario executed successfully
+     And initial XML pspInviaRPT 
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaRPTResponse>
+                        <pspInviaRPTResponse>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                        </pspInviaRPTResponse>
+                    </ws:pspInviaRPTResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When WISP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti
     """
     {
       "idPagamento": "$sessionToken",
       "identificativoPsp": "#psp#",
-      "tipoVersamento": "BBT",
+      "tipoVersamento": "AD",
       "identificativoIntermediario": "#psp#",
-      "identificativoCanale": "#canale_DIFFERITO_MOD2#",
-      "codiceConvenzione":"CONV1"
+      "identificativoCanale": "#canale_DIFFERITO_MOD2#"
     }
     """
-    Then verify the HTTP status code of inoltroEsito/mod2 response is 400
-    And check error is Richiesta non valida of inoltroEsito/mod2 response
-    And replace sessionExpected content with $sessionToken content
-    And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
-   
+    Then verify the HTTP status code of inoltroEsito/mod2 response is 200
+    And check esito is OK of inoltroEsito/mod2 response
+    And check url field not exists in inoltroEsito/mod2 response
+
     
   
- 

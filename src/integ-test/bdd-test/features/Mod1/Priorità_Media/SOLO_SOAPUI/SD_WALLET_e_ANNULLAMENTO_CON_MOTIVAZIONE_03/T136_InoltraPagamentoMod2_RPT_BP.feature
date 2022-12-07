@@ -1,4 +1,4 @@
-Feature: T135_InoltraPagamentoMod2_RPT_KO_convenzioni
+Feature: T136_InoltraPagamentoMod2_RPT_BP
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
@@ -202,22 +202,91 @@ Feature: T135_InoltraPagamentoMod2_RPT_KO_convenzioni
 
   Scenario: Execute nodoInoltraEsitoPagamentoMod2 request
     Given the Execute nodoInviaRPT request scenario executed successfully
+     And initial XML pspInviaRPT 
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaRPTResponse>
+                        <pspInviaRPTResponse>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                        </pspInviaRPTResponse>
+                    </ws:pspInviaRPTResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When WISP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti
     """
     {
       "idPagamento": "$sessionToken",
       "identificativoPsp": "#psp#",
-      "tipoVersamento": "BBT",
+      "tipoVersamento": "BP",
       "identificativoIntermediario": "#psp#",
-      "identificativoCanale": "#canale_DIFFERITO_MOD2#",
-      "codiceConvenzione":"CONV1"
+      "identificativoCanale": "#canale_DIFFERITO_MOD2#"
     }
     """
-    Then verify the HTTP status code of inoltroEsito/mod2 response is 400
-    And check error is Richiesta non valida of inoltroEsito/mod2 response
-    And replace sessionExpected content with $sessionToken content
-    And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
-   
+    Then verify the HTTP status code of inoltroEsito/mod2 response is 200
+    And check esito is OK of inoltroEsito/mod2 response
+    And check url field not exists in inoltroEsito/mod2 response
+
     
+  Scenario: Execute nodoChiediStatoRPT request
+    Given the Execute nodoInoltraEsitoPagamentoMod2 request scenario executed successfully
+    And initial XML nodoChiediStatoRPT
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+      <soapenv:Header/>
+      <soapenv:Body>
+          <ws:nodoChiediStatoRPT>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <password>pwdpwdpwd</password>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+          </ws:nodoChiediStatoRPT>
+      </soapenv:Body>
+    </soapenv:Envelope>
+    """
+    When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+    Then checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
+    And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
+    And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+    And check url field not exists in nodoChiediStatoRPT response
   
+  Scenario: Execute nodoChiediAvanzamentoPagamento
+    Given the Execute nodoChiediStatoRPT request scenario executed successfully
+    When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti  
+    Then verify the HTTP status code of avanzamentoPagamento response is 200
+    And check esito field exists in avanzamentoPagamento response
+    And check esito is OK of avanzamentoPagamento response
+
+  Scenario: Execute nodoInviaRT request
+    Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
+    And initial XML nodoInviaRT
+    """
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+      <soapenv:Header/>
+      <soapenv:Body>
+          <ws:nodoInviaRT>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <tipoFirma></tipoFirma>
+            <forzaControlloSegno>1</forzaControlloSegno>
+          <rt>$rtAttachment</rt>
+          </ws:nodoInviaRT>
+      </soapenv:Body>
+    </soapenv:Envelope>
+    """
+    When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+    Then check esito is OK of nodoInviaRT response
+
  
