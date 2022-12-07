@@ -473,7 +473,7 @@ Feature: T136A_InoltraPagamentoMod2_carrello_BP
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
-            <rt>$rt1Attachment</rt>
+            <rt>$rt2Attachment</rt>
             </ws:nodoInviaRT>
             </soapenv:Body>
             </soapenv:Envelope>
