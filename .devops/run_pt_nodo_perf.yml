@@ -106,13 +106,17 @@ stages:
                 #k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output
                 
                 #Aggiunta integrazione influxdb-grafana (su nodo 117)
-                debugSelectedParam = ${{ parameters.debugEnabled }}
-                echo debugEnabled: $(debugSelectedParam)
+                echo debugEnabled: ${{ parameters.debugEnabled }}
                 debugParam = ""
-                if [[ " $(debugSelectedParam) " =~ " True " ]]; then
+                if [[ " ${{ parameters.debugEnabled }} " =~ " True " ]]; then
+                echo =~ " True "
                   debugParam = "-v"
                 fi
-                echo debugParam: [$(debugParam)]
+                if [[ " ${{ parameters.debugEnabled }} " == " True " ]]; then
+                echo == " True "
+                  debugParam = "-v"
+                fi
+                echo debugParam: [$(debugParam)] - $debugParam
                 k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://10.101.132.117:8086/k6database $(debugParam)
 
                 #Aggiunta integrazione influxdb-grafana (su nodo 118)
