@@ -216,8 +216,6 @@ Feature: T135_InoltraPagamentoMod2_RPT_KO_convenzioni
     Then verify the HTTP status code of inoltroEsito/mod2 response is 400
     And check error is Richiesta non valida of inoltroEsito/mod2 response
     And replace sessionExpected content with $sessionToken content
-    And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
-   
-    
+    And verify 0 record for the table PM_SESSION_DATA retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
   
  

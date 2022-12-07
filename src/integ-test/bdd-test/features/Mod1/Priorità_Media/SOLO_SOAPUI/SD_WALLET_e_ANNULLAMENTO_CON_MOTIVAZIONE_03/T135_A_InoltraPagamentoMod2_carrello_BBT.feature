@@ -432,7 +432,7 @@ Feature: T135_A_InoltraPagamentoMod2_carrello_BBT
    
 
     Scenario: Execute nodoInviaRT (Phase 4)
-        Given the Execute inoltroEsito/mod1 (Phase 2) scenario executed successfully
+        Given the Execute inoltroEsito/mod2 (Phase 2) scenario executed successfully
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
