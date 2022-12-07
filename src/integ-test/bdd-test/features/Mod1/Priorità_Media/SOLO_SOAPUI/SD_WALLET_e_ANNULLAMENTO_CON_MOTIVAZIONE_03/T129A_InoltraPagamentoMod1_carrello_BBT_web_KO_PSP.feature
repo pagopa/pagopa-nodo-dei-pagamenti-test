@@ -410,8 +410,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
         Then verify the HTTP status code of listaPSP response is 200
         
     Scenario: Execute inoltroEsito/mod1 (Phase 4)
-        Given the Execute nodoChiediListaPsp (Phase 3) scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the 
+        Given the Execute nodoChiediListaPsp (Phase 3) scenario executed successfully 
         When PSP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
