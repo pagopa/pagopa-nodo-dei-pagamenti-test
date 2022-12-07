@@ -1,10 +1,11 @@
-Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartDiversoInoltro
+Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web
 
     Background:
         Given systems up
 
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
-        Given generate 2 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
+        And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $2noticeNumber
         And RPT1 generation
             """
@@ -64,15 +65,15 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartDiversoInoltro
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>15.00</pay_i:importoTotaleDaVersare>
+            <pay_i:importoTotaleDaVersare>6.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>CARTcheckConv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
+            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>15.00</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>6.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
@@ -146,7 +147,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartDiversoInoltro
             <pay_i:importoTotaleDaVersare>5.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>$1ccp</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -239,13 +240,13 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartDiversoInoltro
             <pay_i:datiPagamento>
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-            <pay_i:identificativoUnivocoVersamento>CARTcheckConv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
+            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>CARTcheckConv</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloPagamento>
@@ -328,12 +329,12 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartDiversoInoltro
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
+            <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>$2iuv</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloPagamento>
@@ -360,14 +361,14 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartDiversoInoltro
             <!--1 or more repetitions:-->
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>CARTcheckConv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
@@ -376,90 +377,50 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartDiversoInoltro
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        And retrieve session token from $nodoInviaCarrelloRPT response
-
-    Scenario: Execute nodoChiediInformazioniPagamento (Phase 2)
-        Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
-        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then veirfy the HTTP status code of informazioniPagamento response is 200
-
-    Scenario: Execute nodoInoltroEsitoCarta (Phase 3)
-        Given the Execute nodoChiediInformazioniPagamento (Phase 2) scenario executed successfully
-        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
-            """
-            {
-                "idPagamento": "$sessionToken",
-                "RRN": 1872787,
-                "identificativoPsp": "#psp#",
-                "tipoVersamento": "CP",
-                "identificativoIntermediario": "#psp#",
-                "identificativoCanale": "#canale#",
-                "esitoTransazioneCarta": "00",
-                "importoTotalePagato": 11.11,
-                "timestampOperazione": "2012-04-23T18:25:43.001Z",
-                "codiceAutorizzativo": "123212",
-                "codiceConvenzione": "CONV2"
-            }
-            """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is OK of inoltroEsito/carta response
-        And replace sessionExpected content with $sessionToken content
-        And checks the value CONV1 of the record at column CODICE_CONVENZIONE of the table CARRELLO retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
-        And checks the value CONV1 of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
-
-    Scenario: Execute nodoChiediStatoRPT (Phase 4)
-        Given the Execute nodoInoltroEsitoCarta (Phase 3) scenario executed successfully
-        And initial XML nodoChiediStatoRPT
+        And initial XML pspInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-            <ws:nodoChiediStatoRPT>
-            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <password>pwdpwdpwd</password>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>CARTcheckConv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
-            </ws:nodoChiediStatoRPT>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When PSP sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
-        And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-    Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 5)
-        Given the Execute nodoChiediStatoRPT (Phase 4) scenario executed successfully
-        When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of avanzamentoPagamento response is 200
-        And check esito is OK of avanzamentoPagamento response
-
-    Scenario: Execute nodoInoltroEsitoCarta 1 (Phase 6)
-        Given the Execute nodoChiediAvanzamentoPagamento (Phase 5) scenario executed successfully
-        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
+    Scenario: Execute inoltroEsito/mod1 (Phase 2)
+        Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
+        When PSP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
                 "idPagamento": "$sessionToken",
-                "RRN": 1872787,
                 "identificativoPsp": "#psp#",
-                "tipoVersamento": "CP",
+                "tipoVersamento": "BBT",
                 "identificativoIntermediario": "#psp#",
                 "identificativoCanale": "#canale#",
-                "esitoTransazioneCarta": "00",
-                "importoTotalePagato": 11.11,
-                "timestampOperazione": "2012-04-23T18:25:43.001Z",
-                "codiceAutorizzativo": "123212"
+                "tipoOperazione": "web"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/carta response is 200
-        And check esito is OK of inoltroEsito/carta response
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+        And check esito is OK of inoltroEsito/mod1 response
 
-    Scenario: Execute nodoInviaRT (Phase 7)
-        Given the Execute nodoInoltroEsitoCarta 1 (Phase 6) scenario executed successfully
+    Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 3)
+        Given the Execute inoltroEsito/mod1 (Phase 2) scenario executed successfully
+        When PSP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of avanzamentoPagamento response is 200
+        And check esito is OK of avanzamentoPagamento response
+
+    Scenario: Execute nodoInviaRT (Phase 4)
+        Given the Execute nodoChiediAvanzamentoPagamento (Phase 3) scenario executed successfully
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -471,8 +432,8 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartDiversoInoltro
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>CARTcheckConv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
             <rt>$rt1Attachment</rt>
@@ -480,12 +441,12 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartDiversoInoltro
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
     @midRunnable
-    Scenario: Execute nodoInviaRT 1 (Phase 8)
-        Given the Execute nodoInviaRT (Phase 7) scenario executed successfully
+    Scenario: Execute nodoInviaRT 1 (Phase 5)
+        Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
         And identificativoUnivocoVersamento with $2iuv in nodoInviaRT
         And rt with $rt2Attachment in nodoInviaRT
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti

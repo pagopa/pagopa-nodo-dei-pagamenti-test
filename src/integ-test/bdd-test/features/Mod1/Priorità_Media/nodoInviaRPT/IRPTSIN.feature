@@ -669,6 +669,7 @@ Feature: process tests for nodoInviaRT[IRPTSIN]
             </pay_i:RPT>
             """
 
+    @midRunnable
     Scenario: Execute nodoInviaRT (Phase 7)
         Given the (Phase 7) RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -696,7 +697,7 @@ Feature: process tests for nodoInviaRT[IRPTSIN]
             </soapenv:Envelope>
             """
         When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_XSD of nodoInviaRPT response
+        Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaRPT response
 
     @midRunnable
     Scenario Outline: Execute nodoInviaRT (Phase 8)

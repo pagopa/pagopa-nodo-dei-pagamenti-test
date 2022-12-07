@@ -1,4 +1,4 @@
-Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_idPsp1_checkPPP
+Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_wpl02_checkPPP
 
     Background:
         Given systems up
@@ -119,15 +119,20 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_idPsp1_checkPPP
                 """
                 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
                 <soapenv:Header/>
-                    <soapenv:Body>
-                        <ws:pspInviaRPTResponse>
-                            <pspInviaRPTResponse>
-                                <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                                <identificativoCarrello>$nodoInviaRPT.identificativoPSP</identificativoCarrello>
-                                <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-                            </pspInviaRPTResponse>
-                        </ws:pspInviaRPTResponse>
-                    </soapenv:Body>
+                <soapenv:Body>
+                    <ws:pspInviaRPTResponse>
+                        <pspInviaRPTResponse>
+                            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                            <listaErroriRPT>
+                            <fault>
+                                <faultCode>CANALE_SYSTEM_ERROR</faultCode>
+                                <faultString>system error</faultString>
+                                <id>wrapper</id>
+                            </fault>
+                            </listaErroriRPT>
+                        </pspInviaRPTResponse>
+                    </ws:pspInviaRPTResponse>
+                </soapenv:Body>
                 </soapenv:Envelope>
                 """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
@@ -143,4 +148,5 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_idPsp1_checkPPP
             }
             """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-        And check esito is OK of inoltroEsito/mod1 response
+        And check esito is KO of inoltroEsito/mod1 response
+        And check errorCode is RIFPSP of inoltroEsito/mod1 response
