@@ -433,7 +433,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD
         Given the Execute inoltroEsito/mod2 (Phase 2) scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
-        And check esito is ACK_UNKNOWN of avanzamentoPagamento response
+        And check esito is OK of avanzamentoPagamento response
 
     Scenario: Execute nodoInviaRT (Phase 4)
         Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
