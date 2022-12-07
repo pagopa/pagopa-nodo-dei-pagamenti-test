@@ -106,9 +106,10 @@ stages:
                 #k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output
                 
                 #Aggiunta integrazione influxdb-grafana (su nodo 117)
-                echo debugEnabled: ${{ parameters.debugEnabled }}
+                debugSelectedParam = ${{ parameters.debugEnabled }}
+                echo debugEnabled: ${debugSelectedParam}
                 debugParam = ""
-                if [[ " ${{ parameters.debugEnabled }} " =~ " True " ]]; then
+                if [[ " ${debugSelectedParam} " =~ " True " ]]; then
                   debugParam = "-v"
                 fi
                 echo debugParam: [$(debugParam)]
