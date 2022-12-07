@@ -109,8 +109,8 @@ Feature: process tests for pspInviaCarrelloRPT
         Examples:
             | tag                              | tag_value | error                               | soapUI test |
             | soapenv:Body                     | Empty     | PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE | CNARES3     |
-            | soapenv:Body                     | None      | PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE | CNARES4     |
-            | ws:paaChiediNumeroAvvisoRisposta | Empty     | PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE | CNARES5     |
+            | soapenv:Body                     | None      | PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | CNARES4     |
+            | ws:paaChiediNumeroAvvisoRisposta | Empty     | PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | CNARES5     |
             | fault                            | Empty     | PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | CNARES6     |
             | faultCode                        | None      | PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | CNARES7     |
             | faultCode                        | ciao      | PPT_ERRORE_EMESSO_DA_PAA            | CNARES8     |
