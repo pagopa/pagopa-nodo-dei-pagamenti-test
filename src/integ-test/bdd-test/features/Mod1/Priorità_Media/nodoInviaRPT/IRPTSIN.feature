@@ -669,6 +669,7 @@ Feature: process tests for nodoInviaRT[IRPTSIN]
             </pay_i:RPT>
             """
 
+    @midRunnable
     Scenario: Execute nodoInviaRT (Phase 7)
         Given the (Phase 7) RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
