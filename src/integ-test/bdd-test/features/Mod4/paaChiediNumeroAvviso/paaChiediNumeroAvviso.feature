@@ -108,7 +108,7 @@ Feature: process tests for pspInviaCarrelloRPT
         And check faultCode is <error> of nodoChiediNumeroAvviso response
         Examples:
             | tag                              | tag_value | error                               | soapUI test |
-            | soapenv:Body                     | Empty     | PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE | CNARES3     |
+            | paaChiediNumeroAvvisoRisposta    | Empty     | PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | CNARES3     |
             | soapenv:Body                     | None      | PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | CNARES4     |
             | ws:paaChiediNumeroAvvisoRisposta | Empty     | PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | CNARES5     |
             | fault                            | Empty     | PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | CNARES6     |
