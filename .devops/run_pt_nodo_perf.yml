@@ -107,9 +107,9 @@ stages:
                 
                 #Aggiunta integrazione influxdb-grafana (su nodo 117)
                 debugSelectedParam = ${{ parameters.debugEnabled }}
-                echo debugEnabled: ${debugSelectedParam}
+                echo debugEnabled: $(debugSelectedParam)
                 debugParam = ""
-                if [[ " ${debugSelectedParam} " =~ " True " ]]; then
+                if [[ " $(debugSelectedParam) " =~ " True " ]]; then
                   debugParam = "-v"
                 fi
                 echo debugParam: [$(debugParam)]
