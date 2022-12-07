@@ -101,6 +101,16 @@ def step_impl(context, primitive):
         payload = payload.replace('#ccp#', ccp)
         setattr(context, "ccp", ccp)
 
+    if "#ccpms#" in payload:
+        ccpms = str(utils.current_milli_time())
+        payload = payload.replace('#ccpms#', ccpms)
+        setattr(context, "ccpms", ccpms)
+    
+    if "#ccpms2#" in payload:
+        ccpms2 = str(utils.current_milli_time()) + '1'
+        payload = payload.replace('#ccpms2#', ccpms2)
+        setattr(context, "ccpms2", ccpms2)
+
     if "#iuv#" in payload:
         iuv = str(random.randint(100000000000000, 999999999999999))
         payload = payload.replace('#iuv#', iuv)
@@ -616,7 +626,7 @@ def step_impl(context, number):
         setattr(context, f'{number}IUV', IUV)
 
     if f"#ccp{number}#" in payload:
-        ccp = str(utils.current_milli_time() + '1')
+        ccp = str(utils.current_milli_time()) + '1'
         payload = payload.replace(f'#ccp{number}#', ccp)
         setattr(context, f"{number}ccp", ccp)
 
