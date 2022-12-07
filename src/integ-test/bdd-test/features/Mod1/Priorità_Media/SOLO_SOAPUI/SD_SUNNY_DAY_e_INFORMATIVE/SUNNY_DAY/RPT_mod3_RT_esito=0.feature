@@ -139,7 +139,7 @@ Feature: RPT_mod3_RT_esito=0
             <pay_i:soggettoPagatore>
             <pay_i:identificativoUnivocoPagatore>
             <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>'+CF+'</pay_i:codiceIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>AAAAAA00A00A000A</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoPagatore>
             <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
             <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
@@ -154,7 +154,7 @@ Feature: RPT_mod3_RT_esito=0
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>$IUV</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>'+ccp+'</pay_i:CodiceContestoPagamento>
+            <pay_i:CodiceContestoPagamento>NOTIFICA_RT</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
