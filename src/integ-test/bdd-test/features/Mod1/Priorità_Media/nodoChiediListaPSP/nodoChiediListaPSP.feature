@@ -116,7 +116,7 @@ Feature: process tests for chiediListaPSP
     Scenario: execution nodoChiediListaPSP - PM_CLPSP1
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET listaPSP?importoTotale=100&percorsoPagamento=CARTE to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 400
+        Then verify the HTTP status code of listaPSP response is 404
 
     @midRunnable
     Scenario: execution nodoChiediListaPSP - PM_CLPSP2
@@ -170,7 +170,7 @@ Feature: process tests for chiediListaPSP
     Scenario: execution nodoChiediListaPSP - PM_CLPSP10
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=10 to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 400
+        Then verify the HTTP status code of listaPSP response is 404
 
     @midRunnable
     Scenario: execution nodoChiediListaPSP - PM_CLPSP11
