@@ -108,7 +108,7 @@ Feature: T135_B_InoltraPagamentoMod2_RPT_BBT_noPPI
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        And check redirect is 0 of nodoInviaRPT response
+        
 
      Scenario: Execute nodoInoltraEsitoPagamentoMod2 request
         Given the Execute nodoInviaRPT scenario executed successfully
