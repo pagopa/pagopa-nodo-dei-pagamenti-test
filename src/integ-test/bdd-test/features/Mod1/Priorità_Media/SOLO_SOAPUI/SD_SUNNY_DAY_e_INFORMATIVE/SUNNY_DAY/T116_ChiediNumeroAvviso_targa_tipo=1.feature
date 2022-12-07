@@ -24,7 +24,7 @@ Feature: T116_ChiediNumeroAvviso_targa_tipo=1
         """
         When PSP sends SOAP nodoChiediNumeroAvviso to nodo-dei-pagamenti
         Then check esito is OK of nodoChiediNumeroAvviso response
-        And checks identificativoDominio contains #creditor_institution_code# of nodoChiediListaPendentiRPT response
-        And check numeroAvviso field exists in nodoChiediListaPendentiRPT response
-        And check datiPagamentoPA field exists in nodoChiediListaPendentiRPT response
-        And verify the HTTP status code of nodoChiediListaPendentiRPT response is 200
+        And checks identificativoDominio contains #creditor_institution_code# of nodoChiediNumeroAvviso response
+        And check numeroAvviso field exists in nodoChiediNumeroAvviso response
+        And check datiPagamentoPA field exists in nodoChiediNumeroAvviso response
+        And verify the HTTP status code of nodoChiediNumeroAvviso response is 200
