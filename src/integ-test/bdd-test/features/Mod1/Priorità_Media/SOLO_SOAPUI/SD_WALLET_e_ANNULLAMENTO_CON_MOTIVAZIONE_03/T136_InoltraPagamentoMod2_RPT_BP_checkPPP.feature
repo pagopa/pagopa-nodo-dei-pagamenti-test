@@ -232,7 +232,7 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_checkPPP
     And check url field not exists in inoltroEsito/mod2 response
 
   Scenario: Execute nodoChiediStatoRPT request
-    Given the Execute nodoInoltraEsitoPagamentoCarta request scenario executed successfully
+    Given the Execute nodoInoltraEsitoPagamentoMod2 request scenario executed successfully
     And initial XML nodoChiediStatoRPT
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
