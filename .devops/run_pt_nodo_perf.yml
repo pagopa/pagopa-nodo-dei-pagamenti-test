@@ -13,6 +13,9 @@ parameters:
     displayName: Blacklist for CT
     type: string
     default: "none"
+  - name: debugEnabled
+    type: boolean
+    default: false
   - name: rampingSel
     displayName: Ramping rate to use
     type: string
@@ -103,7 +106,13 @@ stages:
                 #k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output
                 
                 #Aggiunta integrazione influxdb-grafana (su nodo 117)
-                k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://10.101.132.117:8086/k6database
+                echo debugEnabled: ${{ parameters.debugEnabled }}
+                debugParam = ""
+                if(${{ parameters.debugEnabled }} == true){
+                  debugParam = -v
+                }
+                echo debugParam: [${debugParam}]
+                k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://10.101.132.117:8086/k6database ${debugParam}
 
                 #Aggiunta integrazione influxdb-grafana (su nodo 118)
                 #k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://10.101.132.118:8086/k6database
