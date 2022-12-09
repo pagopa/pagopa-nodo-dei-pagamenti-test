@@ -127,7 +127,7 @@ Feature: T129_B_InoltraPagamentoMod1_RPT_BBT_web_noPPI
                     </soapenv:Body>
                 </soapenv:Envelope>
                 """
-            And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
         """
         {
