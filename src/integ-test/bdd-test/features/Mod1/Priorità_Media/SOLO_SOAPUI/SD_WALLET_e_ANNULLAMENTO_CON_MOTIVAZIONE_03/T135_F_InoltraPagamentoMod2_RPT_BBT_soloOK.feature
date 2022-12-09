@@ -63,7 +63,7 @@ Feature: T135_F_InoltraPagamentoMod2_RPT_BBT_soloOK
         <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
         <pay_i:identificativoUnivocoVersamento>soloOK</pay_i:identificativoUnivocoVersamento>
-        <pay_i:codiceContestoPagamento>$1ccp</pay_i:codiceContestoPagamento>
+        <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
         <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -91,8 +91,8 @@ Feature: T135_F_InoltraPagamentoMod2_RPT_BBT_soloOK
         <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-        <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-        <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+        <identificativoUnivocoVersamento>soloOK</identificativoUnivocoVersamento>
+        <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
       <soapenv:Body>
