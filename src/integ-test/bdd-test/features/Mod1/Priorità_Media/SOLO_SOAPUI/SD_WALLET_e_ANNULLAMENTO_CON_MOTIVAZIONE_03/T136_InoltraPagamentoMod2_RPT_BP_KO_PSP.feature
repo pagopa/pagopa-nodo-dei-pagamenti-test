@@ -161,7 +161,7 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_KO_PSP
         <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
         <pay_i:datiSingoloPagamento>
           <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
-          <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
+          <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
           <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
           <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
           <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
