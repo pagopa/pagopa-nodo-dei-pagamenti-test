@@ -26,5 +26,5 @@ Feature: T195_ChiediNumeroAvviso_targa_senzaRegione
         Then check esito is OK of nodoChiediNumeroAvviso response
         And check numeroAvviso field exists in nodoChiediNumeroAvviso response
         And check datiPagamentoPA field exists in nodoChiediNumeroAvviso response
-        And check identificativoDominio contains #creditor_institution_code# of nodoChiediNumeroAvviso response
+        And check identificativoDominio contains 66666666666 of nodoChiediNumeroAvviso response
         And verify the HTTP status code of nodoChiediNumeroAvviso response is 200
