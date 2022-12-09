@@ -141,7 +141,7 @@ Feature: T129_B_InoltraPagamentoMod1_RPT_BBT_web_noPPI
         """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
-        And check url field not exists in inoltroEsito/mod1 response
+        And check urlRedirectPSP field exists in inoltroEsito/mod1 response
 
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInoltraEsitoPagamentoMod1 request scenario executed successfully
