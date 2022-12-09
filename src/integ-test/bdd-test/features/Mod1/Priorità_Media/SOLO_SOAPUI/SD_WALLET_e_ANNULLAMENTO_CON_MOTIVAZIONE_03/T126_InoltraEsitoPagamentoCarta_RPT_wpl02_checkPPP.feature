@@ -4,14 +4,16 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
     And RPT generation
     """
-    <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
+    <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
       <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
       <pay_i:dominio>
         <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
         <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
       </pay_i:dominio>
       <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-      <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
+      <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
       <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
       <pay_i:soggettoVersante>
         <pay_i:identificativoUnivocoVersante>
@@ -57,10 +59,10 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
         <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
       </pay_i:enteBeneficiario>
       <pay_i:datiVersamento>
-        <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
+        <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
         <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
         <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-        <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+        <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
         <pay_i:codiceContestoPagamento>checkNoPPP</pay_i:codiceContestoPagamento>
         <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -81,16 +83,18 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     """
     And RT generation
     """
-    <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
-    <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
+    <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
+      <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
       <pay_i:dominio>
         <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
         <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
       </pay_i:dominio>
       <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
-      <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
+      <pay_i:dataOraMessaggioRicevuta>2001-12-31T12:00:00</pay_i:dataOraMessaggioRicevuta>
       <pay_i:riferimentoMessaggioRichiesta>RiferimentoMessaggioRichiesta</pay_i:riferimentoMessaggioRichiesta>
-      <pay_i:riferimentoDataRichiesta>#date#</pay_i:riferimentoDataRichiesta>
+      <pay_i:riferimentoDataRichiesta>2001-01-01</pay_i:riferimentoDataRichiesta>
       <pay_i:istitutoAttestante>
         <pay_i:identificativoUnivocoAttestante>
           <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
@@ -152,19 +156,23 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
       <pay_i:datiPagamento>
         <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
         <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-        <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+        <pay_i:identificativoUnivocoVersamento>$IUV</pay_i:identificativoUnivocoVersamento>
         <pay_i:CodiceContestoPagamento>checkNoPPP</pay_i:CodiceContestoPagamento>
         <pay_i:datiSingoloPagamento>
           <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
           <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
-          <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
-          <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
+          <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
+          <pay_i:identificativoUnivocoRiscossione>$IUV</pay_i:identificativoUnivocoRiscossione>
           <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
           <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
         </pay_i:datiSingoloPagamento>
       </pay_i:datiPagamento>
     </pay_i:RT>
     """
+    #DB Check
+    And replace canaleUsato content with WFESP_02_gabri content
+    And checks the value wpl02 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query ID_Serv_Plugin on db nodo_cfg under macro Mod1
+  
   Scenario: Execute nodoInviaRPT request
     Given initial XML nodoInviaRPT
     """
@@ -174,7 +182,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
         <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-        <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+        <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
         <codiceContestoPagamento>checkNoPPP</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
@@ -195,10 +203,8 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     And check url field exists in nodoInviaRPT response 
     And check url contains acards of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
-    #DB Check
-    And replace canaleUsato content with WFESP_02_gabri content
-    And checks the value wpl02 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query ID_Serv_Plugin on db nodo_cfg under macro Mod1
 
+  #IN PROGRESS
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
     Given the Execute nodoInviaRPT request scenario executed successfully
     And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
@@ -208,11 +214,6 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
         <soapenv:Body>
             <ws:pspInviaCarrelloRPTCarteResponse>
                 <pspInviaCarrelloRPTResponse>
-                    <fault>
-                    <faultCode>CANALE_RPT_DUPLICATA</faultCode>
-                    <faultString>HGCCJCHG</faultString>
-                    <id>idPsp1</id>
-                    </fault>
                     <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
                 </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
@@ -249,7 +250,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
             <codiceContestoPagamento>checkNoPPP</codiceContestoPagamento>
           </ws:nodoChiediStatoRPT>
       </soapenv:Body>
@@ -258,7 +259,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
     Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
     And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-    #And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
+    And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
     And check redirect is 0 of nodoChiediStatoRPT response
 
   Scenario: Execute nodoInviaRT request
@@ -269,12 +270,12 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     <soapenv:Header/>
     <soapenv:Body>
       <ws:nodoInviaRT>
-         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-         <identificativoCanale>#canale_AGID#</identificativoCanale>
+         <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+         <identificativoCanale>#canale#</identificativoCanale>
          <password>pwdpwdpwd</password>
-         <identificativoPSP>#psp_AGID#</identificativoPSP>
+         <identificativoPSP>#psp#</identificativoPSP>
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+         <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
          <codiceContestoPagamento>checkNoPPP</codiceContestoPagamento>
          <tipoFirma></tipoFirma>
          <forzaControlloSegno>1</forzaControlloSegno>
@@ -283,5 +284,5 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     </soapenv:Body>
     </soapenv:Envelope>
     """
-    When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+     When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRT response
