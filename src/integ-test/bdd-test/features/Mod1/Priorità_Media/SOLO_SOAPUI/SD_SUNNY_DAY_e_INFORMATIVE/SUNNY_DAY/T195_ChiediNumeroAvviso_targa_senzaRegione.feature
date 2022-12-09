@@ -1,10 +1,10 @@
-Feature: T116_A_ChiediNumeroAvviso_targa_tipo=1_ErroreEmessoDaPA
+Feature: T195_ChiediNumeroAvviso_targa_senzaRegione
 
     Background:
         Given systems up
 
 @midRunnable
-    Scenario: Execute nodoChiediNumeroAvviso (Phase 1)
+    Scenario: Execute nodoChiediNumeroAvviso
         Given initial XML nodoChiediNumeroAvviso
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -13,7 +13,7 @@ Feature: T116_A_ChiediNumeroAvviso_targa_tipo=1_ErroreEmessoDaPA
             <ws:nodoChiediNumeroAvviso>
                 <identificativoPSP>#psp#</identificativoPSP>
                 <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+                <identificativoCanale>#canaleRtPush#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <idServizio>00001</idServizio>
                 <idDominioErogatoreServizio>#creditor_institution_code#</idDominioErogatoreServizio>
@@ -22,27 +22,9 @@ Feature: T116_A_ChiediNumeroAvviso_targa_tipo=1_ErroreEmessoDaPA
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        And initial XML paaChiediNumeroAvviso
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaChiediNumeroAvvisoRisposta>
-            <paaChiediNumeroAvvisoRisposta>
-            <fault>
-            <faultCode>ciao</faultCode>
-            <faultString>errore semantico PA</faultString>
-            <id>#creditor_institution_code#</id>
-            <description>Errore semantico emesso dalla PA</description>
-            </fault>
-            <esito>KO</esito>
-            </paaChiediNumeroAvvisoRisposta>
-            </ws:paaChiediNumeroAvvisoRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paaChiediNumeroAvviso
         When PSP sends SOAP nodoChiediNumeroAvviso to nodo-dei-pagamenti
-        Then check esito is KO of nodoChiediNumeroAvviso response
-        And check faultCode field exists in nodoChiediNumeroAvviso response
-        And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of nodoChiediNumeroAvviso response
+        Then check esito is OK of nodoChiediNumeroAvviso response
+        And check numeroAvviso field exists in nodoChiediNumeroAvviso response
+        And check datiPagamentoPA field exists in nodoChiediNumeroAvviso response
+        And check identificativoDominio contains 66666666666 of nodoChiediNumeroAvviso response
+        And verify the HTTP status code of nodoChiediNumeroAvviso response is 200
