@@ -1,7 +1,5 @@
 Feature: NCAP
 
-    
-
     Background:
         Given systems up
 
