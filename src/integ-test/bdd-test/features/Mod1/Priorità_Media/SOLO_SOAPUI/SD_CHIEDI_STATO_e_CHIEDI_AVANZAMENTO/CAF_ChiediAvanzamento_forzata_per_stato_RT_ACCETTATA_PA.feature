@@ -155,8 +155,7 @@ Feature: CAF_ChiediAvanzamento_forzata per stato RT_ACCETTATA_PA
                 "tipoOperazione": "web"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 408
-        And check error is timeout of inoltroEsito/mod1 response
+        Then check descrizione is Operazione in timeout of inoltroEsito/mod1 response
         And check url field not exists in inoltroEsito/mod1 response
         And replace pa content with #creditor_institution_code# content
         And replace iuv content with $1iuv content
