@@ -115,6 +115,7 @@ Feature: CAF_ChiediAvanzamento_forzata per stato RT_ACCETTATA_PA
             <soapenv:Body>
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
+            <delay>10000</delay>
             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
             <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
             <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
@@ -128,23 +129,21 @@ Feature: CAF_ChiediAvanzamento_forzata per stato RT_ACCETTATA_PA
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
         
-        
-
     Scenario: execution nodoInoltraPagamentoMod1
         Given the RPT generation scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaCarrelloRPTResponse>
-            <pspInviaCarrelloRPTResponse>
-            <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
-            </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+        #And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        #    """
+        #    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        #    <soapenv:Header/>
+        #    <soapenv:Body>
+        #    <ws:pspInviaCarrelloRPTResponse>
+        #    <pspInviaCarrelloRPTResponse>
+        #    <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
+        #    </pspInviaCarrelloRPTResponse>
+        #    </ws:pspInviaCarrelloRPTResponse>
+        #    </soapenv:Body>
+        #    </soapenv:Envelope>
+        #    """
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
