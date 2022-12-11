@@ -442,7 +442,8 @@ Feature: monoRPT_ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParcheggio
         And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
         And checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-        
+
+    @midRunnable 
     Scenario: Execution Esito Carta retry
         Given the clean pspChiediAvanzamentoRPT queue scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte

@@ -1,6 +1,5 @@
 Feature: T095_K_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio_OK+listaFault_mod2
 
-    
     Background:
         Given systems up
 
@@ -392,7 +391,7 @@ Feature: T095_K_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
 
-
+    @midRunnable
      Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoChiediStatoRPT3 scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

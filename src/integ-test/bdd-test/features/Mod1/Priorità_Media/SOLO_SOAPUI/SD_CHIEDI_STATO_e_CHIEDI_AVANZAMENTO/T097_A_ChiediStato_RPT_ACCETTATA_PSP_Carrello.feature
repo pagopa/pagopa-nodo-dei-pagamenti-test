@@ -316,10 +316,9 @@ Feature: T097_A_ChiediStato_RPT_ACCETTATA_PSP_Carrello
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
-   
-
+    @midRunnable
     Scenario: nodoInviaCarrelloRPT duplicato1
-        Given the Execute nodoChiediStatoRPT2 scenario executed successfully
+        Given the nodoInviaCarrelloRPT duplicato scenario executed successfully
        And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -357,5 +356,3 @@ Feature: T097_A_ChiediStato_RPT_ACCETTATA_PSP_Carrello
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_RPT_DUPLICATA of nodoInviaCarrelloRPT response
-
-    

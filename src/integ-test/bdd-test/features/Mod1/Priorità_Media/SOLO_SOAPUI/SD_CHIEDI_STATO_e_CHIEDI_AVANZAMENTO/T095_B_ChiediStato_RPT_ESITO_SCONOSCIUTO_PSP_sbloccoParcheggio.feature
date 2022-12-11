@@ -166,9 +166,6 @@ Feature: T095_B_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_sbloccoParcheggio
         Then verify the HTTP status code of inoltroEsito/mod1 response is 408
         And check error is timeout of inoltroEsito/mod1 response
 
-   
-
-@midRunnable
     Scenario: Execute nodoChiediStatoRPT
         Given the execution nodoInoltraPagamentoMod1 scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -192,9 +189,6 @@ Feature: T095_B_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_sbloccoParcheggio
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         
-
-    
-
      Scenario: execution nodoInviaRPT duplicato
         Given the Execute nodoChiediStatoRPT scenario executed successfully
         And initial XML nodoInviaRPT
@@ -264,6 +258,7 @@ Feature: T095_B_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_sbloccoParcheggio
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
 
+    @midRunnable
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoChiediStatoRPT1 scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

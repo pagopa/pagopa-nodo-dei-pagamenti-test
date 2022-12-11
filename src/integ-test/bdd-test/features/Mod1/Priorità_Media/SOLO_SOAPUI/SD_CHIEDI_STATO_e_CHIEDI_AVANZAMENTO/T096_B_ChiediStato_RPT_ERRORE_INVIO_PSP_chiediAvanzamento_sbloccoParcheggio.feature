@@ -151,8 +151,6 @@ Feature: T096_B_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamento_sbloccoParche
         And check esito is KO of inoltroEsito/mod1 response
         And wait 11 seconds for expiration
    
-
-@midRunnable
     Scenario: Execute nodoChiediStatoRPT
         Given the execution nodoInoltraPagamentoMod1 scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -175,8 +173,6 @@ Feature: T096_B_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamento_sbloccoParche
         Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ERRORE_INVIO_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-
-    
 
      Scenario: execution nodoInviaRPT duplicato
         Given the Execute nodoChiediStatoRPT scenario executed successfully
@@ -231,6 +227,7 @@ Feature: T096_B_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamento_sbloccoParche
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
 
+    @midRunnable
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoChiediStatoRPT1 scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

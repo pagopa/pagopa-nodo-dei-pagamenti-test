@@ -248,6 +248,7 @@ Feature: T096_D_ChiediStato_RPT_ERRORE_INVIO_PSP_carrello_mancatoCertificato_htt
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ERRORE_INVIO_A_PSP of nodoChiediStatoRPT response
 
+    @midRunnable
     Scenario: nodoInviaCarrelloRPT duplicato
         Given the Execute nodoChiediStatoRPT2 scenario executed successfully
        And initial XML nodoInviaCarrelloRPT
@@ -287,8 +288,3 @@ Feature: T096_D_ChiediStato_RPT_ERRORE_INVIO_PSP_carrello_mancatoCertificato_htt
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
-
-
-
-
-     

@@ -249,6 +249,7 @@ Feature: T096_A_ChiediStato_RPT_ERRORE_INVIO_PSP_Carrello
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ERRORE_INVIO_A_PSP of nodoChiediStatoRPT response
 
+    @midRunnable
     Scenario: Check DB
         Given the Execute nodoChiediStatoRPT2 scenario executed successfully
         # check STATI_RPT table
@@ -259,8 +260,3 @@ Feature: T096_A_ChiediStato_RPT_ERRORE_INVIO_PSP_Carrello
         And replace iuv content with avanzaErrResponse$1iuv content
         And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         And checks the value CART_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query stati_carrello on db nodo_online under macro Mod1
-
-
-
-
-     

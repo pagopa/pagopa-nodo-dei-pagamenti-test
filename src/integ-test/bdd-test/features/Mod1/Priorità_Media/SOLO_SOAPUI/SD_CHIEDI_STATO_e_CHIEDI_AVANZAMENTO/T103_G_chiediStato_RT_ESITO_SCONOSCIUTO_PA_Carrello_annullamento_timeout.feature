@@ -438,8 +438,6 @@ Feature: T103_G_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento_timeou
         When job paInviaRt triggered after 5 seconds
         Then wait 7 seconds for expiration
 
-    
-     
     Scenario: Execute nodoChiediStatoRPT1
         Given the Execute job paInviaRt scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -465,8 +463,6 @@ Feature: T103_G_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento_timeou
         And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
-        
-
         
      Scenario: Execute nodoChiediStatoRPT2
         Given the Execute nodoChiediStatoRPT1 scenario executed successfully
@@ -494,8 +490,6 @@ Feature: T103_G_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento_timeou
         And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
        And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
        
-     
-
     Scenario: nodoInviaCarrelloRPT duplicato
         Given the Execute nodoChiediStatoRPT2 scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -536,8 +530,7 @@ Feature: T103_G_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento_timeou
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
-    
-
+    @midRunnable
       Scenario: execution nodoInviaRT2
         Given the nodoInviaCarrelloRPT duplicato scenario executed successfully
         And initial XML nodoInviaRT

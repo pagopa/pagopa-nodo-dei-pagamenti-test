@@ -459,6 +459,7 @@ Feature: T099_A_chiediStato_RT_RIFIUTATA_NODO_Carrello
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
 
+    @midRunnable
      Scenario: Execute nodoChiediStatoRPT2
         Given the Execute nodoChiediStatoRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT

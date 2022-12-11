@@ -604,8 +604,7 @@ Feature: T103_C_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_sbloccoParcheggio
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
-    
-
+    @midRunnable
       Scenario: execution nodoInviaRT2
         Given the nodoInviaCarrelloRPT duplicato scenario executed successfully
         And initial XML nodoInviaRT
@@ -631,5 +630,3 @@ Feature: T103_C_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_sbloccoParcheggio
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
-
-    

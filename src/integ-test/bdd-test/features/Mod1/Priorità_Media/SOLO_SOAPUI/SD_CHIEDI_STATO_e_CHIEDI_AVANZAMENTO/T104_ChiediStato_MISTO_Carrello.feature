@@ -457,7 +457,6 @@ Feature: T104_ChiediStato_MISTO_Carrello
         When job paInviaRt triggered after 5 seconds
         And wait 10 seconds for expiration
        
-
     Scenario: Execute nodoChiediStatoRPT
         Given the Execute job paInviaRt scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -486,6 +485,7 @@ Feature: T104_ChiediStato_MISTO_Carrello
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
+    @midRunnable
      Scenario: Execute nodoChiediStatoRPT2
         Given the Execute nodoChiediStatoRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -508,5 +508,4 @@ Feature: T104_ChiediStato_MISTO_Carrello
         Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
-        
         

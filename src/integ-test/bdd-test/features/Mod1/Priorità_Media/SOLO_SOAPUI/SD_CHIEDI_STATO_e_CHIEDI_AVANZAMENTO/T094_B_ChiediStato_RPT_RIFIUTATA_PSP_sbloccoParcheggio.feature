@@ -173,9 +173,6 @@ Feature: T094_B_ChiediStato_RPT_RIFIUTATA_PSP_sbloccoParcheggio
         And check descrizione is Risposta negativa del Canale of inoltroEsito/mod1 response
         And check esito is KO of inoltroEsito/mod1 response
 
-   
-
-@midRunnable
     Scenario: Execute nodoChiediStatoRPT
         Given the execution nodoInoltraPagamentoMod1 scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -307,6 +304,7 @@ Feature: T094_B_ChiediStato_RPT_RIFIUTATA_PSP_sbloccoParcheggio
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
 
+    @midRunnable
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoChiediStatoRPT1 scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

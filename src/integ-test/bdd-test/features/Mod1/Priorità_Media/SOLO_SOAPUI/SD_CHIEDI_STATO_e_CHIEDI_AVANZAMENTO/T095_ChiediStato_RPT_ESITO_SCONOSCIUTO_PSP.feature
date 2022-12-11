@@ -128,11 +128,6 @@ Feature: T095_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaRPT response
        
-
-    
-   
-
-@midRunnable
     Scenario: Execute nodoChiediStatoRPT
         Given the RPT generation scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -157,7 +152,7 @@ Feature: T095_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
 
-    
+    @midRunnable
      Scenario: execution nodoInviaRPT duplicato
         Given the Execute nodoChiediStatoRPT scenario executed successfully
         And initial XML nodoInviaRPT

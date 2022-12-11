@@ -164,6 +164,7 @@ Feature: T095_P_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_sbloccoParcheggio_time
         And wait 10 seconds for expiration
         Then checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
 
+    @midRunnable
     Scenario: Execution retry Esito Carta
         Given the Execute check DB scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
@@ -203,6 +204,3 @@ Feature: T095_P_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_sbloccoParcheggio_time
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         And verify if the records for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1 are not null
         And verify 1 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
-
-
-    

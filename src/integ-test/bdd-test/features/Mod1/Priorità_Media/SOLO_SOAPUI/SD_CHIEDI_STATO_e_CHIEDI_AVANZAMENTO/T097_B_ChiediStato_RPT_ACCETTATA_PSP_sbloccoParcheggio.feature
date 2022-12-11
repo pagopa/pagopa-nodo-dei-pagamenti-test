@@ -144,9 +144,6 @@ Feature: T097_B_ChiediStato_RPT_ACCETTATA_PSP_sbloccoParcheggio
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
 
-   
-
-@midRunnable
     Scenario: Execute nodoChiediStatoRPT
         Given the execution nodoInoltraPagamentoMod1 scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -176,7 +173,6 @@ Feature: T097_B_ChiediStato_RPT_ACCETTATA_PSP_sbloccoParcheggio
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
     
-
      Scenario: execution nodoInviaRPT duplicato
         Given the Execute nodoChiediStatoRPT scenario executed successfully
         And initial XML nodoInviaRPT
@@ -207,8 +203,7 @@ Feature: T097_B_ChiediStato_RPT_ACCETTATA_PSP_sbloccoParcheggio
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
 
-     
-
+    @midRunnable
     Scenario: Execute nodoNotificaAnnullamento
         Given the execution nodoInviaRPT duplicato scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

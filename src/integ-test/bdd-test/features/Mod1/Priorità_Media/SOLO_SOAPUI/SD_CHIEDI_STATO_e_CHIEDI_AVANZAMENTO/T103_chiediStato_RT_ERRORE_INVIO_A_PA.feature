@@ -321,7 +321,6 @@ Scenario: execution nodoInviaRT1
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
     
-@midRunnable
     Scenario: Execute nodoChiediStatoRPT1
         Given the execution nodoInviaRT1 scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -351,6 +350,7 @@ Scenario: execution nodoInviaRT1
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
+    @midRunnable
         Scenario: Execute nodoChiediStatoRPT2
         Given the Execute nodoChiediStatoRPT1 scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -376,6 +376,3 @@ Scenario: execution nodoInviaRT1
         And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-
-
-        

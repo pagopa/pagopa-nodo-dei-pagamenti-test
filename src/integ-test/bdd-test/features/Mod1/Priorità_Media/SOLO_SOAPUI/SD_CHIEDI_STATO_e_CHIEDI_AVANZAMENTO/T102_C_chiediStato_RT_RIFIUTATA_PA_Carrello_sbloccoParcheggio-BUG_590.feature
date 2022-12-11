@@ -599,8 +599,6 @@ Feature: T102_C_chiediStato_RT_RIFIUTATA_PA_Carrello_sbloccoParcheggio-BUG_590
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
-    
-
       Scenario: execution nodoInviaRT2
         Given the nodoInviaCarrelloRPT duplicato scenario executed successfully
         And initial XML nodoInviaRT
@@ -627,6 +625,7 @@ Feature: T102_C_chiediStato_RT_RIFIUTATA_PA_Carrello_sbloccoParcheggio-BUG_590
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
 
+    @midRunnable
     Scenario: Execution Esito Mod1.1
         Given the execution nodoInviaRT2 scenario executed successfully
         And initial XML pspInviaCarrelloRPT 
@@ -646,7 +645,6 @@ Feature: T102_C_chiediStato_RT_RIFIUTATA_PA_Carrello_sbloccoParcheggio-BUG_590
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
-
             """
             {
             "idPagamento":"$sessionToken",

@@ -267,6 +267,7 @@ Feature: T095_O_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_timeout
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
 
+    @midRunnable
     Scenario: Execute nodoInviaCarrelloRPT2
         Given the Execute nodoChiediStatoRPT2 scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -306,10 +307,3 @@ Feature: T095_O_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_timeout
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti 
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
-
-     
-
-
-
-
-     

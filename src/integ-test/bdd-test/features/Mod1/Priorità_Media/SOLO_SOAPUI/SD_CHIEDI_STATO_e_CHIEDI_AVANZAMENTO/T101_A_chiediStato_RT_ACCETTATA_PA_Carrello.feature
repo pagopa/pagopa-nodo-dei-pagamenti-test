@@ -575,7 +575,8 @@ Feature: T101_A_chiediStato_RT_ACCETTATA_PA_Carrello
         And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
-       
+    
+    @midRunnable
     Scenario: execution nodoInviaRT2
         Given the Execute nodoChiediStatoRPT4 scenario executed successfully
         And initial XML nodoInviaRT

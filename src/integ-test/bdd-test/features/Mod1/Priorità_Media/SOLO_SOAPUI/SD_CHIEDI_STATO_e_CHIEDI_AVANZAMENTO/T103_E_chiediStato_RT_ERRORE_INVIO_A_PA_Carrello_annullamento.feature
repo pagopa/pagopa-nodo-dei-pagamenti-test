@@ -460,8 +460,6 @@ Feature: T103_E_chiediStato_RT_ERRORE_INVIO_A_PA_Carrello_annullamento
         And check url field not exists in nodoChiediStatoRPT response
         And wait 10 seconds for expiration
 
-       
-
     Scenario: nodoInviaCarrelloRPT duplicato
         Given the Execute nodoChiediStatoRPT2 scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -502,8 +500,7 @@ Feature: T103_E_chiediStato_RT_ERRORE_INVIO_A_PA_Carrello_annullamento
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
-    
-
+    @midRunnable
       Scenario: execution nodoInviaRT2
         Given the nodoInviaCarrelloRPT duplicato scenario executed successfully
         And initial XML nodoInviaRT
@@ -529,5 +526,3 @@ Feature: T103_E_chiediStato_RT_ERRORE_INVIO_A_PA_Carrello_annullamento
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
-
-    

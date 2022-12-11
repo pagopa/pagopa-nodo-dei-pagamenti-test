@@ -438,6 +438,7 @@ Feature: T096_D_ChiediStato_RPT_ERRORE_INVIO_PSP_Carrello_sbloccoParcheggio_manc
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_RPT_DUPLICATA of nodoInviaCarrelloRPT response
 
+    @midRunnable
     Scenario: Execute nodoChiediStatoRPT3
         Given the nodoInviaCarrelloRPT duplicato1 scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -460,6 +461,3 @@ Feature: T096_D_ChiediStato_RPT_ERRORE_INVIO_PSP_Carrello_sbloccoParcheggio_manc
         Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-
-
-     

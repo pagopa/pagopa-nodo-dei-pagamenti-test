@@ -358,6 +358,7 @@ Scenario: execution nodoInviaRPT1
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
 
+@midRunnable
 Scenario: execution nodoInviaRT1
         Given the execution nodoInviaRPT1 scenario executed successfully
         And initial XML nodoInviaRT
@@ -383,6 +384,4 @@ Scenario: execution nodoInviaRT1
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti 
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
-    
-
     

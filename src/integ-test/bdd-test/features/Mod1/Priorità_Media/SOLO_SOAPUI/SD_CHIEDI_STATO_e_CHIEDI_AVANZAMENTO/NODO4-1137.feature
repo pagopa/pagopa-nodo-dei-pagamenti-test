@@ -1,6 +1,5 @@
 Feature: NODO4-1137
 
-    
     Background:
         Given systems up
 
@@ -298,8 +297,7 @@ Feature: NODO4-1137
         Then check esito is OK of nodoInviaRT response
         And wait 14 seconds for expiration
 
-   
-
+   @midRunnable
     Scenario: Execute nodoChiediStatoRPT
         Given the execution nodoInviaRT scenario executed successfully
         And initial XML nodoChiediStatoRPT
