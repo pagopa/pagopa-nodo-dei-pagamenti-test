@@ -5,15 +5,15 @@ Feature: CAF_ChiediAvanzamento_forzata per stato RT_ACCETTATA_PA
         Given systems up
 
     Scenario: RPT generation
-        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
-        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
+        Given generate 1 notice number and iuv with aux digit 3, segregation code NA and application code #cod_segr#
+        And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
         And RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
             <pay_i:dominio>
-                <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+                <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -89,8 +89,8 @@ Feature: CAF_ChiediAvanzamento_forzata per stato RT_ACCETTATA_PA
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-                <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-                <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+                <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
+                <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
@@ -156,11 +156,11 @@ Feature: CAF_ChiediAvanzamento_forzata per stato RT_ACCETTATA_PA
             </pay_i:soggettoPagatore>
             <pay_i:datiPagamento>
                 <pay_i:codiceEsitoPagamento>1</pay_i:codiceEsitoPagamento>
-                <pay_i:importoTotalePagato>fallisci!</pay_i:importoTotalePagato>
+                <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
                 <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
                 <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
                 <pay_i:datiSingoloPagamento>
-                    <pay_i:singoloImportoPagato>fallisci!</pay_i:singoloImportoPagato>
+                    <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
                     <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
                     <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
                     <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
@@ -175,9 +175,9 @@ Feature: CAF_ChiediAvanzamento_forzata per stato RT_ACCETTATA_PA
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -230,7 +230,7 @@ Feature: CAF_ChiediAvanzamento_forzata per stato RT_ACCETTATA_PA
             """
         Then check descrizione is Operazione in timeout of inoltroEsito/mod1 response
         And check url field not exists in inoltroEsito/mod1 response
-        And replace pa content with #creditor_institution_code# content
+        And replace pa content with #creditor_institution_code_old# content
         And replace iuv content with $1iuv content
         And replace 1ccp content with CCD01 content
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
@@ -262,7 +262,7 @@ Feature: CAF_ChiediAvanzamento_forzata per stato RT_ACCETTATA_PA
                 <identificativoCanale>#canale#</identificativoCanale>
                 <password>pwdpwdpwd</password>
                 <identificativoPSP>#psp#</identificativoPSP>
-                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                 <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                 <tipoFirma></tipoFirma>
@@ -276,7 +276,7 @@ Feature: CAF_ChiediAvanzamento_forzata per stato RT_ACCETTATA_PA
         Then check esito is OK of nodoInviaRT response
         And verify 0 record for the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
         And wait 5 seconds for expiration
-        And replace pa content with #creditor_institution_code# content
+        And replace pa content with #creditor_institution_code_old# content
         And replace iuv content with $1iuv content
         And replace 1ccp content with CCD01 content
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
@@ -290,10 +290,10 @@ Feature: CAF_ChiediAvanzamento_forzata per stato RT_ACCETTATA_PA
             <soapenv:Header />
             <soapenv:Body>
                 <ws:nodoChiediStatoRPT>
-                    <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                    <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
-                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                    <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                     <identificativoUnivocoVersamento>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoUnivocoVersamento>
                     <codiceContestoPagamento>$nodoInviaRPT.codiceContestoPagamento</codiceContestoPagamento>
                 </ws:nodoChiediStatoRPT>
