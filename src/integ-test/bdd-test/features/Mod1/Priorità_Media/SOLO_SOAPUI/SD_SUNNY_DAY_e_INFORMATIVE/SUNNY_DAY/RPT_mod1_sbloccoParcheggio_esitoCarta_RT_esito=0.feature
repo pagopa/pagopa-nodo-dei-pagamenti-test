@@ -235,7 +235,7 @@ Feature: RPT_mod1_sbloccoParcheggio_esitoCarta_RT_esito=0
 
     @rpt
     Scenario: Execute nodoInviaRT (phase 3)
-        Given the Execute nodoInoltraEsitoPagamentoCarta (Phase 2) scenario executed successfully
+        Given the Execute nodoInoltraEsitoPagamentoCarta (phase 2) scenario executed successfully
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">

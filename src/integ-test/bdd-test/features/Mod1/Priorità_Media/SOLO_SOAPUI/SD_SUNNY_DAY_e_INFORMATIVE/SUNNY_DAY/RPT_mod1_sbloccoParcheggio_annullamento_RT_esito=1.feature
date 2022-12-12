@@ -253,6 +253,6 @@ Feature: RPT_mod1_sbloccoParcheggio_annullamento_RT_esito=1
 
     @rpt
     Scenario: Execute nodoNotificaAnnullamentoPagamento (Phase 3)
-        Given the Execute nodoInviaRT (phase 2) scenario executed successfully
+        Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And wait 5 seconds for expiration
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
