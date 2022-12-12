@@ -25,7 +25,7 @@ Feature: T052_verifica_attiva_AIM_aux=2_timeout
         When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
 
-    @midRunnable
+    @fix
     Scenario: Execute nodoAttivaRPT
         Given the Execute nodoVerificaRPT scenario executed successfully
         And initial XML nodoAttivaRPT
@@ -102,27 +102,5 @@ Feature: T052_verifica_attiva_AIM_aux=2_timeout
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML paaAttivaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:paaAttivaRPTRisposta>
-                        <paaAttivaRPTRisposta>
-                            <esito>KO</esito>
-                            <delay>10000</delay>
-                            <fault>
-                                <faultCode>PAA_FIRMA_INDISPONIBILE</faultCode>
-                                <faultString>gbyiua</faultString>
-                                <id>#creditor_institution_code_old#</id>
-                                <description>dfstf</description>
-                                <serial>1</serial>
-                            </fault>
-                        </paaAttivaRPTRisposta>
-                    </ws:paaAttivaRPTRisposta>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
-        Then check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of nodoAttivaRPT response
+        Then check esito is OK of nodoAttivaRPT response
