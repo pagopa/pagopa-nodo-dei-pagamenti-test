@@ -7,7 +7,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_PSP
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And replace $1iuv content with RPTdaRifPsp content
-        And replace $2iuv content with RPTdaRifPsp content
+        And replace $2IUV content with RPTdaRifPsp content
         And RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_2_0.xsd ">
@@ -80,11 +80,6 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_PSP
                     <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
                     <pay_i:causaleVersamento>RPT 1 versamento 1</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-                    <pay_i:datiMarcaBolloDigitale>
-                    <pay_i:tipoBollo>01</pay_i:tipoBollo>
-                    <pay_i:hashDocumento>1HpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</pay_i:hashDocumento>
-                    <pay_i:provinciaResidenza>MI</pay_i:provinciaResidenza>
-                    </pay_i:datiMarcaBolloDigitale>
                 </pay_i:datiSingoloVersamento>
                 <pay_i:datiSingoloVersamento>
                     <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
@@ -183,11 +178,6 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_PSP
                     <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
                     <pay_i:causaleVersamento>RPT 2 versamento 2</pay_i:causaleVersamento>
                     <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-                    <pay_i:datiMarcaBolloDigitale>
-                    <pay_i:tipoBollo>01</pay_i:tipoBollo>
-                    <pay_i:hashDocumento>4HpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</pay_i:hashDocumento>
-                    <pay_i:provinciaResidenza>MI</pay_i:provinciaResidenza>
-                    </pay_i:datiMarcaBolloDigitale>
                 </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
             </pay_i:RPT>
@@ -388,7 +378,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_PSP
                         <elementoListaRPT>
                         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                         <identificativoUnivocoVersamento>$2IUV</identificativoUnivocoVersamento>
-                        <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                        <codiceContestoPagamento>CCD02</codiceContestoPagamento>
                         <rpt>$rpt2Attachment</rpt>
                         </elementoListaRPT>
                     </listaRPT>
@@ -416,14 +406,10 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_PSP
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-    # [DescriptionValorizzata]
-    Scenario: Execute listaPSP (Phase 2)
-        Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=1000&percorsoPagamento=CARTE to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 200
+   
 
     Scenario: Execute nodoInoltroEsitoMod2 (Phase 3)
-        Given the Execute listaPSP (Phase 2) scenario executed successfully
+        Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         And initial XML pspInviaCarrelloRPT
         """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -448,7 +434,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_PSP
             {
             "idPagamento": "$sessionToken",
             "identificativoPsp": "#psp#",
-            "tipoVersamento": "AD",
+            "tipoVersamento": "BP",
             "identificativoIntermediario": "#psp#",
             "identificativoCanale": "#canale_DIFFERITO_MOD2#"
 
@@ -462,6 +448,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_PSP
         Given the Execute nodoInoltroEsitoMod2 (Phase 3) scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
+        And check esito is KO of avanzamentoPagamento response
 
 
     Scenario: Execute nodoInviaRT (Phase 5)
@@ -504,7 +491,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_PSP
                     <identificativoPSP>#psp#</identificativoPSP>
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                     <identificativoUnivocoVersamento>$2IUV</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                    <codiceContestoPagamento>CCD02</codiceContestoPagamento>
                     <tipoFirma></tipoFirma>
                     <forzaControlloSegno>1</forzaControlloSegno>
                     <rt>$rt2Attachment</rt>
@@ -517,96 +504,4 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_PSP
 
 
 
-    # [DescriptionNull]
-    Scenario: Execute nodoInoltroEsitoMod2 (Phase 7)
-        Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
-        And initial XML pspInviaCarrelloRPT
-        """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:pspInviaCarrelloRPTResponse>
-                    <pspInviaCarrelloRPTResponse>
-                        <fault>
-                        <faultCode>CANALE_SYSTEM_ERROR</faultCode>
-                        <faultString>system error</faultString>
-                        <id>wrapper</id>
-                        </fault>
-                        <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                    </pspInviaCarrelloRPTResponse>
-                </ws:pspInviaCarrelloRPTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-        """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
-        When WISP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti
-            """
-            {
-            "idPagamento": "$sessionToken",
-            "identificativoPsp": "#psp#",
-            "tipoVersamento": "AD",
-            "identificativoIntermediario": "#psp#",
-            "identificativoCanale": "#canale_DIFFERITO_MOD2#"
-
-            }
-             """
-        Then check esito is KO of inoltroEsito/mod2 response
-        And check descrizione is Risposta negativa del Canale of inoltroEsito/mod2 response
-
-
-    Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 8)
-        Given the Execute nodoInoltroEsitoMod2 (Phase 7) scenario executed successfully
-        When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of avanzamentoPagamento response is 200
-
-
-    Scenario: Execute nodoInviaRT (Phase 9)
-        Given the Execute nodoChiediAvanzamentoPagamento (Phase 8) scenario executed successfully
-        And initial XML nodoInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:nodoInviaRT>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
-                    <password>pwdpwdpwd</password>
-                    <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                    <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                    <tipoFirma></tipoFirma>
-                    <forzaControlloSegno>1</forzaControlloSegno>
-                    <rt>$rt2Attachment</rt>
-                </ws:nodoInviaRT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is KO of nodoInviaRT response
-
-@midRunnable
-    Scenario: Execute nodoInviaRT2 (Phase 10)
-        Given the Execute nodoInviaRT (Phase 9) scenario executed successfully
-        And initial XML nodoInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <ws:nodoInviaRT>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
-                    <password>pwdpwdpwd</password>
-                    <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                    <identificativoUnivocoVersamento>$2IUV</identificativoUnivocoVersamento>
-                    <codiceContestoPagamento>CCD01</codiceContestoPagamento>
-                    <tipoFirma></tipoFirma>
-                    <forzaControlloSegno>1</forzaControlloSegno>
-                    <rt>$rt2Attachment</rt>
-                </ws:nodoInviaRT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is KO of nodoInviaRT response
+   

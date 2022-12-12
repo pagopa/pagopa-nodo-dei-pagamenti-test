@@ -209,7 +209,7 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_CANALE_IRRAGGIUNGIBILE - BUG_482 - CLO
       "identificativoPsp": "irraggiungibile",
       "tipoVersamento": "BP",
       "identificativoIntermediario": "irraggiungibile",
-      "identificativoCanale": "irraggiungibile"
+      "identificativoCanale": "irraggiungibile2"
     }
     """
     Then verify the HTTP status code of inoltroEsito/mod2 response is 200
