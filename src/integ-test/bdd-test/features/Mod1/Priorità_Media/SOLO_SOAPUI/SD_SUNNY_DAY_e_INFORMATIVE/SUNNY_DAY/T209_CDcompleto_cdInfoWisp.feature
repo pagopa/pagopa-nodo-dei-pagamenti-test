@@ -61,7 +61,7 @@ Background:
         <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
         <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
         <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
-        <pay_i:identificativoUnivocoVersamento>#IUV1#</pay_i:identificativoUnivocoVersamento>
+        <pay_i:identificativoUnivocoVersamento>11186771779210799</pay_i:identificativoUnivocoVersamento>
         <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
         <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
         <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -92,7 +92,7 @@ Background:
                 <password>pwdpwdpwd</password>
                 <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                 <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-                <codiceIdRPT><qrc:QrCode>  <qrc:CF>#creditor_institution_code#</qrc:CF> <qrc:AuxDigit>3</qrc:AuxDigit>  <qrc:CodIUV>$1IUV</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
+                <codiceIdRPT><qrc:QrCode>  <qrc:CF>#creditor_institution_code#</qrc:CF> <qrc:AuxDigit>3</qrc:AuxDigit>  <qrc:CodIUV>11186771779210799</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
             </ws:nodoVerificaRPT>
         </soapenv:Body>
         </soapenv:Envelope>
@@ -111,7 +111,7 @@ Background:
                 <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
                 <identificativoCanalePagamento>#canale_AGID_BBT#</identificativoCanalePagamento>
                 <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
-                <codiceIdRPT><qrc:QrCode>  <qrc:CF>#creditor_institution_code#</qrc:CF> <qrc:CodStazPA>02</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>$1IUV</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
+                <codiceIdRPT><qrc:QrCode>  <qrc:CF>#creditor_institution_code#</qrc:CF> <qrc:CodStazPA>02</qrc:CodStazPA> <qrc:AuxDigit>0</qrc:AuxDigit>  <qrc:CodIUV>11186771779210799</qrc:CodIUV> </qrc:QrCode></codiceIdRPT>
                 <datiPagamentoPSP>
                     <importoSingoloVersamento>10.00</importoSingoloVersamento>
                     <!--Optional:-->
@@ -179,7 +179,7 @@ Background:
                 <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
+                <identificativoUnivocoVersamento>11186771779210799</identificativoUnivocoVersamento>
                 <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>
         </soapenv:Header>
