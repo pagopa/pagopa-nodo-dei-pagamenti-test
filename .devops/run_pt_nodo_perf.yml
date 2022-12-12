@@ -13,6 +13,9 @@ parameters:
     displayName: Blacklist for CT
     type: string
     default: "none"
+  - name: debugEnabled
+    type: boolean
+    default: false
   - name: rampingSel
     displayName: Ramping rate to use
     type: string
@@ -99,12 +102,18 @@ stages:
                 echo configured envTest= $envTest
                 
                 filename=$(date +%m_%d_%y)$active_test.csv
-                
+                echo debugEnabled ${{ parameters.debugEnabled }}
+                debugParam=""
+                if [[ " ${{ parameters.debugEnabled }} " == " True " ]]; then
+                  echo "debugParam is True" 
+                  debugParam="-v"
+                fi
+                echo debugParam is $debugParam
                 echo ***** k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$active_test.csv -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js****               
                 #k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output
                 
                 #Aggiunta integrazione influxdb-grafana (su nodo 117)
-                k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://10.101.132.117:8086/k6database
+                k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://10.101.132.117:8086/k6database $debugParam
 
                 #Aggiunta integrazione influxdb-grafana (su nodo 118)
                 #k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://10.101.132.118:8086/k6database
@@ -160,7 +169,7 @@ stages:
               echo current directory:
               pwd
                             
-            displayName: 'Command Line Script -  Run $scenarioToRun K6 scripts'
+            displayName: 'Command Line Script -  Run $(scenarioToRun) K6 scripts'
                     
           - task: ArchiveFiles@2
             displayName: 'Archive test results'
