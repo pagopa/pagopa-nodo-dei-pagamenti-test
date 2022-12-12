@@ -19,7 +19,7 @@ Feature: T050_verifica_attiva_AIM_aux=0
             <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <aim:aim128>
-            <aim:CCPost>#ccPoste#</aim:CCPost>
+            <aim:CCPost>900000000001</aim:CCPost>
             <aim:CodStazPA>#cod_segr#</aim:CodStazPA>
             <aim:AuxDigit>0</aim:AuxDigit>
             <aim:CodIUV>$1iuv</aim:CodIUV>
@@ -42,7 +42,7 @@ Feature: T050_verifica_attiva_AIM_aux=0
             <soapenv:Body>
             <ws:nodoAttivaRPT>
             <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>60000000002</identificativoIntermediarioPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale32#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <codiceContestoPagamento>$ccp</codiceContestoPagamento>
@@ -51,7 +51,7 @@ Feature: T050_verifica_attiva_AIM_aux=0
             <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <aim:aim128>
-            <aim:CCPost>#ccPoste#</aim:CCPost>
+            <aim:CCPost>900000000001</aim:CCPost>
             <aim:CodStazPA>#cod_segr#</aim:CodStazPA>
             <aim:AuxDigit>0</aim:AuxDigit>
             <aim:CodIUV>$1iuv</aim:CodIUV>
