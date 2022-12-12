@@ -433,7 +433,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When PSP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
