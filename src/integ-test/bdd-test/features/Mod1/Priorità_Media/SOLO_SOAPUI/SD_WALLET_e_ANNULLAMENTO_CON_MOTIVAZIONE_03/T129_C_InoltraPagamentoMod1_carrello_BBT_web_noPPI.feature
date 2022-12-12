@@ -68,7 +68,7 @@ Feature: T129_C_InoltraPagamentoMod1_carrello_BBT_web_noPPI
             <pay_i:importoTotaleDaVersare>6.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>noPPI</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>$1ccp</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -147,7 +147,7 @@ Feature: T129_C_InoltraPagamentoMod1_carrello_BBT_web_noPPI
             <pay_i:importoTotaleDaVersare>5.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>noPPI</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>$2ccp</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#ccp2#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
