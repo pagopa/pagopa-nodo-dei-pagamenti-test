@@ -147,7 +147,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
             <pay_i:importoTotaleDaVersare>5.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>timeoutPsp</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp2#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#CCP2#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -329,7 +329,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>timeoutPsp</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>$2ccp</pay_i:CodiceContestoPagamento>
+            <pay_i:CodiceContestoPagamento>$2CCP</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
@@ -368,7 +368,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>timeoutPsp</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$2ccp</codiceContestoPagamento>
+            <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
@@ -483,7 +483,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
     Scenario: Execute nodoInviaRT 1 (Phase 5)
         Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
         And identificativoUnivocoVersamento with timeoutPsp in nodoInviaRT
-        And codiceContestoPagamento with $2ccp in nodoInviaRT
+        And codiceContestoPagamento with $2CCP in nodoInviaRT
         And rt with $rt2Attachment in nodoInviaRT
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
