@@ -7,6 +7,8 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $2noticeNumber
+        And replace $1iuv content with RPTdaRifPsp content
+        And replace $2iuv content with RPTdaRifPsp content
         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/"
@@ -14,8 +16,8 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
             xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -93,8 +95,8 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
             xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -147,7 +149,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
             <pay_i:importoTotaleDaVersare>5.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>CCD02</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -172,8 +174,8 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
             xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>2001-12-31T12:00:00</pay_i:dataOraMessaggioRicevuta>
@@ -260,8 +262,8 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
             xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>2001-12-31T12:00:00</pay_i:dataOraMessaggioRicevuta>
@@ -329,7 +331,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
+            <pay_i:CodiceContestoPagamento>CCD02</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
@@ -360,19 +362,18 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
             <listaRPT>
             <!--1 or more repetitions:-->
             <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <codiceContestoPagamento>CCD02</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
-            <codiceConvenzione>CONV1</codiceConvenzione>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -384,12 +385,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
             <soapenv:Body>
                 <ws:pspInviaCarrelloRPTResponse>
                     <pspInviaCarrelloRPTResponse>
-                        <fault>
-                        <faultCode>CANALE_SYSTEM_ERROR</faultCode>
-                        <faultString>system error</faultString>
-                        <id>wrapper</id>
-                        </fault>
-                        <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
                     </pspInviaCarrelloRPTResponse>
                 </ws:pspInviaCarrelloRPTResponse>
             </soapenv:Body>
@@ -403,14 +399,41 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
+        And check importo field exists in informazioniPagamento response
+        And check email field exists in informazioniPagamento response
+        And check ragioneSociale field exists in informazioniPagamento response
+        And check oggettoPagamento field exists in informazioniPagamento response
+        And check urlRedirectEC field exists in informazioniPagamento response
 
     Scenario: Execute nodoChiediListaPsp (Phase 3)
         Given the Execute nodoChiediInformazioniPagamento (Phase 2) scenario executed successfully
         When WISP sends REST GET listaPSP?idPagamento=$sessionToken&importoTotale=1000&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
+        And check totalRows is $sizeCarte of listaPSP response
+        And check data is $listaCarte of listaPSP response
         
     Scenario: Execute inoltroEsito/mod1 (Phase 4)
         Given the Execute nodoChiediListaPsp (Phase 3) scenario executed successfully 
+        And initial XML pspInviaCarrelloRPT 
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaCarrelloRPTResponse>
+                        <pspInviaCarrelloRPTResponse>
+                            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                            <fault>
+                            <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
+                            <faultString>fault esterno</faultString>
+                            <id>#psp#</id>
+                            <description>descrizione fault esterno</description>
+                        </fault>
+                        </pspInviaCarrelloRPTResponse>
+                    </ws:pspInviaCarrelloRPTResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When PSP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
@@ -425,12 +448,13 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is KO of inoltroEsito/mod1 response
         And check errorCode is RIFPSP of inoltroEsito/mod1 response
+        And check descrizione is Risposta negativa del Canale of inoltroEsito/mod1 response
 
     Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 5)
         Given the Execute inoltroEsito/mod1 (Phase 4) scenario executed successfully
         When PSP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
-        And check esito is OK of avanzamentoPagamento response
+        And check esito is KO of avanzamentoPagamento response
 
     Scenario: Execute nodoInviaRT (Phase 6)
         Given the Execute nodoChiediAvanzamentoPagamento (Phase 5) scenario executed successfully
@@ -455,12 +479,13 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRT response
+        Then check esito is KO of nodoInviaRT response
 
     @midRunnable
     Scenario: Execute nodoInviaRT 1 (Phase 7)
         Given the Execute nodoInviaRT (Phase 6) scenario executed successfully
         And identificativoUnivocoVersamento with $2iuv in nodoInviaRT
+        And codiceContestoPagamento with CCD02 in nodoInviaRT
         And rt with $rt2Attachment in nodoInviaRT
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRT response
+        Then check esito is KO of nodoInviaRT response
