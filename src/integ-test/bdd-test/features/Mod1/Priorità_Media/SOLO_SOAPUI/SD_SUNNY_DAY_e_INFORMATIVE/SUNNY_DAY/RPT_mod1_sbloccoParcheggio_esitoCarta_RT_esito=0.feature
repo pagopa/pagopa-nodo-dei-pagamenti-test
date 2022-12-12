@@ -213,10 +213,10 @@ Feature: RPT_mod1_sbloccoParcheggio_esitoCarta_RT_esito=0
 
     Scenario: Execute nodoInoltraEsitoPagamentoCarta (phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
-        When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
+        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
-            {"idPagamento":"$sessionToken",
+            "idPagamento":"$sessionToken",
             "RRN":7352169,
             "identificativoPsp":"#psp#",
             "tipoVersamento":"CP",
@@ -225,7 +225,7 @@ Feature: RPT_mod1_sbloccoParcheggio_esitoCarta_RT_esito=0
             "importoTotalePagato":10.00,
             "timestampOperazione":"2018-02-08T17:06:03.100+01:00",
             "codiceAutorizzativo":"123456",
-            "esitoTransazioneCarta":"00"}
+            "esitoTransazioneCarta":"00"
             }
             """
         And wait 6 seconds for expiration
