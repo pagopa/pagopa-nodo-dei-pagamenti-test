@@ -147,7 +147,7 @@ Feature: T135_C_InoltraPagamentoMod2_carrello_BBT_noPPI
             <pay_i:importoTotaleDaVersare>5.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>noPPI</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp2#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#CCP2#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -172,8 +172,8 @@ Feature: T135_C_InoltraPagamentoMod2_carrello_BBT_noPPI
             xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>2001-12-31T12:00:00</pay_i:dataOraMessaggioRicevuta>
@@ -260,8 +260,8 @@ Feature: T135_C_InoltraPagamentoMod2_carrello_BBT_noPPI
             xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
             <pay_i:dataOraMessaggioRicevuta>2001-12-31T12:00:00</pay_i:dataOraMessaggioRicevuta>
@@ -329,7 +329,7 @@ Feature: T135_C_InoltraPagamentoMod2_carrello_BBT_noPPI
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>noPPI</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>$2ccp</pay_i:CodiceContestoPagamento>
+            <pay_i:CodiceContestoPagamento>$2CCP</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
@@ -346,8 +346,8 @@ Feature: T135_C_InoltraPagamentoMod2_carrello_BBT_noPPI
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
@@ -360,19 +360,18 @@ Feature: T135_C_InoltraPagamentoMod2_carrello_BBT_noPPI
             <listaRPT>
             <!--1 or more repetitions:-->
             <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>noPPI</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>noPPI</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$2ccp</codiceContestoPagamento>
+            <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
-            <codiceConvenzione>CONV1</codiceConvenzione>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -445,7 +444,7 @@ Feature: T135_C_InoltraPagamentoMod2_carrello_BBT_noPPI
     Scenario: Execute nodoInviaRT 1 (Phase 5)
         Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
         And identificativoUnivocoVersamento with noPPI in nodoInviaRT
-        And codiceContestoPagamento with $2ccp in nodoInviaRT
+        And codiceContestoPagamento with $2CCP in nodoInviaRT
         And rt with $rt2Attachment in nodoInviaRT
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response

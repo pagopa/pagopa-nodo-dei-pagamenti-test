@@ -346,8 +346,8 @@ Feature: T129_C_InoltraPagamentoMod1_carrello_BBT_web_noPPI
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
@@ -360,19 +360,18 @@ Feature: T129_C_InoltraPagamentoMod1_carrello_BBT_web_noPPI
             <listaRPT>
             <!--1 or more repetitions:-->
             <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>noPPI</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>noPPI</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$2ccp</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
-            <codiceConvenzione>CONV1</codiceConvenzione>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
