@@ -13,7 +13,7 @@ Feature: T053_verifica_attiva_AIM_aux=3_stazioneAux03
             <ws:nodoVerificaRPT>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
             <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
@@ -36,11 +36,11 @@ Feature: T053_verifica_attiva_AIM_aux=3_stazioneAux03
                 <ws:nodoAttivaRPT>
                     <identificativoPSP>#psp#</identificativoPSP>
                     <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
+                    <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
                     <password>pwdpwdpwd</password>
                     <codiceContestoPagamento>$ccp</codiceContestoPagamento>
                     <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
-                    <identificativoCanalePagamento>#canale#</identificativoCanalePagamento>
+                    <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
                     <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
                     <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost>  <aim:AuxDigit>3</aim:AuxDigit>  <aim:CodIUV>#cod_segr_old#$1iuv</aim:CodIUV> </aim:aim128></codiceIdRPT>
                     <datiPagamentoPSP>
