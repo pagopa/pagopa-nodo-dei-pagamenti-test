@@ -340,9 +340,6 @@ Feature: ChiediAvanzamento_RT_RIFIUTATA_NODO_sbloccoParcheggio
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
         And wait 10 seconds for expiration
-        And job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 15 seconds
-        And wait 10 seconds for expiration
         And verify 0 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And replace pa content with #creditor_institution_code# content
         And replace iuv content with $2iuv content
@@ -367,7 +364,10 @@ Feature: ChiediAvanzamento_RT_RIFIUTATA_NODO_sbloccoParcheggio
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+        When job pspChiediListaAndChiediRt triggered after 5 seconds
+        And job paInviaRt triggered after 15 seconds
+        And wait 10 seconds for expiration
+        And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
