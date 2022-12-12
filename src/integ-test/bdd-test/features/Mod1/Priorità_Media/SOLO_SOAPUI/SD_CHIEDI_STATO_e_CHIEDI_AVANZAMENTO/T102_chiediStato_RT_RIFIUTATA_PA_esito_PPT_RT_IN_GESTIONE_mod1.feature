@@ -218,20 +218,6 @@ Feature: T102_chiediStato_RT_RIFIUTATA_PA_esito_PPT_RT_IN_GESTIONE_mod1
        
      Scenario: execution nodoInviaRT
         Given the RPT generation scenario executed successfully
-        #And initial XML paaInviaRT
-        #    """
-        #    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-        #        <soapenv:Header/>
-        #        <soapenv:Body>
-        #            <ws:paaInviaRTRisposta>
-        #                <paaInviaRTRisposta>
-        #                    <esito>OK</esito>
-        #                </paaInviaRTRisposta>
-        #            </ws:paaInviaRTRisposta>
-        #        </soapenv:Body>
-        #    </soapenv:Envelope>
-        #    """
-        #And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And initial XML paaInviaRT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -275,29 +261,6 @@ Feature: T102_chiediStato_RT_RIFIUTATA_PA_esito_PPT_RT_IN_GESTIONE_mod1
         Then check esito is OK of nodoInviaRT response
         And wait 10 seconds for expiration
 
-    #Scenario: Execute job paInviaRt
-    #    Given the execution nodoInviaRT scenario executed successfully
-    #    And initial XML paaInviaRT
-    #    """
-    #    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-    #    <soapenv:Header/>
-    #    <soapenv:Body>
-    #        <ws:paaInviaRTRisposta>
-    #            <paaInviaRTRisposta>
-    #                <fault>
-    #                <faultCode>PAA_RT_DUPLICATA</faultCode>
-    #                <faultString>tegba</faultString>
-    #                <id>#creditor_institution_code#</id>
-    #                </fault>
-    #                <esito>KO</esito>
-    #            </paaInviaRTRisposta>
-    #        </ws:paaInviaRTRisposta>
-    #    </soapenv:Body>
-    #    </soapenv:Envelope>
-    #    """
-    #    And EC replies to nodo-dei-pagamenti with the paaInviaRT
-    #    When job paInviaRt triggered after 5 seconds
-    #    And wait 10 seconds for expiration
 
     Scenario: Execute nodoChiediStatoRPT
         Given the execution nodoInviaRT scenario executed successfully
