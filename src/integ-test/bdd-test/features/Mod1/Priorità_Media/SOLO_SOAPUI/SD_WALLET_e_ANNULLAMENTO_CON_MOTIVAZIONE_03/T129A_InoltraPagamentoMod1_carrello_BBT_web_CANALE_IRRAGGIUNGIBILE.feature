@@ -444,8 +444,8 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_CANALE_IRRAGGIUNGIBILE
                 <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+                <identificativoUnivocoVersamento>timeoutPsp</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
         </soapenv:Body>
         </soapenv:Envelope>
