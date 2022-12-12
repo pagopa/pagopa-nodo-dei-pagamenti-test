@@ -6,7 +6,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
-        And generate 1 cart with PA #creditor_institution_code_old# and notice number $2noticeNumber
+        And generate 1 cart with PA #creditor_institution_code# and notice number $2noticeNumber
         And replace $1iuv content with RPTdaRifPsp content
         And replace $2iuv content with RPTdaRifPsp content
         And RPT1 generation
@@ -422,12 +422,13 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
                     <ws:pspInviaCarrelloRPTResponse>
                         <pspInviaCarrelloRPTResponse>
                             <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                        <listaErroriRPT>
                             <fault>
-                            <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
-                            <faultString>fault esterno</faultString>
-                            <id>#psp#</id>
-                            <description>descrizione fault esterno</description>
-                        </fault>
+                                <faultCode>CANALE_RPT_DA_RIFIUTARE</faultCode>
+                                <faultString>RPT da Rifiutare lato PSP</faultString>
+                                <id>40000000001</id>
+                            </fault>
+                        </listaErroriRPT>
                         </pspInviaCarrelloRPTResponse>
                     </ws:pspInviaCarrelloRPTResponse>
                 </soapenv:Body>
@@ -441,7 +442,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
                 "identificativoPsp": "#psp#",
                 "tipoVersamento": "BBT",
                 "identificativoIntermediario": "#psp#",
-                "identificativoCanale": "#canaleRtPush#",
+                "identificativoCanale": "#canale#",
                 "tipoOperazione": "web"
             }
             """
