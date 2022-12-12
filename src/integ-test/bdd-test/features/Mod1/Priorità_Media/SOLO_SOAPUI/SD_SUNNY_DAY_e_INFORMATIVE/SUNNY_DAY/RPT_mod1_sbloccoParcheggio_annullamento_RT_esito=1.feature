@@ -211,47 +211,8 @@ Feature: RPT_mod1_sbloccoParcheggio_annullamento_RT_esito=1
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-    # Scenario: Execute nodoInviaRT (phase 2)
-    #     Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
-    #     And initial XML nodoInviaRT
-    #         """
-    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-    #         <soapenv:Header/>
-    #         <soapenv:Body>
-    #         <ws:nodoInviaRT>
-    #         <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-    #         <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
-    #         <password>pwdpwdpwd</password>
-    #         <identificativoPSP>#psp#</identificativoPSP>
-    #         <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-    #         <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-    #         <codiceContestoPagamento>NOTIFICA_RT</codiceContestoPagamento>
-    #         <tipoFirma></tipoFirma>
-    #         <forzaControlloSegno>1</forzaControlloSegno>
-    #         <rt>$rtAttachment</rt>
-    #         </ws:nodoInviaRT>
-    #         </soapenv:Body>
-    #         </soapenv:Envelope>
-    #         """
-    #     And initial XML paaInviaRT
-    #         """
-    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-    #         <soapenv:Header/>
-    #         <soapenv:Body>
-    #         <ws:paaInviaRTRisposta>
-    #         <paaInviaRTRisposta>
-    #         <esito>OK</esito>
-    #         </paaInviaRTRisposta>
-    #         </ws:paaInviaRTRisposta>
-    #         </soapenv:Body>
-    #         </soapenv:Envelope>
-    #         """
-    #     And EC replies to nodo-dei-pagamenti with the paaInviaRT
-    #     When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
-    #     Then check esito is OK of nodoInviaRT response
-        
 
-    @rpt
+    @midRunnable
     Scenario: Execute nodoNotificaAnnullamentoPagamento (Phase 3)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And wait 5 seconds for expiration

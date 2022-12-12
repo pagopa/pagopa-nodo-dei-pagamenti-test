@@ -183,7 +183,7 @@ Feature: RPT_mod1_sbloccoParcheggio_esitoCarta_RT_esito=0
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp_AGID#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp_AGID#</identificativoIntermediarioPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
@@ -233,7 +233,7 @@ Feature: RPT_mod1_sbloccoParcheggio_esitoCarta_RT_esito=0
         And check esito is OK of inoltroEsito/carta response 
 
 
-    @rpt
+    @midRunnable
     Scenario: Execute nodoInviaRT (phase 3)
         Given the Execute nodoInoltraEsitoPagamentoCarta (phase 2) scenario executed successfully
         And initial XML nodoInviaRT
