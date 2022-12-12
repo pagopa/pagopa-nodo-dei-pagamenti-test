@@ -374,7 +374,7 @@ Feature: T095_D_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio
             <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
             <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$2carrello</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
@@ -439,7 +439,7 @@ Feature: T095_D_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio
             <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
             <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
