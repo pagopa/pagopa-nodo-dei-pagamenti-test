@@ -399,8 +399,8 @@ def step_impl(context, number, aux_digit, segregation_code, application_code):
         iuv = random.randint(10000000000000000, 99999999999999999)
         notice_number = f"{aux_digit}{iuv}"
     elif aux_digit == 2:
-        iuv = random.randint(100000000000000, 999999999999999)
-        notice_number = f"{aux_digit}{iuv}00"
+        iuv = random.randint(100000000000000, 999999999999999) + "00"
+        notice_number = f"{aux_digit}{iuv}"
     else:
         assert False
 
