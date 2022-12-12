@@ -183,8 +183,8 @@ Feature: RPT_mod1_sbloccoParcheggio_esitoCarta_RT_esito=0
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp_AGID#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID#</identificativoCanale>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -209,22 +209,23 @@ Feature: RPT_mod1_sbloccoParcheggio_esitoCarta_RT_esito=0
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
     Scenario: Execute nodoInoltraEsitoPagamentoCarta (phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
-        When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
+        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
-            {"idPagamento":"SESSIONIDRICAVATODAQUERY",
+            "idPagamento":"$sessionToken",
             "RRN":7352169,
-            "identificativoPsp":"#psp_AGID#",
+            "identificativoPsp":"#psp#",
             "tipoVersamento":"CP",
-            "identificativoIntermediario":"#psp_AGID#",
-            "identificativoCanale":"#canale_AGID#",
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#canale#",
             "importoTotalePagato":10.00,
             "timestampOperazione":"2018-02-08T17:06:03.100+01:00",
             "codiceAutorizzativo":"123456",
-            "esitoTransazioneCarta":"00"}
+            "esitoTransazioneCarta":"00"
             }
             """
         And wait 6 seconds for expiration
@@ -234,7 +235,7 @@ Feature: RPT_mod1_sbloccoParcheggio_esitoCarta_RT_esito=0
 
     @midRunnable
     Scenario: Execute nodoInviaRT (phase 3)
-        Given the Execute nodoInoltraEsitoPagamentoCarta (Phase 2) scenario executed successfully
+        Given the Execute nodoInoltraEsitoPagamentoCarta (phase 2) scenario executed successfully
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">

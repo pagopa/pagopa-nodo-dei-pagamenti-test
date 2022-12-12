@@ -176,6 +176,8 @@ stages:
               echo 'Install Behave'
               sudo pip3 install behave 
               sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
+              echo python version
+              python3 -V
               whereis behave
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
@@ -185,20 +187,19 @@ stages:
 
               # Lorenzo  
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/TestGenerazioneRicevute $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/RetryATokenScaduto --tags=runnable
-              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_WALLET_e_ANNULLAMENTO_CON_MOTIVAZIONE_03/T129_InoltraPagamentoMod1_RPT_BBT_web_KO_PSP.feature --tags=midRunnable
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_SUNNY_DAY_e_INFORMATIVE/SUNNY_DAY/RPT_mod1_sbloccoParcheggio_esitoCarta_RT_esito=0.feature --tags=midRunnable
+              
+              # Mascia
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/RPT_UNIVERSALE/T213_rptUniversale_1RPT_2versamenti_appoggio_accredito.feature --tags=midRunnable
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_CHIEDI_STATO_e_CHIEDI_AVANZAMENTO/CAF_ChiediAvanzamento_forzata_per_stato_RT_ACCETTATA_PA.feature --tags=midRunnable
+              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_CHIEDI_STATO_e_CHIEDI_AVANZAMENTO/T095_E_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParch_nomod2.feature --tags=midRunnable
               
               # Damiano
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/paaInviaRT/IRTRES1.feature
 
-              # Alessandro
-              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/nodoInviaRT/IRTSIN.feature --tags=runnable
-
               # Marisa
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_CHIEDI_STATO_e_CHIEDI_AVANZAMENTO/T101_chiediStato_RT_REVOCATA_tipoRevoca=1.feature
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_SUNNY_DAY_e_INFORMATIVE/SUNNY_DAY/T195_ChiediNumeroAvviso_targa_senzaRegione.feature
-              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_WALLET_e_ANNULLAMENTO_CON_MOTIVAZIONE_03/T136_InoltraPagamentoMod2_RPT_BP_KO_PSP.feature
+              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_WALLET_e_ANNULLAMENTO_CON_MOTIVAZIONE_03/T137A_InoltraPagamentoMod2_carrello_AD_TIMEOUT.feature
 
               # Davide
               #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/paSendRT/PSRT_30_new.feature

@@ -182,9 +182,9 @@ Feature: RPT_mod1_sbloccoParcheggio_annullamento_RT_esito=1
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -209,48 +209,11 @@ Feature: RPT_mod1_sbloccoParcheggio_annullamento_RT_esito=1
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
-    Scenario: Execute nodoInviaRT (phase 2)
-        Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
-        And initial XML nodoInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:nodoInviaRT>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>NOTIFICA_RT</codiceContestoPagamento>
-            <tipoFirma></tipoFirma>
-            <forzaControlloSegno>1</forzaControlloSegno>
-            <rt>$rtAttachment</rt>
-            </ws:nodoInviaRT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paaInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaInviaRTRisposta>
-            <paaInviaRTRisposta>
-            <esito>OK</esito>
-            </paaInviaRTRisposta>
-            </ws:paaInviaRTRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paaInviaRT
-        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRT response
 
     @midRunnable
     Scenario: Execute nodoNotificaAnnullamentoPagamento (Phase 3)
-        Given the Execute nodoInviaRT (phase 2) scenario executed successfully
+        Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And wait 5 seconds for expiration
-        When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionTokenDARECUPERARETRAMITEQUERY to nodo-dei-pagamenti
+        When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

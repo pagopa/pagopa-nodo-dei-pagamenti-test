@@ -1,4 +1,4 @@
-Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
+Feature: T135_G_InoltraPagamentoMod2_carrello_BBT_soloOK
 
     Background:
         Given systems up
@@ -67,7 +67,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>6.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>timeoutPsp</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>soloOK</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -146,7 +146,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>5.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>timeoutPsp</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>soloOK</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>#CCP2#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -240,13 +240,13 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
             <pay_i:datiPagamento>
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-            <pay_i:identificativoUnivocoVersamento>timeoutPsp</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>soloOK</pay_i:identificativoUnivocoVersamento>
             <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>timeoutPsp</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoRiscossione>soloOK</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloPagamento>
@@ -328,13 +328,13 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
             <pay_i:datiPagamento>
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-            <pay_i:identificativoUnivocoVersamento>timeoutPsp</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>soloOK</pay_i:identificativoUnivocoVersamento>
             <pay_i:CodiceContestoPagamento>$2CCP</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>timeoutPsp</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoRiscossione>soloOK</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloPagamento>
@@ -361,13 +361,13 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
             <!--1 or more repetitions:-->
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>timeoutPsp</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>soloOK</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>timeoutPsp</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>soloOK</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
@@ -383,7 +383,6 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
             <soapenv:Body>
             <ws:pspInviaCarrelloRPTResponse>
             <pspInviaCarrelloRPTResponse>
-            <delay>10000</delay>
             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
             <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
             <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
@@ -397,65 +396,27 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-     Scenario: Execute nodoChiediInformazioniPagamento (Phase 2)
+   
+
+    Scenario: Execute inoltroEsito/mod2 (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
-        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 200
-        And check importo field exists in informazioniPagamento response
-        And check email field exists in informazioniPagamento response
-        And check ragioneSociale field exists in informazioniPagamento response
-        And check oggettoPagamento field exists in informazioniPagamento response
-        And check urlRedirectEC field exists in informazioniPagamento response
-
-    Scenario: Execute nodoChiediListaPsp (Phase 3)
-        Given the Execute nodoChiediInformazioniPagamento (Phase 2) scenario executed successfully
-        When WISP sends REST GET listaPSP?idPagamento=$sessionToken&importoTotale=1000&percorsoPagamento=CARTE to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 200
-        And check totalRows field exists in listaPSP response
-        And check data field exists in listaPSP response
-
-    Scenario: Execute inoltroEsito/mod1 (Phase 2)
-        Given the Execute nodoChiediListaPsp (Phase 3) scenario executed successfully
-         And initial XML pspInviaCarrelloRPT 
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTResponse>
-                        <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                <delay>10000</delay>
-                <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoUnivocoVersamento</identificativoCarrello>
-                <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-                        </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTResponse>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
-        When PSP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
+        When PSP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti
             """
             {
                 "idPagamento": "$sessionToken",
                 "identificativoPsp": "#psp#",
                 "tipoVersamento": "BBT",
                 "identificativoIntermediario": "#psp#",
-                "identificativoCanale": "#canale#",
-                "tipoOperazione": "web"
+                "identificativoCanale": "#canale_DIFFERITO_MOD2#"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-        And check errorCode is UNKPSP of inoltroEsito/mod1 response
-        And check descrizione is Operazione in timeout of inoltroEsito/mod1 response
+        Then verify the HTTP status code of inoltroEsito/mod2 response is 200
+        And check esito is OK of inoltroEsito/mod2 response
 
-    Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 3)
-        Given the Execute inoltroEsito/mod1 (Phase 2) scenario executed successfully
-        When PSP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of avanzamentoPagamento response is 200
-        And check esito is ACK_UNKNOWN of avanzamentoPagamento response
+   
 
     Scenario: Execute nodoInviaRT (Phase 4)
-        Given the Execute nodoChiediAvanzamentoPagamento (Phase 3) scenario executed successfully
+        Given the Execute inoltroEsito/mod2 (Phase 2) scenario executed successfully
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -467,7 +428,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>timeoutPsp</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>soloOK</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
@@ -482,7 +443,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
     @midRunnable
     Scenario: Execute nodoInviaRT 1 (Phase 5)
         Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
-        And identificativoUnivocoVersamento with timeoutPsp in nodoInviaRT
+        And identificativoUnivocoVersamento with soloOK in nodoInviaRT
         And codiceContestoPagamento with $2CCP in nodoInviaRT
         And rt with $rt2Attachment in nodoInviaRT
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti

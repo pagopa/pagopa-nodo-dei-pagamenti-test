@@ -1,4 +1,4 @@
-Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
+Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_CANALE_ERRORE_RESPONSE
 
     Background:
         Given systems up
@@ -416,23 +416,19 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
 
     Scenario: Execute inoltroEsito/mod1 (Phase 2)
         Given the Execute nodoChiediListaPsp (Phase 3) scenario executed successfully
-         And initial XML pspInviaCarrelloRPT 
+         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTResponse>
-                        <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                <delay>10000</delay>
-                <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoUnivocoVersamento</identificativoCarrello>
-                <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-                        </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTResponse>
-                </soapenv:Body>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When PSP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
@@ -444,10 +440,11 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
                 "tipoOperazione": "web"
             }
             """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-        And check errorCode is UNKPSP of inoltroEsito/mod1 response
-        And check descrizione is Operazione in timeout of inoltroEsito/mod1 response
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 408
+        And check error is timeout of inoltroEsito/mod1 response
 
+
+   
     Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 3)
         Given the Execute inoltroEsito/mod1 (Phase 2) scenario executed successfully
         When PSP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti

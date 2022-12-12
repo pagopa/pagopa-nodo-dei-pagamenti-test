@@ -1,4 +1,4 @@
-Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
+Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_CANALE_IRRAGGIUNGIBILE
 
     Background:
         Given systems up
@@ -416,43 +416,51 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
 
     Scenario: Execute inoltroEsito/mod1 (Phase 2)
         Given the Execute nodoChiediListaPsp (Phase 3) scenario executed successfully
-         And initial XML pspInviaCarrelloRPT 
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaCarrelloRPTResponse>
-                        <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                <delay>10000</delay>
-                <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoUnivocoVersamento</identificativoCarrello>
-                <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-                        </pspInviaCarrelloRPTResponse>
-                    </ws:pspInviaCarrelloRPTResponse>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When PSP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
                 "idPagamento": "$sessionToken",
-                "identificativoPsp": "#psp#",
+                "identificativoPsp": "irraggiungibile",
                 "tipoVersamento": "BBT",
-                "identificativoIntermediario": "#psp#",
-                "identificativoCanale": "#canale#",
+                "identificativoIntermediario": "irraggiungibile",
+                "identificativoCanale": "irraggiungibile",
                 "tipoOperazione": "web"
             }
             """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-        And check errorCode is UNKPSP of inoltroEsito/mod1 response
-        And check descrizione is Operazione in timeout of inoltroEsito/mod1 response
+        And check errorCode is CONPSP of inoltroEsito/mod1 response
+        And check descrizione is Canale non raggiungibile of inoltroEsito/mod1 response
+
+
+    Scenario: Execute nodoChiediStatoRPT request
+        Given the Execute inoltroEsito/mod1 (Phase 2) scenario executed successfully
+        And initial XML nodoChiediStatoRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+        <soapenv:Header/>
+        <soapenv:Body>
+            <ws:nodoChiediStatoRPT>
+                <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+                <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                <password>pwdpwdpwd</password>
+                <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+                <identificativoUnivocoVersamento>timeoutPsp</identificativoUnivocoVersamento>
+                <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+            </ws:nodoChiediStatoRPT>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+        Then checks stato contains RPT_ERRORE_INVIO_A_PSP of nodoChiediStatoRPT response
+        And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And check url field not exists in nodoChiediStatoRPT response
 
     Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 3)
-        Given the Execute inoltroEsito/mod1 (Phase 2) scenario executed successfully
+        Given the Execute nodoChiediStatoRPT request scenario executed successfully
         When PSP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
-        And check esito is ACK_UNKNOWN of avanzamentoPagamento response
+        And check esito is KO of avanzamentoPagamento response
 
     Scenario: Execute nodoInviaRT (Phase 4)
         Given the Execute nodoChiediAvanzamentoPagamento (Phase 3) scenario executed successfully
@@ -477,7 +485,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRT response
+        Then check esito is KO of nodoInviaRT response
 
     @midRunnable
     Scenario: Execute nodoInviaRT 1 (Phase 5)
@@ -486,4 +494,4 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
         And codiceContestoPagamento with $2CCP in nodoInviaRT
         And rt with $rt2Attachment in nodoInviaRT
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRT response
+        Then check esito is KO of nodoInviaRT response

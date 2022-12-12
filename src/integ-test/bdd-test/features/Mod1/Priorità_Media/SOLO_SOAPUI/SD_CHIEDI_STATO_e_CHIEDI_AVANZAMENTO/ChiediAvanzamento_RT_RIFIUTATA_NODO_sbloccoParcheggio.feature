@@ -153,7 +153,7 @@ Feature: ChiediAvanzamento_RT_RIFIUTATA_NODO_sbloccoParcheggio
                 <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
             </pay_i:soggettoPagatore>
             <pay_i:datiPagamento>
-                <pay_i:codiceEsitoPagamento>1</pay_i:codiceEsitoPagamento>
+                <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
                 <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
                 <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
                 <pay_i:CodiceContestoPagamento>CCD01</pay_i:CodiceContestoPagamento>
@@ -215,7 +215,7 @@ Feature: ChiediAvanzamento_RT_RIFIUTATA_NODO_sbloccoParcheggio
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
         When WISP sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
@@ -223,7 +223,7 @@ Feature: ChiediAvanzamento_RT_RIFIUTATA_NODO_sbloccoParcheggio
                 "identificativoPsp": "#psp#",
                 "tipoVersamento": "BBT",
                 "identificativoIntermediario": "#psp#",
-                "identificativoCanale": "#canale#",
+                "identificativoCanale": "#canaleRtPull_sec#",
                 "tipoOperazione": "web"
             }
             """
@@ -242,7 +242,7 @@ Feature: ChiediAvanzamento_RT_RIFIUTATA_NODO_sbloccoParcheggio
             <soapenv:Body>
             <ws:nodoInviaRT>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPull#</identificativoCanale>
+            <identificativoCanale>#canaleRtPull_sec#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
@@ -255,7 +255,7 @@ Feature: ChiediAvanzamento_RT_RIFIUTATA_NODO_sbloccoParcheggio
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_SEMANTICA of nodoInviaRT response
         And wait 5 seconds for expiration
@@ -275,21 +275,41 @@ Feature: ChiediAvanzamento_RT_RIFIUTATA_NODO_sbloccoParcheggio
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
-          And initial XML pspInviaRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
+        And initial XML pspChiediListaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-                <ws:pspInviaRPTResponse>
-                    <pspInviaRPTResponse>
-                    <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                    </pspInviaRPTResponse>
-                </ws:pspInviaRPTResponse>
+            <ws:pspChiediListaRTResponse>
+            <pspChiediListaRTResponse>
+            <elementoListaRTResponse>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            </elementoListaRTResponse>
+            </pspChiediListaRTResponse>
+            </ws:pspChiediListaRTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        And initial XML pspChiediRT
+            """
+            <soapenv:Envelope
+            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspChiediRTResponse>
+            <pspChiediRTResponse>
+            <rt>$rtAttachment</rt>
+            </pspChiediRTResponse>
+            </ws:pspChiediRTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         And initial XML paaInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -305,8 +325,6 @@ Feature: ChiediAvanzamento_RT_RIFIUTATA_NODO_sbloccoParcheggio
             """
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
-        And wait 10 seconds for expiration
-        And job paInviaRT triggered after 5 seconds
         And wait 10 seconds for expiration
         And verify 0 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And replace pa content with #creditor_institution_code# content
@@ -332,7 +350,10 @@ Feature: ChiediAvanzamento_RT_RIFIUTATA_NODO_sbloccoParcheggio
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+        When job pspChiediListaAndChiediRt triggered after 5 seconds
+        And job paInviaRt triggered after 15 seconds
+        And wait 10 seconds for expiration
+        And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response

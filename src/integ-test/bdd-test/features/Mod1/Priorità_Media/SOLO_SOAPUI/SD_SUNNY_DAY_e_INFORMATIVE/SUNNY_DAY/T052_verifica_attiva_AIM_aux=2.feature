@@ -1,31 +1,24 @@
-Feature: T050_verifica_attiva_AIM_aux=0
+Feature: T052_verifica_attiva_AIM_aux=2
 
     Background:
         Given systems up
 
     Scenario: Execute nodoVerificaRPT
-        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
+        Given generate 1 notice number and iuv with aux digit 2, segregation code NA and application code NA
         And initial XML nodoVerificaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
             <soapenv:Header/>
             <soapenv:Body>
-            <ws:nodoVerificaRPT>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
-            <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-            <codiceIdRPT>
-            <aim:aim128>
-            <aim:CCPost>#ccPoste#</aim:CCPost>
-            <aim:CodStazPA>#cod_segr#</aim:CodStazPA>
-            <aim:AuxDigit>0</aim:AuxDigit>
-            <aim:CodIUV>$1iuv</aim:CodIUV>
-            </aim:aim128>
-            </codiceIdRPT>
-            </ws:nodoVerificaRPT>
+                <ws:nodoVerificaRPT>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+                    <password>pwdpwdpwd</password>
+                    <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
+                    <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
+                    <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost>  <aim:AuxDigit>2</aim:AuxDigit>  <aim:CodIUV>$1iuv</aim:CodIUV> </aim:aim128></codiceIdRPT>
+                </ws:nodoVerificaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -49,7 +42,7 @@ Feature: T050_verifica_attiva_AIM_aux=0
                     <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
                     <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
                     <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-                    <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>#cod_segr#</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>$1iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
+                    <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:AuxDigit>2</aim:AuxDigit>  <aim:CodIUV>$1iuv</aim:CodIUV></aim:aim128></codiceIdRPT>
                     <datiPagamentoPSP>
                         <importoSingoloVersamento>10.00</importoSingoloVersamento>
                         <!--Optional:-->
@@ -109,5 +102,27 @@ Feature: T050_verifica_attiva_AIM_aux=0
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML paaAttivaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:paaAttivaRPTRisposta>
+                        <paaAttivaRPTRisposta>
+                            <esito>KO</esito>
+                            <irraggiungibile/>
+                            <fault>
+                                <faultCode>PAA_FIRMA_INDISPONIBILE</faultCode>
+                                <faultString>gbyiua</faultString>
+                                <id>#creditor_institution_code_old#</id>
+                                <description>dfstf</description>
+                                <serial>1</serial>
+                            </fault>
+                        </paaAttivaRPTRisposta>
+                    </ws:paaAttivaRPTRisposta>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
-        Then check esito is OK of nodoAttivaRPT response
+        Then check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of nodoAttivaRPT response
