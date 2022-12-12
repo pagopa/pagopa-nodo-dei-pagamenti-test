@@ -361,13 +361,13 @@ Feature: T135_G_InoltraPagamentoMod2_carrello_BBT_soloOK
             <!--1 or more repetitions:-->
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>noPPI</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>soloOK</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>noPPI</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>soloOK</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$2CCP</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
@@ -427,8 +427,8 @@ Feature: T135_G_InoltraPagamentoMod2_carrello_BBT_soloOK
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>noPPI</identificativoUnivocoVersamento>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>soloOK</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
@@ -443,7 +443,7 @@ Feature: T135_G_InoltraPagamentoMod2_carrello_BBT_soloOK
     @midRunnable
     Scenario: Execute nodoInviaRT 1 (Phase 5)
         Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
-        And identificativoUnivocoVersamento with noPPI in nodoInviaRT
+        And identificativoUnivocoVersamento with soloOK in nodoInviaRT
         And codiceContestoPagamento with $2CCP in nodoInviaRT
         And rt with $rt2Attachment in nodoInviaRT
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
