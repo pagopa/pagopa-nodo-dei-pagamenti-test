@@ -17,7 +17,7 @@ Feature: T053_verifica_attiva_AIM_aux=3
             <password>pwdpwdpwd</password>
             <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
             <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-            <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost>  <aim:AuxDigit>3</aim:AuxDigit>  <aim:CodIUV>#cod_segr#$1iuv</aim:CodIUV> </aim:aim128></codiceIdRPT>
+            <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:AuxDigit>3</aim:AuxDigit> <aim:CodIUV>#cod_segr#$1iuv</aim:CodIUV> </aim:aim128></codiceIdRPT>
             </ws:nodoVerificaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -42,7 +42,7 @@ Feature: T053_verifica_attiva_AIM_aux=3
                     <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
                     <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
                     <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-                    <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost>  <aim:AuxDigit>3</aim:AuxDigit>  <aim:CodIUV>#cod_segr#$1iuv</aim:CodIUV> </aim:aim128></codiceIdRPT>
+                    <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:AuxDigit>3</aim:AuxDigit> <aim:CodIUV>#cod_segr#$1iuv</aim:CodIUV> </aim:aim128></codiceIdRPT>
                     <datiPagamentoPSP>
                         <importoSingoloVersamento>10.00</importoSingoloVersamento>
                         <!--Optional:-->
