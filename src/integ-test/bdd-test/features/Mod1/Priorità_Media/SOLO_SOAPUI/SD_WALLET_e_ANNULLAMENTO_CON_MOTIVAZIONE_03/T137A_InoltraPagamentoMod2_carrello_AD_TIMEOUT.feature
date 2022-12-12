@@ -469,7 +469,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_TIMEOUT
                     <codiceContestoPagamento>CCD01</codiceContestoPagamento>
                     <tipoFirma></tipoFirma>
                     <forzaControlloSegno>1</forzaControlloSegno>
-                    <rt>$rt1Attachment</rt>
+                    <rt>$rtAttachment</rt>
                 </ws:nodoInviaRT>
             </soapenv:Body>
             </soapenv:Envelope>
