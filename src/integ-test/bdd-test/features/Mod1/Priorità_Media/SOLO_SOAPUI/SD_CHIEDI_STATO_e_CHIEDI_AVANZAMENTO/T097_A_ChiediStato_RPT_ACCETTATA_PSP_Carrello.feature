@@ -206,8 +206,8 @@ Feature: T097_A_ChiediStato_RPT_ACCETTATA_PSP_Carrello
                     <ws:pspInviaCarrelloRPTResponse>
                         <pspInviaCarrelloRPTResponse>
                             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-                            <identificativoCarrello>$ccp</identificativoCarrello>
-                            <parametriPagamentoImmediato>idBruciatura=$ccp</parametriPagamentoImmediato>
+                            <identificativoCarrello>$1carrello</identificativoCarrello>
+                            <parametriPagamentoImmediato>idBruciatura=$1carrello</parametriPagamentoImmediato>
                         </pspInviaCarrelloRPTResponse>
                     </ws:pspInviaCarrelloRPTResponse>
                 </soapenv:Body>
