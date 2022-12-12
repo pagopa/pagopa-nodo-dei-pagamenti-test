@@ -2,7 +2,7 @@ Feature: Copy of T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParchegg
 
     Background:
         Given systems up
-
+    
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
         And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
