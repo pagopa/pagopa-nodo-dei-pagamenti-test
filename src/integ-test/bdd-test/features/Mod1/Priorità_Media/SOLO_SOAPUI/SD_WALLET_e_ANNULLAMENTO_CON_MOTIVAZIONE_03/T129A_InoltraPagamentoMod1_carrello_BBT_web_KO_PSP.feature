@@ -409,8 +409,8 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
         Given the Execute nodoChiediInformazioniPagamento (Phase 2) scenario executed successfully
         When WISP sends REST GET listaPSP?idPagamento=$sessionToken&importoTotale=1000&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
-        And check totalRows exists in listaPSP response
-        And check data exists in listaPSP response
+        And check totalRows field exists in listaPSP response
+        And check data field exists in listaPSP response
         
     Scenario: Execute inoltroEsito/mod1 (Phase 4)
         Given the Execute nodoChiediListaPsp (Phase 3) scenario executed successfully 
