@@ -216,11 +216,9 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
                 <pspInviaCarrelloRPTResponse>
                 <!--Optional:-->
                     <fault>
-                        <faultCode>CANALE_SEMANTICA</faultCode>
-                        <faultString>Errore semantico dal psp</faultString>
-                        <id>1</id>
-                        <!--Optional:-->
-                        <description>Errore dal psp</description>
+                      <faultCode>CANALE_RPT_DUPLICATA</faultCode>
+                      <faultString>random</faultString>
+                      <id>wpl02</id>
                     </fault>
                     <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
                 </pspInviaCarrelloRPTResponse>
@@ -244,7 +242,11 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
       "esitoTransazioneCarta":"00"
     }
     """
-    Then check errorCode is RIFPSP of inoltroEsito/carta response
+    Then check esito field exists in inoltroEsito/carta response
+    And check esito is KO of inoltroEsito/carta response
+    And check url field not exists in inoltroEsito/carta response
+    And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response 
+    And check errorCode is RIFPSP of inoltroEsito/carta response
 
   Scenario: Execute nodoChiediStatoRPT request
     Given the Execute nodoInoltraEsitoPagamentoCarta request scenario executed successfully
@@ -267,8 +269,8 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
     Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
     And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-    #And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
-    And check redirect is 0 of nodoChiediStatoRPT response
+    And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
+    
 
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediStatoRPT request scenario executed successfully
