@@ -217,7 +217,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_AUTH
                     <faultString>HGCCJCHG</faultString>
                     <id>idPsp1</id>
                     </fault>
-                    <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                    <esitoComplessivoOperazione>KO_AUTH</esitoComplessivoOperazione>
                 </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
         </soapenv:Body>
@@ -232,7 +232,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_AUTH
       "identificativoPsp":"#psp#",
       "tipoVersamento":"CP",
       "identificativoIntermediario":"#psp#",
-      "identificativoCanale":"#canale#",
+      "identificativoCanale":"#canaleRtPush#",
       "esitoTransazioneCarta": "123456", 
       "importoTotalePagato": 11.11,
       "timestampOperazione": "2012-04-23T18:25:43.001Z",
