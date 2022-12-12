@@ -232,7 +232,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_AUTH
       "identificativoPsp":"#psp#",
       "tipoVersamento":"CP",
       "identificativoIntermediario":"#psp#",
-      "identificativoCanale":"#canaleRtPush#",
+      "identificativoCanale":"#canale#",
       "esitoTransazioneCarta": "123456", 
       "importoTotalePagato": 11.11,
       "timestampOperazione": "2012-04-23T18:25:43.001Z",
