@@ -222,7 +222,7 @@ Feature: RPT_mod1_sbloccoParcheggio_esitoCarta_RT_esito=0
             "tipoVersamento":"CP",
             "identificativoIntermediario":"#psp#",
             "identificativoCanale":"#canale#",
-            "importoTotalePagato":10.00,
+            "importoTotalePagato": 10,
             "timestampOperazione":"2018-02-08T17:06:03.100+01:00",
             "codiceAutorizzativo":"123456",
             "esitoTransazioneCarta":"00"
