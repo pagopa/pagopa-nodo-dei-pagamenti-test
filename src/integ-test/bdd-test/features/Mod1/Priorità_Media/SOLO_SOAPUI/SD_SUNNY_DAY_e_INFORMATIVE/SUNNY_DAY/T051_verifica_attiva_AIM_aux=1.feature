@@ -15,7 +15,7 @@ Feature: T051_verifica_attiva_AIM_aux=1
                     <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
                     <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
                     <password>pwdpwdpwd</password>
-                    <codiceContestoPagamento>167411010512874</codiceContestoPagamento>
+                    <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
                     <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
                     <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost>  <aim:AuxDigit>1</aim:AuxDigit>  <aim:CodIUV>$1iuv</aim:CodIUV> </aim:aim128></codiceIdRPT>
                 </ws:nodoVerificaRPT>
