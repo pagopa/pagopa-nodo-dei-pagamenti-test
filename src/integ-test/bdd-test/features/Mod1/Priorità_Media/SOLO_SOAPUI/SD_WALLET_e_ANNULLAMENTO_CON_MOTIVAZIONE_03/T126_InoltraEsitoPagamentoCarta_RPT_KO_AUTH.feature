@@ -212,11 +212,6 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_AUTH
         <soapenv:Body>
             <ws:pspInviaCarrelloRPTCarteResponse>
                 <pspInviaCarrelloRPTResponse>
-                    <fault>
-                    <faultCode>CANALE_SYSTEM_ERROR</faultCode>
-                    <faultString>HGCCJCHG</faultString>
-                    <id>idPsp1</id>
-                    </fault>
                     <esitoComplessivoOperazione>KO_AUTH</esitoComplessivoOperazione>
                 </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
