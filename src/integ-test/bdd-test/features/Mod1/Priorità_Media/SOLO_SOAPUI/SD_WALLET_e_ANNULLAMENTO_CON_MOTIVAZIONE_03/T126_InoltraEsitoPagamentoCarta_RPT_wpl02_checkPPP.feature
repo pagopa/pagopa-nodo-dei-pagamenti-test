@@ -214,6 +214,14 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
         <soapenv:Body>
             <ws:pspInviaCarrelloRPTCarteResponse>
                 <pspInviaCarrelloRPTResponse>
+                <!--Optional:-->
+                    <fault>
+                        <faultCode>CANALE_SEMANTICA</faultCode>
+                        <faultString>Errore semantico dal psp</faultString>
+                        <id>1</id>
+                        <!--Optional:-->
+                        <description>Errore dal psp</description>
+                    </fault>
                     <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
                 </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
@@ -259,7 +267,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
     Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
     And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-    And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
+    #And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
     And check redirect is 0 of nodoChiediStatoRPT response
 
   Scenario: Execute nodoInviaRT request
@@ -271,7 +279,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     <soapenv:Body>
       <ws:nodoInviaRT>
          <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-         <identificativoCanale>#canale#</identificativoCanale>
+         <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
          <password>pwdpwdpwd</password>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
@@ -284,5 +292,5 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     </soapenv:Body>
     </soapenv:Envelope>
     """
-     When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+    When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRT response
