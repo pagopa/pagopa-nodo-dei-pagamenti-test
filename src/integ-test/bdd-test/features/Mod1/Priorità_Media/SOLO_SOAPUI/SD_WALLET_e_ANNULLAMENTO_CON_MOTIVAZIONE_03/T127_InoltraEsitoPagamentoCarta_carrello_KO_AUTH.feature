@@ -447,7 +447,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$RPT_XML.codiceContestoPagamento</codiceContestoPagamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
           </ws:nodoChiediStatoRPT>
       </soapenv:Body>
     </soapenv:Envelope>
