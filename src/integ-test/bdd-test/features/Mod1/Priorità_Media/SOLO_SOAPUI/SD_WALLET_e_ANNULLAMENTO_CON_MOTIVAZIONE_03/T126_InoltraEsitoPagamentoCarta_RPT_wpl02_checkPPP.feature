@@ -204,7 +204,6 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     And check url contains acards of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
 
-  #IN PROGRESS
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
     Given the Execute nodoInviaRPT request scenario executed successfully
     And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
@@ -269,7 +268,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
     Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
     And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-    And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
+    And checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
     
 
   Scenario: Execute nodoInviaRT request
