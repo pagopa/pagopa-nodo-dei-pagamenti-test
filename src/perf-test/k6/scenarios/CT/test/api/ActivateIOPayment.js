@@ -110,8 +110,8 @@ export function ActivateIOPayment(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,ide
 
   /*
   if(outcome=='KO'){
-  console.log("ActivateIOPayment REQuest----------------"+activateIOPaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPaNew.CF , noticeNmbr, idempotencyKey)); 
-  console.log("ActivateIOPayment RESPONSE----------------"+res.body);
+  console.debug("ActivateIOPayment REQuest----------------"+activateIOPaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPaNew.CF , noticeNmbr, idempotencyKey)); 
+  console.debug("ActivateIOPayment RESPONSE----------------"+res.body);
   }*/
   
    check(

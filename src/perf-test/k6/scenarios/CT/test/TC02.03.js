@@ -27,7 +27,7 @@ export function genNoticeNumber(){
 	let noticeNumber='111';
 	for (var i = 15; i > 0; --i) noticeNumber += chars[Math.floor(Math.random() * chars.length)];
 	//let returnValue = "311"+noticeNumber.toString().split('.')[0];
-	//console.log("noticeNumber="+returnValue);
+	//console.debug("noticeNumber="+returnValue);
 	return noticeNumber;
 }
 
@@ -45,7 +45,7 @@ export function genIdempotencyKey(){
 	//let returnValue=key1.toString().split('.')[0]+"_"+key2;
 	for (var i = 11; i > 0; --i) key1 += chars[Math.floor(Math.random() * chars.length)];
 	let returnValue=key1+"_"+key2;
-	//console.log("IdempotencyKey="+returnValue);
+	//console.debug("IdempotencyKey="+returnValue);
 	return returnValue;
 }
 
@@ -57,7 +57,7 @@ export const getScalini = new SharedArray('scalini', function () {
 	
   // here you can open files, and then do additional processing or generate the array with data dynamically
   const f = JSON.parse(open('../../../cfg/'+`${__ENV.steps}`+'.json'));
-  //console.log(f);
+  //console.debug(f);
   return f; // f must be an array[]
 });
 
@@ -156,7 +156,7 @@ export function total() {
 		baseUrl = urls[key].SOAP_BASEURL;
       }
   }
-  console.log(`${__ITER}`);
+  console.debug(`${__ITER}`);
   let rndAnagPsp = inputDataUtil.getAnagPsp();
   let rndAnagPa = inputDataUtil.getAnagPa();
   let rndAnagPaNew = inputDataUtil.getAnagPaNew();
@@ -173,7 +173,7 @@ export function total() {
 
 
 
-  console.log('prima di rpt='+paymentToken+ " importo da versare "+  importoTotaleDaVersare);
+  console.debug('prima di rpt='+paymentToken+ " importo da versare "+  importoTotaleDaVersare);
   res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, importoTotaleDaVersare);
 
   
@@ -186,7 +186,7 @@ export default function(){
 
 
 export function handleSummary(data) {
-  console.log('Preparing the end-of-test summary...');
+  console.debug('Preparing the end-of-test summary...');
  
   return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
   

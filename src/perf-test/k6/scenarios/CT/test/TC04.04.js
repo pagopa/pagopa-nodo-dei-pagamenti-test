@@ -186,7 +186,7 @@ export function total() {
   let idempotencyKey = genIdempotencyKey(); 
   let iuv = genIuv();
   let ccp = create_UUID().replace("-", "");
-  //console.log("CCP=="+ccp);
+  //console.debug("CCP=="+ccp);
   
   const fixedRndAnagPsp = {
 	  PSP: 'AGID_01',
@@ -227,7 +227,7 @@ export default function(){
 
 
 export function handleSummary(data) {
-  console.log('Preparing the end-of-test summary...');
+  console.debug('Preparing the end-of-test summary...');
  
   return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
   

@@ -129,8 +129,8 @@ export function RPT_Carrello_2(baseUrl,rndAnagPa,iuvs) {
 
 
   if(outcome=='KO'){
-  /*console.log("rptCarrello2 REQuest----------------"+rptReqBody(rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuvs, rptEncodeds));
-  console.log("rptCarrello2 RESPONSE----------------"+res.body);*/
+  /*console.debug("rptCarrello2 REQuest----------------"+rptReqBody(rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuvs, rptEncodeds));
+  console.debug("rptCarrello2 RESPONSE----------------"+res.body);*/
   }
     
    check(

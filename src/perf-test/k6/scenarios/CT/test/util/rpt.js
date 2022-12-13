@@ -46,25 +46,25 @@ export function getRptEncoded(pa, stazpa, creditorRefId, paymentToken, importoTo
         day = '0' + day;
 
     var nowDate = [year, month, day].join('-');
-	//console.log(nowDate);
+	//console.debug(nowDate);
 	//var nowDate = today.format("YYYY-MM-dd");
 
     var nowMilliseconds =  new Date(today.getTime())
                     .toISOString()
                     //.split("T")[0];
 
-    //console.log("nowMilliseconds==="+nowMilliseconds);
+    //console.debug("nowMilliseconds==="+nowMilliseconds);
 	if(importoTotaleDaVersare == undefined || importoTotaleDaVersare == ''){
 		importoTotaleDaVersare = "10.00";
 	}	
 	let rptXml = getRpt(pa,stazpa,nowMilliseconds,nowDate,creditorRefId,paymentToken, importoTotaleDaVersare);
-	//console.log(rptXml);
+	//console.debug(rptXml);
 	
     let rptEncoded= encoding.b64encode(rptXml);
 	//let rptEncoded=encode(getBytes(rptXml));
-	//console.log("RPT____="+pa+" "+stazpa+" "+nowMilliseconds+" "+nowDate+" "+creditorRefId+" "+paymentToken);
+	//console.debug("RPT____="+pa+" "+stazpa+" "+nowMilliseconds+" "+nowDate+" "+creditorRefId+" "+paymentToken);
 	
-	//console.log(rptEncoded);
+	//console.debug(rptEncoded);
 	return rptEncoded;
 }
 
@@ -84,18 +84,18 @@ export function getRptBBTEncoded(pa, stazpa, iuv){
         day = '0' + day;
 
     var nowDate = [year, month, day].join('-');
-	//console.log(nowDate);
+	//console.debug(nowDate);
 	
     var nowMilliseconds =  new Date(today.getTime())
                     .toISOString();
      
 	
 	let rptXml = getRptBBT(pa,stazpa,nowMilliseconds,nowDate,iuv,"PERFORMANCE");
-	//console.log(rptXml);
+	//console.debug(rptXml);
 	
     let rptEncoded= encoding.b64encode(rptXml);
-	//console.log("RPT____="+pa+" "+stazpa+" "+nowMilliseconds+" "+nowDate+" "+iuv);
-	//console.log(rptEncoded);
+	//console.debug("RPT____="+pa+" "+stazpa+" "+nowMilliseconds+" "+nowDate+" "+iuv);
+	//console.debug(rptEncoded);
 	return rptEncoded;
 }
 
@@ -115,18 +115,18 @@ export function getRptCEncoded(pa, stazpa, iuv){
         day = '0' + day;
 
     var nowDate = [year, month, day].join('-');
-	//console.log(nowDate);
+	//console.debug(nowDate);
 	
     var nowMilliseconds =  new Date(today.getTime())
                     .toISOString();
      
 	
 	let rptXml = getRptC(pa,stazpa,nowMilliseconds,nowDate,iuv,"PERFORMANCE");
-	//console.log(rptXml);
+	//console.debug(rptXml);
 	
     let rptEncoded= encoding.b64encode(rptXml);
-	//console.log("RPT____="+pa+" "+stazpa+" "+nowMilliseconds+" "+nowDate+" "+iuv);
-	//console.log(rptEncoded);
+	//console.debug("RPT____="+pa+" "+stazpa+" "+nowMilliseconds+" "+nowDate+" "+iuv);
+	//console.debug(rptEncoded);
 	return rptEncoded;
 }
 
@@ -147,14 +147,14 @@ export function getRtEncoded(pa, iuv){
         day = '0' + day;
 
     var nowDate = [year, month, day].join('-');
-	//console.log(nowDate);
+	//console.debug(nowDate);
 	
     var nowMilliseconds =  new Date(today.getTime())
                     .toISOString();
      
 	
 	let rtXml = getRt(pa,nowMilliseconds,nowDate,"0",iuv,"PERFORMANCE");
-	//console.log(rptXml);
+	//console.debug(rptXml);
 	
     let rtEncoded= encoding.b64encode(rtXml);
 	

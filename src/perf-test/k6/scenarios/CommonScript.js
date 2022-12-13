@@ -2,9 +2,9 @@ import { jUnit, textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.j
 import { randomIntBetween, randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 export function handleSummary(data, path,test) {
-  console.log('Preparing the end-of-test summary...');
-  console.log('out path is '+ path);
-  console.log('out test is'+ test);
+  console.debug('Preparing the end-of-test summary...');
+  console.debug('out path is '+ path);
+  console.debug('out test is'+ test);
  
   var csv = extractData(data);
   let d = (new Date).toISOString().substr(0,10);
@@ -25,16 +25,16 @@ export function handleSummary(data, path,test) {
 
 export function extractData(data, type) {
    
-  /*console.log(data.root_group.checks[0].name);
-  console.log(data.root_group.checks[0].passes);
-  console.log(data.metrics.http_req_duration.values);*/
+  /*console.debug(data.root_group.checks[0].name);
+  console.debug(data.root_group.checks[0].passes);
+  console.debug(data.metrics.http_req_duration.values);*/
   var eles = [];
   var prop = [];
-  //console.log(data.metrics);
+  //console.debug(data.metrics);
  
  let myJSON = JSON.stringify(data.metrics);
  //myJSON= myJSON.slice(1,-1);
- //console.log(myJSON);
+ //console.debug(myJSON);
  var json = JSON.parse(myJSON);
  
  var summary = [];  
@@ -42,8 +42,8 @@ export function extractData(data, type) {
  var resultCodeSummary = [];
 	
  for(let key of Object.keys(json)){
-  //console.log(key);
-  //console.log(json[key]);
+  //console.debug(key);
+  //console.debug(json[key]);
   
    var rec = new Object();
    var recSla = new Object();
@@ -69,7 +69,7 @@ export function extractData(data, type) {
      }
      }
 	 
-	   //console.log("name------"+name[0]);
+	   //console.debug("name------"+name[0]);
 	   rec.api = name[0];
 	   rec.trNum = parseInt(obj.value.values.count);
 	   rec.minEl = parseInt(obj.value.values.min);
@@ -77,7 +77,7 @@ export function extractData(data, type) {
 	   rec.avgEl = parseInt(obj.value.values.avg);
 	   
 	   //var str = JSON.stringify(rec);
-	   //console.log(rec.api);
+	   //console.debug(rec.api);
 	   
 	   summary.push(rec);
 	 
@@ -167,7 +167,7 @@ export function extractData(data, type) {
 	   }
 	   	   
 	   //var str = JSON.stringify(rec);
-	   //console.log(recResultCode.api);
+	   //console.debug(recResultCode.api);
 	   
 	   summary.push(rec);	
 	   trOverSla.push(recSla);
@@ -179,15 +179,15 @@ export function extractData(data, type) {
  // eles.push(key+":"+Object.values(json[key]));
 }
 /*for(let value of Object.values(json)){
-  console.log(value);
+  console.debug(value);
   
  // eles.push(key+":"+Object.values(json[key]));
 }*/
-  /*console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-  console.log(trOverSla);
-  console.log(resultCodeSummary);*/
- /* console.log(eles[1][1].values.avg);
-  console.log(eles[0][0]);*/
+  /*console.debug("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+  console.debug(trOverSla);
+  console.debug(resultCodeSummary);*/
+ /* console.debug(eles[1][1].values.avg);
+  console.debug(eles[0][0]);*/
  //return summary;
  var returnArray = []
  var csvsumm = ConvertToCSV(summary);
@@ -206,7 +206,7 @@ export function extractData(data, type) {
 
 
 export function ConvertToCSV(jsonArray) {
-	//console.log("dentro converter");
+	//console.debug("dentro converter");
 	
 var jsonArr = [] 
 
@@ -222,14 +222,14 @@ for(var i = 0; i < jsonArray.length; i++) {
       
  }
    
-  //console.log("sorted="+JSON.stringify(jsonArr))
+  //console.debug("sorted="+JSON.stringify(jsonArr))
 
   const header = Object.keys(jsonArr[0]);
   let h = header.toString();
-  //console.log(h);
+  //console.debug(h);
  
  /* const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
-  console.log(header);
+  console.debug(header);
   const csv = [
   header.join(','), // header row first
   jsonArr.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(',')
@@ -254,7 +254,7 @@ for(var i = 0; i < jsonArray.length; i++) {
         line.slice(0, line.Length - 1);
         str += line + '\r\n';
 	  }
- // console.log(str);
+ // console.debug(str);
   return str;
     
 }
@@ -264,7 +264,7 @@ for(var i = 0; i < jsonArray.length; i++) {
 
 
 export function ConvertToResultCodeCSV(jsonArray) {
-	//console.log("dentro resultCode converter");
+	//console.debug("dentro resultCode converter");
 	
 var jsonArr = [] 
 
@@ -280,7 +280,7 @@ for(var i = 0; i < jsonArray.length; i++) {
       
  }
    
-  //console.log("sorted="+JSON.stringify(jsonArr))
+  //console.debug("sorted="+JSON.stringify(jsonArr))
   
   let summary = [];  
   const rec1 = [];
@@ -291,7 +291,7 @@ for(var i = 0; i < jsonArray.length; i++) {
  
   rec1.push("OK"); //200_OK
   rec2.push("KO"); //Error
-  //console.log(rec1);
+  //console.debug(rec1);
 	
 	for (var i = 0; i < jsonArr.length; i++) {
 		header.push(jsonArr[i].api);
@@ -307,14 +307,14 @@ for(var i = 0; i < jsonArray.length; i++) {
         obj[property]=parseInt(jsonArr[i].trOK)*/
 	    rec1.push(parseInt(jsonArr[i].trOK))
 	}
-	//console.log(rec1);
+	//console.debug(rec1);
 	
 	summary.push(rec1, rec2);
-	//console.log(summary);
+	//console.debug(summary);
   
   
   let h = header.toString();
-  //console.log(h);
+  //console.debug(h);
  
   var array = typeof summary != 'object' ? JSON.parse(summary) : summary;
 
@@ -335,7 +335,7 @@ for(var i = 0; i < jsonArray.length; i++) {
         line.slice(0, line.Length - 1);
         str += line + '\r\n';
 	  }
-  //console.log(str);
+  //console.debug(str);
   return str;
     
 }
@@ -350,7 +350,7 @@ export function genIdempotencyKey(){
 	for (var i = 11; i > 0; --i) key1 += chars[Math.floor(Math.random() * chars.length)];
 	let returnValue=key1+"_"+key2;*/
 	let result = key1+"_"+key2;
-	console.log("genIdempotencyKey "+ result);
+	console.debug("genIdempotencyKey "+ result);
 	return result;
 }
 	

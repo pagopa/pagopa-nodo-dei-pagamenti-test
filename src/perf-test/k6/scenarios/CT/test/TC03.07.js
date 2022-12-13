@@ -57,7 +57,7 @@ export const getScalini = new SharedArray('scalini', function () {
 	
   // here you can open files, and then do additional processing or generate the array with data dynamically
   const f = JSON.parse(open('../../../cfg/'+`${__ENV.steps}`+'.json'));
-  //console.log(f);
+  //console.debug(f);
   return f; // f must be an array[]
 });
 
@@ -402,49 +402,49 @@ function executeMod(){
 
 
 function func1() {
-   //console.log("func1");
+   //console.debug("func1");
    verificaAttiva();
    executeRpts(); 
 }
 function func2() {
-   //console.log("func2");
+   //console.debug("func2");
    verificaAttiva();
    executeRpts(); 
 }
 function func3() {
-    //console.log("func3");
+    //console.debug("func3");
 	executeIdp();
 	//executeOro();
 }
 function func4() {
-   //console.log("func4");
+   //console.debug("func4");
    executeIdp();
   // executeOro();
 }
 function func5() {
-  //console.log("func5");
+  //console.debug("func5");
   executeIdp();
   //executeOro();
 }
 function func6() {
-    //console.log("func6");
+    //console.debug("func6");
    executeIdp();
    //executeOro();
 }
 function func7() {
-    //console.log("func7");
+    //console.debug("func7");
    executeMod();// executeTransf();
 }
 function func8() {
-   //console.log("func8");
+   //console.debug("func8");
    executeMod();//executeTransf();
 }
 function func9() {
-   //console.log("func9");
+   //console.debug("func9");
    executeMod();//executeTransf();
 }
 function func10() {
-    //console.log("func10");
+    //console.debug("func10");
 	executeMod();//executeTransf();
 }
 
@@ -693,7 +693,7 @@ export function rpt5() {
     let rndAnagPa = inputDataUtil.getAnagPa();
 	
     let iuvArray = iuvUtil.genIuvArray(5);
-	//console.log("iuvArray=="+iuvArray);
+	//console.debug("iuvArray=="+iuvArray);
 
 
  	let res = RPT_Carrello_5(baseUrl,rndAnagPsp,rndAnagPa,iuvArray);
@@ -856,7 +856,7 @@ function rndActivatePaymentNoticeIdp(rndAnagPsp, rndAnagPaNew, noticeNmbr, payme
 
 
 export function handleSummary(data) {
-  console.log('Preparing the end-of-test summary...');
+  console.debug('Preparing the end-of-test summary...');
  
   return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
   

@@ -98,8 +98,8 @@ export function activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPa,noticeNm
   }catch(error){}
   /*
   if(outcome=='KO'){
-  console.log("activateIDP REQuest----------------"+ activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey)); 
-  console.log("activateIDP RESPONSE----------------"+res.body);
+  console.debug("activateIDP REQuest----------------"+ activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey)); 
+  console.debug("activateIDP RESPONSE----------------"+res.body);
   }*/ 
   
    check(

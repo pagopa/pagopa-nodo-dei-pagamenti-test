@@ -8,7 +8,7 @@ export const activatePaymentNotice_Trend = new Trend('activatePaymentNotice');
 export const All_Trend = new Trend('ALL');
 
 export function activateReqBody (psp, pspint, chpsp, cfpa, noticeNmbr, idempotencyKey) {
-  //console.log("noticeNmbr="+noticeNmbr+" |psp="+psp+" |pspint="+pspint+" |chpsp="+chpsp+" |idempotencyKey="+idempotencyKey+" |cfpa="+cfpa);
+  //console.debug("noticeNmbr="+noticeNmbr+" |psp="+psp+" |pspint="+pspint+" |chpsp="+chpsp+" |idempotencyKey="+idempotencyKey+" |cfpa="+cfpa);
 	
 	return `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
 <soapenv:Header/>
@@ -33,7 +33,7 @@ export function activateReqBody (psp, pspint, chpsp, cfpa, noticeNmbr, idempoten
 
 export function activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idempotencyKey) {
  
- //console.log( activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey));
+ //console.debug( activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey));
  let res=http.post(baseUrl,
     activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey),
     { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'activatePaymentNotice'} ,
@@ -107,8 +107,8 @@ export function activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,id
 
 /*
   if(outcome=='KO'){
-  console.log("activate REQuest----------------"+activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey)); 
-  console.log("activate RESPONSE----------------"+res.body);
+  console.debug("activate REQuest----------------"+activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey)); 
+  console.debug("activate RESPONSE----------------"+res.body);
   } */ 
 
 

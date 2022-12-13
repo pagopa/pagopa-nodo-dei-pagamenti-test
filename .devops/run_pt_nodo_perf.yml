@@ -30,6 +30,7 @@ parameters:
       - rampa_50_500_10
       - rampa_50_500_10_1
       - rampa_125_350_10_1
+      - rampa_125_350_10_2
       - rampa_piatta
 variables:
   artifactName: TestPT

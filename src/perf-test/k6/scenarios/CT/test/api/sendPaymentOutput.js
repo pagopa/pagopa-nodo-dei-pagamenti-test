@@ -15,7 +15,7 @@ var today = new Date();
 var tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1)
 
-//console.log(tomorrow);
+//console.debug(tomorrow);
 var dd = String(today.getDate()).padStart(2, '0');
 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy = today.getFullYear();
@@ -50,7 +50,7 @@ return `
 };
 
 export function sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken) {
- //console.log("VERIFY="+noticeNmbr);
+ //console.debug("VERIFY="+noticeNmbr);
  
  const res = http.post(
     baseUrl,
@@ -110,8 +110,8 @@ export function sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken) {
   outcome = script.text();
   }catch(error){}
   /*if(outcome=='KO'){
-  console.log("SendPaymentOutput REq----------------"+sendPaymentOutputReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken));
-  console.log("SendPaymentOutput RESPONSE----------------"+res.body);
+  console.debug("SendPaymentOutput REq----------------"+sendPaymentOutputReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken));
+  console.debug("SendPaymentOutput RESPONSE----------------"+res.body);
   }*/
 
 

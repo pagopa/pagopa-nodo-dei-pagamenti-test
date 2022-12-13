@@ -130,13 +130,13 @@ export function Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, ccp) {
   let script = doc.find('esito');
   outcome = script.text();
   }catch(error){
-	console.log("ERROR "+ res.body);
+	console.debug("ERROR "+ res.body);
 }
 
 
   /*if(outcome=='KO'){
-	   console.log("ATTIVA REQuest----------------"+AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, ccp)); 
-  console.log("ATTIVA RESPONSE----------------"+res.body);
+	   console.debug("ATTIVA REQuest----------------"+AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, ccp)); 
+  console.debug("ATTIVA RESPONSE----------------"+res.body);
   }*/
     
    check(

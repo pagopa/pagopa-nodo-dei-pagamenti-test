@@ -106,10 +106,10 @@ export function inoltraEsitoPagamentoCarta(baseUrl,rndAnagPsp,paymentToken, fiel
 	
    }catch(error){}
 
-  /*console.log("inoltraEsitoPagamento="+res.body);
+  /*console.debug("inoltraEsitoPagamento="+res.body);
   if(outcome=='KO'){
-  console.log("inoltraEsitoPagamento REQuest----------------"+JSON.stringify(rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken))); 
-  console.log("inoltraEsitoPagamento RESPONSE----------------"+res.body);
+  console.debug("inoltraEsitoPagamento REQuest----------------"+JSON.stringify(rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken))); 
+  console.debug("inoltraEsitoPagamento RESPONSE----------------"+res.body);
   }*/
     
    check(

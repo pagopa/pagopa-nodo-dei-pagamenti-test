@@ -216,7 +216,7 @@ export default function(){
 
 
 export function handleSummary(data) {
-  console.log('Preparing the end-of-test summary...');
+  console.debug('Preparing the end-of-test summary...');
  
   return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
   

@@ -42,7 +42,7 @@ export const getScalini = new SharedArray('scalini', function () {
 	
   // here you can open files, and then do additional processing or generate the array with data dynamically
   const f = JSON.parse(open('../../../cfg/'+`${__ENV.steps}`+'.json'));
-  //console.log(f);
+  //console.debug(f);
   return f; // f must be an array[]
 });
 
@@ -171,7 +171,7 @@ export default function(){
 
 
 export function handleSummary(data) {
-  console.log('Preparing the end-of-test summary...');
+  console.debug('Preparing the end-of-test summary...');
  
   return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
   

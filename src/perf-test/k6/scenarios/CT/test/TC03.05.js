@@ -44,7 +44,7 @@ export const getScalini = new SharedArray('scalini', function () {
 	
   // here you can open files, and then do additional processing or generate the array with data dynamically
   const f = JSON.parse(open('../../../cfg/'+`${__ENV.steps}`+'.json'));
-  //console.log(f);
+  //console.debug(f);
   return f; // f must be an array[]
 });
 
@@ -135,10 +135,10 @@ export const options = {
 
 export function total() {
 
-  /*console.log("current stage index="+getCurrentStageIndex());
-  console.log(exec.test.options.scenarios.total.stages[getCurrentStageIndex()].target);
+  /*console.debug("current stage index="+getCurrentStageIndex());
+  console.debug(exec.test.options.scenarios.total.stages[getCurrentStageIndex()].target);
   options.rps = exec.test.options.scenarios.total.stages[getCurrentStageIndex()].target;
-  console.log(options.rps);*/
+  console.debug(options.rps);*/
 
   let baseUrl = "";
   let urls = csvBaseUrl;
@@ -176,7 +176,7 @@ export default function(){
 
 
 export function handleSummary(data) {
-  console.log('Preparing the end-of-test summary...');
+  console.debug('Preparing the end-of-test summary...');
  
   return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
   

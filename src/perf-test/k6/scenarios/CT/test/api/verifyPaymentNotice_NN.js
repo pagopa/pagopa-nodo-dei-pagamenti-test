@@ -30,7 +30,7 @@ return `
 };
 
 export function verifyPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idempotencyKey) {
- //console.log("VERIFY="+noticeNmbr);
+ //console.debug("VERIFY="+noticeNmbr);
  
  const res = http.post(
     baseUrl,
@@ -94,8 +94,8 @@ export function verifyPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,i
 
 
   /*if(outcome=='KO'){
-  console.log("verifyNN REQuest----------------"+ verifyReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr)); 
-  console.log("verifyNN RESPONSE----------------"+res.body);
+  console.debug("verifyNN REQuest----------------"+ verifyReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr)); 
+  console.debug("verifyNN RESPONSE----------------"+res.body);
   }*/
     
    check(

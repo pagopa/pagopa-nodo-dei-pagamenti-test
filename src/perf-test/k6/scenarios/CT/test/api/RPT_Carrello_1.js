@@ -105,8 +105,8 @@ export function RPT_Carrello_1(baseUrl,rndAnagPsp,rndAnagPa,iuvs) {
   }catch(error){}
   
   /*if(outcome=='KO'){
-  console.log("rptCarrello1 REQuest----------------"+rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuvs, rptEncoded)); 
-  console.log("rptCarrello1 RESPONSE----------------"+res.body);
+  console.debug("rptCarrello1 REQuest----------------"+rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuvs, rptEncoded)); 
+  console.debug("rptCarrello1 RESPONSE----------------"+res.body);
   }*/
     
    check(

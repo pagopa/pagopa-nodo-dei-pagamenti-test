@@ -12,7 +12,7 @@ export function rptReqBody(psp, intpsp, chpsp_c, paymentToken){
 var dt = new Date();
 let ms = dt.getMilliseconds();
 
-//console.log(dt.getTimezoneOffset());
+//console.debug(dt.getTimezoneOffset());
 var timezone_offset_min = dt.getTimezoneOffset()-120,
 	offset_hrs = parseInt(Math.abs(timezone_offset_min/60)),
 	offset_min = Math.abs(timezone_offset_min%60),
@@ -33,12 +33,12 @@ else if(timezone_offset_min > 0)
 else if(timezone_offset_min == 0)
 	timezone_standard = 'Z';
 
-//console.log(timezone_standard); 
+//console.debug(timezone_standard); 
 
 dt = dt.getFullYear() + "-" + ("0" + (dt.getMonth() + 1)).slice(-2) + "-" +  ("0" + dt.getDate()).slice(-2) + "T" + 
 ("0" + dt.getHours() ).slice(-2) + ":" + ("0" + dt.getMinutes()).slice(-2) + ":" + ("0" + dt.getSeconds()).slice(-2)+ "." + ms + timezone_standard;
 
-//console.log("dt-----"+dt);
+//console.debug("dt-----"+dt);
 
 return `
 {"idPagamento":"${paymentToken}",
@@ -57,7 +57,7 @@ export function inoltraEsitoPagamentoPaypal(baseUrl,rndAnagPsp,paymentToken,valu
  var dt = new Date();
  let ms = dt.getMilliseconds();
 
- //console.log(dt.getTimezoneOffset());
+ //console.debug(dt.getTimezoneOffset());
  var timezone_offset_min = dt.getTimezoneOffset()-120,
  	offset_hrs = parseInt(Math.abs(timezone_offset_min/60)),
  	offset_min = Math.abs(timezone_offset_min%60),
@@ -78,7 +78,7 @@ export function inoltraEsitoPagamentoPaypal(baseUrl,rndAnagPsp,paymentToken,valu
  else if(timezone_offset_min == 0)
  	timezone_standard = 'Z';
 
- //console.log(timezone_standard);
+ //console.debug(timezone_standard);
 
  dt = dt.getFullYear() + "-" + ("0" + (dt.getMonth() + 1)).slice(-2) + "-" +  ("0" + dt.getDate()).slice(-2) + "T" +
  ("0" + dt.getHours() ).slice(-2) + ":" + ("0" + dt.getMinutes()).slice(-2) + ":" + ("0" + dt.getSeconds()).slice(-2)+ "." + ms + timezone_standard;

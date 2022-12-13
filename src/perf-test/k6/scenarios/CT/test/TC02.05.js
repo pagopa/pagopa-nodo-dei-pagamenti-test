@@ -263,7 +263,7 @@ function executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId)
   var ido = randomOro();
   var args = "'"+rndAnagPsp.PSP+"','"+ rndAnagPsp.INTPSP+"','"+ rndAnagPsp.CHPSP+"','"
   + rndAnagPaNew.PA+"','"+ rndAnagPaNew.INTPA+"','"+ rndAnagPaNew.STAZPA+"','" +paymentToken+"','" +creditorReferenceId +"'"; //
-  //console.log("executeOro+=oro"+ido+"("+args+")");
+  //console.debug("executeOro+=oro"+ido+"("+args+")");
   console.debug("@@@@@EXECUTE ORO ARGS "+ args);
   console.debug("@@@@@EXECUTE ORO creditorReferenceId "+ creditorReferenceId);
   console.debug("@@@@@EXECUTE ORO paymentToken "+ paymentToken);
@@ -275,13 +275,13 @@ function executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId)
 
 
 function func1() {
-   //console.log("func1");
+   //console.debug("func1");
    verificaAttiva();
    executeRpts(); 
 }
 
 function func2() {
-   //console.log("func2");
+   //console.debug("func2");
    executeIdp();
   
 }
@@ -467,7 +467,7 @@ export function rpt5() {
     let rndAnagPa = inputDataUtil.getAnagPa();
 	
     let iuvArray = iuvUtil.genIuvArray(5);
-	//console.log("iuvArray=="+iuvArray);
+	//console.debug("iuvArray=="+iuvArray);
 
 
  	let res = RPT_Carrello_5(baseUrl,rndAnagPsp,rndAnagPa,iuvArray);
@@ -485,7 +485,7 @@ export function rpt5() {
 
 export function OR(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId) {
 
-   //console.log("OR+"+rndAnagPsp.PSP);
+   //console.debug("OR+"+rndAnagPsp.PSP);
  	let res = sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken);
 
 
@@ -515,7 +515,7 @@ export function RO(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId) 
 
 
 export function handleSummary(data) {
-  console.log('Preparing the end-of-test summary...');
+  console.debug('Preparing the end-of-test summary...');
  
   return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
   

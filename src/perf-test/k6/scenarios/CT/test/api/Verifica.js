@@ -97,8 +97,8 @@ export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit, valueToAsse
   faultCode = scriptFaultCode.text();
   }catch(error){}
   /*if(outcome=='KO'){
-  console.log("VERIfica REQuest----------------"+verificaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, auxDigit)); 
-  console.log("VERIFICA RESPONSE----------------"+res.body);
+  console.debug("VERIfica REQuest----------------"+verificaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, auxDigit)); 
+  console.debug("VERIFICA RESPONSE----------------"+res.body);
   }*/
   
    check(

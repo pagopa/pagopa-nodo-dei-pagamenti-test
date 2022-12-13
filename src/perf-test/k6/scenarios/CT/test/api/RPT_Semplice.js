@@ -99,8 +99,8 @@ export function RPT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
   }catch(error){}
   
   /*if(outcome=='KO'){
-  console.log("rptSemplice REQuest----------------"+rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuv, rptEncoded)); 
-  console.log("rptSemplice RESPONSE----------------"+res.body);
+  console.debug("rptSemplice REQuest----------------"+rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuv, rptEncoded)); 
+  console.debug("rptSemplice RESPONSE----------------"+res.body);
   }*/
     
    check(

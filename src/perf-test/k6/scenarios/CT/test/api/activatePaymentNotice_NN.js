@@ -104,14 +104,14 @@ export function activatePaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr
   paymentToken = script.text();
   result.paymentToken=paymentToken;
   }catch(error){}
-  //console.log("activatepaymentNotice="+outcome);
+  //console.debug("activatepaymentNotice="+outcome);
 
 
 
 /*
   if(outcome=='KO'){
-  //console.log("activateNN REQuest----------------"+ activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey, paymentNote));
-  //console.log("activateNN RESPONSE----------------"+res.body);
+  //console.debug("activateNN REQuest----------------"+ activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey, paymentNote));
+  //console.debug("activateNN RESPONSE----------------"+res.body);
   }*/
   
    check(

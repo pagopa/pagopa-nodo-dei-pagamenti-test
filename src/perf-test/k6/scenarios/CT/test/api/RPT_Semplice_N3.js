@@ -43,8 +43,8 @@ return `
 
 export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, importoTotaleDaVersare) {
  
-  //console.log("paymToken="+paymentToken); 
-  //console.log("creditorReferenceId="+creditorReferenceId); 
+  //console.debug("paymToken="+paymentToken); 
+  //console.debug("creditorReferenceId="+creditorReferenceId); 
   console.debug("RPT_Semplice_N3 PA "+ rndAnagPaNew.PA);
   console.debug("RPT_Semplice_N3 importoTotaleDaVersare "+ importoTotaleDaVersare);
   let rptEncoded = rptUtil.getRptEncoded(rndAnagPaNew.PA, rndAnagPaNew.STAZPA, creditorReferenceId, paymentToken, importoTotaleDaVersare);
@@ -110,8 +110,8 @@ export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorRefer
 
 /*
   if(outcome=='KO'){
- // console.log("RPTSempliceN3 REQuest----------------"+ rptSempliceN3ReqBody(rndAnagPaNew.PA, rndAnagPaNew.INTPA, rndAnagPaNew.STAZPA,paymentToken, creditorReferenceId, rptEncoded));
- // console.log("RPTSempliceN3 RESPONSE----------------"+res.body);
+ // console.debug("RPTSempliceN3 REQuest----------------"+ rptSempliceN3ReqBody(rndAnagPaNew.PA, rndAnagPaNew.INTPA, rndAnagPaNew.STAZPA,paymentToken, creditorReferenceId, rptEncoded));
+ // console.debug("RPTSempliceN3 RESPONSE----------------"+res.body);
   }*/
    
    check(

@@ -86,8 +86,8 @@ export function ChiediNumeroAvviso(baseUrl,rndAnagPsp,rndAnagPa) {
   outcome = script.text();
   }catch(error){}
   /*if(outcome=='KO'){
-  console.log("ChiediNumAvviso REQuest----------------"+numAvvisoReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA)); 
-  console.log("ChiediNumAvviso RESPONSE----------------"+res.body);
+  console.debug("ChiediNumAvviso REQuest----------------"+numAvvisoReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA)); 
+  console.debug("ChiediNumAvviso RESPONSE----------------"+res.body);
   }*/
   
    check(

@@ -18,7 +18,7 @@ export function chiediInformazioniPagamento(baseUrl,paymentToken, rndAnagPa) {
   console.debug("chiediInformazioniPagamento RES");
   console.debug(res);
   
-  //console.log(res);
+  //console.debug(res);
     chiediInformazioniPagamento_Trend.add(res.timings.duration);
     All_Trend.add(res.timings.duration);
 

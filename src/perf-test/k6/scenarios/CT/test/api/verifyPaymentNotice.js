@@ -29,7 +29,7 @@ return `
 };
 
 export function verifyPaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idempotencyKey) {
- //console.log("VERIFY="+noticeNmbr);
+ //console.debug("VERIFY="+noticeNmbr);
  
  const res = http.post(
     baseUrl,
@@ -87,7 +87,7 @@ export function verifyPaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idem
   const script = doc.find('outcome');
   outcome = script.text();
   }catch(error){}
-  //console.log("VERIFY RESPONSE----------------"+outcome);
+  //console.debug("VERIFY RESPONSE----------------"+outcome);
   
    check(
     res,
