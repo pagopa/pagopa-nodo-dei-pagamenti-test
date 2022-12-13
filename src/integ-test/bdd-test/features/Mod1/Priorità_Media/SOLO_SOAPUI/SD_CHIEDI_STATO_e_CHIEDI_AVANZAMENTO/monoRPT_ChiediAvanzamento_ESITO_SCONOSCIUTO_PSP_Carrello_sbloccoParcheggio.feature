@@ -431,12 +431,8 @@ Feature: monoRPT_ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheg
             <soapenv:Body>
             <ws:pspChiediAvanzamentoRPTResponse>
             <pspChiediAvanzamentoRPTResponse>
-            <fault>
-            <faultCode>CANALE_RPT_SCONOSCIUTA</faultCode>
-            <faultString>RPT mai arrivata al PSP</faultString>
-            <id>#psp#</id>
-            <description>RPT sconosciuta per il PSP</description>
-            </fault>
+            <delay>10000</delay>
+            <value>OK</value>
             </pspChiediAvanzamentoRPTResponse>
             </ws:pspChiediAvanzamentoRPTResponse>
             </soapenv:Body>
