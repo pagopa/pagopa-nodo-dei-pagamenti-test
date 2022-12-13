@@ -110,18 +110,13 @@ Feature: T016_D_nodoInviaRPT_Mod1_BBT_ProxyError502
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-                <ws:pspInviaRPTResponse>
-                    <pspInviaRPTResponse>
-                    <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                    <listaErroriRPT>
-                        <fault>
-                            <faultCode>CANALE_RPT_DA_RIFIUTARE</faultCode>
-                            <faultString>RPT da Rifiutare lato PSP</faultString>
-                            <id>40000000001</id>
-                        </fault>
-                    </listaErroriRPT>
-                    </pspInviaRPTResponse>
-                </ws:pspInviaRPTResponse>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>malformata</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
