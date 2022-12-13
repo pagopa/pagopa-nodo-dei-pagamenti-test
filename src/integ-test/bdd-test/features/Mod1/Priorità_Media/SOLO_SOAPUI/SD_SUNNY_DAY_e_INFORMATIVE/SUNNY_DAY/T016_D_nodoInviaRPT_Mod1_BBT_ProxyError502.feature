@@ -123,7 +123,7 @@ Feature: T016_D_nodoInviaRPT_Mod1_BBT_ProxyError502
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
-        And check faultCode is PPT_CANALE_ERRORE of nodoInviaRPT response
+        And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaRPT response
 
 @midRunnable
     Scenario: Execute nodoChiediStatoRPT request
