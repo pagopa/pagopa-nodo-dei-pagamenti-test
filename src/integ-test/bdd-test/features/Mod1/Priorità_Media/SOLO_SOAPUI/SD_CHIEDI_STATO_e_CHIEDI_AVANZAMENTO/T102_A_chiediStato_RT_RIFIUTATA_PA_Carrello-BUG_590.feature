@@ -430,6 +430,7 @@ Feature: T102_A_chiediStato_RT_RIFIUTATA_PA_Carrello - BUG_590
         """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
         Then check esito is OK of nodoInviaRT response
+        And wait 7 seconds for expiration
         
 
       Scenario: execution nodoInviaRT1
