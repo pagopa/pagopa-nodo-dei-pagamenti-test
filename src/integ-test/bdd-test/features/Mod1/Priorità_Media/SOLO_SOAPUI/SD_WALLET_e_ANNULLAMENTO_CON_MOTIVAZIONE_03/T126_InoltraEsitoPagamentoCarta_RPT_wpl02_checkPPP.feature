@@ -170,7 +170,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     </pay_i:RT>
     """
     #DB Check
-    And replace canaleUsato content with WFESP_02_gabri content
+    And replace canaleUsato content with WFESP_02_ila content
     And checks the value wpl02 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query ID_Serv_Plugin on db nodo_cfg under macro Mod1
   
   Scenario: Execute nodoInviaRPT request
@@ -204,7 +204,6 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     And check url contains acards of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
 
-  #IN PROGRESS
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
     Given the Execute nodoInviaRPT request scenario executed successfully
     And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
@@ -269,7 +268,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
     Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
     And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
-    And checks stato contains RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
+    And checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
     
 
   Scenario: Execute nodoInviaRT request

@@ -11,7 +11,7 @@ Feature: T091_CarrelloRPT_nobollo_bollo_RTpositiva
             <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
             <PSP>
                 <CodiceFiscale>12345678901</CodiceFiscale>
-                <Denominazione>idPsp1</Denominazione>
+                <Denominazione>#psp#</Denominazione>
             </PSP>
             <IUBD>#iubd4#</IUBD>
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
@@ -426,9 +426,9 @@ Feature: T091_CarrelloRPT_nobollo_bollo_RTpositiva
             <soapenv:Body>
                 <ws:nodoInviaCarrelloRPT>
                     <password>pwdpwdpwd</password>
-                    <identificativoPSP>#psp_AGID#</identificativoPSP>
-                    <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+                    <identificativoPSP>#psp#</identificativoPSP>
+                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                    <identificativoCanale>#canaleRtPush#</identificativoCanale>
                     <listaRPT>
                         <elementoListaRPT>
                         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
@@ -465,8 +465,7 @@ Feature: T091_CarrelloRPT_nobollo_bollo_RTpositiva
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        And check url contains acardste of nodoInviaCarrelloRPT response
-        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
+
 
     Scenario: Execute nodoInviaRT
         Given the MB generation scenario executed successfully
@@ -493,6 +492,7 @@ Feature: T091_CarrelloRPT_nobollo_bollo_RTpositiva
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
+@midRunnable
     Scenario: Execute second nodoInviaRT
         Given the Execute nodoInviaRT scenario executed successfully
         And initial XML nodoInviaRT

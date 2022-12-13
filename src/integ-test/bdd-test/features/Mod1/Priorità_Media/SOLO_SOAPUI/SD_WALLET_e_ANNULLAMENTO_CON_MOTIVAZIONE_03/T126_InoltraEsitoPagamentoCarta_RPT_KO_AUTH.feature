@@ -64,7 +64,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_AUTH
           <pay_i:importoTotaleDaVersare>15.00</pay_i:importoTotaleDaVersare>
           <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
           <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-          <pay_i:codiceContestoPagamento>16514801269711</pay_i:codiceContestoPagamento>
+          <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
           <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
           <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
           <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -158,7 +158,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_AUTH
           <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
           <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
           <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-          <pay_i:CodiceContestoPagamento>16514801269711</pay_i:CodiceContestoPagamento>
+          <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
           <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
@@ -180,7 +180,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_AUTH
         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-        <codiceContestoPagamento>16514801269711</codiceContestoPagamento>
+        <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
       <soapenv:Body>
@@ -212,12 +212,12 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_AUTH
                 <pspInviaCarrelloRPTResponse>
                     <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
                       <listaErroriRPT>
-                      <fault>
-                      <faultCode>CANALE_NEGA_CONTABILIZZAZIONE</faultCode>
-                      <faultString>contabilizzazione differita</faultString>
-                      <id>#psp#</id>
-                      </fault>
-                    </listaErroriRPT>
+                        <fault>
+                        <faultCode>CANALE_NEGA_CONTABILIZZAZIONE</faultCode>
+                        <faultString>contabilizzazione differita</faultString>
+                        <id>#psp#</id>
+                        </fault>
+                      </listaErroriRPT>
                 </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
         </soapenv:Body>
@@ -256,7 +256,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_AUTH
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>16514801269711</codiceContestoPagamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
           </ws:nodoChiediStatoRPT>
       </soapenv:Body>
     </soapenv:Envelope>
@@ -288,7 +288,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_AUTH
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>16514801269711</codiceContestoPagamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
           <rt>$rtAttachment</rt>

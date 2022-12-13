@@ -460,8 +460,8 @@ Feature: T103_G_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento_timeou
         Then checks stato contains RT_ESITO_SCONOSCIUTO_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
         
      Scenario: Execute nodoChiediStatoRPT2
@@ -486,8 +486,8 @@ Feature: T103_G_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento_timeou
         Then checks stato contains RT_ESITO_SCONOSCIUTO_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
        And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
        
     Scenario: nodoInviaCarrelloRPT duplicato

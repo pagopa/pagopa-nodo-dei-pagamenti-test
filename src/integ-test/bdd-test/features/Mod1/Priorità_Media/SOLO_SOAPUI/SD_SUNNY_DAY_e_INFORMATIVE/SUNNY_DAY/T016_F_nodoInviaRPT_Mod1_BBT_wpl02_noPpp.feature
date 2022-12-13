@@ -1,12 +1,12 @@
-Feature: T020_nodoInviaRPT_Mod3_PO_idPsp1_noPpp
+Feature: T016_E_nodoInviaRPT_Mod1_BBT_idPsp1_noPpp
 
     Background:
         Given systems up
     
     @midRunnable
     Scenario: Execute nodoInviaRPT (Phase 1)
-        Given replace canaleUsato content with 60000000001_04 content
-        And checks the value idPsp1 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query chekPlugin on db nodo_cfg under macro Mod1
+        Given replace canaleUsato content with WFESP_02_ila content
+        And checks the value wpl02 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query chekPlugin on db nodo_cfg under macro Mod1
         And RPT generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -65,7 +65,7 @@ Feature: T020_nodoInviaRPT_Mod3_PO_idPsp1_noPpp
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
-            <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
+            <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>checkNoPPP</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
@@ -100,33 +100,16 @@ Feature: T020_nodoInviaRPT_Mod3_PO_idPsp1_noPpp
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>60000000001_04</identificativoCanale>
+            <identificativoPSP>WFESP</identificativoPSP>
+            <identificativoIntermediarioPSP>WFESP</identificativoIntermediarioPSP>
+            <identificativoCanale>WFESP_02_ila</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML pspInviaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaRPTResponse>
-            <pspInviaRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-            </pspInviaRPTResponse>
-            </ws:pspInviaRPTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And check redirect is 0 of nodoInviaRPT response
-        And check url field not exists in nodoInviaRPT response
+        Then check esito is KO of nodoInviaRPT response
+        And check faultCode is PPT_CANALE_ERRORE of nodoInviaRPT response
 
