@@ -273,7 +273,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
   
  
   Scenario: Execute nodoInviaRT request
-    Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
+    Given the Execute nodoChiediStatoRPT request scenario executed successfully
     And initial XML nodoInviaRT
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
