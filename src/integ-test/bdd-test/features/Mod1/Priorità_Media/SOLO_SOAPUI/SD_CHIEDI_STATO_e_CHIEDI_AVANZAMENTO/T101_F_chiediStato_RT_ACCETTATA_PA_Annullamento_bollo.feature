@@ -247,14 +247,29 @@ Feature: T101_F_chiediStato_RT_ACCETTATA_PA_Annullamento_bollo
      
    Scenario: Execute nodoNotificaAnnullamento
       Given the Execute job paInviaRt scenario executed successfully
+      And initial XML paaInviaRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:paaInviaRTRisposta>
+            <paaInviaRTRisposta>
+            <esito>OK</esito>
+            </paaInviaRTRisposta>
+            </ws:paaInviaRTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+      And EC replies to nodo-dei-pagamenti with the paaInviaRT 
       When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
+      And job paInviaRt triggered after 10 seconds
       Then verify the HTTP status code of notificaAnnullamento response is 200
       And check esito is OK of notificaAnnullamento response
       
     @midRunnable
    Scenario: Execute nodoChiediStatoRPT
       Given the Execute nodoNotificaAnnullamento scenario executed successfully
-      And wait 70 seconds for expiration
+      And wait 10 seconds for expiration
       And initial XML nodoChiediStatoRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
