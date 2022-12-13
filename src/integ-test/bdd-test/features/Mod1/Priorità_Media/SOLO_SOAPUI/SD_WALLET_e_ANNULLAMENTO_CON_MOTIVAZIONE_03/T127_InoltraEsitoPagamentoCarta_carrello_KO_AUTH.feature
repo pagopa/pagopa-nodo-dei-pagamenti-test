@@ -4,6 +4,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH
     Given systems up
       And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
       And replace $1iuv content with koAuth content
+      And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
       And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
       And replace $2iuv content with koAuth content
       And initial XML RPT_XML
@@ -67,7 +68,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH
           <pay_i:importoTotaleDaVersare>15.00</pay_i:importoTotaleDaVersare>
           <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
           <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-          <pay_i:codiceContestoPagamento>#ccpms#</pay_i:codiceContestoPagamento>
+          <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
           <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
           <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
           <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -149,8 +150,8 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH
           <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
           <pay_i:importoTotaleDaVersare>5.00</pay_i:importoTotaleDaVersare>
           <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-          <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
-          <pay_i:codiceContestoPagamento>#ccpms2#</pay_i:codiceContestoPagamento>
+          <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+          <pay_i:codiceContestoPagamento>#ccp2#</pay_i:codiceContestoPagamento>
           <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
           <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
           <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -248,7 +249,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH
           <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
           <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
           <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-          <pay_i:CodiceContestoPagamento>$RPT_XML.codiceContestoPagamento</pay_i:CodiceContestoPagamento>
+          <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
           <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
@@ -335,8 +336,8 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH
         <pay_i:datiPagamento>
           <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
           <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-          <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
-          <pay_i:CodiceContestoPagamento>$RPT2_XML.codiceContestoPagamento</pay_i:CodiceContestoPagamento>
+          <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
+          <pay_i:CodiceContestoPagamento>$2ccp</pay_i:CodiceContestoPagamento>
           <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
@@ -357,7 +358,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH
           <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>CART$RPT_XML.codiceContestoPagamento</identificativoCarrello>
+            <identificativoCarrello>$1carrello</identificativoCarrello>
           </ppt:intestazioneCarrelloPPT>
       </soapenv:Header>
       <soapenv:Body>
@@ -371,13 +372,13 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH
                 <elementoListaRPT>
                   <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                   <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-                  <codiceContestoPagamento>$RPT_XML.codiceContestoPagamento</codiceContestoPagamento>
+                  <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
                   <rpt>$rptAttachment</rpt>
                 </elementoListaRPT>
                 <elementoListaRPT>
                   <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                  <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
-                  <codiceContestoPagamento>$RPT2_XML.codiceContestoPagamento</codiceContestoPagamento>
+                  <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+                  <codiceContestoPagamento>$2ccp</codiceContestoPagamento>
                   <rpt>$rpt2Attachment</rpt>
                 </elementoListaRPT>
             </listaRPT>
@@ -390,7 +391,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH
     And check url contains acards of nodoInviaCarrelloRPT response
     And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-  #IN PROGRESS - KO_AUTH
+
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
     Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
     And initial XML pspInviaCarrelloRPTCarte
@@ -400,12 +401,14 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH
         <soapenv:Body>
             <ws:pspInviaCarrelloRPTCarteResponse>
                 <pspInviaCarrelloRPTResponse>
-                <fault>
-                        <faultCode>KOAUTH</faultCode>
-                        <faultString>asda</faultString>
-                        <id>kjsdkhsdkhsd</id>
-                        </fault>
-                  <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                    <listaErroriRPT>
+                      <fault>
+                      <faultCode>CANALE_NEGA_CONTABILIZZAZIONE</faultCode>
+                      <faultString>contabilizzazione differita</faultString>
+                      <id>#psp#</id>
+                      </fault>
+                    </listaErroriRPT>
                 </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
         </soapenv:Body>
@@ -426,9 +429,8 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH
     "codiceAutorizzativo": "123212"}
     """
     Then check esito is KO of inoltroEsito/carta response
-    #TO BE DONE
-    #And check errorCode is KO_AUTH of inoltroEsito/carta response
-    #And check descrizione is Contabilizzazione negata dal PSP of inoltroEsito/carta response
+    And check errorCode is KO_AUTH of inoltroEsito/carta response
+    And check descrizione is Contabilizzazione negata dal PSP of inoltroEsito/carta response
     And check url field not exists in inoltroEsito/carta response
     And check redirect field not exists in inoltroEsito/carta response
   
@@ -477,7 +479,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$RPT_XML.codiceContestoPagamento</codiceContestoPagamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
           <rt>$rtAttachment</rt>
@@ -501,8 +503,8 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$RPT2_XML.codiceContestoPagamento</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$2ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
           <rt>$rt2Attachment</rt>

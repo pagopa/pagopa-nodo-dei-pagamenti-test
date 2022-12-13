@@ -200,7 +200,7 @@ stages:
               # Marisa
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_CHIEDI_STATO_e_CHIEDI_AVANZAMENTO/T101_chiediStato_RT_REVOCATA_tipoRevoca=1.feature
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_SUNNY_DAY_e_INFORMATIVE/SUNNY_DAY/T215_nodoChiediSceltaWisp-TASK_491-CLOSED.feature
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_WALLET_e_ANNULLAMENTO_CON_MOTIVAZIONE_03/T126_InoltraEsitoPagamentoCarta_RPT_KO_AUTH.feature
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_WALLET_e_ANNULLAMENTO_CON_MOTIVAZIONE_03/T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH.feature
 
               # Davide
               #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/paSendRT/PSRT_30_new.feature
