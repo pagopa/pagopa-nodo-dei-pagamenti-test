@@ -465,8 +465,6 @@ Feature: T091_CarrelloRPT_nobollo_bollo_RTpositiva
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        And check url contains acardste of nodoInviaCarrelloRPT response
-        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
 
     Scenario: Execute nodoInviaRT
