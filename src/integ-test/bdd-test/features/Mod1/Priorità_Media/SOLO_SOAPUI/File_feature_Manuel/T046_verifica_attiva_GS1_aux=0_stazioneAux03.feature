@@ -4,7 +4,7 @@ Feature: T046_verifica_attiva_GS1_aux=0_stazioneAux03
         Given systems up
 
     Scenario: Execute nodoVerificaRPT
-        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 01
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And initial XML nodoVerificaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -20,7 +20,7 @@ Feature: T046_verifica_attiva_GS1_aux=0_stazioneAux03
             <codiceIdRPT>
             <bc:BarCode>
             <bc:Gln>7777777777777</bc:Gln>
-            <bc:CodStazPA>01</bc:CodStazPA>
+            <bc:CodStazPA>#cod_segr#</bc:CodStazPA>
             <bc:AuxDigit>0</bc:AuxDigit>
             <bc:CodIUV>$1iuv</bc:CodIUV>
             </bc:BarCode>
@@ -53,7 +53,7 @@ Feature: T046_verifica_attiva_GS1_aux=0_stazioneAux03
             <codiceIdRPT>
             <bc:BarCode>
             <bc:Gln>7777777777777</bc:Gln>
-            <bc:CodStazPA>01</bc:CodStazPA>
+            <bc:CodStazPA>#cod_segr#</bc:CodStazPA>
             <bc:AuxDigit>0</bc:AuxDigit>
             <bc:CodIUV>$1iuv</bc:CodIUV>
             </bc:BarCode>

@@ -4,7 +4,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_stazioneAux03
         Given systems up
 
     Scenario: Execute nodoVerificaRPT
-        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 01
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And initial XML nodoVerificaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -15,12 +15,12 @@ Feature: T042_verifica_attiva_QRcode_aux=0_stazioneAux03
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <codiceContestoPagamento>$1iuv</codiceContestoPagamento>
+            <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
             <qrc:CF>#creditor_institution_code#</qrc:CF>
-            <qrc:CodStazPA>01</qrc:CodStazPA>
+            <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>$1iuv</qrc:CodIUV>
             </qrc:QrCode></codiceIdRPT>
@@ -51,7 +51,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_stazioneAux03
             <codiceIdRPT>
             <qrc:QrCode>
             <qrc:CF>#creditor_institution_code#</qrc:CF>
-            <qrc:CodStazPA>01</qrc:CodStazPA>
+            <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>$1iuv</qrc:CodIUV>
             </qrc:QrCode></codiceIdRPT>
