@@ -213,11 +213,12 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
             <ws:pspInviaCarrelloRPTCarteResponse>
                 <pspInviaCarrelloRPTResponse>
                     <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-		<listaErroriRPT>
-		   <fault>
-               <faultCode>CANALE_CARRELLO_DUPLICATO_KO</faultCode>
-               <faultString>contabilizzazione differita</faultString>
-               <id>#psp#</id>
+		                <listaErroriRPT>
+                    <fault>
+                            <faultCode>CANALE_CARRELLO_DUPLICATO_KO</faultCode>
+                            <faultString>contabilizzazione differita</faultString>
+                            <id>#psp#</id>
+                     </fault>       
                 </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
         </soapenv:Body>
