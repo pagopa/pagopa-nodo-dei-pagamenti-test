@@ -4,6 +4,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_CART_DUPLICATO_KO
     Given systems up
       And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
       And replace $1iuv content with cartDuplicatoKo content
+      And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
       And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
       And initial XML RPT_XML
       """
@@ -356,7 +357,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_CART_DUPLICATO_KO
           <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>CART$RPT_XML.codiceContestoPagamento</identificativoCarrello>
+            <identificativoCarrello>$1carrello</identificativoCarrello>
           </ppt:intestazioneCarrelloPPT>
       </soapenv:Header>
       <soapenv:Body>
