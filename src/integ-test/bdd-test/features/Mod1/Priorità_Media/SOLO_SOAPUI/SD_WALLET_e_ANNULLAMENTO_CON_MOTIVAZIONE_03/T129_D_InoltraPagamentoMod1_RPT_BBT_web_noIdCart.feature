@@ -135,7 +135,7 @@ Feature: T129_D_InoltraPagamentoMod1_RPT_BBT_web_noIdCart
         "identificativoPsp": "#psp#",
         "tipoVersamento": "BBT",
         "identificativoIntermediario": "#psp#",
-        "identificativoCanale": "#canaleRtPush#",
+        "identificativoCanale": "#canale#",
         "tipoOperazione":"web"
         }
         """
