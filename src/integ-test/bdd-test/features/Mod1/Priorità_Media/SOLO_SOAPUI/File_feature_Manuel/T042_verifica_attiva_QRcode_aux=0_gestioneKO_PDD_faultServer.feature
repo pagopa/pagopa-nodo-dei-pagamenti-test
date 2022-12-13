@@ -4,7 +4,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_faultServer
         Given systems up
 
     Scenario: Execute nodoVerificaRPT
-        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 01
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And initial XML nodoVerificaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -19,8 +19,8 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_faultServer
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>#creditor_institution_code#</qrc:CF>
-            <qrc:CodStazPA>01</qrc:CodStazPA>
+            <qrc:CF>90000000001</qrc:CF>
+            <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>$1iuv</qrc:CodIUV>
             </qrc:QrCode></codiceIdRPT>
@@ -29,7 +29,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_faultServer
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoVerificaRPT response
+        Then check esito is KO of nodoVerificaRPT response
         And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of nodoVerificaRPT response
         
     @midRunnable
@@ -51,8 +51,8 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_faultServer
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>#creditor_institution_code#</qrc:CF>
-            <qrc:CodStazPA>01</qrc:CodStazPA>
+            <qrc:CF>90000000001</qrc:CF>
+            <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>$1iuv</qrc:CodIUV>
             </qrc:QrCode></codiceIdRPT>
@@ -64,5 +64,5 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_faultServer
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
+        Then check esito is KO of nodoAttivaRPT response
         And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of nodoAttivaRPT response
