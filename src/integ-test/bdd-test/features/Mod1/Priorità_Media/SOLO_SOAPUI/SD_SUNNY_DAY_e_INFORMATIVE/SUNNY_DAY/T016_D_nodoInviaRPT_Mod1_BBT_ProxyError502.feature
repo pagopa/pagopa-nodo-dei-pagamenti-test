@@ -129,7 +129,6 @@ Feature: T016_D_nodoInviaRPT_Mod1_BBT_ProxyError502
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_ERRORE of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
 
 @midRunnable
     Scenario: Execute nodoChiediStatoRPT request
