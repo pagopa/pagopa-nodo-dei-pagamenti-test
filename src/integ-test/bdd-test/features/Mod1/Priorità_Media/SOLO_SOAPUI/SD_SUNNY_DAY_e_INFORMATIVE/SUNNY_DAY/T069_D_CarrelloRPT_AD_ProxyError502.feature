@@ -120,7 +120,7 @@ Feature: T069_D_CarrelloRPT_AD_ProxyError502
             <soapenv:Body>
             <ws:pspInviaCarrelloRPTResponse>
             <pspInviaCarrelloRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <esitoComplessivoOperazione>malformata</esitoComplessivoOperazione>
             <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
             <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
             </pspInviaCarrelloRPTResponse>
@@ -132,3 +132,29 @@ Feature: T069_D_CarrelloRPT_AD_ProxyError502
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
+
+    @midRunnable
+    Scenario: Execute nodoChiediStatoRPT request
+        Given the RPT generation scenario executed successfully
+        And initial XML nodoChiediStatoRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:nodoChiediStatoRPT>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <password>pwdpwdpwd</password>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>erroreProxy502</codiceContestoPagamento>
+            </ws:nodoChiediStatoRPT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
+        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+        Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
+        And check url field not exists in nodoChiediStatoRPT response

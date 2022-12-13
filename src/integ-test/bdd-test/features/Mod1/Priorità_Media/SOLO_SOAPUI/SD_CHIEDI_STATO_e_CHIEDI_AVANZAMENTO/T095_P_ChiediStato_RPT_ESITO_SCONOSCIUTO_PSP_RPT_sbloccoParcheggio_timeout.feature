@@ -164,7 +164,6 @@ Feature: T095_P_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_sbloccoParcheggio_time
         And wait 10 seconds for expiration
         Then checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
 
-    @midRunnable
     Scenario: Execution retry Esito Carta
         Given the Execute check DB scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
@@ -181,7 +180,6 @@ Feature: T095_P_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_sbloccoParcheggio_time
             </soapenv:Envelope>
             """
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
-
         """
         {
             "idPagamento": "$sessionToken",
@@ -200,6 +198,25 @@ Feature: T095_P_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_sbloccoParcheggio_time
         And check error is Operazione in timeout of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
+        
+    @midRunnable
+    Scenario: final checks T095_P
+        Given the Execution retry Esito Carta scenario executed successfully
+        And initial XML pspChiediAvanzamentoRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspChiediAvanzamentoRPTResponse>
+            <pspChiediAvanzamentoRPTResponse>
+            <delay>10000</delay>
+            <value>OK</value>
+            </pspChiediAvanzamentoRPTResponse>
+            </ws:pspChiediAvanzamentoRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
         And wait 10 seconds for expiration
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         And verify if the records for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1 are not null
