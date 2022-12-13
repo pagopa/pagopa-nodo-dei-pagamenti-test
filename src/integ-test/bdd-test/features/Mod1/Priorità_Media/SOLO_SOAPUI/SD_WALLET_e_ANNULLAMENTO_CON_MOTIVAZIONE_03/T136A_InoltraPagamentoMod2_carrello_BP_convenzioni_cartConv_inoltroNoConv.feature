@@ -425,6 +425,7 @@ Feature: T136A_InoltraPagamentoMod2_carrello_BP_convenzioni_cartConv_inoltroNoCo
             """
         Then verify the HTTP status code of inoltroEsito/mod2 response is 200
         And check esito is OK of inoltroEsito/mod2 response
+        And replace sessionExpected content with $sessionToken content
         And checks the value CONV1 of the record at column CODICE_CONVENZIONE of the table CARRELLO retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
         And verify 0 record for the table PM_SESSION_DATA retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
    
