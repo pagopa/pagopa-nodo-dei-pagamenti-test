@@ -6,7 +6,7 @@ Feature: T136A_InoltraPagamentoMod2_carrello_BP_convenzioni_cartConv_inoltroNoCo
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
-        And generate 1 cart with PA #creditor_institution_code# and notice number $2noticeNumber
+        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/"
@@ -146,7 +146,7 @@ Feature: T136A_InoltraPagamentoMod2_carrello_BP_convenzioni_cartConv_inoltroNoCo
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>5.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>#IUV2#</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -328,13 +328,13 @@ Feature: T136A_InoltraPagamentoMod2_carrello_BP_convenzioni_cartConv_inoltroNoCo
             <pay_i:datiPagamento>
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-            <pay_i:identificativoUnivocoVersamento>$2IUV</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>2001-01-01</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>$2IUV</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoRiscossione>$2iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloPagamento>
@@ -367,7 +367,7 @@ Feature: T136A_InoltraPagamentoMod2_carrello_BP_convenzioni_cartConv_inoltroNoCo
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$2IUV</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
@@ -445,7 +445,7 @@ Feature: T136A_InoltraPagamentoMod2_carrello_BP_convenzioni_cartConv_inoltroNoCo
     @midRunnable
     Scenario: Execute nodoInviaRT 1 (Phase 5)
         Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
-        And identificativoUnivocoVersamento with $2IUV in nodoInviaRT
+        And identificativoUnivocoVersamento with $2iuv in nodoInviaRT
         And codiceContestoPagamento with $1ccp in nodoInviaRT
         And rt with $rt2Attachment in nodoInviaRT
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
