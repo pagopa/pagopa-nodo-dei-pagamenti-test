@@ -217,7 +217,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
                         <faultString>asda</faultString>
                         <id>kjsdkhsdkhsd</id>
                         </fault>
-                  <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                  <esitoComplessivoOperazione>KO_AUTH</esitoComplessivoOperazione>
                 </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
         </soapenv:Body>
