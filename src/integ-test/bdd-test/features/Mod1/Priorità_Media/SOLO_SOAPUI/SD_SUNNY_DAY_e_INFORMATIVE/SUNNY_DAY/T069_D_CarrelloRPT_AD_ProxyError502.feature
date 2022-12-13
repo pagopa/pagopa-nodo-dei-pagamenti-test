@@ -146,8 +146,8 @@ Feature: T069_D_CarrelloRPT_AD_ProxyError502
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>avanzaErrResponse</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>$1IUV</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>erroreProxy502</codiceContestoPagamento>
             </ws:nodoChiediStatoRPT>
             </soapenv:Body>
             </soapenv:Envelope>
