@@ -15,11 +15,11 @@ Feature: T042_verifica_attiva_QRcode_aux=0_stazioneAux03
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <codiceContestoPagamento>$1iuv</codiceContestoPagamento>
+            <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>#creditor_institution_code#</qrc:CF>
+            <qrc:CF>90000000001</qrc:CF>
             <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>$1iuv</qrc:CodIUV>
@@ -50,7 +50,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_stazioneAux03
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>#creditor_institution_code#</qrc:CF>
+            <qrc:CF>90000000001</qrc:CF>
             <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>$1iuv</qrc:CodIUV>

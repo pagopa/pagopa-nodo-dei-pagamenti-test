@@ -15,11 +15,11 @@ Feature: T046_verifica_attiva_GS1_aux=0
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <codiceContestoPagamento>$1iuv</codiceContestoPagamento>
+            <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
             <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <bc:BarCode>
-            <bc:Gln>7777777777777</bc:Gln>
+            <bc:Gln>9000000000001</bc:Gln>
             <bc:CodStazPA>#cod_segr#</bc:CodStazPA>
             <bc:AuxDigit>0</bc:AuxDigit>
             <bc:CodIUV>$1iuv</bc:CodIUV>
@@ -31,7 +31,7 @@ Feature: T046_verifica_attiva_GS1_aux=0
             """
         When EC sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
-        # And check faultCode is  of nodoVerificaRPT response
+
 
 @midRunnable
     Scenario: Execute nodoAttivaRPT
@@ -52,7 +52,7 @@ Feature: T046_verifica_attiva_GS1_aux=0
             <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <bc:BarCode>
-            <bc:Gln>7777777777777</bc:Gln>
+            <bc:Gln>9000000000001</bc:Gln>
             <bc:CodStazPA>#cod_segr#</bc:CodStazPA>
             <bc:AuxDigit>0</bc:AuxDigit>
             <bc:CodIUV>$1iuv</bc:CodIUV>
@@ -67,4 +67,3 @@ Feature: T046_verifica_attiva_GS1_aux=0
             """
         When EC sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
-        # And check faultCode is  of nodoAttivaRPT response

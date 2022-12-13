@@ -19,7 +19,7 @@ Feature: T045_verifica_attiva_QRcode_aux=3
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>#creditor_institution_code#</qrc:CF>
+            <qrc:CF>90000000001</qrc:CF>
             <qrc:AuxDigit>3</qrc:AuxDigit>
             <qrc:CodIUV>#cod_segr_old#$1iuv</qrc:CodIUV>
             </qrc:QrCode></codiceIdRPT>
@@ -41,7 +41,7 @@ Feature: T045_verifica_attiva_QRcode_aux=3
             <ws:nodoAttivaRPT>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <codiceContestoPagamento>$ccp</codiceContestoPagamento>
             <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
@@ -49,7 +49,7 @@ Feature: T045_verifica_attiva_QRcode_aux=3
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>#creditor_institution_code#</qrc:CF>
+            <qrc:CF>90000000001</qrc:CF>
             <qrc:AuxDigit>3</qrc:AuxDigit>
             <qrc:CodIUV>#cod_segr_old#$1iuv</qrc:CodIUV>
             </qrc:QrCode></codiceIdRPT>
