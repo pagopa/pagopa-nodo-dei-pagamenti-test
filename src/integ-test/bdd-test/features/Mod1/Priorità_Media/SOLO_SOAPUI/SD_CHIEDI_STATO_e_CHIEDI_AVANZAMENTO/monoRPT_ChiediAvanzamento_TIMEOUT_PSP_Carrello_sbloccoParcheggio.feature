@@ -424,6 +424,21 @@ Feature: monoRPT_ChiediAvanzamento_TIMEOUT_PSP_Carrello_sbloccoParcheggio
        
      Scenario: clean pspChiediAvanzamentoRPT queue
         Given the Execution Esito Carta scenario executed successfully
+        And initial XML pspChiediAvanzamentoRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspChiediAvanzamentoRPTResponse>
+            <pspChiediAvanzamentoRPTResponse>
+            <delay>10000</delay>
+            <value>OK</value>
+            </pspChiediAvanzamentoRPTResponse>
+            </ws:pspChiediAvanzamentoRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
         And wait 10 seconds for expiration
         And checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
