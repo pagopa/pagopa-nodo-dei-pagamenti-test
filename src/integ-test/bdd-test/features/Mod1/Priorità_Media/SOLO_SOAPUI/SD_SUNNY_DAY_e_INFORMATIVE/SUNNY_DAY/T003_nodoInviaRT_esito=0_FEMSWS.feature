@@ -81,7 +81,7 @@ Feature: T003_nodoInviaRT_esito=0_FEMSWS
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-        And RT1 generation
+        And RT generation
             """
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
@@ -185,7 +185,7 @@ Feature: T003_nodoInviaRT_esito=0_FEMSWS
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <tipoFirma></tipoFirma>
-            <rpt>$rpt1Attachment</rpt>
+            <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -226,7 +226,7 @@ Feature: T003_nodoInviaRT_esito=0_FEMSWS
             <codiceContestoPagamento>CCD01</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
-            <rt>$rt1Attachment</rt>
+            <rt>$rtAttachment</rt>
             </ws:nodoInviaRT>
             </soapenv:Body>
             </soapenv:Envelope>
