@@ -467,7 +467,7 @@ Feature: T103_A_chiediStato_RT_ERRORE_INVIO_A_PA_Carrello
         """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
         Then check esito is OK of nodoInviaRT response
-        And wait 1 seconds for expiration
+        And wait 10 seconds for expiration
         And replace iuv content with $1iuv content
         And replace ccp content with CCD01 content
         And execution query Retrieve_IdSession to get value on the table RT, with the columns ID_SESSIONE under macro Mod1 with db name nodo_online
