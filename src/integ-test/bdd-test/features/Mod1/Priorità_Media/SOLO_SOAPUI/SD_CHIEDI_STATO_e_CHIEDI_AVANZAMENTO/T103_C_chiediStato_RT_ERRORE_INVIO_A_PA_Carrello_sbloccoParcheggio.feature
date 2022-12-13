@@ -442,6 +442,7 @@ Feature: T103_C_chiediStato_RT_ERRORE_INVIO_A_PA_Carrello_sbloccoParcheggio
         """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
         Then check esito is OK of nodoInviaRT response
+        And wait 5 seconds for expiration
         
     Scenario: Execute nodoChiediStatoRPT
         Given the execution nodoInviaRT scenario executed successfully
