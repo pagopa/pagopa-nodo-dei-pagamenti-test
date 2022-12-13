@@ -98,7 +98,7 @@ Feature: T016_D_nodoInviaRPT_Mod1_BBT_ProxyError502
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPush#</identificativoCanale>
+            <identificativoCanale>#canale#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rpt1Attachment</rpt>
             </ws:nodoInviaRPT>
@@ -110,40 +110,30 @@ Feature: T016_D_nodoInviaRPT_Mod1_BBT_ProxyError502
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-            <ws:pspInviaRPTResponse>
-            <pspInviaRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
-            </pspInviaRPTResponse>
-            </ws:pspInviaRPTResponse>
+                <ws:pspInviaRPTResponse>
+                    <pspInviaRPTResponse>
+                    <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                    <listaErroriRPT>
+                        <fault>
+                            <faultCode>CANALE_RPT_DA_RIFIUTARE</faultCode>
+                            <faultString>RPT da Rifiutare lato PSP</faultString>
+                            <id>40000000001</id>
+                        </fault>
+                    </listaErroriRPT>
+                    </pspInviaRPTResponse>
+                </ws:pspInviaRPTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        Then retrieve session token from $nodoInviaRPTResponse.url
+        Then check esito is KO of nodoInviaRPT response
+        And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
-    Scenario: Execution Esito Carta
-        Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
-        When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
-
-            """
-            {
-            "idPagamento":"$sessionToken",
-            "identificativoPsp":"#psp#",
-            "tipoVersamento":"BBT", 
-            "identificativoIntermediario":"#psp#",
-            "identificativoCanale":"#canale#",
-            "tipoOperazione":"web"
-            }
-             """
-        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
-        And check esito is OK of inoltroEsito/mod1 response
-
+@midRunnable
     Scenario: Execute nodoChiediStatoRPT request
-        Given the Execution Esito Carta scenario executed successfully
+        Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML nodoChiediStatoRPT
 
             """
