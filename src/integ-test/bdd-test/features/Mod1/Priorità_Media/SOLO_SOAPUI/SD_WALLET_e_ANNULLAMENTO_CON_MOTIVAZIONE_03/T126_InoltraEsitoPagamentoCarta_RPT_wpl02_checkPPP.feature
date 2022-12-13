@@ -170,7 +170,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     </pay_i:RT>
     """
     #DB Check
-    And replace canaleUsato content with WFESP_02_gabri content
+    And replace canaleUsato content with WFESP_02_ila content
     And checks the value wpl02 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query ID_Serv_Plugin on db nodo_cfg under macro Mod1
   
   Scenario: Execute nodoInviaRPT request
