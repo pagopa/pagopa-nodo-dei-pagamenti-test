@@ -64,7 +64,7 @@ Feature: T003_nodoInviaRT_esito=0_validazioneXSD
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>validateXSD</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#CCP#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#CCP1#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -156,7 +156,7 @@ Feature: T003_nodoInviaRT_esito=0_validazioneXSD
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>validateXSD</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>$CCP</pay_i:CodiceContestoPagamento>
+            <pay_i:CodiceContestoPagamento>$1CCP</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
@@ -177,7 +177,7 @@ Feature: T003_nodoInviaRT_esito=0_validazioneXSD
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>validateXSD</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$CCP</codiceContestoPagamento>
+            <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -226,7 +226,7 @@ Feature: T003_nodoInviaRT_esito=0_validazioneXSD
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>validateXSD</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$CCP</codiceContestoPagamento>
+            <codiceContestoPagamento>$1CCP</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
             <rt>$rt1Attachment</rt>
