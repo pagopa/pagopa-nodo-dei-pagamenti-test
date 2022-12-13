@@ -218,7 +218,8 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
                             <faultCode>CANALE_CARRELLO_DUPLICATO_KO</faultCode>
                             <faultString>contabilizzazione differita</faultString>
                             <id>#psp#</id>
-                     </fault>       
+                     </fault>
+                    </listaErroriRPT>     
                 </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
         </soapenv:Body>
