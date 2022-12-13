@@ -178,7 +178,7 @@ Feature: T003_nodoInviaRT_esito=0_specialChar
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$IUVspecial</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$IUVspecial</ccodiceContestoPagamento>
+            <codiceContestoPagamento>$IUVspecial</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
