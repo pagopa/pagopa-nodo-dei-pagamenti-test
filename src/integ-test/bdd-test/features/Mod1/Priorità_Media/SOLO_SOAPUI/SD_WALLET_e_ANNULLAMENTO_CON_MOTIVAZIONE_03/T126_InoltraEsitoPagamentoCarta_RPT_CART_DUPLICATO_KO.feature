@@ -202,7 +202,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
     And check url contains acards of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
   
-  #IN PROGRESS - KO_AUTH
+
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
     Given the Execute nodoInviaRPT request scenario executed successfully
     And initial XML pspInviaCarrelloRPTCarte
@@ -242,7 +242,6 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
     }
     """
     Then verify the HTTP status code of inoltroEsito/carta response is 200
-    #TO BE DONE
     And check esito is KO_AUTH of inoltroEsito/carta response
     And check url field not exists in inoltroEsito/carta response
     And check redirect field not exists in inoltroEsito/carta response
