@@ -3,7 +3,7 @@ Feature: T067_F_CarrelloRPT_Mod1_BBT_wpl02_noPpp
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
     And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-    And replace canaleUsato content with WFESP_02_gabri content
+    And replace canaleUsato content with WFESP_02_ila content
     And checks the value wpl02 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query ID_Serv_Plugin on db nodo_cfg under macro Mod1
     And RPT generation 
       """

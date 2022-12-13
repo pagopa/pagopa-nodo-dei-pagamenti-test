@@ -201,7 +201,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_wpl02_checkPPP
     Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
     And check url contains acards of nodoInviaCarrelloRPT response
     And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-    And replace canaleUsato content with WFESP_02_gabri content
+    And replace canaleUsato content with WFESP_02_ila content
     And checks the value wpl02 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query ID_Serv_Plugin on db nodo_cfg under macro Mod1
 
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
