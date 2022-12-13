@@ -212,12 +212,12 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
         <soapenv:Body>
             <ws:pspInviaCarrelloRPTCarteResponse>
                 <pspInviaCarrelloRPTResponse>
-                    <fault>
-                        <faultCode>KO_AUTH</faultCode>
-                        <faultString>asda</faultString>
-                        <id>kjsdkhsdkhsd</id>
-                        </fault>
-                  <esitoComplessivoOperazione>KO_AUTH</esitoComplessivoOperazione>
+                    <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+		<listaErroriRPT>
+		   <fault>
+               <faultCode>CANALE_CARRELLO_DUPLICATO_KO</faultCode>
+               <faultString>contabilizzazione differita</faultString>
+               <id>#psp#</id>
                 </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
         </soapenv:Body>
