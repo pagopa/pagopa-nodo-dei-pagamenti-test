@@ -64,7 +64,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
           <pay_i:importoTotaleDaVersare>15.00</pay_i:importoTotaleDaVersare>
           <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
           <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-          <pay_i:codiceContestoPagamento>16514801269711</pay_i:codiceContestoPagamento>
+          <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
           <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
           <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
           <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -158,7 +158,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
           <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
           <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
           <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
-          <pay_i:CodiceContestoPagamento>16514801269711</pay_i:CodiceContestoPagamento>
+          <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
           <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
@@ -181,7 +181,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
         <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
         <identificativoDominio>#creditor_institution_code#</identificativoDominio>
         <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-        <codiceContestoPagamento>16514801269711</codiceContestoPagamento>
+        <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
       <soapenv:Body>
@@ -212,12 +212,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
         <soapenv:Body>
             <ws:pspInviaCarrelloRPTCarteResponse>
                 <pspInviaCarrelloRPTResponse>
-                    <fault>
-                    <faultCode>CANALE_RPT_DUPLICATA</faultCode>
-                    <faultString>HGCCJCHG</faultString>
-                    <id>idPsp1</id>
-                    </fault>
-                    <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                    <esitoComplessivoOperazione>KO_AUTH</esitoComplessivoOperazione>
                 </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
         </soapenv:Body>
@@ -233,14 +228,15 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
       "tipoVersamento":"CP",
       "identificativoIntermediario":"#psp#",
       "identificativoCanale":"#canale#",
-      "esitoTransazioneCarta": "123456", 
       "importoTotalePagato": 11.11,
       "timestampOperazione": "2012-04-23T18:25:43.001Z",
-      "codiceAutorizzativo": "123456"}
+      "codiceAutorizzativo": "123456",
+       "esitoTransazioneCarta": "00"
+    }
     """
     Then verify the HTTP status code of inoltroEsito/carta response is 200
     #TO BE DONE
-    #And check esito is KO_AUTH of inoltroEsito/carta response
+    And check esito is KO_AUTH of inoltroEsito/carta response
     And check url field not exists in inoltroEsito/carta response
     And check redirect field not exists in inoltroEsito/carta response
     
@@ -257,7 +253,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>16514801269711</codiceContestoPagamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
           </ws:nodoChiediStatoRPT>
       </soapenv:Body>
     </soapenv:Envelope>
@@ -268,13 +264,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
     And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
     And check url field not exists in nodoChiediStatoRPT response
   
-  Scenario: Execute nodoChiediAvanzamentoPagamento
-    Given the Execute nodoChiediStatoRPT request scenario executed successfully
-    When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-    Then verify the HTTP status code of avanzamentoPagamento response is 200
-    And check esito field exists in avanzamentoPagamento response
-    And check esito is KO of avanzamentoPagamento response
-
+ 
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
     And initial XML nodoInviaRT
@@ -289,7 +279,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>16514801269711</codiceContestoPagamento>
+            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
           <rt>$rtAttachment</rt>
