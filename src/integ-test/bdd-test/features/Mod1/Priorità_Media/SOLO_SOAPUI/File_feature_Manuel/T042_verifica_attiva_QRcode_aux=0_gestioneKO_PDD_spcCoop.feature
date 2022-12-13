@@ -19,7 +19,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_spcCoop
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>#creditor_institution_code#</qrc:CF>
+            <qrc:CF>90000000001</qrc:CF>
             <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>$1iuv</qrc:CodIUV>
@@ -29,7 +29,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_spcCoop
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoVerificaRPT response
+        Then check esito is KO of nodoVerificaRPT response
         And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of nodoVerificaRPT response
         
 @midRunnable
@@ -51,7 +51,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_spcCoop
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>#creditor_institution_code#</qrc:CF>
+            <qrc:CF>90000000001</qrc:CF>
             <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>$1iuv</qrc:CodIUV>
@@ -64,5 +64,5 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_spcCoop
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
+        Then check esito is KO of nodoAttivaRPT response
         And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of nodoAttivaRPT response

@@ -19,7 +19,7 @@ Feature: T049_verifica_attiva_GS1_aux=3_stazioneAux03
             <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <bc:BarCode>
-            <bc:Gln>7777777777777</bc:Gln>
+            <bc:Gln>9000000000001</bc:Gln>
             <bc:AuxDigit>3</bc:AuxDigit>
             <bc:CodIUV>#cod_segr_old#$1iuv</bc:CodIUV>
             </bc:BarCode>
@@ -43,7 +43,7 @@ Feature: T049_verifica_attiva_GS1_aux=3_stazioneAux03
             <ws:nodoAttivaRPT>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
+            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <codiceContestoPagamento>$ccp</codiceContestoPagamento>
             <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
@@ -51,7 +51,7 @@ Feature: T049_verifica_attiva_GS1_aux=3_stazioneAux03
             <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <bc:BarCode>
-            <bc:Gln>7777777777777</bc:Gln>
+            <bc:Gln>9000000000001</bc:Gln>
             <bc:AuxDigit>3</bc:AuxDigit>
             <bc:CodIUV>#cod_segr_old#$1iuv</bc:CodIUV>
             </bc:BarCode>
