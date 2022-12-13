@@ -116,6 +116,19 @@ def step_impl(context, primitive):
         payload = payload.replace('#iuv#', iuv)
         setattr(context, "iuv", iuv)
 
+    if '#IUV#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + \
+            datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
+        payload = payload.replace('#IUV#', IUV)
+        setattr(context, 'IUV', IUV)
+
+    if '#IUV2#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        IUV2 = str(date + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + '-' + str(random.randint(0, 100000))) 
+        payload = payload.replace('#IUV2#', IUV2)
+        setattr(context, 'IUV2', IUV2)
+
     if '#notice_number#' in payload:
         notice_number = f"30211{str(random.randint(1000000000000, 9999999999999))}"
         payload = payload.replace('#notice_number#', notice_number)
