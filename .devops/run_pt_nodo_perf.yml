@@ -25,6 +25,7 @@ parameters:
       - rampa_1_1_10
       - rampa_1_10_10
       - rampa_4_40_10
+      - rampa_10_350_10_1
       - rampa_10_100_10
       - rampa_30_300_10
       - rampa_50_500_10
