@@ -212,7 +212,12 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
         <soapenv:Body>
             <ws:pspInviaCarrelloRPTCarteResponse>
                 <pspInviaCarrelloRPTResponse>
-                    <esitoComplessivoOperazione>KO_AUTH</esitoComplessivoOperazione>
+                    <fault>
+                        <faultCode>KO_AUTH</faultCode>
+                        <faultString>asda</faultString>
+                        <id>kjsdkhsdkhsd</id>
+                        </fault>
+                  <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
                 </pspInviaCarrelloRPTResponse>
             </ws:pspInviaCarrelloRPTCarteResponse>
         </soapenv:Body>
@@ -223,15 +228,15 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
     """
     {
       "idPagamento":"$sessionToken",
-      "RRN":1749810,
+      "RRN":10026669,
       "identificativoPsp":"#psp#",
       "tipoVersamento":"CP",
       "identificativoIntermediario":"#psp#",
       "identificativoCanale":"#canale#",
-      "importoTotalePagato": 11.11,
-      "timestampOperazione": "2012-04-23T18:25:43.001Z",
-      "codiceAutorizzativo": "123456",
-       "esitoTransazioneCarta": "00"
+      "importoTotalePagato":12.31,
+      "timestampOperazione":"2018-02-08T17:06:03.100+01:00",
+      "codiceAutorizzativo":"123456",
+      "esitoTransazioneCarta":"00"
     }
     """
     Then verify the HTTP status code of inoltroEsito/carta response is 200
