@@ -426,10 +426,10 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH
     "esitoTransazioneCarta": "123456", 
     "importoTotalePagato": 11.11,
     "timestampOperazione": "2012-04-23T18:25:43.001Z",
-    "codiceAutorizzativo": "123212"}
+    "codiceAutorizzativo": "123456"}
     """
-    Then check esito is KO of inoltroEsito/carta response
-    And check errorCode is KO_AUTH of inoltroEsito/carta response
+    Then check esito is KO_AUTH of inoltroEsito/carta response
+    And verify the HTTP status code of inoltroEsito/carta response is 200
     And check descrizione is Contabilizzazione negata dal PSP of inoltroEsito/carta response
     And check url field not exists in inoltroEsito/carta response
     And check redirect field not exists in inoltroEsito/carta response
