@@ -116,4 +116,4 @@ Feature: T067_F_CarrelloRPT_Mod1_BBT_wpl02_noPpp
     </soapenv:Envelope>
     """
     When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-    Then check error is CANALE_PPP_ASSENTI of nodoInviaCarrelloRPT response
+    Then check faultCode is PPT_CANALE_ERRORE of nodoInviaCarrelloRPT response
