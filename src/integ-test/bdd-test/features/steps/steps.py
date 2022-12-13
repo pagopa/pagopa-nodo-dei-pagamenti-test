@@ -921,7 +921,6 @@ def step_impl(context, tag, value, primitive):
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         nodeList = my_document.getElementsByTagName(tag)
-        print("#######################", nodeList)
         values = [node.childNodes[0].nodeValue for node in nodeList]
         print(values)
         assert value in values
