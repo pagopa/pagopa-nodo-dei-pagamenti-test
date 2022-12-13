@@ -430,7 +430,7 @@ Feature: T136A_InoltraPagamentoMod2_carrello_BP_convenzioni_cartConv_inoltroNoCo
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>noIdCart</identificativoUnivocoVersamento>
+            <identificativoUnivocoVersamento>RPTcheckConv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
