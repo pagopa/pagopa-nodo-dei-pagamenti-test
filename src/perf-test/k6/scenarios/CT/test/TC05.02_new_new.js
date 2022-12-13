@@ -159,7 +159,7 @@ export function total() {
   
   
   let outcome = 'KO';
-  res =  closePayment(baseRestUrl,rndAnagPsp,paymentToken,outcome,"09910087308786","09910087308786");
+  res =  closePayment(baseRestUrl,rndAnagPsp,paymentToken,outcome,"09910087308786","09910087308786",res.importoTotale);
 
 }
 

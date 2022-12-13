@@ -22,7 +22,7 @@ const csvBaseUrl = new SharedArray('baseUrl', function () {
 const chars = '0123456789';
 // NoticeNumber
 export function genNoticeNumber(){
-	let noticeNumber='311';
+	let noticeNumber='111';
 	for (var i = 15; i > 0; --i) noticeNumber += chars[Math.floor(Math.random() * chars.length)];
 	return noticeNumber;
 }
@@ -171,11 +171,9 @@ export function total() {
       }
   }
  
-  let rndAnagPsp = inputDataUtil.getAnagPsp();
-  let rndAnagPaNew = inputDataUtil.getAnagPaNew();
+  let rndAnagPsp = inputDataUtil.getAnagPspV1();
+  let rndAnagPaNew = inputDataUtil.getAnagPa();
 
-  let noticeNmbr = genNoticeNumber();
-  let idempotencyKey = genIdempotencyKey(); 
   let iuv = iuvUtil.genIuv();
   let ccp = create_UUID().replace("-", "");
   
@@ -207,7 +205,7 @@ export function total() {
   
     
   let outcome = 'OK';
-  res =  closePayment(baseRestUrl,rndAnagPsp,paymentToken,outcome,"09910087308786","09910087308786");
+  res =  closePayment(baseRestUrl,rndAnagPsp,paymentToken,outcome,"09910087308786","09910087308786",res.importoTotale);
 
   
   

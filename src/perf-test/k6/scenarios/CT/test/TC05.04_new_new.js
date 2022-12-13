@@ -165,7 +165,7 @@ export function total() {
 
 
   let outcome = 'OK';
-  res =  closePayment(baseRestUrl,rndAnagPsp,paymentToken,outcome,"99999999","09910087308786");
+  res =  closePayment(baseRestUrl,rndAnagPsp,paymentToken,outcome,"99999999","09910087308786",res.importoTotale);
 
   
   //res = sendPaymentOutput(baseSoapUrl,rndAnagPsp,paymentToken);

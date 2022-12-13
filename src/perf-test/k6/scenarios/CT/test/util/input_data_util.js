@@ -6,6 +6,11 @@ const csvAnagPsp = new SharedArray('PSP_data', function () {
   return papaparse.parse(open('../../../../data/anagraficaPSP_ALL.csv'), { header: true }).data;
 });
 
+const csvAnagPspv1 = new SharedArray('PSP_data_v1', function () {
+    
+  return papaparse.parse(open('../../../../data/anagraficaPSP_ALL_v1.csv'), { header: true }).data;
+});
+
 const csvAnagPa = new SharedArray('PA_data', function () {
 	  
   return papaparse.parse(open('../../../../data/anagraficaPA.csv'), { header: true }).data;
@@ -18,6 +23,12 @@ const csvAnagPaNew = new SharedArray('PA_data_new', function () {
 
 export function getAnagPsp(){
 	let psp = csvAnagPsp[Math.floor(Math.random() * csvAnagPsp.length)];
+	console.debug("PSP "+ JSON.stringify(psp));
+	return psp;
+}
+
+export function getAnagPspV1(){
+	let psp = csvAnagPspv1[Math.floor(Math.random() * csvAnagPspv1.length)];
 	console.debug("PSP "+ JSON.stringify(psp));
 	return psp;
 }

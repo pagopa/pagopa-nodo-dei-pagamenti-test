@@ -58,7 +58,7 @@ return `
 `
 };
 
-export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transactionId, additionalTransactionId) {
+export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transactionId, additionalTransactionId, totalAmount) {
 
  var dt = new Date();
  let ms = dt.getMilliseconds();
@@ -87,6 +87,9 @@ export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transacti
  dt = dt.getFullYear() + "-" + ("0" + (dt.getMonth() + 1)).slice(-2) + "-" +  ("0" + dt.getDate()).slice(-2) + "T" +
  ("0" + dt.getHours() ).slice(-2) + ":" + ("0" + dt.getMinutes()).slice(-2) + ":" + ("0" + dt.getSeconds()).slice(-2)+ "." + ms + timezone_standard;
 
+let body = `{\"paymentTokens\":[\"${paymentToken}\"],\"outcome\":\"${outcome}\",\"idPSP\":\"${rndAnagPsp.PSP}\",\"idBrokerPSP\":\"${rndAnagPsp.INTPSP}\",\"idChannel\": \"${rndAnagPsp.CHPSP_C}\",\"paymentMethod\":\"TPAY\",\"transactionId\":\"${transactionId}\",\"totalAmount\":${totalAmount},\"fee\":0.00,\"timestampOperation\":\"${dt}\",\"additionalPaymentInformations\":{\"transactionId\":\"${additionalTransactionId}\",\"spoMockV2\":\"true\",\"esitoMock\":\"OK1SPO\"},\"additionalPMInfo\":{\"key\": \"value\"}}`;
+ 
+	/*
   let body=  {
                 "paymentTokens": [
                   paymentToken
@@ -104,12 +107,13 @@ export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transacti
                 "transactionId": additionalTransactionId, //09910087308786 o 99910087308786
                 "spoMock": "true"
                 }
-              };
+              };*/
+              
 
  const res = http.post(
     'https://nodo-dei-pagamenti-prf-npa-nodopagamenti.tst-npc.sia.eu/azurept2'+'/v2/closepayment',
     //JSON.stringify(closePaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId)),
-    JSON.stringify(body),
+    body,
     { headers: { 'Content-Type': 'application/json' } ,
 	tags: { closePayment: 'http_req_duration', ALL: 'http_req_duration'}
 	}
@@ -162,7 +166,7 @@ export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transacti
 
    let esito='';
    try{
-   esito= JSON.parse(res.body)["esito"];
+   esito= JSON.parse(res.body)["outcome"];
    }catch(error){}
 
 

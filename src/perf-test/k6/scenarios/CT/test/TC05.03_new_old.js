@@ -171,7 +171,7 @@ export function total() {
       }
   }
  
-  let rndAnagPsp = inputDataUtil.getAnagPsp();
+  let rndAnagPsp = inputDataUtil.getAnagPspV1();
   let rndAnagPaNew = inputDataUtil.getAnagPaNew();
 
   let noticeNmbr = genNoticeNumber();
@@ -203,7 +203,7 @@ export function total() {
 
 
   let outcome = 'OK';
-  res =  closePayment(baseRestUrl,rndAnagPsp,paymentToken,outcome,"09910087308786","99910087308786");
+  res =  closePayment(baseRestUrl,rndAnagPsp,paymentToken,outcome,"09910087308786","99910087308786",res.importoTotale);
 
   
   //res = sendPaymentOutput(baseSoapUrl,rndAnagPsp,paymentToken);

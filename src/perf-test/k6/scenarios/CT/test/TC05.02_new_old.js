@@ -161,7 +161,7 @@ export function total() {
       }
   }
  
-  let rndAnagPsp = inputDataUtil.getAnagPsp();
+  let rndAnagPsp = inputDataUtil.getAnagPspV1();
   let rndAnagPaNew = inputDataUtil.getAnagPaNew();
 
   let noticeNmbr = genNoticeNumber();
@@ -195,7 +195,7 @@ export function total() {
   
     
   let outcome= 'KO';
-  res =  closePayment(baseRestUrl,rndAnagPsp,paymentToken, outcome, "09910087308786", "09910087308786");
+  res =  closePayment(baseRestUrl,rndAnagPsp,paymentToken, outcome, "09910087308786", "09910087308786",res.importoTotale);
 
 }
 
