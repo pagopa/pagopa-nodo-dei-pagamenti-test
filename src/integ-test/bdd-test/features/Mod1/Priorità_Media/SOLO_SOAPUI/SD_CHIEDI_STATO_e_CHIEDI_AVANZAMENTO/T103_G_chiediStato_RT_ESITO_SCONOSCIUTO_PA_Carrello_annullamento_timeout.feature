@@ -483,8 +483,8 @@ Feature: T103_G_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento_timeou
         </soapenv:Envelope>
         """
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        Then checks stato contains RT_ESITO_SCONOSCIUTO_PA of nodoChiediStatoRPT response
-        And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
+        #Then checks stato contains RT_ESITO_SCONOSCIUTO_PA of nodoChiediStatoRPT response
+        Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
