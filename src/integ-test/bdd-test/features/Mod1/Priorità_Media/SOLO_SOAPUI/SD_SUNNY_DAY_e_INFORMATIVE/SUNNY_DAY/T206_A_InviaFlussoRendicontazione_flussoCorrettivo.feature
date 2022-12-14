@@ -30,8 +30,8 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <pay_i:numeroTotalePagamenti>1</pay_i:numeroTotalePagamenti>
             <pay_i:importoTotalePagamenti>10.00</pay_i:importoTotalePagamenti>
             <pay_i:datiSingoliPagamenti>
-            <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
-            <pay_i:identificativoUnivocoRiscossione>#iuv#</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoRiscossione>$iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:indiceDatiSingoloPagamento>1</pay_i:indiceDatiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:codiceEsitoSingoloPagamento>0</pay_i:codiceEsitoSingoloPagamento>
@@ -50,7 +50,7 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <ws:nodoInviaFlussoRendicontazione>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPush#</identificativoCanale>
+            <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
@@ -71,7 +71,7 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:identificativoFlusso>#identificativoFlusso#</pay_i:identificativoFlusso>
             <pay_i:dataOraFlusso>#timedate#</pay_i:dataOraFlusso>
-            <pay_i:identificativoUnivocoRegolamento>#iuv#</pay_i:identificativoUnivocoRegolamento>
+            <pay_i:identificativoUnivocoRegolamento>$iuv</pay_i:identificativoUnivocoRegolamento>
             <pay_i:dataRegolamento>#date#</pay_i:dataRegolamento>
             <pay_i:istitutoMittente>
             <pay_i:identificativoUnivocoMittente>
@@ -91,8 +91,8 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <pay_i:numeroTotalePagamenti>1</pay_i:numeroTotalePagamenti>
             <pay_i:importoTotalePagamenti>10.00</pay_i:importoTotalePagamenti>
             <pay_i:datiSingoliPagamenti>
-            <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
-            <pay_i:identificativoUnivocoRiscossione>#iuv#</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoRiscossione>$iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:indiceDatiSingoloPagamento>1</pay_i:indiceDatiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:codiceEsitoSingoloPagamento>0</pay_i:codiceEsitoSingoloPagamento>
@@ -111,7 +111,7 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <ws:nodoInviaFlussoRendicontazione>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPush#</identificativoCanale>
+            <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
