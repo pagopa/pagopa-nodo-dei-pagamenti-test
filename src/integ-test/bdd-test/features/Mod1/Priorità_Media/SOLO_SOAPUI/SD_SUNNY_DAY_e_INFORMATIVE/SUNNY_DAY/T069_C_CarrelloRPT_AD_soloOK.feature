@@ -3,7 +3,7 @@ Feature: T069_C_CarrelloRPT_AD_soloOK
     Background:
         Given systems up
 
-
+@midRunnable
     Scenario: RPT generation
         Given RPT1 generation
             """

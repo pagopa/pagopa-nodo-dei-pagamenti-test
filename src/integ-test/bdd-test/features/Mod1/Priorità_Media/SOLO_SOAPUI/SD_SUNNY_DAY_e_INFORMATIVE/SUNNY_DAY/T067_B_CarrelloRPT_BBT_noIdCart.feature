@@ -3,7 +3,7 @@ Feature: T067_B_CarrelloRPT_BBT_noIdCart
     Background:
         Given systems up
 
-
+@midRunnable
     Scenario: RPT generation
         Given RPT1 generation
             """
@@ -83,8 +83,6 @@ Feature: T067_B_CarrelloRPT_BBT_noIdCart
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
-
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">

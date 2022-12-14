@@ -381,6 +381,7 @@ Feature: T198_RichiestaeRispostarevoca_tipoRevoca=0
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
+@midRunnable
     Scenario: Execute nodoInviaRichiestaRevoca
         Given the ER generation scenario executed successfully
         And initial XML nodoInviaRichiestaRevoca

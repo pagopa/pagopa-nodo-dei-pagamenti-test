@@ -3,10 +3,10 @@ Feature: T068_CarrelloRPT_BP
     Background:
         Given systems up
 
+@midRunnable
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-
         And RPT1 generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -85,7 +85,6 @@ Feature: T068_CarrelloRPT_BP
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">

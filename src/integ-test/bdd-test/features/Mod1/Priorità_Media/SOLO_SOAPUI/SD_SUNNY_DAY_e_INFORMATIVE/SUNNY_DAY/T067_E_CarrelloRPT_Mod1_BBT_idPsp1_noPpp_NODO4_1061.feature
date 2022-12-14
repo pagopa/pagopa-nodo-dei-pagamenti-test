@@ -3,7 +3,7 @@ Feature: T067_E_CarrelloRPT_Mod1_BBT_idPsp1_noPpp_NODO4_1061
     Background:
         Given systems up
 
-
+@midRunnable
     Scenario: RPT generation
         Given RPT1 generation
             """
@@ -85,7 +85,6 @@ Feature: T067_E_CarrelloRPT_Mod1_BBT_idPsp1_noPpp_NODO4_1061
             """
         And replace canaleUsato content with WFESP_01_gabri content
         And checks the value idPsp1 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query chekPlugin on db nodo_cfg under macro Mod1
-
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">

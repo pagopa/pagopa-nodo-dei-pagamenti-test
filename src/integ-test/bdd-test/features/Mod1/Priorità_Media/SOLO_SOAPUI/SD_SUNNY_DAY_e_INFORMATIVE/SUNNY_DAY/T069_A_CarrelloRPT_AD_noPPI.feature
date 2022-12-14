@@ -3,7 +3,7 @@ Feature: T069_A_CarrelloRPT_AD_noPPI
     Background:
         Given systems up
 
-
+@midRunnable
     Scenario: RPT generation
         Given RPT1 generation
             """
