@@ -145,5 +145,5 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             """
         When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
         Then check ppt:nodoChiediFlussoRendicontazioneRisposta field exists in nodoChiediFlussoRendicontazione response
-        And check xmlRendicontazione field exists in nodoChiediFlussoRendicontazione response
+        
         
