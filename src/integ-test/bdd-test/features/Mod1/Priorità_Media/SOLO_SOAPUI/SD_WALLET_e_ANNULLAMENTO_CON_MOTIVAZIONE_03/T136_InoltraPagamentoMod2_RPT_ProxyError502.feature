@@ -1,4 +1,5 @@
 Feature: T136_InoltraPagamentoMod2_RPT_ProxyError502
+
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
@@ -169,6 +170,7 @@ Feature: T136_InoltraPagamentoMod2_RPT_ProxyError502
       </pay_i:datiPagamento>
     </pay_i:RT>
     """
+
   Scenario: Execute nodoInviaRPT request
     Given initial XML nodoInviaRPT
     """
@@ -228,7 +230,6 @@ Feature: T136_InoltraPagamentoMod2_RPT_ProxyError502
     Then verify the HTTP status code of inoltroEsito/mod2 response is 408
     And check error is timeout of inoltroEsito/mod2 response
 
-    
   Scenario: Execute nodoChiediStatoRPT request
     Given the Execute nodoInoltraEsitoPagamentoMod2 request scenario executed successfully
     And initial XML nodoChiediStatoRPT
@@ -260,6 +261,7 @@ Feature: T136_InoltraPagamentoMod2_RPT_ProxyError502
     And check esito field exists in avanzamentoPagamento response
     And check esito is ACK_UNKNOWN of avanzamentoPagamento response
 
+  @midRunnable
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
     And initial XML nodoInviaRT
@@ -284,5 +286,3 @@ Feature: T136_InoltraPagamentoMod2_RPT_ProxyError502
     """
     When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRT response
-
- 

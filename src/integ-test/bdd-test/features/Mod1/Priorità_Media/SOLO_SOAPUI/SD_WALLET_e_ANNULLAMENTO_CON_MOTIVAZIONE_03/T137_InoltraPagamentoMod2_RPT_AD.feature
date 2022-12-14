@@ -200,6 +200,7 @@ Feature: T137_InoltraPagamentoMod2_RPT_AD
     And check url contains acards of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
 
+  @midRunnable
   Scenario: Execute nodoInoltraEsitoPagamentoMod2 request
     Given the Execute nodoInviaRPT request scenario executed successfully
      And initial XML pspInviaRPT 
@@ -231,6 +232,3 @@ Feature: T137_InoltraPagamentoMod2_RPT_AD
     Then verify the HTTP status code of inoltroEsito/mod2 response is 200
     And check esito is OK of inoltroEsito/mod2 response
     And check url field not exists in inoltroEsito/mod2 response
-
-    
-  

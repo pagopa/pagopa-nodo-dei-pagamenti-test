@@ -260,7 +260,8 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_TIMEOUT
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And checks esito contains ACK_UNKNOWN of avanzamentoPagamento response
-    
+
+    @midRunnable
      Scenario: Execute nodoInviaRT request
         Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
         And initial XML nodoInviaRT
@@ -286,5 +287,3 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_TIMEOUT
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
       
-    
- 

@@ -1,4 +1,5 @@
 Feature: T136_InoltraPagamentoMod2_RPT_BP_CANALE_IRRAGGIUNGIBILE - BUG_482 - CLOSED
+
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
@@ -169,6 +170,7 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_CANALE_IRRAGGIUNGIBILE - BUG_482 - CLO
       </pay_i:datiPagamento>
     </pay_i:RT>
     """
+
   Scenario: Execute nodoInviaRPT request
     Given initial XML nodoInviaRPT
     """
@@ -249,6 +251,7 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_CANALE_IRRAGGIUNGIBILE - BUG_482 - CLO
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is KO of avanzamentoPagamento response
 
+  @midRunnable
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
     And initial XML nodoInviaRT

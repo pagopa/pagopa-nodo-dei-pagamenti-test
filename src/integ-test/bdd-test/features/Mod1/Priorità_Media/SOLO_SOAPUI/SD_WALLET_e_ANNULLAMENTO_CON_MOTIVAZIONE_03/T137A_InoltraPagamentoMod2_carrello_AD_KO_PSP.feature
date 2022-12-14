@@ -503,7 +503,3 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_PSP
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
-
-
-
-   
