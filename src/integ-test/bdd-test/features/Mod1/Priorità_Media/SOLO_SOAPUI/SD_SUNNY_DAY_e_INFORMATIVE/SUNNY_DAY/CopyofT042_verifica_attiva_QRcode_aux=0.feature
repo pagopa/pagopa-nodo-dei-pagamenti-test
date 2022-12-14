@@ -86,7 +86,7 @@ Feature: Copy of T042_verifica_attiva_QRcode_aux=0
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canaleRtPush#</identificativoCanale>
             <tipoFirma></tipoFirma>
-            <rpt>$rpt1Attachment</rpt>
+            <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
