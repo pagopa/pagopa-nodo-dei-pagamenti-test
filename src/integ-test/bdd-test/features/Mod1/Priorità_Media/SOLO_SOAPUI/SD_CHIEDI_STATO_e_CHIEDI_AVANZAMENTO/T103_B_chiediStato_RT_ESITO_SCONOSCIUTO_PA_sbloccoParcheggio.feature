@@ -284,7 +284,7 @@ Feature: T103_B_chiediStato_RT_ESITO_SCONOSCIUTO_PA_sbloccoParcheggio
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
         Then check esito is OK of nodoInviaRT response
-        And wait 1 seconds for expiration
+        And wait 15 seconds for expiration
         And replace iuv content with $1iuv content
         And replace ccp content with CCD01 content
         And execution query Retrieve_IdSession to get value on the table RT, with the columns ID_SESSIONE under macro Mod1 with db name nodo_online
@@ -292,8 +292,6 @@ Feature: T103_B_chiediStato_RT_ESITO_SCONOSCIUTO_PA_sbloccoParcheggio
         And checks the value RICEVUTA,CAMBIO_STATO,CAMBIO_STATO,INVIATA,CAMBIO_STATO,INVIATA,RICEVUTA,CAMBIO_STATO of the record at column ESITO of the table RE retrived by the query Re on db re under macro Mod1
         And checks the value RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_INVIATA_PA,RT_ESITO_SCONOSCIUTO_PA of the record at column STATUS of the table RE retrived by the query Re on db re under macro Mod1
        
-
-    
 
     Scenario: Execute nodoChiediStatoRPT
         Given the execution nodoInviaRT scenario executed successfully
