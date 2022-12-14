@@ -8,7 +8,7 @@ Feature: T114_InviaFlussoRendicontazione_soloObbligatori
             """
             <pay_i:FlussoRiversamento xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ FlussoRendicontazione_v_1_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
-            <pay_i:identificativoFlusso>flussoPsp1</pay_i:identificativoFlusso>
+            <pay_i:identificativoFlusso>#identificativoFlusso#</pay_i:identificativoFlusso>
             <pay_i:dataOraFlusso>#timedate#</pay_i:dataOraFlusso>
             <pay_i:identificativoUnivocoRegolamento>#iuv#</pay_i:identificativoUnivocoRegolamento>
             <pay_i:dataRegolamento>#date#</pay_i:dataRegolamento>
@@ -35,7 +35,7 @@ Feature: T114_InviaFlussoRendicontazione_soloObbligatori
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-            
+
 @midRunnable
     Scenario: Send nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
@@ -50,7 +50,7 @@ Feature: T114_InviaFlussoRendicontazione_soloObbligatori
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoFlusso>flussoPsp1</identificativoFlusso>
+            <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
             <dataOraFlusso>$timedate</dataOraFlusso>
             <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
             </ws:nodoInviaFlussoRendicontazione>
