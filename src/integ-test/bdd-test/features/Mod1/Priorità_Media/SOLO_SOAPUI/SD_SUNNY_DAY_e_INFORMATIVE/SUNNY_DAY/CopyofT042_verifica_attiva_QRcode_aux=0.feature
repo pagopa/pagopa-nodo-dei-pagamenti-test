@@ -67,7 +67,7 @@ Feature: Copy of T042_verifica_attiva_QRcode_aux=0
             <pay_i:codiceContestoPagamento>#ccp#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
-            <pay_i:firmaRicevuta>1</pay_i:firmaRicevuta>
+            <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
