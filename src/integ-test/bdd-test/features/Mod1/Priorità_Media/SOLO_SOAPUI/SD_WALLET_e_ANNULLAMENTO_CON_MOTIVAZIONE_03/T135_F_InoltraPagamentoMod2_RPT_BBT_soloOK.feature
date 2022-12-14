@@ -113,6 +113,7 @@ Feature: T135_F_InoltraPagamentoMod2_RPT_BBT_soloOK
     And check url contains acards of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
 
+@midRunnable
   Scenario: Execute nodoInoltraEsitoPagamentoMod2 request
     Given the Execute nodoInviaRPT request scenario executed successfully
     And initial XML pspInviaRPT 

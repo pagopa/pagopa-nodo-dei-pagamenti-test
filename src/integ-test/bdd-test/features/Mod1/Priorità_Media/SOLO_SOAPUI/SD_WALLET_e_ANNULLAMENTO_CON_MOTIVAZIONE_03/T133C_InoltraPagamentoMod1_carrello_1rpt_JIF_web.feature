@@ -224,7 +224,8 @@ Feature: T133C_InoltraPagamentoMod1_carrello_1rpt_JIF_web
     And check esito is OK of inoltroEsito/mod1 response
     And check urlRedirectPSP field exists in inoltroEsito/mod1 response
     And check substring wpl06 in urlRedirectPSP content of inoltroEsito/mod1 response
-  
+
+@midRunnable 
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoInoltraEsitoMod1 request scenario executed successfully
     And initial XML nodoInviaRT

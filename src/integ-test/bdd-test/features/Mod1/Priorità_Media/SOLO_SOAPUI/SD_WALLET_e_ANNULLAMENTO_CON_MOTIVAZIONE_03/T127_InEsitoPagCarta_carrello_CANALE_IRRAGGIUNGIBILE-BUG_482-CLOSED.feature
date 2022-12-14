@@ -485,7 +485,8 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_CANALE_IRRAGGIUNGIBILE - BUG_4
     """
     When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
     Then check esito is KO of nodoInviaRT response
-  
+    
+@midRunnable 
   Scenario: Execute nodoInviaRT2 request
     Given the Execute nodoInviaRT1 request scenario executed successfully
     And initial XML nodoInviaRT

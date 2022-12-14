@@ -212,6 +212,7 @@ Feature: T124_ChiediListePSP_carr_2RPT_noIbanAddebitoSecondaRPT
     And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
     And through the query getPspCarte retrieve param listaCarte at position -1 and save it under the key listaCarte
 
+@midRunnable
   Scenario: Execute nodoChiediListaPSP - Carte
     Given the Execute nodoChiediInfoPag request scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE&lingua=$lingua to nodo-dei-pagamenti

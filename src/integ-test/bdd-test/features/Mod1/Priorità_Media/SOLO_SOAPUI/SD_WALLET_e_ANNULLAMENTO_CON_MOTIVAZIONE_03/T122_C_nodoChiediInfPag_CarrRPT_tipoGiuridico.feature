@@ -239,7 +239,8 @@ Feature: process tests for 2 RPT da 3 Versamenti
         And check urlRedirectEC field exists in informazioniPagamento response
         And check bolloDigitale is False of informazioniPagamento response     
         And check codiceFiscale is VERGLD09P09H502E of informazioniPagamento response
-        
+
+@midRunnable      
     Scenario: Execute nodoChiediAvanzamentoPagamento request
         Given the Execute nodoChiediInfoPag request scenario executed successfully
         When WISP sends rest GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti

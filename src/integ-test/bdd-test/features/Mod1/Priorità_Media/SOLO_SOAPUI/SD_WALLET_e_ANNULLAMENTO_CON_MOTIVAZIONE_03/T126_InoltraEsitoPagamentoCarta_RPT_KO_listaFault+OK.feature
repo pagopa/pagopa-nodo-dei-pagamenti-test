@@ -268,6 +268,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_listaFault+OK
     And check esito field exists in avanzamentoPagamento response
     And check esito is ACK_UNKNOWN of avanzamentoPagamento response
 
+@midRunnable
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
     And initial XML nodoInviaRT
