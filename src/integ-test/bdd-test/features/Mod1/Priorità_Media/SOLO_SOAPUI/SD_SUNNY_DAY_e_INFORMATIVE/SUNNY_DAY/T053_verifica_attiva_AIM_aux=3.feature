@@ -4,7 +4,7 @@ Feature: T053_verifica_attiva_AIM_aux=3
         Given systems up
 
     Scenario: Execute nodoVerificaRPT
-        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
         And initial XML nodoVerificaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -24,8 +24,7 @@ Feature: T053_verifica_attiva_AIM_aux=3
             """
         When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
-        And check DatiPagamentoPA field exists in nodoVerificaRPT response
-        And check importoSingoloVersamento field exists in nodoVerificaRPT response
+        
    
 
     @midRunnable
@@ -107,5 +106,4 @@ Feature: T053_verifica_attiva_AIM_aux=3
             """
         When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
         Then check esito is OK of nodoAttivaRPT response
-        And check importoSingoloVersamento field exists in nodoAttivaRPT response
         
