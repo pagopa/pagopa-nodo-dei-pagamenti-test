@@ -30,8 +30,13 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <pay_i:numeroTotalePagamenti>1</pay_i:numeroTotalePagamenti>
             <pay_i:importoTotalePagamenti>10.00</pay_i:importoTotalePagamenti>
             <pay_i:datiSingoliPagamenti>
+<<<<<<< HEAD
             <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
             <pay_i:identificativoUnivocoRiscossione>#iuv#</pay_i:identificativoUnivocoRiscossione>
+=======
+            <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoRiscossione>$iuv</pay_i:identificativoUnivocoRiscossione>
+>>>>>>> 41b27d7bc0a5e9c5ff630dd07155a4023ee7bdaa
             <pay_i:indiceDatiSingoloPagamento>1</pay_i:indiceDatiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:codiceEsitoSingoloPagamento>0</pay_i:codiceEsitoSingoloPagamento>
@@ -39,7 +44,11 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
+<<<<<<< HEAD
 @midRunnable
+=======
+
+>>>>>>> 41b27d7bc0a5e9c5ff630dd07155a4023ee7bdaa
     Scenario: Send nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -50,7 +59,11 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <ws:nodoInviaFlussoRendicontazione>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+<<<<<<< HEAD
             <identificativoCanale>#canaleRtPush#</identificativoCanale>
+=======
+            <identificativoCanale>#canale#</identificativoCanale>
+>>>>>>> 41b27d7bc0a5e9c5ff630dd07155a4023ee7bdaa
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
@@ -71,7 +84,11 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:identificativoFlusso>#identificativoFlusso#</pay_i:identificativoFlusso>
             <pay_i:dataOraFlusso>#timedate#</pay_i:dataOraFlusso>
+<<<<<<< HEAD
             <pay_i:identificativoUnivocoRegolamento>#iuv#</pay_i:identificativoUnivocoRegolamento>
+=======
+            <pay_i:identificativoUnivocoRegolamento>$iuv</pay_i:identificativoUnivocoRegolamento>
+>>>>>>> 41b27d7bc0a5e9c5ff630dd07155a4023ee7bdaa
             <pay_i:dataRegolamento>#date#</pay_i:dataRegolamento>
             <pay_i:istitutoMittente>
             <pay_i:identificativoUnivocoMittente>
@@ -91,8 +108,13 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <pay_i:numeroTotalePagamenti>1</pay_i:numeroTotalePagamenti>
             <pay_i:importoTotalePagamenti>10.00</pay_i:importoTotalePagamenti>
             <pay_i:datiSingoliPagamenti>
+<<<<<<< HEAD
             <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
             <pay_i:identificativoUnivocoRiscossione>#iuv#</pay_i:identificativoUnivocoRiscossione>
+=======
+            <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoRiscossione>$iuv</pay_i:identificativoUnivocoRiscossione>
+>>>>>>> 41b27d7bc0a5e9c5ff630dd07155a4023ee7bdaa
             <pay_i:indiceDatiSingoloPagamento>1</pay_i:indiceDatiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:codiceEsitoSingoloPagamento>0</pay_i:codiceEsitoSingoloPagamento>
@@ -111,7 +133,11 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             <ws:nodoInviaFlussoRendicontazione>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+<<<<<<< HEAD
             <identificativoCanale>#canaleRtPush#</identificativoCanale>
+=======
+            <identificativoCanale>#canale#</identificativoCanale>
+>>>>>>> 41b27d7bc0a5e9c5ff630dd07155a4023ee7bdaa
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
@@ -125,6 +151,10 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
+<<<<<<< HEAD
+=======
+@midRunnable
+>>>>>>> 41b27d7bc0a5e9c5ff630dd07155a4023ee7bdaa
     Scenario: nodoChiediFlussoRendicontazione
         Given the Send nodoInviaFlussoRendicontazione1 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
@@ -145,5 +175,10 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             """
         When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
         Then check ppt:nodoChiediFlussoRendicontazioneRisposta field exists in nodoChiediFlussoRendicontazione response
+<<<<<<< HEAD
         
         And check xmlRendicontazione field exists in nodoChiediFlussoRendicontazione response
+=======
+        And check xmlRendicontazione field exists in nodoChiediFlussoRendicontazione response
+        
+>>>>>>> 41b27d7bc0a5e9c5ff630dd07155a4023ee7bdaa
