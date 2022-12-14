@@ -519,7 +519,8 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartUgualeInoltro
     """
     When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRT response
-  
+
+@midRunnable  
   Scenario: Execute nodoInviaRT2 request
     Given the Execute nodoInoltraEsitoPagamentoCarta1 request scenario executed successfully
     And initial XML nodoInviaRT

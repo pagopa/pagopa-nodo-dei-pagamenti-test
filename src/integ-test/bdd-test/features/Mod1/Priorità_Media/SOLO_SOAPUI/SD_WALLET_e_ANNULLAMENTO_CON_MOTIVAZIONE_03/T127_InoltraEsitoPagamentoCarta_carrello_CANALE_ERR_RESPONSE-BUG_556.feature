@@ -595,7 +595,8 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_CANALE_ERR_RESPONSE - BUG_556
     And check esito is OK of inoltroEsito/carta response
     And check url field not exists in inoltroEsito/carta response
     And check redirect field not exists in inoltroEsito/carta response
-  
+
+@midRunnable  
   Scenario: DB check
     Given the Execute nodoInoltraEsitoPagamentoCarta3 request scenario executed successfully
     Then replace sessionExpected content with $sessionToken content

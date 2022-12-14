@@ -264,6 +264,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_codAuth_4
     And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
     And check redirect is 0 of nodoChiediStatoRPT response
 
+@midRunnable
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediStatoRPT request scenario executed successfully
     And initial XML nodoInviaRT

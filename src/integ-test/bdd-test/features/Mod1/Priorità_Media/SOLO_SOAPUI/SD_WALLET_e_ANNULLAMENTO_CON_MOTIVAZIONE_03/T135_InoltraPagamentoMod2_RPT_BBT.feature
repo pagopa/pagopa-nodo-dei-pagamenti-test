@@ -145,6 +145,7 @@ Feature: T135_InoltraPagamentoMod2_RPT_BBT
     And check esito is OK of inoltroEsito/mod2 response
     And check url field not exists in inoltroEsito/mod2 response
 
+@midRunnable
   Scenario: Execute nodoChiediAvanzamentoPagamento
         Given the Execute nodoInoltraEsitoPagamentoMod2 request scenario executed successfully
         When WISP sends rest GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
