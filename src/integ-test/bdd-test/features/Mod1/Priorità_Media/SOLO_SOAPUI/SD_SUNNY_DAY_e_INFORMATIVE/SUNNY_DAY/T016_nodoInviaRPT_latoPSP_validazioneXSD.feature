@@ -3,6 +3,7 @@ Feature: T016_nodoInviaRPT_latoPSP_validazioneXSD
     Background:
         Given systems up
 
+    @midRunnable
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given RPT generation
             """

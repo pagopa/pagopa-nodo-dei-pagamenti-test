@@ -3,6 +3,7 @@ Feature: T018_B_nodoInviaRPT_Mod2_AD_noIdCart
     Background:
         Given systems up
 
+    @midRunnable
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given RPT1 generation
             """

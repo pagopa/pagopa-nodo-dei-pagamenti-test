@@ -4,6 +4,7 @@ Feature: T001_CarrelloRPT_3RPT
     Background:
         Given systems up
 
+    @midRunnable
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given RPT generation
             """

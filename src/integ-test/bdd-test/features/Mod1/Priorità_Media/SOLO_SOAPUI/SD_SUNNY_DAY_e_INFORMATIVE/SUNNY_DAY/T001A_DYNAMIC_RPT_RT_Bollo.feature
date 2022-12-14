@@ -255,6 +255,7 @@ Feature: T001A_DYNAMIC_RPT_RT_Bollo.feature
         Then check esito is OK of nodoInviaRPT response
         And check redirect is 1 of nodoInviaRPT response
 
+    @midRunnable
     Scenario: Execute nodoInviaRT
         Given the MB generation scenario executed successfully
         And initial XML nodoInviaRT

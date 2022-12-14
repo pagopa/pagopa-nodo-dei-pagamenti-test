@@ -81,6 +81,7 @@ Feature: CarrelloRPT_tipo_versamenti_differenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
+    @midRunnable
     Scenario Outline: Check outcome is OK for nodoInviaCarrelloRPT
         Given <tag> with <tag_value> in RPT
         And RPT generation
@@ -134,7 +135,6 @@ Feature: CarrelloRPT_tipo_versamenti_differenti
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url field exists in nodoInviaCarrelloRPT response
-
         Examples:
             | SoapUI                  | tag                  | tag_value |
             | T067_CarrelloRPT_BBT    | pay_i:tipoVersamento | BBT       |

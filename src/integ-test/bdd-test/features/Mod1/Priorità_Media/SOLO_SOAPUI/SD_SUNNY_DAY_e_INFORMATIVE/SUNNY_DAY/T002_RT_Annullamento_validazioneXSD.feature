@@ -222,7 +222,8 @@ Feature: T002_RT_Annullamento_validazioneXSD
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And check esito is OK of notificaAnnullamento response
         And wait 7 seconds for expiration 
-        
+
+    @midRunnable 
     Scenario: Execute nodoChiediStatoRPT (Phase 2)
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         And initial XML nodoChiediStatoRPT

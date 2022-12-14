@@ -211,6 +211,7 @@ Feature: T003_nodoInviaRT_esito=0
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
+    @midRunnable
     Scenario: Execute nodoInviaRT (Phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML nodoInviaRT

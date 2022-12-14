@@ -4,6 +4,7 @@ Feature: T001_CarrelloRPT_1RPT_convenzioni
     Background:
         Given systems up
 
+    @midRunnable
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given RPT generation
         """
