@@ -269,7 +269,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
     And checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
     
-
+@midRunnable
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediStatoRPT request scenario executed successfully
     And initial XML nodoInviaRT
