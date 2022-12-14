@@ -39,7 +39,7 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-@midRunnable
+
     Scenario: Send nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -125,6 +125,7 @@ Feature: T206_A_InviaFlussoRendicontazione_flussoCorrettivo
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
+@midRunnable
     Scenario: nodoChiediFlussoRendicontazione
         Given the Send nodoInviaFlussoRendicontazione1 scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
