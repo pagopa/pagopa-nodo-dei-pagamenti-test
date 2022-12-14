@@ -128,12 +128,7 @@ Feature: T139C_notificaAnnullamento - RT_RIFIUTATA_PA -> noRetry
         <soapenv:Body>
             <ws:paaInviaRTRisposta>
                 <paaInviaRTRisposta>
-                    <fault>
-                    <faultCode>RT_DUPLICATA</faultCode>
-                    <faultString>RT duplicata lato PA</faultString>
-                    <id>#creditor_institution_code#</id>
-                    </fault>
-                    <esito>KO</esito>
+                    <esito>malformata</esito>
                 </paaInviaRTRisposta>
             </ws:paaInviaRTRisposta>
         </soapenv:Body>
@@ -141,10 +136,11 @@ Feature: T139C_notificaAnnullamento - RT_RIFIUTATA_PA -> noRetry
         """
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job paInviaRt triggered after 20 seconds
-        Then wait 130 seconds for expiration
+        Then wait 3 seconds for expiration
 
    Scenario: Execute nodoChiediStatoRPT
         Given the Execute paInviaRT job scenario executed successfully
+        And wait 30 seconds for expiration
         And initial XML nodoChiediStatoRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
