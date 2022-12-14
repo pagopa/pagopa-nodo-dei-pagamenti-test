@@ -517,12 +517,6 @@ Feature: T103_C_chiediStato_RT_ERRORE_INVIO_A_PA_Carrello_sbloccoParcheggio
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
         Then check esito is OK of nodoInviaRT response
         
-    
-     
-    
-        
-
-        
      Scenario: Execute nodoChiediStatoRPT2
         Given the execution nodoInviaRT1 scenario executed successfully
         And initial XML nodoChiediStatoRPT

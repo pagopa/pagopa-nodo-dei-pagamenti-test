@@ -201,7 +201,6 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
     And check url field exists in nodoInviaRPT response 
-    And check url contains acards of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
 
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
@@ -246,6 +245,9 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     And check url field not exists in inoltroEsito/carta response
     And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response 
     And check errorCode is RIFPSP of inoltroEsito/carta response
+    
+
+
 
   Scenario: Execute nodoChiediStatoRPT request
     Given the Execute nodoInoltraEsitoPagamentoCarta request scenario executed successfully
@@ -265,12 +267,14 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
       </soapenv:Body>
     </soapenv:Envelope>
     """
-    When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+    When job pspChiediAvanzamentoRpt triggered after 5 seconds
+    And wait 5 seconds for expiration
+    And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
     Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
     And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
     And checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
     
-
+@midRunnable
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediStatoRPT request scenario executed successfully
     And initial XML nodoInviaRT
@@ -280,7 +284,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     <soapenv:Body>
       <ws:nodoInviaRT>
          <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-         <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+         <identificativoCanale>#canale#</identificativoCanale>
          <password>pwdpwdpwd</password>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
