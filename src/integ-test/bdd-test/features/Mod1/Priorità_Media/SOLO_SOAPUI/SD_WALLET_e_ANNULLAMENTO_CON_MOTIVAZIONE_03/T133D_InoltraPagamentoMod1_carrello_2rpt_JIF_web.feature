@@ -1,9 +1,6 @@
 Feature: T133D_InoltraPagamentoMod1_carrello_2rpt_JIF_web
   Background:
-    Given systems up  
-      And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
-      And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-      
+    Given systems up     
       And initial XML RPT_XML
       """
       <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/"
@@ -346,7 +343,7 @@ Feature: T133D_InoltraPagamentoMod1_carrello_2rpt_JIF_web
         </pay_i:datiPagamento>
       </pay_i:RT>
       """
-  #In progress
+
   Scenario: Execute nodoInviaCarrelloRPT request
     Given initial XML nodoInviaCarrelloRPT
     """
@@ -355,7 +352,7 @@ Feature: T133D_InoltraPagamentoMod1_carrello_2rpt_JIF_web
           <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$1carrello</identificativoCarrello>
+            <identificativoCarrello>#carrelloMills#</identificativoCarrello>
           </ppt:intestazioneCarrelloPPT>
       </soapenv:Header>
       <soapenv:Body>

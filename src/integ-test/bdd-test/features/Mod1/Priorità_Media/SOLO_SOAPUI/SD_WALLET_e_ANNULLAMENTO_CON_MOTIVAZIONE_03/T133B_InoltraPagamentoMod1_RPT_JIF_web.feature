@@ -84,7 +84,7 @@ Feature: T133B_InoltraPagamentoMod1_RPT_JIF_web
     """
     $RPT_XML
     """
-  #In progress
+
   Scenario: Execute nodoInviaRPT request
     Given initial XML nodoInviaRPT
     """
@@ -113,7 +113,6 @@ Feature: T133B_InoltraPagamentoMod1_RPT_JIF_web
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     And retrieve session token from $nodoInviaRPTResponse.url
 
-  
   Scenario: Execute nodoInoltraEsitoMod1 request
     Given the Execute nodoInviaRPT request scenario executed successfully
     When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
