@@ -280,7 +280,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_wpI02_checkPPP
     <soapenv:Body>
       <ws:nodoInviaRT>
          <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-         <identificativoCanale>$canaleUsato</identificativoCanale>
+         <identificativoCanale>#canale#</identificativoCanale>
          <password>pwdpwdpwd</password>
          <identificativoPSP>#psp#</identificativoPSP>
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
