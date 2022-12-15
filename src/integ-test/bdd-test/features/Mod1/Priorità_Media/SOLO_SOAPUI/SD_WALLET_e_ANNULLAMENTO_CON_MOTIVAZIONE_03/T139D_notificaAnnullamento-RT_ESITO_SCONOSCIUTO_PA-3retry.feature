@@ -138,6 +138,7 @@ Feature: T139C_notificaAnnullamento - RT_RIFIUTATA_PA -> noRetry
         When job paInviaRt triggered after 20 seconds
         Then wait 3 seconds for expiration
 
+  @midRunnable
    Scenario: Execute nodoChiediStatoRPT
         Given the Execute paInviaRT job scenario executed successfully
         And wait 30 seconds for expiration
@@ -165,4 +166,3 @@ Feature: T139C_notificaAnnullamento - RT_RIFIUTATA_PA -> noRetry
         And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-

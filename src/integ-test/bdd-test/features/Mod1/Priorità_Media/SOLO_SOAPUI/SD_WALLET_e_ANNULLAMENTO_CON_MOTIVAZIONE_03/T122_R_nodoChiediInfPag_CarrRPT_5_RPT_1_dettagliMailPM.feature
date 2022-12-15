@@ -451,7 +451,8 @@ Feature: process tests for 5 RPT da 1 VersamentO
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-    
+
+@midRunnable    
     Scenario: Execute nodoChiediInfoPag request
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti

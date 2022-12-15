@@ -2,7 +2,6 @@ Feature: T139A_NotificaAnnullamento_carrello
     Background:
         Given systems up
        
-
    Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
@@ -116,6 +115,7 @@ Feature: T139A_NotificaAnnullamento_carrello
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
+    @midRunnable
      Scenario: Execute nodoNotificaAnnullamento
         Given the RPT generation scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

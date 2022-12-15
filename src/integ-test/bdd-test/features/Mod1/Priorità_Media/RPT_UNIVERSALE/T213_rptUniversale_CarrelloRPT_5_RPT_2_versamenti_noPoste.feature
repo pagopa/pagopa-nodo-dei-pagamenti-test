@@ -705,18 +705,18 @@ Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_noP
         And through the query version retrieve param version at position 0 and save it under the key version
         And replace lingua content with IT content
         And replace importoTot content with 15.00 content
-        And execution query getPsp to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPsp retrieve param sizeCarte at position 0 and save it under the key sizeCarte
-        And execution query getPsp to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPsp retrieve param listaCarte at position -1 and save it under the key listaCarte
-        And execution query getPsp to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPsp retrieve param sizeConto at position 0 and save it under the key sizeConto
-        And execution query getPsp to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPsp retrieve param listaConto at position -1 and save it under the key listaConto
-        And execution query getPsp to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPsp retrieve param sizeConto at position 0 and save it under the key sizeAltro
-        And execution query getPsp to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPsp retrieve param listaAltro at position -1 and save it under the key listaAltro
+        And execution query getPspCarte_no_poste_lingua_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPspCarte_no_poste_lingua_2 retrieve param sizeCarte at position 0 and save it under the key sizeCarte
+        And execution query getPspCarte_no_poste_lingua_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspCarte_no_poste_lingua_2 retrieve param listaCarte at position -1 and save it under the key listaCarte
+        And execution query getPspConto_no_poste_lingua_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPspConto_no_poste_lingua_2 retrieve param sizeConto at position 0 and save it under the key sizeConto
+        And execution query getPspConto_no_poste_lingua_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspConto_no_poste_lingua_2 retrieve param listaConto at position -1 and save it under the key listaConto
+        And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPspAltro retrieve param sizeConto at position 0 and save it under the key sizeAltro
+        And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspAltro retrieve param listaAltro at position -1 and save it under the key listaAltro
 
     Scenario: execution nodoChiediListaPSP - carte
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully

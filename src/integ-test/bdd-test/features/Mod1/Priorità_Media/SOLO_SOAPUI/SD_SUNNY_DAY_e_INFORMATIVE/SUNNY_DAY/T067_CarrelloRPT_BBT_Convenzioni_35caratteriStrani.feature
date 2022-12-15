@@ -3,10 +3,10 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni_35caratteriStrani
     Background:
         Given systems up
 
+@midRunnable
     Scenario: Execute nodoInviaCarrelloRPT
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-
         And RPT1 generation
             """
             <?xml version="1.0" encoding="UTF-8"?>

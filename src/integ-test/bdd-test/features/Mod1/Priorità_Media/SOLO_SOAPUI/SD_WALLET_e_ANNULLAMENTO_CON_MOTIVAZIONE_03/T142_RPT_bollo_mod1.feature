@@ -236,6 +236,7 @@ Feature: T142_RPT_bollo_mod1
         And check totalRows field exists in listaPSP response
         And check data field exists in listaPSP response
     
+    @midRunnable
      Scenario: Execution Esito Mod1
         Given the Execute nodoChiediListaPSP - carte scenario executed successfully
         #non toccare i valori

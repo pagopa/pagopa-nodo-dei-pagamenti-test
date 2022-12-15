@@ -3,6 +3,7 @@ Feature: T020_nodoInviaRPT_Mod3_PO_wpl02_noPpp
     Background:
         Given systems up
 
+    @midRunnable
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given replace canaleUsato content with #canale_ATTIVATO_PRESSO_PSP# content
         And checks the value wpl02 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query chekPlugin on db nodo_cfg under macro Mod1

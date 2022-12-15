@@ -23,7 +23,8 @@ Feature: T115_ChiediInformativaPSP
         Then check xmlInformativa field exists in nodoChiediInformativaPSP response
         And check ppt:nodoChiediInformativaPSPRisposta field exists in nodoChiediInformativaPSP response
         And check fault field not exists in nodoChiediInformativaPSP response
-
+        
+@midRunnable
     Scenario: Send nodoChiediInformativaPSP no CDI
         Given initial XML nodoChiediInformativaPSP
             """

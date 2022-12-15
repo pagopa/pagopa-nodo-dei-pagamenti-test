@@ -1,4 +1,5 @@
 Feature: T136_InoltraPagamentoMod2_RPT_BP_checkPPP
+
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
@@ -167,6 +168,7 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_checkPPP
       </pay_i:datiPagamento>
     </pay_i:RT>
     """
+
   Scenario: Execute nodoInviaRPT request
     Given initial XML nodoInviaRPT
     """
@@ -198,7 +200,6 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_checkPPP
     And check url contains acards of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
    
-
    Scenario: Execute nodoInoltraEsitoPagamentoMod2 request
     Given the Execute nodoInviaRPT request scenario executed successfully
      And initial XML pspInviaRPT 
@@ -261,6 +262,7 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_checkPPP
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And checks esito contains OK of avanzamentoPagamento response
 
+  @midRunnable
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediStatoRPT request scenario executed successfully
     And initial XML nodoInviaRT

@@ -6,7 +6,6 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA
     Scenario: Execute nodoInviaCarrelloRPT
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-
         And RPT1 generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -225,7 +224,8 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA
         And wait 20 seconds for expiration 
         And checks the value codiceConvenzione$1IUV of the record at column CODICE_CONVENZIONE of the table CARRELLO retrived by the query codice_convenzione on db nodo_online under macro Mod1
 
-        Scenario: Execute nodoInviaRT
+@midRunnable
+    Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         And initial XMl nodoInviaRT
             """

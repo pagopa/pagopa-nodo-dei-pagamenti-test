@@ -456,6 +456,7 @@ Feature: T136A_InoltraPagamentoMod2_carrello_BP
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
+    @midRunnable
     Scenario: Execute nodoInviaRT2
         Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
         And initial XML nodoInviaRT

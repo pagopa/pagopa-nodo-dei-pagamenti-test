@@ -215,6 +215,7 @@ Feature: T005_nodoInviaRT_esito=3
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
+    @midRunnable
     Scenario: Execute nodoInviaRT 
         Given the Execute nodoInviaRPT request scenario executed successfully
         And initial XML nodoInviaRT

@@ -271,6 +271,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CANALE_IRRAGGIUNGIBILE - BUG_482 - 
     And check esito field exists in avanzamentoPagamento response
     And check esito is KO of avanzamentoPagamento response
 
+@midRunnable
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
     And initial XML nodoInviaRT

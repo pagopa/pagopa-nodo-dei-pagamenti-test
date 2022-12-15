@@ -159,7 +159,8 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_convenzioni
     "codiceConvenzione":"CONV1"}
     """
     Then check errorCode is RIFPSP of inoltroEsito/carta response
-  
+
+@midRunnable  
   Scenario: DB check 2
     Given the Execute nodoInoltraEsitoPagamentoCarta request scenario executed successfully
     Then replace sessionExpected content with $sessionToken content

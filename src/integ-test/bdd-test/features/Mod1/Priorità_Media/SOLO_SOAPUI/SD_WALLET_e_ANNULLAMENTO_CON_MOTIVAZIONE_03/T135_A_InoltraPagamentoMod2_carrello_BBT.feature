@@ -429,8 +429,7 @@ Feature: T135_A_InoltraPagamentoMod2_carrello_BBT
         Then verify the HTTP status code of inoltroEsito/mod2 response is 200
         And check esito is OK of inoltroEsito/mod2 response
 
-   
-
+@midRunnable
     Scenario: Execute nodoInviaRT (Phase 4)
         Given the Execute inoltroEsito/mod2 (Phase 2) scenario executed successfully
         And initial XML nodoInviaRT

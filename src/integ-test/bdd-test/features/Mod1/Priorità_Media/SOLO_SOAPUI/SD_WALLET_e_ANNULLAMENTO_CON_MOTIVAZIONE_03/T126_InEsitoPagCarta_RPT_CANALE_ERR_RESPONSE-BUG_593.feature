@@ -186,6 +186,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CANALE_ERR_RESPONSE - BUG_593
     And check esito field exists in avanzamentoPagamento response
     And check esito is ACK_UNKNOWN of avanzamentoPagamento response
 
+@midRunnable
   Scenario: Execute nodoInoltraEsitoPagamentoCarta2 request
     Given the Execute nodoChiediAvanzamentoPagamento request scenario executed successfully
     And initial XML pspInviaCarrelloRPTCarte

@@ -119,6 +119,7 @@ Feature: T139C_notificaAnnullamento - RT_RIFIUTATA_PA -> noRetry
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And check esito is OK of notificaAnnullamento response
 
+  @midRunnable
    Scenario: Execute paInviaRT job
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         And initial XML paaInviaRT

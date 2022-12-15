@@ -494,7 +494,3 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_TIMEOUT
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-
-
-
-    

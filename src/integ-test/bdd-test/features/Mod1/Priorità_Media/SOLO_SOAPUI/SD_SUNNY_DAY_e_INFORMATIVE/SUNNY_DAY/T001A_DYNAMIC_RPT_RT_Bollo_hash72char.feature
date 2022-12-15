@@ -2,6 +2,7 @@ Feature: T001A_DYNAMIC_RPT_RT_Bollo_hash72char
     Background:
         Given systems up
 
+    @midRunnable
     Scenario: MB generation
         Given MB generation
             """

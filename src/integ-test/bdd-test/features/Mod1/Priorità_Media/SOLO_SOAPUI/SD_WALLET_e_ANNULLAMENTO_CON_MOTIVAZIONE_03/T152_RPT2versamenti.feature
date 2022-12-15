@@ -1,6 +1,5 @@
 Feature: T152_RPT2versamenti
-
-    
+ 
     Background:
         Given systems up
 
@@ -234,6 +233,7 @@ Feature: T152_RPT2versamenti
         And check totalRows field exists in listaPSP response
         And check data field exists in listaPSP response
     
+    @midRunnable
      Scenario: Execution Esito Mod1
         Given the Execute nodoChiediListaPSP - carte scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte

@@ -371,7 +371,7 @@ Feature: T221_notificaAnnullamento_carrello_2RPT_motivoErrato
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-
+    @midRunnable
      Scenario: Execute nodoNotificaAnnullamento
         Given the RPT generation scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=BBBBB to nodo-dei-pagamenti

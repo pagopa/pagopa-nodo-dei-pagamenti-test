@@ -432,8 +432,6 @@ Feature: T132A_InoltraPagamentoMod1_carrello_BP_mobile
         And check esito is OK of inoltroEsito/mod1 response
         And check urlRedirectPSP field exists in inoltroEsito/mod1 response
 
-   
-
     Scenario: Execute nodoInviaRT (Phase 4)
         Given the Execute inoltroEsito/mod1 (Phase 2) scenario executed successfully
         And initial XML nodoInviaRT

@@ -300,6 +300,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO
     When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
     Then check esito is KO of nodoInviaRT response
 
+@midRunnable
   Scenario: Execute nodoInoltraEsitoPagamentoCarta2 request
     Given the Execute nodoInviaRT request scenario executed successfully
     And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 

@@ -39,7 +39,7 @@ Feature: T206_InviaFlussoRendicontazione_esito=0_FTP
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-@midRunnable
+
     Scenario: Send nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -63,6 +63,7 @@ Feature: T206_InviaFlussoRendicontazione_esito=0_FTP
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
+@midRunnable
      Scenario: nodoChiediFlussoRendicontazione
         Given the Send nodoInviaFlussoRendicontazione primitive scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione

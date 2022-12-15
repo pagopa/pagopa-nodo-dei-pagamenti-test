@@ -115,6 +115,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_senza_pay_i
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     And retrieve session token from $nodoInviaRPTResponse.url
 
+@midRunnable
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
     Given the Execute nodoInviaRPT request scenario executed successfully
     And initial XML pspInviaCarrelloRPTCarte

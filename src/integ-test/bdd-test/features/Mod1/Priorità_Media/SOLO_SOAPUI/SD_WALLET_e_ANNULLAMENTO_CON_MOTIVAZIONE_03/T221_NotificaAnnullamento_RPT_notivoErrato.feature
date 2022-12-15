@@ -117,7 +117,7 @@ Feature: T221_NotificaAnnullamento_RPT_OTHER
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
   
-
+    @midRunnable
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execution idPagamento scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=AAAAA to nodo-dei-pagamenti
