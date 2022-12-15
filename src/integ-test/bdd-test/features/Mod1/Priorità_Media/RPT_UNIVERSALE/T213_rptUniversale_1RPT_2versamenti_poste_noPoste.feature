@@ -140,6 +140,8 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_poste_noPoste
         And through the query getPspCarte_noLingua_2 retrieve param listaCarte at position -1 and save it under the key listaCarte
         And execution query getPspConto_noLingua_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
         And through the query getPspConto_noLingua_2 retrieve param sizeConto at position 0 and save it under the key sizeConto
+        And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPspAltro retrieve param sizeConto at position 0 and save it under the key sizeAltro
         And execution query getPspConto_noLingua_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
         And through the query getPspConto_noLingua_2 retrieve param listaConto at position -1 and save it under the key listaConto
         And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
