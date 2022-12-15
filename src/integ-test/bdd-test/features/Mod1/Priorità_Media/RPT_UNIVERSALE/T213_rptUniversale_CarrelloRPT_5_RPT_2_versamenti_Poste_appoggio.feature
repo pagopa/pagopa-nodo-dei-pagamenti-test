@@ -60,19 +60,19 @@ Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_Pos
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>7.50</pay_i:importoTotaleDaVersare>
+            <pay_i:importoTotaleDaVersare>3.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
+            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -81,42 +81,9 @@ Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_Pos
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -185,19 +152,19 @@ Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_Pos
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>7.50</pay_i:importoTotaleDaVersare>
+            <pay_i:importoTotaleDaVersare>3.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
+            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -206,42 +173,9 @@ Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_Pos
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -310,19 +244,19 @@ Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_Pos
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>7.50</pay_i:importoTotaleDaVersare>
+            <pay_i:importoTotaleDaVersare>3.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
+            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -331,42 +265,9 @@ Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_Pos
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -435,19 +336,19 @@ Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_Pos
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>7.50</pay_i:importoTotaleDaVersare>
+            <pay_i:importoTotaleDaVersare>3.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$3iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
+            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -456,42 +357,9 @@ Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_Pos
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -560,19 +428,19 @@ Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_Pos
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>7.50</pay_i:importoTotaleDaVersare>
+            <pay_i:importoTotaleDaVersare>3.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$4iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>CCD01</pay_i:codiceContestoPagamento>
-            <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
+            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -581,42 +449,9 @@ Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_Pos
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
+            <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
-            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
-            </pay_i:datiSingoloVersamento>
-            <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>1.50</pay_i:importoSingoloVersamento>
-            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
+            <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
@@ -624,6 +459,61 @@ Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_Pos
             </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
             </pay_i:RPT>
+            """
+
+    Scenario: Execute nodoInviaCarrelloRPT request
+        Given the RPT5 generation scenario executed successfully
+        And initial XML nodoInviaCarrelloRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header>
+            <ppt:intestazioneCarrelloPPT>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+            <identificativoCarrello>#CARRELLO#</identificativoCarrello>
+            </ppt:intestazioneCarrelloPPT>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:nodoInviaCarrelloRPT>
+            <password>pwdpwdpwd</password>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+            <listaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <rpt>$rptAttachment</rpt>
+            </elementoListaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <rpt>$rpt2Attachment</rpt>
+            </elementoListaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <rpt>$rpt3Attachment</rpt>
+            </elementoListaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$3iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <rpt>$rpt4Attachment</rpt>
+            </elementoListaRPT>
+            <elementoListaRPT>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$4iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>CCD01</codiceContestoPagamento>
+            <rpt>$rpt5Attachment</rpt>
+            </elementoListaRPT>
+            </listaRPT>
+            </ws:nodoInviaCarrelloRPT>
+            </soapenv:Body>
+            </soapenv:Envelope>
             """
 
     Scenario: Execute nodoInviaCarrelloRPT request
@@ -705,14 +595,14 @@ Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_Pos
         And through the query version retrieve param version at position 0 and save it under the key version
         And replace lingua content with IT content
         And replace importoTot content with 15.00 content
-        And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPspCarte retrieve param sizeCarte at position 0 and save it under the key sizeCarte
-        And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPspCarte retrieve param listaCarte at position -1 and save it under the key listaCarte
-        And execution query getPspConto to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPspConto retrieve param sizeConto at position 0 and save it under the key sizeConto
-        And execution query getPspConto to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPspConto retrieve param listaConto at position -1 and save it under the key listaConto
+        And execution query getPspCarte_noLingua_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPspCarte_noLingua_2 retrieve param sizeCarte at position 0 and save it under the key sizeCarte
+        And execution query getPspCarte_noLingua_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspCarte_noLingua_2 retrieve param listaCarte at position -1 and save it under the key listaCarte
+        And execution query getPspConto_noLingua_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPspConto_noLingua_2 retrieve param sizeConto at position 0 and save it under the key sizeConto
+        And execution query getPspConto_noLingua_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspConto_noLingua_2 retrieve param listaConto at position -1 and save it under the key listaConto
         And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
         And through the query getPspAltro retrieve param sizeConto at position 0 and save it under the key sizeAltro
         And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
