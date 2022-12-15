@@ -1814,14 +1814,11 @@ def step_impl(context, query_name, table_name, param, where_condition, macro, db
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     if number == 'default_token_duration_validity_millis':
-        default = int(
-            getattr(context, 'default_token_duration_validity_millis')) / 60000
-        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
-                 datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
+        default = int(getattr(context, 'default_token_duration_validity_millis')) / 60000
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
         selected_query = utils.query_json(context, query_name, name_macro).replace(
             "columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
@@ -1830,16 +1827,13 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         elem = query_result[0].strftime('%Y-%m-%d %H:%M')
 
     elif number == 'default_idempotency_key_validity_minutes':
-        default = int(
-            getattr(context, 'default_idempotency_key_validity_minutes'))
+        default = int(getattr(context, 'default_idempotency_key_validity_minutes'))
         print("###################", default)
 
-        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
-                 datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
         print(">>>>>>>>>>>>>>>>>>>", value)
 
-        selected_query = utils.query_json(context, query_name, name_macro).replace(
-            "columns", column).replace("table_name", table_name)
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -1847,8 +1841,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
 
     elif number == 'Today':
         value = (datetime.datetime.today()).strftime('%Y-%m-%d')
-        selected_query = utils.query_json(context, query_name, name_macro).replace(
-            "columns", column).replace("table_name", table_name)
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -1856,20 +1849,16 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
 
     elif 'minutes:' in number:
         min = int(number.split(':')[1]) / 60000
-        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
-                 datetime.timedelta(minutes=min)).strftime('%Y-%m-%d %H:%M')
-        selected_query = utils.query_json(context, query_name, name_macro).replace(
-            "columns", column).replace("table_name", table_name)
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=min)).strftime('%Y-%m-%d %H:%M')
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d %H:%M')
     else:
         number = int(number)
-        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
-                 datetime.timedelta(days=number)).strftime('%Y-%m-%d')
-        selected_query = utils.query_json(context, query_name, name_macro).replace(
-            "columns", column).replace("table_name", table_name)
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(days=number)).strftime('%Y-%m-%d')
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
