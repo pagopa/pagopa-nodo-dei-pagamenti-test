@@ -83,19 +83,15 @@
 |   rest|   **Step**"calling primitive {primitive1} {restType1} and {primitive2} {restType2} in parallel"|    chiama la primitiva {primitive1} di tipo REST {restType1} e la primitiva {primitve2} di tipo REST {restType2} contemporaneamente|
 |   rest|   **Step**"calling primitive {primitive1} {restType1} and {primitive2} {restType2} with {delay1:d} ms delay"|    chiama la primitiva {primitive1} di tipo REST {restType1}, attende un delay {delay1:d} in ms e poi chiama la primitiva {primitve2} di tipo REST {restType2} |
 |   verify|   **Then**"check primitive response {primitive1} and primitive response {primitive2}"|    verifica la risposta della soap {primitive1} e la risposta della soap {primitive2}                                                                                                                                                   |
-|   verify|   **Then**"check db PAG-590_01"|    NA|
-|   verify|   **Then**"check DB_GR_01"|    NA|
 |   verify|   **Then**"RTP XML check"|    verifica la corretta formattazione del RPT|
 |   config|   **Step** retrieve session token from {url} |    recupera il token della sessione dalla {url}|
 |   config|   **Step** retrieve session token {number:d} from {url} |    recupera il token della sessione {number:d} dalla {url}|
 |   config|   **Step** retrieve url from {url} |    recupera l'url dalla {url}|
 |   config|   **Step** replace {old_attribute} content with {new_attribute} content |    sostituisce {old_attribute} con {new_attribute}|
-|   config|   **Step** Select and Update RT for Test retry_PAold with causale versamento {causaleVers} |    NA|
 |   config|   **Step** run in parallel "{feature}", "{scenario}" |    esegue in paralello {feature},{scenario}|
 |   config|   **Step** export elem {elem} with value {value} in cache |    esporta elemento {element} con valore {value} nel file /../resources/cache.json|
 |   config|   **Step** delete cache |    cancella il cache ( file /../resources/cache.json )|
-|   config|   **Step** retrive elements from cache and save it in context |    recupera elementi dal file /../resources/cache.json e le salva nel contesto|
-|   config|   **Step** waiting {seconds} seconds for thread |    NA|
+
 
 
 # Placeholder
