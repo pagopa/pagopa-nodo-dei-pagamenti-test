@@ -206,21 +206,20 @@ Feature: T124_ChiediListePSP_carr_2RPT_noIbanAddebitoEntrambeRPT
     And replace importoTot content with 12.40 content
     And replace lingua content with IT content
     # Carte
-    And execution query getPspCarte_mod1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-    And through the query getPspCarte_mod1 retrieve param sizeCarte at position 0 and save it under the key sizeCarte
-    And execution query getPspCarte_mod1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-    And through the query getPspCarte_mod1 retrieve param listaCarte at position -1 and save it under the key listaCarte
+    And execution query getPspCarte_mod1_lingua to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+    And through the query getPspCarte_mod1_lingua retrieve param sizeCarte at position 0 and save it under the key sizeCarte
+    And execution query getPspCarte_mod1_lingua to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+    And through the query getPspCarte_mod1_lingua retrieve param listaCarte at position -1 and save it under the key listaCarte
     # Conto
-    And execution query getPspConto_mod1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-    And through the query getPspConto_mod1 retrieve param sizeConto at position 0 and save it under the key sizeConto
-    And execution query getPspConto_mod1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-    And through the query getPspConto_mod1 retrieve param listaConto at position -1 and save it under the key listaConto
+    And execution query getPspConto_mod1_lingua to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+    And through the query getPspConto_mod1_lingua retrieve param sizeConto at position 0 and save it under the key sizeConto
+    And execution query getPspConto_mod1_lingua to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+    And through the query getPspConto_mod1_lingua retrieve param listaConto at position -1 and save it under the key listaConto
     # Altro
-    And execution query getPspAltro_mod1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-    And through the query getPspAltro_mod1 retrieve param sizeAltro at position 0 and save it under the key sizeAltro
-    And execution query getPspAltro_mod1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-    And through the query getPspAltro_mod1 retrieve param listaAltro at position -1 and save it under the key listaAltro
-
+    And execution query getPspAltro_mod1_lingua to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+    And through the query getPspAltro_mod1_lingua retrieve param sizeAltro at position 0 and save it under the key sizeAltro
+    And execution query getPspAltro_mod1_lingua to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+    And through the query getPspAltro_mod1_lingua retrieve param listaAltro at position -1 and save it under the key listaAltro
 
   Scenario: Execute nodoChiediListaPSP - Carte
     Given the Execute nodoChiediInfoPag request scenario executed successfully
