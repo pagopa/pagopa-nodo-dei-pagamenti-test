@@ -201,6 +201,11 @@ Feature: T124_ChiediListePSP_carr_2RPT_noIbanAddebitoPrimaRPT
     When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
 
+    # DB Check
+    And execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
+    And through the query version retrieve param version at position 0 and save it under the key version
+    And replace importoTot content with 12.40 content
+    And replace lingua content with IT content
     # Carte
     And execution query getPspCarte_mod1_lingua to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
     And through the query getPspCarte_mod1_lingua retrieve param sizeCarte at position 0 and save it under the key sizeCarte
