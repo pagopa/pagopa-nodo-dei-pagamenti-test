@@ -119,10 +119,10 @@ Feature: T124_ChiediListePSP_CC_conIbanAddebito
     And replace importoTot content with 26.20 content
     And replace lingua content with IT content
     # Conto
-    And execution query getPspConto_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-    And through the query getPspConto_2 retrieve param sizeCarte at position 0 and save it under the key sizeConto
-    And execution query getPspConto_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-    And through the query getPspConto_2 retrieve param listaCarte at position -1 and save it under the key listaConto
+    And execution query getPspConto to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+    And through the query getPspConto retrieve param sizeCarte at position 0 and save it under the key sizeConto
+    And execution query getPspConto to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+    And through the query getPspConto retrieve param listaCarte at position -1 and save it under the key listaConto
 
 @midRunnable
   Scenario: Execute nodoChiediListaPSP - Conto
