@@ -119,10 +119,10 @@ Feature: T125_ChiediListePSP_Altro
     And replace importoTot content with 26.20 content
     And replace lingua content with IT content
     # Altro
-    And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-    And through the query getPspAltro retrieve param sizeAltro at position 0 and save it under the key sizeAltro
-    And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-    And through the query getPspAltro retrieve param listaAltro at position -1 and save it under the key listaAltro
+    And execution query getPspAltro_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+    And through the query getPspAltro_2 retrieve param sizeAltro at position 0 and save it under the key sizeAltro
+    And execution query getPspAltro_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+    And through the query getPspAltro_2 retrieve param listaAltro at position -1 and save it under the key listaAltro
 
 @midRunnable
   Scenario: Execute nodoChiediListaPSP - Altro
