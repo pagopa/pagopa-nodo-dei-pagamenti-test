@@ -271,10 +271,10 @@ Feature: T123_ChiediListePSP_Bollo
     And through the query getPspConto_bollo retrieve param listaConto at position -1 and save it under the key listaConto
     
     # Altro
-    And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-    And through the query getPspAltro retrieve param sizeAltro at position 0 and save it under the key sizeAltro
-    And execution query getPspAltro to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-    And through the query getPspAltro retrieve param listaAltro at position -1 and save it under the key listaAltro
+    And execution query getPspAltro_bollo to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+    And through the query getPspAltro_bollo retrieve param sizeAltro at position 0 and save it under the key sizeAltro
+    And execution query getPspAltro_bollo to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+    And through the query getPspAltro_bollo retrieve param listaAltro at position -1 and save it under the key listaAltro
     
   Scenario: Execute nodoChiediListaPSP - conto
     Given the Execute nodoChiediInfoPag request scenario executed successfully
