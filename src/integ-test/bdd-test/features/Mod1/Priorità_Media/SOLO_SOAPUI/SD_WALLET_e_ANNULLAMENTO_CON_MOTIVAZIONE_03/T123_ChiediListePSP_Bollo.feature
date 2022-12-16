@@ -259,10 +259,10 @@ Feature: T123_ChiediListePSP_Bollo
     And replace importoTot content with 10.0 content
     
     # Carte
-    And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-    And through the query getPspCarte retrieve param sizeCarte at position 0 and save it under the key sizeCarte
-    And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-    And through the query getPspCarte retrieve param listaCarte at position -1 and save it under the key listaCarte
+    And execution query getPspCarte_bollo to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+    And through the query getPspCarte_bollo retrieve param sizeCarte at position 0 and save it under the key sizeCarte
+    And execution query getPspCarte_bollo to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+    And through the query getPspCarte_bollo retrieve param listaCarte at position -1 and save it under the key listaCarte
     
     # Conto
     And execution query getPspConto_bollo to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
