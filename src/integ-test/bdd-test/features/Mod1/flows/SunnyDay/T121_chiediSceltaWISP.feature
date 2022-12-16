@@ -2,7 +2,8 @@ Feature: process test for nodoChiediSceltaWISP
 
     Background:
         Given systems up
-@apim
+
+#test rimosso dall'automazione: Furlani Ilaria <ilaria.furlani@nexigroup.com> "In PROD e in UAT non vedo chiamate per la chiediWSceltaWISP"
     Scenario: send nodoChiediSceltaWISP
         Given initial XML nodoChiediSceltaWISP
             """
