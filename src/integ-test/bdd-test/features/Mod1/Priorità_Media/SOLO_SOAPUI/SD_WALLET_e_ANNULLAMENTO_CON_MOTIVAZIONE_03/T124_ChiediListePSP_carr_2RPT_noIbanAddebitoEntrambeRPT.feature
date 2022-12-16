@@ -206,10 +206,10 @@ Feature: T124_ChiediListePSP_carr_2RPT_noIbanAddebitoEntrambeRPT
     And replace importoTot content with 12.40 content
     And replace lingua content with IT content
     # Carte
-    And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-    And through the query getPspCarte retrieve param sizeCarte at position 0 and save it under the key sizeCarte
-    And execution query getPspCarte to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-    And through the query getPspCarte retrieve param listaCarte at position -1 and save it under the key listaCarte
+    And execution query getPspCarte_mod1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+    And through the query getPspCarte_mod1 retrieve param sizeCarte at position 0 and save it under the key sizeCarte
+    And execution query getPspCarte_mod1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+    And through the query getPspCarte_mod1 retrieve param listaCarte at position -1 and save it under the key listaCarte
 
 @midRunnable
   Scenario: Execute nodoChiediListaPSP - Carte
