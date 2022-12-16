@@ -183,7 +183,7 @@ stages:
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
 
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/ --tags=runnable,midRunnable
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_WALLET_e_ANNULLAMENTO_CON_MOTIVAZIONE_03/T124_ChiediListePSP_carr_2RPT_noIbanAddebitoPrimaRPT.feature --tags=midRunnable
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/Priorità_Media/SOLO_SOAPUI/SD_WALLET_e_ANNULLAMENTO_CON_MOTIVAZIONE_03/T124_ChiediListePSP_carr_2RPT_noIbanAddebitoSecondaRPT.feature --tags=midRunnable
 
             displayName: "Run integration test"
 
