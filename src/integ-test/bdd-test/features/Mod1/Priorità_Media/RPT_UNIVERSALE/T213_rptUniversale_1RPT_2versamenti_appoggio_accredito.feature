@@ -140,10 +140,10 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_appoggio_accredit
         And through the query getPspConto_mod1_new retrieve param sizeConto at position 0 and save it under the key sizeConto
         And execution query getPspConto_mod1_new to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
         And through the query getPspConto_mod1_new retrieve param listaConto at position -1 and save it under the key listaConto
-        And execution query getPspAltro_mod1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPspAltro_mod1 retrieve param sizeConto at position 0 and save it under the key sizeAltro
-        And execution query getPspAltro_mod1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPspAltro_mod1 retrieve param listaAltro at position -1 and save it under the key listaAltro
+        And execution query getPspAltro_mod1_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPspAltro_mod1_2 retrieve param sizeConto at position 0 and save it under the key sizeAltro
+        And execution query getPspAltro_mod1_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspAltro_mod1_2 retrieve param listaAltro at position -1 and save it under the key listaAltro
 
 
     Scenario: execution nodoChiediListaPSP - carte
