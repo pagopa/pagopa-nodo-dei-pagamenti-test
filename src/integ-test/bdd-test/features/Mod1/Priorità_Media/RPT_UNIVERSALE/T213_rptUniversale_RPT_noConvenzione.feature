@@ -131,10 +131,10 @@ Feature: process tests for T213_rptUniversale_RPT_noConvenzione
         And through the query getPspCarte_mod_0_1 retrieve param sizeCarte at position 0 and save it under the key sizeCarte
         And execution query getPspCarte_mod_0_1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
         And through the query getPspCarte_mod_0_1 retrieve param listaCarte at position -1 and save it under the key listaCarte
-        And execution query getPspConto_mod_0_1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPspConto_mod_0_1 retrieve param sizeConto at position 0 and save it under the key sizeConto
-        And execution query getPspConto_mod_0_1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPspConto_mod_0_1 retrieve param listaConto at position -1 and save it under the key listaConto
+        And execution query getPspConto_no_poste to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPspConto_no_poste retrieve param sizeConto at position 0 and save it under the key sizeConto
+        And execution query getPspConto_no_poste to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspConto_no_poste retrieve param listaConto at position -1 and save it under the key listaConto
         And execution query getPspAltro_mod_0_1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
         And through the query getPspAltro_mod_0_1 retrieve param listaAltro at position -1 and save it under the key listaAltro
 
