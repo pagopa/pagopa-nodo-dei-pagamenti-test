@@ -3,6 +3,7 @@ Feature: T115_ChiediInformativaPSP
     Background:
         Given systems up
 
+#test rimosso dall'automazione: primitiva deprecata
     Scenario: Send nodoChiediInformativaPSP with CDI
         Given initial XML nodoChiediInformativaPSP
             """
@@ -24,7 +25,7 @@ Feature: T115_ChiediInformativaPSP
         And check ppt:nodoChiediInformativaPSPRisposta field exists in nodoChiediInformativaPSP response
         And check fault field not exists in nodoChiediInformativaPSP response
         
-
+#test rimosso dall'automazione: primitiva deprecata
     Scenario: Send nodoChiediInformativaPSP no CDI
         Given initial XML nodoChiediInformativaPSP
             """

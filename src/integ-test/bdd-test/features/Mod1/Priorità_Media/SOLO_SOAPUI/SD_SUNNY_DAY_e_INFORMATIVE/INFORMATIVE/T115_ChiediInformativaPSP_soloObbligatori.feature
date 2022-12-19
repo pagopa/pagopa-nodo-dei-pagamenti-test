@@ -3,6 +3,7 @@ Feature: T115_ChiediInformativaPSP_soloObbligatori
     Background:
         Given systems up
 
+#test rimosso dall'automazione: primitiva deprecata
     Scenario: Send nodoChiediInformativaPSP
         Given initial XML nodoChiediInformativaPSP
             """
