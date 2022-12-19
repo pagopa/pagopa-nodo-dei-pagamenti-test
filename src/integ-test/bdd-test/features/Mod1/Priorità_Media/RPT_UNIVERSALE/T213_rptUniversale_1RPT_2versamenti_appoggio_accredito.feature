@@ -140,10 +140,10 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_appoggio_accredit
         And through the query getPspConto_mod1_new retrieve param sizeConto at position 0 and save it under the key sizeConto
         And execution query getPspConto_mod1_new to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
         And through the query getPspConto_mod1_new retrieve param listaConto at position -1 and save it under the key listaConto
-        And execution query getPspAltro_mod1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPspAltro_mod1 retrieve param sizeConto at position 0 and save it under the key sizeAltro
-        And execution query getPspAltro_mod1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPspAltro_mod1 retrieve param listaAltro at position -1 and save it under the key listaAltro
+        And execution query getPspAltro_mod1_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPspAltro_mod1_2 retrieve param sizeConto at position 0 and save it under the key sizeAltro
+        And execution query getPspAltro_mod1_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPspAltro_mod1_2 retrieve param listaAltro at position -1 and save it under the key listaAltro
 
 
     Scenario: execution nodoChiediListaPSP - carte
@@ -163,7 +163,7 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_appoggio_accredit
     @midRunnable
     Scenario: execution nodoChiediListaPSP - altro
         Given the execution nodoChiediListaPSP - conto scenario executed successfully
-        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
+        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
         And check totalRows is $sizeAltro of listaPSP response
         And check data is $listaAltro of listaPSP response
