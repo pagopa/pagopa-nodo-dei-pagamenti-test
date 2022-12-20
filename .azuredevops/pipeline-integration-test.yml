@@ -183,7 +183,7 @@ stages:
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
 
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/ --tags=runnable,midRunnable
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/SOLO_SOAPUI/SD_WALLET_e_ANNULLAMENTO_CON_MOTIVAZIONE_03/T129_B_InoltraPagamentoMod1_RPT_BBT_web_noPPI.feature --tags=midRunnable
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/SOLO_SOAPUI/SD_WALLET_e_ANNULLAMENTO_CON_MOTIVAZIONE_03/T129_D_InoltraPagamentoMod1_RPT_BBT_web_noIdCart.feature --tags=midRunnable
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO/primitives/activateIOPayment_syntax_ko.feature --tags=runnable
 
             displayName: "Run integration test"
