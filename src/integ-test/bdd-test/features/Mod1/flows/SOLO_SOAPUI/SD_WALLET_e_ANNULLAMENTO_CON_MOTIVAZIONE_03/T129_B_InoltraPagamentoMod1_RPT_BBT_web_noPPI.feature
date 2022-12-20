@@ -121,7 +121,7 @@ Feature: T129_B_InoltraPagamentoMod1_RPT_BBT_web_noPPI
                             <pspInviaRPTResponse>
                                 <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
                                 <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-                                <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+                                <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.codiceContestoPagamento</parametriPagamentoImmediato>
                             </pspInviaRPTResponse>
                         </ws:pspInviaRPTResponse>
                     </soapenv:Body>
