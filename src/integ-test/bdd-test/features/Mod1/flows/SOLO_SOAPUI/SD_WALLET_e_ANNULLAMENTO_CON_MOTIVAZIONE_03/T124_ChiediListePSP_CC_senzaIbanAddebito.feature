@@ -118,15 +118,15 @@ Feature: T124_ChiediListePSP_CC_senzaIbanAddebito
     And replace importoTot content with 26.20 content
     And replace lingua content with IT content
     # Conto
-    And execution query getPspConto to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-    And through the query getPspConto retrieve param sizeCarte at position 0 and save it under the key sizeConto
-    And execution query getPspConto to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-    And through the query getPspConto retrieve param listaCarte at position -1 and save it under the key listaConto
+    And execution query getPspConto_no_poste_lingua_3 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+    And through the query getPspConto_no_poste_lingua_3 retrieve param sizeCarte at position 0 and save it under the key sizeConto
+    And execution query getPspConto_no_poste_lingua_3 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+    And through the query getPspConto_no_poste_lingua_3 retrieve param listaCarte at position -1 and save it under the key listaConto
 
 @midRunnable
   Scenario: Execute nodoChiediListaPSP - Conto
     Given the Execute nodoChiediInfoPag request scenario executed successfully
-    When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE&lingua=$lingua to nodo-dei-pagamenti
+    When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC to nodo-dei-pagamenti
     Then verify the HTTP status code of listaPSP response is 200
     And check totalRows is $sizeConto of listaPSP response
     And check data is $listaConto of listaPSP response
