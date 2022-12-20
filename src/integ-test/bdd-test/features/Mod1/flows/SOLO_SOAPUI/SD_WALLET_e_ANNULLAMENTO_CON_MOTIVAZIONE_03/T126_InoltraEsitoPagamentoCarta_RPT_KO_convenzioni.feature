@@ -88,6 +88,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_convenzioni
     """
     $RPT_XML
     """
+    And replace canaleUsato content with #canale_DIFFERITO_MOD2# content
     Then checks the value idPsp1 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query ID_Serv_Plugin on db nodo_cfg under macro Mod1
 
   Scenario: Execute nodoInviaRPT request
