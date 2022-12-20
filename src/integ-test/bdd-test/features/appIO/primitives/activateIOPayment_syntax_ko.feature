@@ -51,6 +51,23 @@ Feature: Syntax checks for activateIOPaymentReq - KO
             </soapenv:Body>
             </soapenv:Envelope>
             """
+
+    @runnable
+    Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
+        Given <elem> with <value> in activateIOPayment
+        When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
+        Then check outcome is KO of activateIOPayment response
+        And check faultCode is PPT_SINTASSI_EXTRAXSD of activateIOPayment response
+        Examples:
+            | elem                       | value | soapUI test  |
+            | entityUniqueIdentifierType | None  | SIN_AIOPR_02 |
+            | entityUniqueIdentifierType | Empty | SIN_AIOPR_03 |
+            | idempotencyKey             | Empty | SIN_AIOPR_04 |
+            | amount                     | None  | SIN_AIOPR_24 |
+            | amount                     | Empty | SIN_AIOPR_26 |
+            | fiscalCode                 | Empty | SIN_AIOPR_27 |
+            | noticeNumber               | Empty | SIN_AIOPR_32 |
+
     @runnable
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
         Given <attribute> set <value> for <elem> in activateIOPayment
@@ -60,21 +77,6 @@ Feature: Syntax checks for activateIOPaymentReq - KO
         Examples:
             | elem             | attribute     | value                                     | soapUI test  |
             | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_AIOPR_01 |
-
-    @runnable
-    Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
-        Given <elem> with <value> in activateIOPayment
-        When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
-        Then verify the HTTP status code of activateIOPayment response is 500
-        Examples:
-            | elem                     | value | soapUI test  |
-            | soapenv:Body             | None  | SIN_AIOPR_02 |
-            | soapenv:Body             | Empty | SIN_AIOPR_03 |
-            | nod:activateIOPaymentReq | Empty | SIN_AIOPR_04 |
-            | qrCode                   | None  | SIN_AIOPR_24 |
-            | qrCode                   | Empty | SIN_AIOPR_26 |
-            | fiscalCode               | None  | SIN_AIOPR_27 |
-            | noticeNumber             | None  | SIN_AIOPR_32 |
 
     @runnable
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
