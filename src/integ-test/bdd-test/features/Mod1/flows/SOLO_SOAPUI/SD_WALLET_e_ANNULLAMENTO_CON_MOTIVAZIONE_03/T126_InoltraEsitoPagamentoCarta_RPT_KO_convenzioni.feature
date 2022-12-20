@@ -2,8 +2,8 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_convenzioni
   Background:
     Given systems up
 
-  Scenario: RPT generation 
-    And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
+  Scenario: Create RPT 
+    Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
     And replace $1iuv content with RPTcheckConv content
     And initial XML RPT_XML
     """
@@ -92,7 +92,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_convenzioni
     Then checks the value idPsp1 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query ID_Serv_Plugin on db nodo_cfg under macro Mod1
 
   Scenario: Execute nodoInviaRPT request
-    Given the RPT generation scenario executed successfully
+    Given the Create RPT scenario executed successfully
     And initial XML nodoInviaRPT
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
