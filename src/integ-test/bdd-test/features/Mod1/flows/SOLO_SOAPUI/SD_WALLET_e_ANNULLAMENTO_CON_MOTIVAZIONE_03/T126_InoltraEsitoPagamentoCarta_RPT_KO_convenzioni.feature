@@ -144,7 +144,6 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_convenzioni
         </soapenv:Body>
     </soapenv:Envelope>
     """
-    And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
     When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
     """
     {"idPagamento":"$sessionToken",
