@@ -211,19 +211,18 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_KO_PSP
                 <soapenv:Body>
                     <ws:pspInviaRPTResponse>
                         <pspInviaRPTResponse>
-                            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                            <fault>
+                          <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+                          <fault>
                             <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
                             <faultString>fault esterno</faultString>
                             <id>#psp#</id>
-                            <description>descrizione fault esterno</description>
-                        </fault>
+                          </fault>
                         </pspInviaRPTResponse>
                     </ws:pspInviaRPTResponse>
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+    And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
     When WISP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti
     """
     {
