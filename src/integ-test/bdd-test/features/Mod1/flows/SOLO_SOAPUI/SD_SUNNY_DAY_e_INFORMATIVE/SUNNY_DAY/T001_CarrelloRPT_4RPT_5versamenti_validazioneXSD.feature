@@ -6,7 +6,7 @@ Feature: T001_CarrelloRPT_4RPT_5versamenti_validazioneXSD
 
     @midRunnable
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
-        Given RPT generation
+        Given RPT1 generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.1</pay_i:versioneOggetto>
@@ -51,7 +51,7 @@ Feature: T001_CarrelloRPT_4RPT_5versamenti_validazioneXSD
             <pay_i:importoTotaleDaVersare>7.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>validateXSD</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#codiceContestoPagamento1#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -158,7 +158,7 @@ Feature: T001_CarrelloRPT_4RPT_5versamenti_validazioneXSD
             <pay_i:importoTotaleDaVersare>7.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>validateXSD</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp2#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#codiceContestoPagamento2#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -265,7 +265,7 @@ Feature: T001_CarrelloRPT_4RPT_5versamenti_validazioneXSD
             <pay_i:importoTotaleDaVersare>7.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>validateXSD</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp3#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#codiceContestoPagamento3#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -372,7 +372,7 @@ Feature: T001_CarrelloRPT_4RPT_5versamenti_validazioneXSD
             <pay_i:importoTotaleDaVersare>7.50</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>validateXSD</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp4#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#codiceContestoPagamento4#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -454,25 +454,25 @@ Feature: T001_CarrelloRPT_4RPT_5versamenti_validazioneXSD
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>validateXSD</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
+            <codiceContestoPagamento>$1codiceContestoPagamento</codiceContestoPagamento>
+            <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>validateXSD</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$2ccp</codiceContestoPagamento>
+            <codiceContestoPagamento>$2codiceContestoPagamento</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>validateXSD</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$3ccp</codiceContestoPagamento>
+            <codiceContestoPagamento>$3codiceContestoPagamento</codiceContestoPagamento>
             <rpt>$rpt3Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>validateXSD</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$4ccp</codiceContestoPagamento>
+            <codiceContestoPagamento>$4codiceContestoPagamento</codiceContestoPagamento>
             <rpt>$rpt4Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>

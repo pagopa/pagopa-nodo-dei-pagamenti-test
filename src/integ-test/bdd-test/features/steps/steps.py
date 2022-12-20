@@ -473,6 +473,11 @@ def step_impl(context, number):
         payload = payload.replace(f'#ccp{number}#', ccp)
         setattr(context, f"{number}ccp", ccp)
 
+    if f"#codiceContestoPagamento{number}" in payload:
+        ccp = str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace(f'#codiceContestoPagamento{number}#', ccp)
+        setattr(context, f"{number}codiceContestoPagamento", ccp)
+
     if f"#CCP{number}#" in payload:
         ccp2 = str(utils.current_milli_time()) + '1'
         payload = payload.replace(f'#CCP{number}#', ccp2)

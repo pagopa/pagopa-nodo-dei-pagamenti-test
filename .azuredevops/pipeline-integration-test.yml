@@ -183,7 +183,7 @@ stages:
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
 
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/ --tags=runnable,midRunnable
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/SOLO_SOAPUI/SD_SUNNY_DAY_e_INFORMATIVE/SUNNY_DAY/RPT_mod1_sbloccoParcheggio_esitoCarta_RT_esito=0.feature --tags=midRunnable
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/SOLO_SOAPUI/SD_SUNNY_DAY_e_INFORMATIVE/SUNNY_DAY/T001_CarrelloRPT_4RPT_5versamenti_validazioneXSD.feature --tags=midRunnable
 
             displayName: "Run integration test"
 
