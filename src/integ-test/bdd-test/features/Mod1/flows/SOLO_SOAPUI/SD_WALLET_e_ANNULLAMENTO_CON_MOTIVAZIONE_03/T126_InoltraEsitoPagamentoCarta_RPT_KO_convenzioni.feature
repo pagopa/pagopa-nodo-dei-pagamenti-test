@@ -88,7 +88,6 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_convenzioni
     """
     $RPT_XML
     """
-    And replace canaleUsato content with WFESP_01_gabri content
     Then checks the value idPsp1 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query ID_Serv_Plugin on db nodo_cfg under macro Mod1
 
   Scenario: Execute nodoInviaRPT request
@@ -148,10 +147,10 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_convenzioni
     """
     {"idPagamento":"$sessionToken",
     "RRN":12352689,
-    "identificativoPsp":"WFESP",
+    "identificativoPsp":"#psp#",
     "tipoVersamento":"CP",
-    "identificativoIntermediario":"WFESP",
-    "identificativoCanale":"$canaleUsato",
+    "identificativoIntermediario":"#psp#",
+    "identificativoCanale":"#canale_DIFFERITO_MOD2#",
     "importoTotalePagato":12.31,
     "timestampOperazione":"2018-02-08T17:06:03.100+01:00",
     "codiceAutorizzativo":"123456",
