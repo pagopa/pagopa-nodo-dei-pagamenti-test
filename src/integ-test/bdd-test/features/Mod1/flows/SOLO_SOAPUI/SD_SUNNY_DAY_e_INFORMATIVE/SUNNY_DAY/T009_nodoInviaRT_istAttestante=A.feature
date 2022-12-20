@@ -13,7 +13,7 @@ Feature: T009_nodoInviaRT_istAttestante=A
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
-            <pay_i:dataOraMessaggioRichiesta>#timedte#</pay_i:dataOraMessaggioRichiesta>
+            <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
             <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
             <pay_i:soggettoVersante>
             <pay_i:identificativoUnivocoVersante>
