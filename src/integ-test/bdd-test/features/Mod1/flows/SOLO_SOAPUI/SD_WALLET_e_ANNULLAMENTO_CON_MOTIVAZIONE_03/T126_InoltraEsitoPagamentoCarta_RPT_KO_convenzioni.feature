@@ -1,6 +1,8 @@
 Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_convenzioni
   Background:
     Given systems up
+
+  Scenario: RPT generation 
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
     And replace $1iuv content with RPTcheckConv content
     And initial XML RPT_XML
@@ -86,12 +88,11 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_convenzioni
     """
     $RPT_XML
     """
-  Scenario: DB check 1
-    Given replace canaleUsato content with WFESP_01_gabri content
+    And replace canaleUsato content with WFESP_01_gabri content
     Then checks the value idPsp1 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query ID_Serv_Plugin on db nodo_cfg under macro Mod1
 
   Scenario: Execute nodoInviaRPT request
-    Given the DB check 1 scenario executed successfully
+    Given the RPT generation scenario executed successfully
     And initial XML nodoInviaRPT
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -122,6 +123,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_convenzioni
     And check url contains acards of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
 
+@midRunnable 
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
     Given the Execute nodoInviaRPT request scenario executed successfully
     And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 
@@ -133,9 +135,8 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_convenzioni
                 <pspInviaCarrelloRPTResponse>
                   <fault>
                       <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
-                      <faultString>fault esterno</faultString>
-                      <id>400000000001</id>
-                      <description>descrizione fault esterno</description>
+                      <faultString>random</faultString>
+                      <id>idPsp1</id>
                   </fault>
                   <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
                 </pspInviaCarrelloRPTResponse>
@@ -159,9 +160,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_convenzioni
     "codiceConvenzione":"CONV1"}
     """
     Then check errorCode is RIFPSP of inoltroEsito/carta response
-
-@midRunnable  
-  Scenario: DB check 2
-    Given the Execute nodoInoltraEsitoPagamentoCarta request scenario executed successfully
-    Then replace sessionExpected content with $sessionToken content
+ 
+  # DB Check
+    And replace sessionExpected content with $sessionToken content
     And checks the value CONV1 of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query codice_convenzione_session on db nodo_online under macro Mod1
