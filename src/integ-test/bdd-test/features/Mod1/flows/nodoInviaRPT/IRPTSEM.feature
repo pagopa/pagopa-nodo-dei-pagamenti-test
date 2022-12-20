@@ -131,7 +131,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             | identificativoCanale                  | CANALE_NOT_ENABLED              | PPT_CANALE_DISABILITATO            | IRPTSEM19   |
             | identificativoPSP                     | 40000000001                     | PPT_AUTORIZZAZIONE                 | IRPTSEM21   |
             | identificativoIntermediarioPSP        | 80000000001                     | PPT_AUTORIZZAZIONE                 | IRPTSEM21.1 |
-            | identificativoCanale                  | 60000000001_03                  | PPT_AUTORIZZAZIONE                 | IRPTSEM21.2 |
+            | identificativoCanale                  | 60000000001_04                  | PPT_AUTORIZZAZIONE                 | IRPTSEM21.2 |
 
 
     @midRunnable
