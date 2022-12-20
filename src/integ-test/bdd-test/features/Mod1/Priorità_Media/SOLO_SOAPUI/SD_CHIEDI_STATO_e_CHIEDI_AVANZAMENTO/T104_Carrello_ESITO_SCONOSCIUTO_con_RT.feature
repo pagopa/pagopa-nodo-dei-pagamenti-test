@@ -538,7 +538,6 @@ Feature: T104_Carrello_ESITO_SCONOSCIUTO_con_RT
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
     
     @midRunnable
    Scenario: Execute nodoInviaRT
