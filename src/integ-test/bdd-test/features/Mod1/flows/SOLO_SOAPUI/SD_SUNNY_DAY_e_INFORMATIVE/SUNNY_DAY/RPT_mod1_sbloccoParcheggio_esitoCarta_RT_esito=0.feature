@@ -213,6 +213,19 @@ Feature: RPT_mod1_sbloccoParcheggio_esitoCarta_RT_esito=0
 
     Scenario: Execute nodoInoltraEsitoPagamentoCarta (phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
+        """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:pspInviaCarrelloRPTCarteResponse>
+                    <pspInviaCarrelloRPTResponse>
+                        <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                    </pspInviaCarrelloRPTResponse>
+                    </ws:pspInviaCarrelloRPTCarteResponse>
+                </soapenv:Body>
+            </soapenv:Envelope>
+        """
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
