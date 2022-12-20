@@ -151,7 +151,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_convenzioni
     "identificativoPsp":"#psp#",
     "tipoVersamento":"CP",
     "identificativoIntermediario":"#psp#",
-    "identificativoCanale":"#canale_DIFFERITO_MOD2#",
+    "identificativoCanale":"#canaleRtPush#",
     "importoTotalePagato":12.31,
     "timestampOperazione":"2018-02-08T17:06:03.100+01:00",
     "codiceAutorizzativo":"123456",
