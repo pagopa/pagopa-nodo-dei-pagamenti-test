@@ -23,9 +23,9 @@ jobs:
           s_label: 'size/s'
           s_max_size: '100'
           m_label: 'size/m'
-          m_max_size: '200'
+          m_max_size: '500'
           l_label: 'size/l'
-          l_max_size: '500'
+          l_max_size: '1000'
           xl_label: 'size/xl'
           fail_if_xl: 'true'
           message_if_xl: >
