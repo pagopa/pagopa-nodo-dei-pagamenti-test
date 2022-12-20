@@ -208,18 +208,20 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_KO_PSP
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
-                <soapenv:Body>
-                    <ws:pspInviaRPTResponse>
-                        <pspInviaRPTResponse>
-                          <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
-                          <fault>
-                            <faultCode>CANALE_RPT_RIFIUTATA</faultCode>
-                            <faultString>fault esterno</faultString>
-                            <id>#psp#</id>
-                          </fault>
-                        </pspInviaRPTResponse>
-                    </ws:pspInviaRPTResponse>
-                </soapenv:Body>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+            <listaErroriRPT>
+            <fault>
+            <faultCode>CANALE_SYSTEM_ERROR</faultCode>
+            <faultString>system error</faultString>
+            <id>wrapper</id>
+            </fault>
+            </listaErroriRPT>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
             </soapenv:Envelope>
             """
     And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
