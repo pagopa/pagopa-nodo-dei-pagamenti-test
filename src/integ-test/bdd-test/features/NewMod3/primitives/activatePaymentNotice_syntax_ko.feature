@@ -27,7 +27,7 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       </soapenv:Envelope>
       """
 
-  @test
+  @runnable
   # attribute value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
     Given <attribute> set <value> for <elem> in activatePaymentNotice
@@ -35,8 +35,8 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_SINTASSI_EXTRAXSD of activatePaymentNotice response
     Examples:
-      | elem             | attribute     | value | soapUI test |
-      | soapenv:Envelope | xmlns:soapenv | None  | SIN_APNR_01 |
+      | elem             | attribute     | value                                     | soapUI test |
+      | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_APNR_01 |
 
   @runnable
   # element value check
