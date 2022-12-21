@@ -132,18 +132,18 @@ Feature: flow tests for T213_rptUniversale_carrello_CONV2_fasciaTwoConvDifferent
         And replace lingua content with IT content
         And replace importoTot content with 10.00 content
         And replace codiceConvenzione content with CONV2 content
-        And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param sizeCarte at position 0 and save it under the key sizeCarte
-        And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param listaCarte at position -1 and save it under the key listaCarte
-        And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param sizeConto at position 0 and save it under the key sizeConto
-        And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param listaConto at position -1 and save it under the key listaConto
-        And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param sizeConto at position 0 and save it under the key sizeAltro
-        And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param listaAltro at position -1 and save it under the key listaAltro
+        And execution query getPsp_CONV_carte to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPsp_CONV_carte retrieve param sizeCarte at position 0 and save it under the key sizeCarte
+        And execution query getPsp_CONV_carte to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPsp_CONV_carte retrieve param listaCarte at position -1 and save it under the key listaCarte
+        And execution query getPsp_CONV_conto to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPsp_CONV_conto retrieve param sizeConto at position 0 and save it under the key sizeConto
+        And execution query getPsp_CONV_conto to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPsp_CONV_conto retrieve param listaConto at position -1 and save it under the key listaConto
+        And execution query getPsp_CONV_altro to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPsp_CONV_altro retrieve param sizeConto at position 0 and save it under the key sizeAltro
+        And execution query getPsp_CONV_altro to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPsp_CONV_altro retrieve param listaAltro at position -1 and save it under the key listaAltro
 
     Scenario: execution nodoChiediListaPSP - carte
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
@@ -157,7 +157,7 @@ Feature: flow tests for T213_rptUniversale_carrello_CONV2_fasciaTwoConvDifferent
         Then verify the HTTP status code of listaPSP response is 200
         And check totalRows is $sizeConto of listaPSP response
 
-    @midRunnable
+    @fix
     Scenario: execution nodoChiediListaPSP - altro
         Given the execution nodoChiediListaPSP - conto scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti

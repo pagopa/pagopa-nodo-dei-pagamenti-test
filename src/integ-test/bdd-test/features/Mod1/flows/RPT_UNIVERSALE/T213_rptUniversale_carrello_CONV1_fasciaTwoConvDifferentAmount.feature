@@ -132,7 +132,7 @@ Feature: process tests for T213_rptUniversale_carrello_CONV1_fasciaTwoConvDiffer
         And through the query version retrieve param version at position 0 and save it under the key version
         And replace lingua content with IT content
         And replace importoTot content with 10.00 content
-        And replace codiceConvenzione content with CONV2 content
+        And replace codiceConvenzione content with CONV1 content
         And execution query getPsp_CONV_carte to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
         And through the query getPsp_CONV_carte retrieve param sizeCarte at position 0 and save it under the key sizeCarte
         And execution query getPsp_CONV_carte to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
@@ -158,7 +158,7 @@ Feature: process tests for T213_rptUniversale_carrello_CONV1_fasciaTwoConvDiffer
         Then verify the HTTP status code of listaPSP response is 200
         And check totalRows is $sizeConto of listaPSP response
 
-    @midRunnable
+    @fix
     Scenario: execution nodoChiediListaPSP - altro
         Given the execution nodoChiediListaPSP - conto scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
