@@ -457,6 +457,7 @@ Feature: T103_C_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_sbloccoParcheggio
         """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
         Then check esito is OK of nodoInviaRT response
+        And wait 10 seconds for expiration
         
 
       Scenario: execution nodoInviaRT1
@@ -498,8 +499,6 @@ Feature: T103_C_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_sbloccoParcheggio
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
         Then check esito is OK of nodoInviaRT response
         And wait 1 seconds for expiration
-        
-    
      
     Scenario: Execute nodoChiediStatoRPT
         Given the execution nodoInviaRT1 scenario executed successfully
