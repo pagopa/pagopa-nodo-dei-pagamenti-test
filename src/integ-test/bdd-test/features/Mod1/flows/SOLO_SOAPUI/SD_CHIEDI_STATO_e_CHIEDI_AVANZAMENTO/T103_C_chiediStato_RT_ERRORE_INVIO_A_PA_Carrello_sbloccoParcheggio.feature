@@ -476,6 +476,7 @@ Feature: T103_C_chiediStato_RT_ERRORE_INVIO_A_PA_Carrello_sbloccoParcheggio
         Given the Execute nodoChiediStatoRPT scenario executed successfully
         When WISP sends rest GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
+        And wait 10 seconds for expiration
 
       Scenario: execution nodoInviaRT1
         Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
