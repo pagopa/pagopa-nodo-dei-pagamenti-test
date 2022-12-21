@@ -572,7 +572,7 @@ Feature: Semantic checks for activateIOPayment - KO
       | e-mail                      | test1@prova.gmail.com | SEM_AIPR_22 |
       | e-mail                      | None                  | SEM_AIPR_22 |
 
-  @test
+  @runnable
   # [SEM_AIPR_23]
   Scenario: Check reuse of idempotencyKey with expired paymentToken
     Given nodo-dei-pagamenti has config parameter useIdempotency set to true
