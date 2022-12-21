@@ -429,12 +429,16 @@ Feature: T104_ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParcheggio
         And check error is Operazione in timeout of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
         And checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
-        And wait 30 seconds for expiration
-        And checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
+        
+    Scenario: Execute pspChiediAvanzamentoRPT
+        Given the Execution Esito Carta scenario executed successfully
+        When job pspChiediAvanzamentoRpt triggered after 10 seconds
+        And wait 5 seconds for expiration
+        Then checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
 
 @midRunnable
 Scenario: Execution Esito Carta1
-        Given the Execution Esito Carta scenario executed successfully
+        Given the Execute pspChiediAvanzamentoRPT scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
