@@ -350,8 +350,8 @@ Feature: ChiediAvanzamento_RT_RIFIUTATA_NODO_sbloccoParcheggio
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        When job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 15 seconds
+        When job pspChiediListaAndChiediRt triggered after 10 seconds
+        And job paInviaRt triggered after 30 seconds
         And wait 10 seconds for expiration
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
