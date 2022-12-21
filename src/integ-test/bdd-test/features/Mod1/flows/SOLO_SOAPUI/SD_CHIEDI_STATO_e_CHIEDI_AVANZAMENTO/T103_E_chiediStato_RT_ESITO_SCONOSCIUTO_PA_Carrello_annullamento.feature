@@ -436,8 +436,6 @@ Feature: T103_E_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento
         When job paInviaRt triggered after 5 seconds
         Then wait 7 seconds for expiration
 
-    
-     
     Scenario: Execute nodoChiediStatoRPT1
         Given the Execute job paInviaRt scenario executed successfully
         And initial XML nodoChiediStatoRPT
@@ -460,8 +458,8 @@ Feature: T103_E_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento
         Then checks stato contains RT_ESITO_SCONOSCIUTO_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
         
 
@@ -488,8 +486,8 @@ Feature: T103_E_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento
         Then checks stato contains RT_ESITO_SCONOSCIUTO_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
        And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
        
      
