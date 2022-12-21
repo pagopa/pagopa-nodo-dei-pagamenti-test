@@ -134,18 +134,18 @@ Feature: process tests for T213_rptUniversale_carrello_CONV1_fasciaNessunaConv
         And replace importoTot content with 14.00 content
         And replace codiceConvenzione content with CONV1 content
         #And replace version content with 0 content
-        And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param sizeCarte at position 0 and save it under the key sizeCarte
-        And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param listaCarte at position -1 and save it under the key listaCarte
-        And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param sizeConto at position 0 and save it under the key sizeConto
-        And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param listaConto at position -1 and save it under the key listaConto
-        And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param sizeConto at position 0 and save it under the key sizeAltro
-        And execution query getPsp_CONV1 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV1 retrieve param listaAltro at position -1 and save it under the key listaAltro
+        And execution query getPsp_CONV_carte to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPsp_CONV_carte retrieve param sizeCarte at position 0 and save it under the key sizeCarte
+        And execution query getPsp_CONV_carte to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPsp_CONV_carte retrieve param listaCarte at position -1 and save it under the key listaCarte
+        And execution query getPsp_CONV_conto to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPsp_CONV_conto retrieve param sizeConto at position 0 and save it under the key sizeConto
+        And execution query getPsp_CONV_conto to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPsp_CONV_conto retrieve param listaConto at position -1 and save it under the key listaConto
+        And execution query getPsp_CONV_altro to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query getPsp_CONV_altro retrieve param sizeAltro at position 0 and save it under the key sizeAltro
+        And execution query getPsp_CONV_altro to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query getPsp_CONV_altro retrieve param listaAltro at position -1 and save it under the key listaAltro
 
     Scenario: execution nodoChiediListaPSP - carte
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
