@@ -36,7 +36,7 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
     And check faultCode is PPT_SINTASSI_EXTRAXSD of activatePaymentNotice response
     Examples:
       | elem             | attribute     | value | soapUI test |
-      | soapenv:Envelope | xmlns:soapenv | Empty | SIN_APNR_01 |
+      | soapenv:Envelope | xmlns:soapenv | None  | SIN_APNR_01 |
 
   @runnable
   # element value check
