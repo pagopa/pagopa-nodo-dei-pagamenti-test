@@ -1,4 +1,5 @@
-Feature: flow tests for T213_rptUniversale_carrello_CONV2_fasciaNessunaConv
+Feature: process tests for T213_rptUniversale_carrello_CONV1_fasciaNessunaConv
+
     Background:
         Given systems up
 
@@ -68,6 +69,8 @@ Feature: flow tests for T213_rptUniversale_carrello_CONV2_fasciaNessunaConv
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>7.00</pay_i:importoSingoloVersamento>
+            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+            <pay_i:ibanAccredito>IT45R0760103200000000001016</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
@@ -124,12 +127,13 @@ Feature: flow tests for T213_rptUniversale_carrello_CONV2_fasciaNessunaConv
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-        #db check
+        # DB Check
         And execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
         And through the query version retrieve param version at position 0 and save it under the key version
         And replace lingua content with IT content
         And replace importoTot content with 14.00 content
         And replace codiceConvenzione content with CONV2 content
+        #And replace version content with 0 content
         And execution query getPsp_CONV_carte to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
         And through the query getPsp_CONV_carte retrieve param sizeCarte at position 0 and save it under the key sizeCarte
         And execution query getPsp_CONV_carte to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
@@ -139,7 +143,7 @@ Feature: flow tests for T213_rptUniversale_carrello_CONV2_fasciaNessunaConv
         And execution query getPsp_CONV_conto to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
         And through the query getPsp_CONV_conto retrieve param listaConto at position -1 and save it under the key listaConto
         And execution query getPsp_CONV_altro to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
-        And through the query getPsp_CONV_altro retrieve param sizeConto at position 0 and save it under the key sizeAltro
+        And through the query getPsp_CONV_altro retrieve param sizeAltro at position 0 and save it under the key sizeAltro
         And execution query getPsp_CONV_altro to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
         And through the query getPsp_CONV_altro retrieve param listaAltro at position -1 and save it under the key listaAltro
 
@@ -161,4 +165,3 @@ Feature: flow tests for T213_rptUniversale_carrello_CONV2_fasciaNessunaConv
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
         And check totalRows is $sizeAltro of listaPSP response
-
