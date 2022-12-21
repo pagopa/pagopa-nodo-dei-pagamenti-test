@@ -446,6 +446,7 @@ Feature: T102_C_chiediStato_RT_RIFIUTATA_PA_Carrello_sbloccoParcheggio-BUG_590
         """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti 
         Then check esito is OK of nodoInviaRT response
+        And wait 10 seconds for expiration
         
 
       Scenario: execution nodoInviaRT1
