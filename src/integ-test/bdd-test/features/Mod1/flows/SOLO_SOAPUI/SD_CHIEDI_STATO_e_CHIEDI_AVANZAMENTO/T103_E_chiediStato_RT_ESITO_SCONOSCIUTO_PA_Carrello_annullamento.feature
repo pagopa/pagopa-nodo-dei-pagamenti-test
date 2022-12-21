@@ -388,7 +388,7 @@ Feature: T103_E_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento
             <soapenv:Body>
                 <ws:nodoChiediStatoRPT>
                     <identificativoIntermediarioPA>#creditor_institution_code_secondary#</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>#id_station_secondary#</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
                     <identificativoUnivocoVersamento>avanzaErrResponse$1iuv</identificativoUnivocoVersamento>
