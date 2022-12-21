@@ -421,15 +421,11 @@ Feature: T103_E_chiediStato_RT_ERRORE_INVIO_A_PA_Carrello_annullamento
         Then checks stato contains RT_ERRORE_INVIO_A_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-
-   
-        
-
         
      Scenario: Execute nodoChiediStatoRPT2
         Given the Execute nodoChiediStatoRPT scenario executed successfully
@@ -453,8 +449,8 @@ Feature: T103_E_chiediStato_RT_ERRORE_INVIO_A_PA_Carrello_annullamento
        Then checks stato contains RT_ERRORE_INVIO_A_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_RICEVUTA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
