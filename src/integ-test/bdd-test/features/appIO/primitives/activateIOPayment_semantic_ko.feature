@@ -576,11 +576,14 @@ Feature: Semantic checks for activateIOPayment - KO
   # [SEM_AIPR_23]
   Scenario: Check reuse of idempotencyKey with expired paymentToken
     Given nodo-dei-pagamenti has config parameter useIdempotency set to true
+    And nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1
     And the Execute activateIOPayment (Phase 1) scenario executed successfully
     And PSP waits expirationTime of activateIOPayment expires
+    And wait 5 seconds for expiration
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
+    And restore initial configurations
 
   @runnable
   # [SEM_AIPR_24]
