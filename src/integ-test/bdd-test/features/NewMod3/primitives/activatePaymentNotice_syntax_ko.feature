@@ -28,17 +28,6 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       """
 
   @runnable
-  # attribute value check
-  Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
-    Given <attribute> set <value> for <elem> in activatePaymentNotice
-    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is KO of activatePaymentNotice response
-    And check faultCode is PPT_SINTASSI_EXTRAXSD of activatePaymentNotice response
-    Examples:
-      | elem             | attribute     | value                                     | soapUI test |
-      | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_APNR_01 |
-
-  @runnable
   # element value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
     Given <elem> with <value> in activatePaymentNotice
@@ -64,7 +53,6 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       | password                     | Empty                                                                                                                                                                                                               | SIN_APNR_15   |
       | password                     | 1234567                                                                                                                                                                                                             | SIN_APNR_16   |
       | password                     | 1234567890123456                                                                                                                                                                                                    | SIN_APNR_17   |
-      | idempotencyKey               | Empty                                                                                                                                                                                                               | SIN_APNR_19   |
       | idempotencyKey               | 60000000001.1244565744                                                                                                                                                                                              | SIN_APNR_20   |
       | idempotencyKey               | 60000000001_%244565744                                                                                                                                                                                              | SIN_APNR_20   |
       | idempotencyKey               | 60000000001-1244565744                                                                                                                                                                                              | SIN_APNR_20   |
@@ -75,7 +63,6 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       | idempotencyKey               | 60000000001_124456576                                                                                                                                                                                               | SIN_APNR_22   |
       | idempotencyKey               | 600000hj123_1244565767                                                                                                                                                                                              | SIN_APNR_22.1 |
       | qrCode                       | None                                                                                                                                                                                                                | SIN_APNR_23   |
-      | qrCode                       | RemoveParent                                                                                                                                                                                                        | SIN_APNR_24   |
       | qrCode                       | Empty                                                                                                                                                                                                               | SIN_APNR_25   |
       | fiscalCode                   | None                                                                                                                                                                                                                | SIN_APNR_26   |
       | fiscalCode                   | Empty                                                                                                                                                                                                               | SIN_APNR_27   |
@@ -105,4 +92,3 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       | dueDate                      | 12-12-21                                                                                                                                                                                                            | SIN_APNR_46   |
       | dueDate                      | 2021-03-06T15:25:32                                                                                                                                                                                                 | SIN_APNR_46   |
       | paymentNote                  | Empty                                                                                                                                                                                                               | SIN_APNR_48   |
-      | paymentNote                  | test di prova sulla lunghezza superiore a 140 caratteri per il parametro della primitiva activatePaymentNoticeReq paymentNote prova prova pro activatePaymentNoticeReq paymentNote prova prova pro activatePaymentN | SIN_APNR_49   |

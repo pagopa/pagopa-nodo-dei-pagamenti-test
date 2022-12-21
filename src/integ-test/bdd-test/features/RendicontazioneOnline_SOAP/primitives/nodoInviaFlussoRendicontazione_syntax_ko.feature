@@ -277,7 +277,6 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             | pay_i:codiceIdentificativoUnivoco      | Empty                                                                   | SIN_NIFR_74  |
             | pay_i:codiceIdentificativoUnivoco      | aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa                                    | SIN_NIFR_75  |
             | pay_i:denominazioneRicevente           | Empty                                                                   | SIN_NIFR_77  |
-            | pay_i:denominazioneRicevente           | aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | SIN_NIFR_78  |
             | pay_i:numeroTotalePagamenti            | None                                                                    | SIN_NIFR_79  |
             | pay_i:numeroTotalePagamenti            | Empty                                                                   | SIN_NIFR_80  |
             | pay_i:numeroTotalePagamenti            | aaaaaaaaaaaaaaaa                                                        | SIN_NIFR_81  |
@@ -314,31 +313,3 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             | pay_i:dataEsitoSingoloPagamento        | None                                                                    | SIN_NIFR_112 |
             | pay_i:dataEsitoSingoloPagamento        | Empty                                                                   | SIN_NIFR_113 |
             | pay_i:dataEsitoSingoloPagamento        | $timedate                                                               | SIN_NIFR_114 |
-
-    @runnable
-    Scenario Outline: Check PPT_SINTASSI_XSD error on nodoInviaFlussoRendicontazione primitive
-        Given the Generazione rendicontazione scenario executed successfully
-        And initial XML nodoInviaFlussoRendicontazione
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:nodoInviaFlussoRendicontazione>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale#</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
-            <dataOraFlusso>$timedate</dataOraFlusso>
-            <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
-            </ws:nodoInviaFlussoRendicontazione>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And <tag> with <tag_value> in nodoInviaFlussoRendicontazione
-        When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
-        Then check faultCode is PPT_SINTASSI_XSD of nodoInviaFlussoRendicontazione response
-        Examples:
-            | tag                | tag_value | soapUI test |
-            | xmlRendicontazione | Empty     | SIN_NIFR_32 |
