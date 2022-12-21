@@ -128,8 +128,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_bollo_pspNonBollo - NODO4-949
     
   Scenario: Execute nodoInoltraEsitoPagamentoCarta1 request
     Given the Execute nodoInviaRPT request scenario executed successfully
-    And PSP replies to nodo-dei-pagamenti with the 
-     
+    And initial XML pspInviaCarrelloRPTCarte
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
         <soapenv:Header/>
