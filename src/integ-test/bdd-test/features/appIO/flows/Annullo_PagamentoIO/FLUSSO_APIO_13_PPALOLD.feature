@@ -166,7 +166,7 @@ Feature: FLUSSO_APIO_13_PPALOLD
                             <pag:denominazioneBeneficiario>Pa Gabri</pag:denominazioneBeneficiario>
                         </enteBeneficiario>
                         <credenzialiPagatore>tizio caio</credenzialiPagatore>
-                        <causaleVersamento>12345$1iuv</causaleVersamento>
+                        <causaleVersamento>pagamento fotocopie pratica RPT</causaleVersamento>
                     </datiPagamentoPA>
                 </paaAttivaRPTRisposta>
             </ws:paaAttivaRPTRisposta>
