@@ -452,8 +452,8 @@ Feature: ChiediAvanzamento_ERRORE_INVIO_A_PSP_Carrello_sbloccoParcheggio
             </soapenv:Envelope>
             """
         And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
-        When job pspChiediAvanzamentoRpt triggered after 5 seconds
-        And wait 10 seconds for expiration
+        When job pspChiediAvanzamentoRpt triggered after 10 seconds
+        And wait 30 seconds for expiration
         And checks the value CART_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
 
 @midRunnable
