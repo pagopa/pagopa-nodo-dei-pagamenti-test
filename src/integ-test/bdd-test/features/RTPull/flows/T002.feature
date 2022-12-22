@@ -3,11 +3,12 @@ Feature: Execute nodoInviaRPT - RT_RIFIUTATA_PA [T002]
     Background:
         Given systems up
 
-    @runnable
+    
     Scenario: clean paInviaRt queue
         When job paInviaRt triggered after 1 seconds
         And wait 15 seconds for expiration
 
+@runnable
     Scenario: Execute nodoInviaRPT - RT_RIFIUTATA_PA [T002]
         #Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
         #And refresh job PSP triggered after 10 seconds
