@@ -3,8 +3,14 @@ Feature: process tests for paSendRT [PSRT_26]
     Background:
         Given systems up
 
+     Scenario: clean paSendRt queue
+        Given nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
+        When job paSendRt triggered after 5 seconds
+        And wait 15 seconds for expiration
+
     Scenario: Execute verifyPaymentNotice request
-        Given nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to false
+        Given the clean paSendRt queue scenario executed successfully
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to false
         And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
         And refresh job PA triggered after 10 seconds
         And wait 5 seconds for expiration
@@ -231,7 +237,6 @@ Feature: process tests for paSendRT [PSRT_26]
     @runnable
     Scenario: job paSendRt [PSRT_26]
         Given the Define sendPaymentOutcome scenario executed successfully
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -245,6 +250,7 @@ Feature: process tests for paSendRT [PSRT_26]
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paSendRT
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         When job paSendRt triggered after 6 seconds
         And wait 15 seconds for expiration
         Then checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
