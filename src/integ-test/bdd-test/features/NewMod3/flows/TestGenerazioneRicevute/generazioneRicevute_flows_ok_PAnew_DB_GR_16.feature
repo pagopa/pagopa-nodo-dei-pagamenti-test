@@ -233,15 +233,15 @@ Feature: process tests for generazioneRicevute [DB_GR_16]
     And checks the value NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
 
     #POSITION_RECEIPT_RECIPIENT query
-    And execution query position_receipt_recipient to get value on the table POSITION_RECEIPT_XML, with the columns * under macro NewMod3 with db name nodo_online
-    And through the query position_receipt_recipient retrieve param prx_pa_fiscal_code at position 1 and save it under the key prx_pa_fiscal_code
-    And through the query position_receipt_recipient retrieve param prx_notice_id at position 2 and save it under the key prx_notice_id
-    And through the query position_receipt_recipient retrieve param prx_creditor_reference_id at position 3 and save it under the key prx_creditor_reference_id
-    And through the query position_receipt_recipient retrieve param prx_payment_token at position 4 and save it under the key prx_payment_token
-    And through the query position_receipt_recipient retrieve param prx_recipient_pa_fiscal_code at position 8 and save it under the key prx_recipient_pa_fiscal_code
-    And through the query position_receipt_recipient retrieve param prx_recipient_broker_pa_id at position 9 and save it under the key prx_recipient_broker_pa_id
-    And through the query position_receipt_recipient retrieve param prx_recipient_station_id at position 10 and save it under the key prx_recipient_station_id
-    And through the query position_receipt_recipient retrieve param prx_fk_position_receipt at position 7 and save it under the key prx_fk_position_receipt
+    And execution query pos_receipt_recipient_status_order_by to get value on the table POSITION_RECEIPT_XML, with the columns * under macro NewMod3 with db name nodo_online
+    And through the query pos_receipt_recipient_status_order_by retrieve param prx_pa_fiscal_code at position 1 and save it under the key prx_pa_fiscal_code
+    And through the query pos_receipt_recipient_status_order_by retrieve param prx_notice_id at position 2 and save it under the key prx_notice_id
+    And through the query pos_receipt_recipient_status_order_by retrieve param prx_creditor_reference_id at position 3 and save it under the key prx_creditor_reference_id
+    And through the query pos_receipt_recipient_status_order_by retrieve param prx_payment_token at position 4 and save it under the key prx_payment_token
+    And through the query pos_receipt_recipient_status_order_by retrieve param prx_recipient_pa_fiscal_code at position 8 and save it under the key prx_recipient_pa_fiscal_code
+    And through the query pos_receipt_recipient_status_order_by retrieve param prx_recipient_broker_pa_id at position 9 and save it under the key prx_recipient_broker_pa_id
+    And through the query pos_receipt_recipient_status_order_by retrieve param prx_recipient_station_id at position 10 and save it under the key prx_recipient_station_id
+    And through the query pos_receipt_recipient_status_order_by retrieve param prx_fk_position_receipt at position 7 and save it under the key prx_fk_position_receipt
     And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query position_receipt_recipient on db nodo_online under macro NewMod3
     #checks
