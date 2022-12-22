@@ -4,11 +4,16 @@ Feature: Execute nodoInviaRPT - RT_RIFIUTATA_PA [T002]
         Given systems up
 
     @runnable
+    Scenario: clean paInviaRt queue
+        When job paInviaRt triggered after 1 seconds
+        And wait 15 seconds for expiration
+
     Scenario: Execute nodoInviaRPT - RT_RIFIUTATA_PA [T002]
         #Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
         #And refresh job PSP triggered after 10 seconds
         #And wait 10 seconds for expiration
-        Given RPT generation
+        Given the clean paInviaRt queue scenario executed successfully
+        And RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_2_0.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
@@ -281,7 +286,7 @@ Feature: Execute nodoInviaRPT - RT_RIFIUTATA_PA [T002]
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And wait 5 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        And job pspChiediListaAndChiediRt triggered after 10 seconds
+        And job pspChiediListaAndChiediRt triggered after 5 seconds
         And job paInviaRt triggered after 10 seconds
         And wait 180 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
