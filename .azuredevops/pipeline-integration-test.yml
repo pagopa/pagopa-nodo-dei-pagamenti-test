@@ -58,7 +58,7 @@ stages:
               replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo-dev"
               replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitoring/v1/monitor/health"
               replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  " "
-              replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  "/nodo-per-pm/v1"
+              replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  " "
               replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/monitoring/v1/config/refresh/CONFIG"
 
               replace $file ".services.\"mock-ec\".url"           "https://api.dev.platform.pagopa.it/mock-ec/api/v1"
@@ -182,8 +182,9 @@ stages:
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
 
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod1/flows/sendPaymentOutcomeV2_revision_NM1.feature
-              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/ --tags=runnable,midRunnable
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod1/primitives/checkPosition_syntax.feature
+              #behave --tags=runnable --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod1/flows/sendPaymentOutcomeV2_revision_NM1.feature
+              #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod1/flows/sendPaymentOutcomeV2_revision_NM1.feature
               
             displayName: "Run integration test"
 
