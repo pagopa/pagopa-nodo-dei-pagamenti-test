@@ -59,6 +59,7 @@
       "intermediarioPSP2": "60000000002",
       "canale32": "60000000002_01",
       "id_broker": "66666666666",
+      "id_broker_psp": "66666666666",
       "id_broker_old": "66666666666",
       "cod_segr": "02",
       "cod_segr_old": "12",
