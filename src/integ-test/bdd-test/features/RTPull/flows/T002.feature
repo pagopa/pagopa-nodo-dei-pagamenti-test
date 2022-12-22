@@ -281,7 +281,7 @@ Feature: Execute nodoInviaRPT - RT_RIFIUTATA_PA [T002]
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         And wait 5 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        And job pspChiediListaAndChiediRt triggered after 5 seconds
+        And job pspChiediListaAndChiediRt triggered after 10 seconds
         And job paInviaRt triggered after 10 seconds
         And wait 180 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
