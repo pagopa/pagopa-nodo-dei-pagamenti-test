@@ -129,7 +129,7 @@ Feature: FLUSSO_APIO_36
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
     
-    @runnable
+    @fix
     Scenario: Execute activateIOPayment1 (Phase 4)
         Given nodo-dei-pagamenti has config parameter scheduler.jobName_annullamentoRptMaiRichiesteDaPm.enabled set to true
         And nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
@@ -137,7 +137,7 @@ Feature: FLUSSO_APIO_36
         And the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And save activateIOPayment response in activateIOPayment1
         When job annullamentoRptMaiRichiesteDaPm triggered after 70 seconds
-        And wait 15 seconds for expiration
+        And wait 3 seconds for expiration
         And PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is KO of activateIOPayment response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
