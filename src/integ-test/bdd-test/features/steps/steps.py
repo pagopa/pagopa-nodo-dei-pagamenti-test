@@ -230,11 +230,9 @@ def step_impl(context, primitive):
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
     if '$transaction_id' in payload:
-        payload = payload.replace(
-            '$transaction_id', getattr(context, 'transaction_id'))
+        payload = payload.replace('$transaction_id', getattr(context, 'transaction_id'))
     if '$psp_transaction_id' in payload:
-        payload = payload.replace(
-            '$psp_transaction_id', getattr(context, 'psp_transaction_id'))
+        payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
     setattr(context, primitive, payload)
 
 
