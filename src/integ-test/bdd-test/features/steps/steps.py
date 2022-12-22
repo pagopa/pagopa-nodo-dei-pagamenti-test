@@ -10,7 +10,7 @@ from multiprocessing.sharedctypes import Value
 from sre_constants import ASSERT
 from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
-
+import xmltodict
 import db_operation as db
 import json_operations as jo
 import pytz
@@ -53,7 +53,7 @@ def step_impl(context, version):
     pass
 
 
-@step('initial XML {primitive}')
+@given('initial XML {primitive}')
 def step_impl(context, primitive):
     payload = context.text or ""
     payload = utils.replace_local_variables(payload, context)
@@ -66,10 +66,10 @@ def step_impl(context, primitive):
         if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
             idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[
                 0].firstChild.data
-        payload = payload.replace(
-            '#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
-        payload = payload.replace(
-            '#idempotency_key_IOname#', "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
+				
+        payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+								  
+        payload = payload.replace('#idempotency_key_IOname#', "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
 
     if "#timedate#" in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
@@ -83,17 +83,15 @@ def step_impl(context, primitive):
         setattr(context, 'date', date)
 
     if '#yesterday_date#' in payload:
-        yesterday_date = (datetime.datetime.now(
-        ) - datetime.timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
+        yesterday_date = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
         payload = payload.replace('#yesterday_date#', yesterday_date)
         setattr(context, 'yesterday_date', yesterday_date)
 
     if '#identificativoFlusso#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
-        identificativoFlusso = identificativoFlusso = date + context.config.userdata.get(
-            "global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
-        payload = payload.replace(
-            '#identificativoFlusso#', identificativoFlusso)
+        identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
+								  
+        payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
         setattr(context, 'identificativoFlusso', identificativoFlusso)
 
     if "#ccp#" in payload:
@@ -101,33 +99,11 @@ def step_impl(context, primitive):
         payload = payload.replace('#ccp#', ccp)
         setattr(context, "ccp", ccp)
 
-    if "#ccpms#" in payload:
-        ccpms = str(utils.current_milli_time())
-        payload = payload.replace('#ccpms#', ccpms)
-        setattr(context, "ccpms", ccpms)
-    
-    if "#ccpms2#" in payload:
-        ccpms2 = str(utils.current_milli_time()) + '1'
-        payload = payload.replace('#ccpms2#', ccpms2)
-        setattr(context, "ccpms2", ccpms2)
-
     if "#iuv#" in payload:
         iuv = str(random.randint(100000000000000, 999999999999999))
         payload = payload.replace('#iuv#', iuv)
         setattr(context, "iuv", iuv)
 
-    if '#IUV#' in payload:
-        date = datetime.date.today().strftime("%Y-%m-%d")
-        IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + \
-            datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
-        payload = payload.replace('#IUV#', IUV)
-        setattr(context, 'IUV', IUV)
-
-    if '#IUV2#' in payload:
-        date = datetime.date.today().strftime("%Y-%m-%d")
-        IUV2 = str(date + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + '-' + str(random.randint(0, 100000))) 
-        payload = payload.replace('#IUV2#', IUV2)
-        setattr(context, 'IUV2', IUV2)
 
     if '#notice_number#' in payload:
         notice_number = f"30211{str(random.randint(1000000000000, 9999999999999))}"
@@ -140,7 +116,7 @@ def step_impl(context, primitive):
         setattr(context, "iuv", notice_number[1:])
 
     if '#carrello#' in payload:
-        carrello = "77777777777" + "302" + "0" + str(random.randint(1000, 2000)) + str(
+        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
             random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
         payload = payload.replace('#carrello#', carrello)
         setattr(context, 'carrello', carrello)
@@ -191,13 +167,6 @@ def step_impl(context, primitive):
         payload = payload.replace('#carrelloMills#', carrello)
         setattr(context, 'carrelloMills', carrello)
 
-    if '#ccp3#' in payload:
-        date = datetime.date.today().strftime("%Y-%m-%d")
-        timedate = date + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
-        ccp3 = str(random.randint(0, 10000)) + timedate
-        payload = payload.replace('#ccp3#', ccp3)
-        setattr(context, 'ccp3', ccp3)
-
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
 
@@ -205,12 +174,19 @@ def step_impl(context, primitive):
         payload = payload.replace(
             '$intermediarioPA', getattr(context, 'intermediarioPA'))
 
+    if '$identificativoFlusso' in payload:
+        payload = payload.replace('$identificativoFlusso', getattr(
+            context, 'identificativoFlusso'))
+
+    if '$1ccp' in payload:
+        payload = payload.replace('$1ccp', getattr(context, 'ccp1'))
+
     if '$2ccp' in payload:
         payload = payload.replace('$2ccp', getattr(context, 'ccp2'))
 
     if '$rendAttachment' in payload:
         rendAttachment = getattr(context, 'rendAttachment')
-        rendAttachment_b = bytes(rendAttachment, 'UTF-8')
+        rendAttachment_b = bytes(rendAttachment, 'ascii')
         rendAttachment_uni = b64.b64encode(rendAttachment_b)
         rendAttachment_uni = f"{rendAttachment_uni}".split("'")[1]
         payload = payload.replace('$rendAttachment', rendAttachment_uni)
@@ -239,6 +215,10 @@ def step_impl(context, primitive):
         iuv = str(random.randint(100000000000000, 999999999999999))
         payload = payload.replace('#iuv#', iuv)
         setattr(context, "iuv", iuv)
+    if "#iuv1#" in payload:
+        iuv1 = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#iuv1#', iuv1)
+        setattr(context, "iuv1", iuv1)				   
     if '#transaction_id#' in payload:
         transaction_id = str(random.randint(10000000, 99999999))
         payload = payload.replace('#transaction_id#', transaction_id)
@@ -274,8 +254,8 @@ def step_impl(context):
 
     if "#iuv#" in payload:
         iuv = f"14{str(random.randint(1000000000000, 9999999999999))}"
-        setattr(context, 'iuv', iuv)
         payload = payload.replace('#iuv#', iuv)
+        setattr(context, 'iuv', iuv)
 
     if "#ccp#" in payload:
         ccp = str(int(time.time() * 1000))
@@ -298,7 +278,6 @@ def step_impl(context):
 
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
-        setattr(context, 'timedate', timedate)
 
     if '#IuV#' in payload:
         iuv = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
@@ -313,15 +292,9 @@ def step_impl(context):
         payload = payload.replace('#iuv2#', iuv)
         setattr(context, '2iuv', iuv)
 
-    if '#IUVspecial#' in payload:
-        IUVspecial = '!ìUV[#à°]_' + \
-            datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3] + '$§'
-        payload = payload.replace('#IUVspecial#', IUVspecial)
-        setattr(context, 'IUVspecial', IUVspecial)
 
     if '#IUV_#' in payload:
-        IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' + \
-            datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+        IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' +  datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#IUV_#', IUV_)
         setattr(context, 'IUV_', IUV_)
 
@@ -344,8 +317,6 @@ def step_impl(context):
         setattr(context, 'CARRELLO', CARRELLO)
 
     if '#carrello#' in payload:
-        prova = utils.random_s()
-        print('############', prova)
         carrello = pa + "302" + "0" + str(random.randint(1000, 2000)) + str(
             random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + prova
         print(carrello)
@@ -378,21 +349,11 @@ def step_impl(context):
 
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
-    
-    if '#sdf#' in payload:
-        timedate = date + datetime.datetime.now().strftime("-%H:%M:%S.%f")[:-3]
-        payload = payload.replace('#sdf#', timedate)
-        setattr(context, 'sdf', timedate)
-
-    if '#mills_time#' in payload:
-        millisec = str(int(time.time() * 1000))
-        payload = payload.replace('#mills_time#', millisec)
-        setattr(context, 'mills_time', millisec)
 
     payload = utils.replace_global_variables(payload, context)
 
     setattr(context, 'rpt', payload)
-    payload_b = bytes(payload, 'UTF-8')
+    payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
 
@@ -402,17 +363,17 @@ def step_impl(context):
 
 @given('generate {number:d} notice number and iuv with aux digit {aux_digit:d}, segregation code {segregation_code} and application code {application_code}')
 def step_impl(context, number, aux_digit, segregation_code, application_code):
-    segregation_code = utils.replace_global_variables(
-        segregation_code, context)
-    application_code = utils.replace_global_variables(
-        application_code, context)
+    segregation_code = utils.replace_global_variables(segregation_code, context)
     if aux_digit == 0 or aux_digit == 3:
         iuv = f"11{random.randint(10000000000, 99999999999)}00"
         reference_code = application_code if aux_digit == 0 else segregation_code
         notice_number = f"{aux_digit}{reference_code}{iuv}"
-    elif aux_digit == 1 or aux_digit == 2:
+    elif aux_digit == 1:
         iuv = random.randint(10000000000000000, 99999999999999999)
         notice_number = f"{aux_digit}{iuv}"
+    elif aux_digit == 2:
+        iuv = random.randint(100000000000000, 999999999999999)
+        notice_number = f"{aux_digit}{iuv}00"
     else:
         assert False
 
@@ -433,19 +394,23 @@ def step_impl(context, number, pa, notice_number):
     setattr(context, f'{number}carrello', carrello)
 
 
+
 @given('RPT{number:d} generation')
 def step_impl(context, number):
     payload = context.text or ""
-
-    payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
-
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-
     setattr(context, 'date', date)
     setattr(context, 'timedate', timedate)
+
+    if f"#intermediarioPA {number}#" in payload:
+        intermediarioPA = "44444444444_05"
+        payload = payload.replace(
+            f'#intermediarioPA{number}#', intermediarioPA)
+        setattr(context, f"intermediarioPA{number}", intermediarioPA)
 
     if f"#IUV{number}#" in payload:
         IUV = str(utils.current_milli_time()) + \
@@ -454,34 +419,34 @@ def step_impl(context, number):
         setattr(context, f'{number}IUV', IUV)
 
     if f'#iUV{number}#' in payload:
-        iuv = 'IUV2' + '-' + \
-            str(date + '-' +
-                datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
+							  
+							
+        iuv = 'IUV2' + '-' + str(date + '-' + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
         payload = payload.replace(f'#iUV{number}#', iuv)
         setattr(context, f'{number}iUV', iuv)
 
-    if '#IUV_{number}#' in payload:
-        IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' + \
-            datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-        payload = payload.replace('#IUV_{number}#', IUV_)
-        setattr(context, f'{number}IUV_', IUV_)
+								   
+															  
+																 
+														 
+											   
 
 
 
     if f"#ccp{number}#" in payload:
-        ccp = str(int(time.time() * 1000))
+        ccp = str(int(time() * 1000))
         payload = payload.replace(f'#ccp{number}#', ccp)
-        setattr(context, f"{number}ccp", ccp)
+        setattr(context, f"ccp{number}", ccp)
 
-    if f"#codiceContestoPagamento{number}" in payload:
-        ccp = str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace(f'#codiceContestoPagamento{number}#', ccp)
-        setattr(context, f"{number}codiceContestoPagamento", ccp)
+													  
+															   
+																			
+																 
 
     if f"#CCP{number}#" in payload:
         ccp2 = str(utils.current_milli_time()) + '1'
         payload = payload.replace(f'#CCP{number}#', ccp2)
-        setattr(context, f"{number}CCP", ccp2)
+        setattr(context, f"CCP{number}", ccp2)
 
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
@@ -489,12 +454,12 @@ def step_impl(context, number):
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
 
-        """
-    if "#tomorrow_date#" in payload:
-        tomorrow_date = datetime.date.today() + datetime.timedelta(days=1)
-        payload = payload.replace('#tomorrow_date#', 'tomorrow_date')
-        setattr(context, 'tomorrow_date', tomorrow_date)
-        """
+		   
+									
+																		  
+																	 
+														
+		   
 
     if '$date+1' in payload:
         date = getattr(context, 'date')
@@ -509,7 +474,10 @@ def step_impl(context, number):
         IuV = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
                                                                          2000)) + str(random.randint(1000, 2000)) + '00'
         payload = payload.replace(f'#IuV{number}#', IuV)
-        setattr(context, f'{number}IuV', IuV)
+        setattr(context, f'IuV{number}', IuV)
+
+    if '$carrello' in payload:
+        payload = payload.replace('$carrello', getattr(context, 'carrello'))
 
     if f'#iuv{number}#' in payload:
         iuv = "IUV" + str(random.randint(0, 10000)) + "-" + \
@@ -517,63 +485,79 @@ def step_impl(context, number):
         payload = payload.replace(f'#iuv{number}#', iuv)
         setattr(context, f'{number}iuv', iuv)
 
-    # if '#idCarrello#' in payload:
-    #     idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-    #     payload = payload.replace('#idCarrello#', idCarrello)
-    #     setattr(context, 'idCarrello', idCarrello)
+    if '#idCarrello#' in payload:
+        idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#idCarrello#', idCarrello)
+        setattr(context, 'idCarrello', idCarrello)
 
-    # if '#carrello#' in payload:
-    #     carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-    #     payload = payload.replace('#carrello#', carrello)
-    #     setattr(context, 'carrello', carrello)
+    if '#carrello#' in payload:
+        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#carrello#', carrello)
+        setattr(context, 'carrello', carrello)
 
-    # if '#carrello1#' in payload:
-    #     carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
-    #     payload = payload.replace('#carrello1#', carrello1)
-    #     setattr(context, 'carrello1', carrello1)
+    if '#carrello1#' in payload:
+        carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+        payload = payload.replace('#carrello1#', carrello1)
+        setattr(context, 'carrello1', carrello1)
 
-    # if '#secCarrello#' in payload:
-    #     secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(
-    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-    #     payload = payload.replace('#secCarrello#', secCarrello)
-    #     setattr(context, 'secCarrello', secCarrello)
+    if '#secCarrello#' in payload:
+        secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#secCarrello#', secCarrello)
+        setattr(context, 'secCarrello', secCarrello)
 
-    # if '#thrCarrello#' in payload:
-    #     thrCarrello = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(
-    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-    #     payload = payload.replace('#thrCarrello#', thrCarrello)
-    #     setattr(context, 'thrCarrello', thrCarrello)
+    if '#thrCarrello#' in payload:
+        thrCarrello = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#thrCarrello#', thrCarrello)
+        setattr(context, 'thrCarrello', thrCarrello)
 
-    # if '#carrNOTENABLED#' in payload:
-    #     carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-    #     payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
-    #     setattr(context, 'carrNOTENABLED', carrNOTENABLED)
+    if '#carrNOTENABLED#' in payload:
+        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
+        setattr(context, 'carrNOTENABLED', carrNOTENABLED)
 
-    # if "nodoVerificaRPT_IUV" in payload:
-        # nodoVerificaRPT = getattr(context, 'nodoVerificaRPT')
-        # my_document = parseString(nodoVerificaRPT.content)
-        # aux_digit = my_document.getElementsByTagName('AuxDigit')
-        # if aux_digit == '0' or aux_digit == '1' or aux_digit == '2':
-        #     iuv = ''+random.randint(10000, 20000)+random.randint(10000,
-        #                                                          20000)+random.randint(10000, 20000)
-        # elif aux_digit == '3':
-        #     # per pa_old
-        #     iuv = '11' + (int)(random.randint(10000, 20000)) + \
-        #         (int)(random.randint(10000, 20000)) + \
-        #         (int)(random.randint(10000, 20000))
-        # payload = payload.replace('iuv', iuv)
-        # setattr(context, 'iuv', iuv)
+    if "nodoVerificaRPT_IUV" in payload:
+        nodoVerificaRPT = getattr(context, 'nodoVerificaRPT')
+        my_document = parseString(nodoVerificaRPT.content)
+        aux_digit = my_document.getElementsByTagName('AuxDigit')
+        if aux_digit == '0' or aux_digit == '1' or aux_digit == '2':
+            iuv = ''+random.randint(10000, 20000)+random.randint(10000,
+                                                                 20000)+random.randint(10000, 20000)
+        elif aux_digit == '3':
+            # per pa_old
+            iuv = '11' + (int)(random.randint(10000, 20000)) + \
+                (int)(random.randint(10000, 20000)) + \
+                (int)(random.randint(10000, 20000))
+        payload = payload.replace('iuv', iuv)
+        setattr(context, 'iuv', iuv)
+
+    if "$ccp" in payload:
+															   
+															
+																  
+																	  
+        ccp = ''+random.randint(10000, 20000)+random.randint(10000,
+                                                             20000)+random.randint(10000, 20000)
+								
+						  
+																  
+														 
+													 
+        payload = payload.replace('ccp', ccp)
+        setattr(context, "ccp", ccp)
 
     setattr(context, f'rpt{number}', payload)
-    payload_b = bytes(payload, 'UTF-8')
+    payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
 
+    
     setattr(context, f'rpt{number}Attachment', payload)
 
 
@@ -591,7 +575,7 @@ def step_impl(context):
         payload = payload.replace('#iubd#', iubd)
         setattr(context, 'iubd', iubd)
 
-    payload_b = bytes(payload, 'UTF-8')
+    payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
 
@@ -620,10 +604,11 @@ def step_impl(context, number):
 
 
 @given('RT{number:d} generation')
+								  
 def step_impl(context, number):
     payload = context.text or ""
-    payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
@@ -637,29 +622,23 @@ def step_impl(context, number):
         payload = payload.replace('#date#', date)
 
     if f"#IUV{number}#" in payload:
-        IUV = str(utils.current_milli_time()) + \
-            '-' + str(random.randint(0, 100000))
+        IUV = str(utils.current_milli_time()) + '-' + str(random.randint(0, 100000))
         payload = payload.replace(f'#IUV{number}#', IUV)
         setattr(context, f'{number}IUV', IUV)
 
     if f"#ccp{number}#" in payload:
-        ccp = str(utils.current_milli_time()) + '1'
+        ccp = str(utils.current_milli_time() + '1')
         payload = payload.replace(f'#ccp{number}#', ccp)
         setattr(context, f"{number}ccp", ccp)
 
-    """
-    if "#ccp#" in payload:
-        ccp = str(random.randint(100000000000000, 999999999999999))
-        payload = payload.replace('#ccp#', ccp)
-        setattr(context, "ccp", ccp)
-    """
-
-    payload_b = bytes(payload, 'UTF-8')
+    payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
 
+    
     setattr(context, f'rt{number}Attachment', payload)
+
 
 
 @given('RT generation')
@@ -668,7 +647,7 @@ def step_impl(context):
     payload = utils.replace_global_variables(payload, context)
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
-
+    
     if '#date#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
         payload = payload.replace('#date#', date)
@@ -680,17 +659,18 @@ def step_impl(context):
         payload = payload.replace('#timedate#', timedate)
         setattr(context, 'timedate', timedate)
 
+
     if "#ccp#" in payload:
         ccp = str(utils.current_milli_time())
         payload = payload.replace('#ccp#', ccp)
         setattr(context, "ccp", ccp)
-
+    
     setattr(context, 'rt', payload)
 
-    payload_b = bytes(payload, 'UTF-8')
+    payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
-
+    
     print("RT generato: ", payload)
     setattr(context, 'rtAttachment', payload)
 
@@ -710,15 +690,14 @@ def step_impl(context):
         payload = payload.replace('#date#', date)
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
-
-    payload_b = bytes(payload, 'UTF-8')
+    
+    payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
-
+    
     print("RT generato: ", payload)
     setattr(context, 'rrAttachment', payload)
-
 
 @given('ER generation')
 def step_impl(context):
@@ -735,12 +714,12 @@ def step_impl(context):
         payload = payload.replace('#date#', date)
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
-
-    payload_b = bytes(payload, 'UTF-8')
+    
+    payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
-
+    
     print("RT generato: ", payload)
     setattr(context, 'erAttachment', payload)
 
@@ -785,7 +764,7 @@ def step_impl(context):
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
 
-    payload_b = bytes(payload, 'UTF-8')
+    payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
@@ -904,6 +883,33 @@ def step_impl(context, tag, value, primitive):
             f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
         assert str(founded_value) == value
 
+
+@then('checks {tag} is not {value} of {primitive} response')
+def step_impl(context, tag, value, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
+    value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
+    value = utils.replace_global_variables(value, context)
+    print('soap_response: ', soap_response.headers)
+    if 'xml' in soap_response.headers['content-type']:
+        my_document = parseString(soap_response.content)
+        if len(my_document.getElementsByTagName('faultCode')) > 0:
+            print("fault code: ", my_document.getElementsByTagName(
+                'faultCode')[0].firstChild.data)
+            print("fault string: ", my_document.getElementsByTagName(
+                'faultString')[0].firstChild.data)
+            # if my_document.getElementsByTagName('description'):
+            #     print("description: ", my_document.getElementsByTagName(
+            #         'description')[0].firstChild.data)
+        data = my_document.getElementsByTagName(tag)[0].firstChild.data
+        print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
+        assert value != data
+    else:
+        node_response = getattr(context, primitive + RESPONSE)
+        json_response = node_response.json()
+        founded_value = jo.get_value_from_key(json_response, tag)
+        print(f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
+        assert str(founded_value) != value
 
 # controlla che il valore value sia una sottostringa del contenuto del tag
 @then('check substring {value} in {tag} content of {primitive} response')
@@ -1134,11 +1140,37 @@ def step_impl(context, name, n):
 @when(u'{sender} sends rest {method:Method} {service} to {receiver}')
 def step_impl(context, sender, method, service, receiver):
     # TODO get url according to receiver
-    url_nodo = utils.get_rest_url_nodo(context)
+    url_nodo = utils.get_rest_url_nodo(context, service)
 
     headers = {'Content-Type': 'application/json',
                'Host': 'api.dev.platform.pagopa.it:443'}
     body = context.text or ""
+    if '_json' in service:
+        service = service.split('_')[0]
+        print(service)
+        bodyXml = getattr(context, service)
+        body = xmltodict.parse(bodyXml)
+        body = body["root"]
+        if body != None:
+            if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
+                body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+                if type(body["paymentTokens"]) != list:
+                    l = list()
+                    l.append(body["paymentTokens"])
+                    body["paymentTokens"] = l
+            if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
+                body["totalAmount"] = float(body["totalAmount"])
+            if ('fee' in body.keys()) and (body["fee"] != None):
+                body["fee"] = float(body["fee"])
+            if ('positionslist' in body.keys()) and (body["positionslist"] != None):
+                body["positionslist"] = body["positionslist"]["position"]
+                if type(body["positionslist"]) != list:
+                    l = list()
+                    l.append(body["positionslist"])
+                    body["positionslist"] = l
+            body = json.dumps(body, indent=4)
+        else:
+            body = """{}"""
     print(body)
 
     body = utils.replace_local_variables(body, context)
@@ -1342,8 +1374,18 @@ def step_impl(context, primitive, new_primitive):
 
 @step('random iuv in context')
 def step_impl(context):
-    iuv = str(random.randint(1000000000000, 9999999999999))
+    iuv = str(random.randint(100000000000000, 999999999999999))
     setattr(context, "iuv", iuv)
+
+@step('current date generation')
+def step_impl(context):
+    date = (datetime.datetime.now() + datetime.timedelta(hours = 1)).strftime("%Y-%m-%d %H:%M:%S")
+    setattr(context, 'date', date)
+
+@step('current date plus {minutes:d} minutes generation')
+def step_impl(context, minutes):
+    date_plus_minutes = (datetime.datetime.now() + datetime.timedelta(hours = 1, minutes = minutes)).strftime("%Y-%m-%d %H:%M:%S")
+    setattr(context, 'date_plus_minutes', date_plus_minutes)
 
 
 @then('{response} response is equal to {response_1} response')
@@ -1819,97 +1861,49 @@ def step_impl(context, query_name, table_name, param, where_condition, macro, db
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
-
-    if number == 'default_token_duration_validity_millis':
-        default = int(getattr(context, 'default_token_duration_validity_millis')) / 60000
-        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
-        selected_query = utils.query_json(context, query_name, name_macro).replace(
-            "columns", column).replace("table_name", table_name)
-        exec_query = db.executeQuery(conn, selected_query)
-        query_result = [t[0] for t in exec_query]
-        print('query_result: ', query_result)
-        elem = query_result[0].strftime('%Y-%m-%d %H:%M')
-
-    elif number == 'default_idempotency_key_validity_minutes':
-        default = int(getattr(context, 'default_idempotency_key_validity_minutes'))
-        print("###################", default)
-
-        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
-        print(">>>>>>>>>>>>>>>>>>>", value)
-
-        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
-        exec_query = db.executeQuery(conn, selected_query)
-        query_result = [t[0] for t in exec_query]
-        print('query_result: ', query_result)
-        elem = query_result[0].strftime('%Y-%m-%d %H:%M')
-
-    elif number == 'Today':
-        value = (datetime.datetime.today()).strftime('%Y-%m-%d')
-        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
-        exec_query = db.executeQuery(conn, selected_query)
-        query_result = [t[0] for t in exec_query]
-        print('query_result: ', query_result)
-        elem = query_result[0].strftime('%Y-%m-%d')
-
-    elif 'minutes:' in number:
-        min = int(number.split(':')[1]) / 60000
-        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=min)).strftime('%Y-%m-%d %H:%M')
-        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
-        exec_query = db.executeQuery(conn, selected_query)
-        query_result = [t[0] for t in exec_query]
-        print('query_result: ', query_result)
-        elem = query_result[0].strftime('%Y-%m-%d %H:%M')
-    else:
-        number = int(number)
-        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(days=number)).strftime('%Y-%m-%d')
-        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
-        exec_query = db.executeQuery(conn, selected_query)
-        query_result = [t[0] for t in exec_query]
-        print('query_result: ', query_result)
-        elem = query_result[0].strftime('%Y-%m-%d')
-
-    db.closeConnection(conn)
-
-    print(f"check expected element: {value}, obtained: {elem}")
-    assert elem == value
-
-
-@step(u"checks datetime plus number of date {number} of the record at column {column} in the row {row:d} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
-def step_impl(context, column, query_name, table_name, db_name, name_macro, number, row):
-    db_config = context.config.userdata.get("db_configuration")
-    db_selected = db_config.get(db_name)
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     if number == 'default_token_duration_validity_millis':
         default = int(
             getattr(context, 'default_token_duration_validity_millis')) / 60000
-        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
+        value = (datetime.datetime.today() +
                  datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
         selected_query = utils.query_json(context, query_name, name_macro).replace(
             "columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
-        elem = query_result[row].strftime('%Y-%m-%d %H:%M')
-
-    elif number == 'default_idempotency_key_validity_minutes':
+        elem = query_result[0].strftime('%Y-%m-%d %H:%M')
+																																		 
+    elif number == 'default_idempotency_key_validity_minutes':	   
         default = int(
             getattr(context, 'default_idempotency_key_validity_minutes'))
-        print("###################", default)
-
-        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
+        value = (datetime.datetime.today() +
                  datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
-        print(">>>>>>>>>>>>>>>>>>>", value)
-
         selected_query = utils.query_json(context, query_name, name_macro).replace(
             "columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
-        elem = query_result[row].strftime('%Y-%m-%d %H:%M')
+        elem = query_result[0].strftime('%Y-%m-%d %H:%M')
 
+    elif number == 'default_durata_estensione_token_IO':
+        default = int(
+            getattr(context, 'default_durata_estensione_token_IO')) / 60000
+
+														   
+        value = (datetime.datetime.today() +
+                 datetime.timedelta(hours = 1, minutes=default)).strftime('%Y-%m-%d %H:%M')
+														   
+															 
+        selected_query = utils.query_json(context, query_name, name_macro).replace(
+            "columns", column).replace("table_name", table_name)
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        elem = query_result[0].strftime('%Y-%m-%d %H:%M')
+														
     elif number == 'Today':
         value = (datetime.datetime.today()).strftime('%Y-%m-%d')
         selected_query = utils.query_json(context, query_name, name_macro).replace(
@@ -1917,34 +1911,77 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
-        elem = query_result[row].strftime('%Y-%m-%d')
+        elem = query_result[0].strftime('%Y-%m-%d')
 
     elif 'minutes:' in number:
         min = int(number.split(':')[1]) / 60000
-        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
+        value = (datetime.datetime.today() +
                  datetime.timedelta(minutes=min)).strftime('%Y-%m-%d %H:%M')
         selected_query = utils.query_json(context, query_name, name_macro).replace(
             "columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
-        elem = query_result[row].strftime('%Y-%m-%d %H:%M')
+        elem = query_result[0].strftime('%Y-%m-%d %H:%M')
     else:
         number = int(number)
-        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
+        value = (datetime.datetime.today() +
                  datetime.timedelta(days=number)).strftime('%Y-%m-%d')
         selected_query = utils.query_json(context, query_name, name_macro).replace(
             "columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
-        elem = query_result[row].strftime('%Y-%m-%d')
+        elem = query_result[0].strftime('%Y-%m-%d')
 
     db.closeConnection(conn)
 
     print(f"check expected element: {value}, obtained: {elem}")
     assert elem == value
 
+@step("updates through the query {query_name} of the table {table_name} the parameter {param} with {value} under macro {macro} on db {db_name}")
+def step_impl(context, query_name, table_name, param, value, macro, db_name):
+												 
+											 
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
+    value = utils.replace_global_variables(value, context)
+    value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    exec_query = db.executeQuery(conn, selected_query)
+    db.closeConnection(conn)
+
+@step(u"checks the value {value} is contained in the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+def step_impl(context, value, column, query_name, table_name, db_name, name_macro):
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+
+    selected_query = utils.query_json(context, query_name, name_macro).replace(
+        "columns", column).replace("table_name", table_name)
+    print(selected_query)
+    exec_query = db.executeQuery(conn, selected_query)
+
+    query_result = [t[0] for t in exec_query]
+    print('query_result: ', query_result)
+
+    value = utils.replace_global_variables(value, context)
+    value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
+
+    query_string = str(query_result)
+    
+    print("value: ", value)
+
+    assert value in query_string, f"value obtained: {value}, query obtained: {query_string}"
+
+    db.closeConnection(conn)
 
 @step(u"verify datetime plus number of minutes {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
@@ -2141,6 +2178,47 @@ def step_impl(context, primitive1, primitive2):
      # AccessiConcorrenziali 3e_ACT_SPO
     elif outcome2 == 'KO' and outcome1 == 'KO' and faultCode1 == 'PPT_TOKEN_SCADUTO':
         assert True
+    else:
+        assert False
+
+
+@step("through the query {query_name} convert json {json_elem} at position {position:d} to xml and save it under the key {key}")
+def step_impl(context, query_name, json_elem, position, key):
+    result_query = getattr(context, query_name)
+    print(f'{query_name}: {result_query}')
+    selected_element = result_query[0][position]
+    selected_element = selected_element.read()
+    selected_element = selected_element.decode("utf-8")
+    
+    jsonDict = json.loads(selected_element)
+    selected_element = utils.json2xml(jsonDict)
+    selected_element = '<root>' + selected_element + '</root>'	
+	
+    print(f'{json_elem}: {selected_element}')
+    setattr(context, key, selected_element)
+
+@step('checking value {value1} is {condition} value {value2}')
+def step_impl(context, value1, condition, value2):
+
+    value1 = utils.replace_local_variables(value1, context)
+    value1 = utils.replace_context_variables(value1, context)
+    value1 = utils.replace_global_variables(value1, context)
+    value2 = utils.replace_local_variables(value2, context)
+    value2 = utils.replace_context_variables(value2, context)
+    value2 = utils.replace_global_variables(value2, context)
+
+    value1 = str(value1)
+    value1 = "".join(value1.split())
+    value2 = str(value2)
+
+    if condition == 'equal to':
+        assert value1 == value2, f"{value1} != {value2}"
+    elif condition == 'greater than':
+        assert value1 > value2, f"{value1} <= {value2}"
+    elif condition == 'smaller than':
+        assert value1 < value2, f"{value1} >= {value2}"
+    elif condition == 'containing':
+        assert value2 in value1, f"{value1} contains {value2}"
     else:
         assert False
 
@@ -2820,6 +2898,18 @@ def step_impl(context):
     for key, value in cache.items():
         setattr(context, key, value)
 
+@step('check field in {primitive} response')
+def step_impl(context, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
+    if 'xmlns' in soap_response.headers['content-type']:
+        my_document = parseString(soap_response.content)
+        if my_document.getElementsByTagName('description'):
+            print("description: ", my_document.getElementsByTagName(
+                'description')[0].firstChild.data)
+
+    result = json.loads(my_document)
+    print(result)
+
 
 @step('waiting {seconds} seconds for thread')
 def step_impl(contex, seconds):
@@ -2827,3 +2917,26 @@ def step_impl(contex, seconds):
     while True:
         if datetime.datetime.now() >= endT:
             break
+
+@step(u"under macro {name_macro} on db {db_name} with the query {query_name} verify the value {value} of the record at column {column} of table {table_name}")
+def step_impl(context, name_macro, db_name, query_name, value, column, table_name):
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+        
+    selected_query = utils.query_json(context, query_name, name_macro).replace(
+        "columns", column).replace("table_name", table_name)
+    print(selected_query)
+    exec_query = db.executeQuery(conn, selected_query)
+    query_result = [t[0] for t in exec_query]
+    print('query_result: ', query_result)
+
+    value = utils.replace_global_variables(value, context)
+    value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
+    
+    assert value in query_result, f"check expected element: {value}, obtained: {query_result}"
+    
+    db.closeConnection(conn)
