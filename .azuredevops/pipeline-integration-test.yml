@@ -85,6 +85,11 @@ stages:
               replace $file ".services.\"secondary-mock-psp\".soap_service"  ""
               replace $file ".services.\"secondary-mock-psp\".rest_service"  ""
 
+              replace $file ".services.\"mock-pm\".url"           "https://api.dev.platform.pagopa.it/mock-pm-sit/api/v1"
+              replace $file ".services.\"mock-pm\".healthcheck"   "/info"
+              replace $file ".services.\"mock-pm\".soap_service"  ""
+              replace $file ".services.\"mock-pm\".rest_service"  ""
+
 
               replace $file ".db_configuration.nodo_cfg.host"     $(db-cfg-host-${{ parameters.env }})
               replace $file ".db_configuration.nodo_cfg.database" $(db-cfg-service-name-${{ parameters.env }})
