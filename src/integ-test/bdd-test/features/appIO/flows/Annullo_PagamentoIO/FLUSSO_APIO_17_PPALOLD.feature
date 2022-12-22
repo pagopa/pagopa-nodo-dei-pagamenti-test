@@ -82,6 +82,42 @@ Feature: FLUSSO_APIO_17_PPALOLD
         </pay_i:datiVersamento>
         </pay_i:RPT>
         """
+        And initial XML paaVerificaRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+        <soapenv:Header/>
+        <soapenv:Body>
+        <ws:paaVerificaRPTRisposta>
+        <paaVerificaRPTRisposta>
+        <esito>OK</esito>
+        <datiPagamentoPA>
+        <importoSingoloVersamento>10.00</importoSingoloVersamento>
+        <ibanAccredito>IT96R0123454321000000012345</ibanAccredito>
+        <bicAccredito>BSCTCH22</bicAccredito>
+        <enteBeneficiario>
+        <pag:identificativoUnivocoBeneficiario>
+        <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+        <pag:codiceIdentificativoUnivoco>#id_station_old#</pag:codiceIdentificativoUnivoco>
+        </pag:identificativoUnivocoBeneficiario>
+        <pag:denominazioneBeneficiario>f6</pag:denominazioneBeneficiario>
+        <pag:codiceUnitOperBeneficiario>r6</pag:codiceUnitOperBeneficiario>
+        <pag:denomUnitOperBeneficiario>yr</pag:denomUnitOperBeneficiario>
+        <pag:indirizzoBeneficiario>\"paaVerificaRPT\"</pag:indirizzoBeneficiario>
+        <pag:civicoBeneficiario>ut</pag:civicoBeneficiario>
+        <pag:capBeneficiario>jyr</pag:capBeneficiario>
+        <pag:localitaBeneficiario>yj</pag:localitaBeneficiario>
+        <pag:provinciaBeneficiario>h8</pag:provinciaBeneficiario>
+        <pag:nazioneBeneficiario>IT</pag:nazioneBeneficiario>
+        </enteBeneficiario>
+        <credenzialiPagatore>of8</credenzialiPagatore>
+        <causaleVersamento>paaVerificaRPT</causaleVersamento>
+        </datiPagamentoPA>
+        </paaVerificaRPTRisposta>
+        </ws:paaVerificaRPTRisposta>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         And initial XML nodoVerificaRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -111,6 +147,33 @@ Feature: FLUSSO_APIO_17_PPALOLD
 
     Scenario: Execute nodoAttivaRPT (Phase 2)
         Given the Execute nodoVerificaRPT (Phase 1) scenario executed successfully
+        And initial XML paaAttivaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:paaAttivaRPTRisposta>
+                <paaAttivaRPTRisposta>
+                    <esito>OK</esito>
+                    <datiPagamentoPA>
+                        <importoSingoloVersamento>10.00</importoSingoloVersamento>
+                        <ibanAccredito>IT96R0123454321000000012345</ibanAccredito>
+                        <enteBeneficiario>
+                            <pag:identificativoUnivocoBeneficiario>
+                            <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+                            <pag:codiceIdentificativoUnivoco>#creditor_institution_code_old#</pag:codiceIdentificativoUnivoco>
+                            </pag:identificativoUnivocoBeneficiario>
+                            <pag:denominazioneBeneficiario>Pa Gabri</pag:denominazioneBeneficiario>
+                        </enteBeneficiario>
+                        <credenzialiPagatore>tizio caio</credenzialiPagatore>
+                        <causaleVersamento>12345$1iuv</causaleVersamento>
+                    </datiPagamentoPA>
+                </paaAttivaRPTRisposta>
+            </ws:paaAttivaRPTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         And initial XML nodoAttivaRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified"  xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -269,7 +332,7 @@ Feature: FLUSSO_APIO_17_PPALOLD
         And check esito is KO of inoltroEsito/paypal response
         And check errorCode is RIFPSP of inoltroEsito/paypal response
     
-    @runnable
+    @fix
     Scenario: Execute nodoNotificaAnnullamentoPagamento (Phase 6)
         Given the Execute nodoInoltroEsitoPayPal (Phase 5) scenario executed successfully
         And wait 5 seconds for expiration

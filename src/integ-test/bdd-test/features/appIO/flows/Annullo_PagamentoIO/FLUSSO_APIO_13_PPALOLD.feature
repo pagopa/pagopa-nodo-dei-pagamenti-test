@@ -147,6 +147,33 @@ Feature: FLUSSO_APIO_13_PPALOLD
 
     Scenario: Execute nodoAttivaRPT (Phase 2)
         Given the Execute nodoVerificaRPT (Phase 1) scenario executed successfully
+        And initial XML paaAttivaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:paaAttivaRPTRisposta>
+                <paaAttivaRPTRisposta>
+                    <esito>OK</esito>
+                    <datiPagamentoPA>
+                        <importoSingoloVersamento>10.00</importoSingoloVersamento>
+                        <ibanAccredito>IT96R0123454321000000012345</ibanAccredito>
+                        <enteBeneficiario>
+                            <pag:identificativoUnivocoBeneficiario>
+                            <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+                            <pag:codiceIdentificativoUnivoco>#creditor_institution_code_old#</pag:codiceIdentificativoUnivoco>
+                            </pag:identificativoUnivocoBeneficiario>
+                            <pag:denominazioneBeneficiario>Pa Gabri</pag:denominazioneBeneficiario>
+                        </enteBeneficiario>
+                        <credenzialiPagatore>tizio caio</credenzialiPagatore>
+                        <causaleVersamento>12345$1iuv</causaleVersamento>
+                    </datiPagamentoPA>
+                </paaAttivaRPTRisposta>
+            </ws:paaAttivaRPTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         And initial XML nodoAttivaRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified"  xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -266,7 +293,7 @@ Feature: FLUSSO_APIO_13_PPALOLD
         Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-@runnable
+@fix
     Scenario: Execute nodoNotificaAnnullamento (Phase 5)
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         When WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
