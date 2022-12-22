@@ -608,9 +608,6 @@ Feature: gestioneReceiptMb_12
         And check value $recipientBroker1 is equal to value $pa1
 
         And check value $recipientStation1 is equal to value 90000000001_06
-        #And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-
-
 
         #extraction from POSITION_RECEIPT_XML
         And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_XML, with the columns * under macro Mod1Mb with db name nodo_online
@@ -633,10 +630,3 @@ Feature: gestioneReceiptMb_12
         And check value $recipientBroker1 is equal to value $pa1
 
         And check value $recipientStation1 is equal to value 90000000001_06
-
-        #And replace pa content with $pa content
-        # And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        # And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        # And checks the value PAYING, PAID, NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        # And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-

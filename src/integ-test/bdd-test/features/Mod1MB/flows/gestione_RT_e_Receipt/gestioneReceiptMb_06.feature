@@ -562,16 +562,6 @@ Feature: gestioneReceiptMb_05
         And through the query by_notice_number_and_payment_token retrieve param recipientBroker1 at position 6 and save it under the key recipientBroker1
         And through the query by_notice_number_and_payment_token retrieve param recipientStation1 at position 7 and save it under the key recipientStation1
         And through the query by_notice_number_and_payment_token retrieve param status1 at position 8 and save it under the key status1
-        #row2
-        # And through the query by_notice_number_and_payment_token retrieve param paFiscalCode2 at position 1 in the row 1 and save it under the key paFiscalCode2
-        # And through the query by_notice_number_and_payment_token retrieve param noticeID2 at position 2 in the row 1 and save it under the key noticeID2
-        # And through the query by_notice_number_and_payment_token retrieve param creditorReferenceId2 at position 3 in the row 1 and save it under the key creditorReferenceId2
-        # And through the query by_notice_number_and_payment_token retrieve param paymentToken2 at position 4 in the row 1 and save it under the key paymentToken2
-        # And through the query by_notice_number_and_payment_token retrieve param recipientPA2 at position 5 in the row 1 and save it under the key recipientPA2
-        # And through the query by_notice_number_and_payment_token retrieve param recipientBroker2 at position 6 in the row 1 and save it under the key recipientBroker2
-        # And through the query by_notice_number_and_payment_token retrieve param recipientStation2 at position 7 in the row 1 and save it under the key recipientStation2
-        # And through the query by_notice_number_and_payment_token retrieve param status2 at position 8 in the row 1 and save it under the key status2
-        
 
         #checks
         And check value $paFiscalCode1 is equal to value $expFiscalCode
@@ -581,15 +571,6 @@ Feature: gestioneReceiptMb_05
         And check value $recipientPA1 is equal to value $pa1
         And check value $recipientBroker1 is equal to value $pa1
         And check value $recipientStation1 is equal to value 90000000001_06
-
-        # And check value $paFiscalCode2 is equal to value $expFiscalCode
-        # And check value $noticeID2 is equal to value $expNoticeID
-        # And check value $creditorReferenceId2 is equal to value $expCreditorReferenceID
-        # And check value $paymentToken2 is equal to value $expPaymentToken
-        # And check value $recipientPA2 is equal to value $pa1
-        # And check value $recipientBroker2 is equal to value $pa1
-        # And check value $recipientStation2 is equal to value 90000000001_09
-        #And check value $status is equal to value NOTIFIED
 
         #extraction from POSITION_RECEIPT_XML
         And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_XML, with the columns * under macro Mod1Mb with db name nodo_online
@@ -601,14 +582,6 @@ Feature: gestioneReceiptMb_05
         And through the query by_notice_number_and_payment_token retrieve param recipientPA1 at position 8 and save it under the key recipientPA1
         And through the query by_notice_number_and_payment_token retrieve param recipientBroker1 at position 9 and save it under the key recipientBroker1
         And through the query by_notice_number_and_payment_token retrieve param recipientStation1 at position 10 and save it under the key recipientStation1
-        #row2
-        # And through the query by_notice_number_and_payment_token retrieve param paFiscalCode2 at position 1 in the row 1 and save it under the key paFiscalCode2
-        # And through the query by_notice_number_and_payment_token retrieve param noticeID2 at position 2 in the row 1 and save it under the key noticeID2
-        # And through the query by_notice_number_and_payment_token retrieve param creditorReferenceId2 at position 3 in the row 1 and save it under the key creditorReferenceId2
-        # And through the query by_notice_number_and_payment_token retrieve param paymentToken2 at position 4 in the row 1 and save it under the key paymentToken2
-        # And through the query by_notice_number_and_payment_token retrieve param recipientPA2 at position 8 in the row 1 and save it under the key recipientPA2
-        # And through the query by_notice_number_and_payment_token retrieve param recipientBroker2 at position 9 in the row 1 and save it under the key recipientBroker2
-        # And through the query by_notice_number_and_payment_token retrieve param recipientStation2 at position 10 in the row 1 and save it under the key recipientStation2
         # #checks
         And check value $paFiscalCode1 is equal to value $expFiscalCode
         And check value $noticeID1 is equal to value $expNoticeID
@@ -617,17 +590,3 @@ Feature: gestioneReceiptMb_05
         And check value $recipientPA1 is equal to value $pa1
         And check value $recipientBroker1 is equal to value $pa1
         And check value $recipientStation1 is equal to value 90000000001_06
-
-        # And check value $paFiscalCode2 is equal to value $expFiscalCode
-        # And check value $noticeID2 is equal to value $expNoticeID
-        # And check value $creditorReferenceId2 is equal to value $expCreditorReferenceID
-        # And check value $paymentToken2 is equal to value $expPaymentToken
-        # And check value $recipientPA2 is equal to value $pa1
-        # And check value $recipientBroker2 is equal to value $pa1
-        # And check value $recipientStation2 is equal to value 90000000001_09
-        # #And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
-        #And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
-        # And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        # And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        # And checks the value PAYING, PAID, NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        # And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb

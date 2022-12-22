@@ -549,8 +549,6 @@ Feature: gestioneReceiptMb_04
         And through the query by_notice_number_and_payment_token retrieve param recipientPA at position 8 and save it under the key recipientPA
         And through the query by_notice_number_and_payment_token retrieve param recipientBroker at position 9 and save it under the key recipientBroker
         And through the query by_notice_number_and_payment_token retrieve param recipientStation at position 10 and save it under the key recipientStation
-        #And through the query by_notice_number_and_payment_token retrieve param insertedTimestamp at position 9 and save it under the key insertedTimestamp
-        #And through the query by_notice_number_and_payment_token retrieve param fkPositionReceipt at position 10 and save it under the key fkPositionReceipt
         #checks
         And check value $paFiscalCode is equal to value $expFiscalCode
         And check value $noticeID is equal to value $expNoticeID

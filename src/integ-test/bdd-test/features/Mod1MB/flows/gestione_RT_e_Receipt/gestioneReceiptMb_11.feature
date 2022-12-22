@@ -632,7 +632,6 @@ Feature: gestioneReceiptMb_11
         And check value $recipientPA2 is equal to value $pa1
         And check value $recipientBroker2 is equal to value irraggiungibile
         And check value $recipientStation2 is equal to value irraggiungibile
-        #And check value $status1 is equal to value NOTICE_SENT
 
         #extraction from POSITION_RECEIPT_XML
         And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_XML, with the columns * under macro Mod1Mb with db name nodo_online

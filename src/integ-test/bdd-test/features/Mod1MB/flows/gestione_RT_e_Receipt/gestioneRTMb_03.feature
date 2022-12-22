@@ -372,9 +372,6 @@ Feature: gestioneRTMb_03
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-        #And execution query get_broadcast to get value on the table PA_STAZIONE_PA, with the columns psp.OBJ_ID under macro costanti with db name nodo_cfg
-        #And through the query get_broadcast retrieve param objId at position 0 and save it under the key objId
-        #And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '$objId' under macro update_query on db nodo_cfg
         And replace pa content with #creditor_institution_code# content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
