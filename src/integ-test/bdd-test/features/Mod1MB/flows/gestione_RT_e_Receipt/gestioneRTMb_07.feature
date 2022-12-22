@@ -488,7 +488,7 @@ Feature: gestionRTMb_07
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         And wait 5 seconds for expiration
         And replace ccp content with $1carrello content
-        And verify 2 record for the table RETRY_PA_INVIA_RT retrived by the query by_ccp on db nodo_online under macro Mod1Mb
+        And checks the value NotNone of the record at column ID of the table RETRY_PA_INVIA_RT retrived by the query by_ccp on db nodo_online under macro Mod1Mb
         And job paRetryPaInviaRtNegative triggered after 10 seconds
         And wait 5 seconds for expiration
         Then check esito is OK of nodoInviaRT response
