@@ -151,8 +151,8 @@ Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamen
 
     Scenario: Execute ChiediAvanzamento
         Given the RPT generation scenario executed successfully
-        When job pspChiediAvanzamentoRpt triggered after 5 seconds
-        And wait 2 seconds for expiration
+        When job pspChiediAvanzamentoRpt triggered after 10 seconds
+        And wait 30 seconds for expiration
         And replace iuv content with $1iuv content
         And replace pa content with #creditor_institution_code# content
         And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
