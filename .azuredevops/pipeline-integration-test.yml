@@ -61,11 +61,6 @@ stages:
               replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  "/nodo-per-pm/v1"
               replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/monitoring/v1/config/refresh/CONFIG"
 
-              replace $file ".services.\"mock-pm\".url"           "https://api.dev.platform.pagopa.it/mock-pm-sit/api/v1"
-              replace $file ".services.\"mock-pm\".healthcheck"   "/info"
-              replace $file ".services.\"mock-pm\".soap_service"  ""
-              replace $file ".services.\"mock-pm\".rest_service"  ""
-
               replace $file ".services.\"mock-ec\".url"           "https://api.dev.platform.pagopa.it/mock-ec/api/v1"
               replace $file ".services.\"mock-ec\".healthcheck"   "/info"
               replace $file ".services.\"mock-ec\".soap_service"  ""
