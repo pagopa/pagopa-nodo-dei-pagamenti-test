@@ -55,6 +55,7 @@
       "canaleRtPull": "60000000001_06",
       "canaleRtPush": "60000000001_03",
       "canale_ATTIVATO_PRESSO_PSP": "60000000001_01",
+      "canale_IMMEDIATO_MULTIBENEFICIARIO": "60000000001_03",
       "canale_DIFFERITO_MOD2": "60000000001_04",
       "canaleRtPull_sec": "60000000001_03_ONUS",
       "intermediarioPSP2": "60000000002",
