@@ -1139,7 +1139,6 @@ def step_impl(context, name, n):
 def step_impl(context, sender, method, service, receiver):
     # TODO get url according to receiver
     url_nodo = utils.get_rest_url_nodo(context, service)
-
     headers = {'Content-Type': 'application/json',
                'Host': 'api.dev.platform.pagopa.it:443'}
     body = context.text or ""
@@ -1170,7 +1169,6 @@ def step_impl(context, sender, method, service, receiver):
         else:
             body = """{}"""
     print(body)
-
     body = utils.replace_local_variables(body, context)
     body = utils.replace_context_variables(body, context)
     body = utils.replace_global_variables(body, context)
@@ -1182,10 +1180,8 @@ def step_impl(context, sender, method, service, receiver):
         json_body = json.loads(body)
     else:
         json_body = None
-
     nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers,
                                      json=json_body, verify=False)
-
     setattr(context, service.split('?')[0], json_body)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
     print(service.split('?')[0] + RESPONSE)
