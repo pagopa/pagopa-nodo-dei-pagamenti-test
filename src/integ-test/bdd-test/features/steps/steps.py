@@ -596,7 +596,7 @@ def step_impl(context, number):
         payload = payload.replace(f'#iubd{number}#', iubd)
         setattr(context, f'{number}iubd', iubd)
 
-    payload_b = bytes(payload, 'UTF-8')
+    payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
 
