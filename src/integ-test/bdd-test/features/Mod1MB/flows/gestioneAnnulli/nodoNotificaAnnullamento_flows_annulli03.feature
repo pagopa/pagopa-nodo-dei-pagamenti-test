@@ -3,10 +3,15 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
    Background:
       Given systems up
 
+   Scenario: clean queue
+      Given nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
+      When job paInviaRt triggered after 15 seconds
+      And wait 10 seconds for expiration
 
    # [annulli_03]
    Scenario: RPT generation
-      Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+      Given the clean queue scenario executed successfully
+      And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
       And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
       And RPT1 generation
          """
@@ -241,8 +246,8 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
    Scenario: Trigger paInviaRT
       Given the Trigger annullamentoRptMaiRichiesteDaPm scenario executed successfully
       And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
-      When job paInviaRt triggered after 15 seconds
-      And wait 10 seconds for expiration
+      When job paInviaRt triggered after 5 seconds
+      And wait 95 seconds for expiration
       Then verify the HTTP status code of paInviaRt response is 200
       And replace pa1 content with #creditor_institution_code_secondary# content
 
