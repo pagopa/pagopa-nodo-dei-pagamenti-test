@@ -85,6 +85,11 @@ stages:
               replace $file ".services.\"secondary-mock-psp\".soap_service"  ""
               replace $file ".services.\"secondary-mock-psp\".rest_service"  ""
 
+              replace $file ".services.\"mock-pm\".url"           "https://api.dev.platform.pagopa.it/mock-pm-sit/api/v1"
+              replace $file ".services.\"mock-pm\".healthcheck"   "/info"
+              replace $file ".services.\"mock-pm\".soap_service"  ""
+              replace $file ".services.\"mock-pm\".rest_service"  ""
+
 
               replace $file ".db_configuration.nodo_cfg.host"     $(db-cfg-host-${{ parameters.env }})
               replace $file ".db_configuration.nodo_cfg.database" $(db-cfg-service-name-${{ parameters.env }})
@@ -186,7 +191,7 @@ stages:
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
 
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/primitives/activatePaymentNotice_semantic_ko.feature
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod1/primitives/checkPosition_syntax.feature
               #behave --tags=runnable --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod1/flows/sendPaymentOutcomeV2_revision_NM1.feature
               #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod1/flows/sendPaymentOutcomeV2_revision_NM1.feature
               
