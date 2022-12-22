@@ -20,6 +20,12 @@
          "soap_service": "servizi/MockPSP",
          "rest_service": ""
       },
+      "mock-pm": {
+         "url": "https://api.dev.platform.pagopa.it/mock-pm-sit/api/v1",
+         "healthcheck": "/info",
+         "soap_service": "",
+         "rest_service": ""
+      },
       "secondary-mock-ec": {
          "url": "http://localhost:8091/",
          "healthcheck": "servizi/PagamentiTelematiciRPT/info",
@@ -70,8 +76,15 @@
       "psp_AGID": "AGID_01",
       "broker_AGID": "97735020584",
       "canale_AGID": "97735020584_03",
+      "canale_AGID_02": "97735020584_02",
       "canale_AGID_BBT": "97735020584_02",
+      "password": "pwdpwdpwd",
+      "pspEcommerce": "36892710904",
+      "brokerEcommerce": "36892710904",
+      "canaleEcommerce": "36892710904_02",
+      "ragione_sociale": "PA paolo",
       "pspFittizio": "15376371009",
+      "brokerFittizio": "15376371009",
       "canaleFittizio": "15376371009_01"
    },
    "db_configuration": {
