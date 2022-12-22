@@ -21,7 +21,7 @@
          "rest_service": ""
       },
       "mock-pm": {
-         "url": "https://api.dev.platform.pagopa.it/mock-pm-sit/api/v1",
+         "url": "http://localhost:{porta}/",
          "healthcheck": "/info",
          "soap_service": "",
          "rest_service": ""
