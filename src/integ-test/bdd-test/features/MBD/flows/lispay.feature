@@ -1,4 +1,4 @@
-Feature: chiediListaPsp_MBD
+Feature: lispay
 
     Background:
         Given systems up
