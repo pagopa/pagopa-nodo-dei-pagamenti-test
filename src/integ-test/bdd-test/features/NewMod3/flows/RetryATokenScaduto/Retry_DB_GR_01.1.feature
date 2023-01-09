@@ -106,6 +106,7 @@ Feature: process tests Retry_DB_GR_01.1
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+    And wait 5 seconds for expiration
     #POSITION_PAYMENT
     And execution query position_receipt to get value on the table POSITION_PAYMENT, with the columns payment_token,notice_id,pa_fiscal_code,creditor_reference_id,outcome,amount,channel_id,payment_channel,payer_id,payment_method,fee,application_date under macro NewMod3 with db name nodo_online
     And through the query position_receipt retrieve param payment_token at position 0 and save it under the key payment_token
