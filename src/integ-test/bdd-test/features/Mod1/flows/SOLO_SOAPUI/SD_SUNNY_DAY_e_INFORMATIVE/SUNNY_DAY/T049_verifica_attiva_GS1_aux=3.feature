@@ -19,7 +19,7 @@ Feature: T049_verifica_attiva_GS1_aux=3
             <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <bc:BarCode>
-            <bc:Gln>#creditor_institution_code#</bc:Gln>
+            <bc:Gln>9000000000001</bc:Gln>
             <bc:AuxDigit>3</bc:AuxDigit>
             <bc:CodIUV>#cod_segr_old#$1iuv</bc:CodIUV>
             </bc:BarCode>
@@ -31,7 +31,7 @@ Feature: T049_verifica_attiva_GS1_aux=3
         When EC sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
 
-@fix
+@midRunnable
     Scenario: Execute nodoAttivaRPT
         Given the Execute nodoVerificaRPT scenario executed successfully
         And initial XML nodoAttivaRPT
@@ -50,7 +50,7 @@ Feature: T049_verifica_attiva_GS1_aux=3
             <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <bc:BarCode>
-            <bc:Gln>#creditor_institution_code#</bc:Gln>
+            <bc:Gln>9000000000001</bc:Gln>
             <bc:AuxDigit>3</bc:AuxDigit>
             <bc:CodIUV>#cod_segr_old#$1iuv</bc:CodIUV>
             </bc:BarCode>
