@@ -19,7 +19,7 @@ Feature: T045_verifica_attiva_QRcode_aux=3_stazioneAux03
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>90000000001</qrc:CF>
+            <qrc:CF>#creditor_institution_code#</qrc:CF>
             <qrc:AuxDigit>3</qrc:AuxDigit>
             <qrc:CodIUV>#cod_segr_old#$1iuv</qrc:CodIUV>
             </qrc:QrCode></codiceIdRPT>
@@ -30,7 +30,7 @@ Feature: T045_verifica_attiva_QRcode_aux=3_stazioneAux03
         When EC sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
 
-@midRunnable
+@fix
     Scenario: Execute nodoAttivaRPT
         Given the Execute nodoVerificaRPT scenario executed successfully
         And initial XML nodoAttivaRPT
@@ -49,7 +49,7 @@ Feature: T045_verifica_attiva_QRcode_aux=3_stazioneAux03
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>90000000001</qrc:CF>
+            <qrc:CF>#creditor_institution_code#</qrc:CF>
             <qrc:AuxDigit>3</qrc:AuxDigit>
             <qrc:CodIUV>#cod_segr_old#$1iuv</qrc:CodIUV>
             </qrc:QrCode></codiceIdRPT>

@@ -19,7 +19,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PAA_emessoDaPA
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>90000000001</qrc:CF>
+            <qrc:CF>#creditor_institution_code#</qrc:CF>
             <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>$1iuv</qrc:CodIUV>
@@ -32,7 +32,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PAA_emessoDaPA
         Then check esito is KO of nodoVerificaRPT response
         And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of nodoVerificaRPT response
 
-    @midRunnable
+    @fix
     Scenario: Execute nodoAttivaRPT
         Given the Execute nodoVerificaRPT scenario executed successfully
         And initial XML nodoAttivaRPT
@@ -51,7 +51,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PAA_emessoDaPA
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>90000000001</qrc:CF>
+            <qrc:CF>#creditor_institution_code#</qrc:CF>
             <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>$1iuv</qrc:CodIUV>
