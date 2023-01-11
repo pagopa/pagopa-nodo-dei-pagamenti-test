@@ -68,7 +68,7 @@ Feature: T129_C_InoltraPagamentoMod1_carrello_BBT_web_noPPI
             <pay_i:importoTotaleDaVersare>6.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>noPPI</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp1#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#codiceContestoPagamento1#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -147,7 +147,7 @@ Feature: T129_C_InoltraPagamentoMod1_carrello_BBT_web_noPPI
             <pay_i:importoTotaleDaVersare>5.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>noPPI</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp2#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>#codiceContestoPagamento2#</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -241,7 +241,7 @@ Feature: T129_C_InoltraPagamentoMod1_carrello_BBT_web_noPPI
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>noPPI</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>$1ccp</pay_i:CodiceContestoPagamento>
+            <pay_i:CodiceContestoPagamento>$1codiceContestoPagamento</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
@@ -329,7 +329,7 @@ Feature: T129_C_InoltraPagamentoMod1_carrello_BBT_web_noPPI
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>noPPI</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>$2ccp</pay_i:CodiceContestoPagamento>
+            <pay_i:CodiceContestoPagamento>$2codiceContestoPagamento</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>REJECT</pay_i:esitoSingoloPagamento>
@@ -362,13 +362,13 @@ Feature: T129_C_InoltraPagamentoMod1_carrello_BBT_web_noPPI
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>noPPI</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+            <codiceContestoPagamento>$1codiceContestoPagamento</codiceContestoPagamento>
             <rpt>$rpt1Attachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>noPPI</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$2ccp</codiceContestoPagamento>
+            <codiceContestoPagamento>$2codiceContestoPagamento</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
@@ -444,7 +444,7 @@ Feature: T129_C_InoltraPagamentoMod1_carrello_BBT_web_noPPI
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>noPPI</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1ccp</codiceContestoPagamento>
+            <codiceContestoPagamento>$1codiceContestoPagamento</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
             <rt>$rt1Attachment</rt>
