@@ -37,6 +37,27 @@ Feature: semantic checks for checkPosition outcome OK
             }
             """
 
+    Scenario: checkPosition with 3 activatePaymentNoticeV2 notice numbers
+        Given initial json checkPosition
+            """
+            {
+                "positionslist": [
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "$activatePaymentNoticeV2Request.noticeNumber"
+                    },
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "$activatePaymentNoticeV2Request1.noticeNumber"
+                    },
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "$activatePaymentNoticeV2Request2.noticeNumber"
+                    }
+                ]
+            }
+            """
+
     Scenario: activatePaymentNoticeV2
         Given initial XML activatePaymentNoticeV2
             """
@@ -129,26 +150,6 @@ Feature: semantic checks for checkPosition outcome OK
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
 
-    Scenario: checkPosition with 3 activatePaymentNoticeV2 notice numbers
-        Given initial json checkPosition
-            """
-            {
-                "positionslist": [
-                    {
-                        "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "$activatePaymentNoticeV2Request.noticeNumber"
-                    },
-                    {
-                        "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "$activatePaymentNoticeV2Request1.noticeNumber"
-                    },
-                    {
-                        "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "$activatePaymentNoticeV2Request2.noticeNumber"
-                    }
-                ]
-            }
-            """
     @runnable
     # SEM_CPO_01
     Scenario: Code 200 OK 1
