@@ -397,20 +397,20 @@ Feature: T129_C_InoltraPagamentoMod1_carrello_BBT_web_noPPI
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
     Scenario: Execute informazioniPagamento request
-    Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
-    When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-    Then verify the HTTP status code of informazioniPagamento response is 200
-    And check importo field exists in informazioniPagamento response
-    And check email field exists in informazioniPagamento response
-    And check ragioneSociale field exists in informazioniPagamento response
-    And check oggettoPagamento field exists in informazioniPagamento response
-    And check urlRedirectEC field exists in informazioniPagamento response
+        Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
+        When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 200
+        And check importo field exists in informazioniPagamento response
+        And check email field exists in informazioniPagamento response
+        And check ragioneSociale field exists in informazioniPagamento response
+        And check oggettoPagamento field exists in informazioniPagamento response
+        And check urlRedirectEC field exists in informazioniPagamento response
 
-  Scenario: Execute nodoChiediListaPSP request
-    Given the Execute informazioniPagamento request scenario executed successfully
-    When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=1000&percorsoPagamento=CARTE to nodo-dei-pagamenti
-    Then check totalRows field exists in listaPSP response
-    And check data field exists in listaPSP response
+    Scenario: Execute nodoChiediListaPSP request
+        Given the Execute informazioniPagamento request scenario executed successfully
+        When WISP sends rest GET listaPSP?idPagamento=$sessionToken&importoTotale=1000&percorsoPagamento=CARTE to nodo-dei-pagamenti
+        Then check totalRows field exists in listaPSP response
+        And check data field exists in listaPSP response
 
     Scenario: Execute inoltroEsito/mod1 (Phase 2)
         Given the Execute nodoChiediListaPSP request scenario executed successfully
@@ -459,7 +459,7 @@ Feature: T129_C_InoltraPagamentoMod1_carrello_BBT_web_noPPI
     Scenario: Execute nodoInviaRT 1 (Phase 5)
         Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
         And identificativoUnivocoVersamento with noPPI in nodoInviaRT
-        And codiceContestoPagamento with $2ccp in nodoInviaRT
+        And codiceContestoPagamento with $2codiceContestoPagamento in nodoInviaRT
         And rt with $rt2Attachment in nodoInviaRT
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
