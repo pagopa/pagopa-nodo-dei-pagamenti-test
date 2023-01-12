@@ -5,7 +5,6 @@ Feature: process DoppiaACT_PA OLD
 
     Scenario: Initial activatePaymentNotice request
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
-        And generate 1 cart with PA #creditor_institution_code_old_old# and notice number $1noticeNumber 
         And initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
