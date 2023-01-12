@@ -239,7 +239,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
         And nodo-dei-pagamenti has config parameter scheduler.jobName_annullamentoRptMaiRichiesteDaPm.enabled set to true
         When job annullamentoRptMaiRichiesteDaPm triggered after 15 seconds
         Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
-        And wait 10 seconds for expiration
+        And wait 60 seconds for expiration
         And replace pa1 content with #creditor_institution_code_secondary# content
 
 
