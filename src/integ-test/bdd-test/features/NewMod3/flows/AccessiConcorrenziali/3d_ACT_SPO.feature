@@ -102,9 +102,9 @@ Feature: process tests for accessiConCorrenziali [3d_ACT_SPO]
 
     Scenario: trigger poller annulli
         Given the Execute activatePaymentNotice request scenario executed successfully
-        When job mod3CancelV1 triggered after 3 seconds
+        When job mod3CancelV2 triggered after 3 seconds
         And wait 3 seconds for expiration
-        Then verify the HTTP status code of mod3CancelV1 response is 200
+        Then verify the HTTP status code of mod3CancelV2 response is 200
 
 
     Scenario: Execute second activatePaymentNotice request
