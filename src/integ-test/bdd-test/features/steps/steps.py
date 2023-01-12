@@ -2110,6 +2110,9 @@ def step_impl(context, primitive1, primitive2):
         description2 = response_primitive2.getElementsByTagName('description')[
             0].firstChild.data
 
+    if outcome1 == 'OK' and outcome2 == 'OK':
+        assert False, "outcome1: OK, outcome2: OK"
+
     if outcome1 == 'OK' and faultCode2 == 'PPT_PAGAMENTO_IN_CORSO' and faultString2 == 'Pagamento in attesa risulta in corso al sistema pagoPA' \
             and description2 == 'Pagamento in attesa risulta in corso al sistema pagoPA':
         assert True
