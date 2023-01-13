@@ -4,7 +4,7 @@ Feature: Semantic checks for activateIOPayment - KO
     Given systems up
     And nodo-dei-pagamenti has config parameter scheduler.jobName_annullamentoRptMaiRichiesteDaPm.enabled set to false
 
-  @check
+  @runnable
   Scenario Outline: Check errors on activateIOPayment
     Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
     And initial XML paGetPayment
