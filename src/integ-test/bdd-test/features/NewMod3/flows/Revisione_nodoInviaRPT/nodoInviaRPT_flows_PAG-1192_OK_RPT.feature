@@ -212,8 +212,8 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-        And execution query payment_status to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
-        And through the query payment_status retrieve param paymentToken at position 0 and save it under the key paymentToken
+        And execution query payment_status_orderbydesc to get value on the table POSITION_ACTIVATE, with the columns PAYMENT_TOKEN under macro NewMod3 with db name nodo_online
+        And through the query payment_status_orderbydesc retrieve param paymentToken at position 0 and save it under the key paymentToken
 
 
     Scenario: Define RPT3
@@ -296,7 +296,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
             </pay_i:RPT>
             """
     @runnable
-    Scenario: Excecute nodoInviaRPT3
+    Scenario: Execute nodoInviaRPT3
         Given the Define RPT3 scenario executed successfully
         And initial XML nodoInviaRPT
             """
