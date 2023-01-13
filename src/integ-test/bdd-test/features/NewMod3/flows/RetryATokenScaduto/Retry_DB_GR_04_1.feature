@@ -130,12 +130,12 @@ Feature: process tests for Retry_DB_GR_04_1
     Given the Execute activatePaymentNotice request scenario executed successfully
     When job mod3CancelV2 triggered after 3 seconds
     Then verify the HTTP status code of mod3CancelV2 response is 200
+    And wait 10 seconds for expiration
 
   @runnable
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
     Given the Poller Annulli Scenario executed successfully
-    And initial XML sendPaymentOutcome
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
