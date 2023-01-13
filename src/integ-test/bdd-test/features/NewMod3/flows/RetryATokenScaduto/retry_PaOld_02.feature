@@ -200,6 +200,7 @@ Feature: process tests for retryAtokenScaduto
     When job paInviaRt triggered after 130 seconds
     Then verify the HTTP status code of paInviaRt response is 200
     And replace iuv content with $1iuv content
+    And wait 130 seconds for expiration
     And checks the value RT_RIFIUTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
 @runnable
