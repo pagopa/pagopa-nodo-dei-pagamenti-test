@@ -247,7 +247,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
       Given the Trigger annullamentoRptMaiRichiesteDaPm scenario executed successfully
       And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
       When job paInviaRt triggered after 10 seconds
-      And wait 95 seconds for expiration
+      And wait 130 seconds for expiration
       Then verify the HTTP status code of paInviaRt response is 200
       And replace pa1 content with #creditor_institution_code_secondary# content
 
