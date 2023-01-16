@@ -39,7 +39,7 @@ Feature: bug_prod
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$ccp</identificativoCarrello>
+            <identificativoCarrello>n/a</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
