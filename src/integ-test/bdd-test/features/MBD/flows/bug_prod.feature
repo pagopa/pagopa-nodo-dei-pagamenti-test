@@ -29,7 +29,7 @@ Feature: bug_prod
     #         </soapenv:Envelope>
     #         """
     #     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-    #     Then check esito is KO of nodoInviaRPT response
+    #     Then check esito is OK of nodoInviaRPT response
 
     Scenario: nodoInviaCarrelloRPT
         Given initial XML nodoInviaCarrelloRPT
@@ -39,7 +39,7 @@ Feature: bug_prod
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>n/a</identificativoCarrello>
+            <identificativoCarrello>#ccp#</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -62,4 +62,4 @@ Feature: bug_prod
             </soapenv:Envelope>
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
+        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
