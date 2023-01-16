@@ -1,4 +1,4 @@
-Feature: BUG_RPT_CarattereSpeciale
+Feature: BUG_fullName_CarattereSpeciale
 
     Background:
         Given systems up
