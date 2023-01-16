@@ -110,7 +110,7 @@ Feature: process tests for retry a token scaduto
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
-  @runnable
+  @check
   # test execution
   Scenario: Execution test rety_PaOld_23
     Given the Execute sendPaymentOutcome request scenario executed successfully

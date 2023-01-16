@@ -576,7 +576,7 @@ Feature: T102_A_chiediStato_RT_RIFIUTATA_PA_Carrello - BUG_590
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
         
-    @midRunnable
+    @midCheck
       Scenario: execution nodoInviaRT3
         Given the execution nodoInviaRT2 scenario executed successfully
         And initial XML nodoInviaRT

@@ -237,7 +237,7 @@ Feature: Pag-1163_Paypal_OLD_KO
       And check CCP is $ccp of informazioniPagamento response
       And check enteBeneficiario field exists in informazioniPagamento response
 
-   @runnable
+   @check
    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome error on old PA
       Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
       And initial XML sendPaymentOutcome

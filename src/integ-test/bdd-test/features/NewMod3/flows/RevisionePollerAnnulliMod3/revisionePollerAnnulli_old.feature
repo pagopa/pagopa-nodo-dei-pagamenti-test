@@ -56,7 +56,7 @@ Feature: process tests for revisione-poller annulli03_04
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-@runnable
+@check
   Scenario: pollerAnnulli on token expired [REV_ANN_03 - REV_ANN_04]
     Given the Execute activatePaymentNotice (Phase 2) scenario executed successfully
     When job mod3CancelV1 triggered after 7 seconds

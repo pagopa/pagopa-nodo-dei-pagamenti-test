@@ -301,7 +301,7 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_KO_PSP
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
 
-    @midRunnable
+    @midCheck
      Scenario: Check DB
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         #When job paInviaRt triggered after 5 seconds

@@ -3,7 +3,7 @@ Feature: T016_A_ nodoInviaRPT_Mod1_BBT_noPPI
     Background:
         Given systems up
     
-    @midRunnable
+    @midCheck
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given RPT1 generation
             """

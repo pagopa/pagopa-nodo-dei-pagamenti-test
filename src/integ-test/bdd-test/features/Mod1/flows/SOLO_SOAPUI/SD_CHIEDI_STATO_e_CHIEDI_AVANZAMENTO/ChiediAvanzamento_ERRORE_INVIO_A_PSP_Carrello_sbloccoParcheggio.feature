@@ -456,7 +456,7 @@ Feature: ChiediAvanzamento_ERRORE_INVIO_A_PSP_Carrello_sbloccoParcheggio
         And wait 30 seconds for expiration
         And checks the value CART_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
 
-@midRunnable
+@midCheck
 Scenario: Execution Esito Carta1
         Given the Execute job pspChiediAvanzamentoRPT scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte

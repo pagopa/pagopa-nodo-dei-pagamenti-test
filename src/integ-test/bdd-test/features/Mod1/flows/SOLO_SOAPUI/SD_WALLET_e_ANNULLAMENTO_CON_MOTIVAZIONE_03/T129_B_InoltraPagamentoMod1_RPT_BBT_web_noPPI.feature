@@ -255,7 +255,7 @@ Feature: T129_B_InoltraPagamentoMod1_RPT_BBT_web_noPPI
 
    
 
-@midRunnable
+@midCheck
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoInviaRT

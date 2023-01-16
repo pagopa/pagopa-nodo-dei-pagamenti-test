@@ -120,7 +120,7 @@ Feature: Process tests for retry a token scaduto
       #Test1
       And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
 
-   @runnable
+   @check
    # Payment Outcome Phase outcome OK
    Scenario: Execute sendPaymentOutcome2 request
       Given the Execute sendPaymentOutcome1 request scenario executed successfully

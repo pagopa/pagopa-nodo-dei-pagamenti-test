@@ -420,7 +420,7 @@ Feature: Execute nodoInviaCarrelloRPT - [T007]
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
         
-    @runnable
+    @check
     Scenario: second iuv
         Given the Execute nodoInviaCarrelloRPT - [T007] scenario executed successfully
         And rt with $rt2Attachment in pspChiediRT

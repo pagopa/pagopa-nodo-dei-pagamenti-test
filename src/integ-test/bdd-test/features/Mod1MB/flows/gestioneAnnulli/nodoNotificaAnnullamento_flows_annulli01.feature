@@ -230,7 +230,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_01]
       And check oggettoPagamento field exists in informazioniPagamento response
       And check urlRedirectEC field exists in informazioniPagamento response
 
-@runnable
+@check
    Scenario: Execute nodoNotificaAnnullamento
       Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
       And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true

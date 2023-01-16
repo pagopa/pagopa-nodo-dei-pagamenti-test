@@ -355,7 +355,7 @@ Scenario: execution nodoInviaRPT1
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
 
-    @midRunnable
+    @midCheck
     Scenario: execution nodoInviaRT1
         Given the execution nodoInviaRPT1 scenario executed successfully
         And initial XML nodoInviaRT

@@ -77,7 +77,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency [IDMP_SP
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-@runnable
+@check
 Scenario: Execute sendPaymentOutcome2 request
     Given the Execute sendPaymentOutcome1 request scenario executed successfully
     And initial XML sendPaymentOutcome

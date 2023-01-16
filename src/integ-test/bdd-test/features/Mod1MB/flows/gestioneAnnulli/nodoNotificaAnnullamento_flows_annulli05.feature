@@ -434,7 +434,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_05]
          </pay_i:RPT>
          """
 
-@runnable
+@check
    Scenario: Execute nodoInviaCarrelloRPT request
       Given the Generation of two more RPT scenario executed successfully
       And initial XML paaInviaRT

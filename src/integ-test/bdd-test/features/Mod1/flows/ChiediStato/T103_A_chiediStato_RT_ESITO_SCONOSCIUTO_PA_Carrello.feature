@@ -617,7 +617,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-    @runnable
+    @check
     Scenario: Execute fifth nodoChiediStatoRPT request
         Given the Execute fourth nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT

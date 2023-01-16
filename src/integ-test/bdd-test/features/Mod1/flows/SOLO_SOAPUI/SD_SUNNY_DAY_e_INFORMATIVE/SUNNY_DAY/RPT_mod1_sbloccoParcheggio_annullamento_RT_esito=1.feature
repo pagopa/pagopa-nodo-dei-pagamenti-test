@@ -212,7 +212,7 @@ Feature: RPT_mod1_sbloccoParcheggio_annullamento_RT_esito=1
         And retrieve session token from $nodoInviaRPTResponse.url
 
 
-    @midRunnable
+    @midCheck
     Scenario: Execute nodoNotificaAnnullamentoPagamento (Phase 3)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And wait 5 seconds for expiration

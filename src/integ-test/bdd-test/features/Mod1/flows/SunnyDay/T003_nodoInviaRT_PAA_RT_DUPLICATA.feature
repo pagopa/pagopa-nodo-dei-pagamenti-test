@@ -216,7 +216,7 @@ Feature: process tests for nodoInviaRT_PAA_RT_DUPLICATA
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-@runnable
+@check
     Scenario: Execute nodoInviaRT request
         Given the RT generation scenario executed successfully
         And initial XML nodoInviaRT

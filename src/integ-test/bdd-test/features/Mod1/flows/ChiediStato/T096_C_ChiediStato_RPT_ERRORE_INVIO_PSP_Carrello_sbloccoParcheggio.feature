@@ -440,7 +440,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
 	    Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaCarrelloRPT response
 
- @runnable
+ @check
     Scenario: Execute 21nodoChiediStatoRPT request
         Given the Execute 21nodoInviaCarrelloRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT

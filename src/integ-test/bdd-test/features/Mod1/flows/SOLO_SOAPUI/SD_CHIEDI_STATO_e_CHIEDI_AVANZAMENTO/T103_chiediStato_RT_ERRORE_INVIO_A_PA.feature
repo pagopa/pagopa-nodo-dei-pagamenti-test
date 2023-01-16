@@ -350,7 +350,7 @@ Scenario: execution nodoInviaRT1
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-    @midRunnable
+    @midCheck
         Scenario: Execute nodoChiediStatoRPT2
         Given the Execute nodoChiediStatoRPT1 scenario executed successfully
         And initial XML nodoChiediStatoRPT

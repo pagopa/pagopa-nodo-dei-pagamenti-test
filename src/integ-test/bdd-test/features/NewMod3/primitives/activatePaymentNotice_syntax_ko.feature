@@ -27,7 +27,7 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       </soapenv:Envelope>
       """
 
-  @runnable
+  @check
   # element value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
     Given <elem> with <value> in activatePaymentNotice
