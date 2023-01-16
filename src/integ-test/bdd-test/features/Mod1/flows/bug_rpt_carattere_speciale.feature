@@ -1,4 +1,4 @@
-Feature: bug rpt carattere sporco
+Feature: bug rpt carattere speciale
 
     Background:
         Given systems up
