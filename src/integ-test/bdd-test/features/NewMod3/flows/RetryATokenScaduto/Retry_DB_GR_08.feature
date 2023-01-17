@@ -44,7 +44,7 @@ Feature: process tests for Retry_DB_GR_08
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>#notice_number#</noticeNumber>
+      <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
       <expirationTime>2000</expirationTime>
       <amount>10.00</amount>
@@ -132,6 +132,7 @@ Feature: process tests for Retry_DB_GR_08
     Given the Execute activatePaymentNotice request scenario executed successfully
     When job mod3CancelV2 triggered after 3 seconds
     Then verify the HTTP status code of mod3CancelV2 response is 200
+    And wait 10 seconds for expiration
 
   @runnable
   # Payment Outcome Phase outcome OK
