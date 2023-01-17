@@ -2,6 +2,7 @@ Feature: process tests for DB_GR_13
 
   Background:
     Given systems up
+    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition BROADCAST and where value ('Y') under macro update_query on db nodo_cfg
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
 
   Scenario: job refresh pa (1)
