@@ -176,7 +176,7 @@ Feature: process tests for retry a token scaduto
     Given the Execute nodoInviaRPT request scenario executed successfully
     When job paInviaRt triggered after 3 seconds
     Then verify the HTTP status code of paInviaRt response is 200
-    And wait 15 seconds for expiration
+    And wait 50 seconds for expiration
     And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
   Scenario: Execute sendPaymentOutcome1 request
