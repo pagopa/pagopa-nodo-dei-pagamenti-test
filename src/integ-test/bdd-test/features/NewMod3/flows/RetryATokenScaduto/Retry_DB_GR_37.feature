@@ -118,7 +118,7 @@ Feature: process tests for Retry_DB_GR_37
       <idTransfer>2</idTransfer>
       <transferAmount>3.00</transferAmount>
       <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-      <IBAN>IT45R0760103200000000001016</IBAN>l
+      <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
       </transfer>
