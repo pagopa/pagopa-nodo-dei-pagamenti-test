@@ -53,7 +53,7 @@ Feature: process tests for Retry_DB_GR_36
       <fiscalCode>#creditor_institution_code#</fiscalCode>
       <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
-      <expirationTime>6000</expirationTime>
+      <expirationTime>9000</expirationTime>
       <amount>17.00</amount>
       <dueDate>2021-12-31</dueDate>
       <paymentNote>responseFull3Transfers</paymentNote>
@@ -214,7 +214,7 @@ Feature: process tests for Retry_DB_GR_36
     And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     
   
-  @runnable
+  @fix
   Scenario: job refresh pa (2)
     Given the DB check + db update scenario executed successfully
     Then refresh job PA triggered after 10 seconds

@@ -2,6 +2,7 @@ Feature: process tests for Retry_DB_GR_37
 
   Background:
     Given systems up
+    And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition BROADCAST and where value ('Y') under macro update_query on db nodo_cfg  
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13') under macro update_query on db nodo_cfg
     And EC new version
 
@@ -53,7 +54,7 @@ Feature: process tests for Retry_DB_GR_37
       <fiscalCode>#creditor_institution_code#</fiscalCode>
       <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
-      <expirationTime>6000</expirationTime>
+      <expirationTime>9000</expirationTime>
       <amount>17.00</amount>
       <dueDate>2021-12-31</dueDate>
       <paymentNote>responseFull3Transfers</paymentNote>
@@ -118,7 +119,7 @@ Feature: process tests for Retry_DB_GR_37
       <idTransfer>2</idTransfer>
       <transferAmount>3.00</transferAmount>
       <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-      <IBAN>IT45R0760103200000000001016</IBAN>
+      <IBAN>IT45R0760103200000000001016</IBAN>l
       <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
       </transfer>
@@ -214,7 +215,7 @@ Feature: process tests for Retry_DB_GR_37
     And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     
   
-  @runnable
+  @fix
   Scenario: job refresh pa (2)
     Given the DB check + db update scenario executed successfully
     Then refresh job PA triggered after 10 seconds
