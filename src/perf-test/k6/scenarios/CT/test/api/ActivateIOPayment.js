@@ -1,6 +1,12 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
+import { Trend } from 'k6/metrics';
+
+
+
+export const ActivateIOPayment_Trend = new Trend('ActivateIOPayment');
+export const All_Trend = new Trend('ALL');
 
 export function activateIOPaymentReqBody (psp, pspint, chpsp, cf, noticeNumber, idempotencyKey) {
  
@@ -37,75 +43,97 @@ export function activateIOPaymentReqBody (psp, pspint, chpsp, cf, noticeNumber, 
 
 export function ActivateIOPayment(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey) {
  
- let res=http.post(baseUrl+'?soapAction=ActivateIOPayment',
+ let res=http.post(baseUrl,
     activateIOPaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPaNew.CF , noticeNmbr, idempotencyKey),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'activateIOPayment', 'Host':'api.prf.platform.pagopa.it'} ,
 	tags: { ActivateIOPayment: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );
-  //console.log(res);
+  
+  console.debug("ActivateIOPayment RES");
+  console.debug(res);
+
+  ActivateIOPayment_Trend.add(res.timings.duration);
+  All_Trend.add(res.timings.duration);
+
    check(res, {
  	'ActivateIOPayment:over_sla300': (r) => r.timings.duration >300,
    },
-   { ActivateIOPayment: 'over_sla300' }
+   { ActivateIOPayment: 'over_sla300', ALL: 'over_sla300' }
    );
    
    check(res, {
  	'ActivateIOPayment:over_sla400': (r) => r.timings.duration >400,
    },
-   { ActivateIOPayment: 'over_sla400' }
+   { ActivateIOPayment: 'over_sla400', ALL: 'over_sla400' }
    );
       
    check(res, {
  	'ActivateIOPayment:over_sla500': (r) => r.timings.duration >500,
    },
-   { ActivateIOPayment: 'over_sla500' }
+   { ActivateIOPayment: 'over_sla500', ALL: 'over_sla500' }
    );
    
    check(res, {
  	'ActivateIOPayment:over_sla600': (r) => r.timings.duration >600,
    },
-   { ActivateIOPayment: 'over_sla600' }
+   { ActivateIOPayment: 'over_sla600', ALL: 'over_sla600' }
    );
    
    check(res, {
  	'ActivateIOPayment:over_sla800': (r) => r.timings.duration >800,
    },
-   { ActivateIOPayment: 'over_sla800' }
+   { ActivateIOPayment: 'over_sla800', ALL: 'over_sla800' }
    );
    
    check(res, {
  	'ActivateIOPayment:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { ActivateIOPayment: 'over_sla1000' }
+   { ActivateIOPayment: 'over_sla1000', ALL: 'over_sla1000' }
    );
-   
-  const doc = parseHTML(res.body);
-  const script = doc.find('outcome');
-  const outcome = script.text();
-  
+
+
+
+
+    let outcome='';
+    let paymentToken='';
+    let result={};
+    result.paymentToken=paymentToken;
+    try{
+    let doc = parseHTML(res.body);
+    let script = doc.find('outcome');
+    outcome = script.text();
+    let scriptToken = doc.find('paymentToken');
+    paymentToken = scriptToken.text();
+    result.paymentToken=paymentToken;
+    }catch(error){}
+
+  /*
   if(outcome=='KO'){
-  console.log("ActivateIOPayment REQuest----------------"+activateIOPaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPaNew.CF , noticeNmbr, idempotencyKey)); 
-  console.log("ActivateIOPayment RESPONSE----------------"+res.body);
-  }
+  console.debug("ActivateIOPayment REQuest----------------"+activateIOPaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPaNew.CF , noticeNmbr, idempotencyKey)); 
+  console.debug("ActivateIOPayment RESPONSE----------------"+res.body);
+  }*/
   
    check(
     res,
     {
       //'ActivateIOPayment:ok_rate': (r) => r.status == 200,
-	  'ActivateIOPayment:ok_rate': (r) => outcome == 'OK',
+	  'ActivateIOPayment:ok_rate': (r) => outcome == 'OK' && paymentToken != undefined && paymentToken != '',
     },
-    { ActivateIOPayment: 'ok_rate' }
+    { ActivateIOPayment: 'ok_rate', ALL: 'ok_rate' }
 	);
 	
-	 check(
+	if(check(
     res,
     {
       //'ActivateIOPayment:ko_rate': (r) => r.status !== 200,
-	  'ActivateIOPayment:ko_rate': (r) => outcome !== 'OK',
+	  'ActivateIOPayment:ko_rate': (r) => paymentToken == undefined || paymentToken === '' || outcome != 'OK',
+	  
     },
-    { ActivateIOPayment: 'ko_rate' }
-  );
+    { ActivateIOPayment: 'ko_rate', ALL: 'ko_rate' }
+  )){
+	fail("unexpected value for paymentToken/outcome. paymentToken  "+ paymentToken+" outcome "+ outcome);
+	}
    
-     return res;
+     return result;
 }

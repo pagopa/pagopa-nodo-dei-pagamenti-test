@@ -1,7 +1,12 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import * as rptUtil from '../util/rpt.js';
+import { Trend } from 'k6/metrics';
+
+
+export const RT_Trend = new Trend('RT');
+export const All_Trend = new Trend('ALL');
 
 export function rtReqBody(psp, intpsp, chpsp_c, pa, iuv, rtEncoded){
 
@@ -12,7 +17,7 @@ return `
 		<ws:nodoInviaRT>
 			<identificativoIntermediarioPSP>${intpsp}</identificativoIntermediarioPSP>
 			<identificativoCanale>${chpsp_c}</identificativoCanale>
-			<password>password</password>
+			<password>pwdpwdpwd</password>
 			<identificativoPSP>${psp}</identificativoPSP>
 			<identificativoDominio>${pa}</identificativoDominio>
 			<identificativoUnivocoVersamento>${iuv}</identificativoUnivocoVersamento>
@@ -35,52 +40,65 @@ export function RT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
  let rtEncoded = rptUtil.getRtEncoded(rndAnagPa.PA, iuv);
   
  const res = http.post(
-    baseUrl+'?soapAction=nodoInviaRT',
+    baseUrl,
     rtReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, rndAnagPa.PA, iuv, rtEncoded),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRT' } ,
 	tags: { RT: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
   
+  console.debug("RT RES");
+  console.debug(res);
+
+
+   RT_Trend.add(res.timings.duration);
+   All_Trend.add(res.timings.duration);
+
    check(res, {
  	'RT:over_sla300': (r) => r.timings.duration >300,
    },
-   { RT: 'over_sla300' }
+   { RT: 'over_sla300' , ALL:'over_sla300'}
    );
    
    check(res, {
  	'RT:over_sla400': (r) => r.timings.duration >400,
    },
-   { RT: 'over_sla400' }
+   { RT: 'over_sla400' , ALL:'over_sla400'}
    );
    
    check(res, {
  	'RT:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { RT: 'over_sla500' }
+   { RT: 'over_sla500', ALL:'over_sla500' }
    );
    
    check(res, {
  	'RT:over_sla600': (r) => r.timings.duration >600,
    },
-   { RT: 'over_sla600' }
+   { RT: 'over_sla600' , ALL:'over_sla600'}
    );
    
    check(res, {
  	'RT:over_sla800': (r) => r.timings.duration >800,
    },
-   { RT: 'over_sla800' }
+   { RT: 'over_sla800' , ALL:'over_sla800'}
    );
    
    check(res, {
  	'RT:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { RT: 'over_sla1000' }
+   { RT: 'over_sla1000', ALL:'over_sla1000' }
    );
-   
-  const doc = parseHTML(res.body);
-  const script = doc.find('esito');
-  const outcome = script.text();
+
+
+    let  outcome='';
+    try{
+    let doc = parseHTML(res.body);
+    let script = doc.find('esito');
+    outcome = script.text();
+    }catch(error){}
+
+
     
    check(
     res,
@@ -88,17 +106,19 @@ export function RT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
     
 	 'RT:ok_rate': (r) => outcome == 'OK',
     },
-    { RT: 'ok_rate' }
+    { RT: 'ok_rate', ALL:'ok_rate' }
 	);
  
-  check(
+  if(check(
     res,
     {
      
 	 'RT:ko_rate': (r) => outcome !== 'OK',
     },
-    { RT: 'ko_rate' }
-  );
+    { RT: 'ko_rate', ALL:'ko_rate' }
+  )){
+	fail("outcome != ok: "+outcome);
+	}
   
   return res;
    

@@ -1,0 +1,31 @@
+[{
+"Endpoint": "10.79.20.32",
+"Port": 80,
+"SSL": "http",
+
+"MaxThread": 500,
+"TolTh": 10,
+"TOTAL_TIME": 50,
+
+"Scalino_CT_1": 500,
+"Scalino_CT_TIME_1": 30,
+"Scalino_CT_2": 500,
+"Scalino_CT_TIME_2": 30,
+"Scalino_CT_3": 500,
+"Scalino_CT_TIME_3": 30,
+"Scalino_CT_4": 500,
+"Scalino_CT_TIME_4": 30,
+"Scalino_CT_5": 500,
+"Scalino_CT_TIME_5": 30,
+"Scalino_CT_6": 500,
+"Scalino_CT_TIME_6": 30,
+"Scalino_CT_7": 500,
+"Scalino_CT_TIME_7": 30,
+"Scalino_CT_8": 500,
+"Scalino_CT_TIME_8": 30,
+"Scalino_CT_9": 500,
+"Scalino_CT_TIME_9": 30,
+"Scalino_CT_10": 500,
+"Scalino_CT_TIME_10": 30
+}
+]

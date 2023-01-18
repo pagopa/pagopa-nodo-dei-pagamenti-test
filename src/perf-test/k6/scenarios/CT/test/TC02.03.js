@@ -1,19 +1,11 @@
-import http from 'k6/http';
-import { sleep } from 'k6';
-import { Trend } from "k6/metrics";
-import { check } from 'k6';
-import encoding from 'k6/encoding';
 //import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
-import { scenario } from 'k6/execution';
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
-import { jUnit, textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 import { sendPaymentOutput } from './api/sendPaymentOutput.js';
 import { activatePaymentNotice } from './api/activatePaymentNotice.js';
 import { RPT_Semplice_N3 } from './api/RPT_Semplice_N3.js';
-import * as outputUtil from './util/output_util.js';
+import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
-import { parseHTML } from "k6/html";
 //import * as test_selector from '../../test_selector.js';
 
 
@@ -32,10 +24,10 @@ export function genNoticeNumber(){
 	if(noticeNumber.length==14){
 		noticeNumber="0"+noticeNumber;
 	}*/
-	let noticeNumber='311';
+	let noticeNumber='111';
 	for (var i = 15; i > 0; --i) noticeNumber += chars[Math.floor(Math.random() * chars.length)];
 	//let returnValue = "311"+noticeNumber.toString().split('.')[0];
-	//console.log("noticeNumber="+returnValue);
+	//console.debug("noticeNumber="+returnValue);
 	return noticeNumber;
 }
 
@@ -53,7 +45,7 @@ export function genIdempotencyKey(){
 	//let returnValue=key1.toString().split('.')[0]+"_"+key2;
 	for (var i = 11; i > 0; --i) key1 += chars[Math.floor(Math.random() * chars.length)];
 	let returnValue=key1+"_"+key2;
-	//console.log("IdempotencyKey="+returnValue);
+	//console.debug("IdempotencyKey="+returnValue);
 	return returnValue;
 }
 
@@ -65,33 +57,46 @@ export const getScalini = new SharedArray('scalini', function () {
 	
   // here you can open files, and then do additional processing or generate the array with data dynamically
   const f = JSON.parse(open('../../../cfg/'+`${__ENV.steps}`+'.json'));
-  //console.log(f);
+  //console.debug(f);
   return f; // f must be an array[]
 });
 
 export const options = {
 	
   scenarios: {
-  	total: {
-      executor: 'ramping-vus',
-      //startTime: '2s', // the ramping API test starts a little later
-      stages: [
-        { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' }, 
-        { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' }, 
-        { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' }, 
-		{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' }, 
-        { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' }, 
-        { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
-		{ target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' }, 
-		{ target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' }, 
-        { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' }, 
-        { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' },
-       ],
-      tags: { test_type: 'ALL' }, 
-      exec: 'total', 
-    }
-	
-  },
+      	total: {
+          timeUnit: '3s',
+          preAllocatedVUs: 1, // how large the initial pool of VUs would be
+          executor: 'ramping-arrival-rate',
+          //executor: 'ramping-vus',
+          maxVUs: 500,
+          stages: [
+            { target: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' },
+            { target: getScalini[0].Scalino_CT_2, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' },
+            { target: getScalini[0].Scalino_CT_3, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' },
+            { target: getScalini[0].Scalino_CT_4, duration: 0+'s' },
+    		{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' },
+    	    { target: getScalini[0].Scalino_CT_5, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' },
+            { target: getScalini[0].Scalino_CT_6, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
+            { target: getScalini[0].Scalino_CT_7, duration: 0+'s' },
+    		{ target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' },
+    		{ target: getScalini[0].Scalino_CT_8, duration: 0+'s' },
+    		{ target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' },
+    		{ target: getScalini[0].Scalino_CT_9, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' },
+            { target: getScalini[0].Scalino_CT_10, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' }, //to uncomment
+           ],
+          tags: { test_type: 'ALL' },
+          exec: 'total',
+        }
+
+      },
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
@@ -151,201 +156,26 @@ export function total() {
 		baseUrl = urls[key].SOAP_BASEURL;
       }
   }
-  console.log(`${__ITER}`);
+  console.debug(`${__ITER}`);
   let rndAnagPsp = inputDataUtil.getAnagPsp();
   let rndAnagPa = inputDataUtil.getAnagPa();
   let rndAnagPaNew = inputDataUtil.getAnagPaNew();
   let noticeNmbr = genNoticeNumber();
-  let idempotencyKey = genIdempotencyKey();
+  let idempotencyKey = common.genIdempotencyKey();
     
    
-   	let res = activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
-	 
-     check(res, {
- 	'ALL over_sla300': (r) => r.timings.duration >300,
-   },
-   { ALL: 'over_sla300' }
-   );
-   
-   check(res, {
- 	'ALL over_sla400': (r) => r.timings.duration >400,
-   },
-   { ALL: 'over_sla400' }
-   );
-   
-   check(res, {
- 	'ALL over_sla500': (r) => r.timings.duration >500,
-   },
-   { ALL: 'over_sla500' }
-   );
-   
-   check(res, {
- 	'ALL over_sla600': (r) => r.timings.duration >600,
-   },
-   { ALL: 'over_sla600' }
-   );
-   
-   check(res, {
- 	'ALL over_sla800': (r) => r.timings.duration >800,
-   },
-   { ALL: 'over_sla800' }
-   );
-   
-   check(res, {
- 	'ALL over_sla1000': (r) => r.timings.duration >1000,
-   },
-   { ALL: 'over_sla1000' }
-   );
-   
-   var doc = parseHTML(res.body);
-   var script = doc.find('outcome');
-   var outcome = script.text();
-     
-   check(
-    res,
-    {
-      //'ALL OK status': (r) => r.status == 200,
-	  'ALL OK status': (r) => outcome == 'OK'
-    },
-    { ALL: 'ok_rate' }
-	);
-	
-	 check(
-    res,
-    {
-      //'ALL KO status': (r) => r.status !== 200,
-	  'ALL KO status': (r) => outcome !== 'OK',
-    },
-    { ALL: 'ko_rate' }
-  );
-  
-  var doc = parseHTML(res.body);
-  
-  var script = doc.find('paymentToken');
-  var paymentToken = script.text();
-  var script = doc.find('creditorReferenceId');
-  var creditorReferenceId = script.text();
- 
- 
+   	let res = activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);    
+    let paymentToken=res.paymentToken;
+    let creditorReferenceId=res.creditorReferenceId;
+	let importoTotaleDaVersare = res.amount;
+
   res = sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken);
 
-   check(res, {
- 	'ALL over_sla300': (r) => r.timings.duration >300,
-   },
-   { ALL: 'over_sla300' }
-   );
-   
-   check(res, {
- 	'ALL over_sla400': (r) => r.timings.duration >400,
-   },
-   { ALL: 'over_sla400' }
-   );
-   
-   check(res, {
- 	'ALL over_sla500': (r) => r.timings.duration >500,
-   },
-   { ALL: 'over_sla500' }
-   );
-   
-   check(res, {
- 	'ALL over_sla600': (r) => r.timings.duration >600,
-   },
-   { ALL: 'over_sla600' }
-   );
-   
-   check(res, {
- 	'ALL over_sla800': (r) => r.timings.duration >800,
-   },
-   { ALL: 'over_sla800' }
-   );
-   
-   check(res, {
- 	'ALL over_sla1000': (r) => r.timings.duration >1000,
-   },
-   { ALL: 'over_sla1000' }
-   );
-   
-  var script = doc.find('outcome');
-  var outcome = script.text();
- 
-   check(
-    res,
-    {
-     // 'ALL OK status': (r) => r.status == 200,
-	  'ALL OK status': (r) => outcome == 'OK',
-    },
-    { ALL: 'ok_rate' }
-	);
-	
-	 check(
-    res,
-    {
-      //'ALL KO status': (r) => r.status !== 200,
-	  'ALL KO status': (r) => outcome !== 'OK',
-    },
-    { ALL: 'ko_rate' }
-  );
-  
-    console.log('prima di rpt='+paymentToken);
-  res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId);
-  
-    check(res, {
- 	'ALL over_sla300': (r) => r.timings.duration >300,
-   },
-   { ALL: 'over_sla300' }
-   );
-   
-   check(res, {
- 	'ALL over_sla400': (r) => r.timings.duration >400,
-   },
-   { ALL: 'over_sla400' }
-   );
-   
-   check(res, {
- 	'ALL over_sla500': (r) => r.timings.duration >500,
-   },
-   { ALL: 'over_sla500' }
-   );
-   
-   check(res, {
- 	'ALL over_sla600': (r) => r.timings.duration >600,
-   },
-   { ALL: 'over_sla600' }
-   );
-   
-   check(res, {
- 	'ALL over_sla800': (r) => r.timings.duration >800,
-   },
-   { ALL: 'over_sla800' }
-   );
-   
-   check(res, {
- 	'ALL over_sla1000': (r) => r.timings.duration >1000,
-   },
-   { ALL: 'over_sla1000' }
-   );
-   
-  var script = doc.find('outcome');
-  var outcome = script.text();
-  
-   check(
-    res,
-    {
-     // 'ALL OK status': (r) => r.status == 200,
-	  'ALL OK status': (r) => outcome == 'OK',
-    },
-    { ALL: 'ok_rate' }
-	);
-	
-	 check(
-    res,
-    {
-      //'ALL KO status': (r) => r.status !== 200,
-	  'ALL KO status': (r) => outcome !== 'OK',
-    },
-    { ALL: 'ko_rate' }
-  );
-  
+
+
+  console.debug('prima di rpt='+paymentToken+ " importo da versare "+  importoTotaleDaVersare);
+  res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, importoTotaleDaVersare);
+
   
 }
 
@@ -356,20 +186,8 @@ export default function(){
 
 
 export function handleSummary(data) {
-  console.log('Preparing the end-of-test summary...');
+  console.debug('Preparing the end-of-test summary...');
  
-  var csv = outputUtil.extractData(data);
-     
-   return {
-    'stdout': textSummary(data, { indent: ' ', enableColors: true, expected_response: 'ALL' }), // Show the text summary to stdout...
-	//'./junit.xml': jUnit(data), // but also transform it and save it as a JUnit XML...
-    './scenarios/CT/test/output/TC02.03.summary.json': JSON.stringify(data), // and a JSON with all the details...
-	//'./scenarios/CT/test/output/summary.html': htmlReport(data),
-	'./scenarios/CT/test/output/TC02.03.summary.csv': csv[0],
-	'./scenarios/CT/test/output/TC02.03.trOverSla.csv': csv[1],
-	'./scenarios/CT/test/output/TC02.03.resultCodeSummary.csv': csv[2],
-	//'./xrayJunit.xml': generateXrayJUnitXML(data, 'summary.json', encoding.b64encode(JSON.stringify(data))),
- 	
-  };
+  return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
   
 }

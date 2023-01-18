@@ -1,20 +1,12 @@
-import http from 'k6/http';
-import { sleep } from 'k6';
-import { Trend } from "k6/metrics";
 import { check } from 'k6';
-import encoding from 'k6/encoding';
-import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
-import { scenario } from 'k6/execution';
+//import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
-import { jUnit, textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 import { chiediInformazioniPagamento } from './api/chiediInformazioniPagamento.js';
 import { inoltraEsitoPagamentoCarta } from './api/inoltraEsitoPagamentoCarta.js';
 import { ActivateIOPayment } from './api/ActivateIOPayment.js';
 import { sendPaymentOutput } from './api/sendPaymentOutput.js';
-import * as outputUtil from './util/output_util.js';
 import * as inputDataUtil from './util/input_data_util.js';
-import { parseHTML } from "k6/html";
 //import * as test_selector from '../../test_selector.js';
 
 
@@ -55,25 +47,39 @@ export const getScalini = new SharedArray('scalini', function () {
 export const options = {
 	
   scenarios: {
-  	total: {
-      executor: 'ramping-vus',
-      stages: [
-        { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' }, 
-        { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' }, 
-        { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' }, 
-		{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' }, 
-        { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' }, 
-        { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
-		{ target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' }, 
-		{ target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' }, 
-        { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' }, 
-        { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' },
-       ],
-      tags: { test_type: 'ALL' }, 
-      exec: 'total', 
-    }
-	
-  },
+      	total: {
+          timeUnit: '4s',
+          preAllocatedVUs: 1, // how large the initial pool of VUs would be
+          executor: 'ramping-arrival-rate',
+          //executor: 'ramping-vus',
+          maxVUs: 500,
+          stages: [
+            { target: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' },
+            { target: getScalini[0].Scalino_CT_2, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' },
+            { target: getScalini[0].Scalino_CT_3, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' },
+            { target: getScalini[0].Scalino_CT_4, duration: 0+'s' },
+    		{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' },
+    		{ target: getScalini[0].Scalino_CT_5, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' },
+            { target: getScalini[0].Scalino_CT_6, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
+            { target: getScalini[0].Scalino_CT_7, duration: 0+'s' },
+    		{ target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' },
+    		{ target: getScalini[0].Scalino_CT_8, duration: 0+'s' },
+    		{ target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' },
+    		{ target: getScalini[0].Scalino_CT_9, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' },
+            { target: getScalini[0].Scalino_CT_10, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' }, //to uncomment
+           ],
+          tags: { test_type: 'ALL' },
+          exec: 'total',
+        }
+
+      },
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
@@ -151,49 +157,25 @@ export function total() {
   let noticeNmbr = genNoticeNumber();
   let idempotencyKey = genIdempotencyKey(); 
   
-   
+
+
   let res = ActivateIOPayment(baseSoapUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
-	
-  var doc = parseHTML(res.body);
-  var script = doc.find('outcome');
-  var outcome = script.text();
-    
-  var scriptToken = doc.find('paymentToken');
-  var paymentToken = scriptToken.text();
-	      
-  checks(res, outcome, 'OK');   
-	
-  
-  script = doc.find('url');
-  var token = script.text();
-  var paymentToken = token.split('=')[1];
-  
-  
+  let paymentToken= res.paymentToken;
+
+	console.debug("paymentToken from ActivateIOPayment " + paymentToken);
   
   res = chiediInformazioniPagamento(baseRestUrl,paymentToken, rndAnagPaNew);
-	 
-  const ragioneSocialeExtr= res["ragioneSociale"];
-     
-  checks(res, ragioneSocialeExtr, rndAnagPaNew.PA);
+  //let ragioneSocialeExtr=result.ragioneSocialeExtr;
   
   
-    
-  res = inoltraEsitoPagamentoCarta(baseRestUrl,rndAnagPsp,paymentToken);
-	 
-  outcome= res["esito"];
-     
-  checks(res, outcome, 'OK');
+  let importoTotale = res.importoTotale;  
+  res = inoltraEsitoPagamentoCarta(baseRestUrl,rndAnagPsp,paymentToken, 'esito','OK', importoTotale, 15465081);
+
   
   
   
   res = sendPaymentOutput(baseSoapUrl,rndAnagPsp,paymentToken);
 
-  doc = parseHTML(res.body);
-  script = doc.find('outcome');
-  outcome = script.text();
-    
-  checks(res, outcome, 'OK');
-  
     
 }
 
@@ -204,21 +186,9 @@ export default function(){
 
 
 export function handleSummary(data) {
-  console.log('Preparing the end-of-test summary...');
+  console.debug('Preparing the end-of-test summary...');
  
-  var csv = outputUtil.extractData(data);
-     
-   return {
-    'stdout': textSummary(data, { indent: ' ', enableColors: true, expected_response: 'ALL' }), // Show the text summary to stdout...
-	//'./junit.xml': jUnit(data), // but also transform it and save it as a JUnit XML...
-    './scenarios/CT/test/output/TC04.01.summary.json': JSON.stringify(data), // and a JSON with all the details...
-	//'./scenarios/CT/test/output/summary.html': htmlReport(data),
-	'./scenarios/CT/test/output/TC04.01.summary.csv': csv[0],
-	'./scenarios/CT/test/output/TC04.01.trOverSla.csv': csv[1],
-	'./scenarios/CT/test/output/TC04.01.resultCodeSummary.csv': csv[2],
-	//'./xrayJunit.xml': generateXrayJUnitXML(data, 'summary.json', encoding.b64encode(JSON.stringify(data))),
- 	
-  };
+  return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
   
 }
 

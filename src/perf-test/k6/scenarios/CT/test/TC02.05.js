@@ -1,29 +1,24 @@
-import http from 'k6/http';
-import { sleep } from 'k6';
-import { Trend } from "k6/metrics";
 import { check } from 'k6';
-import encoding from 'k6/encoding';
-import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
-import { scenario } from 'k6/execution';
+//import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
-import { jUnit, textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 import { activatePaymentNotice } from './api/activatePaymentNotice.js';
 import { activatePaymentNotice_IDMP } from './api/activatePaymentNotice_IDMP.js';
 import { verifyPaymentNotice } from './api/verifyPaymentNotice.js';
 import { Verifica } from './api/Verifica.js';
 import { Attiva } from './api/Attiva.js';
 import { RPT } from './api/RPT_Semplice.js';
+import { RT } from './api/RT.js';
 import { RPT_Carrello_1 } from './api/RPT_Carrello_1.js';
 import { RPT_Carrello_5 } from './api/RPT_Carrello_5.js';
 import { RPT_Semplice_N3 } from './api/RPT_Semplice_N3.js';
 import { sendPaymentOutput } from './api/sendPaymentOutput.js';
-import * as outputUtil from './util/output_util.js';
+import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
 import * as iuvUtil from './util/iuv_util.js';
-import { parseHTML } from "k6/html";
 
 
+var amountGlobal = undefined;
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
   
@@ -35,22 +30,10 @@ const csvBaseUrl = new SharedArray('baseUrl', function () {
 const chars = '0123456789';
 // NoticeNumber
 export function genNoticeNumber(){
-	let noticeNumber='311';
+	let noticeNumber='111';
 	for (var i = 15; i > 0; --i) noticeNumber += chars[Math.floor(Math.random() * chars.length)];
 	return noticeNumber;
 }
-
-// Idempotency
-export function genIdempotencyKey(){
-	let key1='';
-	let key2 = Math.round((Math.pow(36, 10 + 1) - Math.random() * Math.pow(36, 10))).toString(36).slice(1);
-	for (var i = 11; i > 0; --i) key1 += chars[Math.floor(Math.random() * chars.length)];
-	let returnValue=key1+"_"+key2;
-	return returnValue;
-}
-
-
-
 
 export const getScalini = new SharedArray('scalini', function () {
 	
@@ -62,25 +45,39 @@ export const getScalini = new SharedArray('scalini', function () {
 export const options = {
 	
   scenarios: {
-  	total: {
-      executor: 'ramping-vus',
-      stages: [
-        { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' }, 
-        { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' }, 
-        { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' }, 
-		{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' }, 
-        { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' }, 
-        { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
-		{ target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' }, 
-		{ target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' }, 
-        { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' }, 
-        { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' },
-       ],
-      tags: { test_type: 'ALL' }, 
-      exec: 'total', 
-    }
-	
-  },
+      	total: {
+          timeUnit: '4.5s', //la media è 4,5 --> 10% da 8, 12.5% da 5, 77.5% da 4
+          preAllocatedVUs: 1, // how large the initial pool of VUs would be
+          executor: 'ramping-arrival-rate',
+          //executor: 'ramping-vus',
+          maxVUs: 500,
+          stages: [
+            { target: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' },
+            { target: getScalini[0].Scalino_CT_2, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' },
+            { target: getScalini[0].Scalino_CT_3, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' },
+            { target: getScalini[0].Scalino_CT_4, duration: 0+'s' },
+    		{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' },
+    		{ target: getScalini[0].Scalino_CT_5, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' },
+            { target: getScalini[0].Scalino_CT_6, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
+            { target: getScalini[0].Scalino_CT_7, duration: 0+'s' },
+    		{ target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' },
+    		{ target: getScalini[0].Scalino_CT_8, duration: 0+'s' },
+    		{ target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' },
+    		{ target: getScalini[0].Scalino_CT_9, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' },
+            { target: getScalini[0].Scalino_CT_10, duration: 0+'s' },
+            { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' }, //to uncomment
+           ],
+          tags: { test_type: 'ALL' },
+          exec: 'total',
+        }
+
+      },
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
@@ -90,6 +87,7 @@ export const options = {
 	'http_req_duration{sendPaymentOutcome:http_req_duration}': [],
 	'http_req_duration{Verifica:http_req_duration}': [],
 	'http_req_duration{Attiva:http_req_duration}': [],
+	'http_req_duration{RT:http_req_duration}': [],
 	'http_req_duration{RPT_Semplice:http_req_duration}': [],
 	'http_req_duration{RPT_Carrello_1:http_req_duration}': [],
 	'http_req_duration{RPT_Carrello_5:http_req_duration}': [],
@@ -159,6 +157,14 @@ export const options = {
 	'checks{RPT_Carrello_1:over_sla1000}': [],
 	'checks{RPT_Carrello_1:ok_rate}': [],
 	'checks{RPT_Carrello_1:ko_rate}': [],
+	'checks{RT:over_sla300}': [],
+    'checks{RT:over_sla400}': [],
+    'checks{RT:over_sla500}': [],
+    'checks{RT:over_sla600}': [],
+    'checks{RT:over_sla800}': [],
+    'checks{RT:over_sla1000}': [],
+    'checks{RT:ok_rate}': [],
+    'checks{RT:ko_rate}': [],
 	'checks{RPT_Carrello_5:over_sla300}': [],
 	'checks{RPT_Carrello_5:over_sla400}': [],
 	'checks{RPT_Carrello_5:over_sla500}': [],
@@ -257,7 +263,10 @@ function executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId)
   var ido = randomOro();
   var args = "'"+rndAnagPsp.PSP+"','"+ rndAnagPsp.INTPSP+"','"+ rndAnagPsp.CHPSP+"','"
   + rndAnagPaNew.PA+"','"+ rndAnagPaNew.INTPA+"','"+ rndAnagPaNew.STAZPA+"','" +paymentToken+"','" +creditorReferenceId +"'"; //
-  //console.log("executeOro+=oro"+ido+"("+args+")");
+  //console.debug("executeOro+=oro"+ido+"("+args+")");
+  console.debug("@@@@@EXECUTE ORO ARGS "+ args);
+  console.debug("@@@@@EXECUTE ORO creditorReferenceId "+ creditorReferenceId);
+  console.debug("@@@@@EXECUTE ORO paymentToken "+ paymentToken);
   eval("oro"+ido+"("+args+")");
 }
 
@@ -266,12 +275,13 @@ function executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId)
 
 
 function func1() {
-   //console.log("func1");
+   //console.debug("func1");
    verificaAttiva();
    executeRpts(); 
 }
+
 function func2() {
-   //console.log("func2");
+   //console.debug("func2");
    executeIdp();
   
 }
@@ -360,30 +370,18 @@ function verifyAndActivate(){
   let rndAnagPsp = inputDataUtil.getAnagPsp();
   let rndAnagPaNew = inputDataUtil.getAnagPaNew();
   let noticeNmbr = genNoticeNumber();
-  let idempotencyKey = genIdempotencyKey();
-	
+  let idempotencyKey = common.genIdempotencyKey();
+
+
   let res = verifyPaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
-	 
-	let doc = parseHTML(res.body);
-    let script = doc.find('esito');
-    let outcome = script.text(); 
-	
-	checks(res, outcome, 'OK');
+
 	
   res = activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
-  
-	doc = parseHTML(res.body);
-    script = doc.find('esito');
-    outcome = script.text(); 
-		
-	checks(res, outcome, 'OK');
+  let paymentToken=res.paymentToken;
+  let creditorReferenceId=res.creditorReferenceId;
+	amountGlobal = res.amount;
 	
-	script = doc.find('paymentToken');
-    var paymentToken = script.text();
-	script = doc.find('creditorReferenceId');
-    var creditorReferenceId = script.text();
-	
-	executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId);
+  executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId);
 }
 
 
@@ -393,43 +391,21 @@ function verifyAndActivateIdp(){
   let rndAnagPsp = inputDataUtil.getAnagPsp();
   let rndAnagPaNew = inputDataUtil.getAnagPaNew();
   let noticeNmbr = genNoticeNumber();
-  let idempotencyKey = genIdempotencyKey();
-	
+  let idempotencyKey = common.genIdempotencyKey();
+
+
   let res = verifyPaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
-	 
-	let doc = parseHTML(res.body);
-    let script = doc.find('esito');
-    let outcome = script.text(); 
-	
-	checks(res, outcome, 'OK');
-	
-	
-  res = activatePaymentNotice(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
-  
-	doc = parseHTML(res.body);
-    script = doc.find('esito');
-    outcome = script.text(); 
-		
-	checks(res, outcome, 'OK');
-	
-		
-	
-	res = activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
-  
-	doc = parseHTML(res.body);
-    script = doc.find('esito');
-    outcome = script.text(); 
-		
-	checks(res, outcome, 'OK');
-	
-	
-	script = doc.find('paymentToken');
-    var paymentToken = script.text();
-	script = doc.find('creditorReferenceId');
-    var creditorReferenceId = script.text();
-		
-	
-	executeOro(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId);
+
+  let paymentToken=res.paymentToken;
+  let creditorReferenceId=res.creditorReferenceId;
+
+
+  res = activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
+  amountGlobal = res.amount;
+  creditorReferenceId=res.creditorReferenceId;
+	console.debug("### verifyAndActivateIdp "+ creditorReferenceId);		
+
+  executeOro(rndAnagPsp, rndAnagPaNew, res.paymentToken, creditorReferenceId);
 }
 	
 
@@ -444,22 +420,12 @@ function verificaAttiva() {
     let rndAnagPsp = inputDataUtil.getAnagPsp();
     let rndAnagPa = inputDataUtil.getAnagPa();
     let iuv = iuvUtil.genIuv();
-	
- 	let res = Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv,1);
-	
-    let doc = parseHTML(res.body);
-    let script = doc.find('esito');
-    let outcome = script.text();
-    
-    checks(res, outcome, 'OK');
- 
+
+
+ 	let res = Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv,1,'OK');
+
  
     res = Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, "PERFORMANCE");
-	
-	script = doc.find('esito');
-    outcome = script.text();
-	
-    checks(res, outcome, 'OK');
 
 }
 
@@ -472,13 +438,11 @@ export function rptSemplice() {
 	
 	let iuv = iuvUtil.genIuvSemplice();
 
-    let res = RPT(baseUrl,rndAnagPsp,rndAnagPa,iuv);
-	
-    let doc = parseHTML(res.body);
-    let script = doc.find('esito');
-    let outcome = script.text();
-    
-    checks(res, outcome, 'OK');
+
+	let importoSingoloVersamento = "10.00";
+    let res = RPT(baseUrl,rndAnagPsp,rndAnagPa,iuv, importoSingoloVersamento);
+
+	res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuv);
  
 }
 
@@ -488,14 +452,12 @@ export function rpt1() {
     let rndAnagPa = inputDataUtil.getAnagPa();
 	
  	let iuvArray = iuvUtil.genIuvArray(1);
-		
+
+
+
 	let res = RPT_Carrello_1(baseUrl,rndAnagPsp,rndAnagPa,iuvArray);
-	
-    let doc = parseHTML(res.body);
-    let script = doc.find('esitoComplessivoOperazione');
-    let outcome = script.text();
-    
-    checks(res, outcome, 'OK');
+
+    res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[0]);
  
 }
 
@@ -505,61 +467,42 @@ export function rpt5() {
     let rndAnagPa = inputDataUtil.getAnagPa();
 	
     let iuvArray = iuvUtil.genIuvArray(5);
-	//console.log("iuvArray=="+iuvArray);
+	//console.debug("iuvArray=="+iuvArray);
+
 
  	let res = RPT_Carrello_5(baseUrl,rndAnagPsp,rndAnagPa,iuvArray);
-	
-    let doc = parseHTML(res.body);
-    let script = doc.find('esitoComplessivoOperazione');
-    let outcome = script.text();
-    
-    checks(res, outcome, 'OK');
+
+
+     res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[0]);
+     res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[1]);
+     res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[2]);
+     res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[3]);
+     res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[4]);
  
 }
+
 
 
 export function OR(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId) {
 
-   //console.log("OR+"+rndAnagPsp.PSP);
+   //console.debug("OR+"+rndAnagPsp.PSP);
  	let res = sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken);
-	
-    let doc = parseHTML(res.body);
-    let script = doc.find('outcome');
-    let outcome = script.text();
-    
-    checks(res, outcome, 'OK');
-	
-	res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId);
-  
-    doc = parseHTML(res.body);
-    script = doc.find('esito');
-    outcome = script.text();
-    
-    checks(res, outcome, 'OK'); 
- 
+
+
+	res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, amountGlobal);
+
 }
+
 
 
 export function RO(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId) {
 
    	
-    let res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId);
-  
-    let doc = parseHTML(res.body);
-    let script = doc.find('esito');
-    let outcome = script.text();
-    
-    checks(res, outcome, 'OK'); 
-	
-		
+    let res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, amountGlobal);
+
+
 	res = sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken);
-	
-    doc = parseHTML(res.body);
-    script = doc.find('outcome');
-    outcome = script.text();
-    
-    checks(res, outcome, 'OK');
- 
+
 }
 
 
@@ -572,21 +515,9 @@ export function RO(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId) 
 
 
 export function handleSummary(data) {
-  console.log('Preparing the end-of-test summary...');
+  console.debug('Preparing the end-of-test summary...');
  
-  var csv = outputUtil.extractData(data);
-     
-   return {
-    'stdout': textSummary(data, { indent: ' ', enableColors: true, expected_response: 'ALL' }), // Show the text summary to stdout...
-	//'./junit.xml': jUnit(data), // but also transform it and save it as a JUnit XML...
-    './scenarios/CT/test/output/TC02.05.summary.json': JSON.stringify(data), // and a JSON with all the details...
-	//'./scenarios/CT/test/output/summary.html': htmlReport(data),
-	'./scenarios/CT/test/output/TC02.05.summary.csv': csv[0],
-	'./scenarios/CT/test/output/TC02.05.trOverSla.csv': csv[1],
-	'./scenarios/CT/test/output/TC02.05.resultCodeSummary.csv': csv[2],
-	//'./xrayJunit.xml': generateXrayJUnitXML(data, 'summary.json', encoding.b64encode(JSON.stringify(data))),
- 	
-  };
+  return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
   
 }
 

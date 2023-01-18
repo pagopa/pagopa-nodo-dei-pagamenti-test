@@ -1,0 +1,29 @@
+to install influxDB+grafana:
+https://medium.com/@knoldus/k6-results-with-influxdb-and-grafana-93b4dc381f6c:
+install influxdb vers 1.8: wget https://dl.influxdata.com/influxdb/releases/influxdb-1.8.10_windows_amd64.zip -UseBasicParsing -OutFile influxdb-1.8.10_windows_amd64.zip
+Expand-Archive .\influxdb-1.8.10_windows_amd64.zip -DestinationPath 'C:\Program Files\InfluxData\influxdb\'
+launch ./influxd from dir of influxd.exe
+to install grafana=https://grafana.com/grafana/download?platform=windows
+in grafana crete datasource setting url of influxdb (the name of database is the same that compare in k6 script)
+install k6 extension for InfluxDB v2(https://github.com/grafana/xk6-output-influxdb (devono essere installati go (con settaggio variabili d'ambiente) e xk6)): in k6 directory (the dir where main.sh is) launch this command: xk6 build --with github.com/grafana/xk6-output-influxdb
+for default grafana metrics for k6 --> on grafana GUI --> dashboard --> import --> insert in "import via garfana.com": https://grafana.com/grafana/dashboards/2587
+
+TC01.01 rps
+SELECT count("value") as rps FROM "ob_CC_Onboard", "ob_CC_Verify", "ob_CC_VerifyInternal", "ob_CC_continueToStep1", "ob_CC_CheckOut", "ob_CC_Check_1", "ob_CC_Check_2", "ob_CC_Check_3", "ob_CC_Logout", "ob_CC_bye", "ob_CC_update", "ob_CC_Challenge", "ob_CC_Response", "ob_CC_resume3ds2", "startSession", "ALL" WHERE $timeFilter GROUP BY time(1s) fill(null)
+TC01.01 avg
+SELECT mean("value") as avg FROM "ob_CC_Onboard", "ob_CC_Verify", "ob_CC_VerifyInternal", "ob_CC_continueToStep1", "ob_CC_CheckOut", "ob_CC_Check_1", "ob_CC_Check_2", "ob_CC_Check_3", "ob_CC_Logout", "ob_CC_bye", "ob_CC_update", "ob_CC_Challenge", "ob_CC_Response", "ob_CC_resume3ds2", "startSession", "ALL" WHERE $timeFilter GROUP BY time(1s) fill(null)
+
+TC01.02 rps
+SELECT count("value") as rps FROM "ALL", "ob_PP_psp", "startSession", "ob_PP_pspInternal", "ob_PP_Confirm_Call", "ob_PP_Confirm", "ob_PP_Confirm_Continue", "ob_PP_Confirm_Logout", "ob_PP_Confirm_bye" WHERE $timeFilter GROUP BY time(1s) fill(null)
+TC01.02 avg
+SELECT mean("value") as avg FROM "ALL", "ob_PP_psp", "startSession", "ob_PP_pspInternal", "ob_PP_Confirm_Call", "ob_PP_Confirm", "ob_PP_Confirm_Continue", "ob_PP_Confirm_Logout", "ob_PP_Confirm_bye" WHERE $timeFilter GROUP BY time(1s) fill(null)
+
+TC01.03 rps
+SELECT count("value") as rps FROM "pay_Check", "getWallet_v2", "pay_CC_PayINternal", "pay_CC_Pay", "pay_CC_CheckOut", "ob_CC_Check_1", "ob_CC_Check_2", "ob_CC_Check_3", "ob_CC_continueToStep1", "ob_CC_Logout", "ob_CC_bye", "ob_CC_Challenge", "ob_CC_Response", "ob_CC_resume3ds2", "startSession", "ALL" WHERE $timeFilter GROUP BY time(1s) fill(null)
+TC01.03 avg
+SELECT mean("value") as avg FROM "pay_Check", "getWallet_v2", "pay_CC_PayINternal", "pay_CC_Pay", "pay_CC_CheckOut", "ob_CC_Check_1", "ob_CC_Check_2", "ob_CC_Check_3", "ob_CC_continueToStep1", "ob_CC_Logout", "ob_CC_bye", "ob_CC_Challenge", "ob_CC_Response", "ob_CC_resume3ds2", "startSession", "ALL" WHERE $timeFilter GROUP BY time(1s) fill(null)
+
+TC01.04 rps
+SELECT count("value") as rps FROM "ALL", "B_Check", "startSession", "getWallet_v3", "pay_PP_Check", "pay_PP_Pay", "pay_PP_Logout", "pay_PP_bye" WHERE $timeFilter GROUP BY time(1s) fill(null)
+TC01.04 avg
+SELECT mean("value") as avg FROM "ALL", "B_Check", "startSession", "getWallet_v3", "pay_PP_Check", "pay_PP_Pay", "pay_PP_Logout", "pay_PP_bye" WHERE $timeFilter GROUP BY time(1s) fill(null)

@@ -1,0 +1,202 @@
+pr: none
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+parameters:
+  - name: env
+    displayName: Environment to Run Test
+    type: string
+    default: prf
+  - name: blacklistCTStr
+    displayName: Blacklist for CT
+    type: string
+    default: "none"
+  - name: debugEnabled
+    type: boolean
+    default: false
+  - name: rampingSel
+    displayName: Ramping rate to use
+    type: string
+    default: rampa_1_1_10
+    values:
+      - rampa_1_1_1
+      - rampa_1_1_10
+      - rampa_1_10_10
+      - rampa_4_40_10
+      - rampa_10_350_10_1
+      - rampa_20_200_10_1
+      - rampa_10_100_10
+      - rampa_30_300_10
+      - rampa_30_300_10_1
+      - rampa_50_500_10
+      - rampa_50_500_10_1
+      - rampa_125_350_10_1
+      - rampa_125_350_10_2
+      - rampa_piatta
+variables:
+  artifactName: TestPT
+
+stages:
+  
+  - stage: publish_artifact
+    displayName: "Publish artifact env (${{ parameters.env }})"
+    jobs:
+      - job: 
+        displayName: "publish artifact on env (${{ parameters.env }})"
+        steps:
+          - checkout: self
+            clean: true
+            persistCredentials: true
+                      
+          - task: ArchiveFiles@2
+            displayName: 'Archive files'
+            inputs:
+              rootFolderOrFile: $(Agent.BuildDirectory)/
+              includeRootFolder: false
+              archiveType: zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/pagopa-nodo-dei-pagamenti-test.zip
+              replaceExistingArchive: true
+            
+          - publish: $(Build.ArtifactStagingDirectory)/pagopa-nodo-dei-pagamenti-test.zip
+            displayName: "Publish Artifact"
+            artifact: $(artifactName)
+            
+            
+  - stage: k6_run_tests
+    displayName: "K6 Run Tests"
+
+    jobs:
+      - job: k6_run_scripts
+        displayName: "k6 run scripts"
+        pool: pagopa-agent-pool-uat
+        timeoutInMinutes: 0 #Timeout
+        steps:
+          - checkout: none    
+                       
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: $(artifactName)
+              source: current
+          
+          - task: ExtractFiles@1
+            inputs:
+              archiveFilePatterns: $(Pipeline.Workspace)/pagopa-nodo-dei-pagamenti-test.zip
+              destinationFolder: $(Pipeline.Workspace)
+              cleanDestinationFolder: false
+              overwriteExistingFiles: true
+                                      
+          - script: |
+              
+              executeScript()
+              {
+                active_scenario=$1
+                active_test=$2
+                test_step=${rampingSel}
+     
+                envTest="pagoPA_PERF_apim"
+            
+                echo -----------------------------------------
+                echo *** Main K6 Perf Test Script ***
+                echo -----------------------------------------
+               
+                echo configured active_scenario = $active_scenario
+                echo configured active_test = $active_test
+                echo configured test_step= $test_step
+                echo configured envTest= $envTest
+                
+                filename=$(date +%m_%d_%y)$active_test.csv
+                echo debugEnabled ${{ parameters.debugEnabled }}
+                debugParam=""
+                if [[ " ${{ parameters.debugEnabled }} " == " True " ]]; then
+                  echo "debugParam is True" 
+                  debugParam="-v"
+                fi
+                echo debugParam is $debugParam
+                #echo ***** k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$active_test.csv -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js****               
+                #k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output $debugParam
+                
+                #Aggiunta integrazione influxdb-grafana (su nodo 117)
+                #echo ***** k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://k6nodo:siametricssiametricssiametrics@10.101.132.117:8086/k6nodo
+                K6_INFLUXDB_CONCURRENT_WRITES=6 K6_INFLUXDB_PUSH_INTERVAL=5s k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://k6nodo:siametricssiametricssiametrics@10.101.132.117:8086/k6nodo
+
+                #Aggiunta integrazione influxdb-grafana (su nodo 118)
+                #echo ***** k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://k6nodo:siametricssiametricssiametrics@10.101.132.118:8086/k6nodo
+                #k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://k6nodo:siametricssiametricssiametrics@10.101.132.118:8086/k6nodo $debugParam
+
+                
+              }
+              echo env selected:
+              echo ${{ parameters.env }}
+              echo ramping selected:
+              echo ${{ parameters.rampingSel }}
+              rampingSel=${{ parameters.rampingSel }}
+
+              scenarioToRun=CT
+              
+              #clean and create output directory
+              rm -rf src/perf-test/k6/scenarios/CT/test/output
+              
+              mkdir -p src/perf-test/k6/scenarios/CT/test/output
+                            
+              blacklistCT=(${{ parameters.blacklistCTStr }})
+
+              #for each script
+              for d in src/perf-test/k6/scenarios/CT/test/*.js; do
+      
+                      #removing prefix path: removing prefix ending with slash
+                      active_test=${d#src/perf-test/k6/scenarios/CT/test/*}
+      
+                      #removing suffix js
+                      active_test=${active_test%.js}
+      
+                      
+                      if [[ " ${blacklistCT[*]} " =~ " ${active_test} " ]]; then
+                              #skip script if it is blacklisted for CT
+                              echo $active_test blacklisted
+                      else
+                              #call function to execute the script
+                              executeScript CT ${active_test}
+                      fi
+      
+              done
+              
+              #remove old data
+              rm -rf CT
+              
+              #create output folder structure
+              mkdir -p CT
+              #copy out
+              cp -r src/perf-test/k6/scenarios/CT/test/output CT
+              
+              #remove empty folder
+              #find output -type d -empty -delete
+              
+              echo current directory:
+              pwd
+                            
+            displayName: 'Command Line Script -  Run $(scenarioToRun) K6 scripts'
+                    
+          - task: ArchiveFiles@2
+            displayName: 'Archive test results'
+            inputs:
+              rootFolderOrFile: $(Agent.BuildDirectory)/s/CT
+              includeRootFolder: false
+              archiveType: zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/CT.zip
+              replaceExistingArchive: true
+            
+          - publish: $(Build.ArtifactStagingDirectory)/CT.zip
+            displayName: "Publish Artifact results"
+            artifact: testResult
+            
+          - script: |
+             echo pwd:
+             pwd
+             echo output tree:
+             chmod +777 src/perf-test/k6/scripttree.sh
+             ./src/perf-test/k6/scripttree.sh CT/ 3
+             
+            displayName: 'show results'
+            

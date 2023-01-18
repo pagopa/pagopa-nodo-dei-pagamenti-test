@@ -1,6 +1,12 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
+import { Trend } from 'k6/metrics';
+
+
+
+export const activatePaymentNotice_NN_Trend = new Trend('activatePaymentNotice_NN');
+export const All_Trend = new Trend('ALL');
 
 export function activateReqBody (psp, pspint, chpsp, cfpa, noticeNmbr, idempotencyKey, paymentNote) {
   	
@@ -36,75 +42,97 @@ today = yyyy + '-' + mm + '-' + dd;
 
 export function activatePaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idempotencyKey, paymentNote) {
  
- let res=http.post(baseUrl+'?soapAction=activatePaymentNotice',
+ let res=http.post(baseUrl,
     activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey, paymentNote),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'activatePaymentNotice', 'x-forwarded-for':'10.6.189.192' } ,
 	tags: { activatePaymentNotice_NN: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );
-  //console.log(res);
+  
+  console.debug("activatePaymentNotice_NN RES");
+  console.debug(res);
+  
+  activatePaymentNotice_NN_Trend.add(res.timings.duration);
+  All_Trend.add(res.timings.duration);
+
+
    check(res, {
  	'activatePaymentNotice_NN:over_sla300': (r) => r.timings.duration >300,
    },
-   { activatePaymentNotice_NN: 'over_sla300' }
+   { activatePaymentNotice_NN: 'over_sla300', ALL: 'over_sla300' }
    );
    
    check(res, {
  	'activatePaymentNotice_NN:over_sla400': (r) => r.timings.duration >400,
    },
-   { activatePaymentNotice_NN: 'over_sla400' }
+   { activatePaymentNotice_NN: 'over_sla400', ALL: 'over_sla400' }
    );
       
    check(res, {
  	'activatePaymentNotice_NN:over_sla500': (r) => r.timings.duration >500,
    },
-   { activatePaymentNotice_NN: 'over_sla500' }
+   { activatePaymentNotice_NN: 'over_sla500', ALL: 'over_sla500' }
    );
    
    check(res, {
  	'activatePaymentNotice_NN:over_sla600': (r) => r.timings.duration >600,
    },
-   { activatePaymentNotice_NN: 'over_sla600' }
+   { activatePaymentNotice_NN: 'over_sla600', ALL: 'over_sla600' }
    );
    
    check(res, {
  	'activatePaymentNotice_NN:over_sla800': (r) => r.timings.duration >800,
    },
-   { activatePaymentNotice_NN: 'over_sla800' }
+   { activatePaymentNotice_NN: 'over_sla800', ALL: 'over_sla800' }
    );
    
    check(res, {
  	'activatePaymentNotice_NN:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { activatePaymentNotice_NN: 'over_sla1000' }
+   { activatePaymentNotice_NN: 'over_sla1000', ALL: 'over_sla1000'  }
    );
-   
-  const doc = parseHTML(res.body);
-  const script = doc.find('outcome');
-  const outcome = script.text();
-  
-  /*if(outcome=='KO'){
-  console.log("activateNN REQuest----------------"+ activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey, paymentNote)); 
-  console.log("activateNN RESPONSE----------------"+res.body);
+
+  let outcome='';
+  let paymentToken='';
+  let result={};
+  result.paymentToken=paymentToken;
+  try{
+  let doc = parseHTML(res.body);
+  let script = doc.find('outcome');
+  outcome = script.text();
+  script = doc.find('paymentToken');
+  paymentToken = script.text();
+  result.paymentToken=paymentToken;
+  }catch(error){}
+  //console.debug("activatepaymentNotice="+outcome);
+
+
+
+/*
+  if(outcome=='KO'){
+  //console.debug("activateNN REQuest----------------"+ activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey, paymentNote));
+  //console.debug("activateNN RESPONSE----------------"+res.body);
   }*/
   
    check(
     res,
     {
      
-	  'activatePaymentNotice_NN:ok_rate': (r) => outcome == 'OK',
+	  'activatePaymentNotice_NN:ok_rate': (r) => outcome == 'OK' && paymentToken != undefined || paymentToken !== '',
     },
-    { activatePaymentNotice_NN: 'ok_rate' }
+    { activatePaymentNotice_NN: 'ok_rate', ALL: 'ok_rate'  }
 	);
-	
-	 check(
+
+	if(check(
     res,
     {
     
-	  'activatePaymentNotice_NN:ko_rate': (r) => outcome !== 'OK',
+	  'activatePaymentNotice_NN:ko_rate': (r) => paymentToken == undefined || paymentToken === '' || outcome !== 'OK',
     },
-    { activatePaymentNotice_NN: 'ko_rate' }
-  );
+    { activatePaymentNotice_NN: 'ko_rate', ALL: 'ko_rate' }
+  )){
+	fail("unexpected value for paymentToken/outcome. paymentToken  "+ paymentToken+" outcome "+ outcome);
+}
    
-     return res;
+     return result;
 }

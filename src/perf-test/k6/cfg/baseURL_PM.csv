@@ -1,4 +1,4 @@
 ENV;BASEURL;PRIVATEURL;MOCK_PP_BASEURL;MOCK_PM_BASEURL
-pagoPA_DEV_apim;https://acardste.vaservices.eu:1444;;http://10.6.189.28:8002;http://10.6.189.28:8001
+pagoPA_DEV_apim;https://api.dev.platform.pagopa.it;;https://api.dev.platform.pagopa.it/mock-psp/api;https://api.dev.platform.pagopa.it
 pagoPA_UAT_apim;;;;
-pagoPA_PRD_apim;;;;
+pagoPA_PERF_apim;https://api.prf.platform.pagopa.it;;https://api.prf.platform.pagopa.it;https://api.prf.platform.pagopa.it

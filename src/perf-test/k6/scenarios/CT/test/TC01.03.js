@@ -1,21 +1,15 @@
-import http from 'k6/http';
-import { sleep } from 'k6';
-import { Trend } from "k6/metrics";
 import { check } from 'k6';
-import encoding from 'k6/encoding';
 //import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
-import { scenario } from 'k6/execution';
 import { SharedArray } from 'k6/data';
 import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
-import { jUnit, textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 import { Verifica } from './api/Verifica.js';
 import { Attiva } from './api/Attiva.js';
 import { ChiediNumeroAvviso } from './api/ChiediNumeroAvviso.js';
 import { RPT } from './api/RPT_Semplice.js';
+import { RT } from './api/RT.js';
 import { RPT_Carrello_5 } from './api/RPT_Carrello_5.js';
 import { RPT_Carrello_1 } from './api/RPT_Carrello_1.js';
-import * as outputUtil from './util/output_util.js';
-import { parseHTML } from "k6/html";
+import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
 //import * as test_selector from '../../test_selector.js';
 
@@ -90,7 +84,7 @@ var iuvArray = [];
 	("0" + dt.getHours() ).slice(-2) + ("0" + dt.getMinutes()).slice(-2) + ("0" + dt.getSeconds()).slice(-2)+ ms;
 
 let iuv = "";	
-//console.log(dt+"------"+user);
+//console.debug(dt+"------"+user);
 for(let i = 0; i < l; i++){
   iuv = "P" + i;
   iuv += user; 
@@ -100,8 +94,8 @@ for(let i = 0; i < l; i++){
   iuvArray.push(iuv);
 
 }
-//console.log("genIuvArray="+iuvArray);
-//console.log("genIuvArray1="+iuvArray[0]);
+//console.debug("genIuvArray="+iuvArray);
+//console.debug("genIuvArray1="+iuvArray[0]);
 return iuvArray;
 
 }
@@ -114,33 +108,46 @@ export const getScalini = new SharedArray('scalini', function () {
 	
   // here you can open files, and then do additional processing or generate the array with data dynamically
   const f = JSON.parse(open('../../../cfg/'+`${__ENV.steps}`+'.json'));
-  //console.log(f);
+  //console.debug(f);
   return f; // f must be an array[]
 });
 
 export const options = {
 	
   scenarios: {
-  	total: {
-      executor: 'ramping-vus',
-      //startTime: '2s', // the ramping API test starts a little later
-      stages: [
-        { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' }, 
-        { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' }, 
-        { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' }, 
-		{ target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' }, 
-        { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' }, 
-        { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
-		{ target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' }, 
-		{ target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' }, 
-        { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' }, 
-        { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' },
-       ],
-      tags: { test_type: 'ALL' }, 
-      exec: 'total', 
-    }
-	
-  },
+    	total: {
+        timeUnit: '4.8s', //80% 4 + 20% 8 --> media 4,8 --> 5
+        preAllocatedVUs: 1, // how large the initial pool of VUs would be
+        executor: 'ramping-arrival-rate',
+        //executor: 'ramping-vus',
+        maxVUs: 500,
+        stages: [
+          { target: getScalini[0].Scalino_CT_1, duration: 0+'s' },
+          { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1+'s' },
+          { target: getScalini[0].Scalino_CT_2, duration: 0+'s' },
+          { target: getScalini[0].Scalino_CT_2, duration: getScalini[0].Scalino_CT_TIME_2+'s' },
+          { target: getScalini[0].Scalino_CT_3, duration: 0+'s' },
+          { target: getScalini[0].Scalino_CT_3, duration: getScalini[0].Scalino_CT_TIME_3+'s' },
+          { target: getScalini[0].Scalino_CT_4, duration: 0+'s' },
+  		  { target: getScalini[0].Scalino_CT_4, duration: getScalini[0].Scalino_CT_TIME_4+'s' },
+  		  { target: getScalini[0].Scalino_CT_5, duration: 0+'s' },
+          { target: getScalini[0].Scalino_CT_5, duration: getScalini[0].Scalino_CT_TIME_5+'s' },
+          { target: getScalini[0].Scalino_CT_6, duration: 0+'s' },
+          { target: getScalini[0].Scalino_CT_6, duration: getScalini[0].Scalino_CT_TIME_6+'s' },
+          { target: getScalini[0].Scalino_CT_7, duration: 0+'s' },
+  		  { target: getScalini[0].Scalino_CT_7, duration: getScalini[0].Scalino_CT_TIME_7+'s' },
+  		  { target: getScalini[0].Scalino_CT_8, duration: 0+'s' },
+  		  { target: getScalini[0].Scalino_CT_8, duration: getScalini[0].Scalino_CT_TIME_8+'s' },
+  		  { target: getScalini[0].Scalino_CT_9, duration: 0+'s' },
+          { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9+'s' },
+          { target: getScalini[0].Scalino_CT_10, duration: 0+'s' },
+          { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10+'s' }, //to uncomment
+         ],
+        tags: { test_type: 'ALL' },
+        exec: 'total',
+      }
+
+    },
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
@@ -151,6 +158,7 @@ export const options = {
     'http_req_duration{Verifica:http_req_duration}': [],
 	'http_req_duration{Attiva:http_req_duration}': [],
 	'http_req_duration{RPT_Semplice:http_req_duration}': [],
+	'http_req_duration{RT:http_req_duration}': [],
 	'http_req_duration{RPT_Carrello_5:http_req_duration}': [],
 	'http_req_duration{RPT_Carrello_1:http_req_duration}': [],
 	'http_req_duration{ALL:http_req_duration}': [],
@@ -162,7 +170,7 @@ export const options = {
 	'checks{ChiediNumeroAvviso:over_sla800}': [],
 	'checks{ChiediNumeroAvviso:over_sla1000}': [],
 	'checks{ChiediNumeroAvviso:ok_rate}': [],
-	'checks{ChiediNumeroAvviso:ko_rate}': [],
+	'checks{ChiediNumeroAvviso:ko_rate}': ['rate<0.01'],
 	'checks{Attiva:over_sla300}': [],
 	'checks{Attiva:over_sla400}': [],
 	'checks{Attiva:over_sla500}': [],
@@ -170,7 +178,7 @@ export const options = {
 	'checks{Attiva:over_sla800}': [],
 	'checks{Attiva:over_sla1000}': [],
 	'checks{Attiva:ok_rate}': [],
-	'checks{Attiva:ko_rate}': [],
+	'checks{Attiva:ko_rate}': ['rate<0.01'],
 	'checks{Verifica:over_sla300}': [],
 	'checks{Verifica:over_sla400}': [],
 	'checks{Verifica:over_sla500}': [],
@@ -178,7 +186,7 @@ export const options = {
 	'checks{Verifica:over_sla800}': [],
 	'checks{Verifica:over_sla1000}': [],
 	'checks{Verifica:ok_rate}': [],
-	'checks{Verifica:ko_rate}': [],
+	'checks{Verifica:ko_rate}': ['rate<0.01'],
 	'checks{RPT_Semplice:over_sla300}': [],
 	'checks{RPT_Semplice:over_sla400}': [],
 	'checks{RPT_Semplice:over_sla500}': [],
@@ -186,7 +194,15 @@ export const options = {
 	'checks{RPT_Semplice:over_sla800}': [],
 	'checks{RPT_Semplice:over_sla1000}': [],
 	'checks{RPT_Semplice:ok_rate}': [],
-	'checks{RPT_Semplice:ko_rate}': [],
+	'checks{RPT_Semplice:ko_rate}': ['rate<0.01'],
+	'checks{RT:over_sla300}': [],
+    'checks{RT:over_sla400}': [],
+    'checks{RT:over_sla500}': [],
+    'checks{RT:over_sla600}': [],
+    'checks{RT:over_sla800}': [],
+    'checks{RT:over_sla1000}': [],
+    'checks{RT:ok_rate}': [],
+    'checks{RT:ko_rate}': ['rate<0.01'],
 	'checks{RPT_Carrello_5:over_sla300}': [],
 	'checks{RPT_Carrello_5:over_sla400}': [],
 	'checks{RPT_Carrello_5:over_sla500}': [],
@@ -194,7 +210,7 @@ export const options = {
 	'checks{RPT_Carrello_5:over_sla800}': [],
 	'checks{RPT_Carrello_5:over_sla1000}': [],
 	'checks{RPT_Carrello_5:ok_rate}': [],
-	'checks{RPT_Carrello_5:ko_rate}': [],
+	'checks{RPT_Carrello_5:ko_rate}': ['rate<0.01'],
 	'checks{RPT_Carrello_1:over_sla300}': [],
 	'checks{RPT_Carrello_1:over_sla400}': [],
 	'checks{RPT_Carrello_1:over_sla500}': [],
@@ -202,7 +218,7 @@ export const options = {
 	'checks{RPT_Carrello_1:over_sla800}': [],
 	'checks{RPT_Carrello_1:over_sla1000}': [],
 	'checks{RPT_Carrello_1:ok_rate}': [],
-	'checks{RPT_Carrello_1:ko_rate}': [],
+	'checks{RPT_Carrello_1:ko_rate}': ['rate<0.01'],
 	'checks{ALL:over_sla300}': [],
 	'checks{ALL:over_sla400}': [],
 	'checks{ALL:over_sla500}': [],
@@ -247,15 +263,19 @@ function executeRpts(){
 var baseUrl = "";
 
 export function total() {
-
   let urls = csvBaseUrl;
+
   for (var key in urls){
+	
 	   if (urls[key].ENV == `${__ENV.env}`){
-     
+     	
 		baseUrl = urls[key].SOAP_BASEURL;
+		break;
       }
   }
-
+  console.debug('BASE URL: ');
+  console.debug(baseUrl);
+	
     execute();
 	
 	executeRpts();
@@ -332,21 +352,10 @@ export function verificaAttiva() {
     let rndAnagPa = inputDataUtil.getAnagPa();
     let iuv = genIuv();
 	
- 	let res = Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv,1);
-	
-    let doc = parseHTML(res.body);
-    let script = doc.find('esito');
-    let outcome = script.text();
-    
-    checks(res, outcome);
- 
- 
+
+ 	let res = Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv,1,'OK');
+
     res = Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, "PERFORMANCE");
-	
-	script = doc.find('esito');
-    outcome = script.text();
-	
-    checks(res, outcome);
 
 }
 
@@ -356,22 +365,11 @@ export function chiediNumAvvisoAttiva() {
     let rndAnagPa = inputDataUtil.getAnagPa();
 	let rndAnagPaNew = inputDataUtil.getAnagPaNew();
     let iuv = genIuv();
-	
+
+
  	let res = ChiediNumeroAvviso(baseUrl,rndAnagPsp,rndAnagPa);
-	
-    let doc = parseHTML(res.body);
-    let script = doc.find('esito');
-    let outcome = script.text();
-    
-    checks(res, outcome);
- 
- 
+
     res = Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv,"PERFORMANCE");
-	
-	script = doc.find('esito');
-    outcome = script.text();
-	
-    checks(res, outcome);
 
 }
 
@@ -382,14 +380,11 @@ export function rptSemplice() {
 	
 	let iuv = genIuvSemplice();
 
+
+
  	let res = RPT(baseUrl,rndAnagPsp,rndAnagPa,iuv);
-	
-    let doc = parseHTML(res.body);
-    let script = doc.find('esito');
-    let outcome = script.text();
-    
-    checks(res, outcome);
- 
+
+    res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuv);
 }
 
 export function rpt1() {
@@ -398,15 +393,12 @@ export function rpt1() {
     let rndAnagPa = inputDataUtil.getAnagPa();
 	
  	let iuvArray = genIuvArray(1);
-		
+
+
 	let res = RPT_Carrello_1(baseUrl,rndAnagPsp,rndAnagPa,iuvArray);
-	
-    let doc = parseHTML(res.body);
-    let script = doc.find('esitoComplessivoOperazione');
-    let outcome = script.text();
-    
-    checks(res, outcome);
- 
+
+
+    res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[0]);
 }
 
 export function rpt5() {
@@ -415,16 +407,17 @@ export function rpt5() {
     let rndAnagPa = inputDataUtil.getAnagPa();
 	
     let iuvArray = genIuvArray(5);
-	//console.log("iuvArray=="+iuvArray);
+	//console.debug("iuvArray=="+iuvArray);
+
 
  	let res = RPT_Carrello_5(baseUrl,rndAnagPsp,rndAnagPa,iuvArray);
-	
-    let doc = parseHTML(res.body);
-    let script = doc.find('esitoComplessivoOperazione');
-    let outcome = script.text();
-    
-    checks(res, outcome);
- 
+
+
+    res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[0]);
+    res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[1]);
+    res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[2]);
+    res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[3]);
+    res = RT(baseUrl,rndAnagPsp,rndAnagPa,iuvArray[4]);
 }
 
 
@@ -435,22 +428,9 @@ export default function(){
 
 
 export function handleSummary(data) {
-  console.log('Preparing the end-of-test summary...');
+  console.debug('Preparing the end-of-test summary...');
  
-  var csv = outputUtil.extractData(data);
-     
-   return {
-    'stdout': textSummary(data, { indent: ' ', enableColors: true, expected_response: 'ALL' }), // Show the text summary to stdout...
-	//'./junit.xml': jUnit(data), // but also transform it and save it as a JUnit XML...
-    './scenarios/CT/test/output/TC01.03.summary.json': JSON.stringify(data), // and a JSON with all the details...
-	//'./scenarios/CT/test/output/summary.html': htmlReport(data),
-	'./scenarios/CT/test/output/TC01.03.summary.csv': csv[0],
-	'./scenarios/CT/test/output/TC01.03.trOverSla.csv': csv[1],
-	'./scenarios/CT/test/output/TC01.03.resultCodeSummary.csv': csv[2],
-	//'./xrayJunit.xml': generateXrayJUnitXML(data, 'summary.json', encoding.b64encode(JSON.stringify(data))),
- 	
-  };
-  
+  return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
   
 }
 

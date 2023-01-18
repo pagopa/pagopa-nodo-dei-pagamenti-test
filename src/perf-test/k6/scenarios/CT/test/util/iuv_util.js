@@ -27,7 +27,7 @@ var iuvArray = [];
 	("0" + dt.getHours() ).slice(-2) + ("0" + dt.getMinutes()).slice(-2) + ("0" + dt.getSeconds()).slice(-2)+ ms;
 
 let iuv = "";	
-//console.log(dt+"------"+user);
+//console.debug(dt+"------"+user);
 for(let i = 0; i < l; i++){
   iuv = "P" + i;
   iuv += user; 

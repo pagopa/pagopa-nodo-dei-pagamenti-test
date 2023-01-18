@@ -1,7 +1,12 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import * as rptUtil from '../util/rpt.js';
+import { Trend } from 'k6/metrics';
+
+
+export const RPT_Carrello_1_Trend = new Trend('RPT_Carrello_1');
+export const All_Trend = new Trend('ALL');
 
 export function rptReqBody(psp, intpsp, chpsp_c, pa, intpa, stazpa, iuvs, rptEncoded){
 
@@ -43,56 +48,65 @@ export function RPT_Carrello_1(baseUrl,rndAnagPsp,rndAnagPa,iuvs) {
  let rptEncoded = rptUtil.getRptCEncoded(rndAnagPa.PA, rndAnagPa.STAZPA, iuvs[0]);
   
  const res = http.post(
-    baseUrl+'?soapAction=nodoInviaCarrelloRPT',
+    baseUrl,
     rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuvs, rptEncoded),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaCarrelloRPT', 'x-forwarded-for':'10.6.189.192' } ,
 	tags: { RPT_Carrello_1: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
   
+  console.debug("RPT_Carrello_1 RES");
+  console.debug(res);
+
+   RPT_Carrello_1_Trend.add(res.timings.duration);
+   All_Trend.add(res.timings.duration);
+
    check(res, {
  	'RPT_Carrello_1:over_sla300': (r) => r.timings.duration >300,
    },
-   { RPT_Carrello_1: 'over_sla300' }
+   { RPT_Carrello_1: 'over_sla300', ALL:'over_sla300' }
    );
    
    check(res, {
  	'RPT_Carrello_1:over_sla400': (r) => r.timings.duration >400,
    },
-   { RPT_Carrello_1: 'over_sla400' }
+   { RPT_Carrello_1: 'over_sla400', ALL:'over_sla400' }
    );
    
    check(res, {
  	'RPT_Carrello_1:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { RPT_Carrello_1: 'over_sla500' }
+   { RPT_Carrello_1: 'over_sla500', ALL:'over_sla500' }
    );
    
    check(res, {
  	'RPT_Carrello_1:over_sla600': (r) => r.timings.duration >600,
    },
-   { RPT_Carrello_1: 'over_sla600' }
+   { RPT_Carrello_1: 'over_sla600', ALL:'over_sla600' }
    );
    
    check(res, {
  	'RPT_Carrello_1:over_sla800': (r) => r.timings.duration >800,
    },
-   { RPT_Carrello_1: 'over_sla800' }
+   { RPT_Carrello_1: 'over_sla800', ALL:'over_sla800' }
    );
    
    check(res, {
  	'RPT_Carrello_1:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { RPT_Carrello_1: 'over_sla1000' }
+   { RPT_Carrello_1: 'over_sla1000', ALL:'over_sla1000' }
    );
-   
+
+  let outcome='';
+  try{
   const doc = parseHTML(res.body);
   const script = doc.find('esitoComplessivoOperazione');
-  const outcome = script.text();
+  outcome = script.text();
+  }catch(error){}
   
   /*if(outcome=='KO'){
-  console.log("rptCarrello1 REQuest----------------"+rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuvs, rptEncoded)); 
-  console.log("rptCarrello1 RESPONSE----------------"+res.body);
+  console.debug("rptCarrello1 REQuest----------------"+rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuvs, rptEncoded)); 
+  console.debug("rptCarrello1 RESPONSE----------------"+res.body);
   }*/
     
    check(
@@ -101,17 +115,19 @@ export function RPT_Carrello_1(baseUrl,rndAnagPsp,rndAnagPa,iuvs) {
     
 	  'RPT_Carrello_1:ok_rate': (r) => outcome == 'OK',
     },
-    { RPT_Carrello_1: 'ok_rate' }
+    { RPT_Carrello_1: 'ok_rate' , ALL:'ok_rate'}
 	);
  
-  check(
+  if(check(
     res,
     {
      
 	  'RPT_Carrello_1:ko_rate': (r) => outcome !== 'OK',
     },
-    { RPT_Carrello_1: 'ko_rate' }
-  );
+    { RPT_Carrello_1: 'ko_rate', ALL:'ko_rate' }
+  )){
+	fail("outcome != ok: "+outcome);
+	}
   
   return res;
    

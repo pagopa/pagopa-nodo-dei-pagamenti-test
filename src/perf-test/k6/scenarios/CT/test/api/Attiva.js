@@ -1,9 +1,14 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
+import { Trend } from 'k6/metrics';
+
+
+export const Attiva_Trend = new Trend('Attiva');
+export const All_Trend = new Trend('ALL');
 
 export function AttivaReqBody(psp, intpsp, chpsp, cfpa, iuv,ccp){
-//<password>password</password>
+//<password>pwdpwdpwd</password>
 return `
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
 	<soapenv:Header/>
@@ -69,56 +74,69 @@ export function Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, ccp) {
  
   
  const res = http.post(
-    baseUrl+'?soapAction=Attiva',
+    baseUrl,
     AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, ccp),
-    { headers: { 'Content-Type': 'text/xml' } ,
+    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoAttivaRPT', 'x-forwarded-for':'10.6.189.192' } ,
 	tags: { Attiva: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
   
+  console.debug("Attiva RES");
+  console.debug(res);
+
+  Attiva_Trend.add(res.timings.duration);
+  All_Trend.add(res.timings.duration);
+
    
    check(res, {
  	'Attiva:over_sla300': (r) => r.timings.duration >300,
    },
-   { Attiva: 'over_sla300' }
+   { Attiva: 'over_sla300', ALL:'over_sla300' }
    );
    
    check(res, {
  	'Attiva:over_sla400': (r) => r.timings.duration >400,
    },
-   { Attiva: 'over_sla400' }
+   { Attiva: 'over_sla400', ALL:'over_sla400' }
    );
    
    check(res, {
  	'Attiva:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { Attiva: 'over_sla500' }
+   { Attiva: 'over_sla500', ALL:'over_sla500' }
    );
    
    check(res, {
  	'Attiva:over_sla600': (r) => r.timings.duration >600,
    },
-   { Attiva: 'over_sla600' }
+   { Attiva: 'over_sla600', ALL:'over_sla600' }
    );
    
    check(res, {
  	'Attiva:over_sla800': (r) => r.timings.duration >800,
    },
-   { Attiva: 'over_sla800' }
+   { Attiva: 'over_sla800', ALL:'over_sla800' }
    );
    
    check(res, {
  	'Attiva:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { Attiva: 'over_sla1000' }
+   { Attiva: 'over_sla1000', ALL:'over_sla1000' }
    );
-   
-  const doc = parseHTML(res.body);
-  const script = doc.find('esito');
-  const outcome = script.text();
+
+  let outcome='';
+  try{
+  let doc = parseHTML(res.body);
+  let script = doc.find('esito');
+  outcome = script.text();
+  }catch(error){
+	console.debug("ERROR "+ res.body);
+}
+
+
   /*if(outcome=='KO'){
-	   console.log("ATTIVA REQuest----------------"+AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, ccp)); 
-  console.log("ATTIVA RESPONSE----------------"+res.body);
+	   console.debug("ATTIVA REQuest----------------"+AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, ccp)); 
+  console.debug("ATTIVA RESPONSE----------------"+res.body);
   }*/
     
    check(
@@ -127,17 +145,19 @@ export function Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, ccp) {
       //'Attiva:ok_rate': (r) => r.status == 200,
 	  'Attiva:ok_rate': (r) => outcome == 'OK',
     },
-    { Attiva: 'ok_rate' }
+    { Attiva: 'ok_rate', ALL:'ok_rate' }
 	);
  
-  check(
+  if(check(
     res,
     {
       //'Attiva:ko_rate': (r) => r.status !== 200,
 	  'Attiva:ko_rate': (r) => outcome !== 'OK',
     },
-    { Attiva: 'ko_rate' }
-  );
+    { Attiva: 'ko_rate', ALL:'ko_rate' }
+  )){
+	fail("outcome != ok: "+outcome);
+	}
   
   return res;
    
