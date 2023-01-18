@@ -1,4 +1,4 @@
-Feature: lispay
+Feature: lispay opzione 2
 
     Background:
         Given systems up
