@@ -2,100 +2,97 @@ Feature:  block checks for verificaBollettino - position status in INSERTED (mod
 
   Background:
     Given systems up
-    And initial XML verificaBollettino
+    And EC new version
+
+
+   # Verify RPT Phase
+   Scenario: Execute nodoVerificaRPT request
+      Given initial XML nodoVerificaRPT
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
+            <soapenv:Header/>
+            <soapenv:Body>
+               <ws:nodoVerificaRPT>
+                  <identificativoPSP>#pspPoste#</identificativoPSP>
+                  <identificativoIntermediarioPSP>#brokerPspPoste#</identificativoIntermediarioPSP>
+                  <identificativoCanale>#channelPoste#</identificativoCanale>
+                  <password>pwdpwdpwd</password>
+                  <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
+                  <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
+                  <codiceIdRPT>
+                     <aim:aim128>
+                        <aim:CCPost>#ccPoste#</aim:CCPost>
+                        <aim:AuxDigit>3</aim:AuxDigit>
+                        <aim:CodIUV>#cod_segr#012051482162400</aim:CodIUV>
+                     </aim:aim128>
+                  </codiceIdRPT>
+               </ws:nodoVerificaRPT>
+            </soapenv:Body>
+         </soapenv:Envelope>
+         """
+      When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
+      Then check esito is KO of nodoVerificaRPT response
+      And check faultString is La chiamata non è compatibile con il nuovo modello PSP. of nodoVerificaRPT response
+
+
+  # Verify Phase 1
+  Scenario: Execute verificaBollettino request
+    Given initial XML verificaBollettino
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header />
       <soapenv:Body>
-      <nod:verificaBollettinoReq>
-      <idPSP>88888888888</idPSP>
-      <idBrokerPSP>88888888888</idBrokerPSP>
-      <idChannel>88888888888_01</idChannel>
-      <password>**********</password>
-      <ccPost>012345678912</ccPost>
-      <noticeNumber>311111111112222222</noticeNumber>
-      </nod:verificaBollettinoReq>
+         <nod:verificaBollettinoReq>
+            <idPSP>#pspPoste#</idPSP>
+            <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+            <idChannel>#channelPoste#</idChannel>
+            <password>pwdpwdpwd</password>
+            <ccPost>#ccPoste#</ccPost>
+            <noticeNumber>#notice_number#</noticeNumber>
+         </nod:verificaBollettinoReq>
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC new version
-
-  # Verify Phase 1
-  Scenario: Execute verificaBollettino request
     When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
     Then check outcome is OK of verificaBollettino response
 
 
-  # Activate Phase with expirationTime set to 2000
-  Scenario: Execute activatePaymentNotice request
-    Given initial XML activatePaymentNotice
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-      <soapenv:Header/>
-      <soapenv:Body>
-      <nod:activatePaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
-      <password>pwdpwdpwd</password>
-      <idempotencyKey>#idempotency_key#</idempotencyKey>
-      <qrCode>
-      <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>#notice_number#</noticeNumber>
-      </qrCode>
-      <expirationTime>2000</expirationTime>
-      <amount>120.00</amount>
-      </nod:activatePaymentNoticeReq>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice response
-    And paymentToken exists of activatePaymentNotice response
-    And paymentToken length is less than 36 of activatePaymentNotice response
-
-  Scenario: Execute nodoInviaRPT request
-    Given the Execute activatePaymentNotice request scenario executed successfully
-    And initial XML nodoInviaRPT
-      """
-      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-      <soapenv:Header>
-      <ppt:intestazionePPT>
-      <identificativoIntermediarioPA>${intermediarioPA}</identificativoIntermediarioPA>
-      <identificativoStazioneIntermediarioPA>${stazioneAux03}</identificativoStazioneIntermediarioPA>
-      <identificativoDominio>${pa}</identificativoDominio>
-      <identificativoUnivocoVersamento>${#TestCase#iuv}</identificativoUnivocoVersamento>
-      <codiceContestoPagamento>${#TestCase#token}</codiceContestoPagamento>
-      </ppt:intestazionePPT>
-      </soapenv:Header>
-      <soapenv:Body>
-      <ws:nodoInviaRPT>
-      <password>${password}</password>
-      <identificativoPSP>${pspFittizio}</identificativoPSP>
-      <identificativoIntermediarioPSP>${intermediarioPSPFittizio}</identificativoIntermediarioPSP>
-      <identificativoCanale>${canaleFittizio}</identificativoCanale>
-      <tipoFirma></tipoFirma>
-      <rpt>${#TestCase#rptAttachment}</rpt>
-      </ws:nodoInviaRPT>
-      </soapenv:Body>
-      </soapenv:Envelope>
-      """
-    #  When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti using the token of the activate phase
-    When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-    Then check outcome is OK of nodoInviaRPT response
-
-  # Mod3Cancel Phase
-  Scenario: Execute mod3Cancel poller
-    Given the Execute activatePaymentNotice request scenario executed successfully
-    # When expirationTime inserted in activatePaymentNoticeReq has passed and mod3Cancel poller has been triggered
-    When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
+   # Activate Phase
+   Scenario: Execute activatePaymentNotice request
+      Given the Execute verificaBollettino request scenario executed successfully
+      And initial XML activatePaymentNotice
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+         <soapenv:Header/>
+         <soapenv:Body>
+            <nod:activatePaymentNoticeReq>
+               <idPSP>#pspPoste#</idPSP>
+               <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+               <idChannel>#channelPoste#</idChannel>
+               <password>pwdpwdpwd</password>
+               <qrCode>
+                  <fiscalCode>$verificaBollettinoResponse.fiscalCodePA</fiscalCode>
+                  <noticeNumber>$verificaBollettino.noticeNumber</noticeNumber>
+               </qrCode>
+               <expirationTime>4000</expirationTime>
+               <amount>10.00</amount>
+            </nod:activatePaymentNoticeReq>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
+      When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+      Then check outcome is OK of activatePaymentNotice response
+      And paymentToken exists of activatePaymentNotice response
+      And paymentToken length is less than 36 of activatePaymentNotice response
 
 
-  # Verify Phase 2
-  Scenario: Execute verificaBollettino request with the same request as Verify Phase 1
-    # Given the Mod3Cancel Phase executed successfully
-    Given the Execute mod3Cancel poller scenario executed successfully
-    When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
-    Then check outcome is OK of verificaBollettino response
-
+   # Verify Phase 2
+   @runnable
+   Scenario: Execute verificaBollettino request with the same request as Verify Phase 1
+      Given the Execute activatePaymentNotice request scenario executed successfully
+      When job mod3CancelV2 triggered after 5 seconds
+      And wait 6 seconds for expiration
+      And psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+      Then check outcome is OK of verificaBollettino response
+      And wait 5 seconds for expiration
+      And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3

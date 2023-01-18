@@ -11,13 +11,13 @@ Background:
         <soapenv:Header/>
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>AGID_01</idPSP>
-            <idBrokerPSP>97735020584</idBrokerPSP>
-            <idChannel>97735020584_03</idChannel>
+            <idPSP>#psp_AGID#</idPSP>
+            <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+            <idChannel>#canale_AGID#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>302094719472095710</noticeNumber>
+                <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
         </nod:verifyPaymentNoticeReq>
         </soapenv:Body>
@@ -34,15 +34,15 @@ Scenario: Execute activateIOPayment (Phase 2)
         <soapenv:Header/>
         <soapenv:Body>
             <nod:activateIOPaymentReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
+                <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+                <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+                <idChannel>$verifyPaymentNotice.idChannel</idChannel>
                 <password>pwdpwdpwd</password>
                 <!--Optional:-->
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>#notice_number#</noticeNumber>
+                    <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
                 <expirationTime>12345</expirationTime>
@@ -84,12 +84,13 @@ Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     Given the Execute activateIOPayment (Phase 2) scenario executed successfully
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
-    
+
 Scenario: Execute nodoNotificaAnnullamento (Phase 4)
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of notificaAnnullamento response is 200
 
+@runnable
 Scenario: Execute activateIOPayment1 (Phase 5)
     Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 6000
     Given the Execute nodoNotificaAnnullamento (Phase 4) scenario executed successfully

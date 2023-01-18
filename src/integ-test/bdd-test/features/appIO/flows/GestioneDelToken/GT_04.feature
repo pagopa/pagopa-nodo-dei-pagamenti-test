@@ -12,9 +12,9 @@ Feature: GT_04
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:verifyPaymentNoticeReq>
-                        <idPSP>AGID_01</idPSP>
-                        <idBrokerPSP>97735020584</idBrokerPSP>
-                        <idChannel>97735020584_03</idChannel>
+                        <idPSP>#psp_AGID#</idPSP>
+                        <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                        <idChannel>#canale_AGID#</idChannel>
                         <password>pwdpwdpwd</password>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -26,7 +26,7 @@ Feature: GT_04
             """
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-
+@runnable
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML activateIOPayment
@@ -88,5 +88,5 @@ Feature: GT_04
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column TOKEN of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column TOKEN_VALID_FROM of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-        And check token validity
+        And check token_valid_to is equal to token_valid_from plus default_durata_token_IO
         And restore initial configurations

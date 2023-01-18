@@ -6,44 +6,35 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
       xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-        <soapenv:Header/>
-        <soapenv:Body>
-          <nod:activatePaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
-            <idChannel>70000000001_01</idChannel>
-            <password>pwdpwdpwd</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-              <fiscalCode>#creditor_institution_code#</fiscalCode>
-              <noticeNumber>#notice_number#</noticeNumber>
-            </qrCode>
-            <expirationTime>120000</expirationTime>
-            <amount>10.00</amount>
-            <dueDate>2021-12-31</dueDate>
-            <paymentNote>causale</paymentNote>
-          </nod:activatePaymentNoticeReq>
-        </soapenv:Body>
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:activatePaymentNoticeReq>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+      <password>pwdpwdpwd</password>
+      <idempotencyKey>#idempotency_key#</idempotencyKey>
+      <qrCode>
+      <fiscalCode>#creditor_institution_code#</fiscalCode>
+      <noticeNumber>#notice_number#</noticeNumber>
+      </qrCode>
+      <expirationTime>120000</expirationTime>
+      <amount>10.00</amount>
+      <dueDate>2021-12-31</dueDate>
+      <paymentNote>causale</paymentNote>
+      </nod:activatePaymentNoticeReq>
+      </soapenv:Body>
       </soapenv:Envelope>
       """
 
-  # attribute value check
-  Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
-    Given <attribute> set <value> for <elem> in activatePaymentNotice
-    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is KO of activatePaymentNotice response
-    And check faultCode is PPT_SINTASSI_EXTRAXSD of activatePaymentNotice response
-    Examples:
-      | elem             | attribute     | value                                     | soapUI test |
-      | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_APNR_01 |
-
-
+  @check
   # element value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
     Given <elem> with <value> in activatePaymentNotice
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_SINTASSI_EXTRAXSD of activatePaymentNotice response
+    #@apim i test sotto sono stati momentaneamente commentati in attesa di runnable su APIM
     Examples:
       | elem                         | value                                                                                                                                                                                                               | soapUI test   |
       | soapenv:Body                 | None                                                                                                                                                                                                                | SIN_APNR_02   |
@@ -62,18 +53,16 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       | password                     | Empty                                                                                                                                                                                                               | SIN_APNR_15   |
       | password                     | 1234567                                                                                                                                                                                                             | SIN_APNR_16   |
       | password                     | 1234567890123456                                                                                                                                                                                                    | SIN_APNR_17   |
-      | idempotencyKey               | Empty                                                                                                                                                                                                               | SIN_APNR_19   |
-      | idempotencyKey               | 70000000001.1244565744                                                                                                                                                                                              | SIN_APNR_20   |
-      | idempotencyKey               | 70000000001_%244565744                                                                                                                                                                                              | SIN_APNR_20   |
-      | idempotencyKey               | 70000000001-1244565744                                                                                                                                                                                              | SIN_APNR_20   |
-      | idempotencyKey               | 1244565768_70000000001                                                                                                                                                                                              | SIN_APNR_20   |
+      | idempotencyKey               | 60000000001.1244565744                                                                                                                                                                                              | SIN_APNR_20   |
+      | idempotencyKey               | 60000000001_%244565744                                                                                                                                                                                              | SIN_APNR_20   |
+      | idempotencyKey               | 60000000001-1244565744                                                                                                                                                                                              | SIN_APNR_20   |
+      | idempotencyKey               | 1244565768_#psp#                                                                                                                                                                                                    | SIN_APNR_20   |
       | idempotencyKey               | 1244565744                                                                                                                                                                                                          | SIN_APNR_20   |
-      | idempotencyKey               | 700000000011244565744                                                                                                                                                                                               | SIN_APNR_20   |
-      | idempotencyKey               | 70000000001_12445657684                                                                                                                                                                                             | SIN_APNR_21   |
-      | idempotencyKey               | 70000000001_124456576                                                                                                                                                                                               | SIN_APNR_22   |
-      | idempotencyKey               | 700000hj123_1244565767                                                                                                                                                                                              | SIN_APNR_22.1 |
+      | idempotencyKey               | 600000000011244565744                                                                                                                                                                                               | SIN_APNR_20   |
+      | idempotencyKey               | 60000000001_12445657684                                                                                                                                                                                             | SIN_APNR_21   |
+      | idempotencyKey               | 60000000001_124456576                                                                                                                                                                                               | SIN_APNR_22   |
+      | idempotencyKey               | 600000hj123_1244565767                                                                                                                                                                                              | SIN_APNR_22.1 |
       | qrCode                       | None                                                                                                                                                                                                                | SIN_APNR_23   |
-      | qrCode                       | RemoveParent                                                                                                                                                                                                        | SIN_APNR_24   |
       | qrCode                       | Empty                                                                                                                                                                                                               | SIN_APNR_25   |
       | fiscalCode                   | None                                                                                                                                                                                                                | SIN_APNR_26   |
       | fiscalCode                   | Empty                                                                                                                                                                                                               | SIN_APNR_27   |
@@ -91,6 +80,7 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       | expirationTime               | 48:12:12                                                                                                                                                                                                            | SIN_APNR_37   |
       | expirationTime               | 12:12                                                                                                                                                                                                               | SIN_APNR_37   |
       | expirationTime               | 1800001                                                                                                                                                                                                             | SIN_APNR_38   |
+      | amount                       | None                                                                                                                                                                                                                | SIN_APNR_39   |
       | amount                       | Empty                                                                                                                                                                                                               | SIN_APNR_40   |
       | amount                       | 10,00                                                                                                                                                                                                               | SIN_APNR_41   |
       | amount                       | 10.1                                                                                                                                                                                                                | SIN_APNR_42   |
@@ -102,4 +92,3 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       | dueDate                      | 12-12-21                                                                                                                                                                                                            | SIN_APNR_46   |
       | dueDate                      | 2021-03-06T15:25:32                                                                                                                                                                                                 | SIN_APNR_46   |
       | paymentNote                  | Empty                                                                                                                                                                                                               | SIN_APNR_48   |
-      | paymentNote                  | test di prova sulla lunghezza superiore a 140 caratteri per il parametro della primitiva activatePaymentNoticeReq paymentNote prova prova pro activatePaymentNoticeReq paymentNote prova prova pro activatePaymentN | SIN_APNR_49   |

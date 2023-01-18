@@ -4,16 +4,16 @@ Feature: FLUSSO_APIO_04_PPALNEW
         Given systems up
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
-        Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 8000
+    Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 8000
         And initial XML verifyPaymentNotice
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
+                <idPSP>#psp_AGID#</idPSP>
+                <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                <idChannel>#canale_AGID#</idChannel>
                 <password>pwdpwdpwd</password>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -25,7 +25,7 @@ Feature: FLUSSO_APIO_04_PPALNEW
         """
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-
+    
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML activateIOPayment
@@ -42,7 +42,7 @@ Feature: FLUSSO_APIO_04_PPALNEW
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>#notice_number#</noticeNumber>
+                    <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
                 <expirationTime>6000</expirationTime>
@@ -85,38 +85,40 @@ Feature: FLUSSO_APIO_04_PPALNEW
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
+    @runnable
     Scenario: Execute nodoInoltroEsitoPayPal (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-                <psp:pspNotifyPaymentRes>
-                <outcome>OK</outcome>
-                <!--Optional:-->
-                <wait>20</wait>
-                </psp:pspNotifyPaymentRes>
+            <pfn:pspNotifyPaymentRes>
+            <delay>10000</delay>
+            <outcome>OK</outcome>
+            </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
-        </soapenv:Envelope>
-        """
-        When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
-        """
-        {
-            "idTransazione": "responseKO",
-            "idTransazionePsp":"$activateIOPayment.idempotencyKey",
-            "idPagamento": "$activateIOPaymentResponse.paymentToken",
-            "identificativoIntermediario": "40000000001",
-            "identificativoPsp": "40000000001",
-            "identificativoCanale": "40000000001_03",
-            "importoTotalePagato": 10.00,
-            "timestampOperazione": "2012-04-23T18:25:43Z"
-        }
-        """
+            </soapenv:Envelope>
+            """
+        When WISP sends rest POST inoltroEsito/paypal to nodo-dei-pagamenti
+            """
+            {
+                "idTransazione": "responseKO",
+                "idTransazionePsp": "$activateIOPayment.idempotencyKey",
+                "idPagamento": "$activateIOPaymentResponse.paymentToken",
+                "identificativoIntermediario": "#psp#",
+                "identificativoPsp": "#psp#",
+                "identificativoCanale": "#canale#",
+                "importoTotalePagato": 10,
+                "timestampOperazione": "2012-04-23T18:25:43Z"
+            }
+            """
+        And wait 10 seconds for expiration
         And job mod3CancelV2 triggered after 10 seconds
-        And wait 17 seconds for expiration
+        And wait 20 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/paypal response is 408
         And check error is Operazione in timeout of inoltroEsito/paypal response
+        And refresh job CONFIG triggered after 10 seconds
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO

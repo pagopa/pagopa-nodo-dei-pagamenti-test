@@ -2,7 +2,8 @@ Feature: Semantic checks for nodoChiediElencoFlussiRendicontazione - KO
 
     Background:
         Given systems up
-
+    
+    @runnable
     Scenario Outline: Check semantic errors for nodoChiediElencoFlussiRendicontazione primitive
         Given initial XML nodoChiediElencoFlussiRendicontazione
             """
@@ -10,10 +11,10 @@ Feature: Semantic checks for nodoChiediElencoFlussiRendicontazione - KO
             <soapenv:Header />
             <soapenv:Body>
             <ws:nodoChiediElencoFlussiRendicontazione>
-            <identificativoIntermediarioPA>#codicePA#</identificativoIntermediarioPA>
+            <identificativoIntermediarioPA>#creditor_institution_code#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
             <password>pwdpwdpwd</password>
-            <identificativoDominio>#codicePA#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoPSP>#psp#</identificativoPSP>
             </ws:nodoChiediElencoFlussiRendicontazione>
             </soapenv:Body>
@@ -23,14 +24,14 @@ Feature: Semantic checks for nodoChiediElencoFlussiRendicontazione - KO
         When EC sends SOAP nodoChiediElencoFlussiRendicontazione to nodo-dei-pagamenti
         Then check faultCode is <error> of nodoChiediElencoFlussiRendicontazione response
         Examples:
-            | elem                                  | value               | error                             | soapUI test |
-            | identificativoIntermediarioPA         | ciaoIntermediarioPA | PPT_INTERMEDIARIO_PA_SCONOSCIUTO  | CEFRSEM1    |
-            | identificativoIntermediarioPA         | INT_NOT_ENABLED     | PPT_INTERMEDIARIO_PA_DISABILITATO | CEFRSEM2    |
-            | identificativoStazioneIntermediarioPA | ciaoStazionePA      | PPT_STAZIONE_INT_PA_SCONOSCIUTA   | CEFRSEM3    |
-            | identificativoStazioneIntermediarioPA | 77777777777_05      | PPT_STAZIONE_INT_PA_DISABILITATA  | CEFRSEM4    |
-            | password                              | password01          | PPT_AUTENTICAZIONE                | CEFRSEM5    |
-            | identificativoDominio                 | ciaoDominio         | PPT_DOMINIO_SCONOSCIUTO           | CEFRSEM6    |
-            | identificativoDominio                 | NOT_ENABLED         | PPT_DOMINIO_DISABILITATO          | CEFRSEM7    |
-            | identificativoPSP                     | ciaoPSP             | PPT_PSP_SCONOSCIUTO               | CEFRSEM8    |
-            | identificativoPSP                     | NOT_ENABLED         | PPT_PSP_DISABILITATO              | CEFRSEM9    |
-            | identificativoIntermediarioPA         | 90000000001         | PPT_AUTORIZZAZIONE                | CEFRSEM10   |
+            | elem                                  | value                | error                             | soapUI test |
+            | identificativoIntermediarioPA         | ciaoIntermediarioPA  | PPT_INTERMEDIARIO_PA_SCONOSCIUTO  | CEFRSEM1    |
+            | identificativoIntermediarioPA         | INT_NOT_ENABLED      | PPT_INTERMEDIARIO_PA_DISABILITATO | CEFRSEM2    |
+            | identificativoStazioneIntermediarioPA | ciaoStazionePA       | PPT_STAZIONE_INT_PA_SCONOSCIUTA   | CEFRSEM3    |
+            | identificativoStazioneIntermediarioPA | STAZIONE_NOT_ENABLED | PPT_STAZIONE_INT_PA_DISABILITATA  | CEFRSEM4    |
+            | password                              | password01           | PPT_AUTENTICAZIONE                | CEFRSEM5    |
+            | identificativoDominio                 | ciaoDominio          | PPT_DOMINIO_SCONOSCIUTO           | CEFRSEM6    |
+            | identificativoDominio                 | NOT_ENABLED          | PPT_DOMINIO_DISABILITATO          | CEFRSEM7    |
+            | identificativoPSP                     | ciaoPSP              | PPT_PSP_SCONOSCIUTO               | CEFRSEM8    |
+            | identificativoPSP                     | NOT_ENABLED          | PPT_PSP_DISABILITATO              | CEFRSEM9    |
+            | identificativoIntermediarioPA         | 90000000001          | PPT_AUTORIZZAZIONE                | CEFRSEM10   |

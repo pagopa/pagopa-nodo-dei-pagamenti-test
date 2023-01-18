@@ -1,4 +1,4 @@
-Feature: syntax checks for pspNotifyPaymentResponse - OK
+Feature: Syntax checks for pspNotifyPaymentResponse - OK
 
   Background:
     Given systems up
@@ -8,9 +8,9 @@ Feature: syntax checks for pspNotifyPaymentResponse - OK
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:activateIOPaymentReq>
-                     <idPSP>70000000001</idPSP>
-                     <idBrokerPSP>70000000001</idBrokerPSP>
-                     <idChannel>70000000001_01</idChannel>
+                     <idPSP>#psp_AGID#</idPSP>
+                     <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                     <idChannel>#canale_AGID#</idChannel>
                      <password>pwdpwdpwd</password>
                      <!--Optional:-->
                      <idempotencyKey>#idempotency_key#</idempotencyKey>
@@ -53,9 +53,11 @@ Feature: syntax checks for pspNotifyPaymentResponse - OK
       """
     And EC new version
 
+
   Scenario: Execute activateIOPaymentReq request
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
+
 
   # nodoChiediInformazioniPagamento phase
   Scenario: Execute nodoChiediInformazioniPagamento request
@@ -63,17 +65,17 @@ Feature: syntax checks for pspNotifyPaymentResponse - OK
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
 
-
+  @runnable
     # nodoInoltraEsitoPagamentoCarte phase
   Scenario: Execute nodoInoltraEsitoPagamentoCarte request
     Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
     And initial XML pspNotifyPayment
     """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
       <soapenv:Body>
-        <psp:pspNotifyPaymentRes>
+        <pfn:pspNotifyPaymentRes>
           <outcome>OK</outcome>
-        </psp:pspNotifyPaymentRes>
+        </pfn:pspNotifyPaymentRes>
       </soapenv:Body>
     </soapenv:Envelope>
     """
@@ -84,9 +86,9 @@ Feature: syntax checks for pspNotifyPaymentResponse - OK
         "RRN":10026669,
         "tipoVersamento":"CP",
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
-        "identificativoIntermediario":"40000000001",
-        "identificativoPsp":"40000000001",
-        "identificativoCanale":"40000000001_06",
+        "identificativoIntermediario":"#psp#",
+        "identificativoPsp":"#psp#",
+        "identificativoCanale":"#canale#",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
         "codiceAutorizzativo":"resOK",

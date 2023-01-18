@@ -3,7 +3,7 @@ Feature: Semantic checks for chiediListaPSP primitive
     Background:
         Given systems up
         And EC new version
-
+        
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given initial XML verifyPaymentNotice
             """
@@ -11,13 +11,13 @@ Feature: Semantic checks for chiediListaPSP primitive
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:verifyPaymentNoticeReq>
-                        <idPSP>70000000001</idPSP>
-                        <idBrokerPSP>70000000001</idBrokerPSP>
-                        <idChannel>70000000001_01</idChannel>
+                        <idPSP>#psp_AGID#</idPSP>
+                        <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                        <idChannel>#canale_AGID#</idChannel>
                         <password>pwdpwdpwd</password>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
-                            <noticeNumber>302094719472095710</noticeNumber>
+                            <noticeNumber>#notice_number#</noticeNumber>
                         </qrCode>
                     </nod:verifyPaymentNoticeReq>
                 </soapenv:Body>
@@ -25,7 +25,7 @@ Feature: Semantic checks for chiediListaPSP primitive
             """
         When AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-
+    
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML activateIOPayment
@@ -34,15 +34,15 @@ Feature: Semantic checks for chiediListaPSP primitive
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:activateIOPaymentReq>
-                        <idPSP>70000000001</idPSP>
-                        <idBrokerPSP>70000000001</idBrokerPSP>
-                        <idChannel>70000000001_01</idChannel>
+                        <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+                        <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+                        <idChannel>$verifyPaymentNotice.idChannel</idChannel>
                         <password>pwdpwdpwd</password>
                         <!--Optional:-->
                         <idempotencyKey>#idempotency_key#</idempotencyKey>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
-                            <noticeNumber>#notice_number#</noticeNumber>
+                            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                         </qrCode>
                         <!--Optional:-->
                         <expirationTime>12345</expirationTime>
@@ -79,29 +79,39 @@ Feature: Semantic checks for chiediListaPSP primitive
             """
         When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-
+        
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
+    @check
      # [PRO_CLPSP_14]
-    Scenario: Check semantic correctness - OK
+    Scenario: Check semantic correctness - OK [PRO_CLPSP_14]
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends rest GET listaPSP?percorsoPagamento=CARTE&idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
 
-    Scenario Outline: Check semantic correctness - KO
+    @check
+    Scenario Outline: Check semantic correctness - KO [outline PRO_CLPSP_08-14]
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends rest GET <service> to nodo-dei-pagamenti
         Then check error is <value> of listaPSP response
         And verify the HTTP status code of listaPSP response is <status_code>
         Examples:
             | service                                                                              | value                            | status_code | test         |
-            | listaPSP?percorsoPagamento=CARTE                                                     | Richiesta non valida             | 400         | PRO_CLPSP_07 |
             | listaPSP?idPagamento&percorsoPagamento=CARTE                                         | Richiesta non valida             | 400         | PRO_CLPSP_08 |
             | listaPSP?idPagamento=PAGAMENTOCHENONESISTEDENTROALDB_&percorsoPagamento=CARTE        | Il Pagamento indicato non esiste | 404         | PRO_CLPSP_09 |
-            | listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken                         | Richiesta non valida             | 400         | PRO_CLPSP_11 |
             | listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento       | Percorso di Pagamento invalido   | 422         | PRO_CLPSP_12 |
             | listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=PIPPO | Percorso di Pagamento invalido   | 422         | PRO_CLPSP_13 |
             | listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=carte | Percorso di Pagamento invalido   | 422         | PRO_CLPSP_14 |
+    
+    @check
+    Scenario Outline: Check semantic correctness - KO [outline PRO_CLPSP_07/11]
+        Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
+        When WISP sends rest GET <service> to nodo-dei-pagamenti
+        Then verify the HTTP status code of listaPSP response is <status_code>
+        Examples:
+            | service                                                                              | status_code | test         |
+            | listaPSP?percorsoPagamento=CARTE                                                     | 404         | PRO_CLPSP_07 |
+            | listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken                         | 404         | PRO_CLPSP_11 |

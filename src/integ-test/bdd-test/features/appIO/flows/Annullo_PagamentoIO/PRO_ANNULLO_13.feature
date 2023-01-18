@@ -11,9 +11,9 @@ Feature: PRO_ANNULLO_13
             <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
+                <idPSP>#psp_AGID#</idPSP>
+                <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                <idChannel>#canale_AGID#</idChannel>
                 <password>pwdpwdpwd</password>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -42,7 +42,7 @@ Feature: PRO_ANNULLO_13
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>#notice_number#</noticeNumber>
+                    <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
                 <expirationTime>6000</expirationTime>
@@ -85,15 +85,15 @@ Feature: PRO_ANNULLO_13
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-    
+    @runnable   
     Scenario: Execute nodoInoltroEsitoPagamentoCarta (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
         """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
         <soapenv:Header/>
         <soapenv:Body>
-            <psp:pspNotifyPaymentRes>
+            <pfn:pspNotifyPaymentRes>
             <outcome>KO</outcome>
             <!--Optional:-->
             <fault>
@@ -103,7 +103,7 @@ Feature: PRO_ANNULLO_13
                 <!--Optional:-->
                 <description>Errore dal psp</description>
             </fault>
-            </psp:pspNotifyPaymentRes>
+            </pfn:pspNotifyPaymentRes>
         </soapenv:Body>
         </soapenv:Envelope>
         """
@@ -113,9 +113,9 @@ Feature: PRO_ANNULLO_13
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
         "RRN":10026669,
         "tipoVersamento":"CP",
-        "identificativoIntermediario":"40000000001",
-        "identificativoPsp":"40000000001",
-        "identificativoCanale":"40000000001_06",
+        "identificativoIntermediario":"#psp#",
+        "identificativoPsp":"#psp#",
+        "identificativoCanale":"#canale#",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
         "codiceAutorizzativo":"resKO",

@@ -5,53 +5,70 @@ Feature: Syntax checks for activateIOPaymentReq - KO
         And initial XML activateIOPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <nod:activateIOPaymentReq>
-                        <idPSP>70000000001</idPSP>
-                        <idBrokerPSP>70000000001</idBrokerPSP>
-                        <idChannel>70000000001_01</idChannel>
-                        <password>pwdpwdpwd</password>
-                        <!--Optional:-->
-                        <idempotencyKey>#idempotency_key#</idempotencyKey>
-                        <qrCode>
-                            <fiscalCode>#creditor_institution_code#</fiscalCode>
-                            <noticeNumber>#notice_number#</noticeNumber>
-                        </qrCode>
-                        <!--Optional:-->
-                        <expirationTime>12345</expirationTime>
-                        <amount>10.00</amount>
-                        <!--Optional:-->
-                        <dueDate>2021-12-12</dueDate>
-                        <!--Optional:-->
-                        <paymentNote>test</paymentNote>
-                        <!--Optional:-->
-                        <payer>
-                            <uniqueIdentifier>
-                                <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                                <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
-                            </uniqueIdentifier>
-                            <fullName>name</fullName>
-                            <!--Optional:-->
-                            <streetName>street</streetName>
-                            <!--Optional:-->
-                            <civicNumber>civic</civicNumber>
-                            <!--Optional:-->
-                            <postalCode>code</postalCode>
-                            <!--Optional:-->
-                            <city>city</city>
-                            <!--Optional:-->
-                            <stateProvinceRegion>state</stateProvinceRegion>
-                            <!--Optional:-->
-                            <country>IT</country>
-                            <!--Optional:-->
-                            <e-mail>test.prova@gmail.com</e-mail>
-                        </payer>
-                    </nod:activateIOPaymentReq>
-                </soapenv:Body>
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:activateIOPaymentReq>
+            <idPSP>#psp_AGID#</idPSP>
+            <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+            <idChannel>#canale_AGID#</idChannel>
+            <password>pwdpwdpwd</password>
+            <!--Optional:-->
+            <idempotencyKey>#idempotency_key#</idempotencyKey>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>#notice_number#</noticeNumber>
+            </qrCode>
+            <!--Optional:-->
+            <expirationTime>12345</expirationTime>
+            <amount>10.00</amount>
+            <!--Optional:-->
+            <dueDate>2021-12-12</dueDate>
+            <!--Optional:-->
+            <paymentNote>test</paymentNote>
+            <!--Optional:-->
+            <payer>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>name</fullName>
+            <!--Optional:-->
+            <streetName>street</streetName>
+            <!--Optional:-->
+            <civicNumber>civic</civicNumber>
+            <!--Optional:-->
+            <postalCode>code</postalCode>
+            <!--Optional:-->
+            <city>city</city>
+            <!--Optional:-->
+            <stateProvinceRegion>state</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>test.prova@gmail.com</e-mail>
+            </payer>
+            </nod:activateIOPaymentReq>
+            </soapenv:Body>
             </soapenv:Envelope>
             """
 
+    @check
+    Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
+        Given <elem> with <value> in activateIOPayment
+        When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
+        Then check outcome is KO of activateIOPayment response
+        And check faultCode is PPT_SINTASSI_EXTRAXSD of activateIOPayment response
+        Examples:
+            | elem                       | value | soapUI test  |
+            | entityUniqueIdentifierType | None  | SIN_AIOPR_02 |
+            | entityUniqueIdentifierType | Empty | SIN_AIOPR_03 |
+            | idempotencyKey             | Empty | SIN_AIOPR_04 |
+            | amount                     | None  | SIN_AIOPR_24 |
+            | amount                     | Empty | SIN_AIOPR_26 |
+            | fiscalCode                 | Empty | SIN_AIOPR_27 |
+            | noticeNumber               | Empty | SIN_AIOPR_32 |
+
+    @check
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
         Given <attribute> set <value> for <elem> in activateIOPayment
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
@@ -61,16 +78,14 @@ Feature: Syntax checks for activateIOPaymentReq - KO
             | elem             | attribute     | value                                     | soapUI test  |
             | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_AIOPR_01 |
 
-    Scenario Outline: Check PPT_SINTASSI_EXTRASXSD error on invalid body element value
+    @check
+    Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
         Given <elem> with <value> in activateIOPayment
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is KO of activateIOPayment response
         And check faultCode is PPT_SINTASSI_EXTRAXSD of activateIOPayment response
         Examples:
             | elem                        | value                                                                                                                                                                                                                                                             | soapUI test  |
-            | soapenv:Body                | None                                                                                                                                                                                                                                                              | SIN_AIOPR_02 |
-            | soapenv:Body                | Empty                                                                                                                                                                                                                                                             | SIN_AIOPR_03 |
-            | nod:activateIOPaymentReq    | Empty                                                                                                                                                                                                                                                             | SIN_AIOPR_04 |
             | idPSP                       | None                                                                                                                                                                                                                                                              | SIN_AIOPR_05 |
             | idPSP                       | Empty                                                                                                                                                                                                                                                             | SIN_AIOPR_06 |
             | idPSP                       | rwEtgqWfYwFQPbViQGnNezKnsNtPOAHLgllk                                                                                                                                                                                                                              | SIN_AIOPR_07 |
@@ -94,15 +109,11 @@ Feature: Syntax checks for activateIOPaymentReq - KO
             | idempotencyKey              | 70000000001_12445657684                                                                                                                                                                                                                                           | SIN_AIOPR_21 |
             | idempotencyKey              | 70000000001_124456576                                                                                                                                                                                                                                             | SIN_AIOPR_22 |
             | idempotencyKey              | 700000hj123_1244565767                                                                                                                                                                                                                                            | SIN_AIOPR_23 |
-            | qrCode                      | None                                                                                                                                                                                                                                                              | SIN_AIOPR_24 |
             | qrCode                      | RemoveParent                                                                                                                                                                                                                                                      | SIN_AIOPR_25 |
-            | qrCode                      | Empty                                                                                                                                                                                                                                                             | SIN_AIOPR_26 |
-            | fiscalCode                  | None                                                                                                                                                                                                                                                              | SIN_AIOPR_27 |
             | fiscalCode                  | Empty                                                                                                                                                                                                                                                             | SIN_AIOPR_28 |
             | fiscalCode                  | qvQoUVvmru                                                                                                                                                                                                                                                        | SIN_AIOPR_29 |
             | fiscalCode                  | oACMPdRkhfgo                                                                                                                                                                                                                                                      | SIN_AIOPR_30 |
             | fiscalCode                  | oACMPd%khfgo                                                                                                                                                                                                                                                      | SIN_AIOPR_31 |
-            | noticeNumber                | None                                                                                                                                                                                                                                                              | SIN_AIOPR_32 |
             | noticeNumber                | Empty                                                                                                                                                                                                                                                             | SIN_AIOPR_33 |
             | noticeNumber                | 43138814989806638                                                                                                                                                                                                                                                 | SIN_AIOPR_34 |
             | noticeNumber                | 7289343950087913278                                                                                                                                                                                                                                               | SIN_AIOPR_34 |

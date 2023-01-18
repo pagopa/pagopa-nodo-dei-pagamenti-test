@@ -11,9 +11,9 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
          <soapenv:Header/>
          <soapenv:Body>
             <nod:activateIOPaymentReq>
-               <idPSP>AGID_01</idPSP>
-               <idBrokerPSP>97735020584</idBrokerPSP>
-               <idChannel>97735020584_03</idChannel>
+               <idPSP>#psp_AGID#</idPSP>
+               <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+               <idChannel>#canale_AGID#</idChannel>
                <password>pwdpwdpwd</password>
                <idempotencyKey>#idempotency_key#</idempotencyKey>
                <qrCode>
@@ -32,7 +32,7 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
 
   # Payment Phase
   Scenario: Execute nodoChiediInformazioniPagamento request
-    Given the activateIOPayment scenario executed successfully
+    Given the Execute activateIOPayment scenario executed successfully
     When WISP/PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
 
@@ -44,10 +44,10 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
     {
          "idPagamento": "$activateIOPaymentResponse.paymentToken",
          "RRN": 0,
-         "identificativoPsp": "40000000001",
+         "identificativoPsp": "#psp#",
          "tipoVersamento": "CP",
-         "identificativoIntermediario": "40000000001",
-         "identificativoCanale": "40000000001_06",
+         "identificativoIntermediario": "#psp#",
+         "identificativoCanale": "#canale#",
          "importoTotalePagato": 20.1,
          "timestampOperazione": "2012-04-23T18:25:43Z",
          "codiceAutorizzativo": "666666",
@@ -65,15 +65,15 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
   # Send receipt phase
   Scenario: Execute sendPaymentOutcome request
     Given the Verify consistency between activateIOPaymentRes and pspNotifyPaymentReq scenario executed successfully
-    Given initial XML sendPaymentOutcome
+    And initial XML sendPaymentOutcome
     """
      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
         <soapenv:Header/>
         <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
-                <idPSP>40000000001</idPSP>
-                <idBrokerPSP>40000000001</idBrokerPSP>
-                <idChannel>40000000001_06</idChannel>
+                <idPSP>#psp#</idPSP>
+                <idBrokerPSP>#psp#</idBrokerPSP>
+                <idChannel>#canale#</idChannel>
                 <password>pwdpwdpwd</password>
                 <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
                 <outcome>OK</outcome>
@@ -105,6 +105,7 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
+  @runable
   Scenario: Execute paSendRT request
     Given the Execute sendPaymentOutcome request scenario executed successfully
     Then check EC receives paSendRT properly

@@ -29,7 +29,8 @@ Feature: semantic checks for sendPaymentOutcomeReq - PPT_TOKEN_SCONOSCIUTO [SEM_
     """
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-    
+
+@runnable    
   # sendPaymentOutcomeReq phase
   Scenario: Execute a sendPaymentOutcome request
     Given the Execute activatePaymentNotice request scenario executed successfully
@@ -39,9 +40,9 @@ Feature: semantic checks for sendPaymentOutcomeReq - PPT_TOKEN_SCONOSCIUTO [SEM_
            <soapenv:Header/>
            <soapenv:Body>
               <nod:sendPaymentOutcomeReq>
-                 <idPSP>70000000001</idPSP>
-                 <idBrokerPSP>70000000001</idBrokerPSP>
-                 <idChannel>70000000001_01</idChannel>
+                 <idPSP>#psp#</idPSP>
+                 <idBrokerPSP>#psp#</idBrokerPSP>
+                 <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                  <password>pwdpwdpwd</password>
                  <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
                  <outcome>OK</outcome>

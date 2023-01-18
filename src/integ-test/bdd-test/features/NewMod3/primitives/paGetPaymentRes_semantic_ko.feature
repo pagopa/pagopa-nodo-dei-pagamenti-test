@@ -2,15 +2,15 @@ Feature:  semantic checks for paGetPaymentRes - KO
 
 	Background:
 		Given systems up
-		And initial XML activatePaymentNoticeReq
+		And initial XML activatePaymentNotice
 			"""
 			<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
 				<soapenv:Header/>
 				<soapenv:Body>
 					<nod:activatePaymentNoticeReq>
-						<idPSP>70000000001</idPSP>
-						<idBrokerPSP>70000000001</idBrokerPSP>
-						<idChannel>70000000001_01</idChannel>
+						<idPSP>#psp#</idPSP>
+						<idBrokerPSP>#psp#</idBrokerPSP>
+						<idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
 						<password>pwdpwdpwd</password>
 						<idempotencyKey>#idempotency_key#</idempotencyKey>
 						<qrCode>
@@ -26,6 +26,7 @@ Feature:  semantic checks for paGetPaymentRes - KO
 			"""
 		And EC new version
 
+	@runnable
 	# fiscalCodePA and IBAN check: fiscalCodePA and IBAN not in db, fiscalCodePA with field ENABLED = N, IBAN not associated to fiscalCodePa in NODO4_CFG.INFORMATIVE_CONTO_ACCREDITO_DETAIL table
 	Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on non-existent or disabled body element value
 		Given initial XML paGetPayment
@@ -97,9 +98,9 @@ Feature:  semantic checks for paGetPaymentRes - KO
 			"""
 		And <tag> with <tag_value> in paGetPayment
 		And EC replies to nodo-dei-pagamenti with the paGetPayment
-		When PSP sends SOAP activatePaymentNoticeReq to nodo-dei-pagamenti
-		Then check outcome is KO of activatePaymentNoticeReq response
-		And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeReq response
+		When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+		Then check outcome is KO of activatePaymentNotice response
+		And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNotice response
 		Examples:
 			| tag          | tag_value                   | soapUI test |
 			| fiscalCodePA | 10000000000                 | SEM_PGPR_03 |

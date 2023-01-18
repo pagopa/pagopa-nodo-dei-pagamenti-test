@@ -8,10 +8,10 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
                 <soapenv:Header/>
                 <soapenv:Body>
                     <ws:nodoChiediCopiaRT>
-                        <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
-                        <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
+                        <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
+                        <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
                         <password>pwdpwdpwd</password>
-                        <identificativoDominio>44444444444</identificativoDominio>
+                        <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
                         <identificativoUnivocoVersamento>IUV846</identificativoUnivocoVersamento>
                         <codiceContestoPagamento>codiceContestoPagamento</codiceContestoPagamento>
                     </ws:nodoChiediCopiaRT>
@@ -19,6 +19,7 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             </soapenv:Envelope>
             """
 
+@runnable
     Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
         Given <tag> with <tag_value> in nodoChiediCopiaRT
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
@@ -28,7 +29,7 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             | identificativoIntermediarioPA         | 12345678901             | PPT_INTERMEDIARIO_PA_SCONOSCIUTO  | CCRTSEM1    |
             | identificativoIntermediarioPA         | INT_NOT_ENABLED         | PPT_INTERMEDIARIO_PA_DISABILITATO | CCRTSEM2    |
             | identificativoStazioneIntermediarioPA | unknownStation          | PPT_STAZIONE_INT_PA_SCONOSCIUTA   | CCRTSEM3    |
-            | identificativoStazioneIntermediarioPA | STAZIONE_NOT_ENABLED    | PPT_STAZIONE_INT_PA_DISABILITATA  | CCRTSEM4    |
+            | identificativoStazioneIntermediarioPA | #id_station_disabled#   | PPT_STAZIONE_INT_PA_DISABILITATA  | CCRTSEM4    |
             | password                              | wrongPassword           | PPT_AUTENTICAZIONE                | CCRTSEM5    |
             | identificativoDominio                 | 12345678902             | PPT_DOMINIO_SCONOSCIUTO           | CCRTSEM6    |
             | identificativoDominio                 | NOT_ENABLED             | PPT_DOMINIO_DISABILITATO          | CCRTSEM7    |
@@ -36,13 +37,19 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             | codiceContestoPagamento               | wrongPaymentContextCode | PPT_RT_SCONOSCIUTA                | CCRTSEM9    |
             | identificativoIntermediarioPA         | 77777777777             | PPT_AUTORIZZAZIONE                | CCRTSEM12   |
 
-    # TODO: COMPLETARE CON VALORI ESATTI
-    Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
-        Given identificativoUnivocoVersamento with <iuv_value> in nodoChiediCopiaRT
+@runnable
+Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
+        Given replace status content with RPT_ACCETTATA_PSP content
+        And replace pa content with #creditor_institution_code_old# content
+        And execution query stati_rpt_snapshot to get value on the table STATI_RPT_SNAPSHOT, with the columns IUV, CCP under macro Primitive_accessorie with db name nodo_online
+        And through the query stati_rpt_snapshot retrieve param iuv at position 0 in the row 0 and save it under the key iuv
+        And through the query stati_rpt_snapshot retrieve param ccp at position 1 in the row 0 and save it under the key ccp
+        And identificativoUnivocoVersamento with <iuv_value> in nodoChiediCopiaRT
         And codiceContestoPagamento with <ccp_value> in nodoChiediCopiaRT
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
         Then check faultCode is <error> of nodoChiediCopiaRT response
+        #per il test CCRTSEM11 prendere i dati dal db dalla STATI_RPT_SNAPSHOT con STATO = 'RPT_ACCETTATA_PSP'
         Examples:
-            | iuv_value         | ccp_value         | error                 | soapUI test |
-            | iuv_value_in_db_1 | ccp_value_in_db_1 | PPT_RT_SCONOSCIUTA    | CCRTSEM10   |
-            | iuv_value_in_db_2 | ccp_value_in_db_2 | PPT_RT_NONDISPONIBILE | CCRTSEM11   |
+            | iuv_value                       | ccp_value         | error                 | soapUI test |
+            | 11000679416493210               | 59050             | PPT_RT_SCONOSCIUTA    | CCRTSEM10   |
+            | $iuv                            | $ccp              | PPT_RT_NONDISPONIBILE | CCRTSEM11   |

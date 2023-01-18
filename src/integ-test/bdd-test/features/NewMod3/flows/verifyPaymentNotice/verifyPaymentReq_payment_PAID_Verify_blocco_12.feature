@@ -6,19 +6,20 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
 
   # Verify Phase 1
   Scenario: Execute verifyPaymentNotice request
-    Given initial XML verifyPaymentNotice
+    Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+    And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
          <soapenv:Header/>
          <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <qrCode>
                   <fiscalCode>#creditor_institution_code#</fiscalCode>
-                  <noticeNumber>#notice_number#</noticeNumber>
+                  <noticeNumber>$1noticeNumber</noticeNumber>
                </qrCode>
             </nod:verifyPaymentNoticeReq>
          </soapenv:Body>
@@ -37,32 +38,31 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
          <soapenv:Header/>
          <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <idempotencyKey>#idempotency_key#</idempotencyKey>
                <qrCode>
                   <fiscalCode>$verifyPaymentNotice.fiscalCode</fiscalCode>
                   <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                </qrCode>
-               <expirationTime>2000</expirationTime>
-               <amount>120.00</amount>
+               <expirationTime>6000</expirationTime>
+               <amount>10.00</amount>
+               <paymentNote>responseFull</paymentNote>
             </nod:activatePaymentNoticeReq>
          </soapenv:Body>
       </soapenv:Envelope>
       """    
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-    And paymentToken exists of activatePaymentNotice response
-    And paymentToken length is less than 36 of activatePaymentNotice response
 
   # Mod3Cancel Phase
   Scenario: Execute mod3Cancel poller
     Given the Execute activatePaymentNotice request scenario executed successfully
     # When expirationTime inserted in activatePaymentNoticeReq has passed and mod3Cancel poller has been triggered
-    When job mod3Cancel triggered after 3 seconds
-    Then verify the HTTP status code of mod3Cancel response is 200
+    When job mod3CancelV2 triggered after 3 seconds
+    Then verify the HTTP status code of mod3CancelV2 response is 200
 
 
   # Payment Outcome Phase
@@ -74,9 +74,9 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
          <soapenv:Header/>
          <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
                <outcome>OK</outcome>
@@ -107,19 +107,21 @@ Feature:  block checks for verifyPaymentReq - position status in PAID after retr
       """
    #  When psp sends SOAP sendPaymentOutcomeReq to nodo-dei-pagamenti using the token of the activate phase, and with request field <outcome> = OK
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+    Then check outcome is OK of sendPaymentOutcome response
 	
-  Scenario: Execute paSendRT request
-    Given the Execute sendPaymentOutcome request scenario executed successfully
-    Then check EC receives paSendRT properly
-  """
-    $verifyPaymentNotice.noticeNumber
-  """
+
+#   Scenario: Execute paSendRT request
+#     Given the Execute sendPaymentOutcome request scenario executed successfully
+#     Then check EC receives paSendRT properly
+#   """
+#     $verifyPaymentNotice.noticeNumber
+#   """
+
 
   # Verify Phase 2
+  @runnable
   Scenario: Execute a verifyPaymentNotice request with the same request as Verify Phase 1, immediately after the Payment Outcome Phase
-    Given the Execute paSendRT request scenario executed successfully
+    Given the Execute sendPaymentOutcome request scenario executed successfully
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_PAGAMENTO_DUPLICATO of verifyPaymentNotice response

@@ -8,11 +8,11 @@ Feature: syntax checks for paVerifyPaymentNotice - KO
       <soapenv:Header/>
       <soapenv:Body>
         <nod:verificaBollettinoReq>
-          <idPSP>POSTE3</idPSP>
-          <idBrokerPSP>BANCOPOSTA</idBrokerPSP>
-          <idChannel>POSTE3</idChannel>
+          <idPSP>#pspPoste#</idPSP>
+          <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+          <idChannel>#channelPoste#</idChannel>
           <password>pwdpwdpwd</password>
-          <ccPost>#codicePA#</ccPost>
+          <ccPost>#ccPoste#</ccPost>
           <noticeNumber>#notice_number#</noticeNumber>
         </nod:verificaBollettinoReq>
       </soapenv:Body>
@@ -21,6 +21,7 @@ Feature: syntax checks for paVerifyPaymentNotice - KO
     And EC new version
 
   # element value check
+  @runnable
   Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
     Given initial XML paVerifyPaymentNotice
     """
@@ -28,12 +29,12 @@ Feature: syntax checks for paVerifyPaymentNotice - KO
       <soapenv:Header/>
       <soapenv:Body>
         <paf:paVerifyPaymentNoticeRes>
-          <outcome>#outcome#</outcome>
+          <outcome>KO</outcome>
           <fault>
-            <faultCode>#faultCode#</faultCode>
-            <faultString>#faultString#</faultString>
-            <id>#id#</id>
-            <description>#description#</description>
+            <faultCode>PAA_SEMANTICA</faultCode>
+            <faultString>chiamata da rifiutare</faultString>
+            <id>#creditor_institution_code#</id>
+            <description>haloo</description>
           </fault>
         </paf:paVerifyPaymentNoticeRes>
       </soapenv:Body>
@@ -56,7 +57,7 @@ Feature: syntax checks for paVerifyPaymentNotice - KO
       | outcome                      | PP    | SIN_VBR_09  |
       | outcome                      | KO    | SIN_VBR_10  |
 
-
+  @runnable
   Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
     Given initial XML paVerifyPaymentNotice
     """

@@ -12,9 +12,9 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
          <soapenv:Header/>
          <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <qrCode>
                   <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -27,6 +27,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
+
   # Activate Phase
   Scenario: Execute activatePaymentNotice request
     Given the verifyPaymentNotice scenario executed successfully
@@ -36,9 +37,9 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
          <soapenv:Header/>
          <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <idempotencyKey>#idempotency_key#</idempotencyKey>
                <qrCode>
@@ -56,8 +57,8 @@ Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_
     And paymentToken length is less than 36 of activatePaymentNotice response
 
 
-
    # Verify Phase 2
+   @runnable
   Scenario: Execute verifyPaymentNotice2 request with the same request as Verify Phase 1
     Given the activatePaymentNotice scenario executed successfully
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti

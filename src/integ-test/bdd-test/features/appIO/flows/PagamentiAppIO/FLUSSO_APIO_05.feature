@@ -11,13 +11,13 @@ Feature: FLUSSO_APIO_05
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:verifyPaymentNoticeReq>
-                        <idPSP>AGID_01</idPSP>
-                        <idBrokerPSP>97735020584</idBrokerPSP>
-                        <idChannel>97735020584_03</idChannel>
+                        <idPSP>#psp_AGID#</idPSP>
+                        <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                        <idChannel>#canale_AGID#</idChannel>
                         <password>pwdpwdpwd</password>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
-                            <noticeNumber>302094719472095710</noticeNumber>
+                            <noticeNumber>#notice_number#</noticeNumber>
                         </qrCode>
                     </nod:verifyPaymentNoticeReq>
                 </soapenv:Body>
@@ -29,54 +29,54 @@ Feature: FLUSSO_APIO_05
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML activateIOPayment
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <nod:activateIOPaymentReq>
-                        <idPSP>$verifyPaymentNotice.idPSP</idPSP>
-                        <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
-                        <idChannel>$verifyPaymentNotice.idChannel</idChannel>
-                        <password>$verifyPaymentNotice.password</password>
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <nod:activateIOPaymentReq>
+                    <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+                    <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+                    <idChannel>$verifyPaymentNotice.idChannel</idChannel>
+                    <password>$verifyPaymentNotice.password</password>
+                    <!--Optional:-->
+                    <idempotencyKey>#idempotency_key#</idempotencyKey>
+                    <qrCode>
+                        <fiscalCode>#creditor_institution_code#</fiscalCode>
+                        <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
+                    </qrCode>
+                    <!--Optional:-->
+                    <expirationTime>12345</expirationTime>
+                    <amount>10.00</amount>
+                    <!--Optional:-->
+                    <dueDate>2021-12-12</dueDate>
+                    <!--Optional:-->
+                    <paymentNote>test</paymentNote>
+                    <!--Optional:-->
+                    <payer>
+                        <uniqueIdentifier>
+                            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+                            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
+                        </uniqueIdentifier>
+                        <fullName>name</fullName>
                         <!--Optional:-->
-                        <idempotencyKey>#idempotency_key#</idempotencyKey>
-                        <qrCode>
-                            <fiscalCode>#creditor_institution_code#</fiscalCode>
-                            <noticeNumber>#notice_number#</noticeNumber>
-                        </qrCode>
+                        <streetName>street</streetName>
                         <!--Optional:-->
-                        <expirationTime>12345</expirationTime>
-                        <amount>10.00</amount>
+                        <civicNumber>civic</civicNumber>
                         <!--Optional:-->
-                        <dueDate>2021-12-12</dueDate>
+                        <postalCode>code</postalCode>
                         <!--Optional:-->
-                        <paymentNote>test</paymentNote>
+                        <city>city</city>
                         <!--Optional:-->
-                        <payer>
-                            <uniqueIdentifier>
-                                <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                                <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
-                            </uniqueIdentifier>
-                            <fullName>name</fullName>
-                            <!--Optional:-->
-                            <streetName>street</streetName>
-                            <!--Optional:-->
-                            <civicNumber>civic</civicNumber>
-                            <!--Optional:-->
-                            <postalCode>code</postalCode>
-                            <!--Optional:-->
-                            <city>city</city>
-                            <!--Optional:-->
-                            <stateProvinceRegion>state</stateProvinceRegion>
-                            <!--Optional:-->
-                            <country>IT</country>
-                            <!--Optional:-->
-                            <e-mail>test.prova@gmail.com</e-mail>
-                        </payer>
-                    </nod:activateIOPaymentReq>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
+                        <stateProvinceRegion>state</stateProvinceRegion>
+                        <!--Optional:-->
+                        <country>IT</country>
+                        <!--Optional:-->
+                        <e-mail>test.prova@gmail.com</e-mail>
+                    </payer>
+                </nod:activateIOPaymentReq>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
         When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
@@ -89,10 +89,10 @@ Feature: FLUSSO_APIO_05
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
         """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-                <psp:pspNotifyPaymentRes>
+                <pfn:pspNotifyPaymentRes>
                     <outcome>KO</outcome>
                     <!--Optional:-->
                     <fault>
@@ -102,7 +102,7 @@ Feature: FLUSSO_APIO_05
                         <!--Optional:-->
                         <description>Errore dal psp</description>
                     </fault>
-                </psp:pspNotifyPaymentRes>
+                </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
         </soapenv:Envelope>
         """
@@ -112,9 +112,9 @@ Feature: FLUSSO_APIO_05
             "RRN": 10026669,
             "tipoVersamento": "CP",
             "idPagamento": "$activateIOPaymentResponse.paymentToken",
-            "identificativoIntermediario": "40000000001",
-            "identificativoPsp": "40000000001",
-            "identificativoCanale": "40000000001_06",
+            "identificativoIntermediario": "#psp#",
+            "identificativoPsp": "#psp#",
+            "identificativoCanale": "#canale#",
             "importoTotalePagato": 10,
             "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
             "codiceAutorizzativo": "resOK",
@@ -132,9 +132,9 @@ Feature: FLUSSO_APIO_05
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPaymentResponse.fiscalCodePA of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value 2 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value 40000000001 of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value 40000000001 of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-        And checks the value 40000000001_06 of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value #psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
+        And checks the value #canale# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPayment.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPaymentResponse.totalAmount of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value None of the record at column FEE of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
@@ -166,57 +166,57 @@ Feature: FLUSSO_APIO_05
         And checks the value None of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
         And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
-
+@runnable
     Scenario: Check sendPaymentOutcome response with pspNotifyPayment KO and sendPaymentOutcome KO, and check correctness of database tables
         Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
         And initial XML sendPaymentOutcome
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-                <soapenv:Header/>
-                <soapenv:Body>
-                    <nod:sendPaymentOutcomeReq>
-                        <idPSP>40000000001</idPSP>
-                        <idBrokerPSP>40000000001</idBrokerPSP>
-                        <idChannel>40000000001_06</idChannel>
-                        <password>pwdpwdpwd</password>
-                        <idempotencyKey>#idempotency_key#</idempotencyKey>
-                        <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
-                        <outcome>KO</outcome>
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <nod:sendPaymentOutcomeReq>
+                    <idPSP>#psp#</idPSP>
+                    <idBrokerPSP>#psp#</idBrokerPSP>
+                    <idChannel>#canale#</idChannel>
+                    <password>pwdpwdpwd</password>
+                    <idempotencyKey>#idempotency_key#</idempotencyKey>
+                    <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
+                    <outcome>KO</outcome>
+                    <!--Optional:-->
+                    <details>
+                        <paymentMethod>creditCard</paymentMethod>
                         <!--Optional:-->
-                        <details>
-                            <paymentMethod>creditCard</paymentMethod>
+                        <paymentChannel>app</paymentChannel>
+                        <fee>2.00</fee>
+                        <!--Optional:-->
+                        <payer>
+                            <uniqueIdentifier>
+                            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+                            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+                            </uniqueIdentifier>
+                            <fullName>name</fullName>
                             <!--Optional:-->
-                            <paymentChannel>app</paymentChannel>
-                            <fee>2.00</fee>
+                            <streetName>street</streetName>
                             <!--Optional:-->
-                            <payer>
-                                <uniqueIdentifier>
-                                <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                                <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-                                </uniqueIdentifier>
-                                <fullName>name</fullName>
-                                <!--Optional:-->
-                                <streetName>street</streetName>
-                                <!--Optional:-->
-                                <civicNumber>civic</civicNumber>
-                                <!--Optional:-->
-                                <postalCode>postal</postalCode>
-                                <!--Optional:-->
-                                <city>city</city>
-                                <!--Optional:-->
-                                <stateProvinceRegion>state</stateProvinceRegion>
-                                <!--Optional:-->
-                                <country>IT</country>
-                                <!--Optional:-->
-                                <e-mail>prova@test.it</e-mail>
-                            </payer>
-                            <applicationDate>2021-12-12</applicationDate>
-                            <transferDate>2021-12-11</transferDate>
-                        </details>
-                    </nod:sendPaymentOutcomeReq>
-                </soapenv:Body>
-            </soapenv:Envelope>
-            """
+                            <civicNumber>civic</civicNumber>
+                            <!--Optional:-->
+                            <postalCode>postal</postalCode>
+                            <!--Optional:-->
+                            <city>city</city>
+                            <!--Optional:-->
+                            <stateProvinceRegion>state</stateProvinceRegion>
+                            <!--Optional:-->
+                            <country>IT</country>
+                            <!--Optional:-->
+                            <e-mail>prova@test.it</e-mail>
+                        </payer>
+                        <applicationDate>2021-12-12</applicationDate>
+                        <transferDate>2021-12-11</transferDate>
+                    </details>
+                </nod:sendPaymentOutcomeReq>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response

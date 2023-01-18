@@ -8,9 +8,9 @@ Feature: Syntax checks for paGetPaymentRes - OK
 				<soapenv:Header/>
 				<soapenv:Body>
 					<nod:activatePaymentNoticeReq>
-						<idPSP>70000000001</idPSP>
-						<idBrokerPSP>70000000001</idBrokerPSP>
-						<idChannel>70000000001_01</idChannel>
+						<idPSP>#psp#</idPSP>
+						<idBrokerPSP>#psp#</idBrokerPSP>
+						<idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
 						<password>pwdpwdpwd</password>
 						<idempotencyKey>#idempotency_key#</idempotencyKey>
 						<qrCode>
@@ -26,6 +26,7 @@ Feature: Syntax checks for paGetPaymentRes - OK
 			"""
 		And EC new version
 
+	@runnable
 	Scenario Outline: Check paGetPayment response with missing optional fields
 		Given initial XML paGetPayment
 			"""

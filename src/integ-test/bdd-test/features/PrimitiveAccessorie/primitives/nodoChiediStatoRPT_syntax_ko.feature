@@ -3,6 +3,7 @@ Feature: Syntax checks for nodoChiediStatoRPT - KO
     Background:
         Given systems up
 
+@runnable
     # [CSRPTSIN1]
     Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediStatoRPT primitive
         Given initial XML nodoChiediStatoRPT
@@ -26,6 +27,7 @@ Feature: Syntax checks for nodoChiediStatoRPT - KO
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediStatoRPT response
 
+@runnable
     # [CSRPTSIN5]
     Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediStatoRPT primitive
         Given initial XML nodoChiediStatoRPT
@@ -47,6 +49,7 @@ Feature: Syntax checks for nodoChiediStatoRPT - KO
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediStatoRPT response
 
+@runnable
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediStatoRPT primitive
         Given initial XML nodoChiediStatoRPT
             """

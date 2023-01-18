@@ -11,9 +11,9 @@ Feature: PRO_ANNULLO_12
             <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
+                <idPSP>#psp_AGID#</idPSP>
+                <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                <idChannel>#canale_AGID#</idChannel>
                 <password>pwdpwdpwd</password>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -42,7 +42,7 @@ Feature: PRO_ANNULLO_12
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>#notice_number#</noticeNumber>
+                    <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
                 <expirationTime>6000</expirationTime>
@@ -88,9 +88,9 @@ Feature: PRO_ANNULLO_12
         "idPagamento":"$activateIOPaymentResponse.paymentToken",
         "RRN":10026669,
         "tipoVersamento":"CP",
-        "identificativoIntermediario":"40000000001",
-        "identificativoPsp":"40000000001",
-        "identificativoCanale":"40000000001_06",
+        "identificativoIntermediario":"#psp#",
+        "identificativoPsp":"#psp#",
+        "identificativoCanale":"#canale#",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",
         "codiceAutorizzativo":"resKO",
@@ -100,6 +100,7 @@ Feature: PRO_ANNULLO_12
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
 
+    @runnable
     Scenario: Execute sendPaymentOutcome (Phase 4)
         Given the Execute nodoInoltroEsitoPagamentoCarta (Phase 3) scenario executed successfully
         And initial XML sendPaymentOutcome
@@ -108,9 +109,9 @@ Feature: PRO_ANNULLO_12
         <soapenv:Header/>
         <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
-            <idPSP>40000000001</idPSP>
-            <idBrokerPSP>40000000001</idBrokerPSP>
-            <idChannel>40000000001_06</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale#</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>

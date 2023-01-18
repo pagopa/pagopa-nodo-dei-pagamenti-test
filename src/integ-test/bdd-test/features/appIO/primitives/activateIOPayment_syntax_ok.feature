@@ -2,21 +2,66 @@ Feature: Syntax checks for activateIOPaymentReq - OK
 
     Background:
         Given systems up
+        And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        And initial XML paGetPayment
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <paf:paGetPaymentRes>
+                    <outcome>OK</outcome>
+                    <data>
+                        <creditorReferenceId>#cod_segr#$1iuv</creditorReferenceId>
+                        <paymentAmount>10.00</paymentAmount>
+                        <dueDate>2021-07-31</dueDate>
+                        <description>TARI 2021</description>
+                        <companyName>company PA</companyName>
+                        <officeName>office PA</officeName>
+                        <debtor>
+                            <uniqueIdentifier>
+                                <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+                                <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
+                            </uniqueIdentifier>
+                            <fullName>John Doe</fullName>
+                            <streetName>street</streetName>
+                            <civicNumber>12</civicNumber>
+                            <postalCode>89020</postalCode>
+                            <city>city</city>
+                            <stateProvinceRegion>MI</stateProvinceRegion>
+                            <country>IT</country>
+                            <e-mail>john.doe@test.it</e-mail>
+                        </debtor>
+                        <transferList>
+                            <transfer>
+                                <idTransfer>1</idTransfer>
+                                <transferAmount>10.00</transferAmount>
+                                <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+                                <IBAN>IT96R0123454321000000012345</IBAN>
+                                <remittanceInformation>TARI Comune EC_TE</remittanceInformation>
+                                <transferCategory>0101101IM</transferCategory>
+                            </transfer>
+                        </transferList>
+                    </data>
+                </paf:paGetPaymentRes>
+            </soapenv:Body>
+        </soapenv:Envelope>
+        """
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
         And initial XML activateIOPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:activateIOPaymentReq>
-                        <idPSP>70000000001</idPSP>
-                        <idBrokerPSP>70000000001</idBrokerPSP>
-                        <idChannel>70000000001_01</idChannel>
+                        <idPSP>#psp_AGID#</idPSP>
+                        <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                        <idChannel>#canale_AGID#</idChannel>
                         <password>pwdpwdpwd</password>
                         <!--Optional:-->
                         <idempotencyKey>#idempotency_key#</idempotencyKey>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
-                            <noticeNumber>#notice_number#</noticeNumber>
+                            <noticeNumber>$1noticeNumber</noticeNumber>
                         </qrCode>
                         <!--Optional:-->
                         <expirationTime>12345</expirationTime>
@@ -29,7 +74,7 @@ Feature: Syntax checks for activateIOPaymentReq - OK
                         <payer>
                             <uniqueIdentifier>
                                 <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                                <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
+                                <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
                             </uniqueIdentifier>
                             <fullName>name</fullName>
                             <!--Optional:-->
@@ -51,12 +96,13 @@ Feature: Syntax checks for activateIOPaymentReq - OK
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-
-    Scenario: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
+    @runnable
+    Scenario: Check OK of activateIOPayment response
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-
-    Scenario Outline: Check PPT_SINTASSI_EXTRASXSD error on invalid body element value
+        
+    @runnable
+    Scenario Outline: Check OK of activateIOPayment response (phase 2)
         Given <elem> with <value> in activateIOPayment
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response

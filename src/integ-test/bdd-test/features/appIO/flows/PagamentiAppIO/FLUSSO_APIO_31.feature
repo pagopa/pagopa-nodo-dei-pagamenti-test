@@ -11,13 +11,13 @@ Background:
         <soapenv:Header/>
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>AGID_01</idPSP>
-            <idBrokerPSP>97735020584</idBrokerPSP>
-            <idChannel>97735020584_03</idChannel>
+            <idPSP>#psp_AGID#</idPSP>
+            <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+            <idChannel>#canale_AGID#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>302094719472095710</noticeNumber>
+                <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
         </nod:verifyPaymentNoticeReq>
         </soapenv:Body>
@@ -42,7 +42,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>#notice_number#</noticeNumber>
+                    <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
                 <expirationTime>12345</expirationTime>
@@ -124,8 +124,9 @@ Scenario: Execute nodoNotificaAnnullamento (Phase 4)
     # check correctness IDEMPOTENCY_CACHE table
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
 
+@runnable
 Scenario: Check activateIOPayment1 response with different idempotencyKey in the request after nodoNotificaAnnullamento
     Given the Execute nodoNotificaAnnullamento (Phase 4) scenario executed successfully
-    And random idempotencyKey having 40000000001 as idPSP in activateIOPayment
+    And random idempotencyKey having #psp# as idPSP in activateIOPayment
     When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response

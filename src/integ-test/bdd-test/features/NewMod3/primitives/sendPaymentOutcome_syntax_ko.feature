@@ -8,9 +8,9 @@ Feature: Syntax checks for sendPaymentOutcome - KO
         <soapenv:Header/>
         <soapenv:Body>
           <nod:sendPaymentOutcomeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
-            <idChannel>70000000001_01</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <paymentToken>12345678901234567890123456789012</paymentToken>
@@ -52,6 +52,7 @@ Feature: Syntax checks for sendPaymentOutcome - KO
       """
     And EC new version
 
+  @runnable
   # attribute value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
     Given <attribute> set <value> for <elem> in sendPaymentOutcome
@@ -62,6 +63,7 @@ Feature: Syntax checks for sendPaymentOutcome - KO
       | elem             | attribute     | value                                     | soapUI test |
       | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_SPO_01  |
 
+  @runnable
   # element value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
     Given <elem> with <value> in sendPaymentOutcome
@@ -148,12 +150,12 @@ Feature: Syntax checks for sendPaymentOutcome - KO
       | transferDate                | 20-12-21                                                                                                                                                                                                                                                          | SIN_SPO_79   |
       | transferDate                | 21-12-09                                                                                                                                                                                                                                                          | SIN_SPO_79   |
       | idempotencyKey              | Empty                                                                                                                                                                                                                                                             | SIN_SPO_81   |
-      | idempotencyKey              | 70000000001.1244565744                                                                                                                                                                                                                                            | SIN_SPO_82   |
-      | idempotencyKey              | 70000000001_%244565744                                                                                                                                                                                                                                            | SIN_SPO_82   |
-      | idempotencyKey              | 70000000001-1244565744                                                                                                                                                                                                                                            | SIN_SPO_82   |
-      | idempotencyKey              | 1244565768_70000000001                                                                                                                                                                                                                                            | SIN_SPO_82   |
+      | idempotencyKey              | 60000000001.1244565744                                                                                                                                                                                                                                            | SIN_SPO_82   |
+      | idempotencyKey              | 60000000001_%244565744                                                                                                                                                                                                                                            | SIN_SPO_82   |
+      | idempotencyKey              | #psp#-1244565744                                                                                                                                                                                                                                            | SIN_SPO_82   |
+      | idempotencyKey              | 1244565768_#psp#                                                                                                                                                                                                                                            | SIN_SPO_82   |
       | idempotencyKey              | 1244565744                                                                                                                                                                                                                                                        | SIN_SPO_82   |
-      | idempotencyKey              | 700000000011244565744                                                                                                                                                                                                                                             | SIN_SPO_82   |
-      | idempotencyKey              | 70000000001_12345678901                                                                                                                                                                                                                                           | SIN_SPO_83   |
-      | idempotencyKey              | 70000000001_12445657                                                                                                                                                                                                                                              | SIN_SPO_84   |
-      | idempotencyKey              | 700000hj123_124456576                                                                                                                                                                                                                                             | SIN_SPO_85   |
+      | idempotencyKey              | 600000000011244565744                                                                                                                                                                                                                                             | SIN_SPO_82   |
+      | idempotencyKey              | 60000000001_12345678901                                                                                                                                                                                                                                           | SIN_SPO_83   |
+      | idempotencyKey              | 60000000001_12445657                                                                                                                                                                                                                                              | SIN_SPO_84   |
+      | idempotencyKey              | 600000hj123_124456576                                                                                                                                                                                                                                             | SIN_SPO_85   |

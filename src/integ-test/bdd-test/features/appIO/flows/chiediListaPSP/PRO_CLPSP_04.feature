@@ -11,9 +11,9 @@ Background:
         <soapenv:Header/>
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>AGID_01</idPSP>
-            <idBrokerPSP>97735020584</idBrokerPSP>
-            <idChannel>97735020584_03</idChannel>
+            <idPSP>#psp_AGID#</idPSP>
+            <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+            <idChannel>#canale_AGID#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -34,15 +34,15 @@ Scenario: Execute activateIOPayment (Phase 2)
         <soapenv:Header/>
         <soapenv:Body>
             <nod:activateIOPaymentReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
+                <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+                <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+                <idChannel>$verifyPaymentNotice.idChannel</idChannel>
                 <password>pwdpwdpwd</password>
                 <!--Optional:-->
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>#notice_number#</noticeNumber>
+                    <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
                 <expirationTime>60000</expirationTime>
@@ -130,7 +130,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                            <transferCategory>paGetPaymentTest</transferCategory>
                         </transfer>
                         <transfer>
-                           <idTransfer>1</idTransfer>
+                           <idTransfer>2</idTransfer>
                            <transferAmount>3.00</transferAmount>
                            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
                            <IBAN>IT45R0760103200000000001016</IBAN>
@@ -138,7 +138,7 @@ Scenario: Execute activateIOPayment (Phase 2)
                            <transferCategory>paGetPaymentTest</transferCategory>
                         </transfer>
                         <transfer>
-                           <idTransfer>1</idTransfer>
+                           <idTransfer>3</idTransfer>
                            <transferAmount>4.00</transferAmount>
                            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
                            <IBAN>IT45R0760103200000000001016</IBAN>
@@ -168,6 +168,7 @@ Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
 
+@runnable
 Scenario: Check correct PSP list
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=CARTE&lingua=DE to nodo-dei-pagamenti

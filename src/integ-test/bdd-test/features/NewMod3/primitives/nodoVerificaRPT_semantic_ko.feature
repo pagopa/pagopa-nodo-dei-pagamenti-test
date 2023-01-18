@@ -8,9 +8,9 @@ Feature: Checks for EC new and nodoVerificaRPT
           <soapenv:Header/>
           <soapenv:Body>
               <ws:nodoVerificaRPT>
-                  <identificativoPSP>70000000001</identificativoPSP>
-                  <identificativoIntermediarioPSP>70000000001</identificativoIntermediarioPSP>
-                  <identificativoCanale>70000000001_01</identificativoCanale>
+                  <identificativoPSP>#psp#</identificativoPSP>
+                  <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+                  <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
                   <password>pwdpwdpwd</password>
                   <codiceContestoPagamento>120671877019565</codiceContestoPagamento>
                   <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
@@ -27,7 +27,8 @@ Feature: Checks for EC new and nodoVerificaRPT
       """
     And EC new version
 
-    # check PPT_MULTI_BENEFICIARIO error - PRO_VPNR_04
+  @runnable
+  # check PPT_MULTI_BENEFICIARIO error - PRO_VPNR_04
   Scenario: Check PPT_MULTI_BENEFICIARIO error
     When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
     Then check esito is KO of nodoVerificaRPT response

@@ -1,17 +1,15 @@
 import json
-import random
-import time
-
 import steps.db_operation as db
 from behave.model import Table
 import os, cx_Oracle, requests
 import steps.utils as utils
+import time
 
 
 def before_all(context):
     print('Global settings...')
-    
-    lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'instantclient_21_6'))
+
+    lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
     cx_Oracle.init_oracle_client(lib_dir = lib_dir)
     more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
     context.config.update_userdata(more_userdata)
@@ -30,8 +28,6 @@ def before_all(context):
         config_dict[config_key] = config_value
     
     setattr(context, 'configurations', config_dict)
-    
-
 
 def before_feature(context, feature):
     services = context.config.userdata.get("services")
@@ -69,10 +65,11 @@ def after_all(context):
     for key, value in config_dict.items():
         #print(key, value)
         selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
-        db.executeQuery(conn, selected_query)
-
+        db.executeQuery(conn, selected_query)  
+    
     db.closeConnection(conn)
-    requests.get(utils.get_refresh_config_url(context))
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}  
+    requests.get(utils.get_refresh_config_url(context),verify=False,headers=headers)
 
 
 def config_ec(context):

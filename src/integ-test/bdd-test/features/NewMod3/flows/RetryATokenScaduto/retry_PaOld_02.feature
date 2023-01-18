@@ -1,29 +1,29 @@
-Feature: process tests for generazioneRicevute
+Feature: process tests for retryAtokenScaduto
 
   Background:
     Given systems up
+
+  Scenario: Execute verifyPaymentNotice request
+    Given nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to false
+    And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
       <soapenv:Body>
       <nod:verifyPaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <qrCode>
       <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-      <noticeNumber>#notice_number_old#</noticeNumber>
+      <noticeNumber>$1noticeNumber</noticeNumber>
       </qrCode>
       </nod:verifyPaymentNoticeReq>
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC old version
-
-  # Verify phase
-  Scenario: Execute verifyPaymentNotice request
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
@@ -36,14 +36,14 @@ Feature: process tests for generazioneRicevute
       <soapenv:Header/>
       <soapenv:Body>
       <nod:activatePaymentNoticeReq>
-      <idPSP>70000000001</idPSP>
-      <idBrokerPSP>70000000001</idBrokerPSP>
-      <idChannel>70000000001_01</idChannel>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>pwdpwdpwd</password>
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-      <noticeNumber>#notice_number_old#</noticeNumber>
+      <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
       <expirationTime>2000</expirationTime>
       <amount>10.00</amount>
@@ -64,7 +64,7 @@ Feature: process tests for generazioneRicevute
       <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
       <pay_i:dominio>
       <pay_i:identificativoDominio>$activatePaymentNotice.fiscalCode</pay_i:identificativoDominio>
-      <pay_i:identificativoStazioneRichiedente>#intermediarioPA#</pay_i:identificativoStazioneRichiedente>
+      <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
       </pay_i:dominio>
       <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
       <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
@@ -116,7 +116,7 @@ Feature: process tests for generazioneRicevute
       <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
       <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
       <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
-      <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+      <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
       <pay_i:codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</pay_i:codiceContestoPagamento>
       <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
       <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -129,7 +129,7 @@ Feature: process tests for generazioneRicevute
       <pay_i:ibanAppoggio>IT96R0123454321000000012345</pay_i:ibanAppoggio>
       <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
       <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
-      <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
+      <pay_i:causaleVersamento>pagamento</pay_i:causaleVersamento>
       <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
       </pay_i:datiSingoloVersamento>
       </pay_i:datiVersamento>
@@ -144,25 +144,24 @@ Feature: process tests for generazioneRicevute
       <soapenv:Header>
       <ppt:intestazionePPT>
       <identificativoIntermediarioPA>$activatePaymentNotice.fiscalCode</identificativoIntermediarioPA>
-      <identificativoStazioneIntermediarioPA>$intermediarioPA</identificativoStazioneIntermediarioPA>
+      <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
       <identificativoDominio>$activatePaymentNotice.fiscalCode</identificativoDominio>
-      <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+      <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
       <codiceContestoPagamento>$activatePaymentNoticeResponse.paymentToken</codiceContestoPagamento>
       </ppt:intestazionePPT>
       </soapenv:Header>
       <soapenv:Body>
       <ws:nodoInviaRPT>
       <password>pwdpwdpwd</password>
-      <identificativoPSP>15376371009</identificativoPSP>
-      <identificativoIntermediarioPSP>15376371009</identificativoIntermediarioPSP>
-      <identificativoCanale>15376371009_01</identificativoCanale>
+      <identificativoPSP>#pspFittizio#</identificativoPSP>
+      <identificativoIntermediarioPSP>#pspFittizio#</identificativoIntermediarioPSP>
+      <identificativoCanale>#canaleFittizio#</identificativoCanale>
       <tipoFirma></tipoFirma>
       <rpt>$rptAttachment</rpt>
       </ws:nodoInviaRPT>
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    #  When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti using the token of the activate phase
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
     And verify 0 record for the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
@@ -174,14 +173,81 @@ Feature: process tests for generazioneRicevute
 
   Scenario: Execute paInviaRT
     Given the Execute poller Annulli scenario executed successfully
-    When job paInviaRt triggered after 5 seconds
+    And initial XML paaInviaRT
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <ws:paaInviaRTRisposta>
+      <paaInviaRTRisposta>
+      <!--Optional:-->
+      <fault>
+      <faultCode>PAA_SINTASSI_XSD</faultCode>
+      <faultString>RT non valida rispetto XSD</faultString>
+      <id>mockPa</id>
+      <!--Optional:-->
+      <description>test</description>
+      </fault>
+      <!--Optional:-->
+      <esito>KO</esito>
+      </paaInviaRTRisposta>
+      </ws:paaInviaRTRisposta>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    And EC replies to nodo-dei-pagamenti with the paaInviaRT
+    And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
+    When job paInviaRt triggered after 130 seconds
     Then verify the HTTP status code of paInviaRt response is 200
+    And replace iuv content with $1iuv content
+    And wait 130 seconds for expiration
+    And checks the value RT_RIFIUTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
-  Scenario: DB check
+@check
+  # Payment Outcome Phase outcome OK
+  Scenario: Execute sendPaymentOutcome request
     Given the Execute paInviaRT scenario executed successfully
-    And PSP waits 5 seconds for expiration
-    Then checks the value RT_RIFIUTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And initial XML sendPaymentOutcome
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:sendPaymentOutcomeReq>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+      <password>pwdpwdpwd</password>
+      <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
+      <outcome>OK</outcome>
+      <details>
+      <paymentMethod>creditCard</paymentMethod>
+      <paymentChannel>app</paymentChannel>
+      <fee>2.00</fee>
+      <payer>
+      <uniqueIdentifier>
+      <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
+      <entityUniqueIdentifierValue>JHNDOE00A01F205N</entityUniqueIdentifierValue>
+      </uniqueIdentifier>
+      <fullName>John Doe</fullName>
+      <streetName>street</streetName>
+      <civicNumber>12</civicNumber>
+      <postalCode>89020</postalCode>
+      <city>city</city>
+      <stateProvinceRegion>MI</stateProvinceRegion>
+      <country>IT</country>
+      <e-mail>john.doe@test.it</e-mail>
+      </payer>
+      <applicationDate>2021-10-01</applicationDate>
+      <transferDate>2021-10-02</transferDate>
+      </details>
+      </nod:sendPaymentOutcomeReq>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
-
-
-
+    And checks the value PAYING,PAYING_RPT,CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+    And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And restore initial configurations

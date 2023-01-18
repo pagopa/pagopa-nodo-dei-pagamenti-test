@@ -8,11 +8,11 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
       <soapenv:Header/>
       <soapenv:Body>
         <nod:verificaBollettinoReq>
-          <idPSP>POSTE3</idPSP>
-          <idBrokerPSP>BANCOPOSTA</idBrokerPSP>
-          <idChannel>POSTE3</idChannel>
+          <idPSP>#pspPoste#</idPSP>
+          <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+          <idChannel>#channelPoste#</idChannel>
           <password>pwdpwdpwd</password>
-          <ccPost>#codicePA#</ccPost>
+          <ccPost>#ccPoste#</ccPost>
           <noticeNumber>#notice_number#</noticeNumber>
         </nod:verificaBollettinoReq>
       </soapenv:Body>
@@ -20,7 +20,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
     """
     And EC new version
 
-
+  @runnable
   Scenario Outline: Check paVerifyPayment response with missing optional fields
     Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
     """
@@ -59,7 +59,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
     Then check outcome is OK of verificaBollettino response
     Examples:
       | elem              | value | soapUI test |
-      | soapenv:header    | None  | SIN_VBR_01  |
+      | soapenv:Header    | None  | SIN_VBR_01  |
       | dueDate           | None  | SIN_VBR_25  |
       | detailDescription | None  | SIN_VBR_28  |
       | officeName        | None  | SIN_VBR_44  |

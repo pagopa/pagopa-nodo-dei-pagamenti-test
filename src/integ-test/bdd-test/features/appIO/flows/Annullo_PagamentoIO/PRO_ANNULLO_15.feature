@@ -11,9 +11,9 @@ Feature: PRO_ANNULLO_15
             <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
+                <idPSP>#psp_AGID#</idPSP>
+                <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                <idChannel>#canale_AGID#</idChannel>
                 <password>pwdpwdpwd</password>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -42,7 +42,7 @@ Feature: PRO_ANNULLO_15
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>#notice_number#</noticeNumber>
+                    <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
                 <expirationTime>6000</expirationTime>
@@ -79,8 +79,8 @@ Feature: PRO_ANNULLO_15
         """
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-
     
+    @runnable
     Scenario: Execute nodoInoltroEsitoPagamentoCarta (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -90,7 +90,7 @@ Feature: PRO_ANNULLO_15
         "RRN":10026669,
         "tipoVersamento":"CP",
         "identificativoIntermediario":"irraggiungibile",
-        "identificativoPsp":"irraggiungibile",
+        "identificativoPsp":"#psp#",
         "identificativoCanale":"irraggiungibile",
         "importoTotalePagato":10.00,
         "timestampOperazione":"2021-07-09T17:06:03.100+01:00",

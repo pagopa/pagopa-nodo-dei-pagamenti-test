@@ -12,13 +12,14 @@
                <idBrokerPSP>BANCOPOSTA</idBrokerPSP>
                <idChannel>POSTE3</idChannel>
                <password>pwdpwdpwd</password>
-               <ccPost>777777777777</ccPost>
+               <ccPost>#ccPoste#</ccPost>
                <noticeNumber>#notice_number#</noticeNumber>
             </nod:verificaBollettinoReq>
          </soapenv:Body>
       </soapenv:Envelope>
       """
-      
+ 
+ @runnable    
  Scenario: SIN_VB_00
     When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
     Then check outcome is OK of verificaBollettino response

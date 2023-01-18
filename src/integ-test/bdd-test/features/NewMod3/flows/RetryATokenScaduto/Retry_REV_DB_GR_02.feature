@@ -2,15 +2,18 @@ Feature: process tests Retry_REV_DB_GR_02
 
     Background:
         Given systems up
-        And initial XML verifyPaymentNotice
+
+    # Verify phase
+    Scenario: Execute verifyPaymentNotice request
+        Given initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
                 <soapenv:Header />
                 <soapenv:Body>
                     <nod:verifyPaymentNoticeReq>
-                        <idPSP>70000000001</idPSP>
-                        <idBrokerPSP>70000000001</idBrokerPSP>
-                        <idChannel>70000000001_01</idChannel>
+                        <idPSP>#psp#</idPSP>
+                        <idBrokerPSP>#psp#</idBrokerPSP>
+                        <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                         <password>pwdpwdpwd</password>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -20,10 +23,6 @@ Feature: process tests Retry_REV_DB_GR_02
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC new version
-
-    # Verify phase
-    Scenario: Execute verifyPaymentNotice request
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
@@ -36,9 +35,9 @@ Feature: process tests Retry_REV_DB_GR_02
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:activatePaymentNoticeReq>
-                        <idPSP>70000000001</idPSP>
-                        <idBrokerPSP>70000000001</idBrokerPSP>
-                        <idChannel>70000000001_01</idChannel>
+                        <idPSP>#psp#</idPSP>
+                        <idBrokerPSP>#psp#</idBrokerPSP>
+                        <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                         <password>pwdpwdpwd</password>
                         <idempotencyKey>#idempotency_key#</idempotencyKey>
                         <qrCode>
@@ -55,13 +54,10 @@ Feature: process tests Retry_REV_DB_GR_02
             """
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-
-    #sleep phase1
-    Scenario: Execute sleep phase1
-        Given the Execute activatePaymentNotice request scenario executed successfully
-        And PSP waits expirationTime of activatePaymentNotice expires
+        And wait 3 seconds for expiration
 
     # Payment Outcome Phase outcome KO
+    @runnable
     Scenario: Execute sendPaymentOutcome request
         Given the Execute activatePaymentNotice request scenario executed successfully
         And initial XML sendPaymentOutcome
@@ -70,12 +66,12 @@ Feature: process tests Retry_REV_DB_GR_02
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:sendPaymentOutcomeReq>
-                        <idPSP>${psp}</idPSP>
-                        <idBrokerPSP>${intermediarioPSP}</idBrokerPSP>
-                        <idChannel>${canale3}</idChannel>
-                        <password>${password}</password>
-                        <paymentToken>${#TestCase#token}</paymentToken>
-                        <outcome>OK</outcome>
+                        <idPSP>#psp#</idPSP>
+                        <idBrokerPSP>#psp#</idBrokerPSP>
+                        <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+                        <password>pwdpwdpwd</password>
+                        <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
+                        <outcome>KO</outcome>
                         <!--Optional:-->
                         <details>
                             <paymentMethod>creditCard</paymentMethod>
@@ -86,7 +82,7 @@ Feature: process tests Retry_REV_DB_GR_02
                             <payer>
                                 <uniqueIdentifier>
                                     <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                                    <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+                                    <entityUniqueIdentifierValue>#canale_ATTIVATO_PRESSO_PSP#</entityUniqueIdentifierValue>
                                 </uniqueIdentifier>
                                 <fullName>name</fullName>
                                 <!--Optional:-->
@@ -113,18 +109,5 @@ Feature: process tests Retry_REV_DB_GR_02
             """
 
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcome response
-
-
-    # test execution
-    Scenario: Execution test
-        Given the activatePaymentNoticeReq request scenario executed successfully
-        When job mod3CancelV2 triggered after 3 seconds
-        Then verify the HTTP status code of mod3CancelV2 response is 200
-
-
-    #db check
-    Scenario: DB check
-        Given the Execute sendPaymentOutcomeReq request scenario executed successfully
-        When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then checks the value None of the record ID of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
+        Then check outcome is OK of sendPaymentOutcome response
+        And verify 0 record for the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3

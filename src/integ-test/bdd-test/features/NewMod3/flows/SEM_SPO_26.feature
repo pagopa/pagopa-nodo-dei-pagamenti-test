@@ -12,9 +12,9 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
       <soapenv:Header/>
       <soapenv:Body>
         <nod:activatePaymentNoticeReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
-          <idChannel>70000000001_01</idChannel>
+          <idPSP>#psp#</idPSP>
+          <idBrokerPSP>#psp#</idBrokerPSP>
+          <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
           <idempotencyKey>#idempotency_key#</idempotencyKey>
           <qrCode>
@@ -33,19 +33,19 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
 
    # sendPaymentOutcomeReq phase
   Scenario: Execute a sendPaymentOutcome request
-    Given the Execute a new activatePaymentNotice request scenario executed successfully
-    And initial XML sendPaymentOutcome_1
+    Given the Execute activatePaymentNotice request scenario executed successfully
+    And initial XML sendPaymentOutcome
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
       <soapenv:Body>
         <nod:sendPaymentOutcomeReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
-          <idChannel>70000000001_01</idChannel>
+          <idPSP>#psp#</idPSP>
+          <idBrokerPSP>#psp#</idBrokerPSP>
+          <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
-          <paymentToken>$activatePaymentNotice_1Response.paymentToken</paymentToken>
-          <outcome>OK</outcome>
+          <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
+          <outcome>KO</outcome>
           <!--Optional:-->
           <details>
             <paymentMethod>creditCard</paymentMethod>
@@ -81,23 +81,24 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
       </soapenv:Body>
     </soapenv:Envelope>
     """
-    When PSP sends SOAP sendPaymentOutcome_1 to nodo-dei-pagamenti
-    Then check outcome is KO of sendPaymentOutcome_1 response
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is OK of sendPaymentOutcome response
 
+  @runnable
   # sendPaymentOutcomeReq phase 2
   Scenario: Execute a new sendPaymentOutcome request
-    Given the Execute a sendPaymentOutcome_1 request scenario executed successfully
-    And initial XML sendPaymentOutcome_2
+    Given the Execute a sendPaymentOutcome request scenario executed successfully
+    And initial XML sendPaymentOutcome
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
       <soapenv:Body>
         <nod:sendPaymentOutcomeReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
-          <idChannel>70000000001_01</idChannel>
+          <idPSP>#psp#</idPSP>
+          <idBrokerPSP>#psp#</idBrokerPSP>
+          <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
           <password>pwdpwdpwd</password>
-          <paymentToken>$activatePaymentNotice_1Response.paymentToken</paymentToken>
+          <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
           <outcome>OK</outcome>
           <!--Optional:-->
           <details>
@@ -134,6 +135,6 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
       </soapenv:Body>
     </soapenv:Envelope>
     """
-    When PSP sends SOAP sendPaymentOutcome_2 to nodo-dei-pagamenti
-    Then check outcome is KO of sendPaymentOutcome_2 response
-    And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response

@@ -8,9 +8,9 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (payme
          <soapenv:Header/>
          <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <qrCode>
                   <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -21,6 +21,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (payme
       </soapenv:Envelope>
       """
 	 And EC new version
+
 
   # Verify Phase 1
   Scenario: Execute verifyPaymentNotice request
@@ -36,9 +37,9 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (payme
          <soapenv:Header/>
          <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <idempotencyKey>#idempotency_key#</idempotencyKey>
                <qrCode>
@@ -52,9 +53,10 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (payme
       """
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
-#    And token exists and check
+    #And token exists and check
     And paymentToken length is less than 36 of activatePaymentNotice response
-	
+
+
   # Payment Outcome Phase outcome KO
   Scenario: Execute sendPaymentOutcome request
     Given the activatePaymentNotice scenario executed successfully
@@ -64,9 +66,9 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (payme
          <soapenv:Header/>
          <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
                <outcome>KO</outcome>
@@ -95,11 +97,13 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (payme
          </soapenv:Body>
       </soapenv:Envelope>
       """
-   #  When psp sends SOAP sendPaymentOutcomeReq to nodo-dei-pagamenti using the token of the activate phase, and with request field <outcome> = OK
+    #When psp sends SOAP sendPaymentOutcomeReq to nodo-dei-pagamenti using the token of the activate phase, and with request field <outcome> = OK
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
+
   # Verify Phase 2
+  @runnable
   Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response

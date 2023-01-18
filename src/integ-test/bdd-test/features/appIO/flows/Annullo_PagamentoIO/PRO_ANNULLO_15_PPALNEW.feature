@@ -11,9 +11,9 @@ Feature: PRO_ANNULLO_15_PPALNEW
             <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
+                <idPSP>#psp_AGID#</idPSP>
+                <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                <idChannel>#canale_AGID#</idChannel>
                 <password>pwdpwdpwd</password>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -42,7 +42,7 @@ Feature: PRO_ANNULLO_15_PPALNEW
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>#notice_number#</noticeNumber>
+                    <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
                 <expirationTime>6000</expirationTime>
@@ -84,7 +84,8 @@ Feature: PRO_ANNULLO_15_PPALNEW
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
-
+    
+    @runnable
     Scenario: Execute nodoInoltroEsitoPayPal (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
@@ -94,7 +95,7 @@ Feature: PRO_ANNULLO_15_PPALNEW
             "idTransazionePsp":"$activateIOPayment.idempotencyKey",
             "idPagamento": "$activateIOPaymentResponse.paymentToken",
             "identificativoIntermediario": "irraggiungibile",
-            "identificativoPsp": "irraggiungibile",
+            "identificativoPsp": "#psp#",
             "identificativoCanale": "irraggiungibile",
             "importoTotalePagato": 10.00,
             "timestampOperazione": "2012-04-23T18:25:43Z"
@@ -103,7 +104,7 @@ Feature: PRO_ANNULLO_15_PPALNEW
         And job mod3CancelV2 triggered after 10 seconds
         And wait 6 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
-        And check esito is OK of inoltroEsito/paypal response
+        And check esito is KO of inoltroEsito/paypal response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_SEND_ERROR of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYMENT_SEND_ERROR of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO

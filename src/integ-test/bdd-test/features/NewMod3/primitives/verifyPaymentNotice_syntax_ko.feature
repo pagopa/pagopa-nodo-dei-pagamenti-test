@@ -8,9 +8,9 @@ Feature: Syntax checks for verifyPaymentReq - KO
         <soapenv:Header/>
         <soapenv:Body>
           <nod:verifyPaymentNoticeReq>
-            <idPSP>70000000001</idPSP>
-            <idBrokerPSP>70000000001</idBrokerPSP>
-            <idChannel>70000000001_01</idChannel>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
               <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -21,6 +21,7 @@ Feature: Syntax checks for verifyPaymentReq - KO
       </soapenv:Envelope>
       """
 
+  @runnable
   # attribute value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
     Given <attribute> set <value> for <elem> in verifyPaymentNotice
@@ -31,6 +32,7 @@ Feature: Syntax checks for verifyPaymentReq - KO
       | elem             | attribute     | value                                     | soapUI test |
       | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_VPNR_01 |
 
+  @runnable
   # element value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
     Given <elem> with <value> in verifyPaymentNotice

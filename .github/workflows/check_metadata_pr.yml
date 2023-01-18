@@ -1,0 +1,49 @@
+name: Check PR
+
+# Controls when the workflow will run
+on:
+  pull_request:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  check_size:
+    runs-on: ubuntu-latest
+    name: Check Size
+    steps:
+      - name: Check Size
+        uses: actions/github-script@v6.3.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const additions = context.payload.pull_request.additions || 0
+            const deletions = context.payload.pull_request.deletions || 0
+
+            if (additions + deletions < 150){
+              github.rest.issues.addLabels({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['size/small']
+              })
+            }
+
+            if (additions + deletions > 450){
+              github.rest.issues.addLabels({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['size/large']
+              })
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: 'This PR exceeds the recommended size of 450 lines. Please make sure you are NOT addressing multiple issues with one PR. _Note this PR might be rejected due to its size._'
+              })
+              core.setFailed('Missing required labels')
+            }

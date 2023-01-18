@@ -1,4 +1,4 @@
-Feature: GT_05
+Feature: GT_06
 
     Background:
         Given systems up
@@ -12,9 +12,9 @@ Feature: GT_05
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:verifyPaymentNoticeReq>
-                        <idPSP>AGID_01</idPSP>
-                        <idBrokerPSP>97735020584</idBrokerPSP>
-                        <idChannel>97735020584_03</idChannel>
+                        <idPSP>#psp_AGID#</idPSP>
+                        <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                        <idChannel>#canale_AGID#</idChannel>
                         <password>pwdpwdpwd</password>
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -26,7 +26,7 @@ Feature: GT_05
             """
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-
+@runnable
     Scenario: Execute activateIOPayment (Phase 2)
         Given nodo-dei-pagamenti has config parameter default_token_duration_validity_millis set to 7000
         And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 15000
@@ -37,17 +37,17 @@ Feature: GT_05
                 <soapenv:Header/>
                 <soapenv:Body>
                     <nod:activateIOPaymentReq>
-                        <idPSP>AGID_01</idPSP>
-                        <idBrokerPSP>97735020584</idBrokerPSP>
-                        <idChannel>97735020584_03</idChannel>
+                        <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+                        <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+                        <idChannel>$verifyPaymentNotice.idChannel</idChannel>
                         <password>pwdpwdpwd</password>
                         <!--Optional:-->
                         <qrCode>
                             <fiscalCode>#creditor_institution_code#</fiscalCode>
-                            <noticeNumber>#notice_number#</noticeNumber>
+                            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                         </qrCode>
                         <!--Optional:-->
-                        <expirationTime>12345</expirationTime>
+                        <expirationTime>10000</expirationTime>
                         <amount>10.00</amount>
                         <!--Optional:-->
                         <dueDate>2021-12-12</dueDate>
@@ -82,4 +82,5 @@ Feature: GT_05
         And expirationTime with 10000 in activateIOPayment 
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-        And check token validity
+        And check token_valid_to is equal to token_valid_from plus 15000
+        And restore initial configurations

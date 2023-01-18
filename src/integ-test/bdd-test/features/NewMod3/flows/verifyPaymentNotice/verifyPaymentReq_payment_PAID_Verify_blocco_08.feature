@@ -12,9 +12,9 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
          <soapenv:Header/>
          <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <qrCode>
                   <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -37,9 +37,9 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
          <soapenv:Header/>
          <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <idempotencyKey>#idempotency_key#</idempotencyKey>
                <qrCode>
@@ -56,6 +56,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
     And paymentToken exists of activatePaymentNotice response
     And paymentToken length is less than 36 of activatePaymentNotice response
 	
+  
   # Payment Outcome Phase
   Scenario: Execute sendPaymentOutcome request
     Given the activatePaymentNotice scenario executed successfully
@@ -65,9 +66,9 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
          <soapenv:Header/>
          <soapenv:Body>
             <nod:sendPaymentOutcomeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
                <outcome>OK</outcome>
@@ -102,13 +103,14 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
 
 	
   # Verify Phase 2
+  @runnable
   Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1, immediately after the Payment Outcome Phase
     Given the Execute sendPaymentOutcome request scenario executed successfully
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_PAGAMENTO_DUPLICATO of verifyPaymentNotice response
 
-
+  @runnable
   Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1, few seconds after the Payment Outcome Phase (e.g. 30s)
     Given EC replies to nodo-dei-pagamenti with the paSendRT
   """

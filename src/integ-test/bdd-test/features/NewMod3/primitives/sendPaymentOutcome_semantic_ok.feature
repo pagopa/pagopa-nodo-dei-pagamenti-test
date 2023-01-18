@@ -12,9 +12,9 @@ Feature: Semantic checks for sendPaymentOutcomeReq - OK [SEM_SPO_07]
          <soapenv:Header/>
          <soapenv:Body>
             <nod:activatePaymentNoticeReq>
-               <idPSP>70000000001</idPSP>
-               <idBrokerPSP>70000000001</idBrokerPSP>
-               <idChannel>70000000001_01</idChannel>
+               <idPSP>#psp#</idPSP>
+               <idBrokerPSP>#psp#</idBrokerPSP>
+               <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
                <password>pwdpwdpwd</password>
                <idempotencyKey>#idempotency_key#</idempotencyKey>
                <qrCode>
@@ -32,7 +32,8 @@ Feature: Semantic checks for sendPaymentOutcomeReq - OK [SEM_SPO_07]
   
 	# idChannel value check: idChannel with value in NODO4_CFG.CANALI whose field MODELLO_PAGAMENTO in NODO4_CFG.CANALI_NODO table of nodo-dei-pagamenti database does not contain value 'ATTIVATO_PRESSO_PSP' (e.g. contains 'IMMEDIATO_MULTIBENEFICIARIO')
   
-  #  sendPaymentOutcome phase
+  @runnable
+  #sendPaymentOutcome phase
   Scenario: Execute a sendPaymentOutcome request on psp channel not enabled for payment model 3
     Given the Execute activatePaymentNotice request scenario executed successfully
     And initial XML sendPaymentOutcome
@@ -41,9 +42,9 @@ Feature: Semantic checks for sendPaymentOutcomeReq - OK [SEM_SPO_07]
       <soapenv:Header/>
       <soapenv:Body>
         <nod:sendPaymentOutcomeReq>
-          <idPSP>70000000001</idPSP>
-          <idBrokerPSP>70000000001</idBrokerPSP>
-          <idChannel>70000000001_03</idChannel>
+          <idPSP>#psp#</idPSP>
+          <idBrokerPSP>#psp#</idBrokerPSP>
+          <idChannel>#canale#</idChannel>
           <password>pwdpwdpwd</password>
           <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
           <outcome>OK</outcome>

@@ -1,4 +1,4 @@
-Feature: PRO_ANNULLO_08_PPALNEW
+Feature: PRO_ANNULLO_09_PPALNEW
 
     Background:
         Given systems up
@@ -11,9 +11,9 @@ Feature: PRO_ANNULLO_08_PPALNEW
             <soapenv:Header/>
             <soapenv:Body>
             <nod:verifyPaymentNoticeReq>
-                <idPSP>AGID_01</idPSP>
-                <idBrokerPSP>97735020584</idBrokerPSP>
-                <idChannel>97735020584_03</idChannel>
+                <idPSP>#psp_AGID#</idPSP>
+                <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+                <idChannel>#canale_AGID#</idChannel>
                 <password>pwdpwdpwd</password>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
@@ -42,7 +42,7 @@ Feature: PRO_ANNULLO_08_PPALNEW
                 <idempotencyKey>#idempotency_key#</idempotencyKey>
                 <qrCode>
                     <fiscalCode>#creditor_institution_code#</fiscalCode>
-                    <noticeNumber>#notice_number#</noticeNumber>
+                    <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                 </qrCode>
                 <!--Optional:-->
                 <expirationTime>6000</expirationTime>
@@ -85,21 +85,9 @@ Feature: PRO_ANNULLO_08_PPALNEW
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
     
+    @runnable
     Scenario: Execute nodoInoltroEsitoPaypal (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-        """
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:psp="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <psp:pspNotifyPaymentRes>
-                <outcome>OK</outcome>
-                <!--Optional:-->
-                <wait>20</wait>
-                </psp:pspNotifyPaymentRes>
-            </soapenv:Body>
-        </soapenv:Envelope>
-        """
         When WISP sends rest POST inoltroEsito/paypal to nodo-dei-pagamenti
         """
         {
@@ -107,7 +95,7 @@ Feature: PRO_ANNULLO_08_PPALNEW
             "idTransazionePsp":"$activateIOPayment.idempotencyKey",
             "idPagamento": "$activateIOPaymentResponse.paymentToken",
             "identificativoIntermediario": "irraggiungibile",
-            "identificativoPsp": "irraggiungibile",
+            "identificativoPsp": "#psp#",
             "identificativoCanale": "irraggiungibile",
             "importoTotalePagato": 10.00,
             "timestampOperazione": "2012-04-23T18:25:43Z"
@@ -115,8 +103,9 @@ Feature: PRO_ANNULLO_08_PPALNEW
         """
         And job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
         And wait 15 seconds for expiration
-        Then verify the HTTP status code of inoltroEsito/paypal response is 408
-        And check error is Operazione in timeout of inoltroEsito/paypal response
+        Then verify the HTTP status code of inoltroEsito/paypal response is 200
+        And check esito is KO of inoltroEsito/paypal response
+        And check errorCode is CONPSP of inoltroEsito/paypal response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_SEND_ERROR of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYMENT_SEND_ERROR of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO

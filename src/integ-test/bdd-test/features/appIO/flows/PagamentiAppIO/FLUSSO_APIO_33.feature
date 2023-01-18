@@ -10,13 +10,13 @@ Feature: FLUSSO_APIO_33
         <soapenv:Header/>
         <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>AGID_01</idPSP>
-            <idBrokerPSP>97735020584</idBrokerPSP>
-            <idChannel>97735020584_03</idChannel>
+            <idPSP>#psp_AGID#</idPSP>
+            <idBrokerPSP>#broker_AGID#</idBrokerPSP>
+            <idChannel>#canale_AGID#</idChannel>
             <password>pwdpwdpwd</password>
             <qrCode>
                 <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>302094719472095710</noticeNumber>
+                <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
         </nod:verifyPaymentNoticeReq>
         </soapenv:Body>
@@ -33,15 +33,15 @@ Feature: FLUSSO_APIO_33
             <soapenv:Header/>
             <soapenv:Body>
                 <nod:activateIOPaymentReq>
-                    <idPSP>AGID_01</idPSP>
-                    <idBrokerPSP>97735020584</idBrokerPSP>
-                    <idChannel>97735020584_03</idChannel>
+                    <idPSP>$verifyPaymentNotice.idPSP</idPSP>
+                    <idBrokerPSP>$verifyPaymentNotice.idBrokerPSP</idBrokerPSP>
+                    <idChannel>$verifyPaymentNotice.idChannel</idChannel>
                     <password>pwdpwdpwd</password>
                     <!--Optional:-->
                     <idempotencyKey>#idempotency_key#</idempotencyKey>
                     <qrCode>
                         <fiscalCode>#creditor_institution_code#</fiscalCode>
-                        <noticeNumber>#notice_number#</noticeNumber>
+                        <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
                     </qrCode>
                     <!--Optional:-->
                     <expirationTime>12345</expirationTime>
@@ -79,12 +79,15 @@ Feature: FLUSSO_APIO_33
         When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
+    @check
     Scenario: Execute activateIOPayment1 (Phase 3)
-        Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
+        Given nodo-dei-pagamenti has config parameter scheduler.jobName_annullamentoRptMaiRichiesteDaPm.enabled set to true
+        And nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1
         And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 1000
         And the Execute activateIOPayment (Phase 2) scenario executed successfully
         When job annullamentoRptMaiRichiesteDaPm triggered after 70 seconds
-        And wait 3 seconds for expiration
+        And wait 15 seconds for expiration
         And PSP sends soap activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
+        And restore initial configurations
         
