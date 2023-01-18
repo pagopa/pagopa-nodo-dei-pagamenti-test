@@ -1,0 +1,5 @@
+api,avgEl,maxEl,minEl,percOK,trNum,trOK,trOverSla300,
+verifyPaymentNotice_NN,601,1279,219,1.00,31,31,27,
+sendPaymentOutcome_NN,233,615,53,0.00,31,0,10,
+activatePaymentNotice_NN,761,1414,259,0.00,31,0,30,
+ALL,532,1414,53,0.33,93,31,67,

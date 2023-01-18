@@ -1,0 +1,8 @@
+api,avgEl,maxEl,minEl,percOK,trNum,trOK,trOverSla300,
+ChiediNumeroAvviso,1527,1849,1363,1.00,3,3,3,
+Verifica,1979,2475,1064,1.00,10,10,10,
+ALL,1993,4010,527,0.67,39,26,39,
+RPT_Semplice,1442,2327,527,0.00,5,0,5,
+RPT_Carrello_1,1694,2496,1202,0.00,6,0,6,
+RPT_Carrello_5,3120,4010,2230,0.00,2,0,2,
+Attiva,2287,3066,1199,1.00,13,13,13,

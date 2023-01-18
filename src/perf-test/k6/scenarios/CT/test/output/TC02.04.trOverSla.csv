@@ -1,0 +1,5 @@
+api,trOverSla1000,trOverSla300,trOverSla400,trOverSla500,trOverSla600,trOverSla800,
+verifyPaymentNotice_NN,4,27,24,18,11,6,
+sendPaymentOutcome_NN,0,10,6,2,1,0,
+activatePaymentNotice_NN,7,30,26,21,20,13,
+ALL,11,67,56,41,32,19,

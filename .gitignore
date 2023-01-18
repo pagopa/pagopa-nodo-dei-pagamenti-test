@@ -114,4 +114,12 @@ __pycache__
 
 *.iml
 .idea/
-**/config.json
+/config.json
+
+/instantclient_*
+/.idea
+environment.py
+reports.html
+
+/venv
+venv

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<testsuites tests="3" failures="1">
+<testsuite name="k6 thresholds" tests="3" failures="1"><testcase name="checks{pay_Check:over_sla300} - rate&lt;0.9" />
+<testcase name="http_req_duration{ALL:http_req_duration} - p(95)&lt;200" />
+<testcase name="checks{ALL:ko_rate} - rate&lt;0.01"><failure message="failed" /></testcase>
+</testsuite >
+</testsuites >
