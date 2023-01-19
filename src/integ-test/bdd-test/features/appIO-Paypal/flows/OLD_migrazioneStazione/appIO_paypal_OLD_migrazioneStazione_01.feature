@@ -7,59 +7,64 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
     # nodoVerificaRPT phase
     Scenario: Execute nodoVerificaRPT request
         Given initial XML nodoVerificaRPT
-
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:nodoVerificaRPT>
-            <identificativoPSP>#psp_AGID#</identificativoPSP>
-            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID#</identificativoCanale>
-            <password>pwdpwdpwd</password>
-            <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
-            <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-            <codiceIdRPT><aim:aim128> <aim:CCPost>#ccPoste#</aim:CCPost> <aim:CodStazPA>02</aim:CodStazPA> <aim:AuxDigit>0</aim:AuxDigit>  <aim:CodIUV>#iuv#</aim:CodIUV></aim:aim128></codiceIdRPT>
-            </ws:nodoVerificaRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-        And initial xml paaVerificaRPT
-            """"
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaVerificaRPTRisposta>
-            <paaVerificaRPTRisposta>
-            <esito>OK</esito>
-            <datiPagamentoPA>
-            <importoSingoloVersamento>1.00</importoSingoloVersamento>
-            <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
-            <bicAccredito>BSCTCH22</bicAccredito>
-            <enteBeneficiario>
-            <pag:identificativoUnivocoBeneficiario>
-            <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
-            <pag:codiceIdentificativoUnivoco>66666666666_05</pag:codiceIdentificativoUnivoco>
-            </pag:identificativoUnivocoBeneficiario>
-            <pag:denominazioneBeneficiario>f6</pag:denominazioneBeneficiario>
-            <pag:codiceUnitOperBeneficiario>r6</pag:codiceUnitOperBeneficiario>
-            <pag:denomUnitOperBeneficiario>yr</pag:denomUnitOperBeneficiario>
-            <pag:indirizzoBeneficiario>"paaVerificaRPT"</pag:indirizzoBeneficiario>
-            <pag:civicoBeneficiario>ut</pag:civicoBeneficiario>
-            <pag:capBeneficiario>jyr</pag:capBeneficiario>
-            <pag:localitaBeneficiario>yj</pag:localitaBeneficiario>
-            <pag:provinciaBeneficiario>h8</pag:provinciaBeneficiario>
-            <pag:nazioneBeneficiario>IT</pag:nazioneBeneficiario>
-            </enteBeneficiario>
-            <credenzialiPagatore>of8</credenzialiPagatore>
-            <causaleVersamento>prova/RFDB/$iuv/TESTO/causale del versamento</causaleVersamento>
-            </datiPagamentoPA>
-            </paaVerificaRPTRisposta>
-            </ws:paaVerificaRPTRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
+         <soapenv:Header/>
+         <soapenv:Body>
+         <ws:nodoVerificaRPT>
+         <identificativoPSP>#psp_AGID#</identificativoPSP>
+         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+         <identificativoCanale>#canale_AGID#</identificativoCanale>
+         <password>#password#</password>
+         <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
+         <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
+         <codiceIdRPT>
+         <aim:aim128>
+         <aim:CCPost>#ccPoste#</aim:CCPost>
+         <aim:CodStazPA>02</aim:CodStazPA>
+         <aim:AuxDigit>0</aim:AuxDigit>
+         <aim:CodIUV>#iuv#</aim:CodIUV>
+         </aim:aim128>
+         </codiceIdRPT>
+         </ws:nodoVerificaRPT>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
+      And initial XML paaVerificaRPT
+         """"
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+         <soapenv:Header/>
+         <soapenv:Body>
+         <ws:paaVerificaRPTRisposta>
+         <paaVerificaRPTRisposta>
+         <esito>OK</esito>
+         <datiPagamentoPA>
+         <importoSingoloVersamento>1.00</importoSingoloVersamento>
+         <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
+         <bicAccredito>BSCTCH22</bicAccredito>
+         <enteBeneficiario>
+         <pag:identificativoUnivocoBeneficiario>
+         <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+         <pag:codiceIdentificativoUnivoco>66666666666_05</pag:codiceIdentificativoUnivoco>
+         </pag:identificativoUnivocoBeneficiario>
+         <pag:denominazioneBeneficiario>f6</pag:denominazioneBeneficiario>
+         <pag:codiceUnitOperBeneficiario>r6</pag:codiceUnitOperBeneficiario>
+         <pag:denomUnitOperBeneficiario>yr</pag:denomUnitOperBeneficiario>
+         <pag:indirizzoBeneficiario>"paaVerificaRPT"</pag:indirizzoBeneficiario>
+         <pag:civicoBeneficiario>ut</pag:civicoBeneficiario>
+         <pag:capBeneficiario>jyr</pag:capBeneficiario>
+         <pag:localitaBeneficiario>yj</pag:localitaBeneficiario>
+         <pag:provinciaBeneficiario>h8</pag:provinciaBeneficiario>
+         <pag:nazioneBeneficiario>IT</pag:nazioneBeneficiario>
+         </enteBeneficiario>
+         <credenzialiPagatore>of8</credenzialiPagatore>
+         <causaleVersamento>prova/RFDB/$iuv/TESTO/causale del versamento</causaleVersamento>
+         </datiPagamentoPA>
+         </paaVerificaRPTRisposta>
+         </ws:paaVerificaRPTRisposta>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
@@ -142,7 +147,6 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
         And initial xml paaAttivaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
@@ -178,7 +182,6 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
