@@ -564,3 +564,166 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # RT_ISTANTANEO
+
+    Scenario: RT_ISTANTANEO (part 1)
+        Given the verifyPaymentNotice scenario executed successfully
+        And the activatePaymentNotice scenario executed successfully
+        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+
+    Scenario: RT_ISTANTANEO (part 2)
+        Given the RT_ISTANTANEO (part 1) scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+    Scenario: RT_ISTANTANEO (part 3)
+        Given the RT_ISTANTANEO (part 2) scenario executed successfully
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+    @wip
+    Scenario: RT_ISTANTANEO (part 4)
+        Given the RT_ISTANTANEO (part 3) scenario executed successfully
+        And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with Y under macro sendPaymentResultV2 on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYING_RPT,PAID,NOTICE_GENERATED,NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS
+        And checks the value PAYING,PAID,NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS_SNAPSHOT
+        And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 7 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with N under macro sendPaymentResultV2 on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # RT_ISTANTANEO_RPT_TARDIVA
+
+    Scenario: RT_ISTANTANEO_RPT_TARDIVA (part 1)
+        Given the verifyPaymentNotice scenario executed successfully
+        And the activatePaymentNotice scenario executed successfully
+        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+
+    Scenario: RT_ISTANTANEO_RPT_TARDIVA (part 2)
+        Given the RT_ISTANTANEO_RPT_TARDIVA (part 1) scenario executed successfully
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+
+    Scenario: RT_ISTANTANEO_RPT_TARDIVA (part 3)
+        Given the RT_ISTANTANEO_RPT_TARDIVA (part 2) scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+    @wip
+    Scenario: RT_ISTANTANEO_RPT_TARDIVA (part 4)
+        Given the RT_ISTANTANEO_RPT_TARDIVA (part 3) scenario executed successfully
+        And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with Y under macro sendPaymentResultV2 on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYING_RPT,PAID,NOTICE_GENERATED,NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS
+        And checks the value PAYING,PAID,NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # POSITION_STATUS_SNAPSHOT
+        And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 7 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with N under macro sendPaymentResultV2 on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
