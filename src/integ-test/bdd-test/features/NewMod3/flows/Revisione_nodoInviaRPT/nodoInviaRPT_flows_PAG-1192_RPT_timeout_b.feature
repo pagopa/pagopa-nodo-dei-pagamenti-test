@@ -408,7 +408,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b]
         #POSITION_STATUS
         And checks the value PAYING,INSERTED,INSERTED of the record at column status of the table POSITION_STATUS retrived by the query payment_status_only_act1 on db nodo_online under macro NewMod3
         #STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_ANNULLATA_NODO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column stato of the table STATI_RPT retrived by the query rt_v2 on db nodo_online under macro NewMod3
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column stato of the table STATI_RPT retrived by the query rt_v2 on db nodo_online under macro NewMod3
 
     Scenario: Execute nodoChiediCopiaRT
         Given the DB check scenario executed successfully

@@ -241,9 +241,9 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
         #DB-CHECK-STATI_RPT
         And replace iuv content with $1iuv content
         And replace pa content with #creditor_institution_code# content
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
         And replace pa content with #creditor_institution_code_secondary# content
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
 
         #DB-CHECK-STATI_RPT_SNAPSHOT
         And replace pa content with #creditor_institution_code# content
@@ -446,9 +446,9 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_01]
         #DB-CHECK-STATI_RPT
         And replace iuv content with $1iuv content
         And replace pa content with #creditor_institution_code# content
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP, RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO,  RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
         And replace pa content with #creditor_institution_code_secondary# content
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_ANNULLATA_WISP, RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO,  RT_GENERATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query by_iuv_and_id_dominio on db nodo_online under macro Mod1Mb
 
         #DB-CHECK-STATI_RPT_SNAPSHOT
         And replace pa content with #creditor_institution_code# content

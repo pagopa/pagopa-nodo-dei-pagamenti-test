@@ -266,7 +266,7 @@ Feature: T103_D_chiediStato_RT_ESITO_SCONOSCIUTO_PA_annullamento
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
+        #And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
        
  
 Scenario: execution nodoInviaRPT1

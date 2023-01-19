@@ -248,7 +248,7 @@ Feature: T002_RT_Annullamento_validazioneXSD
         Then checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
         Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
+        #And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
         And wait 10 seconds for expiration

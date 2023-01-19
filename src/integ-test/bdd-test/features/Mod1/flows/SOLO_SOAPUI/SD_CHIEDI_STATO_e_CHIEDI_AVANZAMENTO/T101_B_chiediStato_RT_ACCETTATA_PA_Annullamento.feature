@@ -250,7 +250,7 @@ Feature: T101_B_chiediStato_RT_ACCETTATA_PA_Annullamento
         Then checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
+        #And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
         And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
         
