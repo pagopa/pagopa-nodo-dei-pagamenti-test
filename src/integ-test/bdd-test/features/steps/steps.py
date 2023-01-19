@@ -444,7 +444,7 @@ def step_impl(context, number):
     if f"#CCP{number}#" in payload:
         ccp2 = str(utils.current_milli_time()) + '1'
         payload = payload.replace(f'#CCP{number}#', ccp2)
-        setattr(context, f"CCP{number}", ccp2)
+        setattr(context, f"{number}CCP", ccp2)
 
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
