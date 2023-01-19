@@ -6,64 +6,64 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
     # nodoVerificaRPT phase
     Scenario: Execute nodoVerificaRPT request
         Given initial XML nodoVerificaRPT
-         """
-         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
-         <soapenv:Header/>
-         <soapenv:Body>
-         <ws:nodoVerificaRPT>
-         <identificativoPSP>#psp_AGID#</identificativoPSP>
-         <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-         <identificativoCanale>#canale_AGID#</identificativoCanale>
-         <password>#password#</password>
-         <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
-         <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
-         <codiceIdRPT>
-         <aim:aim128>
-         <aim:CCPost>#ccPoste#</aim:CCPost>
-         <aim:CodStazPA>02</aim:CodStazPA>
-         <aim:AuxDigit>0</aim:AuxDigit>
-         <aim:CodIUV>#iuv#</aim:CodIUV>
-         </aim:aim128>
-         </codiceIdRPT>
-         </ws:nodoVerificaRPT>
-         </soapenv:Body>
-         </soapenv:Envelope>
-         """
-      And initial XML paaVerificaRPT
-         """"
-         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
-         <soapenv:Header/>
-         <soapenv:Body>
-         <ws:paaVerificaRPTRisposta>
-         <paaVerificaRPTRisposta>
-         <esito>OK</esito>
-         <datiPagamentoPA>
-         <importoSingoloVersamento>1.00</importoSingoloVersamento>
-         <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
-         <bicAccredito>BSCTCH22</bicAccredito>
-         <enteBeneficiario>
-         <pag:identificativoUnivocoBeneficiario>
-         <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
-         <pag:codiceIdentificativoUnivoco>66666666666_05</pag:codiceIdentificativoUnivoco>
-         </pag:identificativoUnivocoBeneficiario>
-         <pag:denominazioneBeneficiario>f6</pag:denominazioneBeneficiario>
-         <pag:codiceUnitOperBeneficiario>r6</pag:codiceUnitOperBeneficiario>
-         <pag:denomUnitOperBeneficiario>yr</pag:denomUnitOperBeneficiario>
-         <pag:indirizzoBeneficiario>"paaVerificaRPT"</pag:indirizzoBeneficiario>
-         <pag:civicoBeneficiario>ut</pag:civicoBeneficiario>
-         <pag:capBeneficiario>jyr</pag:capBeneficiario>
-         <pag:localitaBeneficiario>yj</pag:localitaBeneficiario>
-         <pag:provinciaBeneficiario>h8</pag:provinciaBeneficiario>
-         <pag:nazioneBeneficiario>IT</pag:nazioneBeneficiario>
-         </enteBeneficiario>
-         <credenzialiPagatore>of8</credenzialiPagatore>
-         <causaleVersamento>prova/RFDB/$iuv/TESTO/causale del versamento</causaleVersamento>
-         </datiPagamentoPA>
-         </paaVerificaRPTRisposta>
-         </ws:paaVerificaRPTRisposta>
-         </soapenv:Body>
-         </soapenv:Envelope>
-         """
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:nodoVerificaRPT>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID#</identificativoCanale>
+            <password>#password#</password>
+            <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
+            <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
+            <codiceIdRPT>
+            <aim:aim128>
+            <aim:CCPost>#ccPoste#</aim:CCPost>
+            <aim:CodStazPA>02</aim:CodStazPA>
+            <aim:AuxDigit>0</aim:AuxDigit>
+            <aim:CodIUV>#iuv#</aim:CodIUV>
+            </aim:aim128>
+            </codiceIdRPT>
+            </ws:nodoVerificaRPT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML paaVerificaRPT
+            """"
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:paaVerificaRPTRisposta>
+            <paaVerificaRPTRisposta>
+            <esito>OK</esito>
+            <datiPagamentoPA>
+            <importoSingoloVersamento>1.00</importoSingoloVersamento>
+            <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
+            <bicAccredito>BSCTCH22</bicAccredito>
+            <enteBeneficiario>
+            <pag:identificativoUnivocoBeneficiario>
+            <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+            <pag:codiceIdentificativoUnivoco>66666666666_05</pag:codiceIdentificativoUnivoco>
+            </pag:identificativoUnivocoBeneficiario>
+            <pag:denominazioneBeneficiario>f6</pag:denominazioneBeneficiario>
+            <pag:codiceUnitOperBeneficiario>r6</pag:codiceUnitOperBeneficiario>
+            <pag:denomUnitOperBeneficiario>yr</pag:denomUnitOperBeneficiario>
+            <pag:indirizzoBeneficiario>"paaVerificaRPT"</pag:indirizzoBeneficiario>
+            <pag:civicoBeneficiario>ut</pag:civicoBeneficiario>
+            <pag:capBeneficiario>jyr</pag:capBeneficiario>
+            <pag:localitaBeneficiario>yj</pag:localitaBeneficiario>
+            <pag:provinciaBeneficiario>h8</pag:provinciaBeneficiario>
+            <pag:nazioneBeneficiario>IT</pag:nazioneBeneficiario>
+            </enteBeneficiario>
+            <credenzialiPagatore>of8</credenzialiPagatore>
+            <causaleVersamento>prova/RFDB/$iuv/TESTO/causale del versamento</causaleVersamento>
+            </datiPagamentoPA>
+            </paaVerificaRPTRisposta>
+            </ws:paaVerificaRPTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
@@ -379,9 +379,20 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
+    #DB update 2
+    Scenario: Execute station version update 2
+        Given the Execute sendPaymentOutcome request scenario executed successfully
+        Then updates through the query stationUpdate of the table STAZIONI the parameter VERSIONE with 1 under macro sendPaymentResultV2 on db nodo_cfg
+
+    #refresh pa e stazioni
+    Scenario: Execute refresh pa e stazioni 2
+        Given the Execute station version update 2 scenario executed successfully
+        Then refresh job PA triggered after 10 seconds
+
+    @runnable
     #DB Check
     Scenario: Execute DB check
-        Given the Execute sendPaymentOutcome request scenario executed successfully
+        Given the Execute refresh pa e stazioni 2 scenario executed successfully
         And wait 25 seconds for expiration
         #POSITION_PAYMENT_STATUS
         Then checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED, PAID, NOTICE_GENERATED, NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -417,7 +428,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
         #STATI_RPT table
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RPT_RISOLTA_OK, RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
         #STATI_RPT_SNAPSHOT table
-        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stato on db nodo_online under macro AppIO
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query stato on db nodo_online under macro AppIO
         #RT
         Then execution query rt_1 to get value on the table RT, with the columns ID_SESSIONE,CCP,IDENT_DOMINIO,IUV,COD_ESITO,DATA_RICEVUTA,DATA_RICHIESTA,ID_RICEVUTA,ID_RICHIESTA,SOMMA_VERSAMENTI,INSERTED_TIMESTAMP,UPDATED_TIMESTAMP,CANALE,ID under macro NewMod3 with db name nodo_online
@@ -434,14 +445,3 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
         And checks the value $nodoInviaRPT.identificativoIntermediarioPA of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query position_payment_status_old on db nodo_online under macro NewMod3
         And checks the value $nodoInviaRPT.identificativoUnivocoVersamento of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_XML retrived by the query position_payment_status_old on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query position_payment_status_old on db nodo_online under macro NewMod3
-
-    #DB update 2
-    Scenario: Execute station version update 2
-        Given the Execute DB check scenario executed successfully
-        Then updates through the query stationUpdate of the table STAZIONI the parameter VERSIONE with 1 under macro sendPaymentResultV2 on db nodo_cfg
-
-    @runnable
-    #refresh pa e stazioni
-    Scenario: Execute refresh pa e stazioni 2
-        Given the Execute station version update 2 scenario executed successfully
-        Then refresh job PA triggered after 10 seconds
