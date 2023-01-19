@@ -565,42 +565,6 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # RT_ISTANTANEO
 
     Scenario: RT_ISTANTANEO (part 1)
@@ -622,7 +586,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @wip
+    @runnable
     Scenario: RT_ISTANTANEO (part 4)
         Given the RT_ISTANTANEO (part 3) scenario executed successfully
         And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with Y under macro sendPaymentResultV2 on db nodo_cfg
@@ -651,37 +615,6 @@ Feature: revision checks for sendPaymentOutcomeV2
         And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with N under macro sendPaymentResultV2 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     # RT_ISTANTANEO_RPT_TARDIVA
 
     Scenario: RT_ISTANTANEO_RPT_TARDIVA (part 1)
@@ -703,7 +636,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-    @wip
+    @runnable
     Scenario: RT_ISTANTANEO_RPT_TARDIVA (part 4)
         Given the RT_ISTANTANEO_RPT_TARDIVA (part 3) scenario executed successfully
 
