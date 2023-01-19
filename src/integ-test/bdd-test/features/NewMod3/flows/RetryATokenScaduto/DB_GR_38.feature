@@ -4,7 +4,10 @@ Feature: process tests for DB_GR_38
     Given systems up
 
   Scenario: Execute verifyPaymentNotice request
-    Given initial XML verifyPaymentNotice
+    Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition BROADCAST and where value ('Y') under macro update_query on db nodo_cfg
+    And refresh job PA triggered after 10 seconds
+    And wait 5 seconds for expiration
+    And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header/>
