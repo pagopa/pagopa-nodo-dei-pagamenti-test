@@ -604,7 +604,9 @@ Feature: revision checks for sendPaymentOutcomeV2
     # RT_ISTANTANEO
 
     Scenario: RT_ISTANTANEO (part 1)
-        Given the verifyPaymentNotice scenario executed successfully
+        Given updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with Y under macro sendPaymentResultV2 on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
+        And the verifyPaymentNotice scenario executed successfully
         And the activatePaymentNotice scenario executed successfully
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
@@ -683,7 +685,9 @@ Feature: revision checks for sendPaymentOutcomeV2
     # RT_ISTANTANEO_RPT_TARDIVA
 
     Scenario: RT_ISTANTANEO_RPT_TARDIVA (part 1)
-        Given the verifyPaymentNotice scenario executed successfully
+        Given updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with Y under macro sendPaymentResultV2 on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
+        And the verifyPaymentNotice scenario executed successfully
         And the activatePaymentNotice scenario executed successfully
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
@@ -702,8 +706,6 @@ Feature: revision checks for sendPaymentOutcomeV2
     @wip
     Scenario: RT_ISTANTANEO_RPT_TARDIVA (part 4)
         Given the RT_ISTANTANEO_RPT_TARDIVA (part 3) scenario executed successfully
-        And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with Y under macro sendPaymentResultV2 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYING_RPT,PAID,NOTICE_GENERATED,NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
