@@ -348,7 +348,7 @@ Feature: gestioneReceiptMb_06_PULL
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
 
-@fix
+@secondFix
     Scenario: job pspChiediRT (Phase 4)
         Given the Execute nodoInoltroEsitoMod1 (Phase 3) scenario executed successfully
         And initial XML pspChiediListaRT
