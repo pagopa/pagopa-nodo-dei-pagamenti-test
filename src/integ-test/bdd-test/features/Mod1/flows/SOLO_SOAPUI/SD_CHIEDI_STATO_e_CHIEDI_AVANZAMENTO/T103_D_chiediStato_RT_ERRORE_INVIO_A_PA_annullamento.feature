@@ -223,7 +223,7 @@ Feature: T103_D_chiediStato_RT_ERRORE_INVIO_A_PA_annullamento
 
     Scenario: Execute job paInviaRt
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
-        When job paInviaRt triggered after 5 seconds
+        When job paInviaRt triggered after 10 seconds
         Then wait 7 seconds for expiration
 
 

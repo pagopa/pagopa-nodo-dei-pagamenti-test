@@ -170,7 +170,7 @@ Feature: process tests for retryAtokenScaduto
   Scenario: Execute poller Annulli
     Given the Execute nodoInviaRPT request scenario executed successfully
     When job mod3CancelV1 triggered after 5 seconds
-    And wait ? seconds for expiration
+    And wait 15 seconds for expiration
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
   Scenario: DB check
