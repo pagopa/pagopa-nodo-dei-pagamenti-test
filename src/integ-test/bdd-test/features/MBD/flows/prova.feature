@@ -498,7 +498,7 @@ Feature: bug uat
                 "identificativoIntermediario": "#id_broker_psp#",
                 "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
                 "esitoTransazioneCarta": "123456",
-                "importoTotalePagato": 10.00,
+                "importoTotalePagato": 10.5,
                 "timestampOperazione": "2012-04-23T18:25:43.001Z",
                 "codiceAutorizzativo": "123212"
             }
