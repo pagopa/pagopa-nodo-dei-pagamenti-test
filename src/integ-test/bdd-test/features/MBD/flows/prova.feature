@@ -6,7 +6,7 @@ Feature: bug uat
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
 
     Scenario: MB
-        And MB generation
+        Given MB generation
             """
             <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
             <PSP>
@@ -409,41 +409,7 @@ Feature: bug uat
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-    Scenario: nodoInviaCarrelloRPT with IBAN
-        Given initial XML nodoInviaCarrelloRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header>
-            <ppt:intestazioneCarrelloPPT>
-            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$ccp</identificativoCarrello>
-            </ppt:intestazioneCarrelloPPT>
-            </soapenv:Header>
-            <soapenv:Body>
-            <ws:nodoInviaCarrelloRPT>
-            <password>#password#</password>
-            <identificativoPSP>#psp_AGID#</identificativoPSP>
-            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID_02#</identificativoCanale>
-            <listaRPT>
-            <!--1 or more repetitions:-->
-            <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$ccp</codiceContestoPagamento>
-            <rpt>$rptAttachment</rpt>
-            </elementoListaRPT>
-            </listaRPT>
-            </ws:nodoInviaCarrelloRPT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
-
-    Scenario: nodoInviaCarrelloRPT with MBD
+    Scenario: nodoInviaCarrelloRPT
         Given initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -523,7 +489,7 @@ Feature: bug uat
         And the nodoInviaRPT scenario executed successfully
         And the nodoChiediInformazioniPagamento scenario executed successfully
         And the nodoChiediListaPsp with MBD scenario executed successfully
-        And the nodoInviaRT executed successfully
+        And the nodoInviaRT scenario executed successfully
 
     @runnable
     Scenario: Test nodoInviaRPT with IBAN
@@ -531,21 +497,21 @@ Feature: bug uat
         And the nodoInviaRPT scenario executed successfully
         And the nodoChiediInformazioniPagamento scenario executed successfully
         And the nodoChiediListaPsp with IBAN scenario executed successfully
-        And the nodoInviaRT executed successfully
+        And the nodoInviaRT scenario executed successfully
 
     @runnable
     Scenario: Test nodoInviaCarrelloRPT with MBD
         Given the MB scenario executed successfully
         And the RPT with MBD scenario executed successfully
-        And the nodoInviaCarrelloRPT with MBD scenario executed successfully
+        And the nodoInviaCarrelloRPT scenario executed successfully
         And the nodoChiediInformazioniPagamento scenario executed successfully
         And the nodoChiediListaPsp with MBD scenario executed successfully
-        And the nodoInviaRT executed successfully
+        And the nodoInviaRT scenario executed successfully
 
     @runnable
     Scenario: Test nodoInviaCarrelloRPT with IBAN
         Given the RPT with IBAN scenario executed successfully
-        And the nodoInviaCarrelloRPT with IBAN scenario executed successfully
+        And the nodoInviaCarrelloRPT scenario executed successfully
         And the nodoChiediInformazioniPagamento scenario executed successfully
         And the nodoChiediListaPsp with IBAN scenario executed successfully
-        And the nodoInviaRT executed successfully
+        And the nodoInviaRT scenario executed successfully
