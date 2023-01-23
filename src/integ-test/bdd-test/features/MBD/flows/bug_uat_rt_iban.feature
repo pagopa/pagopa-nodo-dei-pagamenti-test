@@ -110,7 +110,6 @@ Feature: bug uat rt iban
             """
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
     Scenario: nodoInviaRT
         Given RT generation
