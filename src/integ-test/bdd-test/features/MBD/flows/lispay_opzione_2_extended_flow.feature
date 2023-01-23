@@ -1,4 +1,4 @@
-Feature: rpt carrello mbd iban
+Feature: lispay opzione 2 extended flow
 
     Background:
         Given systems up
