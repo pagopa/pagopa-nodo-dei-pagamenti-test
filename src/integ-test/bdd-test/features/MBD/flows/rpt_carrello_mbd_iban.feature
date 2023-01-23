@@ -1,4 +1,4 @@
-Feature: bug uat
+Feature: rpt carrello mbd iban
 
     Background:
         Given systems up
@@ -45,7 +45,7 @@ Feature: bug uat
             """
 
     Scenario: RPT with MBD
-        Given initial XML RPT_XML
+        Given RPT generation
             """
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_2_0.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
@@ -121,10 +121,6 @@ Feature: bug uat
             </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
             </pay_i:RPT>
-            """
-        And RPT generation
-            """
-            $RPT_XML
             """
 
     Scenario: RPT with IBAN
@@ -465,16 +461,16 @@ Feature: bug uat
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
-            "idPagamento": "$sessionToken",
-            "RRN": 123456789,
-            "identificativoPsp": "#psp#",
-            "tipoVersamento": "CP",
-            "identificativoIntermediario": "#id_broker_psp#",
-            "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-            "esitoTransazioneCarta": "123456",
-            "importoTotalePagato": $RPT_XML.importoTotaleDaVersare,
-            "timestampOperazione": "2012-04-23T18:25:43.001Z",
-            "codiceAutorizzativo": "123212"
+                "idPagamento": "$sessionToken",
+                "RRN": 123456789,
+                "identificativoPsp": "#psp#",
+                "tipoVersamento": "CP",
+                "identificativoIntermediario": "#id_broker_psp#",
+                "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "esitoTransazioneCarta": "123456",
+                "importoTotalePagato": 10,
+                "timestampOperazione": "2012-04-23T18:25:43.001Z",
+                "codiceAutorizzativo": "123212"
             }
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
