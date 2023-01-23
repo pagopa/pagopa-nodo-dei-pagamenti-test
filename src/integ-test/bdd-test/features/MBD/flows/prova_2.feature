@@ -459,7 +459,7 @@ Feature: bug uat
         And check totalRows is 0 of listaPSP response
 
     Scenario: nodoInoltraEsitoMod1
-        And initial XML pspInviaRPT
+        Given initial XML pspInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
