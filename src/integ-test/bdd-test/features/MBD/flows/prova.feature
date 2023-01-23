@@ -475,7 +475,7 @@ Feature: bug uat
         And check totalRows is 0 of listaPSP response
 
     Scenario: nodoInoltraEsitoCarta
-        Given PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
+        Given initial XML pspInviaCarrelloRPTCarte
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
@@ -488,6 +488,7 @@ Feature: bug uat
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
@@ -495,10 +496,10 @@ Feature: bug uat
                 "RRN": 123456789,
                 "identificativoPsp": "#psp#",
                 "tipoVersamento": "CP",
-                "identificativoIntermediario": "#psp#",
-                "identificativoCanale": "#canale#",
+                "identificativoIntermediario": "#id_broker_psp#",
+                "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
                 "esitoTransazioneCarta": "123456",
-                "importoTotalePagato": 10.00,
+                "importoTotalePagato": 10,
                 "timestampOperazione": "2012-04-23T18:25:43.001Z",
                 "codiceAutorizzativo": "123212"
             }
