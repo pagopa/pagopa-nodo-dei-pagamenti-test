@@ -439,6 +439,22 @@ Feature: bug uat
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML pspInviaCarrelloRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
@@ -459,19 +475,32 @@ Feature: bug uat
         And check totalRows is 0 of listaPSP response
 
     Scenario: nodoInoltraEsitoCarta
-        When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
+        Given PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTCarteResponse>
+            <pspInviaCarrelloRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTCarteResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
             """
             {
                 "idPagamento": "$sessionToken",
-                "RRN": 10026669,
-                "tipoVersamento": "CP",
-                "identificativoIntermediario": "#id_broker_psp#",
+                "RRN": 123456789,
                 "identificativoPsp": "#psp#",
+                "tipoVersamento": "CP",
+                "identificativoIntermediario": "#psp#",
                 "identificativoCanale": "#canale#",
+                "esitoTransazioneCarta": "123456",
                 "importoTotalePagato": 10.00,
-                "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
-                "codiceAutorizzativo": "resOK",
-                "esitoTransazioneCarta": "00"
+                "timestampOperazione": "2012-04-23T18:25:43.001Z",
+                "codiceAutorizzativo": "123212"
             }
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
