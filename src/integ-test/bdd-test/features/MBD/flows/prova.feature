@@ -458,6 +458,25 @@ Feature: bug uat
         Then verify the HTTP status code of listaPSP response is 200
         And check totalRows is 0 of listaPSP response
 
+    Scenario: nodoInoltraEsitoCarta
+        When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
+            """
+            {
+                "idPagamento": "$sessionToken",
+                "RRN": 10026669,
+                "tipoVersamento": "CP",
+                "identificativoIntermediario": "#id_broker_psp#",
+                "identificativoPsp": "#psp#",
+                "identificativoCanale": "#canale#",
+                "importoTotalePagato": 10.00,
+                "timestampOperazione": "2021-07-09T17:06:03.100+01:00",
+                "codiceAutorizzativo": "resOK",
+                "esitoTransazioneCarta": "00"
+            }
+            """
+        Then verify the HTTP status code of inoltroEsito/carta response is 200
+        And check esito is OK of inoltroEsito/carta response
+
     Scenario: nodoInviaRT
         Given initial XML nodoInviaRT
             """
@@ -489,6 +508,7 @@ Feature: bug uat
         And the nodoInviaRPT scenario executed successfully
         And the nodoChiediInformazioniPagamento scenario executed successfully
         And the nodoChiediListaPsp with MBD scenario executed successfully
+        And the nodoInoltraEsitoCarta scenario executed successfully
         And the RT with MBD scenario executed successfully
         And the nodoInviaRT scenario executed successfully
 
@@ -498,6 +518,7 @@ Feature: bug uat
         And the nodoInviaRPT scenario executed successfully
         And the nodoChiediInformazioniPagamento scenario executed successfully
         And the nodoChiediListaPsp with IBAN scenario executed successfully
+        And the nodoInoltraEsitoCarta scenario executed successfully
         And the RT with IBAN scenario executed successfully
         And the nodoInviaRT scenario executed successfully
 
@@ -508,6 +529,7 @@ Feature: bug uat
         And the nodoInviaCarrelloRPT scenario executed successfully
         And the nodoChiediInformazioniPagamento scenario executed successfully
         And the nodoChiediListaPsp with MBD scenario executed successfully
+        And the nodoInoltraEsitoCarta scenario executed successfully
         And the RT with MBD scenario executed successfully
         And the nodoInviaRT scenario executed successfully
 
@@ -517,5 +539,6 @@ Feature: bug uat
         And the nodoInviaCarrelloRPT scenario executed successfully
         And the nodoChiediInformazioniPagamento scenario executed successfully
         And the nodoChiediListaPsp with IBAN scenario executed successfully
+        And the nodoInoltraEsitoCarta scenario executed successfully
         And the RT with IBAN scenario executed successfully
         And the nodoInviaRT scenario executed successfully
