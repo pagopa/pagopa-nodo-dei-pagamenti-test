@@ -489,6 +489,7 @@ Feature: bug uat
         And the nodoInviaRPT scenario executed successfully
         And the nodoChiediInformazioniPagamento scenario executed successfully
         And the nodoChiediListaPsp with MBD scenario executed successfully
+        And the RT with MBD scenario executed successfully
         And the nodoInviaRT scenario executed successfully
 
     @runnable
@@ -497,6 +498,7 @@ Feature: bug uat
         And the nodoInviaRPT scenario executed successfully
         And the nodoChiediInformazioniPagamento scenario executed successfully
         And the nodoChiediListaPsp with IBAN scenario executed successfully
+        And the RT with IBAN scenario executed successfully
         And the nodoInviaRT scenario executed successfully
 
     @runnable
@@ -506,6 +508,7 @@ Feature: bug uat
         And the nodoInviaCarrelloRPT scenario executed successfully
         And the nodoChiediInformazioniPagamento scenario executed successfully
         And the nodoChiediListaPsp with MBD scenario executed successfully
+        And the RT with MBD scenario executed successfully
         And the nodoInviaRT scenario executed successfully
 
     @runnable
@@ -514,4 +517,5 @@ Feature: bug uat
         And the nodoInviaCarrelloRPT scenario executed successfully
         And the nodoChiediInformazioniPagamento scenario executed successfully
         And the nodoChiediListaPsp with IBAN scenario executed successfully
+        And the RT with IBAN scenario executed successfully
         And the nodoInviaRT scenario executed successfully
