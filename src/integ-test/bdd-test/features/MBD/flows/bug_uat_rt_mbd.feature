@@ -161,7 +161,7 @@ Feature: bug uat rt mbd
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>TR0001_20120302-10:37:52.0264-F098</pay_i:identificativoMessaggioRicevuta>
@@ -263,7 +263,7 @@ Feature: bug uat rt mbd
             <identificativoCanale>#canale_IMMEDIATO_MULTIBENEFICIARIO#</identificativoCanale>
             <password>#password#</password>
             <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoDominio>$nodoInviaCarrelloRPT.identificativoDominio</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$ccp</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
