@@ -227,7 +227,7 @@ Feature: bug uat rt mbd
             </pay_i:soggettoPagatore>
             <pay_i:datiPagamento>
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
-            <pay_i:importoTotalePagato>20.00</pay_i:importoTotalePagato>
+            <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:CodiceContestoPagamento>$ccp</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
@@ -241,14 +241,6 @@ Feature: bug uat rt mbd
             <pay_i:tipoAllegatoRicevuta>BD</pay_i:tipoAllegatoRicevuta>
             <pay_i:testoAllegato>$bollo</pay_i:testoAllegato>
             </pay_i:allegatoRicevuta>
-            </pay_i:datiSingoloPagamento>
-            <pay_i:datiSingoloPagamento>
-            <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
-            <pay_i:esitoSingoloPagamento>Pagamento effettuato</pay_i:esitoSingoloPagamento>
-            <pay_i:dataEsitoSingoloPagamento>2012-03-02</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
-            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloPagamento>
             </pay_i:datiPagamento>
             </pay_i:RT>
