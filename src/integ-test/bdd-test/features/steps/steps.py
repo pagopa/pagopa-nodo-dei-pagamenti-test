@@ -362,6 +362,7 @@ def step_impl(context):
 @given('generate {number:d} notice number and iuv with aux digit {aux_digit:d}, segregation code {segregation_code} and application code {application_code}')
 def step_impl(context, number, aux_digit, segregation_code, application_code):
     segregation_code = utils.replace_global_variables(segregation_code, context)
+    application_code = utils.replace_global_variables(application_code, context)
     if aux_digit == 0 or aux_digit == 3:
         iuv = f"11{random.randint(10000000000, 99999999999)}00"
         reference_code = application_code if aux_digit == 0 else segregation_code
