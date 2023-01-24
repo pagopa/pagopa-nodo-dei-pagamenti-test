@@ -326,9 +326,9 @@ Feature: PAG-2346
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
         # And job paInviaRt triggered after 10 seconds
