@@ -1,11 +1,11 @@
-Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
+Feature: PAG-2346
 
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
 
-    Scenario: prova
+    Scenario: Test
         Given MB generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -336,29 +336,3 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP
     # , RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_IUV on db nodo_online under macro RTPull
     # And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_IUV on db nodo_online under macro RTPull
-
-    @runnable
-    Scenario: nodoInviaRT
-        Given the prova scenario executed successfully
-        And initial XML nodoInviaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:nodoInviaRT>
-            <identificativoIntermediarioPSP>#id_broker_psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_IMMEDIATO_MULTIBENEFICIARIO#</identificativoCanale>
-            <password>#password#</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
-            <tipoFirma></tipoFirma>
-            <forzaControlloSegno>1</forzaControlloSegno>
-            <rt>$rtAttachment</rt>
-            </ws:nodoInviaRT>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRT response
