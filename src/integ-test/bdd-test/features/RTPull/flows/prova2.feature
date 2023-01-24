@@ -3,7 +3,7 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
     Background:
         Given systems up
 
-    Scenario: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO]
+    Scenario: prova
         Given MB generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -332,12 +332,13 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
         # And wait 130 seconds for expiration
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP
-        # , RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_IUV on db nodo_online under macro RTPull
-        # And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_IUV on db nodo_online under macro RTPull
-    
+    # , RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_IUV on db nodo_online under macro RTPull
+    # And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_IUV on db nodo_online under macro RTPull
+
     @runnable
     Scenario: nodoInviaRT
-        Given initial XML nodoInviaRT
+        Given the prova scenario executed successfully
+        And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
