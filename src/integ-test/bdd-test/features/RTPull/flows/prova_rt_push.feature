@@ -2,7 +2,7 @@ Feature: prova rt push
 
     Background:
         Given systems up
-        And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
+        And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
 
     Scenario: Test part 1
