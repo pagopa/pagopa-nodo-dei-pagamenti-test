@@ -2,6 +2,8 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
 
     Background:
         Given systems up
+        And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
+        And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
 
     Scenario: prova
         Given MB generation
@@ -99,7 +101,7 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>#IUV#</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#carrello#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -216,7 +218,7 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>$IUV</pay_i:identificativoUnivocoVersamento>
-            <pay_i:CodiceContestoPagamento>$carrello</pay_i:CodiceContestoPagamento>
+            <pay_i:CodiceContestoPagamento>$1carrello</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>4.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>Pagamento effettuato</pay_i:esitoSingoloPagamento>
@@ -255,7 +257,7 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
             <ppt:intestazioneCarrelloPPT>
             <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoCarrello>$carrello</identificativoCarrello>
+            <identificativoCarrello>$1carrello</identificativoCarrello>
             </ppt:intestazioneCarrelloPPT>
             </soapenv:Header>
             <soapenv:Body>
@@ -268,7 +270,7 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             </listaRPT>
@@ -286,7 +288,7 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
             <elementoListaRTResponse>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             </elementoListaRTResponse>
             </pspChiediListaRTResponse>
             </ws:pspChiediListaRTResponse>
@@ -350,7 +352,7 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$IUV</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$carrello</codiceContestoPagamento>
+            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
             <rt>$rtAttachment</rt>
