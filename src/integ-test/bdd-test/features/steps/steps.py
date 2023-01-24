@@ -804,8 +804,8 @@ def step_impl(context, attribute, value, elem, primitive):
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     #primitive = soap_primitive.split("_")[0]
-    headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive,
-               'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
+    # headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
+    headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
     url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
@@ -823,8 +823,8 @@ def step_impl(context, sender, soap_primitive, receiver):
 @step('send, by sender {sender}, soap action {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     #primitive = soap_primitive.split("_")[0]
-    headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive,
-               'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
+    # headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
+    headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
     url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
@@ -1598,6 +1598,7 @@ def step_impl(context, query_name, date, macro, db_name):
 
 @then("restore initial configurations")
 def step_impl(context):
+    print(">>> restore initial configurations")
     db_selected = context.config.userdata.get(
         "db_configuration").get('nodo_cfg')
     conn = db.getConnection(db_selected.get('host'), db_selected.get(

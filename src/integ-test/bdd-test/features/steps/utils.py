@@ -313,8 +313,7 @@ def single_thread(context, soap_primitive, type):
     primitive = replace_global_variables(primitive, context)
 
     if type == 'GET':
-        headers = {'X-Forwarded-For': '10.82.39.148',
-                   'Host': 'api.dev.platform.pagopa.it:443'}
+        # headers = {'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
         url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
         print(url_nodo)
         soap_response = requests.get(url_nodo, headers=headers, verify=False)
@@ -322,8 +321,8 @@ def single_thread(context, soap_primitive, type):
         body = getattr(context, primitive)
         print(body)
         if 'xml' in getattr(context, primitive):
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive,
-                       'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+            # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive}
             url_nodo = get_soap_url_nodo(context, primitive)
         else:
             headers = {'Content-Type': 'application/json',

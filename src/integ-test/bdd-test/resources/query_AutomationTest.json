@@ -1,7 +1,7 @@
 {
     "configurations": {
         "select_config": "SELECT ck.CONFIG_KEY, ck.CONFIG_VALUE from CONFIGURATION_KEYS ck",
-        "update_config": "UPDATE CONFIGURATION_KEYS s SET s.CONFIG_VALUE = q'[value]' WHERE s.CONFIG_KEY = 'key'"
+        "update_config" : "UPDATE cfg.CONFIGURATION_KEYS SET CONFIG_VALUE = 'value' WHERE CONFIG_KEY = 'key'"
     },
     "NewMod3": {
         "payment_status": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
