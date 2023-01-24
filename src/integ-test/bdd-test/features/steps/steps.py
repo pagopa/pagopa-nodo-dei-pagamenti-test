@@ -10,8 +10,10 @@ from multiprocessing.sharedctypes import Value
 from sre_constants import ASSERT
 from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
-import xmltodict
-import db_operation as db
+if 'NODOPGDB' in os.environ:
+    import db_operation_pg as db
+else:
+    import db_operation as db
 import json_operations as jo
 import pytz
 import requests
@@ -804,8 +806,10 @@ def step_impl(context, attribute, value, elem, primitive):
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     #primitive = soap_primitive.split("_")[0]
-    # headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
-    headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
+    if 'NODOPGDB' in os.environ:
+        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
+    else:
+        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
     url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
@@ -823,8 +827,10 @@ def step_impl(context, sender, soap_primitive, receiver):
 @step('send, by sender {sender}, soap action {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     #primitive = soap_primitive.split("_")[0]
-    # headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
-    headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
+    if 'NODOPGDB' in os.environ:
+        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
+    else:
+        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts        
     url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
