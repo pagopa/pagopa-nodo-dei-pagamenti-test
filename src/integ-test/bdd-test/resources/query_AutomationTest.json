@@ -235,6 +235,7 @@
     "RTPull": {
         "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC",
         "rpt_stati_IUV": "SELECT columns FROM table_name s WHERE s.IUV = '$IUV' ORDER BY INSERTED_TIMESTAMP ASC",
+        "rpt_stati_1iuv": "SELECT columns FROM table_name s WHERE s.IUV = '$1iuv' ORDER BY INSERTED_TIMESTAMP ASC",
         "by_iuv": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv'",
         "by_iuv_and_ccp": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' AND s.ccp = '$ccp'",
         "getSchedulerPspRetryAckNegativePollerMaxRetry": "SELECT columns FROM table_name s WHERE s.CONFIG_KEY='scheduler.pspRetryAckNegativePollerMaxRetry'",
