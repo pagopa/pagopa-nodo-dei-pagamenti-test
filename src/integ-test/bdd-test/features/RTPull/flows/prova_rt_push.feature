@@ -1,11 +1,10 @@
-Feature: PAG-2346 rt push
+Feature: prova rt push
 
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
 
-    @runnable
     Scenario: Test part 1
         Given MB generation
             """
@@ -300,6 +299,7 @@ Feature: PAG-2346 rt push
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_1iuv on db nodo_online under macro RTPull
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_1iuv on db nodo_online under macro RTPull
 
+    @runnable
     Scenario: Test part 2
         Given the Test part 1 scenario executed succesfully
         And initial XML nodoInviaRT
