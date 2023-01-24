@@ -301,7 +301,7 @@ Feature: prova rt push
 
     @runnable
     Scenario: Test part 2
-        Given the Test part 1 scenario executed succesfully
+        Given the Test part 1 scenario executed successfully
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
