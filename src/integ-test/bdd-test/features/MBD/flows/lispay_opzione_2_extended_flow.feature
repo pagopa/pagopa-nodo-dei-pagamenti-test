@@ -468,7 +468,7 @@ Feature: lispay opzione 2 extended flow
                 "identificativoIntermediario": "#id_broker_psp#",
                 "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
                 "esitoTransazioneCarta": "123456",
-                "importoTotalePagato": 11.00,
+                "importoTotalePagato": 10.01,
                 "timestampOperazione": "2012-04-23T18:25:43.001Z",
                 "codiceAutorizzativo": "123212"
             }
