@@ -1,4 +1,4 @@
-Feature: PAG-2346
+Feature: PAG-2346 rt push
 
     Background:
         Given systems up
@@ -6,7 +6,7 @@ Feature: PAG-2346
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
 
     @runnable
-    Scenario: Test
+    Scenario: Test part 1
         Given MB generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -294,42 +294,33 @@ Feature: PAG-2346
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML pspChiediListaRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspChiediListaRTResponse>
-            <pspChiediListaRTResponse>
-            <elementoListaRTResponse>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
-            </elementoListaRTResponse>
-            </pspChiediListaRTResponse>
-            </ws:pspChiediListaRTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML pspChiediRT
-            """
-            <soapenv:Envelope
-            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspChiediRTResponse>
-            <pspChiediRTResponse>
-            <rt>$rtAttachment</rt>
-            </pspChiediRTResponse>
-            </ws:pspChiediRTResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
-        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_1iuv on db nodo_online under macro RTPull
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_1iuv on db nodo_online under macro RTPull
+
+    Scenario: Test part 2
+        Given the Test part 1 scenario executed succesfully
+        And initial XML nodoInviaRT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:nodoInviaRT>
+            <identificativoIntermediarioPSP>#id_broker_psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_IMMEDIATO_MULTIBENEFICIARIO#</identificativoCanale>
+            <password>#password#</password>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
+            <tipoFirma></tipoFirma>
+            <forzaControlloSegno>1</forzaControlloSegno>
+            <rt>$rtAttachment</rt>
+            </ws:nodoInviaRT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRT response
