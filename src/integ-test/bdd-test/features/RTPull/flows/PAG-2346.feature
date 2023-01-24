@@ -98,7 +98,7 @@ Feature: PAG-2346
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
+            <pay_i:importoTotaleDaVersare>11.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
@@ -106,7 +106,7 @@ Feature: PAG-2346
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>4.00</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>5.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
             <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
@@ -216,11 +216,11 @@ Feature: PAG-2346
             </pay_i:soggettoPagatore>
             <pay_i:datiPagamento>
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
-            <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
+            <pay_i:importoTotalePagato>11.00</pay_i:importoTotalePagato>
             <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:CodiceContestoPagamento>$1carrello</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
-            <pay_i:singoloImportoPagato>4.00</pay_i:singoloImportoPagato>
+            <pay_i:singoloImportoPagato>5.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>Pagamento effettuato</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>2012-03-02</pay_i:dataEsitoSingoloPagamento>
             <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
