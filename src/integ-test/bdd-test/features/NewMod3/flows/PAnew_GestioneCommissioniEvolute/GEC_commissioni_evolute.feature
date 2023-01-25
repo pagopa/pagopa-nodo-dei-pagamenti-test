@@ -168,6 +168,7 @@ Feature: Commissioni evolute process
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     @runnable
+    @wip
     # sunny day activate
     Scenario: Execute activate 2
         Given nodo-dei-pagamenti has config parameter gec.enabled set to true
