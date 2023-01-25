@@ -11,12 +11,16 @@ parameters:
     values:
       - dev
       - sit
-    default: sit
+    default: dev
 
 variables:
   archiveName: nodo-dei-pagamenti-NRT.zip
   destinationFolderExtractArtifact: nodo/extracted
   deploy-pool: nodopagamenti-agent-pool-sit
+  ${{ if eq(parameters['env'], 'dev') }}:
+    NODO_URL: "https://10.230.8.5:443/nodo-dev"    
+  ${{ if eq(parameters['env'], 'sit') }}:
+    NODO_URL: "https://10.230.8.5:443/nodo"
 
 stages:
   - stage: prepare_env
@@ -55,10 +59,10 @@ stages:
               # replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  "/nodo-per-pm/v1"
               # replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/config/refresh/CONFIG"
 
-              replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo"
+              replace $file ".services.\"nodo-dei-pagamenti\".url"           "$(NODO_URL)"
               replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitoring/v1/monitor/health"
               replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  " "
-              replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  "/nodo-per-pm/v1"
+              replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  " "
               replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/monitoring/v1/config/refresh/CONFIG"
 
               replace $file ".services.\"mock-ec\".url"           "https://api.dev.platform.pagopa.it/mock-ec/api/v1"
@@ -80,6 +84,11 @@ stages:
               replace $file ".services.\"secondary-mock-psp\".healthcheck"   "/info"
               replace $file ".services.\"secondary-mock-psp\".soap_service"  ""
               replace $file ".services.\"secondary-mock-psp\".rest_service"  ""
+
+              replace $file ".services.\"mock-pm\".url"           "https://api.dev.platform.pagopa.it/mock-pm-sit/api/v1"
+              replace $file ".services.\"mock-pm\".healthcheck"   "/info"
+              replace $file ".services.\"mock-pm\".soap_service"  ""
+              replace $file ".services.\"mock-pm\".rest_service"  ""
 
 
               replace $file ".db_configuration.nodo_cfg.host"     $(db-cfg-host-${{ parameters.env }})
@@ -182,11 +191,10 @@ stages:
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
 
-              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/ --tags=runnable,midRunnable,check,midCheck
-              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/ --tags=check,midCheck
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RTPull/flows/prova.feature
-              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/SOLO_SOAPUI --tags=midRunnable
-
+              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO-Paypal/flows/OLD_migrazioneStazione/appIO_paypal_OLD_migrazioneStazione_01.feature
+              behave --tags=runnable --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RTPull/flows/PAG-2346_1_mbd.feature
+              #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/sendPaymentOutcomeV2_revision_NM3_pa_old.feature
+             
             displayName: "Run integration test"
 
           - task: PublishTestResults@2

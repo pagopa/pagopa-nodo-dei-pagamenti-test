@@ -51,7 +51,9 @@ def get_soap_url_nodo(context, primitive=-1):
         "verificaBollettino": "/node-for-psp/v1",
         "verifyPaymentNotice": "/node-for-psp/v1",
         "activatePaymentNotice": "/node-for-psp/v1",
+        "activatePaymentNoticeV2": "/node-for-psp/v1",
         "sendPaymentOutcome": "/node-for-psp/v1",
+        "sendPaymentOutcomeV2": "/node-for-psp/v1",
         "activateIOPayment": "/node-for-io/v1",
         "nodoVerificaRPT": "/nodo-per-psp/v1",
         "nodoAttivaRPT": "/nodo-per-psp/v1",
@@ -59,9 +61,9 @@ def get_soap_url_nodo(context, primitive=-1):
         # "pspNotifyPayment": "/psp-for-node/v1",
         "nodoChiediElencoFlussiRendicontazione": "/nodo-per-pa/v1",
         "nodoChiediFlussoRendicontazione": "/nodo-per-pa/v1",
-        "demandPaymentNotice": "/nodo-per-psp/v1",
+        "demandPaymentNotice": "/node-for-psp/v1",
         "nodoChiediCatalogoServizi": "/nodo-per-psp-richiesta-avvisi/v1",
-        "nodoChiediCatalogoServiziV2": "/nodo-per-psp/v1",
+        "nodoChiediCatalogoServiziV2": "/node-for-psp/v1",
         "nodoChiediCopiaRT": "/nodo-per-pa/v1",
         "nodoChiediInformativaPA": "/nodo-per-psp/v1",
         "nodoChiediListaPendentiRPT": "/nodo-per-pa/v1",
@@ -72,8 +74,12 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoInviaCarrelloRPT": "/nodo-per-pa/v1",
         "nodoInviaRPT": "/nodo-per-pa/v1",
         "nodoInviaRT": "/nodo-per-psp/v1",
-        #"nodoChiediSceltaWISP":"//v1",
-        "nodoPAChiediInformativaPA": "/nodo-per-pa/v1"
+        "nodoPAChiediInformativaPA": "/nodo-per-pa/v1",
+        "nodoChiediElencoQuadraturePSP": "/nodo-per-psp/v1",
+        "nodoChiediInformativaPSP": "/nodo-per-pa/v1",
+        "nodoChiediElencoQuadraturePA": "/nodo-per-pa/v1",
+        "nodoChiediQuadraturaPA": "/nodo-per-pa/v1"
+        #"nodoChiediSceltaWISP":"//v1"
     }
    
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") == " ":
@@ -84,11 +90,26 @@ def get_soap_url_nodo(context, primitive=-1):
                 "nodo-dei-pagamenti").get("soap_service")
 
         
-def get_rest_url_nodo(context):
-    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") is not None:
-        return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
-            + context.config.userdata.get("services").get(
-                "nodo-dei-pagamenti").get("rest_service")
+def get_rest_url_nodo(context, primitive):
+    primitive_mapping = { 
+        "avanzamentoPagamento": "/nodo-per-pm/v1",
+        "checkPosition": "/nodo-per-pm/v1",
+        "informazioniPagamento": "/nodo-per-pm/v1",
+        "inoltroEsito/carta": "/nodo-per-pm/v1",
+        "inoltroEsito/mod1": "/nodo-per-pm/v1",
+        "inoltroEsito/mod2": "/nodo-per-pm/v1",
+        "inoltroEsito/paypal": "/nodo-per-pm/v1",
+        "listaPSP": "/nodo-per-pm/v1",
+        "notificaAnnullamento": "/nodo-per-pm/v1",
+        "v1/closepayment": "/nodo-per-pm",
+        "v2/closepayment": "/nodo-per-pm"
+    }
+    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == " ":
+        if "?idPagamento=" in primitive:
+            primitive = primitive.split('?')[0]
+        if "_json" in primitive:
+            primitive = primitive.split('_')[0]
+        return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
     else:
         return ""
 
@@ -294,7 +315,7 @@ def single_thread(context, soap_primitive, type):
     if type == 'GET':
         headers = {'X-Forwarded-For': '10.82.39.148',
                    'Host': 'api.dev.platform.pagopa.it:443'}
-        url_nodo = f"{get_rest_url_nodo(context)}/{primitive}"
+        url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
         print(url_nodo)
         soap_response = requests.get(url_nodo, headers=headers, verify=False)
     elif type == 'POST':
@@ -307,7 +328,7 @@ def single_thread(context, soap_primitive, type):
         else:
             headers = {'Content-Type': 'application/json',
                        'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-            url_nodo = f"{get_rest_url_nodo(context)}/{primitive}"
+            url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
         soap_response = requests.post(
             url_nodo, body, headers=headers, verify=False)
 
@@ -360,26 +381,26 @@ def json2xml(json_obj, line_padding=""):
                 for key in sub_obj:
                     sub_sub_obj = sub_obj[key]
                     result_list.append("%s<%s>" % (line_padding, key))
-                    result_list.append(
-                        json2xml(sub_sub_obj, "\t" + line_padding))
+                    result_list.append(json2xml(sub_sub_obj, "\t" + line_padding))
                     result_list.append("%s</%s>" % (line_padding, key))
                 result_list.append("%s</%s>" % (line_padding, tag_name))
             elif type(sub_obj) is list:
                 result_list.append("%s<%s>" % (line_padding, tag_name))
                 if tag_name == 'paymentTokens':
                     for sub_elem in sub_obj:
-                        result_list.append("%s<%s>" %
-                                           (line_padding, "paymentToken"))
+                        result_list.append("%s<%s>" % (line_padding, "paymentToken"))
                         result_list.append(json2xml(sub_elem, line_padding))
-                        result_list.append("%s</%s>" %
-                                           (line_padding, "paymentToken"))
+                        result_list.append("%s</%s>" % (line_padding, "paymentToken"))
                 if tag_name == 'positionslist':
                     for sub_elem in sub_obj:
-                        result_list.append("%s<%s>" %
-                                           (line_padding, "position"))
+                        result_list.append("%s<%s>" % (line_padding, "position"))
                         result_list.append(json2xml(sub_elem, line_padding))
-                        result_list.append("%s</%s>" %
-                                           (line_padding, "position"))
+                        result_list.append("%s</%s>" % (line_padding, "position"))
+                if tag_name == 'payments':
+                    for sub_elem in sub_obj:
+                        result_list.append("%s<%s>" % (line_padding, "payment"))
+                        result_list.append(json2xml(sub_elem, line_padding))
+                        result_list.append("%s</%s>" % (line_padding, "payment"))
                 result_list.append("%s</%s>" % (line_padding, tag_name))
             else:
                 result_list.append("%s<%s>" % (line_padding, tag_name))
