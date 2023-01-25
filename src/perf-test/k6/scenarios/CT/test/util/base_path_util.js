@@ -1,3 +1,7 @@
+import http from 'k6/http';
+import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
+import { SharedArray } from 'k6/data';
+
 export function getBasePath(baseUrl, primitive) {
 	const primitiveMapping = {
 		"verificaBollettino": "/node-for-psp/v1",
@@ -28,4 +32,12 @@ export function getBasePath(baseUrl, primitive) {
 		"nodoPerPMv2": "nodo-per-pm/v2",
 	}
 	return baseUrl + primitiveMapping[primitive]
+}
+
+
+export function getHeaders(headers) {
+	if ("SUBSCRIPTION_KEY" in __ENV && __ENV.SUBSCRIPTION_KEY != "")  {
+		headers["Ocp-Apim-Subscription-Key"] = __ENV.SUBSCRIPTION_KEY;
+	}
+	return headers;
 }

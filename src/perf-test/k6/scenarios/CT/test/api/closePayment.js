@@ -1,7 +1,7 @@
 import http from 'k6/http';
 import { check, fail } from 'k6';
 import { Trend } from 'k6/metrics';
-import {getBasePath} from "../util/base_path_util.js";
+import {getBasePath, getHeaders} from "../util/base_path_util.js";
 
 
 export const closePayment_Trend = new Trend('closePayment');
@@ -116,7 +116,7 @@ export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transacti
     getBasePath(baseUrl, "nodoPerPMv1")+'/closepayment',
     //JSON.stringify(closePaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId)),
     JSON.stringify(body),
-    { headers: { 'Content-Type': 'application/json' } ,
+    { headers: getHeaders({ 'Content-Type': 'application/json' }) ,
 	tags: { closePayment: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );

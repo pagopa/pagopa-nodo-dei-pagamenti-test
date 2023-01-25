@@ -2,7 +2,7 @@ import http from 'k6/http';
 import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
-import { getBasePath } from "../util/base_path_util.js";
+import {getBasePath, getHeaders} from "../util/base_path_util.js";
 
 export const demandPaymentNotice_NN_Trend = new Trend('demandPaymentNotice_NN');
 export const All_Trend = new Trend('ALL');
@@ -38,7 +38,7 @@ export function demandPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,i
  const res = http.post(
     getBasePath(baseUrl, "demandPaymentNotice"),
     demandReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, idServizio),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'demandPaymentNotice' } ,
+    { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'demandPaymentNotice' }) ,
 	tags: { demandPaymentNotice_NN: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );

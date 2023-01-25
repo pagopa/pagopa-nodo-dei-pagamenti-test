@@ -3,7 +3,7 @@ import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import * as rptUtil from '../util/rpt.js';
 import { Trend } from 'k6/metrics';
-import { getBasePath } from "../util/base_path_util.js";
+import {getBasePath, getHeaders} from "../util/base_path_util.js";
 
 
 export const RT_Trend = new Trend('RT');
@@ -43,7 +43,7 @@ export function RT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
  const res = http.post(
 		 getBasePath(baseUrl, "nodoInviaRPT"),
     rtReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, rndAnagPa.PA, iuv, rtEncoded),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRT' } ,
+    { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRT' }) ,
 	tags: { RT: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );

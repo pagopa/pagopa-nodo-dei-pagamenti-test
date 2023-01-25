@@ -1,7 +1,7 @@
 import http from 'k6/http';
 import { check, fail } from 'k6';
 import { Trend } from 'k6/metrics';
-import {getBasePath} from "../util/base_path_util";
+import {getBasePath, getHeaders} from "../util/base_path_util";
 
 
 export const nodoNotificaAnnullamento_Trend = new Trend('nodoNotificaAnnullamento');
@@ -11,7 +11,7 @@ export const All_Trend = new Trend('ALL');
 export function nodoNotificaAnnullamento(baseUrl,paymentToken) {
  
  let res=http.get(getBasePath(baseUrl, "nodoPerPMv1")+'/notificaAnnullamento?idPagamento='+paymentToken,
-    { headers: { 'Content-Type': 'application/json' } ,
+    { headers: getHeaders({ 'Content-Type': 'application/json' }) ,
 	tags: { nodoNotificaAnnullamento: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );

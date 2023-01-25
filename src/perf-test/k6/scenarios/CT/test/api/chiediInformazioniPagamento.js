@@ -1,7 +1,7 @@
 import http from 'k6/http';
 import { check, fail } from 'k6';
 import { Trend } from 'k6/metrics';
-import {getBasePath} from "../util/base_path_util.js";
+import {getBasePath, getHeaders} from "../util/base_path_util.js";
 
 
 export const chiediInformazioniPagamento_Trend = new Trend('chiediInformazioniPagamento');
@@ -11,7 +11,7 @@ export const All_Trend = new Trend('ALL');
 export function chiediInformazioniPagamento(baseUrl,paymentToken, rndAnagPa) {
  
  let res=http.get(getBasePath(baseUrl, "nodoPerPMv1")+'/informazioniPagamento?idPagamento='+paymentToken,
-    { headers: { 'Content-Type': 'application/json'/*, 'Host': 'api.prf.platform.pagopa.it'*/ } ,
+    { headers: getHeaders({ 'Content-Type': 'application/json'/*, 'Host': 'api.prf.platform.pagopa.it'*/ }) ,
 	tags: { chiediInformazioniPagamento: 'http_req_duration' , ALL: 'http_req_duration'}
 	}
   );
