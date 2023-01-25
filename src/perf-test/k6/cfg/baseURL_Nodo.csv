@@ -2,3 +2,4 @@ ENV;BASEURL;PRIVATEURL;SOAP_BASEURL;REST_BASEURL
 pagoPA_DEV_apim;https://api.dev.platform.pagopa.it/nodo-pagamenti/api/v1/webservices/input;10.230.8.5;https://api.dev.platform.pagopa.it/nodo-pagamenti/api/v1/webservices/input;https://10.230.8.5/nodo-pagamenti/api/v1
 pagoPA_UAT_apim;https://api.uat.platform.pagopa.it/nodo-pagamenti/api/v1/webservices/input;10.230.9.5;;
 pagoPA_PERF_apim;https://nodo-dei-pagamenti-prf-npa-nodopagamenti.tst-npc.sia.eu/webservices/input;10.230.9.5;https://nodo-dei-pagamenti-prf-npa-nodopagamenti.tst-npc.sia.eu/webservices/input;https://nodo-dei-pagamenti-prf-npa-nodopagamenti.tst-npc.sia.eu/azurept
+pagoPA_PERF_apim_REAL;https://api.dev.platform.pagopa.it/ndp/service/v1/webservices/input;;https://api.dev.platform.pagopa.it/ndp/service/v1/webservices/input;https://api.dev.platform.pagopa.it/ndp/service/v1/
