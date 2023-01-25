@@ -2,7 +2,7 @@ import http from 'k6/http';
 import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
-
+import { getBasePath } from "../util/base_path_util.js";
 
 
 export const ActivateIOPayment_Trend = new Trend('ActivateIOPayment');
@@ -43,7 +43,7 @@ export function activateIOPaymentReqBody (psp, pspint, chpsp, cf, noticeNumber, 
 
 export function ActivateIOPayment(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey) {
  
- let res=http.post(baseUrl,
+ let res=http.post(getBasePath(baseUrl, "activateIOPayment"),
     activateIOPaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPaNew.CF , noticeNmbr, idempotencyKey),
     { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'activateIOPayment', 'Host':'api.prf.platform.pagopa.it'} ,
 	tags: { ActivateIOPayment: 'http_req_duration' , ALL: 'http_req_duration'}

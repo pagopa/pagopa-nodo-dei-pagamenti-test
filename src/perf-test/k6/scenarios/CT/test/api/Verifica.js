@@ -2,7 +2,7 @@ import http from 'k6/http';
 import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
-
+import { getBasePath } from "../util/base_path_util.js";
 
 export const Verifica_Trend = new Trend('Verifica');
 export const All_Trend = new Trend('ALL');
@@ -36,7 +36,7 @@ return `
 export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit, valueToAssert) {
 
  const res = http.post(
-    baseUrl,
+		 getBasePath(baseUrl, "nodoVerificaRPT"),
     verificaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, auxDigit),
     { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'nodoVerificaRPT', 'x-forwarded-for':'10.6.189.192'} ,
 	tags: { Verifica: 'http_req_duration', ALL: 'http_req_duration'}

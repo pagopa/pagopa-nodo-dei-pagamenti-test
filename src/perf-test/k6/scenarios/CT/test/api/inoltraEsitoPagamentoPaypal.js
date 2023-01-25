@@ -1,6 +1,7 @@
 import http from 'k6/http';
 import { check, fail } from 'k6';
 import { Trend } from 'k6/metrics';
+import {getBasePath} from "../util/base_path_util.js";
 
 
 export const inoltraEsitoPagamentoPaypal_Trend = new Trend('inoltraEsitoPagamentoPaypal');
@@ -94,7 +95,7 @@ export function inoltraEsitoPagamentoPaypal(baseUrl,rndAnagPsp,paymentToken,valu
           "timestampOperazione":dt};
 
  const res = http.post(
-    baseUrl+'/inoltroEsito/paypal',
+	 getBasePath(baseUrl, "nodoPerPMv1")+'/inoltroEsito/paypal',
     JSON.stringify(body),
     //JSON.stringify(rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken)),
     { headers: { 'Content-Type': 'application/json' } ,

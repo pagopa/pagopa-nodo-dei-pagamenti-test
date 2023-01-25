@@ -1,7 +1,7 @@
 import http from 'k6/http';
 import { check, fail } from 'k6';
 import { Trend } from 'k6/metrics';
-
+import {getBasePath} from "../util/base_path_util.js";
 
 export const closePayment_Trend = new Trend('closePayment');
 export const All_Trend = new Trend('ALL');
@@ -111,7 +111,7 @@ let body = `{\"paymentTokens\":[\"${paymentToken}\"],\"outcome\":\"${outcome}\",
               
 
  const res = http.post(
-    'https://nodo-dei-pagamenti-prf-npa-nodopagamenti.tst-npc.sia.eu/azurept2'+'/v2/closepayment',
+		 getBasePath(baseUrl, "nodoPerPMv2")+'/closepayment',
     //JSON.stringify(closePaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId)),
     body,
     { headers: { 'Content-Type': 'application/json' } ,

@@ -3,7 +3,7 @@ import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import * as rptUtil from '../util/rpt.js';
 import { Trend } from 'k6/metrics';
-
+import { getBasePath } from "../util/base_path_util.js";
 
 export const RPT_Semplice_Trend = new Trend('RPT_Semplice');
 export const All_Trend = new Trend('ALL');
@@ -40,27 +40,26 @@ export function RPT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
  
   
  let rptEncoded = rptUtil.getRptEncoded(rndAnagPa.PA, rndAnagPa.STAZPA, iuv, "PERFORMANCE");
- 
  const res = http.post(
-    baseUrl,
+		 getBasePath(baseUrl, "nodoInviaRPT"),
     rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuv, rptEncoded),
     { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRPT', 'x-forwarded-for':'10.6.189.192' } ,
 	tags: { RPT_Semplice: 'http_req_duration', ALL: 'http_req_duration'}
 	}
   );
-  
+
   console.debug("RPT (semplice) RES");
   console.debug(res);
 
    RPT_Semplice_Trend.add(res.timings.duration);
    All_Trend.add(res.timings.duration);
 
-   check(res, {
+	check(res, {
  	'RPT_Semplice:over_sla300': (r) => r.timings.duration >300,
    },
    { RPT_Semplice: 'over_sla300', ALL:'over_sla300' }
    );
-   
+
    check(res, {
  	'RPT_Semplice:over_sla400': (r) => r.timings.duration >400,
    },

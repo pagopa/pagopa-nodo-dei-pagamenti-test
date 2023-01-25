@@ -3,7 +3,7 @@ import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import * as rptUtil from '../util/rpt.js';
 import { Trend } from 'k6/metrics';
-
+import { getBasePath } from "../util/base_path_util.js";
 
 export const RPT_Carrello_1_Trend = new Trend('RPT_Carrello_1');
 export const All_Trend = new Trend('ALL');
@@ -48,7 +48,7 @@ export function RPT_Carrello_1(baseUrl,rndAnagPsp,rndAnagPa,iuvs) {
  let rptEncoded = rptUtil.getRptCEncoded(rndAnagPa.PA, rndAnagPa.STAZPA, iuvs[0]);
   
  const res = http.post(
-    baseUrl,
+		 getBasePath(baseUrl, "nodoInviaCarrelloRPT"),
     rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuvs, rptEncoded),
     { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaCarrelloRPT', 'x-forwarded-for':'10.6.189.192' } ,
 	tags: { RPT_Carrello_1: 'http_req_duration', ALL: 'http_req_duration'}

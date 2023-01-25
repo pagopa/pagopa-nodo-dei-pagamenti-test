@@ -1,7 +1,7 @@
 import http from 'k6/http';
 import { check, fail } from 'k6';
 import { Trend } from 'k6/metrics';
-
+import {getBasePath} from "../util/base_path_util.js";
 
 export const inoltraEsitoPagamentoCarta_Trend = new Trend('inoltraEsitoPagamentoCarta');
 export const All_Trend = new Trend('ALL');
@@ -42,7 +42,7 @@ export function inoltraEsitoPagamentoCarta(baseUrl,rndAnagPsp,paymentToken, fiel
 	}`;
 
  const res = http.post(
-    baseUrl+'/inoltroEsito/carta',
+    getBasePath(baseUrl, "nodoPerPMv1")+'/inoltroEsito/carta',
     body,
     //JSON.stringify(rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken)),
     { headers: { 'Content-Type': 'application/json', 'Host': 'api.prf.platform.pagopa.it'  } ,

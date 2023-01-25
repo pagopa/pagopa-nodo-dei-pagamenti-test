@@ -2,8 +2,7 @@ import http from 'k6/http';
 import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
-
-
+import { getBasePath } from "../util/base_path_util.js";
 
 export const verifyPaymentNotice_Trend = new Trend('verifyPaymentNotice');
 export const All_Trend = new Trend('ALL');
@@ -32,7 +31,7 @@ export function verifyPaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idem
  //console.debug("VERIFY="+noticeNmbr);
  
  const res = http.post(
-    baseUrl,
+    getBasePath(baseUrl, "verifyPaymentNotice"),
     verifyReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPsp.CHPSP_C, rndAnagPa.CF , noticeNmbr),
     { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'verifyPaymentNotice' } ,
 	tags: { verifyPaymentNotice: 'http_req_duration', ALL: 'http_req_duration'}

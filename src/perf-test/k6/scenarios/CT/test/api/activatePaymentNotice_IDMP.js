@@ -2,7 +2,7 @@ import http from 'k6/http';
 import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
-
+import { getBasePath } from "../util/base_path_util.js";
 
 
 export const activatePaymentNotice_IDMP_Trend = new Trend('activatePaymentNotice_IDMP');
@@ -34,7 +34,7 @@ export function activateReqBody (psp, pspint, chpsp, cfpa, noticeNmbr, idempoten
 
 export function activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idempotencyKey) {
  
- let res=http.post(baseUrl,
+ let res=http.post(getBasePath(baseUrl, "activatePaymentNotice"),
     activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey),
     { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'activatePaymentNotice' } ,
 	tags: { activatePaymentNotice_IDMP: 'http_req_duration' , ALL: 'http_req_duration'}

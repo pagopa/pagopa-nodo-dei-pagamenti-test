@@ -2,7 +2,7 @@ import http from 'k6/http';
 import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
-
+import { getBasePath } from "../util/base_path_util.js";
 
 
 export const sendPaymentOutput_NN_Trend = new Trend('sendPaymentOutput_NN');
@@ -52,7 +52,7 @@ export function sendPaymentOutput_NN(baseUrl,rndAnagPsp,paymentToken) {
  //console.debug("VERIFY="+noticeNmbr);
  
  const res = http.post(
-    baseUrl,
+		 getBasePath(baseUrl, "sendPaymentOutcome"),
     sendPaymentOutputReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken),
     { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'sendPaymentOutcome' } ,
 	tags: { sendPaymentOutcome_NN: 'http_req_duration', ALL: 'http_req_duration'}
