@@ -195,6 +195,7 @@ stages:
               behave --tags=runnable --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RTPull/flows/PAG-2346_1_mbd.feature
               #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/sendPaymentOutcomeV2_revision_NM3_pa_old.feature
               
+              
             displayName: "Run integration test"
 
           - task: PublishTestResults@2
