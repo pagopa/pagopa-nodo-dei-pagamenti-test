@@ -1,4 +1,4 @@
-Feature: PAG-2346 1 mbd
+Feature: PAG-2346 only 1 mbd
 
     Background:
         Given systems up
