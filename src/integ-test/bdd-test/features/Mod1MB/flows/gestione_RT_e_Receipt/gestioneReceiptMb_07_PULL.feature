@@ -349,7 +349,7 @@ Feature: gestioneReceiptMb_07_PULL
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
 
-@check
+@runnable
     Scenario: job pspChiediRT (Phase 4)
         Given the Execute nodoInoltroEsitoMod1 (Phase 3) scenario executed successfully
         And initial XML pspChiediListaRT
@@ -468,10 +468,10 @@ Feature: gestioneReceiptMb_07_PULL
         And through the query by_notice_number_and_pa retrieve param expOfficeName at position 5 and save it under the key expOfficeName
         And through the query by_notice_number_and_pa retrieve param expDebtorID at position 6 and save it under the key expDebtorID
         #extraction from PSP table
-        And execution query by_psp to get value on the table PSP, with the columns * under macro Mod1Mb with db name nodo_cfg
-        And through the query by_psp retrieve param ragioneSociale at position 6 and save it under the key ragioneSociale
-        And through the query by_psp retrieve param codiceFiscale at position 16 and save it under the key codiceFiscale
-        And through the query by_psp retrieve param vatNumber at position 17 and save it under the key vatNumber
+        And execution query by_psp to get value on the table PSP, with the columns RAGIONE_SOCIALE, CODICE_FISCALE, VAT_NUMBER under macro Mod1Mb with db name nodo_cfg
+        And through the query by_psp retrieve param ragioneSociale at position 0 and save it under the key ragioneSociale
+        And through the query by_psp retrieve param codiceFiscale at position 1 and save it under the key codiceFiscale
+        And through the query by_psp retrieve param vatNumber at position 2 and save it under the key vatNumber
         
         #checks
         And check value $receptID is equal to value $1iuv

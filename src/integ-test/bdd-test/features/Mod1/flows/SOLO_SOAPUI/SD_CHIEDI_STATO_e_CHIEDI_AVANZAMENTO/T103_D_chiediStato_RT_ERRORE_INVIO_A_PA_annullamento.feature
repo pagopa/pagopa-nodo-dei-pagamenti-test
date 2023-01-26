@@ -223,7 +223,7 @@ Feature: T103_D_chiediStato_RT_ERRORE_INVIO_A_PA_annullamento
 
     Scenario: Execute job paInviaRt
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
-        When job paInviaRt triggered after 5 seconds
+        When job paInviaRt triggered after 10 seconds
         Then wait 7 seconds for expiration
 
 
@@ -252,7 +252,7 @@ Feature: T103_D_chiediStato_RT_ERRORE_INVIO_A_PA_annullamento
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
+        #And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 

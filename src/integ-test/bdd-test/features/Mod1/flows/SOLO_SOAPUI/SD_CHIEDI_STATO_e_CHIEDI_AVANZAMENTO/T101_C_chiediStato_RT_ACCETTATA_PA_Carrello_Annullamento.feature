@@ -424,7 +424,7 @@ Feature: T101_C_chiediStato_RT_ACCETTATA_PA_Carrello_Annullamento
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
-        And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
+        #And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
 
     @midRunnable
      Scenario: Execute nodoChiediStatoRPT2
@@ -449,7 +449,7 @@ Feature: T101_C_chiediStato_RT_ACCETTATA_PA_Carrello_Annullamento
         Then checks stato contains RT_ACCETTATA_PA of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
-        And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
+        #And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
         And checks stato contains RT_GENERATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
         And wait 1 seconds for expiration

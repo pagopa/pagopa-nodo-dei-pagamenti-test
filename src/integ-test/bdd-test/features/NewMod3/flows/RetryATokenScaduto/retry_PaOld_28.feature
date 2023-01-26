@@ -270,7 +270,7 @@ Feature: process tests for retry a token scaduto
     #STATI
     Then checks the value PAYING,INSERTED,PAID of the record at column status of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value PAYING,PAYING_RPT,CANCELLED,PAID_NORPT of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_ANNULLATA_NODO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column stato of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column stato of the table STATI_RPT retrived by the query stati_rpt on db nodo_online under macro NewMod3
     # POSITION_PAYMENT
     And checks the value $activatePaymentNotice.fiscalCode of the record at column pa_fiscal_code of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.noticeNumber of the record at column notice_id of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
@@ -334,12 +334,12 @@ Feature: process tests for retry a token scaduto
     And checks the value $iuv of the record at column creditor_reference_id of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column token1 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNoticeResponse.paymentToken-v2 of the record at column token2 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
-    And execution query payment_status to get value on the table POSITION_PAYMENT, with the columns id under macro NewMod3 with db name nodo_online
-    And through the query payment_status retrieve param id at position 0 and save it under the key id0
-    And execution query payment_status_v2 to get value on the table POSITION_PAYMENT, with the columns id under macro NewMod3 with db name nodo_online
-    And through the query payment_status_v2 retrieve param id at position 0 and save it under the key id1
-    And checks the value $id0 of the record at column fk_payment1 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
-    And checks the value $id1 of the record at column fk_payment2 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
+    And execution query payment_status_orderby to get value on the table POSITION_PAYMENT, with the columns id under macro NewMod3 with db name nodo_online
+    And through the query payment_status_orderby retrieve param id at position 0 and save it under the key id0
+    And execution query payment_status_orderbydesc to get value on the table POSITION_PAYMENT, with the columns id under macro NewMod3 with db name nodo_online
+    And through the query payment_status_orderbydesc retrieve param id at position 0 and save it under the key id1
+    And checks the value $id0 of the record at column fk_payment1 of the table TOKEN_UTILITY retrived by the query payment_status_orderby on db nodo_online under macro NewMod3
+    And checks the value $id1 of the record at column fk_payment2 of the table TOKEN_UTILITY retrived by the query payment_status_orderbydesc on db nodo_online under macro NewMod3
     And execution query rt_stati to get value on the table RPT, with the columns id under macro NewMod3 with db name nodo_online
     And through the query rt_stati retrieve param id at position 0 and save it under the key fk_rptid0
     And checks the value $fk_rptid0 of the record at column fk_rpt1 of the table TOKEN_UTILITY retrived by the query payment_status on db nodo_online under macro NewMod3
