@@ -225,7 +225,7 @@ Feature: PAG-2346 recovery pull 1 mbd
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPull_sec#</identificativoCanale>
+            <identificativoCanale>#canale_IMMEDIATO_MULTIBENEFICIARIO#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
@@ -285,9 +285,9 @@ Feature: PAG-2346 recovery pull 1 mbd
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
-        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         And job rtPullRecoveryPush triggered after 5 seconds
         And wait 10 seconds for expiration
