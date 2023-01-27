@@ -194,7 +194,7 @@ stages:
               #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO-Paypal/flows/OLD_migrazioneStazione/appIO_paypal_OLD_migrazioneStazione_01.feature
               #behave --tags=runnable --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod1/flows/pspNotifyPaymentV2.feature
               #behave --tags=wip --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/appIO-Checkout/flows/sendPaymentResultV2_IO_checkout_pa_new.feature
-              behave --tags=bug --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RTPull/flows/PAG-2346_recovery_pull_1_mbd.feature
+              behave --tags=bug --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RTPull/flows/PAG-2346_recovery_pull_1_mbd_1_iban.feature
 
             displayName: "Run integration test"
 
