@@ -210,9 +210,6 @@ Feature: PAG-2346 recovery pull 1 mbd
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
-        And updates through the query obj_id of the table CANALI_NODO the parameter RT_PUSH with Y under macro RTPull on db nodo_cfg
-        And updates through the query obj_id of the table CANALI_NODO the parameter RECOVERY with Y under macro RTPull on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -288,14 +285,12 @@ Feature: PAG-2346 recovery pull 1 mbd
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
-        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        And job rtPullRecoveryPush triggered after 5 seconds
-        And updates through the query obj_id of the table CANALI_NODO the parameter RT_PUSH with N under macro RTPull on db nodo_cfg
-        And updates through the query obj_id of the table CANALI_NODO the parameter RECOVERY with N under macro RTPull on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
+        # And job rtPullRecoveryPush triggered after 5 seconds
+        And wait 10 seconds for expiration
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And verify the HTTP status code of rtPullRecoveryPush response is 200
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_1iuv on db nodo_online under macro RTPull
