@@ -288,10 +288,10 @@ Feature: PAG-2346 recovery pull 1 mbd
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
-        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
-        And job rtPullRecoveryPush triggered after 5 seconds
-        And wait 10 seconds for expiration
+        When job rtPullRecoveryPush triggered after 5 seconds
+        And EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+        And wait 10 seconds for expiration
         And verify the HTTP status code of rtPullRecoveryPush response is 200
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_1iuv on db nodo_online under macro RTPull
         And checks the value RT_ACCETTATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_1iuv on db nodo_online under macro RTPull
