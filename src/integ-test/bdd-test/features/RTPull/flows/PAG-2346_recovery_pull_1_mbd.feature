@@ -288,7 +288,7 @@ Feature: PAG-2346 recovery pull 1 mbd
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
-        When job rtPullRecoveryPush triggered after 5 seconds
+        When job rtPullRecoveryPush triggered after 0 seconds
         And EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then verify the HTTP status code of rtPullRecoveryPush response is 200
         And check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
