@@ -262,7 +262,7 @@ Feature: PAG-2346 rt push
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleRtPull_sec#</identificativoCanale>
+            <identificativoCanale>#canale_IMMEDIATO_MULTIBENEFICIARIO#</identificativoCanale>
             <listaRPT>
             <elementoListaRPT>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
@@ -290,11 +290,11 @@ Feature: PAG-2346 rt push
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP2 replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
-    @runnable
+    @bug
     Scenario: Test part 2
         Given the Test part 1 scenario executed successfully
         And initial XML nodoInviaRT
