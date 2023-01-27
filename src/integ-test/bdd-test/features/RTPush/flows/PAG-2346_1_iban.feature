@@ -1,4 +1,4 @@
-Feature: PAG-2346 rt push
+Feature: PAG-2346 rt push 1 iban
 
     Background:
         Given systems up
