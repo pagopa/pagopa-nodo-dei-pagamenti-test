@@ -25,11 +25,9 @@ export const getScalini = new SharedArray('scalini', () => {
 
 export const options = {
   scenarios: {
-    total: {
-      timeUnit: '4s',
-      preAllocatedVUs: 1,
-      executor: 'ramping-arrival-rate',
-      maxVUs: 500,
+    contacts: {
+      startVus: 0,
+      executor: 'ramping-vus',
       stages: [
         { target: getScalini[0].Scalino_CT_1, duration: 0 + 's' },
         { target: getScalini[0].Scalino_CT_1, duration: getScalini[0].Scalino_CT_TIME_1 + 's' },
@@ -51,10 +49,8 @@ export const options = {
         { target: getScalini[0].Scalino_CT_9, duration: getScalini[0].Scalino_CT_TIME_9 + 's' },
         { target: getScalini[0].Scalino_CT_10, duration: 0 + 's' },
         { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10 + 's' },
-      ],
-      tags: { test_type: 'ALL' },
-      exec: 'total',
-    }
+      ]
+    },
   },
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
