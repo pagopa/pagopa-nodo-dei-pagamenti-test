@@ -151,7 +151,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             <password>#password#</password>
             <paymentTokens>
             <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
-            </paymentToken>
+            </paymentTokens>
             <outcome>OK</outcome>
             <!--Optional:-->
             <details>
