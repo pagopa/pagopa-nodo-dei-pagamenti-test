@@ -213,6 +213,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the activatePaymentNoticeV2 scenario executed successfully
         And the pspNotifyPayment timeout scenario executed successfully
         And the closePaymentV2 scenario executed successfully
+        And the mod3CancelV2 scenario executed successfully
         And the sendPaymentOutcome scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
@@ -223,6 +224,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the activatePaymentNoticeV2 scenario executed successfully
         And the pspNotifyPayment timeout scenario executed successfully
         And the closePaymentV2 scenario executed successfully
+        And the mod3CancelV2 scenario executed successfully
         And the sendPaymentOutcome scenario executed successfully
         And outcome with KO in sendPaymentOutcome
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
