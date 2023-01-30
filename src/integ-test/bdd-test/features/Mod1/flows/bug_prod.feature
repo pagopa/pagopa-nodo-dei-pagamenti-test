@@ -116,5 +116,6 @@ Feature: bug_prod
 
     @bug
     Scenario: nodoChiediInformazioniPagamento
+        Given the nodoInviaCarrelloRPT scenario executed successfully
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
