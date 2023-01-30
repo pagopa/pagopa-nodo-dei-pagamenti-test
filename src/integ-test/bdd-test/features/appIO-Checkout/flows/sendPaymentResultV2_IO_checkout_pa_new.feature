@@ -514,7 +514,6 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
     @runnable
-    @wip
     Scenario: FLUSSO_SPR_01_IO (part 2)
         Given the FLUSSO_SPR_01_IO (part 1) scenario executed successfully
         And wait 5 seconds for expiration
