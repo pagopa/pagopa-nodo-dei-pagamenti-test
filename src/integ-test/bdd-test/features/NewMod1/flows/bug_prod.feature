@@ -123,7 +123,7 @@ Feature: revision checks for sendPaymentOutcomeV2
                 "idPSP": "#psp#",
                 "paymentMethod": "TPAY",
                 "idBrokerPSP": "#id_broker_psp#",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "idChannel": "#canale_versione_primitive_2#",
                 "transactionId": "#transaction_id#",
                 "totalAmount": 12,
                 "fee": 2,
@@ -138,18 +138,20 @@ Feature: revision checks for sendPaymentOutcomeV2
         And check outcome is OK of v2/closepayment response
         And wait 12 seconds for expiration
 
-    Scenario: sendPaymentOutcome
-        Given initial XML sendPaymentOutcome
+    Scenario: sendPaymentOutcomeV2
+        Given initial XML sendPaymentOutcomeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <nod:sendPaymentOutcomeReq>
+            <nod:sendPaymentOutcomeV2Request>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
+            <paymentTokens>
             <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
+            </paymentToken>
             <outcome>OK</outcome>
             <!--Optional:-->
             <details>
@@ -182,24 +184,24 @@ Feature: revision checks for sendPaymentOutcomeV2
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>
             </details>
-            </nod:sendPaymentOutcomeReq>
+            </nod:sendPaymentOutcomeV2Request>
             </soapenv:Body>
             </soapenv:Envelope>
             """
 
-    Scenario: pspNotifyPayment timeout
-        Given initial XML pspNotifyPayment
+    Scenario: pspNotifyPaymentV2 timeout response
+        Given initial XML pspNotifyPaymentV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <pfn:pspNotifyPaymentRes>
+            <pfn:pspNotifyPaymentV2Res>
             <delay>10000</delay>
-            </pfn:pspNotifyPaymentRes>
+            </pfn:pspNotifyPaymentV2Res>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
 
     Scenario: mod3CancelV2
         When job mod3CancelV2 triggered after 4 seconds
@@ -212,24 +214,24 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
-        And the pspNotifyPayment timeout scenario executed successfully
+        And the pspNotifyPaymentV2 timeout scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And the mod3CancelV2 scenario executed successfully
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
-        And the sendPaymentOutcome scenario executed successfully
-        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcome response
+        Then check outcome is OK of sendPaymentOutcomeV2 response
 
     @bug
     Scenario: test 2
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
-        And the pspNotifyPayment timeout scenario executed successfully
+        And the pspNotifyPaymentV2 timeout scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And the mod3CancelV2 scenario executed successfully
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        And outcome with KO in sendPaymentOutcomeV2
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
-        And the sendPaymentOutcome scenario executed successfully
-        And outcome with KO in sendPaymentOutcome
-        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcome response
+        Then check outcome is OK of sendPaymentOutcomeV2 response
