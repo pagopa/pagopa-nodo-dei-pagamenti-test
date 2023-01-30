@@ -202,29 +202,33 @@ Feature: revision checks for sendPaymentOutcomeV2
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
     Scenario: mod3CancelV2
-        When job mod3CancelV2 triggered after 3 seconds
+        When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
 
     #################################################################################################################################
 
     @bug
     Scenario: test 1
-        Given the checkPosition scenario executed successfully
+        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
         And the pspNotifyPayment timeout scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And the mod3CancelV2 scenario executed successfully
+        And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
         And the sendPaymentOutcome scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
     @bug
     Scenario: test 2
-        Given the checkPosition scenario executed successfully
+        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
         And the pspNotifyPayment timeout scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And the mod3CancelV2 scenario executed successfully
+        And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
         And the sendPaymentOutcome scenario executed successfully
         And outcome with KO in sendPaymentOutcome
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
