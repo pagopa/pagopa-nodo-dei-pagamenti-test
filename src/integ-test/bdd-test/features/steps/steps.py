@@ -1611,7 +1611,6 @@ def step_impl(context, query_name, date, macro, db_name):
 
 @then("restore initial configurations")
 def step_impl(context):
-    print(">>> restore initial configurations")
     db_selected = context.config.userdata.get(
         "db_configuration").get('nodo_cfg')
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
