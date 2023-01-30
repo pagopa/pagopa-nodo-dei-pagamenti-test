@@ -44,7 +44,7 @@ export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit, valueToAsse
   );
   
   console.debug("Verifica RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
   
 
    Verifica_Trend.add(res.timings.duration);
