@@ -3,7 +3,7 @@ Feature: PAG-1976
   Background:
     Given systems up
 
-  Scenario: activatePaymentNotice
+  Scenario: activatePaymentNotice request
     Given initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -97,7 +97,7 @@ Feature: PAG-1976
     When job mod3CancelV2 triggered after 3 seconds
     Then verify the HTTP status code of mod3CancelV2 response is 200
 
-  Scenario: sendPaymentOutcome
+  Scenario: sendPaymentOutcome request
     Given initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -177,6 +177,7 @@ Feature: PAG-1976
     And the mod3CancelV2 scenario executed successfully
     And expirationTime with None in activatePaymentNotice
     And random idempotencyKey having #psp# as idPSP in activatePaymentNotice
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
@@ -254,6 +255,7 @@ Feature: PAG-1976
     And the mod3CancelV2 scenario executed successfully
     And expirationTime with None in activatePaymentNotice
     And random idempotencyKey having #psp# as idPSP in activatePaymentNotice
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
