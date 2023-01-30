@@ -42,7 +42,7 @@ Feature: PAG-1976
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>#password#</password>
       <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-      <outcome>KO</outcome>
+      <outcome>OK</outcome>
       <!--Optional:-->
       <details>
       <paymentMethod>creditCard</paymentMethod>
@@ -79,6 +79,82 @@ Feature: PAG-1976
       </soapenv:Envelope>
       """
 
+  ##########################################################################################
+
+  Scenario: No regression posizione pagabile (part 1)
+    Given the activatePaymentNotice request scenario executed successfully
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+
+  @test
+  Scenario: No regression posizione pagabile (part 2)
+    Given the No regression posizione pagabile (part 1) scenario executed successfully
+    And the mod3CancelV2 scenario executed successfully
+    And the sendPaymentOutcome request scenario executed successfully
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+
+  ##########################################################################################
+
+  Scenario: No regression posizione non pagabile (part 1)
+    Given the activatePaymentNotice request scenario executed successfully
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+    And save activatePaymentNotice response in activatePaymentNotice1
+
+  Scenario: No regression posizione non pagabile (part 2)
+    Given the No regression posizione non pagabile (part 1) scenario executed successfully
+    And the mod3CancelV2 scenario executed successfully
+    And expirationTime with None in activatePaymentNotice
+    And random idempotencyKey having #psp# as idPSP in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+
+  @test
+  Scenario: No regression posizione non pagabile (part 3)
+    Given the No regression posizione non pagabile (part 2) scenario executed successfully
+    And the sendPaymentOutcome request scenario executed successfully
+    And paymentToken with $activatePaymentNotice1Response.paymentToken in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
+
+  ##########################################################################################
+
+  @test
+  Scenario: No regression token inesistente
+    Given the sendPaymentOutcome request scenario executed successfully
+    And outcome with KO in sendPaymentOutcome
+    And paymentToken with token in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
+
+  ##########################################################################################
+
+  Scenario: No regression esito già acquisito (part 1)
+    Given the activatePaymentNotice request scenario executed successfully
+    And expirationTime with 60000 in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+
+  Scenario: No regression esito già acquisito (part 2)
+    Given the No regression esito già acquisito (part 1) scenario executed successfully
+    And the sendPaymentOutcome request scenario executed successfully
+    And outcome with KO in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is OK of sendPaymentOutcome response
+
+  @test
+  Scenario: No regression esito già acquisito (part 3)
+    Given the No regression esito già acquisito (part 2) scenario executed successfully
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
+
+  ##########################################################################################
+
   Scenario: Test posizione pagabile (part 1)
     Given the activatePaymentNotice request scenario executed successfully
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
@@ -89,9 +165,12 @@ Feature: PAG-1976
     Given the Test posizione pagabile (part 1) scenario executed successfully
     And the mod3CancelV2 scenario executed successfully
     And the sendPaymentOutcome request scenario executed successfully
+    And outcome with KO in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
+
+  ##########################################################################################
 
   Scenario: Test posizione non pagabile (part 1)
     Given the activatePaymentNotice request scenario executed successfully
@@ -111,7 +190,8 @@ Feature: PAG-1976
   Scenario: Test posizione non pagabile (part 3)
     Given the Test posizione non pagabile (part 2) scenario executed successfully
     And the sendPaymentOutcome request scenario executed successfully
-    And paymentToken with $activatePaymentNotice1Response.paymentToken
+    And outcome with KO in sendPaymentOutcome
+    And paymentToken with $activatePaymentNotice1Response.paymentToken in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
