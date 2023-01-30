@@ -808,6 +808,8 @@ def step_impl(context, sender, soap_primitive, receiver):
     #primitive = soap_primitive.split("_")[0]
     if 'NODOPGDB' in os.environ:
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
+        if 'SUBSCRIPTION_KEY' in os.environ:
+            headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
     else:
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
     url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
@@ -829,6 +831,8 @@ def step_impl(context, sender, soap_primitive, receiver):
     #primitive = soap_primitive.split("_")[0]
     if 'NODOPGDB' in os.environ:
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
+        if 'SUBSCRIPTION_KEY' in os.environ:
+            headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')        
     else:
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts        
     url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
@@ -1148,6 +1152,9 @@ def step_impl(context, sender, method, service, receiver):
     url_nodo = utils.get_rest_url_nodo(context, service)
     headers = {'Content-Type': 'application/json',
                'Host': 'api.dev.platform.pagopa.it:443'}
+    if 'SUBSCRIPTION_KEY' in os.environ:
+        headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
+
     body = context.text or ""
     if '_json' in service:
         service = service.split('_')[0]
