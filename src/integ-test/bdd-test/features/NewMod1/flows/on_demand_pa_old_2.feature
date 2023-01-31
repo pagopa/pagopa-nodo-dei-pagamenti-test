@@ -221,7 +221,7 @@ Feature: on demand pa old
             <ws:nodoInviaRPT>
             <password>#password#</password>
             <identificativoPSP>#pspFittizio#</identificativoPSP>
-            <identificativoIntermediarioPSP>#brkerFittizio#</identificativoIntermediarioPSP>
+            <identificativoIntermediarioPSP>#brokerFittizio#</identificativoIntermediarioPSP>
             <identificativoCanale>#canaleFittizio#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
