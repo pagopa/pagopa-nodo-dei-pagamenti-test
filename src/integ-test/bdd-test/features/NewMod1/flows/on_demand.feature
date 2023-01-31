@@ -10,9 +10,9 @@ Feature: on demand
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activatePaymentNoticeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <idPSP>#pspEcommerce#</idPSP>
+            <idBrokerPSP>#brokerEcommerce#</idBrokerPSP>
+            <idChannel>#canaleEcommerce#</idChannel>
             <password>#password#</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
@@ -125,7 +125,7 @@ Feature: on demand
             <pay_i:importoTotaleDaVersare>$activatePaymentNoticeV2.amount</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>$activatePaymentNoticeV2Response.paymentToken</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -152,15 +152,15 @@ Feature: on demand
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>$ccp</codiceContestoPagamento>
+            <codiceContestoPagamento>$activatePaymentNoticeV2Response.paymentToken</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>#password#</password>
-            <identificativoPSP>#pspFittizio#</identificativoPSP>
-            <identificativoIntermediarioPSP>#brokerFittizio#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleFittizio#</identificativoCanale>
+            <identificativoPSP>#pspEcommerce#</identificativoPSP>
+            <identificativoIntermediarioPSP>#brokerEcommerce#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canaleEcommerce#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
