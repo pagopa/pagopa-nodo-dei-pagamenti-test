@@ -20,6 +20,6 @@ WORKDIR target
 
 RUN chmod +777 startPAMock.sh
 
-EXPOSE 8484
+EXPOSE 8080
 
 ENTRYPOINT ["/bin/sh", "./startPAMock.sh"]
