@@ -158,9 +158,9 @@ Feature: on demand pa old
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>#password#</password>
-            <identificativoPSP>#pspEcommerce#</identificativoPSP>
-            <identificativoIntermediarioPSP>#brokerEcommerce#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canaleEcommerce#</identificativoCanale>
+            <identificativoPSP>#pspFittizio#</identificativoPSP>
+            <identificativoIntermediarioPSP>#brokerFittizio#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canaleFittizio#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
