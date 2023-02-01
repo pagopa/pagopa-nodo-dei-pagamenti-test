@@ -33,7 +33,6 @@ parameters:
 variables:
   imageRepository: '$(IMAGE_REPOSITORY_NAME)'
   nameSpace: '$(K8S_NAMESPACE)'
-  FILE_CONFIG_PATH_LOGBACK: $(Build.SourcesDirectory)/helm/config/${{ parameters.ENV }}/logback.xml
 
   dockerRegistryServiceConnection: $(UAT_CONTAINER_REGISTRY_SERVICE_CONN)
   dockerRegistryFqdn: $(UAT_CONTAINER_NAMESPACE)

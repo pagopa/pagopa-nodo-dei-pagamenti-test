@@ -33,7 +33,7 @@ microservice-chart:
   ingress:
     create: true
     host: "weuuat.nodo.internal.uat.platform.pagopa.it"
-    path: /mock-ec-prf(/|$)(.*)
+    path: /mock-ec(/|$)(.*)
     pathType: Prefix
     servicePort: 8080
     rewriteTarget: /$2
