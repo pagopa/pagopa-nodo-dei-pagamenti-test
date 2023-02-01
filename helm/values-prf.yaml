@@ -9,7 +9,7 @@ microservice-chart:
       maxSurge: 1
   image:
     repository: pagopaucommonacr.azurecr.io/pagopanododeipagamentitest
-    tag: "0.0.0-SNAPSHOT"
+    tag: "1.2.0"
     pullPolicy: Always
   readinessProbe:
     handlerType: tcpSocket
