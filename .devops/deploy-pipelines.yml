@@ -1,25 +1,27 @@
-# Only manual activations are intended
+# Only manual triggers
 trigger: none
 pr: none
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-22.04'
 
 parameters:
-  - name: 'SEMVER'
-    displayName: 'When packing a release, define the version bump to apply'
+  - name: ENV
+    displayName: Target Environment
+    type: string
+    default: dev
+    values:
+      - prf
+  - name: SEMVER
+    displayName: "When packing a release, define the version bump to apply. Use only buildNumber or skip for manual deployment"
     type: string
     values:
       - major
       - minor
       - patch
-    default: minor
-  - name: ENV
-    displayName: Target Environment
-    type: string
-    default: prf
-    values:
-      - prf
+      - buildNumber
+      - skip
+    default: skip
   - name: "FORCE_REPLACE_DOCKER_IMAGE"
     displayName: "Force the existing docker image to be replaced"
     type: boolean
@@ -28,26 +30,24 @@ parameters:
       - False
       - True
 
-# variables setted on azdevops to avoid circular dependency warning
-# $(DEFAULT_BRANCH)
-# $(HEALTHCHECK_CONTAINER_SUBNET)
-# $(HEALTHCHECK_ENDPOINT)
 variables:
   imageRepository: '$(IMAGE_REPOSITORY_NAME)'
   nameSpace: '$(K8S_NAMESPACE)'
+  FILE_CONFIG_PATH_LOGBACK: $(Build.SourcesDirectory)/helm/config/${{ parameters.ENV }}/logback.xml
 
   dockerRegistryServiceConnection: $(UAT_CONTAINER_REGISTRY_SERVICE_CONN)
   dockerRegistryFqdn: $(UAT_CONTAINER_NAMESPACE)
-  AZURE_SUBSCRIPTION: $(UAT_AZURE_SUBSCRIPTION)
-  WEB_APP_NAME: $(UAT_WEB_APP_NAME)
-  WEB_APP_RESOURCE_GROUP_NAME: $(UAT_WEB_APP_RESOURCE_GROUP_NAME)
-  HEALTHCHECK_CONTAINER_RESOURCE_GROUP_NAME: $(UAT_HEALTHCHECK_CONTAINER_RESOURCE_GROUP_NAME)
-  HEALTHCHECK_CONTAINER_VNET: $(UAT_HEALTHCHECK_CONTAINER_VNET)
-  poolImage: 'pagopa-uat-linux'
   kubernetesServiceConnection: '$(UAT_KUBERNETES_SERVICE_CONN)'
+  poolImage: 'pagopa-uat-linux'
   appInsightsServiceConn: "$(TF_APPINSIGHTS_SERVICE_CONN_UAT)"
   appInsightsResourceId: "$(TF_APPINSIGHTS_RESOURCE_ID_UAT)"
-  appName: '$(imageRepository)'
+  API_SUBSCRIPTION_KEY: $(UAT_API_SUBSCRIPTION_KEY)
+
+  ${{ if eq(variables['Build.SourceBranchName'], 'merge') }}:
+    sourceBranch: "main" # force to main branch
+  ${{ if ne(variables['Build.SourceBranchName'], 'merge') }}:
+    sourceBranch: ${{ variables['Build.SourceBranchName'] }}
+
 
 
 resources:
@@ -55,107 +55,62 @@ resources:
     - repository: pagopaCommons
       type: github
       name: pagopa/azure-pipeline-templates
-      ref: refs/tags/v3.6.0
+      ref: refs/tags/v3.2.0
       endpoint: 'io-azure-devops-github-ro'
 
-
 stages:
-  - stage: EchoDbg
-    pool:
-      vmImage: 'ubuntu-latest'
-    jobs:
-      - job: Print
-        steps:
-          - script: |
-              echo "Debug..."
-              echo ${{ variables['Build.SourceBranch'] }}
-              echo ${{ variables.DEFAULT_BRANCH }} 
-              echo $(DEFAULT_BRANCH)
-            displayName: 'Print info'
 
-  # Create a relase
-  # Activated when ONE OF these are met:
-  # - is on branch $(DEFAULT_BRANCH)
-  # - is a tag in the form v{version}-RELEASE
+  # Create a release on GitHub
   - stage: Release
-    # condition: or(
-    #   eq(variables['Build.SourceBranch'], format('refs/heads/{0}', variables.DEFAULT_BRANCH)),
-    #   and(
-    #   startsWith(variables['Build.SourceBranch'], 'refs/tags'),
-    #   endsWith(variables['Build.SourceBranch'], '-RELEASE')
-    #   )
-    #   )
-    pool:
-      vmImage: 'ubuntu-latest'
     jobs:
       - job: make_release
-        condition: eq(variables['Build.SourceBranch'], format('refs/heads/{0}', variables.DEFAULT_BRANCH))
         steps:
-          - template: templates/node-job-setup/template.yaml@pagopaCommons
-            parameters:
-              persistCredentials: true
-          - template: templates/node-github-release/template.yaml@pagopaCommons
-            parameters:
-              release_branch: '$(DEFAULT_BRANCH)'
-              semver: '${{ parameters.SEMVER }}'
-              gitEmail: '$(GIT_EMAIL)'
-              gitUsername: '$(GIT_USERNAME)'
-              gitHubConnection: '$(GITHUB_CONNECTION)'
+          - checkout: self
+            clean: true
+            persistCredentials: true
 
-      - job: skip_release
-        condition: ne(variables['Build.SourceBranch'], format('refs/heads/{0}', variables.DEFAULT_BRANCH))
-        steps:
-          - script: |
-              APP_VERSION=$(jq -r .version package.json)
-              echo "current version is $APP_VERSION"
-              echo "##vso[task.setvariable variable=value;isOutput=true]$APP_VERSION"
-            displayName: Set version
-            name: current_version
-          - script: |
-              echo "We assume this reference to be a valid release: $(Build.SourceBranch). Therefore, there is no need to bundle a new release."
-            displayName: 'Skip release bundle'
+          - template: templates/maven-github-release/template.yaml@pagopaCommons
+            parameters:
+              release_branch: $(sourceBranch)
+              gitEmail: $(GIT_EMAIL)
+              gitUsername: $(GIT_USERNAME)
+              gitHubConnection: $(GITHUB_CONNECTION)
+              semver: "${{ parameters.SEMVER }}"
 
-  # Prepare Artifact
-  - stage: Prepare_artifact
-    dependsOn:
-      - Release
+          - template: templates/maven-github-current-version/template.yaml@pagopaCommons
+
+  # Build and Push Docker Image
+  - stage: Build
+    dependsOn: Release
     variables:
-      next_version: $[ stageDependencies.Release.make_release.outputs['next_version.value'] ]
-      current_version: $[ stageDependencies.Release.skip_release.outputs['current_version.value'] ]
+      current_version: $[ stageDependencies.Release.make_release.outputs['current_version.value'] ]
     jobs:
-      - job: 'prepare_artifact'
+      - job: "build"
         steps:
-          # Build application
-          - template: templates/node-job-setup/template.yaml@pagopaCommons
-            parameters:
-              # On the assumption that this stage is executed only when Relase stage is,
-              #  with this parameter we set the reference the deploy script must pull changes from.
-              # The branch/tag name is calculated from the source branch
-              #  ex: Build.SourceBranch=refs/heads/master --> master
-              #  ex: Build.SourceBranch=refs/tags/v1.2.3-RELEASE --> v1.2.3-RELEASE
-              gitReference: ${{ replace(replace(variables['Build.SourceBranch'], 'refs/tags/', ''), 'refs/heads/', '') }}
+          - checkout: self
+            persistCredentials: true
+
           - script: |
-              yarn build
-            displayName: 'Build'
+              git checkout $(sourceBranch)
+            displayName: Checkout and update branch
 
           - template: templates/docker-release/template.yaml@pagopaCommons
             parameters:
               CONTAINER_REGISTRY_SERVICE_CONN: $(dockerRegistryServiceConnection)
               CONTAINER_REGISTRY_FQDN: $(dockerRegistryFqdn)
               DOCKER_IMAGE_NAME: $(imageRepository)
-              DOCKER_IMAGE_TAG: "$(next_version)$(current_version)"
+              DOCKER_IMAGE_TAG: $(current_version)
               FORCE_REPLACE_DOCKER_IMAGE: ${{ parameters.FORCE_REPLACE_DOCKER_IMAGE }}
-              DOCKERFILE: Dockerfile
+              DOCKERFILE: Dockerfile.azurepg
 
   # Deploy on K8s with Helm
   - stage: Deploy
-    condition: succeeded('Prepare_artifact')
+    condition: succeeded('Build')
     dependsOn:
       - Release
-      - Prepare_artifact
+      - Build
     variables:
-      next_version: $[ stageDependencies.Release.make_release.outputs['next_version.value'] ]
-      current_version: $[ stageDependencies.Release.skip_release.outputs['current_version.value'] ]
+      deploy_version: $[ stageDependencies.Release.make_release.outputs['current_version.value'] ]
     jobs:
       - deployment: "deploy"
         pool:
@@ -168,9 +123,13 @@ stages:
                 - checkout: self
                   persistCredentials: true
 
+                - script: |
+                    git checkout $(sourceBranch)
+                  displayName: Checkout and update branch
+
                 - template: templates/helm-microservice-chart-setup/template.yaml@pagopaCommons
                   parameters:
-                    DEPLOY_VERSION: $(next_version)$(current_version)
+                    DEPLOY_VERSION: $(deploy_version)
 
                 - template: templates/helm-microservice-chart-deploy/template.yaml@pagopaCommons
                   parameters:
@@ -178,10 +137,12 @@ stages:
                     ENV: ${{ parameters['ENV'] }}
                     KUBERNETES_SERVICE_CONN: ${{ variables.kubernetesServiceConnection }}
                     NAMESPACE: $(nameSpace)
-                    APP_NAME: $(appName)
+                    APP_NAME: $(imageRepository)
                     VALUE_FILE: "helm/values-${{ parameters['ENV'] }}.yaml"
-                    DEPLOY_VERSION: $(next_version)$(current_version)
+                    DEPLOY_VERSION: $(deploy_version)
                     APPINSIGHTS_SERVICE_CONN: ${{ variables.appInsightsServiceConn }}
                     APPINSIGHTS_RESOURCE_ID: ${{ variables.appInsightsResourceId }}
                     ARGUMENTS: >-
-                      --set mock-ec-prf.image.tag="$(next_version)$(current_version)"
+                      --set mock-ec-prf-chart.image.tag="$(next_version)$(current_version)"
+                    
+

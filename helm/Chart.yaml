@@ -1,5 +1,5 @@
 apiVersion: v2
-name: mock-ec-chart
+name: mock-ec-prf-chart
 description: Mock EC
 type: application
 version: 0.0.1
