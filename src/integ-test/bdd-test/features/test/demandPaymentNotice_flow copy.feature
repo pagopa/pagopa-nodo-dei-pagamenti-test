@@ -942,7 +942,7 @@ Feature: flow tests for demandPaymentNotice
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
     @runnable
-    @check
+    @newcheck
     Scenario: F_DPNR_07 (part 2)
         Given the F_DPNR_07 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1081,7 +1081,7 @@ Feature: flow tests for demandPaymentNotice
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
     @runnable
-    @check
+    @newcheck
     Scenario: F_DPNR_10 (part 2)
         Given the F_DPNR_10 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1224,7 +1224,7 @@ Feature: flow tests for demandPaymentNotice
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
     @runnable
-    @check
+    @newcheck
     Scenario: F_DPNR_13 (part 2)
         Given the F_DPNR_13 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1447,7 +1447,7 @@ Feature: flow tests for demandPaymentNotice
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
     @runnable
-    @check
+    @newcheck
     Scenario: F_DPNR_16 (part 2)
         Given the F_DPNR_16 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1613,7 +1613,7 @@ Feature: flow tests for demandPaymentNotice
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
     @runnable
-    @check
+    @newcheck
     Scenario: F_DPNR_17 (part 2)
         Given the F_DPNR_17 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully

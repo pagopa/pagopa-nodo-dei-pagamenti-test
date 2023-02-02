@@ -2041,7 +2041,7 @@ Feature: flow tests for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
     @runnable
-    @check
+    @newcheck
     Scenario: FLUSSO_CP_09 (part 3)
         Given the FLUSSO_CP_09 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
