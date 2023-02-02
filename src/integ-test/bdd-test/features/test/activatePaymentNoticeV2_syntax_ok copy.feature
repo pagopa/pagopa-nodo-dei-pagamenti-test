@@ -1,15 +1,14 @@
-Feature: BUG_fullName_CarattereSpeciale
+Feature: syntax checks OK for activatePaymentNoticeV2Request
 
     Background:
         Given systems up
-
-    Scenario: activatePaymentNotice request
-        Given initial XML activatePaymentNotice
+        And initial XML activatePaymentNoticeV2
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <nod:activatePaymentNoticeReq>
+            <nod:activatePaymentNoticeV2Request>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
@@ -19,17 +18,20 @@ Feature: BUG_fullName_CarattereSpeciale
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
-            <expirationTime>60000</expirationTime>
+            <expirationTime>120000</expirationTime>
             <amount>10.00</amount>
-            <paymentNote>responseFull</paymentNote>
-            </nod:activatePaymentNoticeReq>
+            <dueDate>2021-12-31</dueDate>
+            <paymentNote>causale</paymentNote>
+            <paymentMethod>PO</paymentMethod>
+            <touchPoint>ATM</touchPoint>
+            </nod:activatePaymentNoticeV2Request>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header />
+            <soapenv:Header/>
             <soapenv:Body>
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
@@ -51,7 +53,7 @@ Feature: BUG_fullName_CarattereSpeciale
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
             <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
             </uniqueIdentifier>
-            <fullName>Massimo BenvegnÃ¹</fullName>
+            <fullName>paGetPaymentName</fullName>
             <!--Optional:-->
             <streetName>paGetPaymentStreet</streetName>
             <!--Optional:-->
@@ -73,7 +75,7 @@ Feature: BUG_fullName_CarattereSpeciale
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
+            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -93,5 +95,31 @@ Feature: BUG_fullName_CarattereSpeciale
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
+@runnable
+    Scenario: Check valid URL in WSDL namespace
+        When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+@runnable
+    Scenario Outline: Check OK response on missing optional fields
+        Given <elem> with <value> in activatePaymentNoticeV2
+        When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        Examples:
+            | elem           | value | soapUI test            |
+            | idempotencyKey | None  | SIN_APNV2_18           |
+            | expirationTime | None  | SIN_APNV2_35           |
+            | dueDate        | None  | SIN_APNV2_44           |
+            | paymentNote    | None  | SIN_APNV2_47           |
+            | paymentMethod  | None  | #commissioni evolute 1 |
+            | touchPoint     | None  | #commissioni evolute 2 |
+@runnable
+    Scenario Outline: Check OK response on missing optional fields (stazione con versione primitive 2)
+        Given <elem> with <value> in activatePaymentNoticeV2
+        When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        Examples:
+            | elem           | value | soapUI test    |
+            | idempotencyKey | None  | SIN_APNV2_18.1 |
+            | expirationTime | None  | SIN_APNV2_35.1 |
+            | dueDate        | None  | SIN_APNV2_44.1 |
+            | paymentNote    | None  | SIN_APNV2_47.1 |

@@ -142,7 +142,7 @@
         "DB_GEST_ANN_update1": "UPDATE STATI_RPT_SNAPSHOT SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IUV = '$iuv' AND ID_DOMINIO = '$nodoInviaCarrelloRPT.identificativoDominio'",
         "DB_GEST_ANN_update2": "UPDATE STATI_RPT_SNAPSHOT SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IUV = '$iuv' AND ID_DOMINIO = '$pa1'",
         "DB_GEST_ANN_notice_number": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '$NOTICE_ID'",
-        "DB_GEST_ANN_stati_position_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '311$iuv' and s.pa_fiscal_code= '$nodoInviaCarrelloRPT.identificativoDominio'",
+        "DB_GEST_ANN_stati_position_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '302$iuv' and s.pa_fiscal_code= '$nodoInviaCarrelloRPT.identificativoDominio'",
         "by_notice_number_and_pa": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '$noticeNumber' and s.pa_fiscal_code= '$pa'",
         "by_iuv_and_id_dominio": "SELECT s.columns FROM table_name s WHERE s.IUV = '$iuv' and s.ID_DOMINIO = '$pa' ORDER BY INSERTED_TIMESTAMP",
         "by_iuv_and_ident_dominio": "SELECT s.columns FROM table_name s WHERE s.IUV = '$iuv' and s.IDENT_DOMINIO = '$pa'",
@@ -315,8 +315,8 @@
         "update_noticeidrandom": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='311011451292109621'",
         "transactionid": "SELECT columns FROM table_name WHERE TRANSACTION_ID = '$transaction_id'",
         "temptransactionid": "SELECT columns FROM table_name WHERE TRANSACTION_ID = '$temp_transaction_id'",
-        "update_noticeid_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='311$iuv' and PA_FISCAL_CODE='#creditor_institution_code#'",
-        "update_noticeid1_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='311$iuv1' and PA_FISCAL_CODE='#creditor_institution_code#'",
+        "update_noticeid_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='302$iuv' and PA_FISCAL_CODE='#creditor_institution_code#'",
+        "update_noticeid1_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='302$iuv1' and PA_FISCAL_CODE='#creditor_institution_code#'",
         "position_subject": "SELECT columns FROM table_name WHERE ENTITY_UNIQUE_IDENTIFIER_VALUE = '$sendPaymentOutcomeV2.entityUniqueIdentifierValue' and INSERTED_TIMESTAMP > TO_DATE ('$date','YYYY-MM-DD HH24:MI:SS')",
         "position_subject_spo": "SELECT columns FROM table_name WHERE ENTITY_UNIQUE_IDENTIFIER_VALUE = '$sendPaymentOutcome.entityUniqueIdentifierValue' and INSERTED_TIMESTAMP > TO_DATE ('$date','YYYY-MM-DD HH24:MI:SS')",
         "update_validto": "UPDATE table_name SET param = TO_DATE('value', 'YYYY-MM-DD HH24:MI:SS') WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcomeV2.idempotencyKey' AND PSP_ID = '$sendPaymentOutcomeV2.idPSP'",
@@ -360,7 +360,7 @@
         "update_noticeid1_pa_ver2": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='310$iuv1' and PA_FISCAL_CODE='#creditor_institution_code#'",
         "update_obj_id_1": "UPDATE table_name SET param = 'value' WHERE OBJ_ID IN ('4328', '4329')",
         "update_obj_id_2": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = '4328'",
-        "checkposition_resp": "SELECT columns FROM table_name WHERE NOTICE_ID = '311$iuv' AND TIPO_EVENTO = 'checkPosition' AND SOTTO_TIPO_EVENTO = 'RESP'"
+        "checkposition_resp": "SELECT columns FROM table_name WHERE NOTICE_ID = '302$iuv' AND TIPO_EVENTO = 'checkPosition' AND SOTTO_TIPO_EVENTO = 'RESP'"
     },
     "sendPaymentResultV2": {
         "select_sprV2_old": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$ccp' AND TIPO_EVENTO = 'sendPaymentResult-v2' ORDER BY ID ASC",

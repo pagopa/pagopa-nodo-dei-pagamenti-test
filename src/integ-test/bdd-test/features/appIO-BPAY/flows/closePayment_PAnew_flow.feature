@@ -16,7 +16,7 @@ Feature: flow checks for closePayment - PA new
          <password>#password#</password>
          <qrCode>
          <fiscalCode>#creditor_institution_code#</fiscalCode>
-         <noticeNumber>311#iuv#</noticeNumber>
+         <noticeNumber>302#iuv#</noticeNumber>
          </qrCode>
          </nod:verifyPaymentNoticeReq>
          </soapenv:Body>
@@ -70,7 +70,7 @@ Feature: flow checks for closePayment - PA new
          <password>#password#</password>
          <qrCode>
          <fiscalCode>#creditor_institution_code#</fiscalCode>
-         <noticeNumber>311$iuv</noticeNumber>
+         <noticeNumber>302$iuv</noticeNumber>
          </qrCode>
          <expirationTime>60000</expirationTime>
          <amount>10.00</amount>
@@ -87,7 +87,7 @@ Feature: flow checks for closePayment - PA new
          <paf:paGetPaymentRes>
          <outcome>OK</outcome>
          <data>
-         <creditorReferenceId>11$iuv</creditorReferenceId>
+         <creditorReferenceId>02$iuv</creditorReferenceId>
          <paymentAmount>10.00</paymentAmount>
          <dueDate>2021-12-31</dueDate>
          <!--Optional:-->
@@ -1686,8 +1686,8 @@ Feature: flow checks for closePayment - PA new
    Scenario: FLUSSO_CP_23 (part 4)
       Given the FLUSSO_CP_23 (part 3) scenario executed successfully
       And the activateIOPayment scenario executed successfully
-      And noticeNumber with 311$iuv in activateIOPayment
-      And creditorReferenceId with 11$iuv in paGetPayment
+      And noticeNumber with 302$iuv in activateIOPayment
+      And creditorReferenceId with 02$iuv in paGetPayment
       And EC replies to nodo-dei-pagamenti with the paGetPayment
       When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
       Then check outcome is OK of activateIOPayment response
