@@ -913,6 +913,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
     @runnable
+    @check
     Scenario: semantic check 20.1 (part 3)
         Given the semantic check 20.1 (part 1) scenario executed successfully
         And fiscalCode with 77777777777 in activatePaymentNoticeV2
@@ -1215,6 +1216,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     # SEM_APNV2_27
     @runnable
+    @check
     Scenario: semantic check 27 (part 1)
         Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata chiaveok) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -1234,6 +1236,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And checks the value CHIAVEOKFINNULL is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
         And checks the value CHIAVEOKFINNULL is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
     @runnable
+    @check
     Scenario: semantic check 27 (part 3)
         Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOKFININF) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -1245,6 +1248,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And checks the value CHIAVEOKFININF is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
         And checks the value CHIAVEOKFININF is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
     @runnable
+    @check
     Scenario: semantic check 27 (part 4)
         Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOKINIZSUP) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -1256,6 +1260,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And checks the value CHIAVEOKINIZSUP is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
         And checks the value CHIAVEOKINIZSUP is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
     @runnable
+    @check
     Scenario: semantic check 27 (part 5)
         Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata chiaveminuscola) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -1277,6 +1282,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     # SEM_APNV2_28
     @runnable
+    @check
     Scenario: semantic check 28
         Given the activatePaymentNoticeV2 + paGetPaymentV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti

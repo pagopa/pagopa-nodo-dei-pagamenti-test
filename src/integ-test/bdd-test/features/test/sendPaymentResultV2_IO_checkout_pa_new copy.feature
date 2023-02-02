@@ -1604,6 +1604,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
     @runnable
+    @check
     Scenario: FLUSSO_SPR_08_IO (part 2)
         Given the FLUSSO_SPR_08_IO (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -3251,6 +3252,7 @@ Feature: flow tests for sendPaymentResultV2
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
     @runnable
+    @check
     Scenario: T_SPR_V2_08 (part 2)
         Given the T_SPR_V2_08 (part 1) scenario executed successfully
         And wait 3 seconds for expiration
