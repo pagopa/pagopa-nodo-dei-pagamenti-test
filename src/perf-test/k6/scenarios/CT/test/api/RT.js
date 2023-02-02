@@ -41,7 +41,7 @@ export function RT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
  let rtEncoded = rptUtil.getRtEncoded(rndAnagPa.PA, iuv);
   
  const res = http.post(
-		 getBasePath(baseUrl, "nodoInviaRPT"),
+		 getBasePath(baseUrl, "nodoInviaRT"),
     rtReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, rndAnagPa.PA, iuv, rtEncoded),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRT' }) ,
 	tags: { RT: 'http_req_duration', ALL: 'http_req_duration'}

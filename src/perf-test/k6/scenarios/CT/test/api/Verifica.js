@@ -34,7 +34,7 @@ return `
 };
 
 export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit, valueToAssert) {
-
+//console.log(verificaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, auxDigit));
  const res = http.post(
 		 getBasePath(baseUrl, "nodoVerificaRPT"),
     verificaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, auxDigit),
@@ -44,7 +44,7 @@ export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit, valueToAsse
   );
   
   console.debug("Verifica RES");
-  console.debug(JSON.stringify(res));
+  console.debug(JSON.stringify(res.timings));
   
 
    Verifica_Trend.add(res.timings.duration);

@@ -440,7 +440,7 @@ export function handleSummary(data) {
 
 
 export function checks(res, outcome) {
-	
+ 
 	 check(res, {
  	'ALL over_sla300': (r) => r.timings.duration >300,
    },
