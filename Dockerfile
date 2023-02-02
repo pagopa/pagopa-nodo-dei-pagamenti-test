@@ -14,6 +14,8 @@ WORKDIR /tmp/
 
 RUN mvn package
 
+RUN mv target PA_Mock*.jar target/PA_Mock.jar
+
 RUN mv startPAMock.sh target/startPAMock.sh
 
 WORKDIR target
