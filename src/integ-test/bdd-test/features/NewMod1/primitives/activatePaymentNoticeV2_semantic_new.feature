@@ -917,7 +917,8 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Given the semantic check 20.1 (part 1) scenario executed successfully
         And fiscalCode with 77777777777 in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
+        Then check outcome is KO of activatePaymentNoticeV2 response
+        And check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
     @runnable
     Scenario: semantic check 20.1 (part 4)
