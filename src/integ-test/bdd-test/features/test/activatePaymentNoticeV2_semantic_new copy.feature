@@ -913,7 +913,6 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
     @runnable
-    @newcheck
     Scenario: semantic check 20.1 (part 3)
         Given the semantic check 20.1 (part 1) scenario executed successfully
         And fiscalCode with 77777777777 in activatePaymentNoticeV2

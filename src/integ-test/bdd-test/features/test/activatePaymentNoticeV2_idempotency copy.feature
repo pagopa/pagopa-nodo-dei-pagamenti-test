@@ -598,7 +598,6 @@ Feature: idempotency tests for activatePaymentNoticeV2Request
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And wait 70 seconds for expiration
     @runnable
-    @newcheck
     Scenario: IDMP_APNV2_17 (part 2)
         Given the IDMP_APNV2_17 (part 1) scenario executed successfully
         And fiscalCode with 44444444444 in activatePaymentNoticeV2
@@ -708,10 +707,10 @@ Feature: idempotency tests for activatePaymentNoticeV2Request
     Scenario: IDMP_APNV2_20 (part 2)
         Given the IDMP_APNV2_20 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 7 seconds
-        And job idempotencyCacheClean triggered after 5 seconds
+        And job idempotencyCacheClean triggered after 10 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         And verify the HTTP status code of idempotencyCacheClean response is 200
-        And wait 5 seconds for expiration
+        And wait 10 seconds for expiration
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
 
     # [IDMP_APNV2_22]
