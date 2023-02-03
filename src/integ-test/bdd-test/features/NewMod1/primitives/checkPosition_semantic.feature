@@ -37,26 +37,26 @@ Feature: semantic checks for checkPosition outcome OK
             }
             """
 
-    # Scenario: checkPosition with 3 activatePaymentNoticeV2 notice numbers
-    #     Given initial json checkPosition
-    #         """
-    #         {
-    #             "positionslist": [
-    #                 {
-    #                     "fiscalCode": "#creditor_institution_code#",
-    #                     "noticeNumber": "$activatePaymentNoticeV2Request.noticeNumber"
-    #                 },
-    #                 {
-    #                     "fiscalCode": "#creditor_institution_code#",
-    #                     "noticeNumber": "$activatePaymentNoticeV2Request1.noticeNumber"
-    #                 },
-    #                 {
-    #                     "fiscalCode": "#creditor_institution_code#",
-    #                     "noticeNumber": "$activatePaymentNoticeV2Request2.noticeNumber"
-    #                 }
-    #             ]
-    #         }
-    #         """
+    Scenario: checkPosition with 3 activated notice numbers
+        Given initial json checkPosition
+            """
+            {
+                "positionslist": [
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "$activatePaymentNoticeV2Request.noticeNumber"
+                    },
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "$activatePaymentNoticeV2Request1.noticeNumber"
+                    },
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "$activatePaymentNoticeV2Request2.noticeNumber"
+                    }
+                ]
+            }
+            """
 
     Scenario: activatePaymentNoticeV2
         Given initial XML activatePaymentNoticeV2
@@ -207,7 +207,7 @@ Feature: semantic checks for checkPosition outcome OK
     @newcheck
     Scenario: Code 200 KO (part 4)
         Given the Code 200 KO (part 3) scenario executed successfully
-        And the checkPosition with 3 activatePaymentNoticeV2 notice numbers scenario executed successfully
+        And the checkPosition with 3 activated notice numbers scenario executed successfully
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is KO of checkPosition response
