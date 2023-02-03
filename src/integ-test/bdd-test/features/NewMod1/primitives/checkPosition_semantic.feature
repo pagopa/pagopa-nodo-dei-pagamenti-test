@@ -166,7 +166,6 @@ Feature: semantic checks for checkPosition outcome OK
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
         And updates through the query update_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with INSERTED under macro NewMod1 on db nodo_online
     @runnable
-    @newcheck
     Scenario: Code 200 OK 2 (part 2)
         Given the Code 200 OK 2 (part 1) scenario executed successfully
         And the checkPosition scenario executed successfully
@@ -204,7 +203,6 @@ Feature: semantic checks for checkPosition outcome OK
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request2
         And updates through the query update_noticeid_pa of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online
     @runnable
-    @newcheck
     Scenario: Code 200 KO (part 4)
         Given the Code 200 KO (part 3) scenario executed successfully
         And the checkPosition with 3 activated notice numbers scenario executed successfully
