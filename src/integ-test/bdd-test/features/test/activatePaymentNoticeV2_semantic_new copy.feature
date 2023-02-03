@@ -1282,7 +1282,6 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
 
     # SEM_APNV2_28
     @runnable
-    @newcheck
     Scenario: semantic check 28
         Given the activatePaymentNoticeV2 + paGetPaymentV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
