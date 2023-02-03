@@ -2,7 +2,7 @@ Feature: PAG-1879
 
     Background:
         Given systems up
-
+@runnable
     Scenario: Empty
         Given REND generation
             """
@@ -60,7 +60,7 @@ Feature: PAG-1879
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaFlussoRendicontazione response
         And check faultCode is PPT_SINTASSI_XSD of nodoInviaFlussoRendicontazione response
-
+@runnable
     Scenario: 141 characters
         Given REND generation
             """
@@ -118,7 +118,7 @@ Feature: PAG-1879
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaFlussoRendicontazione response
         And check faultCode is PPT_SINTASSI_XSD of nodoInviaFlussoRendicontazione response
-
+@runnable
     Scenario: OK 1 car
         Given REND generation
             """
@@ -175,7 +175,7 @@ Feature: PAG-1879
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
-
+@runnable
     Scenario: OK campo assente
         Given REND generation
             """
@@ -232,7 +232,7 @@ Feature: PAG-1879
             """
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
-
+@runnable
     Scenario: OK 140 car
         Given REND generation
             """
