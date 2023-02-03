@@ -3239,7 +3239,7 @@ Feature: flow tests for sendPaymentResultV2
     # T_SPR_V2_08
 
     Scenario: T_SPR_V2_08 (part 1)
-        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 1000
         And the verifyPaymentNotice scenario executed successfully
         And the activateIOPayment with 2 seconds expirationTime scenario executed successfully
 
@@ -3260,7 +3260,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Unacceptable outcome when token has expired of v2/closepayment response
-        And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
+        And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 3600000
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
