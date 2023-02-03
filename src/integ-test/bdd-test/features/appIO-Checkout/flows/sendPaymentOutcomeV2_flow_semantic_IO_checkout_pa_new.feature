@@ -243,7 +243,6 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
     @runnable
-    @prova
     Scenario: SEM_SPO_7.1 (part 4)
         Given the SEM_SPO_7.1 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
