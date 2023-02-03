@@ -74,7 +74,7 @@ Feature: semantic checks for checkPosition outcome OK
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
-            <expirationTime>12345</expirationTime>
+            <expirationTime>120000</expirationTime>
             <amount>10.00</amount>
             <dueDate>2021-12-31</dueDate>
             <paymentNote>causale</paymentNote>
@@ -163,7 +163,7 @@ Feature: semantic checks for checkPosition outcome OK
         Given the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
+        # And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
         And updates through the query update_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with INSERTED under macro NewMod1 on db nodo_online
     @runnable
     @newcheck
