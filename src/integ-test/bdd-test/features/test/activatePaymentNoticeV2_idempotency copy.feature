@@ -602,6 +602,8 @@ Feature: idempotency tests for activatePaymentNoticeV2Request
     Scenario: IDMP_APNV2_17 (part 2)
         Given the IDMP_APNV2_17 (part 1) scenario executed successfully
         And fiscalCode with 44444444444 in activatePaymentNoticeV2
+        And random iuv in context
+        And noticeNumber with 311$iuv in activatePaymentNoticeV2
         And fiscalCodePA with 44444444444 in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti

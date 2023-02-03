@@ -360,7 +360,8 @@
         "update_noticeid1_pa_ver2": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='310$iuv1' and PA_FISCAL_CODE='#creditor_institution_code#'",
         "update_obj_id_1": "UPDATE table_name SET param = 'value' WHERE OBJ_ID IN ('4328', '4329')",
         "update_obj_id_2": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = '4328'",
-        "checkposition_resp": "SELECT columns FROM table_name WHERE NOTICE_ID = '302$iuv' AND TIPO_EVENTO = 'checkPosition' AND SOTTO_TIPO_EVENTO = 'RESP'"
+        "checkposition_resp": "SELECT columns FROM table_name WHERE NOTICE_ID = '302$iuv' AND TIPO_EVENTO = 'checkPosition' AND SOTTO_TIPO_EVENTO = 'RESP'",
+        "activatev2_resp": "SELECT columns FROM table_name WHERE NOTICE_ID = '302$iuv' AND TIPO_EVENTO = 'activatePaymentNoticeV2' AND SOTTO_TIPO_EVENTO = 'RESP'"
     },
     "sendPaymentResultV2": {
         "select_sprV2_old": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$ccp' AND TIPO_EVENTO = 'sendPaymentResult-v2' ORDER BY ID ASC",

@@ -163,13 +163,14 @@ Feature: semantic checks for checkPosition outcome OK
         Given the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
         And updates through the query update_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with INSERTED under macro NewMod1 on db nodo_online
     @runnable
     @newcheck
     Scenario: Code 200 OK 2 (part 2)
         Given the Code 200 OK 2 (part 1) scenario executed successfully
         And the checkPosition scenario executed successfully
-        And noticeNumber with 302$iuv in checkPosition
+        And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in checkPosition
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
