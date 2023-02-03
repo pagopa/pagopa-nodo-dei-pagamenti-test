@@ -2100,6 +2100,8 @@ def step_impl(context, value1, condition, value2):
         assert value1 < value2, f"{value1} >= {value2}"
     elif condition == 'not equal to':
         assert value1 != value2, f"{value1} = {value2}"
+    elif condition == 'containing':
+        assert value2 in value1, f"{value1} contains {value2}"
     else:
         assert False
 
