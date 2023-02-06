@@ -155,6 +155,7 @@ Feature: PAG-1976
     And expirationTime with 2000 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
+    And updates through the query update_activate of the table POSITION_PAYMENT the parameter FLAG_IO with Y under macro NewMod1 on db nodo_online
 
   @test
   Scenario: Test 1 posizione ancora pagabile (part 2)
@@ -174,6 +175,7 @@ Feature: PAG-1976
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     And save activatePaymentNotice response in activatePaymentNotice1
+    And updates through the query update_activate of the table POSITION_PAYMENT the parameter FLAG_IO with Y under macro NewMod1 on db nodo_online
 
   Scenario: Test 2 posizione non più pagabile (part 2)
     Given the Test 2 posizione non più pagabile (part 1) scenario executed successfully
@@ -183,6 +185,7 @@ Feature: PAG-1976
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
+    And updates through the query update_activate of the table POSITION_PAYMENT the parameter FLAG_IO with Y under macro NewMod1 on db nodo_online
 
   @test
   Scenario: Test 2 posizione non più pagabile (part 3)
