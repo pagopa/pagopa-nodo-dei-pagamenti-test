@@ -196,6 +196,35 @@ Feature: PAG-1976
       """
 
   ##########################################################################################
+  @prova
+  Scenario: No regression PPT_TOKEN_SCONOSCIUTO
+    Given the sendPaymentOutcome with unknown token request scenario executed successfully
+    And outcome with KO in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
+
+  ##########################################################################################
+
+  Scenario: No regression PPT_ESITO_GIA_ACQUISITO (part 1)
+    Given the activatePaymentNotice request scenario executed successfully
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+
+  Scenario: No regression PPT_ESITO_GIA_ACQUISITO (part 2)
+    Given the No regression PPT_ESITO_GIA_ACQUISITO (part 1) scenario executed successfully
+    And the sendPaymentOutcome request scenario executed successfully
+    And outcome with KO in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is OK of sendPaymentOutcome response
+  @prova
+  Scenario: No regression PPT_ESITO_GIA_ACQUISITO (part 3)
+    Given the No regression PPT_ESITO_GIA_ACQUISITO (part 2) scenario executed successfully
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
+
+  ##########################################################################################
 
   Scenario: Test 1 PPT_TOKEN_SCADUTO_KO (part 1)
     Given the activatePaymentNotice request scenario executed successfully
