@@ -49,7 +49,7 @@ export function RT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
   );
   
   console.debug("RT RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
 
    RT_Trend.add(res.timings.duration);
