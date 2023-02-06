@@ -73,7 +73,7 @@ return `
 
 export function Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, ccp) {
  
-  
+console.log(AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, ccp));
  const res = http.post(
 	 getBasePath(baseUrl, "nodoAttivaRPT"),
     AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, ccp),
@@ -83,7 +83,7 @@ export function Attiva(baseUrl,rndAnagPsp,rndAnagPa,iuv, ccp) {
   );
   
   console.debug("Attiva RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
   Attiva_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);

@@ -34,7 +34,7 @@ return `
 };
 
 export function Verifica(baseUrl,rndAnagPsp,rndAnagPa,iuv, auxDigit, valueToAssert) {
-//console.log(verificaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, auxDigit));
+console.log(verificaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, auxDigit));
  const res = http.post(
 		 getBasePath(baseUrl, "nodoVerificaRPT"),
     verificaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, auxDigit),

@@ -56,7 +56,7 @@ export function RPT_Carrello_1(baseUrl,rndAnagPsp,rndAnagPa,iuvs) {
   );
   
   console.debug("RPT_Carrello_1 RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
    RPT_Carrello_1_Trend.add(res.timings.duration);
    All_Trend.add(res.timings.duration);
