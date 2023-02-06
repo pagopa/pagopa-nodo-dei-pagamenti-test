@@ -196,7 +196,8 @@ Feature: PAG-1976
       """
 
   ##########################################################################################
-  @prova
+
+  @test
   Scenario: No regression PPT_TOKEN_SCONOSCIUTO
     Given the sendPaymentOutcome with unknown token request scenario executed successfully
     And outcome with KO in sendPaymentOutcome
@@ -217,7 +218,8 @@ Feature: PAG-1976
     And outcome with KO in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-  @prova
+    
+  @test
   Scenario: No regression PPT_ESITO_GIA_ACQUISITO (part 3)
     Given the No regression PPT_ESITO_GIA_ACQUISITO (part 2) scenario executed successfully
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
