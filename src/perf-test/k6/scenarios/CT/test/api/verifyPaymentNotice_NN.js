@@ -31,6 +31,8 @@ return `
 export function verifyPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idempotencyKey) {
  //console.debug("VERIFY="+noticeNmbr);
  
+ console.log(verifyReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr));
+ 
  const res = http.post(
 		 getBasePath(baseUrl, "verifyPaymentNotice"),
     verifyReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr),
@@ -40,7 +42,7 @@ export function verifyPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,i
   );
   
   console.debug("verifyPaymentNotice_NN RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
 
   verifyPaymentNotice_NN_Trend.add(res.timings.duration);

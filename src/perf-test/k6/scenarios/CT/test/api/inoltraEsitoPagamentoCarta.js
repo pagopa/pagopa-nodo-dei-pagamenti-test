@@ -51,7 +51,7 @@ export function inoltraEsitoPagamentoCarta(baseUrl,rndAnagPsp,paymentToken, fiel
   );
   
   console.debug("inoltraEsitoPagamentoCarta RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
   inoltraEsitoPagamentoCarta_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);

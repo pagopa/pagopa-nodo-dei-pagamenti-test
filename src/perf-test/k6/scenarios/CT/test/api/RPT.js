@@ -50,7 +50,7 @@ export function RPT(baseUrl,rndAnagPa,iuv,ccp) {
   );
   
   console.debug("RPT RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
    RPT_Trend.add(res.timings.duration);
    All_Trend.add(res.timings.duration);

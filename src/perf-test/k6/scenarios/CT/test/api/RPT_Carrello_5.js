@@ -83,7 +83,7 @@ export function RPT_Carrello_5(baseUrl,rndAnagPsp,rndAnagPa,iuvs) {
   );
   
   console.debug("RPT_Carrello_5 RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
 
 

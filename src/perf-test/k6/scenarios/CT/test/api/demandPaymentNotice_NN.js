@@ -44,7 +44,7 @@ export function demandPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,i
   );
   
   console.debug("demandPaymentNotice_NN RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
   
    demandPaymentNotice_NN_Trend.add(res.timings.duration);
    All_Trend.add(res.timings.duration);

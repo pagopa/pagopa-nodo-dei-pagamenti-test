@@ -61,7 +61,7 @@ export function sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken) {
   );
   
   console.debug("sendPaymentOutput RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
   sendPaymentOutput_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);

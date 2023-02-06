@@ -51,7 +51,7 @@ export function activatePaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr
   );
   
   console.debug("activatePaymentNotice_NN RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
   
   activatePaymentNotice_NN_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);

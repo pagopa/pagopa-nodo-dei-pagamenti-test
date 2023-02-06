@@ -51,6 +51,7 @@ return `
 export function sendPaymentOutput_NN(baseUrl,rndAnagPsp,paymentToken) {
  //console.debug("VERIFY="+noticeNmbr);
  
+ console.log(sendPaymentOutputReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken));
  const res = http.post(
 		 getBasePath(baseUrl, "sendPaymentOutcome"),
     sendPaymentOutputReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken),
@@ -60,7 +61,7 @@ export function sendPaymentOutput_NN(baseUrl,rndAnagPsp,paymentToken) {
   );
   
   console.debug("sendPaymentOutput_NN RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
   
    sendPaymentOutput_NN_Trend.add(res.timings.duration);
    All_Trend.add(res.timings.duration);

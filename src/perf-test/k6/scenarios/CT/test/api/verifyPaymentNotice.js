@@ -39,7 +39,7 @@ export function verifyPaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idem
   );
   
   console.debug("verifyPaymentNotice RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
   verifyPaymentNotice_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);

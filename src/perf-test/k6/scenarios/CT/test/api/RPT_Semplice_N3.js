@@ -58,7 +58,7 @@ export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorRefer
   );
   
   console.debug("RPT_Semplice_N3 RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
   
    RPT_Semplice_N3_Trend.add(res.timings.duration);
    All_Trend.add(res.timings.duration);

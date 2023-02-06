@@ -120,7 +120,7 @@ let body = `{\"paymentTokens\":[\"${paymentToken}\"],\"outcome\":\"${outcome}\",
   );
   
   console.debug("closePaymentReqBody RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
 
   closePayment_Trend.add(res.timings.duration);

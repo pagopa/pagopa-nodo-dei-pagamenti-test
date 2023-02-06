@@ -51,7 +51,7 @@ export function ActivateIOPayment(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,ide
   );
   
   console.debug("ActivateIOPayment RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
   ActivateIOPayment_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);

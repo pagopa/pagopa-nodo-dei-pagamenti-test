@@ -122,7 +122,7 @@ export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transacti
   );
   
   console.debug("closePayment RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
 
   closePayment_Trend.add(res.timings.duration);

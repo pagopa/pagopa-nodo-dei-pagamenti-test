@@ -70,7 +70,7 @@ export function RPT_Carrello_2(baseUrl,rndAnagPa,iuvs) {
   );
   
   console.debug("RPT_Carrello_2 RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
 
    RPT_Carrello_2_Trend.add(res.timings.duration);

@@ -104,7 +104,7 @@ export function inoltraEsitoPagamentoPaypal(baseUrl,rndAnagPsp,paymentToken,valu
   );
   
   console.debug("inoltraEsitoPagamentoPaypal RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
 
   inoltraEsitoPagamentoPaypal_Trend.add(res.timings.duration);

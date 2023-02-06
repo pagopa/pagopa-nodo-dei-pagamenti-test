@@ -17,7 +17,7 @@ export function nodoChiediAvanzamentoPagamento_Post(baseUrl,paymentToken) {
 	}
   );
   console.debug("nodoChiediAvanzamentoPagamento_Post RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
   nodoChiediAvanzamentoPagamento_Post_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);
 

@@ -16,7 +16,7 @@ export function nodoNotificaAnnullamento(baseUrl,paymentToken) {
 	}
   );
   console.debug("nodoNotificaAnnullamento RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
     nodoNotificaAnnullamento_Trend.add(res.timings.duration);
     All_Trend.add(res.timings.duration);
 

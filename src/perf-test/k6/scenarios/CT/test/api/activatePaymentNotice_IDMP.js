@@ -41,7 +41,7 @@ export function activatePaymentNotice_IDMP(baseUrl,rndAnagPsp,rndAnagPa,noticeNm
 	}
   );
   console.debug("activatePaymentNotice_IDMP RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
   activatePaymentNotice_IDMP_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);
