@@ -175,7 +175,6 @@ Feature: PAG-1976
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     And save activatePaymentNotice response in activatePaymentNotice1
-    And updates through the query update_activate of the table POSITION_PAYMENT the parameter FLAG_IO with Y under macro NewMod1 on db nodo_online
 
   Scenario: Test 2 posizione non più pagabile (part 2)
     Given the Test 2 posizione non più pagabile (part 1) scenario executed successfully
