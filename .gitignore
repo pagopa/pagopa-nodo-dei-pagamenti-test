@@ -132,4 +132,3 @@ venv
 report-nodo
 report/*
 reports
-*test*.sh
