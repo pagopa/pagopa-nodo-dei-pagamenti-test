@@ -13,7 +13,7 @@ Feature: PAG-2358
             <identificativoPSP>#psp_AGID#</identificativoPSP>
             <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_AGID#</identificativoCanale>
-            <password>$nodoVerificaRPT.password</password>
+            <password>#password#</password>
             <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
             <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
             <identificativoCanalePagamento>#canale_AGID_BBT#</identificativoCanalePagamento>
@@ -181,7 +181,7 @@ Feature: PAG-2358
             </soapenv:Header>
             <soapenv:Body>
             <ws:nodoInviaRPT>
-            <password>pwdpwdpwd</password>
+            <password>#password#</password>
             <identificativoPSP>#psp_AGID#</identificativoPSP>
             <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
