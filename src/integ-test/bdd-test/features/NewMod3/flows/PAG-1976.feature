@@ -297,6 +297,8 @@ Feature: PAG-1976
       </soapenv:Envelope>
       """
 
+  ##########################################################################################
+
   Scenario: Posizione ancora pagabile spov1 OK (part 1)
     Given the activatePaymentNotice request scenario executed successfully
     And expirationTime with 2000 in activatePaymentNotice
@@ -415,6 +417,8 @@ Feature: PAG-1976
   #   When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
   #   Then check outcome is KO of sendPaymentOutcome response
   #   And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
+
+  ##########################################################################################
 
   Scenario: Posizione ancora pagabile spov2 OK (part 1)
     Given the activatePaymentNotice request scenario executed successfully
