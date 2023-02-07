@@ -195,66 +195,134 @@ Feature: PAG-1976
       </soapenv:Envelope>
       """
 
-  ##########################################################################################
+  Scenario: sendPaymentOutcomeV2 request
+    Given initial XML sendPaymentOutcomeV2
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:sendPaymentOutcomeV2Request>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+      <password>#password#</password>
+      <paymentTokens>
+      <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
+      </paymentTokens>
+      <outcome>OK</outcome>
+      <!--Optional:-->
+      <details>
+      <paymentMethod>creditCard</paymentMethod>
+      <!--Optional:-->
+      <paymentChannel>app</paymentChannel>
+      <fee>2.00</fee>
+      <!--Optional:-->
+      <payer>
+      <uniqueIdentifier>
+      <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+      <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+      </uniqueIdentifier>
+      <fullName>name</fullName>
+      <!--Optional:-->
+      <streetName>street</streetName>
+      <!--Optional:-->
+      <civicNumber>civic</civicNumber>
+      <!--Optional:-->
+      <postalCode>postal</postalCode>
+      <!--Optional:-->
+      <city>city</city>
+      <!--Optional:-->
+      <stateProvinceRegion>state</stateProvinceRegion>
+      <!--Optional:-->
+      <country>IT</country>
+      <!--Optional:-->
+      <e-mail>prova@test.it</e-mail>
+      </payer>
+      <applicationDate>2021-12-12</applicationDate>
+      <transferDate>2021-12-11</transferDate>
+      </details>
+      </nod:sendPaymentOutcomeV2Request>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
 
-  @test
-  Scenario: No regression PPT_TOKEN_SCONOSCIUTO
-    Given the sendPaymentOutcome with unknown token request scenario executed successfully
-    And outcome with KO in sendPaymentOutcome
-    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
+  Scenario: sendPaymentOutcomeV2 with unknown token request
+    Given initial XML sendPaymentOutcomeV2
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:sendPaymentOutcomeV2Request>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+      <password>#password#</password>
+      </paymentTokens>
+      <paymentToken>token</paymentToken>
+      </paymentTokens>
+      <outcome>OK</outcome>
+      <!--Optional:-->
+      <details>
+      <paymentMethod>creditCard</paymentMethod>
+      <!--Optional:-->
+      <paymentChannel>app</paymentChannel>
+      <fee>2.00</fee>
+      <!--Optional:-->
+      <payer>
+      <uniqueIdentifier>
+      <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+      <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+      </uniqueIdentifier>
+      <fullName>name</fullName>
+      <!--Optional:-->
+      <streetName>street</streetName>
+      <!--Optional:-->
+      <civicNumber>civic</civicNumber>
+      <!--Optional:-->
+      <postalCode>postal</postalCode>
+      <!--Optional:-->
+      <city>city</city>
+      <!--Optional:-->
+      <stateProvinceRegion>state</stateProvinceRegion>
+      <!--Optional:-->
+      <country>IT</country>
+      <!--Optional:-->
+      <e-mail>prova@test.it</e-mail>
+      </payer>
+      <applicationDate>2021-12-12</applicationDate>
+      <transferDate>2021-12-11</transferDate>
+      </details>
+      </nod:sendPaymentOutcomeV2Request>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
 
-  ##########################################################################################
-
-  Scenario: No regression PPT_ESITO_GIA_ACQUISITO (part 1)
-    Given the activatePaymentNotice request scenario executed successfully
-    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice response
-
-  Scenario: No regression PPT_ESITO_GIA_ACQUISITO (part 2)
-    Given the No regression PPT_ESITO_GIA_ACQUISITO (part 1) scenario executed successfully
-    And the sendPaymentOutcome request scenario executed successfully
-    And outcome with KO in sendPaymentOutcome
-    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is OK of sendPaymentOutcome response
-    
-  @test
-  Scenario: No regression PPT_ESITO_GIA_ACQUISITO (part 3)
-    Given the No regression PPT_ESITO_GIA_ACQUISITO (part 2) scenario executed successfully
-    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
-
-  ##########################################################################################
-
-  Scenario: Test 1 PPT_TOKEN_SCADUTO_KO (part 1)
+  Scenario: Posizione ancora pagabile spov1 OK (part 1)
     Given the activatePaymentNotice request scenario executed successfully
     And expirationTime with 2000 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
   @test
-  Scenario: Test 1 PPT_TOKEN_SCADUTO_KO (part 2)
-    Given the Test 1 PPT_TOKEN_SCADUTO_KO (part 1) scenario executed successfully
+  Scenario: Posizione ancora pagabile spov1 OK (part 2)
+    Given the Posizione ancora pagabile spov1 OK (part 1) scenario executed successfully
     And the mod3CancelV2 scenario executed successfully
     And the sendPaymentOutcome request scenario executed successfully
-    And outcome with KO in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
   ##########################################################################################
 
-  Scenario: Test 2 PPT_TOKEN_SCADUTO_KO (part 1)
+  Scenario: Posizione non pagabile spov1 OK (part 1)
     Given the activatePaymentNotice request scenario executed successfully
     And expirationTime with 2000 in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     And save activatePaymentNotice response in activatePaymentNotice1
 
-  Scenario: Test 2 PPT_TOKEN_SCADUTO_KO (part 2)
-    Given the Test 2 PPT_TOKEN_SCADUTO_KO (part 1) scenario executed successfully
+  Scenario: Posizione non pagabile spov1 OK (part 2)
+    Given the Posizione non pagabile spov1 OK (part 1) scenario executed successfully
     And the mod3CancelV2 scenario executed successfully
     And expirationTime with None in activatePaymentNotice
     And random idempotencyKey having #psp# as idPSP in activatePaymentNotice
@@ -263,11 +331,87 @@ Feature: PAG-1976
     Then check outcome is OK of activatePaymentNotice response
 
   @test
-  Scenario: Test 2 PPT_TOKEN_SCADUTO_KO (part 3)
-    Given the Test 2 PPT_TOKEN_SCADUTO_KO (part 2) scenario executed successfully
+  Scenario: Posizione non pagabile spov1 OK (part 3)
+    Given the Posizione non pagabile spov1 OK (part 2) scenario executed successfully
     And the sendPaymentOutcome request scenario executed successfully
-    And outcome with KO in sendPaymentOutcome
     And paymentToken with $activatePaymentNotice1Response.paymentToken in sendPaymentOutcome
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
+    And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcome response
+
+  ##########################################################################################
+
+  @test
+  Scenario: Token sconosciuto spov1 KO
+    Given the sendPaymentOutcome with unknown token request scenario executed successfully
+    And outcome with KO in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
+
+  ##########################################################################################
+
+  Scenario: Esito già acquisito spov1 KO (part 1)
+    Given the activatePaymentNotice request scenario executed successfully
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+
+  Scenario: Esito già acquisito spov1 KO (part 2)
+    Given the Esito già acquisito spov1 KO (part 1) scenario executed successfully
+    And the sendPaymentOutcome request scenario executed successfully
+    And outcome with KO in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is OK of sendPaymentOutcome response
+
+  @test
+  Scenario: Esito già acquisito spov1 KO (part 3)
+    Given the Esito già acquisito spov1 KO (part 2) scenario executed successfully
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
+
+##########################################################################################
+
+# Scenario: Posizione ancora pagabile spov1 KO (part 1)
+#   Given the activatePaymentNotice request scenario executed successfully
+#   And expirationTime with 2000 in activatePaymentNotice
+#   When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+#   Then check outcome is OK of activatePaymentNotice response
+
+# @test
+# Scenario: Posizione ancora pagabile spov1 KO (part 2)
+#   Given the Posizione ancora pagabile spov1 KO (part 1) scenario executed successfully
+#   And the mod3CancelV2 scenario executed successfully
+#   And the sendPaymentOutcome request scenario executed successfully
+#   And outcome with KO in sendPaymentOutcome
+#   When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#   Then check outcome is KO of sendPaymentOutcome response
+#   And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
+
+##########################################################################################
+
+# Scenario: Posizione non pagabile spov1 KO (part 1)
+#   Given the activatePaymentNotice request scenario executed successfully
+#   And expirationTime with 2000 in activatePaymentNotice
+#   When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+#   Then check outcome is OK of activatePaymentNotice response
+#   And save activatePaymentNotice response in activatePaymentNotice1
+
+# Scenario: Posizione non pagabile spov1 KO (part 2)
+#   Given the Posizione non pagabile spov1 KO (part 1) scenario executed successfully
+#   And the mod3CancelV2 scenario executed successfully
+#   And expirationTime with None in activatePaymentNotice
+#   And random idempotencyKey having #psp# as idPSP in activatePaymentNotice
+#   And EC replies to nodo-dei-pagamenti with the paGetPayment
+#   When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+#   Then check outcome is OK of activatePaymentNotice response
+
+# @test
+# Scenario: Posizione non pagabile spov1 KO (part 3)
+#   Given the Posizione non pagabile spov1 KO (part 2) scenario executed successfully
+#   And the sendPaymentOutcome request scenario executed successfully
+#   And outcome with KO in sendPaymentOutcome
+#   And paymentToken with $activatePaymentNotice1Response.paymentToken in sendPaymentOutcome
+#   When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+#   Then check outcome is KO of sendPaymentOutcome response
+#   And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
