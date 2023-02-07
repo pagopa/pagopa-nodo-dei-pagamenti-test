@@ -19,7 +19,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_egov
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>90000000001</qrc:CF>
+            <qrc:CF>#creditor_institution_code#</qrc:CF>
             <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>$1iuv</qrc:CodIUV>
@@ -28,11 +28,31 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_egov
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML paaVerificaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <ws:paaVerificaRPTRisposta>
+                        <paaVerificaRPTRisposta>
+                            <fault>
+                            <faultCode>PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO</faultCode>
+                            <faultString>il servizio applicativo della stazione non è attivo</faultString>
+                            <id>#creditor_institution_code#</id>
+                            <description>servizio sconosciuto</description>
+                            </fault>
+                            <esito>KO</esito>
+                        </paaVerificaRPTRisposta>
+                    </ws:paaVerificaRPTRisposta>
+                </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When EC sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoVerificaRPT response
         And check faultCode is PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO of nodoVerificaRPT response
         
-    @midRunnable
+    @fix
     Scenario: Execute nodoAttivaRPT
         Given the Execute nodoVerificaRPT scenario executed successfully
         And initial XML nodoAttivaRPT
@@ -51,7 +71,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_egov
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>90000000001</qrc:CF>
+            <qrc:CF>#creditor_institution_code#</qrc:CF>
             <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>$1iuv</qrc:CodIUV>
@@ -63,6 +83,26 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_egov
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML paaAttivaRPT
+            """
+                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                <ws:paaAttivaRPTRisposta>
+                <paaAttivaRPTRisposta>
+                <fault>
+                <faultCode>PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO</faultCode>
+                <faultString>il servizio applicativo della stazione non è attivo</faultString>
+                <id>#creditor_institution_code#</id>
+                <description>servizio sconosciuto</description>
+                </fault>
+                <esito>KO</esito>
+                </paaAttivaRPTRisposta>
+                </ws:paaAttivaRPTRisposta>
+                </soapenv:Body>
+                </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When EC sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoAttivaRPT response
         And check faultCode is PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO of nodoAttivaRPT response

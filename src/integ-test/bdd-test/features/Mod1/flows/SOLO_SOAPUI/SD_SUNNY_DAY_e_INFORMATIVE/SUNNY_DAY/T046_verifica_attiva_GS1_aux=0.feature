@@ -19,7 +19,7 @@ Feature: T046_verifica_attiva_GS1_aux=0
             <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <bc:BarCode>
-            <bc:Gln>#creditor_institution_code#</bc:Gln>
+            <bc:Gln>#Gln#</bc:Gln>
             <bc:CodStazPA>01</bc:CodStazPA>
             <bc:AuxDigit>0</bc:AuxDigit>
             <bc:CodIUV>$1iuv</bc:CodIUV>
@@ -52,7 +52,7 @@ Feature: T046_verifica_attiva_GS1_aux=0
             <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <bc:BarCode>
-            <bc:Gln>#creditor_institution_code#</bc:Gln>
+            <bc:Gln>#Gln#</bc:Gln>
             <bc:CodStazPA>01</bc:CodStazPA>
             <bc:AuxDigit>0</bc:AuxDigit>
             <bc:CodIUV>$1iuv</bc:CodIUV>
