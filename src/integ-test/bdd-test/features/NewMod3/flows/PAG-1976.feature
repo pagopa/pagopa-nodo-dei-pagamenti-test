@@ -257,7 +257,7 @@ Feature: PAG-1976
       <idBrokerPSP>#psp#</idBrokerPSP>
       <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
       <password>#password#</password>
-      </paymentTokens>
+      <paymentTokens>
       <paymentToken>token</paymentToken>
       </paymentTokens>
       <outcome>OK</outcome>
