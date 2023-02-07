@@ -31,7 +31,7 @@ Feature: T049_verifica_attiva_GS1_aux=3
         When EC sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
 
-@fix
+@midRunnable
     Scenario: Execute nodoAttivaRPT
         Given the Execute nodoVerificaRPT scenario executed successfully
         And initial XML nodoAttivaRPT
