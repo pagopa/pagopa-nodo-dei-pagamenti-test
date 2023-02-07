@@ -23,7 +23,7 @@ Feature: PAG-2358
             <qrc:CF>#creditor_institution_code_old#</qrc:CF>
             <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
-            <qrc:CodIUV>$iuv</qrc:CodIUV>
+            <qrc:CodIUV>#iuv#</qrc:CodIUV>
             </qrc:QrCode>
             </codiceIdRPT>
             <datiPagamentoPSP>
@@ -148,7 +148,7 @@ Feature: PAG-2358
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>$ccp</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123451234512345678904</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
