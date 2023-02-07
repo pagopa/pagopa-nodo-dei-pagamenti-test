@@ -10,8 +10,8 @@ Feature: Copy of T042_verifica_attiva_QRcode_aux=0
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -105,42 +105,6 @@ Feature: Copy of T042_verifica_attiva_QRcode_aux=0
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML paaVerificaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaVerificaRPTRisposta>
-            <paaVerificaRPTRisposta>
-            <esito>OK</esito>
-            <datiPagamentoPA>
-            <importoSingoloVersamento>10.00</importoSingoloVersamento>
-            <ibanAccredito>IT96R0123454321000000012345</ibanAccredito>
-            <bicAccredito>BSCTCH22</bicAccredito>
-            <enteBeneficiario>
-            <pag:identificativoUnivocoBeneficiario>
-            <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
-            <pag:codiceIdentificativoUnivoco>#id_station_old#</pag:codiceIdentificativoUnivoco>
-            </pag:identificativoUnivocoBeneficiario>
-            <pag:denominazioneBeneficiario>f6</pag:denominazioneBeneficiario>
-            <pag:codiceUnitOperBeneficiario>r6</pag:codiceUnitOperBeneficiario>
-            <pag:denomUnitOperBeneficiario>yr</pag:denomUnitOperBeneficiario>
-            <pag:indirizzoBeneficiario>\"paaVerificaRPT\"</pag:indirizzoBeneficiario>
-            <pag:civicoBeneficiario>ut</pag:civicoBeneficiario>
-            <pag:capBeneficiario>jyr</pag:capBeneficiario>
-            <pag:localitaBeneficiario>yj</pag:localitaBeneficiario>
-            <pag:provinciaBeneficiario>h8</pag:provinciaBeneficiario>
-            <pag:nazioneBeneficiario>IT</pag:nazioneBeneficiario>
-            </enteBeneficiario>
-            <credenzialiPagatore>of8</credenzialiPagatore>
-            <causaleVersamento>paaVerificaRPT</causaleVersamento>
-            </datiPagamentoPA>
-            </paaVerificaRPTRisposta>
-            </ws:paaVerificaRPTRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When EC sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
 
