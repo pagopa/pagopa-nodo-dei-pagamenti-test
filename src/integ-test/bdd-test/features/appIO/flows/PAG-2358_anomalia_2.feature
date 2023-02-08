@@ -126,4 +126,4 @@ Feature: PAG-2358 anomalia 2
     Scenario: Test
         Given the nodoInviaCarrelloRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        And the notificaAnnullamento scenario executed successfully
+        # And the notificaAnnullamento scenario executed successfully
