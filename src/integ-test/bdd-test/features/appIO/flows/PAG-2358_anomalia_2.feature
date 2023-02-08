@@ -60,7 +60,7 @@ Feature: PAG-2358 anomalia 2
             </pay_i:enteBeneficiario>
             <pay_i:datiVersamento>
             <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
-            <pay_i:importoTotaleDaVersare>$nodoAttivaRPT.importoSingoloVersamento</pay_i:importoTotaleDaVersare>
+            <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>#ccp#</pay_i:codiceContestoPagamento>
@@ -68,7 +68,7 @@ Feature: PAG-2358 anomalia 2
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
             <pay_i:datiSingoloVersamento>
-            <pay_i:importoSingoloVersamento>$nodoAttivaRPT.importoSingoloVersamento</pay_i:importoSingoloVersamento>
+            <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
             <pay_i:ibanAccredito>IT96R0123454321000000012345</pay_i:ibanAccredito>
             <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
