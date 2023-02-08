@@ -204,7 +204,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_wpl02_checkPPP
     And replace canaleUsato content with WFESP_02_ila content
     And checks the value wpl02 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query ID_Serv_Plugin on db nodo_cfg under macro Mod1
 
-@bug
+@fix
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
     Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
     And initial XML pspInviaCarrelloRPTCarte
