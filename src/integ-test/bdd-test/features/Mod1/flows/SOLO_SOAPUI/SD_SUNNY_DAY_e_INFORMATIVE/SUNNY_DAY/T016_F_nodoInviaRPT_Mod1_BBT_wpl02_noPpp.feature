@@ -114,16 +114,18 @@ Feature: T016_F_nodoInviaRPT_Mod1_BBT_wpl02_noPpp
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-                <ws:pspInviaRPTResponse>
-                    <pspInviaRPTResponse>
-                        <fault>
-                            <faultCode>PPT_CANALE_ERRORE</faultCode>
-                            <faultString>errore restituito dal canale</faultString>
-                            <id>wrapper</id>
-                        </fault>
-                        <esito>KO</esito>
-                    </pspInviaRPTResponse>
-                </ws:pspInviaRPTResponse>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+            <listaErroriRPT>
+            <fault>
+            <faultCode>CANALE_SYSTEM_ERROR</faultCode>
+            <faultString>system error</faultString>
+            <id>#psp#</id>
+            </fault>
+            </listaErroriRPT>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
