@@ -149,9 +149,9 @@ Feature: Copy of T042_verifica_attiva_QRcode_aux=0
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
+            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>
@@ -159,9 +159,9 @@ Feature: Copy of T042_verifica_attiva_QRcode_aux=0
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
