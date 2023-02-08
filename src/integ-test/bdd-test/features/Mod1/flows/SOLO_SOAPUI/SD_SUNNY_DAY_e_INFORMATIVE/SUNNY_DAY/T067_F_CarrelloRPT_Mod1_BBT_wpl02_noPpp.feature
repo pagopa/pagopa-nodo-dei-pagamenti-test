@@ -100,9 +100,9 @@ Feature: T067_F_CarrelloRPT_Mod1_BBT_wpl02_noPpp
         <soapenv:Body>
             <ws:nodoInviaCarrelloRPT>
               <password>pwdpwdpwd</password>
-              <identificativoPSP>WFESP</identificativoPSP>
-              <identificativoIntermediarioPSP>WFESP</identificativoIntermediarioPSP>
-              <identificativoCanale>$canaleUsato</identificativoCanale>
+              <identificativoPSP>#psp#</identificativoPSP>
+              <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+              <identificativoCanale>#canale#</identificativoCanale>
               <listaRPT>
                   <elementoListaRPT>
                     <identificativoDominio>#creditor_institution_code#</identificativoDominio>
@@ -133,6 +133,6 @@ Feature: T067_F_CarrelloRPT_Mod1_BBT_wpl02_noPpp
         </soapenv:Body>
         </soapenv:Envelope>
         """
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+    And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
     When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_CANALE_ERRORE of nodoInviaCarrelloRPT response
