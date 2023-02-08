@@ -92,7 +92,7 @@ Feature: Copy of T042_verifica_attiva_QRcode_aux=0
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
+            <codiceContestoPagamento>$ccp</codiceContestoPagamento>
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
