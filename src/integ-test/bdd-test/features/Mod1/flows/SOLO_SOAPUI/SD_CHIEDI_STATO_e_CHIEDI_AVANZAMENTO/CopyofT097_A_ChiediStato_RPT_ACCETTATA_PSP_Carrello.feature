@@ -239,7 +239,7 @@ Feature: Copy of T097_A_ChiediStato_RPT_ACCETTATA_PSP_Carrello
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         
-    @midRunnable
+    @runnable
      Scenario: Execute nodoChiediStatoRPT2
         Given the Execute nodoChiediStatoRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT

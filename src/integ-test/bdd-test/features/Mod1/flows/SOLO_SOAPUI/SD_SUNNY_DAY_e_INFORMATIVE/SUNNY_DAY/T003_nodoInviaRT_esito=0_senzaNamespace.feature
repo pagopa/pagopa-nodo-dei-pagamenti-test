@@ -171,7 +171,7 @@ Feature: T003_nodoInviaRT_esito=0_senzaNamespace
             </RT>
             """
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT

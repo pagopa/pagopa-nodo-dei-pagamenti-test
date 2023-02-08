@@ -469,7 +469,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_TIMEOUT
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-@midRunnable
+@runnable
     Scenario: Execute nodoInviaRT2 (Phase 6)
         Given the Execute nodoInviaRT (Phase 5) scenario executed successfully
         And initial XML nodoInviaRT

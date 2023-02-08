@@ -3,7 +3,7 @@ Feature: Semantic checks for nodoInviaRT - KO
     Background:
         Given systems up
 
-    @midRunnable
+    @runnable
     Scenario Outline: Semantic check of nodoInviaRT
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
         And RPT generation
@@ -246,7 +246,7 @@ Feature: Semantic checks for nodoInviaRT - KO
             | RTSEM87 | pay_i:identificativoUnivocoVersamento | $1iuv+_01 | PPT_RPT_SCONOSCIUTA |
             | RTSEM11 | pay_i:tipoIdentificativoUnivoco       | F         | PPT_SINTASSI_XSD    |
 
-    @midRunnable
+    @runnable
     Scenario: Semantic check of nodoInviaRT- RTSEM90
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
         And RPT generation
@@ -486,7 +486,7 @@ Feature: Semantic checks for nodoInviaRT - KO
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_SEMANTICA of nodoInviaRT response
 
-    @midRunnable
+    @runnable
     Scenario: Semantic checks [RTSEM3]
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
         And initial XML RPT
@@ -980,7 +980,7 @@ Feature: Semantic checks for nodoInviaRT - KO
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @midRunnable
+    @runnable
     Scenario: Execute second nodoInviaRT (Phase 3) [RTSEM8]
         Given the Execute first nodoInviaRT (Phase 2) scenario executed successfully
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti

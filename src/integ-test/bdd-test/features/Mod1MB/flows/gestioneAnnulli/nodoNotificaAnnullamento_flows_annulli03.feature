@@ -242,7 +242,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_03]
       And wait 10 seconds for expiration
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
 
-@check
+@runnable
    Scenario: Trigger paInviaRT
       Given the Trigger annullamentoRptMaiRichiesteDaPm scenario executed successfully
       And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true

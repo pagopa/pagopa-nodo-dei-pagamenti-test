@@ -220,7 +220,7 @@ Feature: T145_carrello_bollo_mod2
         And check totalRows field exists in listaPSP response
         And check data field exists in listaPSP response
 
-    @midRunnable
+    @runnable
     Scenario: Execution Esito Mod2
         Given the Execute nodoChiediListaPSP - carte scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte

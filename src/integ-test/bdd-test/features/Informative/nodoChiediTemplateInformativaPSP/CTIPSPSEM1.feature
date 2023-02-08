@@ -2,7 +2,7 @@ Feature: Semantic checks KO for nodoChiediInformativaPA
     Background:
         Given systems up
     
-    @midRunnable
+    @runnable
     Scenario: Check CTIPSPSEM1 
     Given initial XML nodoChiediTemplateInformativaPSP
         """

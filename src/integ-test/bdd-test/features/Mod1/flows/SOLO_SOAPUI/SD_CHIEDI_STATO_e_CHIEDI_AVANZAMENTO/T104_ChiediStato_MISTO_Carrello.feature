@@ -485,7 +485,7 @@ Feature: T104_ChiediStato_MISTO_Carrello
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-    @midRunnable
+    @runnable
      Scenario: Execute nodoChiediStatoRPT2
         Given the Execute nodoChiediStatoRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT

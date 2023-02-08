@@ -52,7 +52,7 @@ Feature: Syntax checks for activateIOPaymentReq - KO
             </soapenv:Envelope>
             """
 
-    @check
+    @runnable
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
         Given <elem> with <value> in activateIOPayment
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
@@ -68,7 +68,7 @@ Feature: Syntax checks for activateIOPaymentReq - KO
             | fiscalCode                 | Empty | SIN_AIOPR_27 |
             | noticeNumber               | Empty | SIN_AIOPR_32 |
 
-    @check
+    @runnable
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
         Given <attribute> set <value> for <elem> in activateIOPayment
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
@@ -78,7 +78,7 @@ Feature: Syntax checks for activateIOPaymentReq - KO
             | elem             | attribute     | value                                     | soapUI test  |
             | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_AIOPR_01 |
 
-    @check
+    @runnable
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
         Given <elem> with <value> in activateIOPayment
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti

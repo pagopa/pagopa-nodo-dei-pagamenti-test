@@ -125,7 +125,7 @@ Feature: T016_D_nodoInviaRPT_Mod1_BBT_ProxyError502
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaRPT response
 
-@midRunnable
+@runnable
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML nodoChiediStatoRPT

@@ -253,7 +253,7 @@ Feature: RPT-RT bollo
       Then check esito is OK of nodoInviaRPT response
       And check redirect is 1 of nodoInviaRPT response
 
-@check
+@runnable
    Scenario: Execute nodoInviaRT
       Given the MB generation scenario executed successfully
       And initial XML nodoInviaRT

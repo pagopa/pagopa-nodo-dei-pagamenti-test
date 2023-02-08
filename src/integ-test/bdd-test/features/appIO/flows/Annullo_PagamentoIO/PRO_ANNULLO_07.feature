@@ -88,7 +88,7 @@ Feature: PRO_ANNULLO_07
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And restore initial configurations
     
-    @check
+    @runnable
     Scenario: Execute activateIOPayment1 (Phase 3) [PRO_ANNULLO_07]
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti

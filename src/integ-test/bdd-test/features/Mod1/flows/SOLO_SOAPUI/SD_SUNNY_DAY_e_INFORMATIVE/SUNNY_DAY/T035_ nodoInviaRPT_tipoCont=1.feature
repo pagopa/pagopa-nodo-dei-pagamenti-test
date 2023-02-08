@@ -82,7 +82,7 @@ Feature: T035_ nodoInviaRPT_tipoCont=1
             </pay_i:RPT>
             """
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT

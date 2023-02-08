@@ -82,7 +82,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             </pay_i:RPT>
             """
 
-    @midCheck
+    @runnable
     Scenario Outline: (phase 1) Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -134,7 +134,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             #| identificativoCanale                  | 60000000001_04                  | PPT_AUTORIZZAZIONE                 | IRPTSEM21.2 |
 
 
-    @midCheck
+    @runnable
     #IRPTSEM2
     Scenario: (phase 2) Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
@@ -165,7 +165,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
         When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of nodoInviaRPT response
 
-    @midCheck
+    @runnable
     #IRPTSEM4
     Scenario: (phase 2.1) Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
@@ -528,7 +528,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
         When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
 
-    @midCheck
+    @runnable
     Scenario: (phase 3) Execute nodoInviaRPT3 request
         Given the (phase 3) Execute nodoInviaRPT1 request scenario executed successfully
         And initial XML nodoInviaRPT
@@ -872,7 +872,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
         When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
 
-    @midCheck
+    @runnable
     Scenario: (phase 4) Execute nodoInviaRPT3 request
         Given the (phase 4) Execute nodoInviaRPT1 request scenario executed successfully
         And initial XML nodoInviaRPT
@@ -1344,7 +1344,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @midCheck
+    @runnable
     Scenario: (phase 5) Execute nodoInviaRPT3 request
         Given the (phase 5) Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoInviaRPT
@@ -1472,7 +1472,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             </pay_i:RPT>
             """
 
-    @midCheck
+    @runnable
     Scenario: (phase 6) Execute nodoInviaRPT request
         Given the (phase 6) RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -1503,7 +1503,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
         Then check faultCode is PPT_SEMANTICA of nodoInviaRPT response
 
 
-    @midCheck
+    @runnable
     #IRPTSEM20
     Scenario: (phase 7) Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
@@ -1553,7 +1553,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
         Then check esito is OK of nodoInviaRPT response
 
 
-    @midCheck
+    @runnable
     #IRPTSEM16
     Scenario: (phase 8) Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
@@ -1602,7 +1602,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
         Then check faultCode is PPT_CANALE_IRRAGGIUNGIBILE of nodoInviaRPT response
 
 
-    @midCheck
+    @runnable
     #IRPTSEM17
     Scenario: (phase 9) Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
@@ -1730,7 +1730,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             </pay_i:RPT>
             """
 
-    @midCheck
+    @runnable
     Scenario: (phase 10) Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT

@@ -32,7 +32,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_spcCoop2
         Then check esito is KO of nodoVerificaRPT response
         And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of nodoVerificaRPT response
         
-@midRunnable
+@runnable
     Scenario: Execute nodoAttivaRPT
         Given the Execute nodoVerificaRPT scenario executed successfully
         And initial XML nodoAttivaRPT

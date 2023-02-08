@@ -227,7 +227,7 @@ Feature: T101_B_chiediStato_RT_ACCETTATA_PA_Annullamento
         When job paInviaRt triggered after 5 seconds
         And wait 50 seconds for expiration
     
-@midRunnable
+@runnable
     Scenario: Execute nodoChiediStatoRPT
         Given the Execute job paInviaRt scenario executed successfully
         And initial XML nodoChiediStatoRPT

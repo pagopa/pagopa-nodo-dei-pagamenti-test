@@ -4,7 +4,7 @@ Feature: T001_CarrelloRPT_2RPT_pagatore_versante
     Background:
         Given systems up
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given RPT generation
             """

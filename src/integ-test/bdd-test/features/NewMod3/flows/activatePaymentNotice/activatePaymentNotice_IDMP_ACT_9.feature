@@ -32,7 +32,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @check
+  @runnable
   Scenario: Execute activatePaymentNotice1 request
     Given the Execute activatePaymentNotice request scenario executed successfully
     And PSP waits 4 seconds for expiration

@@ -3,7 +3,7 @@ Feature: T195_ChiediNumeroAvviso_targa_senzaRegione
     Background:
         Given systems up
 
-@midRunnable
+@runnable
     Scenario: Execute nodoChiediNumeroAvviso
         Given initial XML nodoChiediNumeroAvviso
         """

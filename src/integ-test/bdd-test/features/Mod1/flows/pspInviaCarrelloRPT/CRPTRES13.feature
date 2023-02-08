@@ -82,7 +82,7 @@ Feature: process tests for pspInviaCarrelloRPT[CRPTRES13]
             </pay_i:RPT>
             """
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML pspInviaCarrelloRPT

@@ -3,7 +3,7 @@ Feature: T020_nodoInviaRPT_Mod3_PO_idPsp1_noPpp
     Background:
         Given systems up
     
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given replace canaleUsato content with 60000000001_04 content
         And checks the value idPsp1 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query chekPlugin on db nodo_cfg under macro Mod1

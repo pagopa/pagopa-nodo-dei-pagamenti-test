@@ -154,7 +154,7 @@ Scenario: Execute second sendPaymentOutcome
     And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_psp_1 on db nodo_online under macro NewMod3
     And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_psp_2 on db nodo_online under macro NewMod3
 
-@check  
+@runnable  
 Scenario: Execute third sendPaymentOutcome
     Given the Execute second sendPaymentOutcome scenario executed successfully
     And saving sendPaymentOutcome2 request in sendPaymentOutcome

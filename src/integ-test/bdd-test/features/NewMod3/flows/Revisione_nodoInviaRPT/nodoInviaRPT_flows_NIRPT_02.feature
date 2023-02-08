@@ -164,7 +164,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_02]
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @check
+    @runnable
     # Payment Outcome Phase outcome OK
     Scenario: Execute sendPaymentOutcome request
         Given the Excecute nodoInviaRPT scenario executed successfully

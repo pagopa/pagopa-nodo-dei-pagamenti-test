@@ -281,7 +281,7 @@ Feature: CAF_ChiediAvanzamento_forzata per stato RT_ACCETTATA_PA
         And replace 1ccp content with CCD01 content
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
 
-@midRunnable
+@runnable
     Scenario: Execute nodoChiediStatoRPT
         Given the execution nodoInviaRT scenario executed successfully
         And initial XML nodoChiediStatoRPT

@@ -2,7 +2,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
     Background:
         Given systems up
 
-@midRunnable
+@runnable
     Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error 
     Given initial XML nodoAttivaRPT
         """

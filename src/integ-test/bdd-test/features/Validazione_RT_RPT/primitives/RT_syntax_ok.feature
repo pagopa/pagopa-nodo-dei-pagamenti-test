@@ -123,7 +123,7 @@ Feature: Syntax checks for RT - OK
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
 
-  @midRunnable
+  @runnable
   Scenario Outline: Check OK on None RT tag
     Given initial xml RT
       """
@@ -276,7 +276,7 @@ Feature: Syntax checks for RT - OK
       | RTSIN140.1 | pay_i:e-mailPagatore                    | None      |
       | RTSIN169.1 | pay_i:esitoSingoloPagamento             | None      |
 
-  @midRunnable
+  @runnable
   Scenario: Check OK on None RT with MB [RTSIN190.1]
     Given MB generation
       """

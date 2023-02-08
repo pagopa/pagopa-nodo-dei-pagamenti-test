@@ -232,7 +232,7 @@ Feature: process tests for retryAtokenScaduto
     And Select and Update RT for Test retry_PAold with causale versamento respIrr
     And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
 
-  @check
+  @runnable
   Scenario: Execute paInviaRT [retry_PaOld_10]
     Given the check position_payment_status scenario executed successfully
     When job paInviaRt triggered after 5 seconds

@@ -3,7 +3,7 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni_36caratteri
     Background:
         Given systems up
 
-@midRunnable
+@runnable
     Scenario: RPT generation
         Given RPT1 generation
             """

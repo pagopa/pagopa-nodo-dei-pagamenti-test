@@ -631,7 +631,7 @@ Feature: T122_O_ChiediInformazioniPagamento_CarrelloRPT_Bollo_IBAN
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-@midRunnable
+@runnable
     Scenario: Execute nodoInviaRT2
         Given the Execute nodoInviaRT1 scenario executed successfully
         And initial XML paaInviaRT

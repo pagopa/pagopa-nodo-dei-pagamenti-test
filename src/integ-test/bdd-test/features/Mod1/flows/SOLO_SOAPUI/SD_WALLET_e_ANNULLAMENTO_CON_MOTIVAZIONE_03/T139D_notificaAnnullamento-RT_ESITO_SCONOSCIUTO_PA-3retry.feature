@@ -138,7 +138,7 @@ Feature: T139C_notificaAnnullamento - RT_RIFIUTATA_PA -> noRetry
         When job paInviaRt triggered after 20 seconds
         Then wait 3 seconds for expiration
 
-  @midRunnable
+  @runnable
    Scenario: Execute nodoChiediStatoRPT
         Given the Execute paInviaRT job scenario executed successfully
         And wait 30 seconds for expiration

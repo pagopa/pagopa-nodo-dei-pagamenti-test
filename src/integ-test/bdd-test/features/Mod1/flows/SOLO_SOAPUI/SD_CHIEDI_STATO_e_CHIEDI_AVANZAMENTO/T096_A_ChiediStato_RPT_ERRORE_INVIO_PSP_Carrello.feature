@@ -249,7 +249,7 @@ Feature: T096_A_ChiediStato_RPT_ERRORE_INVIO_PSP_Carrello
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ERRORE_INVIO_A_PSP of nodoChiediStatoRPT response
 
-    @midRunnable
+    @runnable
     Scenario: Check DB
         Given the Execute nodoChiediStatoRPT2 scenario executed successfully
         # check STATI_RPT table

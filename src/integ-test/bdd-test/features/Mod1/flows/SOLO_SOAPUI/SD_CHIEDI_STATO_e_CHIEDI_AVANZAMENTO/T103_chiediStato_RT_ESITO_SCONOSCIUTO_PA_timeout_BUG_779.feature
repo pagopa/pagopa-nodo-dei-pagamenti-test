@@ -314,7 +314,7 @@ Scenario: execution nodoInviaRT1
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
     
-@midRunnable
+@runnable
     Scenario: Execute nodoChiediCopiaRT
         Given the execution nodoInviaRT1 scenario executed successfully
         And initial XML nodoChiediCopiaRT

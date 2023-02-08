@@ -215,7 +215,7 @@ Feature: T010_nodoInviaRT_istAttestante=B
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRT 
         Given the Execute nodoInviaRPT request scenario executed successfully
         And initial XML nodoInviaRT

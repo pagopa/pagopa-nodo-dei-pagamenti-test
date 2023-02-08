@@ -230,7 +230,7 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
         When job paInviaRt triggered after 10 seconds
         Then wait 130 seconds for expiration
 
-@check
+@runnable
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute paInviaRT job scenario executed successfully
         And initial XML nodoChiediStatoRPT

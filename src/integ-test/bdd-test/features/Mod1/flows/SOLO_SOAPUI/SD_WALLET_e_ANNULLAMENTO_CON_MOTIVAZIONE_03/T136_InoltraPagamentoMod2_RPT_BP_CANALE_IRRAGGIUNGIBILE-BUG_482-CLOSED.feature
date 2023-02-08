@@ -251,7 +251,7 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_CANALE_IRRAGGIUNGIBILE - BUG_482 - CLO
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is KO of avanzamentoPagamento response
 
-  @midRunnable
+  @runnable
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
     And initial XML nodoInviaRT

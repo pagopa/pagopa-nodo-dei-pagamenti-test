@@ -156,7 +156,7 @@ Feature: T092_ChiediStato_RPT_RIFIUTATA_NODO
         Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRPT
         Given the Execute nodoChiediStatoRPT scenario executed successfully
         And initial XML nodoInviaRPT

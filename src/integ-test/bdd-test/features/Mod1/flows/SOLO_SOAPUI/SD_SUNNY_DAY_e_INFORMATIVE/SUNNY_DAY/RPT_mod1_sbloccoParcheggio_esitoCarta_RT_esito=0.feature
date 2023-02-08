@@ -246,7 +246,7 @@ Feature: RPT_mod1_sbloccoParcheggio_esitoCarta_RT_esito=0
         And check esito is OK of inoltroEsito/carta response 
 
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRT (phase 3)
         Given the Execute nodoInoltraEsitoPagamentoCarta (phase 2) scenario executed successfully
         And initial XML nodoInviaRT

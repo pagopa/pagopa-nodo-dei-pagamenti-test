@@ -168,7 +168,7 @@ Feature: process tests for nodoInviaRT[IRTSIN]
             </pay_i:RPT>
             """
 
-    @midRunnable
+    @runnable
     Scenario Outline: Execute nodoInviaRT (Phase 2)
         Given the RT generation and RPT generation (Phase 1) scenario executed successfully
         And initial XML nodoInviaRT
@@ -197,7 +197,7 @@ Feature: process tests for nodoInviaRT[IRTSIN]
             | elem             | attribute     | value                                     | soapUI test |
             | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | IRTSIN1     |
 
-    @midRunnable
+    @runnable
     Scenario Outline: Execute nodoInviaRT (Phase 2_1)
         Given the RT generation and RPT generation (Phase 1) scenario executed successfully
         And initial XML nodoInviaRT
@@ -252,7 +252,7 @@ Feature: process tests for nodoInviaRT[IRTSIN]
             | rt                              | Empty                                | PPT_SINTASSI_XSD      | IRTSIN29    |
 
 
-    @midRunnable
+    @runnable
     Scenario Outline: Execute nodoInviaRPT and nodoInviaRT (Phase 3)
         Given the RT generation and RPT generation (Phase 1) scenario executed successfully
         And initial XML nodoInviaRPT
@@ -307,7 +307,7 @@ Feature: process tests for nodoInviaRT[IRTSIN]
             | tipoFirma | None     | IRTSIN26    |
             | tipoFirma | 6        | IRTSIN27    |
 
-    @midRunnable
+    @runnable
     #IRTSIN27.1
     Scenario: Execute nodoInviaRPT and nodoInviaRT (Phase 3_1)
         Given the RT generation and RPT generation (Phase 1) scenario executed successfully
@@ -358,7 +358,7 @@ Feature: process tests for nodoInviaRT[IRTSIN]
         And PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @midRunnable
+    @runnable
     #IRTSIN30
     Scenario: Execute nodoInviaRPT and nodoInviaRT (Phase 3_2)
         Given the RT generation and RPT generation (Phase 1) scenario executed successfully
@@ -491,7 +491,7 @@ Feature: process tests for nodoInviaRT[IRTSIN]
         And PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaRT response
 
-    @midRunnable
+    @runnable
     #IRTSIN32
     Scenario: Execute nodoInviaRPT and nodoInviaRT (Phase 4)
         Given the RT generation and RPT generation (Phase 1) scenario executed successfully
@@ -541,7 +541,7 @@ Feature: process tests for nodoInviaRT[IRTSIN]
         And PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @midRunnable
+    @runnable
     #IRTSIN33
     Scenario: Execute nodoInviaRPT and nodoInviaRT (Phase 4_1)
         Given the RT generation and RPT generation (Phase 1) scenario executed successfully
@@ -592,7 +592,7 @@ Feature: process tests for nodoInviaRT[IRTSIN]
         And PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaRT response
 
-    @midRunnable
+    @runnable
     #IRTSIN34
     Scenario: Execute nodoInviaRPT and nodoInviaRT (Phase 4_2)
         Given the RT generation and RPT generation (Phase 1) scenario executed successfully
@@ -643,7 +643,7 @@ Feature: process tests for nodoInviaRT[IRTSIN]
         And PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaRT response
 
-    @midRunnable
+    @runnable
     #IRTSIN35
     Scenario: Execute nodoInviaRPT and nodoInviaRT (Phase 4_3)
         Given the RT generation and RPT generation (Phase 1) scenario executed successfully
@@ -694,7 +694,7 @@ Feature: process tests for nodoInviaRT[IRTSIN]
         And PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @midRunnable
+    @runnable
     #IRTSIN36
     Scenario: Execute nodoInviaRPT and nodoInviaRT (Phase 4_4)
         Given the RT generation and RPT generation (Phase 1) scenario executed successfully
@@ -745,7 +745,7 @@ Feature: process tests for nodoInviaRT[IRTSIN]
         And PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaRT response
 
-    @midRunnable
+    @runnable
     #IRTSIN31
     Scenario: Execute nodoInviaRT (Phase 5)
         Given RT2 generation

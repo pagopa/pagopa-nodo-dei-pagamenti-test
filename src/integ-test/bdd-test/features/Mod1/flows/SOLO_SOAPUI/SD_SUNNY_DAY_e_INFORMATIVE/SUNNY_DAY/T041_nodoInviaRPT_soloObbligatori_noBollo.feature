@@ -3,7 +3,7 @@ Feature: T041_nodoInviaRPT_soloObbligatori_noBollo
     Background:
         Given systems up
 
-@midRunnable
+@runnable
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given RPT1 generation
             """

@@ -83,7 +83,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - same outcome - ok [SEM_SPO_
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-@check
+@runnable
   # SendPaymentOutcomeReq phase 2
   Scenario: Execute a new sendPaymentOutcome request
     Given the Execute a sendPaymentOutcome request scenario executed successfully

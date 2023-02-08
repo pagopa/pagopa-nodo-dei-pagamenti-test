@@ -4,7 +4,7 @@ Feature: Flow checks Bollo 7 -12
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
     
-    @midRunnable
+    @runnable
     Scenario: Check faultCode PPT_SEMANTICA error on Importo diffrent value between MB and RT [Bollo_7]
       Given MB generation
         """
@@ -292,7 +292,7 @@ Feature: Flow checks Bollo 7 -12
       And check faultCode is PPT_SEMANTICA of nodoInviaRT response
 
 
-    @midRunnable
+    @runnable
     Scenario Outline: Check faultCode PPT_SEMANTICA error on Bollo_8-12
       Given initial xml RPT
         """

@@ -430,7 +430,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_timeout_RPT]
         Then check rt field exists in nodoChiediCopiaRT response
         And check ppt:nodoChiediCopiaRTRisposta field exists in nodoChiediCopiaRT response
 
-    @check
+    @runnable
     Scenario: Excecute nodoChiediCopiaRT2
         Given the Excecute nodoChiediCopiaRT scenario executed successfully
         And initial XML nodoChiediCopiaRT

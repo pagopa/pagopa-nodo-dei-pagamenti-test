@@ -304,7 +304,7 @@ Feature: T094_B_ChiediStato_RPT_RIFIUTATA_PSP_sbloccoParcheggio
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoChiediStatoRPT1 scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

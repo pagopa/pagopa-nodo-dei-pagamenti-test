@@ -249,7 +249,7 @@ Feature: T128_InoltraPagamentoMod1_RPT_MYBK_web_senzaBuyerBank
     And check esito field exists in avanzamentoPagamento response
     And check esito is PARKED of avanzamentoPagamento response
 
-@midRunnable
+@runnable
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
     And initial XML nodoInviaRT

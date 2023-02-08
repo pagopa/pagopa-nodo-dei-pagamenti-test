@@ -223,7 +223,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_wpl02_checkPPP
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-    @midRunnable
+    @runnable
     Scenario: Execute inoltroEsito/mod1 (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         When PSP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti

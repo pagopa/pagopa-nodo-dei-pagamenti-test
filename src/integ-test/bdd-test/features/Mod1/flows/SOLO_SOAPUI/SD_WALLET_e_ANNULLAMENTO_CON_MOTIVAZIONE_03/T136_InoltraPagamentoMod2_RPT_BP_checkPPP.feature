@@ -262,7 +262,7 @@ Feature: T136_InoltraPagamentoMod2_RPT_BP_checkPPP
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And checks esito contains OK of avanzamentoPagamento response
 
-  @midRunnable
+  @runnable
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediStatoRPT request scenario executed successfully
     And initial XML nodoInviaRT

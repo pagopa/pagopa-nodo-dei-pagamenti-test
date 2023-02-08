@@ -4,7 +4,7 @@ Feature: Semantic checks for nodoInviaRT - OK
         Given systems up
         #And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
 
-    @midRunnable
+    @runnable
     Scenario Outline: Semantic check of nodoInviaRT
         Given RPT generation
             """
@@ -305,7 +305,7 @@ Feature: Semantic checks for nodoInviaRT - OK
             | RTSEM93 | pay_i:datiSpecificiRiscossione          | 1/def                                   |
             #| RTSEM7  | pay_i:identificativoDominio             | None
 
-    @midRunnable
+    @runnable
     Scenario: Semantic checks of nodoInviaRT [RTSEM91]
         Given RPT generation
             """
@@ -544,7 +544,7 @@ Feature: Semantic checks for nodoInviaRT - OK
         Then check esito is OK of nodoInviaRPT response
         And check esito is OK of nodoInviaRT response
 
-    @midRunnable
+    @runnable
     #SULL'EXCEL DA PPT_SEMANTICA MENTRE SU SOAPUI OK
     Scenario Outline: Semantic checks of nodoInviaRT
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
@@ -800,7 +800,7 @@ Feature: Semantic checks for nodoInviaRT - OK
             | pay_i:e-mailPagatore    | RTSEM85 |
 
     #[RTSEM94]
-    @midRunnable
+    @runnable
     Scenario: Semantic checks of nodoInviaRT [RTSEM94]
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
         And initial XML RPT
@@ -1038,7 +1038,7 @@ Feature: Semantic checks for nodoInviaRT - OK
         Then check esito is OK of nodoInviaRPT response
         And check esito is OK of nodoInviaRT response
 
-    @midRunnable
+    @runnable
     Scenario: Semantic checks of nodoInviaRT [RTSEM89]
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
         And initial XML RPT
@@ -1296,7 +1296,7 @@ Feature: Semantic checks for nodoInviaRT - OK
         Then check esito is OK of nodoInviaRPT response
         And check esito is OK of nodoInviaRT response
 
-    @midRunnable
+    @runnable
     Scenario Outline: Semantic check of nodoInviaRPT
         Given initial xml RPT
             """

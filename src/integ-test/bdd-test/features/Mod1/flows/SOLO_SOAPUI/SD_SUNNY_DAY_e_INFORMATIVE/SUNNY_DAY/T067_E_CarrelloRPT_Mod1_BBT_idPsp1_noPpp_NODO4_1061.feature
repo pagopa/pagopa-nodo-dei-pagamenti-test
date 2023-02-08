@@ -3,7 +3,7 @@ Feature: T067_E_CarrelloRPT_Mod1_BBT_idPsp1_noPpp_NODO4_1061
     Background:
         Given systems up
 
-@midRunnable
+@runnable
     Scenario: RPT generation
         Given RPT1 generation
             """

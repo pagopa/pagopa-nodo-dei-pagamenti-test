@@ -426,7 +426,7 @@ Feature: T101_C_chiediStato_RT_ACCETTATA_PA_Carrello_Annullamento
         And checks stato contains RT_INVIATA_PA of nodoChiediStatoRPT response
         #And checks stato contains RPT_ANNULLATA_WISP of nodoChiediStatoRPT response
 
-    @midRunnable
+    @runnable
      Scenario: Execute nodoChiediStatoRPT2
         Given the Execute nodoChiediStatoRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT

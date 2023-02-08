@@ -4,7 +4,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
       Given systems up
 
 
-@check
+@runnable
    # [annulli_06]
    Scenario: RPT generation
       Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
@@ -440,7 +440,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_06]
          </pay_i:RPT>
          """
 
-@check
+@runnable
    Scenario: Execute nodoInviaCarrelloRPT request
       Given the Generation of two more RPT scenario executed successfully
       And initial XML paaInviaRT

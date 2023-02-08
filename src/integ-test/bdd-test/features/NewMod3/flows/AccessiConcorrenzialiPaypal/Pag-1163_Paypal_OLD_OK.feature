@@ -238,7 +238,7 @@ Feature: Pag-1163_Paypal_OLD_OK
       And check enteBeneficiario field exists in informazioniPagamento response
       And wait 5 seconds for expiration
       
-   @check
+   @runnable
    Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome error on old PA
       Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
       And initial XML sendPaymentOutcome

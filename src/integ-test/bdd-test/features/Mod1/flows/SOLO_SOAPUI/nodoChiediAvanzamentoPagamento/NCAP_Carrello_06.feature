@@ -149,7 +149,7 @@ Feature: NCAP
         And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
         And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoChiediAvanzamentoPagamento
         Given the RPT generation scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti

@@ -3,7 +3,7 @@ Feature: T017_nodoInviaRPT_Mod1_BP
     Background:
         Given systems up
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given RPT1 generation
             """
