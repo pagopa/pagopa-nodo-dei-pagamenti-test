@@ -1,4 +1,4 @@
-Feature: PAG-2358 anomalia 2
+Feature: PAG-2358 anomalia 2 part 1
 
     Background:
         Given systems up
@@ -118,12 +118,7 @@ Feature: PAG-2358 anomalia 2
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-    Scenario: notificaAnnullamento
-        When WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of notificaAnnullamento response is 200
-
     @bug
     Scenario: Test
         Given the nodoInviaCarrelloRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
-        # And the notificaAnnullamento scenario executed successfully
