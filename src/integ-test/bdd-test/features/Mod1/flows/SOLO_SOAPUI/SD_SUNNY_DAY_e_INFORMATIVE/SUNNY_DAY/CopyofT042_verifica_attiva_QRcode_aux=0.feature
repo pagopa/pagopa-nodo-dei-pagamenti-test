@@ -92,11 +92,11 @@ Feature: Copy of T042_verifica_attiva_QRcode_aux=0
             <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <password>pwdpwdpwd</password>
-            <codiceContestoPagamento>$ccp</codiceContestoPagamento>
+            <codiceContestoPagamento>#ccp#</codiceContestoPagamento>
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>66666666666</qrc:CF>
+            <qrc:CF>#creditor_institution_code#</qrc:CF>
             <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>$1iuv</qrc:CodIUV>
@@ -141,7 +141,7 @@ Feature: Copy of T042_verifica_attiva_QRcode_aux=0
         When EC sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
 
-    @fix
+    @bug
     Scenario: Execute nodoInviaRPT
         Given the Execute nodoAttivaRPT scenario executed successfully
         And initial XML nodoInviaRPT
