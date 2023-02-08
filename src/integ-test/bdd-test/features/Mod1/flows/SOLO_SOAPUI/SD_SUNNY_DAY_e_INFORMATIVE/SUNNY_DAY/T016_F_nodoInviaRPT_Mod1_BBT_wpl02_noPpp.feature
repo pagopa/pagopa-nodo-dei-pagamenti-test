@@ -1,4 +1,4 @@
-Feature: T016_E_nodoInviaRPT_Mod1_BBT_idPsp1_noPpp
+Feature: T016_F_nodoInviaRPT_Mod1_BBT_wpl02_noPpp
 
     Background:
         Given systems up
