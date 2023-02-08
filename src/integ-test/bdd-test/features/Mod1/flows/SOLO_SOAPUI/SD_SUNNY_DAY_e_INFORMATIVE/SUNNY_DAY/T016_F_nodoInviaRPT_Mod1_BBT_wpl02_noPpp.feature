@@ -100,9 +100,9 @@ Feature: T016_E_nodoInviaRPT_Mod1_BBT_idPsp1_noPpp
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>WFESP</identificativoPSP>
-            <identificativoIntermediarioPSP>WFESP</identificativoIntermediarioPSP>
-            <identificativoCanale>WFESP_02_ila</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
