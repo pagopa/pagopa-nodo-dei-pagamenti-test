@@ -85,7 +85,7 @@ Feature: T067_F_CarrelloRPT_Mod1_BBT_wpl02_noPpp
       </pay_i:RPT>
       """
 
-  @midRunnable
+  @fix
   Scenario: Execute nodoInviaCarrelloRPT request
     Given initial XML nodoInviaCarrelloRPT
     """

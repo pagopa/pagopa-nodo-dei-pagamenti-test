@@ -32,7 +32,7 @@ Feature: T047_verifica_attiva_GS1_aux=1
         Then check esito is OK of nodoVerificaRPT response
 
 
-@midRunnable
+@fix
     Scenario: Execute nodoAttivaRPT
         Given the Execute nodoVerificaRPT scenario executed successfully
         And initial XML nodoAttivaRPT

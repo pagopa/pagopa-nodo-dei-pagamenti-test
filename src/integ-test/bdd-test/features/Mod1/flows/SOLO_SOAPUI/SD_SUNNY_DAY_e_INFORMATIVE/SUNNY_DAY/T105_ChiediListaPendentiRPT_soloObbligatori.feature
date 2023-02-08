@@ -2,7 +2,7 @@ Feature: T105_ChiediListaPendentiRPT_soloObbligatori
    Background:
         Given systems up
 
-@midRunnable        
+@fix        
     Scenario: Execute nodoChiediListaPendentiRPT request
         Given initial XML nodoChiediListaPendentiRPT
         """

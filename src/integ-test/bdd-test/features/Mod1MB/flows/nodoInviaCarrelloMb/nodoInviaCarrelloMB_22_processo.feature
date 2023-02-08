@@ -207,7 +207,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_22]
         And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS the parameter STATUS = 'PAID', with where condition NOTICE_ID = '$noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
         And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS = 'PAID', with where condition NOTICE_ID = '$noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
 
-    @check
+    @fix
     Scenario: Execute nodoInviaCarrello (Phase 2)
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And generate 2 cart with PA #creditor_institution_code# and notice number $1noticeNumber

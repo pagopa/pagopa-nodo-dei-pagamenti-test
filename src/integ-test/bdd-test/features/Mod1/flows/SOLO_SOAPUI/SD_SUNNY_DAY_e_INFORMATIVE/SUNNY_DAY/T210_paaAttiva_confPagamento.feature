@@ -3,7 +3,7 @@ Feature: T210_paaAttiva_confPagamento
     Background:
         Given systems up
 
-@midRunnable
+@fix
     Scenario: Execute nodoAttivaRPT
         Given generate 1 notice number and iuv with aux digit 1, segregation code NA and application code NA
         And initial XML nodoAttivaRPT
@@ -20,7 +20,7 @@ Feature: T210_paaAttiva_confPagamento
                     <identificativoIntermediarioPSPPagamento>#psp#</identificativoIntermediarioPSPPagamento>
                     <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
                     <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
-                    <codiceIdRPT><bc:BarCode>  <bc:Gln>9000000000001</bc:Gln>  <bc:AuxDigit>1</bc:AuxDigit>  <bc:CodIUV>$1iuv</bc:CodIUV> </bc:BarCode></codiceIdRPT>
+                    <codiceIdRPT><bc:BarCode>  <bc:Gln>#Gln#</bc:Gln>  <bc:AuxDigit>1</bc:AuxDigit>  <bc:CodIUV>$1iuv</bc:CodIUV> </bc:BarCode></codiceIdRPT>
                     <datiPagamentoPSP>
                         <importoSingoloVersamento>10.00</importoSingoloVersamento>
                         <!--Optional:-->

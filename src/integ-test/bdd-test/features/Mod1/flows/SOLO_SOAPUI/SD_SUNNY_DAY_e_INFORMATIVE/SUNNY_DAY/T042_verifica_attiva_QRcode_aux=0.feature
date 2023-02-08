@@ -31,7 +31,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_stazioneAux03
         When EC sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
 
-@midRunnable
+@fix
     Scenario: Execute nodoAttivaRPT
         Given the Execute nodoVerificaRPT scenario executed successfully
         And initial XML nodoAttivaRPT

@@ -110,7 +110,7 @@ Feature: T105_ChiediListaPendentiRPT_nonVuota
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
- @midRunnable
+ @fix
     Scenario: Execute nodoChiediListaPendentiRPT request
         Given the Execute nodoInviaRPT request scenario executed successfully 
         And initial XML nodoChiediListaPendentiRPT

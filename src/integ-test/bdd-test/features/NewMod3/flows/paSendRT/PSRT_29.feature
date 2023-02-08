@@ -229,7 +229,7 @@ Feature: process tests for paSendRT [PSRT_29]
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-    @runnable
+    @fix
     Scenario: job paSendRt
         Given the Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT
