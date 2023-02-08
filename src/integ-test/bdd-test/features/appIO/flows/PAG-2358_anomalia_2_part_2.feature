@@ -1,4 +1,4 @@
-Feature: PAG-2358 anomalia 2
+Feature: PAG-2358 anomalia 2 part 2
 
     Background:
         Given systems up
