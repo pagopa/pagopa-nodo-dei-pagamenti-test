@@ -298,9 +298,14 @@ Feature: PAG-2358
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
+    Scenario: notificaAnnullamento
+        When WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of notificaAnnullamento response is 200
+
     @bug
     Scenario: Test
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the informazioniPagamento scenario executed successfully
+        And the notificaAnnullamento scenario executed successfully
