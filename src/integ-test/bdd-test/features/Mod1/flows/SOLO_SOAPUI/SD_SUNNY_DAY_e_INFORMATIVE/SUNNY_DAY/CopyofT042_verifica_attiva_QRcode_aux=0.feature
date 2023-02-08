@@ -126,7 +126,7 @@ Feature: Copy of T042_verifica_attiva_QRcode_aux=0
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>90000000001</qrc:CF>
+            <qrc:CF>#creditor_institution_code#</qrc:CF>
             <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>$1iuv</qrc:CodIUV>
