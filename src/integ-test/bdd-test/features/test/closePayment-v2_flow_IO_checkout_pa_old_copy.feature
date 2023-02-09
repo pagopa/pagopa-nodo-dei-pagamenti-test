@@ -898,7 +898,7 @@ Feature: flow tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @runnable @fix
+    @runnable
     Scenario: FLUSSO_OLD_CP_02 (part 2)
         Given the FLUSSO_OLD_CP_02 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1175,7 +1175,7 @@ Feature: flow tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @runnable @fix
+    @runnable 
     Scenario: FLUSSO_OLD_CP_04 (part 2)
         Given the FLUSSO_OLD_CP_04 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1705,7 +1705,7 @@ Feature: flow tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @runnable  @fix
+    @runnable  
     Scenario: FLUSSO_OLD_CP_06 (part 2)
         Given the FLUSSO_OLD_CP_06 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -3714,9 +3714,11 @@ Feature: flow tests for closePaymentV2
         Given the FLUSSO_OLD_CP_14 (part 1) scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        And job paInviaRt triggered after 5 seconds
         Then verify the HTTP status code of v2/closepayment response is 404
         And check outcome is KO of v2/closepayment response
         And check description is The indicated payment does not exist of v2/closepayment response
+        And verify the HTTP status code of paInviaRt response is 200
         And wait 60 seconds for expiration
 
         # RPT
@@ -3770,11 +3772,9 @@ Feature: flow tests for closePaymentV2
         Given the FLUSSO_OLD_CP_14 (part 2) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        And job paInviaRt triggered after 5 seconds
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
         And check description is token unknown of sendPaymentOutcome response
-        And verify the HTTP status code of paInviaRt response is 200
         And wait 10 seconds for expiration
 
         # POSITION_PAYMENT_STATUS
@@ -5358,7 +5358,7 @@ Feature: flow tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @runnable  @fix
+    @runnable  
     Scenario: FLUSSO_OLD_CP_21 (part 2)
         Given the FLUSSO_OLD_CP_21 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
