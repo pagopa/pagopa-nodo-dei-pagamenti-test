@@ -216,6 +216,7 @@ Feature: PAG-2258
     @runnable
     Scenario: PAYMENT_ACCEPTED (part 3)
         Given the PAYMENT_ACCEPTED (part 2) scenario executed successfully
+        And wait 5 seconds for expiration
         And the sendPaymentOutcome request scenario executed successfully
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
