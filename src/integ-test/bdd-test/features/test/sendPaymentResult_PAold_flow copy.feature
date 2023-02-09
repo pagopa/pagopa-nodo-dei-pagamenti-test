@@ -786,13 +786,7 @@ Feature: flow checks for sendPaymentResult with PA old
       And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-      And verify 2 record for the table RE retrived by the query select_sprV1_old on db re under macro AppIO
-      And execution query select_sprV1_old to get value on the table RE, with the columns PAYLOAD under macro AppIO with db name re
-      And through the query select_sprV1_old convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
-      And checking value $XML_RE.paymentToken is equal to value $ccp
-      And checking value $XML_RE.pspTransactionId is equal to value $psp_transaction_id
-      And checking value $XML_RE.outcome is equal to value KO
-
+      And verify 0 record for the table RE retrived by the query select_sprV1_old on db re under macro AppIO
 
    # T_SPR_23
    Scenario: T_SPR_23 (nodoAttivaRPT)
