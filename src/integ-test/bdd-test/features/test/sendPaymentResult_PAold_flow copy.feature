@@ -767,7 +767,7 @@ Feature: flow checks for sendPaymentResult with PA old
       When job annullamentoRptMaiRichiesteDaPm triggered after 70 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
       And wait 5 seconds for expiration
-   @runnable
+   @runnable @fix
    Scenario: T_SPR_22 (closePayment)
       Given the T_SPR_22 (annullamentoRptMaiRichiesteDaPm) scenario executed successfully
       And the closePayment scenario executed successfully

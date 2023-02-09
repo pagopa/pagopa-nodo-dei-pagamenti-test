@@ -213,7 +213,7 @@ Feature: PAG-2258
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @runnable @fix
     Scenario: PAYMENT_ACCEPTED (part 3)
         Given the PAYMENT_ACCEPTED (part 2) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
