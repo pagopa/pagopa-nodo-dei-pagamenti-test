@@ -65,6 +65,7 @@ Feature: process tests for retry a token scaduto
     Given the Execute activatePaymentNotice request scenario executed successfully
     When job mod3CancelV1 triggered after 5 seconds
     Then verify the HTTP status code of mod3CancelV1 response is 200
+    And wait 3 seconds for expiration
 
   # Payment Outcome Phase outcome KO
   Scenario: Execute sendPaymentOutcome request
