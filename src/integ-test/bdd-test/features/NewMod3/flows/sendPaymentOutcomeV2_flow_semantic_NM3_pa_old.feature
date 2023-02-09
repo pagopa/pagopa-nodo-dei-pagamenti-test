@@ -357,7 +357,6 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
    Scenario: SEM_SPO_13 (part 2)
       Given the SEM_SPO_13 (part 1) scenario executed successfully
       And random idempotencyKey having $activatePaymentNotice.idPSP as idPSP in activatePaymentNotice
-      And EC replies to nodo-dei-pagamenti with the paGetPayment
       When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
       Then check outcome is OK of activatePaymentNotice response
       And save activatePaymentNotice response in activatePaymentNotice_2
@@ -368,7 +367,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
       And paymentToken with $activatePaymentNotice_2Response.paymentToken in sendPaymentOutcomeV2
       When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is OK of sendPaymentOutcomeV2 response
-   @runnable
+   @runnable 
    Scenario: SEM_SPO_13 (part 4)
       Given the SEM_SPO_13 (part 3) scenario executed successfully
       And paymentToken with $activatePaymentNotice_1Response.paymentToken in sendPaymentOutcomeV2
@@ -390,11 +389,10 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
    Scenario: SEM_SPO_13.1 (part 2)
       Given the SEM_SPO_13.1 (part 1) scenario executed successfully
       And random idempotencyKey having $activatePaymentNotice.idPSP as idPSP in activatePaymentNotice
-      And EC replies to nodo-dei-pagamenti with the paGetPayment
       When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
       Then check outcome is OK of activatePaymentNotice response
       And save activatePaymentNotice response in activatePaymentNotice_2
-   @runnable
+   @runnable 
    Scenario: SEM_SPO_13.1 (part 3)
       Given the SEM_SPO_13.1 (part 2) scenario executed successfully
       And the sendPaymentOutcomeV2 scenario executed successfully
@@ -645,8 +643,6 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
       Given the SEM_SPO_38 (part 1) scenario executed successfully
       And random iuv in context
       And noticeNumber with 002$iuv in activatePaymentNotice
-      And creditorReferenceId with $iuv in paGetPayment
-      And EC replies to nodo-dei-pagamenti with the paGetPayment
       When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
       Then check outcome is OK of activatePaymentNotice response
       And saving activatePaymentNotice request in activatePaymentNoticeRequest2
