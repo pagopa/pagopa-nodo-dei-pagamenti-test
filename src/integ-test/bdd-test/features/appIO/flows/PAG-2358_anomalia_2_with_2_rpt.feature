@@ -1,4 +1,4 @@
-Feature: PAG-2358 anomalia 2
+Feature: PAG-2358 anomalia 2 with 2 rpt
 
     Background:
         Given systems up
