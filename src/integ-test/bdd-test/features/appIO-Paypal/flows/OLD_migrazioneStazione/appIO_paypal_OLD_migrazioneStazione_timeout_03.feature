@@ -444,7 +444,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 befo
         Given the Execute DB check scenario executed successfully
         Then updates through the query stationUpdate of the table STAZIONI the parameter VERSIONE with 1 under macro sendPaymentResultV2 on db nodo_cfg
 
-
+@test
     #refresh pa e stazioni
     Scenario: Execute refresh pa e stazioni 2
         Given the Execute station version update 2 scenario executed successfully
