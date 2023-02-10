@@ -299,13 +299,13 @@ Feature: flow tests for paSendRTV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
-    # @runnable
+    # @test
     # Scenario: Test 1
     #     Given the activatePaymentNoticeV2 vp1 scenario executed successfully
     #     And the closePaymentV2 scenario executed successfully
     #     And the sendPaymentOutcomeV2 scenario executed successfully
 
-    @runnable
+    @test
     Scenario: Test 2
         Given the activatePaymentNoticeV2 vp2 scenario executed successfully
         And the closePaymentV2 scenario executed successfully

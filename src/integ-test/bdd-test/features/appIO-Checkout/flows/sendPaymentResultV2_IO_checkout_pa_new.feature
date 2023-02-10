@@ -513,7 +513,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: FLUSSO_SPR_01_IO (part 2)
         Given the FLUSSO_SPR_01_IO (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -800,7 +800,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: FLUSSO_SPR_02_IO (part 2)
         Given the FLUSSO_SPR_02_IO (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -985,7 +985,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: FLUSSO_SPR_03_IO (part 2)
         Given the FLUSSO_SPR_03_IO (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -1252,7 +1252,7 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # FLUSSO_SPR_04_IO
-    @runnable
+    @test
     Scenario: FLUSSO_SPR_04_IO
         Given the verifyPaymentNotice scenario executed successfully
         And the activateIOPayment scenario executed successfully
@@ -1358,7 +1358,7 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # FLUSSO_SPR_05_IO
-    @runnable
+    @test
     Scenario: FLUSSO_SPR_05_IO
         Given the verifyPaymentNotice scenario executed successfully
         And the activateIOPayment scenario executed successfully
@@ -1477,7 +1477,7 @@ Feature: flow tests for sendPaymentResultV2
         And the nodoChiediInformazioniPagamento scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-    @runnable
+    @test
     Scenario: FLUSSO_SPR_06_IO (part 2)
         Given the FLUSSO_SPR_06_IO (part 1) scenario executed successfully
         And the pspNotifyPaymentV2 malformata response scenario executed successfully
@@ -1538,7 +1538,7 @@ Feature: flow tests for sendPaymentResultV2
         And the nodoChiediInformazioniPagamento scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-    @runnable
+    @test
     Scenario: FLUSSO_SPR_07_IO (part 2)
         Given the FLUSSO_SPR_07_IO (part 1) scenario executed successfully
         And the pspNotifyPaymentV2 malformata response scenario executed successfully
@@ -1603,7 +1603,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: FLUSSO_SPR_08_IO (part 2)
         Given the FLUSSO_SPR_08_IO (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -1882,7 +1882,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: FLUSSO_SPR_09_IO (part 2)
         Given the FLUSSO_SPR_09_IO (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -2161,7 +2161,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: FLUSSO_SPR_10_IO (part 2)
         Given the FLUSSO_SPR_10_IO (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -2440,7 +2440,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: FLUSSO_SPR_11_IO (part 2)
         Given the FLUSSO_SPR_11_IO (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -2703,7 +2703,7 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_01
-    @runnable
+    @test
     Scenario: T_SPR_V2_01
         Given the verifyPaymentNotice scenario executed successfully
         And the activateIOPayment scenario executed successfully
@@ -2756,7 +2756,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: T_SPR_V2_02 (part 2)
         Given the T_SPR_V2_02 (part 1) scenario executed successfully
         And wait 12 seconds for expiration
@@ -2809,7 +2809,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: T_SPR_V2_03 (part 2)
         Given the T_SPR_V2_03 (part 1) scenario executed successfully
         And wait 10 seconds for expiration
@@ -2846,7 +2846,7 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_04
-    @runnable
+    @test
     Scenario: T_SPR_V2_04
         Given the verifyPaymentNotice scenario executed successfully
         And the activateIOPayment scenario executed successfully
@@ -2892,7 +2892,7 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_05
-    @runnable
+    @test
     Scenario: T_SPR_V2_05
         Given the verifyPaymentNotice scenario executed successfully
         And the activateIOPayment scenario executed successfully
@@ -3094,7 +3094,7 @@ Feature: flow tests for sendPaymentResultV2
         # POSITION_ACTIVATE
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
-    @runnable
+    @test
     Scenario: T_SPR_V2_06 (part 2)
         Given the T_SPR_V2_06 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 0 seconds
@@ -3201,7 +3201,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: T_SPR_V2_07 (part 2)
         Given the T_SPR_V2_07 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
@@ -3250,7 +3250,7 @@ Feature: flow tests for sendPaymentResultV2
         And the nodoChiediInformazioniPagamento scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-    @runnable
+    @test
     Scenario: T_SPR_V2_08 (part 2)
         Given the T_SPR_V2_08 (part 1) scenario executed successfully
         And wait 3 seconds for expiration
@@ -3298,7 +3298,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: T_SPR_V2_09 (part 2)
         Given the T_SPR_V2_09 (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -3361,7 +3361,7 @@ Feature: flow tests for sendPaymentResultV2
         And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-    @runnable
+    @test
     Scenario: T_SPR_V2_10 (part 3)
         Given the T_SPR_V2_10 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -3430,7 +3430,7 @@ Feature: flow tests for sendPaymentResultV2
         And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-    @runnable
+    @test
     Scenario: T_SPR_V2_11 (part 3)
         Given the T_SPR_V2_11 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -3499,7 +3499,7 @@ Feature: flow tests for sendPaymentResultV2
         And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-    @runnable
+    @test
     Scenario: T_SPR_V2_12 (part 3)
         Given the T_SPR_V2_12 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -3568,7 +3568,7 @@ Feature: flow tests for sendPaymentResultV2
         And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-    @runnable
+    @test
     Scenario: T_SPR_V2_13 (part 3)
         Given the T_SPR_V2_13 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -3637,7 +3637,7 @@ Feature: flow tests for sendPaymentResultV2
         And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-    @runnable
+    @test
     Scenario: T_SPR_V2_14 (part 3)
         Given the T_SPR_V2_14 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -3683,7 +3683,7 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_01_V2
-    @runnable
+    @test
     Scenario: T_SPR_V2_01_V2
         Given the verifyPaymentNotice scenario executed successfully
         And the activateIOPayment scenario executed successfully
@@ -3735,7 +3735,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test
     Scenario: T_SPR_V2_02_V2 (part 2)
         Given the T_SPR_V2_02_V2 (part 1) scenario executed successfully
         And wait 12 seconds for expiration
@@ -3788,7 +3788,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test
     Scenario: T_SPR_V2_03_V2 (part 2)
         Given the T_SPR_V2_03_V2 (part 1) scenario executed successfully
         And wait 10 seconds for expiration
@@ -3825,7 +3825,7 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_04_V2
-    @runnable
+    @test
     Scenario: T_SPR_V2_04_V2
         Given the verifyPaymentNotice scenario executed successfully
         And the activateIOPayment scenario executed successfully
@@ -3870,7 +3870,7 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_05_V2
-    @runnable
+    @test
     Scenario: T_SPR_V2_05_V2
         Given the verifyPaymentNotice scenario executed successfully
         And the activateIOPayment scenario executed successfully
@@ -4070,7 +4070,7 @@ Feature: flow tests for sendPaymentResultV2
         # POSITION_ACTIVATE
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activateio on db nodo_online under macro NewMod1
-    @runnable
+    @test
     Scenario: T_SPR_V2_06_V2 (part 2)
         Given the T_SPR_V2_06_V2 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 0 seconds
@@ -4176,7 +4176,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: T_SPR_V2_07_V2 (part 2)
         Given the T_SPR_V2_07_V2 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
@@ -4225,7 +4225,7 @@ Feature: flow tests for sendPaymentResultV2
         And the nodoChiediInformazioniPagamento scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-    @runnable
+    @test
     Scenario: T_SPR_V2_08_V2 (part 2)
         Given the T_SPR_V2_08_V2 (part 1) scenario executed successfully
         And wait 3 seconds for expiration
@@ -4271,7 +4271,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: T_SPR_V2_09_V2 (part 2)
         Given the T_SPR_V2_09_V2 (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -4333,7 +4333,7 @@ Feature: flow tests for sendPaymentResultV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @runnable
+    @test
     Scenario: T_SPR_V2_10_V2 (part 3)
         Given the T_SPR_V2_10_V2 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -4401,7 +4401,7 @@ Feature: flow tests for sendPaymentResultV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @runnable
+    @test
     Scenario: T_SPR_V2_11_V2 (part 3)
         Given the T_SPR_V2_11_V2 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -4469,7 +4469,7 @@ Feature: flow tests for sendPaymentResultV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @runnable
+    @test
     Scenario: T_SPR_V2_12_V2 (part 3)
         Given the T_SPR_V2_12_V2 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -4537,7 +4537,7 @@ Feature: flow tests for sendPaymentResultV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @runnable
+    @test
     Scenario: T_SPR_V2_13_V2 (part 3)
         Given the T_SPR_V2_13_V2 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -4605,7 +4605,7 @@ Feature: flow tests for sendPaymentResultV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @runnable
+    @test
     Scenario: T_SPR_V2_14_V2 (part 3)
         Given the T_SPR_V2_14_V2 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds

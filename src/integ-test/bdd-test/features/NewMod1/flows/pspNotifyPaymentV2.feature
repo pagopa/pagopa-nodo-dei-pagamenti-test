@@ -268,7 +268,7 @@ Feature: checks for pspNotifyPaymentV2
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
 
     # T_PNPV2_01
-    @runnable
+    @test
     Scenario: T_PNPV2_01
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
@@ -280,7 +280,7 @@ Feature: checks for pspNotifyPaymentV2
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # T_PNPV2_01.1
-    @runnable
+    @test
     Scenario: T_PNPV2_01.1
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
@@ -293,7 +293,7 @@ Feature: checks for pspNotifyPaymentV2
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # T_PNPV2_02
-    @runnable
+    @test
     Scenario: T_PNPV2_02
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
@@ -306,7 +306,7 @@ Feature: checks for pspNotifyPaymentV2
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # T_PNPV2_02.1
-    @runnable
+    @test
     Scenario: T_PNPV2_02.1
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
@@ -319,7 +319,7 @@ Feature: checks for pspNotifyPaymentV2
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # T_PNPV2_03
-    @runnable
+    @test
     Scenario: T_PNPV2_03
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
@@ -332,7 +332,7 @@ Feature: checks for pspNotifyPaymentV2
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # T_PNPV2_03.1
-    @runnable
+    @test
     Scenario: T_PNPV2_03.1
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
@@ -345,7 +345,7 @@ Feature: checks for pspNotifyPaymentV2
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # T_PNPV2_03.2
-    @runnable
+    @test
     Scenario: T_PNPV2_03.2
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
@@ -358,7 +358,7 @@ Feature: checks for pspNotifyPaymentV2
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # T_PNPV2_03.3
-    @runnable
+    @test
     Scenario: T_PNPV2_03.3
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
@@ -371,7 +371,7 @@ Feature: checks for pspNotifyPaymentV2
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # T_PNPV2_04
-    @runnable
+    @test
     Scenario: T_PNPV2_04
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 scenario executed successfully
@@ -384,7 +384,7 @@ Feature: checks for pspNotifyPaymentV2
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # T_PNPV2_05
-    @runnable
+    @test
     Scenario: # T_PNPV2_05
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And the checkPosition scenario executed successfully

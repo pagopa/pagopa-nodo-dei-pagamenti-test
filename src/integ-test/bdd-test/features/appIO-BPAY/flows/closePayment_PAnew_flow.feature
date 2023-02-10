@@ -423,7 +423,7 @@ Feature: flow checks for closePayment - PA new
       And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And check datetime plus number of date default_durata_estensione_token_IO of the record at column TOKEN_VALID_TO of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-   @runnable
+   @test
    Scenario: FLUSSO_CP_01 (part 4)
       Given the FLUSSO_CP_01 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -519,7 +519,7 @@ Feature: flow checks for closePayment - PA new
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: FLUSSO_CP_02 (part 4)
       Given the FLUSSO_CP_02 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -623,7 +623,7 @@ Feature: flow checks for closePayment - PA new
       And execution query select_activateio to get value on the table POSITION_ACTIVATE, with the columns TO_CHAR(TOKEN_VALID_TO, 'YYYY-MM-DD HH24:MI:SS') under macro NewMod1 with db name nodo_online
       And through the query select_activateio retrieve param TO_CHAR(TOKEN_VALID_TO, 'YYYY-MM-DD HH24:MI:SS') at position 0 and save it under the key tokenvalidto
       And check value $date is equal to value $tokenvalidto
-   @runnable
+   @test
    Scenario: FLUSSO_CP_03 (part 4)
       Given the FLUSSO_CP_03 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -679,7 +679,7 @@ Feature: flow checks for closePayment - PA new
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: FLUSSO_CP_04 (part 4)
       Given the FLUSSO_CP_04 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -741,7 +741,7 @@ Feature: flow checks for closePayment - PA new
       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
       And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
       And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
-   @runnable
+   @test
    Scenario: FLUSSO_CP_05 (part 4)
       Given the FLUSSO_CP_05 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -807,7 +807,7 @@ Feature: flow checks for closePayment - PA new
       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
       And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
       And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
-   @runnable
+   @test
    Scenario: FLUSSO_CP_06 (part 4)
       Given the FLUSSO_CP_06 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -874,7 +874,7 @@ Feature: flow checks for closePayment - PA new
       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
       And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
       And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
-   @runnable
+   @test
    Scenario: FLUSSO_CP_07 (part 4)
       Given the FLUSSO_CP_07 (part 3) scenario executed successfully
       When job mod3CancelV2 triggered after 0 seconds
@@ -913,7 +913,7 @@ Feature: flow checks for closePayment - PA new
       When job mod3CancelV2 triggered after 3 seconds
       Then verify the HTTP status code of mod3CancelV2 response is 200
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: FLUSSO_CP_08 (part 4)
       Given the FLUSSO_CP_08 (part 3) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -981,7 +981,7 @@ Feature: flow checks for closePayment - PA new
       And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
       And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
       And checks the value PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
-   @runnable
+   @test
    Scenario: FLUSSO_CP_09 (part 4)
       Given the FLUSSO_CP_09 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -1037,7 +1037,7 @@ Feature: flow checks for closePayment - PA new
       When job mod3CancelV2 triggered after 3 seconds
       Then verify the HTTP status code of mod3CancelV2 response is 200
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: FLUSSO_CP_10 (part 4)
       Given the FLUSSO_CP_10 (part 3) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -1105,7 +1105,7 @@ Feature: flow checks for closePayment - PA new
       And check esito is KO of v1/closepayment response
       And check descrizione is Esito già acquisito of v1/closepayment response
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: FLUSSO_CP_11 (part 5)
       Given the FLUSSO_CP_11 (part 4) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -1161,7 +1161,7 @@ Feature: flow checks for closePayment - PA new
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @runnable
+   @test
    Scenario: FLUSSO_CP_12 (part 4)
       Given the FLUSSO_CP_12 (part 3) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -1217,7 +1217,7 @@ Feature: flow checks for closePayment - PA new
       And check esito is KO of v1/closepayment response
       And check descrizione is Esito già acquisito of v1/closepayment response
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: FLUSSO_CP_13 (part 5)
       Given the FLUSSO_CP_13 (part 4) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -1273,7 +1273,7 @@ Feature: flow checks for closePayment - PA new
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @runnable
+   @test
    Scenario: FLUSSO_CP_14 (part 4)
       Given the FLUSSO_CP_14 (part 3) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -1316,7 +1316,7 @@ Feature: flow checks for closePayment - PA new
       Then check outcome is KO of sendPaymentOutcome response
       And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
       And check description is Esito discorde of sendPaymentOutcome response
-   @runnable
+   @test
    Scenario: FLUSSO_CP_15 (part 5)
       Given the FLUSSO_CP_15 (part 4) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -1404,7 +1404,7 @@ Feature: flow checks for closePayment - PA new
       And checks the value #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
       And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro AppIO
-   @runnable
+   @test
    Scenario: FLUSSO_CP_16 (part 5)
       Given the FLUSSO_CP_16 (part 4) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -1431,7 +1431,7 @@ Feature: flow checks for closePayment - PA new
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: FLUSSO_CP_17 (part 3)
       Given the FLUSSO_CP_17 (part 2) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -1519,7 +1519,7 @@ Feature: flow checks for closePayment - PA new
       And checks the value #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
       And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro AppIO
-   @runnable
+   @test
    Scenario: FLUSSO_CP_18 (part 5)
       Given the FLUSSO_CP_18 (part 4) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -1552,7 +1552,7 @@ Feature: flow checks for closePayment - PA new
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: FLUSSO_CP_19 (part 4)
       Given the FLUSSO_CP_19 (part 3) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
@@ -1583,7 +1583,7 @@ Feature: flow checks for closePayment - PA new
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 12 seconds for expiration
-   @runnable
+   @test
    Scenario: FLUSSO_CP_20 (part 4)
       Given the FLUSSO_CP_20 (part 3) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
@@ -1620,7 +1620,7 @@ Feature: flow checks for closePayment - PA new
       When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
       Then check outcome is OK of sendPaymentOutcome response
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: FLUSSO_CP_21 (part 5)
       Given the FLUSSO_CP_21 (part 4) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
@@ -1651,7 +1651,7 @@ Feature: flow checks for closePayment - PA new
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: FLUSSO_CP_22 (part 4)
       Given the FLUSSO_CP_22 (part 3) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
@@ -1682,7 +1682,7 @@ Feature: flow checks for closePayment - PA new
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: FLUSSO_CP_23 (part 4)
       Given the FLUSSO_CP_23 (part 3) scenario executed successfully
       And the activateIOPayment scenario executed successfully
@@ -1734,7 +1734,7 @@ Feature: flow checks for closePayment - PA new
       And check esito is KO of v1/closepayment response
       And check descrizione is Il Pagamento indicato non esiste of v1/closepayment response
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: FLUSSO_CP_25 (part 4)
       Given the FLUSSO_CP_25 (part 3) scenario executed successfully
       And the sendPaymentOutcome payToken scenario executed successfully
@@ -1784,7 +1784,7 @@ Feature: flow checks for closePayment - PA new
       And check esito is KO of v1/closepayment response
       And check descrizione is Il Pagamento indicato non esiste of v1/closepayment response
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: FLUSSO_CP_26 (part 4)
       Given the FLUSSO_CP_26 (part 3) scenario executed successfully
       And the sendPaymentOutcome payToken scenario executed successfully
@@ -1818,7 +1818,7 @@ Feature: flow checks for closePayment - PA new
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @runnable
+   @test
    Scenario: FLUSSO_CP_27 (part 4)
       Given the FLUSSO_CP_27 (part 3) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
@@ -1893,7 +1893,7 @@ Feature: flow checks for closePayment - PA new
       # POSITION_ACTIVATE
       And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value $activateIOPayment.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-   @runnable
+   @test
    Scenario: FLUSSO_CP_28 (part 4)
       Given the FLUSSO_CP_28 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully

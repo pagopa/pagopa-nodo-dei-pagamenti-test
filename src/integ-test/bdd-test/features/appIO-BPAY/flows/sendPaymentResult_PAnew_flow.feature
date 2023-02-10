@@ -295,7 +295,7 @@ Feature: flow checks for sendPaymentResult with PA new
       Given the T_SPR_01 (part 1) scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
-   @runnable
+   @test
    Scenario: T_SPR_01 (part 3)
       Given the T_SPR_01 (part 2) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -340,7 +340,7 @@ Feature: flow checks for sendPaymentResult with PA new
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 15 seconds for expiration
-   @runnable
+   @test
    Scenario: T_SPR_02 (sendPaymentOutcome)
       Given the T_SPR_02 (closePayment) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -384,7 +384,7 @@ Feature: flow checks for sendPaymentResult with PA new
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: T_SPR_03 (sendPaymentOutcome)
       Given the T_SPR_03 (closePayment) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -419,7 +419,7 @@ Feature: flow checks for sendPaymentResult with PA new
       Given the T_SPR_04 (activateIOPayment) scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
-   @runnable
+   @test
    Scenario: T_SPR_04 (closePayment)
       Given the T_SPR_04 (informazioniPagamento) scenario executed successfully
       And the pspNotifyPayment KO scenario executed successfully
@@ -467,7 +467,7 @@ Feature: flow checks for sendPaymentResult with PA new
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @runnable
+   @test
    Scenario: T_SPR_05 (mod3CancelV2)
       Given the T_SPR_05 (closePayment) scenario executed successfully
       When job mod3CancelV2 triggered after 20 seconds
@@ -514,7 +514,7 @@ Feature: flow checks for sendPaymentResult with PA new
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: T_SPR_06 (mod3CancelV2)
       Given the T_SPR_06 (closePayment) scenario executed successfully
       When job mod3CancelV2 triggered after 5 seconds
@@ -561,7 +561,7 @@ Feature: flow checks for sendPaymentResult with PA new
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: T_SPR_07 (mod3CancelV2)
       Given the T_SPR_07 (closePayment) scenario executed successfully
       When job mod3CancelV2 triggered after 5 seconds
@@ -605,7 +605,7 @@ Feature: flow checks for sendPaymentResult with PA new
       When job mod3CancelV2 triggered after 3 seconds
       Then verify the HTTP status code of mod3CancelV2 response is 200
       And wait 5 seconds for expiration
-   @runnable
+   @test
    Scenario: T_SPR_08 (closePayment)
       Given the T_SPR_08 (mod3CancelV2) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -651,7 +651,7 @@ Feature: flow checks for sendPaymentResult with PA new
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @runnable
+   @test
    Scenario: T_SPR_09 (retry spr)
       Given the T_SPR_09 (closePayment) scenario executed successfully
       When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -679,7 +679,7 @@ Feature: flow checks for sendPaymentResult with PA new
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @runnable
+   @test
    Scenario: T_SPR_10 (retry spr)
       Given the T_SPR_10 (closePayment) scenario executed successfully
       When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -717,7 +717,7 @@ Feature: flow checks for sendPaymentResult with PA new
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @runnable
+   @test
    Scenario: T_SPR_11 (retry spr)
       Given the T_SPR_11 (closePayment) scenario executed successfully
       When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -755,7 +755,7 @@ Feature: flow checks for sendPaymentResult with PA new
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @runnable
+   @test
    Scenario: T_SPR_12 (retry spr)
       Given the T_SPR_12 (closePayment) scenario executed successfully
       When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -793,7 +793,7 @@ Feature: flow checks for sendPaymentResult with PA new
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @runnable
+   @test
    Scenario: T_SPR_13 (retry spr)
       Given the T_SPR_13 (closePayment) scenario executed successfully
       When job positionRetrySendPaymentResult triggered after 65 seconds

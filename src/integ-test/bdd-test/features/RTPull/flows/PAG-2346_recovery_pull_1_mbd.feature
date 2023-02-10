@@ -5,7 +5,7 @@ Feature: PAG-2346 recovery pull 1 mbd
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
 
-    @runnable
+    @test
     Scenario: Test
         Given MB generation
             """

@@ -1115,7 +1115,7 @@ Feature: response tests for paGetPaymentV2
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    @runnable
+    @test
     # KO tests
     Scenario Outline: KO tests
         Given the paGetPaymentV2 scenario executed successfully
@@ -1238,7 +1238,7 @@ Feature: response tests for paGetPaymentV2
             | transfer                    | Empty                                                                                                                                                                                                                                                             |
             | paymentAmount               | 11.00                                                                                                                                                                                                                                                             |
             | value                       | None                                                                                                                                                                                                                                                              |
-    @runnable
+    @test
     # OK tests
     Scenario Outline: OK tests
         Given the paGetPaymentV2 scenario executed successfully
@@ -1261,7 +1261,7 @@ Feature: response tests for paGetPaymentV2
             | stateProvinceRegion | None                                  |
             | streetName          | None                                  |
             | civicNumber         | None                                  |
-    @runnable
+    @test
     # 6 transfers
     Scenario: 6 transfers
         Given the paGetPaymentV2 with 6 transfers scenario executed successfully
@@ -1269,7 +1269,7 @@ Feature: response tests for paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @runnable
+    @test
     # 11 mapEntry inside trasfer
     Scenario: 11 mapEntry inside transfer
         Given the paGetPaymentV2 with 11 mapEntry inside transfer scenario executed successfully
@@ -1277,7 +1277,7 @@ Feature: response tests for paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @runnable
+    @test
     # 11 mapEntry outside transfer
     Scenario: 11 mapEntry outside transfer
         Given the paGetPaymentV2 with 11 mapEntry outside transfer scenario executed successfully
@@ -1285,7 +1285,7 @@ Feature: response tests for paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @runnable
+    @test
     # different amount and paymentAmount
     Scenario: different amount and paymentAmount
         Given the paGetPaymentV2 scenario executed successfully
@@ -1293,7 +1293,7 @@ Feature: response tests for paGetPaymentV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @runnable
+    @test
     # idTransfer not inside enumeration
     Scenario: idTransfer not inside enumeration
         Given the paGetPaymentV2 with idTransfer not inside enumeration scenario executed successfully
@@ -1301,7 +1301,7 @@ Feature: response tests for paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @runnable
+    @test
     # no mapEntry with subtags outside transfer
     Scenario: no mapEntry with subtags outside transfer
         Given the paGetPaymentV2 without mapEntry with subtags outside transfer scenario executed successfully
@@ -1309,7 +1309,7 @@ Feature: response tests for paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @runnable
+    @test
     # empty mapEntry outside transfer
     Scenario: empty mapEntry outside transfer
         Given the paGetPaymentV2 with empty mapEntry outside transfer scenario executed successfully
@@ -1317,14 +1317,14 @@ Feature: response tests for paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @runnable
+    @test
     # no metadata outside transfer
     Scenario: no metadata outside transfer
         Given the paGetPaymentV2 without metadata outside transfer scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @runnable
+    @test
     # no metadata with subtags outside transfer
     Scenario: no metadata with subtags outside transfer
         Given the paGetPaymentV2 without metadata with subtags outside transfer scenario executed successfully
@@ -1332,7 +1332,7 @@ Feature: response tests for paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @runnable
+    @test
     # empty metadata outside transfer
     Scenario: empty metadata outside transfer
         Given the paGetPaymentV2 with empty metadata outside transfer scenario executed successfully
@@ -1340,7 +1340,7 @@ Feature: response tests for paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @runnable
+    @test
     # no key outside transfer
     Scenario: no key outside transfer
         Given the paGetPaymentV2 without key outside transfer scenario executed successfully
@@ -1348,7 +1348,7 @@ Feature: response tests for paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @runnable
+    @test
     # response KO without faultBeam
     Scenario: response KO without faultBeam
         Given the paGetPaymentV2 KO without faultBean scenario executed successfully
@@ -1356,7 +1356,7 @@ Feature: response tests for paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @runnable
+    @test
     # no value outside transfer
     Scenario: no value outside transfer
         Given the paGetPaymentV2 without value outside transfer scenario executed successfully

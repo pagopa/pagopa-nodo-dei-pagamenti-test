@@ -500,7 +500,7 @@ Feature: lispay opzione 2 extended flow
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @runnable
+    @test
     Scenario: Test nodoInviaRPT with MBD
         Given the MB scenario executed successfully
         And the RPT with MBD scenario executed successfully
@@ -511,7 +511,7 @@ Feature: lispay opzione 2 extended flow
         And the RT with MBD scenario executed successfully
         And the nodoInviaRT scenario executed successfully
 
-    @runnable
+    @test
     Scenario: Test nodoInviaRPT with IBAN
         Given the RPT with IBAN scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
@@ -521,7 +521,7 @@ Feature: lispay opzione 2 extended flow
         And the RT with IBAN scenario executed successfully
         And the nodoInviaRT scenario executed successfully
 
-    @runnable
+    @test
     Scenario: Test nodoInviaCarrelloRPT with MBD
         Given the MB scenario executed successfully
         And the RPT with MBD scenario executed successfully
@@ -532,7 +532,7 @@ Feature: lispay opzione 2 extended flow
         And the RT with MBD scenario executed successfully
         And the nodoInviaRT scenario executed successfully
 
-    @runnable
+    @test
     Scenario: Test nodoInviaCarrelloRPT with IBAN
         Given the RPT with IBAN scenario executed successfully
         And the nodoInviaCarrelloRPT scenario executed successfully

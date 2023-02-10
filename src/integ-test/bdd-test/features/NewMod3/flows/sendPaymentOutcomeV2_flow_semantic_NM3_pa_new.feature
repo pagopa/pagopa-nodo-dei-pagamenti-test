@@ -259,7 +259,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_1
-    @runnable
+    @test
     Scenario: SEM_SPO_7.1 (part 2)
         Given the SEM_SPO_7.1 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -292,7 +292,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         And paymentToken with $activatePaymentNotice_2Response.paymentToken in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @runnable
+    @test
     Scenario: SEM_SPO_13 (part 4)
         Given the SEM_SPO_13 (part 3) scenario executed successfully
         And paymentToken with $activatePaymentNotice_1Response.paymentToken in sendPaymentOutcomeV2
@@ -318,7 +318,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_2
-    @runnable
+    @test
     Scenario: SEM_SPO_13.1 (part 3)
         Given the SEM_SPO_13.1 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -334,7 +334,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_1
-    @runnable
+    @test
     Scenario: SEM_SPO_21 (part 2)
         Given the SEM_SPO_21 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -364,7 +364,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @runnable
+    @test
     Scenario: SEM_SPO_23 (part 3)
         Given the SEM_SPO_23 (part 2) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -386,7 +386,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @runnable
+    @test
     Scenario: SEM_SPO_23.1 (part 3)
         Given the SEM_SPO_23.1 (part 2) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -402,7 +402,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_1
-    @runnable
+    @test
     Scenario: SEM_SPO_28 (part 2)
         Given the SEM_SPO_28 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -418,7 +418,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_1
-    @runnable
+    @test
     Scenario: SEM_SPO_31 (part 2)
         Given the SEM_SPO_31 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -438,7 +438,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_1
-    @runnable
+    @test
     Scenario: SEM_SPO_32 (part 2)
         Given the SEM_SPO_32 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -465,7 +465,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_1
-    @runnable
+    @test
     Scenario: SEM_SPO_35.1 (part 2)
         Given the SEM_SPO_35.1 (part 1) scenario executed successfully
         And updates through the query update_activate of the table POSITION_STATUS_SNAPSHOT the parameter ACTIVATION_PENDING with Y under macro NewMod1 on db nodo_online
@@ -483,7 +483,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_1
-    @runnable
+    @test
     Scenario: SEM_SPO_35.2 (part 2)
         Given the SEM_SPO_35.2 (part 1) scenario executed successfully
         And updates through the query update_activate of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYING under macro NewMod1 on db nodo_online
@@ -499,7 +499,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_1
-    @runnable
+    @test
     Scenario: SEM_SPO_36 (part 2)
         Given the SEM_SPO_36 (part 1) scenario executed successfully
         And updates through the query update_activate of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
@@ -516,7 +516,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_1
-    @runnable
+    @test
     Scenario: SEM_SPO_36.1 (part 2)
         Given the SEM_SPO_36.1 (part 1) scenario executed successfully
         And updates through the query update_activate of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online
@@ -539,7 +539,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_2
-    @runnable
+    @test
     Scenario: SEM_SPO_37 (part 3)
         Given the SEM_SPO_37 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
@@ -568,7 +568,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And saving activatePaymentNotice request in activatePaymentNoticeRequest2
-    @runnable
+    @test
     Scenario: SEM_SPO_38 (part 3)
         Given the SEM_SPO_38 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully

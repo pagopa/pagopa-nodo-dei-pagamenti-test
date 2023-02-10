@@ -321,7 +321,7 @@ Feature: lispay opzione 2
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
 
-    @runnable
+    @test
     Scenario: nodoInviaRPT with MBD
         Given the RPT with MBD scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
@@ -330,7 +330,7 @@ Feature: lispay opzione 2
         Then check totalRows is 5 of listaPSP response
         And check data containsList [6, 7, 8, 9, 10] of listaPSP response
 
-    @runnable
+    @test
     Scenario: nodoInviaRPT with MBD and IBAN
         Given the RPT with MBD and IBAN scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
@@ -338,7 +338,7 @@ Feature: lispay opzione 2
         And the nodoChiediListaPsp scenario executed successfully
         Then check totalRows is 0 of listaPSP response
 
-    @runnable
+    @test
     Scenario: nodoInviaRPT with IBAN
         Given the RPT with IBAN scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
@@ -346,7 +346,7 @@ Feature: lispay opzione 2
         And the nodoChiediListaPsp scenario executed successfully
         Then check totalRows is 0 of listaPSP response
 
-    @runnable
+    @test
     Scenario: nodoInviaCarrelloRPT with MBD
         Given the RPT with MBD scenario executed successfully
         And the nodoInviaCarrelloRPT scenario executed successfully
@@ -355,7 +355,7 @@ Feature: lispay opzione 2
         Then check totalRows is 5 of listaPSP response
         And check data containsList [6, 7, 8, 9, 10] of listaPSP response
 
-    @runnable
+    @test
     Scenario: nodoInviaCarrelloRPT with MBD and IBAN
         Given the RPT with MBD and IBAN scenario executed successfully
         And the nodoInviaCarrelloRPT scenario executed successfully
@@ -363,7 +363,7 @@ Feature: lispay opzione 2
         And the nodoChiediListaPsp scenario executed successfully
         Then check totalRows is 0 of listaPSP response
 
-    @runnable
+    @test
     Scenario: nodoInviaCarrelloRPT with IBAN
         Given the RPT with IBAN scenario executed successfully
         And the nodoInviaCarrelloRPT scenario executed successfully
