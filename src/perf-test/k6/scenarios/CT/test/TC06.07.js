@@ -52,6 +52,8 @@ export const options = {
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
   discardResponseBodies: false,
   thresholds: {
+    'checks{ALL:ok_rate}': [],
+    'checks{ALL:ko_rate}': [],
     'checks{activatePaymentNoticeV2:ko_rate}': ['rate<0.01'],
     'checks{activatePaymentNoticeV2:ok_rate}': [],
     'checks{activatePaymentNoticeV2:over_sla300}': [],
