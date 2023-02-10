@@ -198,7 +198,6 @@ Feature: process tests for NM3 with station migration from V1 to V2
         Then verify the HTTP status code of paInviaRt response is 200
         And updates through the query stationUpdate of the table STAZIONI the parameter VERSIONE with 1 under macro sendPaymentResultV2 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
-        And PSP waits 5 seconds for expiration
         #RT
         Then execution query rt to get value on the table RT, with the columns ID_SESSIONE,CCP,IDENT_DOMINIO,IUV,COD_ESITO,DATA_RICEVUTA,DATA_RICHIESTA,ID_RICEVUTA,ID_RICHIESTA,SOMMA_VERSAMENTI,INSERTED_TIMESTAMP,UPDATED_TIMESTAMP,CANALE,ID under macro NewMod3 with db name nodo_online
         And execution query rpt to get value on the table RPT, with the columns CCP,IDENT_DOMINIO,IUV,ID_MSG_RICH,CANALE under macro NewMod3 with db name nodo_online
@@ -224,7 +223,7 @@ Feature: process tests for NM3 with station migration from V1 to V2
         And checks the value BATCH_ANNULLAMENTO:TOKEN_SCADUTO of the record at column ESITO of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
         And with the query rt_versamenti check assert beetwen elem CAUSALE_VERSAMENTO in position 4 and elem CAUSALE_VERSAMENTO with position 0 of the query rpt_versamenti
         And with the query rt_versamenti check assert beetwen elem DATI_SPECIFICI_RISCOSSIONE in position 5 and elem DATI_SPECIFICI_RISCOSSIONE with position 1 of the query rpt_versamenti
-        And with the query rt_versamenti check assert beetwen elem COMMISSIONE_APPLICATE_PSP in position 6 and elem FEE with position 1 of the query payment_status
+        And checks the value 0 of the record at column COMMISSIONE_APPLICATE_PSP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
         And with the query rt_versamenti check assert beetwen elem FK_RT in position 7 and elem ID with position 13 of the query rt
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_VERSAMENTI retrived by the query rt_versamenti on db nodo_online under macro NewMod3
