@@ -211,7 +211,7 @@ Feature: process tests for NM3 with station migration from V1 to V2
         And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query rt on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query rt on db nodo_online under macro NewMod3
         And with the query rt check assert beetwen elem ID_RICHIESTA in position 8 and elem ID_MSG_RICH with position 3 of the query rpt
-        And with the query rt check assert beetwen elem SOMMA_VERSAMENTI in position 9 and elem AMOUNT with position 0 of the query payment_status
+        And checks the value 0 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query rt on db nodo_online under macro NewMod3
         And with the query rt check assert beetwen elem CANALE in position 12 and elem CANALE with position 4 of the query rpt
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query rt on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query rt on db nodo_online under macro NewMod3
