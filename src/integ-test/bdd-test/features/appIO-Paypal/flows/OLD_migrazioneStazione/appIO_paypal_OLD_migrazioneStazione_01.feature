@@ -388,7 +388,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
     Scenario: Execute refresh pa e stazioni 2
         Given the Execute station version update 2 scenario executed successfully
         Then refresh job PA triggered after 10 seconds
-@test
+    @test
     #DB Check
     Scenario: Execute DB check
         Given the Execute refresh pa e stazioni 2 scenario executed successfully
