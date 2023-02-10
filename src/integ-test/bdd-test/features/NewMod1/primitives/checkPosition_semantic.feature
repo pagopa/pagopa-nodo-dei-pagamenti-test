@@ -157,7 +157,7 @@ Feature: semantic checks for checkPosition outcome OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-    
+
     # SEM_CPO_02
     Scenario: Code 200 OK 2 (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
@@ -173,14 +173,14 @@ Feature: semantic checks for checkPosition outcome OK
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-    
+
     # SEM_CPO_03
     Scenario: Code 200 KO (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
-    
+
     Scenario: Code 200 KO (part 2)
         Given the Code 200 KO (part 1) scenario executed successfully
         And random iuv in context
@@ -191,7 +191,7 @@ Feature: semantic checks for checkPosition outcome OK
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request1
         And updates through the query update_noticeid_pa of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
-    
+
     Scenario: Code 200 KO (part 3)
         Given the Code 200 KO (part 2) scenario executed successfully
         And random iuv in context

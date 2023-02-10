@@ -95,11 +95,11 @@ Feature: syntax checks OK for activatePaymentNoticeV2Request
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-@test
+    @test
     Scenario: Check valid URL in WSDL namespace
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-@test
+    @test
     Scenario Outline: Check OK response on missing optional fields
         Given <elem> with <value> in activatePaymentNoticeV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -112,7 +112,7 @@ Feature: syntax checks OK for activatePaymentNoticeV2Request
             | paymentNote    | None  | SIN_APNV2_47           |
             | paymentMethod  | None  | #commissioni evolute 1 |
             | touchPoint     | None  | #commissioni evolute 2 |
-@test
+    @test
     Scenario Outline: Check OK response on missing optional fields (stazione con versione primitive 2)
         Given <elem> with <value> in activatePaymentNoticeV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti

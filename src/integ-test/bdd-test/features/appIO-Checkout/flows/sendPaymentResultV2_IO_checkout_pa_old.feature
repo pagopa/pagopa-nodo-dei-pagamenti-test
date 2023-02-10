@@ -599,7 +599,7 @@ Feature: flow tests for sendPaymentResultV2
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @test 
+    @test
     Scenario: FLUSSO_SPR_01_IO_OLD (part 2)
         Given the FLUSSO_SPR_01_IO_OLD (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -806,7 +806,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test 
+    @test
     Scenario: T_SPR_V2_16 (part 2)
         Given the T_SPR_V2_16 (part 1) scenario executed successfully
         And wait 12 seconds for expiration
@@ -863,7 +863,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test 
+    @test
     Scenario: T_SPR_V2_17 (part 2)
         Given the T_SPR_V2_17 (part 1) scenario executed successfully
         And wait 10 seconds for expiration
@@ -908,7 +908,7 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.debtor is equal to value RCCGLD09P09H501E
 
     # T_SPR_V2_18
-    @test 
+    @test
     Scenario: T_SPR_V2_18
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -957,7 +957,7 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.debtor is equal to value RCCGLD09P09H501E
 
     # T_SPR_V2_19
-    @test 
+    @test
     Scenario: T_SPR_V2_19
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -1019,7 +1019,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test 
+    @test
     Scenario: T_SPR_V2_20 (part 2)
         Given the T_SPR_V2_20 (part 1) scenario executed successfully
         When job mod3CancelV1 triggered after 0 seconds
@@ -1076,7 +1076,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test 
+    @test
     Scenario: T_SPR_V2_21 (part 2)
         Given the T_SPR_V2_21 (part 1) scenario executed successfully
         When job mod3CancelV1 triggered after 5 seconds
@@ -1129,7 +1129,7 @@ Feature: flow tests for sendPaymentResultV2
         And the nodoInviaRPT scenario executed successfully
         When job annullamentoRptMaiRichiesteDaPm triggered after 70 seconds
         Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
-    @test 
+    @test
     Scenario: T_SPR_V2_22 (part 2)
         Given the T_SPR_V2_22 (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -1187,7 +1187,7 @@ Feature: flow tests for sendPaymentResultV2
         And job paInviaRt triggered after 5 seconds
         Then check outcome is OK of sendPaymentOutcome response
         And verify the HTTP status code of paInviaRt response is 200
-    @test 
+    @test
     Scenario: T_SPR_V2_23 (part 3)
         Given the T_SPR_V2_23 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -1251,7 +1251,7 @@ Feature: flow tests for sendPaymentResultV2
         And job paInviaRt triggered after 5 seconds
         Then check outcome is OK of sendPaymentOutcome response
         And verify the HTTP status code of paInviaRt response is 200
-    @test 
+    @test
     Scenario: T_SPR_V2_24 (part 3)
         Given the T_SPR_V2_24 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -1323,7 +1323,7 @@ Feature: flow tests for sendPaymentResultV2
         And job paInviaRt triggered after 5 seconds
         Then check outcome is OK of sendPaymentOutcome response
         And verify the HTTP status code of paInviaRt response is 200
-    @test 
+    @test
     Scenario: T_SPR_V2_25 (part 3)
         Given the T_SPR_V2_25 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -1395,7 +1395,7 @@ Feature: flow tests for sendPaymentResultV2
         And job paInviaRt triggered after 5 seconds
         Then check outcome is OK of sendPaymentOutcome response
         And verify the HTTP status code of paInviaRt response is 200
-    @test 
+    @test
     Scenario: T_SPR_V2_26 (part 3)
         Given the T_SPR_V2_26 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -1467,7 +1467,7 @@ Feature: flow tests for sendPaymentResultV2
         And job paInviaRt triggered after 5 seconds
         Then check outcome is OK of sendPaymentOutcome response
         And verify the HTTP status code of paInviaRt response is 200
-    @test 
+    @test
     Scenario: T_SPR_V2_27 (part 3)
         Given the T_SPR_V2_27 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -1539,7 +1539,7 @@ Feature: flow tests for sendPaymentResultV2
         And job paInviaRt triggered after 5 seconds
         Then check outcome is OK of sendPaymentOutcome response
         And verify the HTTP status code of paInviaRt response is 200
-    @test 
+    @test
     Scenario: T_SPR_V2_28 (part 3)
         Given the T_SPR_V2_28 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds

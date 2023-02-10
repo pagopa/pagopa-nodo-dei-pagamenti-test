@@ -2,7 +2,7 @@ Feature: BUG_fullName_CarattereSpeciale
 
     Background:
         Given systems up
-@test
+    @test
     Scenario: activatePaymentNotice request
         Given initial XML activatePaymentNotice
             """
