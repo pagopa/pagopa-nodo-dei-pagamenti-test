@@ -190,11 +190,14 @@ Feature: process tests for NM3 with station migration from V1 to V2
         When job mod3CancelV1 triggered after 6 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
 
-
+@test
     # test execution
     Scenario: Execution db check
-        Given the Execute mod3CancelV1 scenario executed successfully
-        And PSP waits 5 seconds for expiration
+        Given the Execute sendPaymentOutcome request scenario executed successfully
+        When job paInviaRt triggered after 5 seconds
+        Then verify the HTTP status code of paInviaRt response is 200
+        And updates through the query stationUpdate of the table STAZIONI the parameter VERSIONE with 1 under macro sendPaymentResultV2 on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
         #RT
         Then execution query rt to get value on the table RT, with the columns ID_SESSIONE,CCP,IDENT_DOMINIO,IUV,COD_ESITO,DATA_RICEVUTA,DATA_RICHIESTA,ID_RICEVUTA,ID_RICHIESTA,SOMMA_VERSAMENTI,INSERTED_TIMESTAMP,UPDATED_TIMESTAMP,CANALE,ID under macro NewMod3 with db name nodo_online
         And execution query rpt to get value on the table RPT, with the columns CCP,IDENT_DOMINIO,IUV,ID_MSG_RICH,CANALE under macro NewMod3 with db name nodo_online
@@ -249,13 +252,3 @@ Feature: process tests for NM3 with station migration from V1 to V2
         #POSITION_STATUS/SNAPSHOT
         And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
-
-    #DB update 2
-    Scenario: Execute station version update 2
-        Given the Execution db check scenario executed successfully
-        Then updates through the query stationUpdate of the table STAZIONI the parameter VERSIONE with 1 under macro sendPaymentResultV2 on db nodo_cfg
-
-    #refresh pa e stazioni
-    Scenario: Execute refresh pa e stazioni
-        Given the Execute station version update 2 scenario executed successfully
-        Then refresh job PA triggered after 10 seconds
