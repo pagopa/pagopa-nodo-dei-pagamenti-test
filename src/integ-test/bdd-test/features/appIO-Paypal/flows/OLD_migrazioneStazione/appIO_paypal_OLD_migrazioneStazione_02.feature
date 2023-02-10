@@ -378,9 +378,14 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
+@test
     #DB Check
     Scenario: Execute DB check
         Given the Execute sendPaymentOutcome request scenario executed successfully
+        When job paInviaRt triggered after 5 seconds
+        Then verify the HTTP status code of paInviaRt response is 200
+        And updates through the query stationUpdate of the table STAZIONI the parameter VERSIONE with 1 under macro sendPaymentResultV2 on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
         And wait 25 seconds for expiration
         #POSITION_PAYMENT_STATUS
         Then checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED, PAID, NOTICE_GENERATED, NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
@@ -428,13 +433,3 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
         And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query rt_1 on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query rt_1 on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query rt_1 on db nodo_online under macro NewMod3
-
-    #DB update 2
-    Scenario: Execute station version update 2
-        Given the Execute DB check scenario executed successfully
-        Then updates through the query stationUpdate of the table STAZIONI the parameter VERSIONE with 1 under macro sendPaymentResultV2 on db nodo_cfg
-
-    #refresh pa e stazioni
-    Scenario: Execute refresh pa e stazioni 2
-        Given the Execute station version update 2 scenario executed successfully
-        Then refresh job PA triggered after 10 seconds
