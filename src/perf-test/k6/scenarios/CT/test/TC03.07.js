@@ -17,7 +17,7 @@ import { sendPaymentOutput_NN } from './api/sendPaymentOutput_NN.js';
 import { activatePaymentNotice_NN } from './api/activatePaymentNotice_NN.js';
 import { activatePaymentNoticeIdp_NN } from './api/activatePaymentNoticeIdp_NN.js';
 import { verifyPaymentNotice_NN } from './api/verifyPaymentNotice_NN.js';
-import { demandPaymentNotice_NN } from './api/demandPaymentNotice_NN.js';
+// import { demandPaymentNotice_NN } from './api/demandPaymentNotice_NN.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
 import * as iuvUtil from './util/iuv_util.js';
@@ -107,7 +107,7 @@ export const options = {
     'http_req_duration{activatePaymentNotice_NN:http_req_duration}': [],
     'http_req_duration{activatePaymentNoticeIdp_NN:http_req_duration}': [],
     'http_req_duration{verifyPaymentNotice_NN:http_req_duration}': [],
-    'http_req_duration{demandPaymentNotice_NN:http_req_duration}': [],
+    // 'http_req_duration{demandPaymentNotice_NN:http_req_duration}': [],
     'http_req_duration{sendPaymentOutcome:http_req_duration}': [],
     'http_req_duration{Verifica:http_req_duration}': [],
     'http_req_duration{Attiva:http_req_duration}': [],
@@ -133,14 +133,14 @@ export const options = {
     'checks{sendPaymentOutcome_NN:over_sla1000}': [],
     'checks{sendPaymentOutcome_NN:ok_rate}': [],
     'checks{sendPaymentOutcome_NN:ko_rate}': [],
-    'checks{demandPaymentNotice_NN:over_sla300}': [],
-    'checks{demandPaymentNotice_NN:over_sla400}': [],
-    'checks{demandPaymentNotice_NN:over_sla500}': [],
-    'checks{demandPaymentNotice_NN:over_sla600}': [],
-    'checks{demandPaymentNotice_NN:over_sla800}': [],
-    'checks{demandPaymentNotice_NN:over_sla1000}': [],
-    'checks{demandPaymentNotice_NN:ok_rate}': [],
-    'checks{demandPaymentNotice_NN:ko_rate}': [],
+    // 'checks{demandPaymentNotice_NN:over_sla300}': [],
+    // 'checks{demandPaymentNotice_NN:over_sla400}': [],
+    // 'checks{demandPaymentNotice_NN:over_sla500}': [],
+    // 'checks{demandPaymentNotice_NN:over_sla600}': [],
+    // 'checks{demandPaymentNotice_NN:over_sla800}': [],
+    // 'checks{demandPaymentNotice_NN:over_sla1000}': [],
+    // 'checks{demandPaymentNotice_NN:ok_rate}': [],
+    // 'checks{demandPaymentNotice_NN:ko_rate}': [],
     'checks{activatePaymentNotice_NN:over_sla300}': [],
     'checks{activatePaymentNotice_NN:over_sla400}': [],
     'checks{activatePaymentNotice_NN:over_sla500}': [],
@@ -755,24 +755,24 @@ function sd2Transf() {
 
 
 
-function sd2TransfMod4() {
+// function sd2TransfMod4() {
 
-  let rndAnagPsp = inputDataUtil.getAnagPsp();
-  let rndAnagPaNew = inputDataUtil.getAnagPaNew();
-  let noticeNmbr = genNoticeNumber();
-  let idempotencyKey = genIdempotencyKey();
-
-
-  let res = demandPaymentNotice_NN(baseUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
-  noticeNmbr = res.noticeNmbr;
+//   let rndAnagPsp = inputDataUtil.getAnagPsp();
+//   let rndAnagPaNew = inputDataUtil.getAnagPaNew();
+//   let noticeNmbr = genNoticeNumber();
+//   let idempotencyKey = genIdempotencyKey();
 
 
-  let paymentToken = executeIdp_NN(rndAnagPsp, rndAnagPaNew, noticeNmbr, 2);
-  console.debug("sd2TransfMod4 paymentToken " + paymentToken);
-  paymentTokenGlobal = paymentToken;
-  res = sendPaymentOutput_NN(baseUrl, rndAnagPsp, paymentToken);
+//   let res = demandPaymentNotice_NN(baseUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
+//   noticeNmbr = res.noticeNmbr;
 
-}
+
+//   let paymentToken = executeIdp_NN(rndAnagPsp, rndAnagPaNew, noticeNmbr, 2);
+//   console.debug("sd2TransfMod4 paymentToken " + paymentToken);
+//   paymentTokenGlobal = paymentToken;
+//   res = sendPaymentOutput_NN(baseUrl, rndAnagPsp, paymentToken);
+
+// }
 
 
 
@@ -796,23 +796,23 @@ function sd5Transf() {
 }
 
 
-function sd5TransfMod4() {
-  let rndAnagPsp = inputDataUtil.getAnagPsp();
-  let rndAnagPaNew = inputDataUtil.getAnagPaNew();
-  let noticeNmbr = genNoticeNumber();
-  let idempotencyKey = genIdempotencyKey();
+// function sd5TransfMod4() {
+//   let rndAnagPsp = inputDataUtil.getAnagPsp();
+//   let rndAnagPaNew = inputDataUtil.getAnagPaNew();
+//   let noticeNmbr = genNoticeNumber();
+//   let idempotencyKey = genIdempotencyKey();
 
 
-  let res = demandPaymentNotice_NN(baseUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
-  noticeNmbr = res.noticeNmbr;
+//   let res = demandPaymentNotice_NN(baseUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
+//   noticeNmbr = res.noticeNmbr;
 
 
-  let paymentToken = executeIdp_NN(rndAnagPsp, rndAnagPaNew, noticeNmbr, 5);
-  console.debug("sd5TransfMod4 paymentToken" + paymentToken);
-  paymentTokenGlobal = paymentToken;
-  res = sendPaymentOutput_NN(baseUrl, rndAnagPsp, paymentToken);
+//   let paymentToken = executeIdp_NN(rndAnagPsp, rndAnagPaNew, noticeNmbr, 5);
+//   console.debug("sd5TransfMod4 paymentToken" + paymentToken);
+//   paymentTokenGlobal = paymentToken;
+//   res = sendPaymentOutput_NN(baseUrl, rndAnagPsp, paymentToken);
 
-}
+// }
 
 
 
