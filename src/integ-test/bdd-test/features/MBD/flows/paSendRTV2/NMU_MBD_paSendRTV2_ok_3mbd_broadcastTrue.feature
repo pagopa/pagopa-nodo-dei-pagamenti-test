@@ -301,7 +301,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And wait 10 seconds for expiration
+        And wait 5 seconds for expiration
         When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
@@ -312,7 +312,6 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
         Given the Execute sendPaymentOutcomeV2 scenario executed successfully
         And updates through the query stationUpdateBroadcast of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro sendPaymentResultV2 on db nodo_cfg
         Then refresh job PA triggered after 10 seconds
-        And wait 20 seconds for expiration
         # POSITION_TRANSFER_MBD
         Then verify 3 record for the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value $MB.TipoBollo of the record at column TIPO_BOLLO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1

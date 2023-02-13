@@ -274,7 +274,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And wait 10 seconds for expiration
+        And wait 5 seconds for expiration
         When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
@@ -283,7 +283,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
     # DB check
     Scenario: execute DB check
         Given the Execute sendPaymentOutcomeV2 scenario executed successfully
-        And wait 30 seconds for expiration
+        And wait 5 seconds for expiration
         Then verify 1 record for the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value $MB.TipoBollo of the record at column TIPO_BOLLO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value BD of the record at column TIPO_ALLEGATO_RICEVUTA of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
@@ -296,8 +296,8 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
         And checks the value sendPaymentOutcomeV2 of the record at column INSERTED_BY of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value sendPaymentOutcomeV2 of the record at column UPDATED_BY of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         # RE
-        And verify 1 record for the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
-        And checks the value REQ of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
+        And verify 2 record for the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
+        And checks the value REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And checks the value NOTICE_GENERATED,NOTICE_SENT of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
         # POSITION_PAYMENT_STATUS
@@ -322,14 +322,15 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             <soapenv:Header/>
             <soapenv:Body>
             <paf:paSendRTV2Response>
-            <delay>15000</delay>
+            <delay>10000</delay>
             <outcome>OK</outcome>
             </paf:paSendRTV2Response>
             </soapenv:Body>
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
-        When job paSendRt triggered after 12 seconds
+        When job paSendRt triggered after 0 seconds
+        And wait 15 seconds for expiration
         Then verify the HTTP status code of paSendRt response is 200
 
         # DB check 1
