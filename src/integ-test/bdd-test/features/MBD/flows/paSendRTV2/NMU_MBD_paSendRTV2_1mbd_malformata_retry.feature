@@ -317,7 +317,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
         Given the execute DB check scenario executed successfully
         When job paSendRt triggered after 10 seconds
         And wait 15 seconds for expiration
-
+    @test
     # trigger pa send RT retry
     Scenario: Execute paSendRT
         Given the clean paSendRt queue scenario executed successfully
