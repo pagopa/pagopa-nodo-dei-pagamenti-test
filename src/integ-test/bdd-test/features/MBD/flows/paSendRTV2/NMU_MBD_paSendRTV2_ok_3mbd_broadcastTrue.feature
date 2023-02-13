@@ -335,10 +335,9 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
         And checks the value ciao of the record at column REQ_HASH_DOCUMENTO of the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2_desc on db nodo_online under macro sendPaymentResultV2
         And checks the value MI of the record at column REQ_PROVINCIA_RESIDENZA of the table POSITION_TRANSFER retrived by the query position_receipt_recipient_v2_desc on db nodo_online under macro sendPaymentResultV2
         # RE 
-        # 3 check momentaneamente commentati
-        # And verify 6 record for the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
-        # And checks the value REQ,RESP,REQ,RESP,REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
-        # And checks the value 66666666666_08,66666666666_08,90000000001_06,90000000001_06,90000000001_01,90000000001_01 of the record at column EROGATORE_DESCR of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
+        And verify 6 record for the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
+        And checks the value REQ,RESP,REQ,RESP,REQ,RESP of the record at column SOTTO_TIPO_EVENTO of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
+        And checks the value 66666666666_08,66666666666_08,90000000001_06,90000000001_06,90000000001_01,90000000001_01 of the record at column EROGATORE_DESCR of the table RE retrived by the query select_paSendRTV2 on db re under macro sendPaymentResultV2
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And verify 9 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
         And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
