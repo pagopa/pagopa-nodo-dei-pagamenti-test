@@ -58,14 +58,14 @@ Feature: process test for NM3 with spoV2 OK and generation of receipt
         Then check outcome is OK of verifyPaymentNotice response
 
     # ActivateV2 Phase
-    Scenario: Execute activatePaymentNoticeV2 request
+    Scenario: Execute activatePaymentNotice request
         Given the Execute verifyPaymentNotice request scenario executed successfully
-        And initial XML activatePaymentNoticeV2
+        And initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <nod:activatePaymentNoticeV2Request>
+            <nod:activatePaymentNoticeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
@@ -78,7 +78,7 @@ Feature: process test for NM3 with spoV2 OK and generation of receipt
             <!--expirationTime>60000</expirationTime-->
             <amount>10.00</amount>
             <paymentNote>responseFull</paymentNote>
-            </nod:activatePaymentNoticeV2Request>
+            </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -128,7 +128,7 @@ Feature: process test for NM3 with spoV2 OK and generation of receipt
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -156,13 +156,13 @@ Feature: process test for NM3 with spoV2 OK and generation of receipt
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And save activatePaymentNoticeV2 response in activatePaymentResponse
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        And save activatePaymentNotice response in activatePaymentResponse
 
     # Payment Outcome Phase outcome OK
     Scenario: Execute sendPaymentOutcomeV2 request
-        Given the Execute activatePaymentNoticeV2 request scenario executed successfully
+        Given the Execute activatePaymentNotice request scenario executed successfully
         And initial XML sendPaymentOutcomeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -174,7 +174,7 @@ Feature: process test for NM3 with spoV2 OK and generation of receipt
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <paymentTokens>
-            <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
+            <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
             </paymentTokens>
             <outcome>OK</outcome>
             <!--Optional:-->
