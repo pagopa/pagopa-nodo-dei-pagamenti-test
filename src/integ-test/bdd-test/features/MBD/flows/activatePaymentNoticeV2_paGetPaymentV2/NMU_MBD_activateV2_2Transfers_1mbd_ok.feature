@@ -143,7 +143,7 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
         And check IBAN is IT45R0760103200000000001016 of activatePaymentNoticeV2 response
         And check key is CHIAVEOKFINNULL of activatePaymentNoticeV2 response
         And check value is CHIAVEOKFINNULL of activatePaymentNoticeV2 response
-
+    @test
     #DB check
     Scenario: DB check
         Given the activatePaymentNoticeV2 scenario executed successfully
