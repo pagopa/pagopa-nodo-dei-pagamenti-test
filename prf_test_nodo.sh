@@ -80,7 +80,7 @@ env=prf
 
 rampingSel=$(basename $output)
 rampingSel="${rampingSel%.*}"
-rampingSel=rampa_30_300_10_1
+rampingSel=rampa_50
 
 echo "rampingSel>" $rampingSel
 
@@ -140,7 +140,7 @@ rm -rf src/perf-test/k6/scenarios/CT/test/output
 mkdir -p src/perf-test/k6/scenarios/CT/test/output
 
 # blacklistCT=("TC02.03" "TC02.04" "TC03.05" "TC03.06" "TC03.07" "TC04.01" "TC04.05" "TC04.06" "TC04.07" "TC04.08" "TC04.09" "TC04.10" "TC05.02_new_new" "TC05.02_new_old" "TC05.03_new_new" "TC05.03_new_old" "TC05.04_new_new" "TC05.04_new_old") # "TC01.03"
-blacklistCT=("TC01.03" "TC02.03" "TC02.04" "TC02.05" "TC03.06" "TC04.01" "TC04.05" "TC04.06" "TC04.07" "TC04.08" "TC04.09" "TC04.10" "TC05.02_new_new" "TC05.02_new_old" "TC05.03_new_new" "TC05.03_new_old" "TC05.04_new_new" "TC05.04_new_old") # "TC03.05"
+blacklistCT=("TC01.03" "TC02.03" "TC02.04" "TC02.05" "TC03.05" "TC03.06" "TC04.01" "TC04.02" "TC04.03" "TC04.04" "TC04.05" "TC04.06" "TC04.07" "TC04.08" "TC04.09" "TC04.10" "TC05.01_new_new" "TC05.01_new_old" "TC05.02_new_new" "TC05.02_new_old" "TC05.03_new_new" "TC05.03_new_old" "TC05.04_new_new" "TC05.04_new_old") # "TC03.05"
 
 #for each script
 i=0

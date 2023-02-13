@@ -28,8 +28,8 @@ export function getBasePath(baseUrl, primitive) {
 		"nodoInviaRT": "/nodo-per-psp/v1",
 		"nodoPAChiediInformativaPA": "/nodo-per-pa/v1",
 
-		"nodoPerPMv1": "nodo-per-pm/v1",
-		"nodoPerPMv2": "nodo-per-pm/v2",
+		"nodoPerPMv1": "/nodo-per-pm/v1",
+		"nodoPerPMv2": "/nodo-per-pm/v2",
 	}
 	return baseUrl + primitiveMapping[primitive]
 }

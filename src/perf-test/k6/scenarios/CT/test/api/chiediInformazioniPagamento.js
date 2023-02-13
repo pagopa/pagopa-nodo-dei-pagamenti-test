@@ -9,17 +9,18 @@ export const All_Trend = new Trend('ALL');
 
 
 export function chiediInformazioniPagamento(baseUrl,paymentToken, rndAnagPa) {
- 
- let res=http.get(getBasePath(baseUrl, "nodoPerPMv1")+'/informazioniPagamento?idPagamento='+paymentToken,
+
+ const pathToCall = getBasePath(baseUrl, "nodoPerPMv1")+'/informazioniPagamento?idPagamento='
+ let res=http.get(pathToCall+paymentToken,
     { headers: getHeaders({ 'Content-Type': 'application/json'/*, 'Host': 'api.prf.platform.pagopa.it'*/ }) ,
-	tags: { chiediInformazioniPagamento: 'http_req_duration' , ALL: 'http_req_duration'}
+	tags: { chiediInformazioniPagamento: 'http_req_duration' , ALL: 'http_req_duration', name: pathToCall+"<idPagamento>"}
 	}
   );
   
   console.debug("chiediInformazioniPagamento RES");
   console.debug(JSON.stringify(res));
   
-  //console.debug(JSON.stringify(res));
+  console.debug(JSON.stringify(res));
     chiediInformazioniPagamento_Trend.add(res.timings.duration);
     All_Trend.add(res.timings.duration);
 
