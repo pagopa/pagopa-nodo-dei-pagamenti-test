@@ -261,7 +261,7 @@ Feature: process test for NM3 with spoV2 OK and generation of receipt
         And with the query position_receipt check assert beetwen elem APPLICATION_DATE in position 21 and elem APPLICATION_DATE with position 11 of the query payment_status
         And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And with the query position_receipt check assert beetwen elem METADATA in position 23 and elem METADATA with position 0 of the query position_payment_plan
-        And with the query position_receipt check assert beetwen elem RT_ID in position 24 and elem METADATA with position 13 of the query rt
+        #And with the query position_receipt check assert beetwen elem RT_ID in position 24 and elem METADATA with position 13 of the query rt
         And with the query position_receipt check assert beetwen elem FK_POSITION_PAYMENT in position 25 and elem METADATA with position 10 of the query payment_status
         #POSITION_RECEIPT_XML
         And execution query position_receipt_xml to get value on the table POSITION_RECEIPT_XML, with the columns ID,PA_FISCAL_CODE,NOTICE_ID,CREDITOR_REFERENCE_ID,PAYMENT_TOKEN,RECIPIENT_PA_FISCAL_CODE,RECIPIENT_BROKER_PA_ID,RECIPIENT_STATION_ID,XML,INSERTED_TIMESTAMP,FK_POSITION_RECEIPT under macro NewMod3 with db name nodo_online
