@@ -39,7 +39,7 @@ console.log(verificaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP,
 		 getBasePath(baseUrl, "nodoVerificaRPT"),
     verificaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, auxDigit),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction':'nodoVerificaRPT', 'x-forwarded-for':'10.6.189.192'}) ,
-	tags: { Verifica: 'http_req_duration', ALL: 'http_req_duration'}
+	tags: { Verifica: 'http_req_duration', ALL: 'http_req_duration',primitiva:"nodoVerificaRPT"}
 	}
   );
   

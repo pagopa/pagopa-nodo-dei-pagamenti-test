@@ -46,7 +46,7 @@ export function activatePaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr
  let res=http.post(getBasePath(baseUrl, "activatePaymentNotice"),
     activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey, paymentNote),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction':'activatePaymentNotice', 'x-forwarded-for':'10.6.189.192' }) ,
-	tags: { activatePaymentNotice_NN: 'http_req_duration' , ALL: 'http_req_duration'}
+	tags: { activatePaymentNotice_NN: 'http_req_duration' , ALL: 'http_req_duration', primitiva: "activatePaymentNotice"}
 	}
   );
   

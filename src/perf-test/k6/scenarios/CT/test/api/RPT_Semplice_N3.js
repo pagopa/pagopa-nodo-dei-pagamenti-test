@@ -53,7 +53,7 @@ export function RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorRefer
 		 getBasePath(baseUrl, "nodoInviaRPT"),
     rptSempliceN3ReqBody(rndAnagPaNew.PA, rndAnagPaNew.INTPA, rndAnagPaNew.STAZPA,paymentToken, creditorReferenceId, rptEncoded),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRPT', 'x-forwarded-for':'10.6.189.192' }) ,
-	tags: { RPT_Semplice_N3: 'http_req_duration', ALL: 'http_req_duration'}
+	tags: { RPT_Semplice_N3: 'http_req_duration', ALL: 'http_req_duration',primitiva:"nodoInviaRPT"}
 	}
   );
   

@@ -13,7 +13,7 @@ export function chiediInformazioniPagamento(baseUrl,paymentToken, rndAnagPa) {
  const pathToCall = getBasePath(baseUrl, "nodoPerPMv1")+'/informazioniPagamento?idPagamento='
  let res=http.get(pathToCall+paymentToken,
     { headers: getHeaders({ 'Content-Type': 'application/json'/*, 'Host': 'api.prf.platform.pagopa.it'*/ }) ,
-	tags: { chiediInformazioniPagamento: 'http_req_duration' , ALL: 'http_req_duration', name: pathToCall+"<idPagamento>"}
+	tags: { chiediInformazioniPagamento: 'http_req_duration' , ALL: 'http_req_duration', name: pathToCall+"<idPagamento>", primitiva: "informazioniPagamento"}
 	}
   );
   

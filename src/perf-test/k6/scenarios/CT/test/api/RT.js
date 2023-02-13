@@ -44,7 +44,7 @@ export function RT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
 		 getBasePath(baseUrl, "nodoInviaRT"),
     rtReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, rndAnagPa.PA, iuv, rtEncoded),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRT' }) ,
-	tags: { RT: 'http_req_duration', ALL: 'http_req_duration'}
+	tags: { RT: 'http_req_duration', ALL: 'http_req_duration',primitiva:"nodoInviaRT"}
 	}
   );
   

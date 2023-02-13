@@ -78,7 +78,7 @@ console.log(AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, r
 	 getBasePath(baseUrl, "nodoAttivaRPT"),
     AttivaReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , iuv, ccp),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoAttivaRPT', 'x-forwarded-for':'10.6.189.192' }) ,
-	tags: { Attiva: 'http_req_duration', ALL: 'http_req_duration'}
+	tags: { Attiva: 'http_req_duration', ALL: 'http_req_duration', primitiva: "nodoAttivaRPT"}
 	}
   );
   

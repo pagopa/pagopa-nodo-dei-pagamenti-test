@@ -56,7 +56,7 @@ export function sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken) {
     getBasePath(baseUrl, "sendPaymentOutcome"),
     sendPaymentOutputReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'sendPaymentOutcome' }) ,
-	tags: { sendPaymentOutcome: 'http_req_duration', ALL: 'http_req_duration'}
+	tags: { sendPaymentOutcome: 'http_req_duration', ALL: 'http_req_duration',primitiva:"sendPaymentOutcome"}
 	}
   );
   

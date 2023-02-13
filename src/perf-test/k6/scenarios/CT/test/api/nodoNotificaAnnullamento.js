@@ -9,10 +9,10 @@ export const All_Trend = new Trend('ALL');
 
 
 export function nodoNotificaAnnullamento(baseUrl,paymentToken) {
- 
- let res=http.get(getBasePath(baseUrl, "nodoPerPMv1")+'/notificaAnnullamento?idPagamento='+paymentToken,
+ const pathToCall = getBasePath(baseUrl, "nodoPerPMv1")+'/notificaAnnullamento?idPagamento='
+ let res=http.get(pathToCall+paymentToken,
     { headers: getHeaders({ 'Content-Type': 'application/json' }) ,
-	tags: { nodoNotificaAnnullamento: 'http_req_duration' , ALL: 'http_req_duration'}
+	tags: { nodoNotificaAnnullamento: 'http_req_duration' , ALL: 'http_req_duration', name: pathToCall+"<idPagamento>", primitiva: "notificaAnnullamento"}
 	}
   );
   console.debug("nodoNotificaAnnullamento RES");

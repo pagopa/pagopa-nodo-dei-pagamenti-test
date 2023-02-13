@@ -39,7 +39,7 @@ export function demandPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,i
     getBasePath(baseUrl, "demandPaymentNotice"),
     demandReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, idServizio),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'demandPaymentNotice' }) ,
-	tags: { demandPaymentNotice_NN: 'http_req_duration', ALL: 'http_req_duration'}
+	tags: { demandPaymentNotice_NN: 'http_req_duration', ALL: 'http_req_duration', primitiva: "demandPaymentNotice"}
 	}
   );
   

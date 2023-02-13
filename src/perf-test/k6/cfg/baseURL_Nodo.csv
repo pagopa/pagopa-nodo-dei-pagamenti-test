@@ -3,3 +3,4 @@ pagoPA_DEV_apim;https://api.dev.platform.pagopa.it/nodo-pagamenti/api/v1/webserv
 pagoPA_UAT_apim;https://api.uat.platform.pagopa.it/nodo-pagamenti/api/v1/webservices/input;10.230.9.5;;
 pagoPA_PERF_apim;https://nodo-dei-pagamenti-prf-npa-nodopagamenti.tst-npc.sia.eu/webservices/input;10.230.9.5;https://nodo-dei-pagamenti-prf-npa-nodopagamenti.tst-npc.sia.eu/webservices/input;https://nodo-dei-pagamenti-prf-npa-nodopagamenti.tst-npc.sia.eu/azurept
 pagoPA_PERF_apim_REAL;https://api.uat.platform.pagopa.it/nodo-replica-ndp;;https://api.uat.platform.pagopa.it/nodo-replica-ndp;https://api.uat.platform.pagopa.it/nodo-replica-ndp
+local;http://localhost:8080;;http://localhost:8080;http://localhost:8080

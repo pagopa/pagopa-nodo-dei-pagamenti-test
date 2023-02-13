@@ -37,7 +37,7 @@ export function verifyPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,i
 		 getBasePath(baseUrl, "verifyPaymentNotice"),
     verifyReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction':'verifyPaymentNotice', 'x-forwarded-for':'10.6.189.192' }) ,
-	tags: { verifyPaymentNotice_NN: 'http_req_duration', ALL: 'http_req_duration'}
+	tags: { verifyPaymentNotice_NN: 'http_req_duration', ALL: 'http_req_duration',primitiva:"verifyPaymentNotice"}
 	}
   );
   

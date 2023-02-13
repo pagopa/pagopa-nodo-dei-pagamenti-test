@@ -35,7 +35,7 @@ export function verifyPaymentNotice(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idem
     getBasePath(baseUrl, "verifyPaymentNotice"),
     verifyReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPsp.CHPSP_C, rndAnagPa.CF , noticeNmbr),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction':'verifyPaymentNotice' }) ,
-	tags: { verifyPaymentNotice: 'http_req_duration', ALL: 'http_req_duration'}
+	tags: { verifyPaymentNotice: 'http_req_duration', ALL: 'http_req_duration',primitiva:"verifyPaymentNotice"}
 	}
   );
   

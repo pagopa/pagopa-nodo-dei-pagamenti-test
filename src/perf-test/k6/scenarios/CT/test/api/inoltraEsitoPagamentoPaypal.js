@@ -99,7 +99,7 @@ export function inoltraEsitoPagamentoPaypal(baseUrl,rndAnagPsp,paymentToken,valu
     JSON.stringify(body),
     //JSON.stringify(rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken)),
     { headers: getHeaders({ 'Content-Type': 'application/json' }) ,
-	tags: { inoltraEsitoPagamentoPaypal: 'http_req_duration', ALL: 'http_req_duration'}
+	tags: { inoltraEsitoPagamentoPaypal: 'http_req_duration', ALL: 'http_req_duration', primitiva: "inoltroEsito/paypal"}
 	}
   );
   

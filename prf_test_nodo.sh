@@ -1,4 +1,4 @@
-# find . -type d
+#find . -type d
 
 # ------------------
 
@@ -172,6 +172,3 @@ for d in src/perf-test/k6/scenarios/CT/test/*.js; do
 
 
 done
-
-
-

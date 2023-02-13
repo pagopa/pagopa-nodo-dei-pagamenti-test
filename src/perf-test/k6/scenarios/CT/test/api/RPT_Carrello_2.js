@@ -65,7 +65,7 @@ export function RPT_Carrello_2(baseUrl,rndAnagPa,iuvs) {
 		 getBasePath(baseUrl, "nodoInviaCarrelloRPT"),
     rptReqBody(rndAnagPa.PA, rndAnagPa.INTPA, rndAnagPa.STAZPA, iuvs, rptEncodeds),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaCarrelloRPT', 'x-forwarded-for':'10.6.189.192' }) ,
-	tags: { RPT_Carrello_2: 'http_req_duration', ALL: 'http_req_duration'}
+	tags: { RPT_Carrello_2: 'http_req_duration', ALL: 'http_req_duration', primitiva: "nodoInviaCarrelloRPT"}
 	}
   );
   

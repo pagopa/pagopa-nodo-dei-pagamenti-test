@@ -115,7 +115,7 @@ let body = `{\"paymentTokens\":[\"${paymentToken}\"],\"outcome\":\"${outcome}\",
     //JSON.stringify(closePaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId)),
     body,
     { headers: getHeaders({ 'Content-Type': 'application/json' }) ,
-	tags: { closePayment: 'http_req_duration', ALL: 'http_req_duration'}
+	tags: { closePayment: 'http_req_duration', ALL: 'http_req_duration', primitiva: "closepayment"}
 	}
   );
   
