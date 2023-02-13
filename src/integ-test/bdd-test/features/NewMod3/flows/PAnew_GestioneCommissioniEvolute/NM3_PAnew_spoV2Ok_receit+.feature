@@ -236,7 +236,6 @@ Feature: process test for NM3 with spoV2 OK and generation of receipt
         And execution query psp to get value on the table PSP, with the columns RAGIONE_SOCIALE,CODICE_FISCALE,VAT_NUMBER under macro NewMod3 with db name nodo_cfg
         And execution query position_payment_plan to get value on the table POSITION_PAYMENT_PLAN, with the columns METADATA under macro NewMod3 with db name nodo_online
         And execution query payment_status to get value on the table POSITION_PAYMENT, with the columns AMOUNT,FEE,PAYMENT_TOKEN,NOTICE_ID,PA_FISCAL_CODE,OUTCOME,CHANNEL_ID,PAYMENT_CHANNEL,PAYER_ID,PAYMENT_METHOD,ID,APPLICATION_DATE,CREDITOR_REFERENCE_ID,BROKER_PA_ID,STATION_ID under macro NewMod3 with db name nodo_online
-        And execution query rt to get value on the table RT, with the columns ID_SESSIONE,CCP,IDENT_DOMINIO,IUV,COD_ESITO,DATA_RICEVUTA,DATA_RICHIESTA,ID_RICEVUTA,ID_RICHIESTA,SOMMA_VERSAMENTI,INSERTED_TIMESTAMP,UPDATED_TIMESTAMP,CANALE,ID under macro NewMod3 with db name nodo_online
         And with the query position_receipt check assert beetwen elem RECEIPT_ID in position 0 and elem PAYMENT_TOKEN with position 2 of the query payment_status
         And with the query position_receipt check assert beetwen elem NOTICE_ID in position 1 and elem NOTICE_ID with position 3 of the query payment_status
         And with the query position_receipt check assert beetwen elem PA_FISCAL_CODE in position 2 and elem PA_FISCAL_CODE with position 4 of the query payment_status
@@ -261,7 +260,6 @@ Feature: process test for NM3 with spoV2 OK and generation of receipt
         And with the query position_receipt check assert beetwen elem APPLICATION_DATE in position 21 and elem APPLICATION_DATE with position 11 of the query payment_status
         And checks the value NotNone of the record at column TRANSFER_DATE of the table POSITION_RECEIPT retrived by the query position_receipt on db nodo_online under macro NewMod3
         And with the query position_receipt check assert beetwen elem METADATA in position 23 and elem METADATA with position 0 of the query position_payment_plan
-        #And with the query position_receipt check assert beetwen elem RT_ID in position 24 and elem METADATA with position 13 of the query rt
         And with the query position_receipt check assert beetwen elem FK_POSITION_PAYMENT in position 25 and elem METADATA with position 10 of the query payment_status
         #POSITION_RECEIPT_XML
         And execution query position_receipt_xml to get value on the table POSITION_RECEIPT_XML, with the columns ID,PA_FISCAL_CODE,NOTICE_ID,CREDITOR_REFERENCE_ID,PAYMENT_TOKEN,RECIPIENT_PA_FISCAL_CODE,RECIPIENT_BROKER_PA_ID,RECIPIENT_STATION_ID,XML,INSERTED_TIMESTAMP,FK_POSITION_RECEIPT under macro NewMod3 with db name nodo_online
