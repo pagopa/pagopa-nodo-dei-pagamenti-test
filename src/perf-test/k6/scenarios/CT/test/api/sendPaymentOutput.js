@@ -51,7 +51,7 @@ return `
 
 export function sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken) {
  //console.debug("VERIFY="+noticeNmbr);
- 
+ console.log(sendPaymentOutputReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken))
  const res = http.post(
     getBasePath(baseUrl, "sendPaymentOutcome"),
     sendPaymentOutputReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken),
