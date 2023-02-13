@@ -116,7 +116,7 @@ Feature: process test for NM3 with spoV2 OK and generation of receipt
         When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
-
+    @test
     # test execution
     Scenario: Execution test DB
         Given the Execute sendPaymentOutcomeV2 request scenario executed successfully
