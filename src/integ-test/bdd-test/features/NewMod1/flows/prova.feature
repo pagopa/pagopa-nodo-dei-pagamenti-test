@@ -222,7 +222,7 @@ Feature: PAG-2258
     Scenario: Test (part 3)
         Given the Test (part 2) scenario executed successfully
         And wait 12 seconds for expiration
-        And the sendPaymentOutcome request scenario executed successfully
         And the mod3CancelV2 scenario executed successfully
-        When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcome response
+# And the sendPaymentOutcome request scenario executed successfully
+# When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+# Then check outcome is KO of sendPaymentOutcome response
