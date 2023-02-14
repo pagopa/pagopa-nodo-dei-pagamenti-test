@@ -189,11 +189,12 @@ Feature: PAG-2258
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
     Scenario: mod3CancelV2
-        When job mod3CancelV2 triggered after 3 seconds
+        When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
 
     Scenario: Test (part 1)
-        Given the activatePaymentNoticeV2 request scenario executed successfully
+        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        And the activatePaymentNoticeV2 request scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
@@ -209,6 +210,7 @@ Feature: PAG-2258
         Given the Test (part 2) scenario executed successfully
         And wait 12 seconds for expiration
         And the mod3CancelV2 scenario executed successfully
+        And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
 # And the sendPaymentOutcome request scenario executed successfully
 # When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
 # Then check outcome is KO of sendPaymentOutcome response
