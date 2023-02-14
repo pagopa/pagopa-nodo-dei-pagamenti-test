@@ -60,7 +60,7 @@ Feature: PAG-1879
 
     @newfix
     Scenario Outline: Test syntax error
-        Given pay_i:denominazioneRicevente with <value> in rendAttachment
+        Given pay_i:denominazioneRicevente with <value> in REND
         And REND generation
             """
             $REND
@@ -76,7 +76,7 @@ Feature: PAG-1879
 
     @newfix
     Scenario Outline: Test OK
-        Given pay_i:denominazioneRicevente with <value> in rendAttachment
+        Given pay_i:denominazioneRicevente with <value> in REND
         And REND generation
             """
             $REND
