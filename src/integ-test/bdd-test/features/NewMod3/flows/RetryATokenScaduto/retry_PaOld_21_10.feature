@@ -17,7 +17,7 @@ Feature: process tests for retryAtokenScaduto
       <password>pwdpwdpwd</password>
       <qrCode>
       <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-      <noticeNumber>#notice_number_old#</noticeNumber>
+      <noticeNumber>#notice_number#</noticeNumber>
       </qrCode>
       </nod:verifyPaymentNoticeReq>
       </soapenv:Body>
