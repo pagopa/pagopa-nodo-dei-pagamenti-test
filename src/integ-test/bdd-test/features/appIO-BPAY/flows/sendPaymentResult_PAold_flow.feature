@@ -807,7 +807,7 @@ Feature: flow checks for sendPaymentResult with PA old
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @test
+   @test @newfix
    Scenario: T_SPR_23 (retry spr)
       Given the T_SPR_23 (closePayment) scenario executed successfully
       When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -908,7 +908,7 @@ Feature: flow checks for sendPaymentResult with PA old
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @test
+   @test @newfix
    Scenario: T_SPR_26 (retry spr)
       Given the T_SPR_26 (closePayment) scenario executed successfully
       When job positionRetrySendPaymentResult triggered after 65 seconds

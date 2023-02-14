@@ -278,7 +278,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test
+    @test @newfix
     Scenario: SEM_SPO_7.1 (part 3)
         Given the SEM_SPO_7.1 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -311,7 +311,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test
+    @test @newfix
     Scenario: SEM_SPO_9.1 (part 4)
         Given the SEM_SPO_9.1 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully
@@ -394,7 +394,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test
+    @test @newfix
     Scenario: SEM_SPO_21 (part 3)
         Given the SEM_SPO_21 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -432,7 +432,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test
+    @test @newfix
     Scenario: SEM_SPO_23 (part 4)
         Given the SEM_SPO_23 (part 3) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -496,7 +496,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test
+    @test @newfix
     Scenario: SEM_SPO_28 (part 3)
         Given the SEM_SPO_28 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -522,7 +522,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test
+    @test @newfix
     Scenario: SEM_SPO_29 (part 3)
         Given the SEM_SPO_29 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully

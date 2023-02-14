@@ -303,7 +303,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 }
             }
             """
-    @test
+    @test @newfix
     Scenario: check closePaymentV2 OK with keys repeated
         Given the closePaymentV2 with keys repeated scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -339,7 +339,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 }
             }
             """
-    @test
+    @test @newfix
     Scenario: check closePaymentV2 OK with key transactionId
         Given the closePaymentV2 with key transactionId scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti

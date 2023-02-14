@@ -298,7 +298,7 @@ Feature: semantic checks for closePaymentV2
                 }
             }
             """
-    @test
+    @test @newfix
     Scenario: check closePaymentV2 OK 4
         Given the closePaymentV2 4 scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -604,7 +604,7 @@ Feature: semantic checks for closePaymentV2
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-    @test
+    @test @newfix
     Scenario: check closePaymentV2 OK 7
         Given the check nodoInviaRPT OK scenario executed successfully
         And the closePaymentV2 scenario executed successfully

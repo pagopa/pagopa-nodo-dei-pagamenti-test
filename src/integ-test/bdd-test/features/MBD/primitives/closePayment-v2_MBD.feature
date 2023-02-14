@@ -128,7 +128,7 @@ Feature: flow tests for closePaymentV2 MBD
                 }
             }
             """
-    @test
+    @test @newfix
     Scenario: Channel with VERSIONE_PRIMITIVE != 2
         Given the closePaymentV2 scenario executed successfully
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
@@ -136,7 +136,7 @@ Feature: flow tests for closePaymentV2 MBD
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid PSP/Canale for MBD of v2/closepayment response
-    @test
+    @test @newfix
     Scenario: Psp with MARCA_BOLLO_DIGITALE != 1
         Given updates through the query update_id_psp of the table PSP the parameter MARCA_BOLLO_DIGITALE with 0 under macro NewMod1 on db nodo_cfg
         And refresh job PSP triggered after 10 seconds

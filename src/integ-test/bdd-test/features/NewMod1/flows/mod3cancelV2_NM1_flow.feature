@@ -333,7 +333,7 @@ Feature: flow checks for mod3CancelV2 in NM1
         And with the query transactionid check assert beetwen elem VALID_TO in position 0 and elem TOKEN_VALID_TO with position 0 of the query select_activatev2
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
-    @test
+    @test @newfix
     Scenario: FLUSSO_NM1_M3CV2_03 (part 4)
         Given the FLUSSO_NM1_M3CV2_03 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully

@@ -214,7 +214,7 @@ Feature: semantic checks OK for activatePaymentNoticeV2Request
         And random idempotencyKey having 80000000001 as idPSP in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test
+    @test @newfix
     # [SEM_APNV2_24]
     Scenario: Check outcome OK if combination psp-channel-pa in denylist
         Given the activatePaymentNoticeV2 with paGetPayment scenario executed successfully
@@ -222,7 +222,7 @@ Feature: semantic checks OK for activatePaymentNoticeV2Request
         And idChannel with 60000000002_01 in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test
+    @test @newfix
     # [SEM_APNV2_24.1]
     Scenario: Check outcome OK if combination psp-channel-pa in denylist
         Given the activatePaymentNoticeV2 with paGetPaymentV2 scenario executed successfully
