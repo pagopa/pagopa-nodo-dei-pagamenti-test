@@ -86,6 +86,6 @@ Feature: PAG-1879
         Then check esito is OK of nodoInviaFlussoRendicontazione response
         Examples:
             | value                                                                                                                                        |
-            | a                                                                                                                                            |
             | None                                                                                                                                         |
+            | a                                                                                                                                            |
             | aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa |
