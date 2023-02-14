@@ -847,7 +847,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test @newfix
+    @test 
     Scenario: FLUSSO_CP_03 (part 3)
         Given the FLUSSO_CP_03 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -1026,7 +1026,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test @newfix
+    @test 
     Scenario: FLUSSO_CP_04 (part 3)
         Given the FLUSSO_CP_04 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -2316,7 +2316,7 @@ Feature: flow tests for closePaymentV2
         Given the FLUSSO_CP_10 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-    @test @newfix
+    @test 
     Scenario: FLUSSO_CP_10 (part 3)
         Given the FLUSSO_CP_10 (part 2) scenario executed successfully
         And wait 3 seconds for expiration
@@ -2722,7 +2722,7 @@ Feature: flow tests for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Unacceptable outcome when token has expired of v2/closepayment response
-    @test @newfix
+    @test 
     Scenario: FLUSSO_CP_12 (part 4)
         Given the FLUSSO_CP_12 (part 3) scenario executed successfully
         And wait 5 seconds for expiration
@@ -4436,7 +4436,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test @newfix
+    @test 
     Scenario: FLUSSO_CP_20 (part 3)
         Given the FLUSSO_CP_20 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -4537,7 +4537,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test @newfix
+    @test 
     Scenario: FLUSSO_CP_21 (part 3)
         Given the FLUSSO_CP_21 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -4705,7 +4705,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test @newfix
+    @test 
     Scenario: FLUSSO_CP_24 (part 3)
         Given the FLUSSO_CP_24 (part 2) scenario executed successfully
         And wait 5 seconds for expiration

@@ -978,7 +978,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 8 seconds for expiration
-    @test @newfix
+    @test
     Scenario: semantic check 21 (part 2)
         Given the semantic check 21 (part 1) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti

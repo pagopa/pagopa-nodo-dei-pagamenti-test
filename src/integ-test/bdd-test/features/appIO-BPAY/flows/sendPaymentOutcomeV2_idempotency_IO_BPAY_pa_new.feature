@@ -245,7 +245,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @test @newfix
+    @test 
     Scenario: IDMP_SPO_11 (part 4)
         Given the IDMP_SPO_11 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -284,7 +284,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @test @newfix
+    @test 
     Scenario: IDMP_SPO_12 (part 4)
         Given the IDMP_SPO_12 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -314,7 +314,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @test @newfix
+    @test 
     Scenario: IDMP_SPO_13 (part 4)
         Given the IDMP_SPO_13 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -354,7 +354,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @test @newfix
+    @test 
     Scenario: IDMP_SPO_14 (part 4)
         Given the IDMP_SPO_14 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -400,7 +400,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test @newfix
+    @test 
     Scenario: IDMP_SPO_15 (part 5)
         Given the IDMP_SPO_15 (part 4) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -443,7 +443,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test @newfix
+    @test 
     Scenario: IDMP_SPO_16.1 (part 5)
         Given the IDMP_SPO_16.1 (part 4) scenario executed successfully
         And idPSP with 70000000001 in sendPaymentOutcomeV2
@@ -490,7 +490,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test @newfix
+    @test 
     Scenario: IDMP_SPO_16.2 (part 5)
         Given the IDMP_SPO_16.2 (part 4) scenario executed successfully
         And paymentMethod with cash in sendPaymentOutcomeV2
@@ -535,7 +535,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test @newfix
+    @test 
     Scenario: IDMP_SPO_16.3 (part 5)
         Given the IDMP_SPO_16.3 (part 4) scenario executed successfully
         And streetName with street3 in sendPaymentOutcomeV2
@@ -595,7 +595,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And current date plus 1 minutes generation
         And updates through the query update_validto of the table IDEMPOTENCY_CACHE the parameter VALID_TO with $date_plus_minutes under macro NewMod1 on db nodo_online
         And wait 65 seconds for expiration
-    @test @newfix
+    @test 
     Scenario: IDMP_SPO_17 (part 5)
         Given the IDMP_SPO_17 (part 4) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -635,7 +635,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @test @newfix
+    @test 
     Scenario: IDMP_SPO_18 (part 4)
         Given the IDMP_SPO_18 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -664,7 +664,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @test @newfix
+    @test 
     Scenario: IDMP_SPO_20 (part 4)
         Given the IDMP_SPO_20 (part 3) scenario executed successfully
         And nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -701,7 +701,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test @newfix
+    @test 
     Scenario: IDMP_SPO_22 (part 5)
         Given the IDMP_SPO_22 (part 4) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -730,7 +730,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @test @newfix
+    @test 
     Scenario: IDMP_SPO_26 (part 4)
         Given the IDMP_SPO_26 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -765,7 +765,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test @newfix
+    @test 
     Scenario: IDMP_SPO_27 (part 5)
         Given the IDMP_SPO_27 (part 4) scenario executed successfully
         And random idempotencyKey having $sendPaymentOutcomeV2.idPSP as idPSP in sendPaymentOutcomeV2

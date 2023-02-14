@@ -332,7 +332,7 @@ Feature: PAG-1976
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @test @newfix
+  @test
   Scenario: Posizione non pagabile spov1 OK (part 3)
     Given the Posizione non pagabile spov1 OK (part 2) scenario executed successfully
     And the sendPaymentOutcome request scenario executed successfully
@@ -453,7 +453,7 @@ Feature: PAG-1976
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @test @newfix
+  @test
   Scenario: Posizione non pagabile spov2 OK (part 3)
     Given the Posizione non pagabile spov2 OK (part 2) scenario executed successfully
     And the sendPaymentOutcomeV2 request scenario executed successfully
