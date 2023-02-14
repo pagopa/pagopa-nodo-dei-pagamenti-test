@@ -2,7 +2,10 @@ Feature: process tests for retryAtokenScaduto
 
   Background:
     Given systems up
-    And initial XML verifyPaymentNotice
+
+  # Verify phase
+  Scenario: Execute verifyPaymentNotice request
+    Given initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header />
@@ -20,11 +23,7 @@ Feature: process tests for retryAtokenScaduto
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC old version
-
-  # Verify phase
-  Scenario: Execute verifyPaymentNotice request
-    Given initial XML paVerifyPaymentNotice
+    And initial XML paVerifyPaymentNotice
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
         <soapenv:Header />
