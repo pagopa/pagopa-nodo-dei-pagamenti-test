@@ -211,6 +211,6 @@ Feature: PAG-2258
         And wait 12 seconds for expiration
         And the mod3CancelV2 scenario executed successfully
         And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
-# And the sendPaymentOutcome request scenario executed successfully
-# When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-# Then check outcome is KO of sendPaymentOutcome response
+        And the sendPaymentOutcome request scenario executed successfully
+        When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
