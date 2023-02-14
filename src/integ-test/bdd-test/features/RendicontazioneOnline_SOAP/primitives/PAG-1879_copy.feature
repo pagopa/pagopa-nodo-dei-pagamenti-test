@@ -2,7 +2,7 @@ Feature: PAG-1879
 
     Background:
         Given systems up
-        And initial xml rendAttachment
+        And initial xml REND
             """
             <pay_i:FlussoRiversamento xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ FlussoRendicontazione_v_1_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
@@ -60,10 +60,10 @@ Feature: PAG-1879
 
     @newfix
     Scenario Outline: Test syntax error
-        Given denominazioneRicevente with <value> in rendAttachment
+        Given pay_i:denominazioneRicevente with <value> in rendAttachment
         And REND generation
             """
-            $rendAttachment
+            $REND
             """
         And the nodoInviaFlussoRendicontazione scenario executed successfully
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
@@ -76,10 +76,10 @@ Feature: PAG-1879
 
     @newfix
     Scenario Outline: Test OK
-        Given denominazioneRicevente with <value> in rendAttachment
+        Given pay_i:denominazioneRicevente with <value> in rendAttachment
         And REND generation
             """
-            $rendAttachment
+            $REND
             """
         And the nodoInviaFlussoRendicontazione scenario executed successfully
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
