@@ -586,7 +586,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test @newfix
+    @test @wip
     Scenario: RT_ISTANTANEO (part 4)
         Given the RT_ISTANTANEO (part 3) scenario executed successfully
         And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with N under macro sendPaymentResultV2 on db nodo_cfg
@@ -633,7 +633,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-    @test @newfix
+    @test @wip
     Scenario: RT_ISTANTANEO_RPT_TARDIVA (part 4)
         Given the RT_ISTANTANEO_RPT_TARDIVA (part 3) scenario executed successfully
         And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with N under macro sendPaymentResultV2 on db nodo_cfg

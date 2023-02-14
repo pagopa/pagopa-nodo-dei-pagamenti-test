@@ -227,7 +227,7 @@ Feature: process tests for NM3 with station migration from V1 to V2
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
-    @test @newfix
+    @test @wip
     # test execution
     Scenario: Execution test DB_GR_21
         Given the Execute sendPaymentOutcome request scenario executed successfully
