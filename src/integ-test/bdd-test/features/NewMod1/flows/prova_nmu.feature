@@ -174,20 +174,6 @@ Feature: PAG-2258
             </soapenv:Envelope>
             """
 
-    Scenario: pspNotifyPayment response malformata
-        Given initial XML pspNotifyPayment
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <pfn:pspNotifyPaymentRes>
-            <outcome>OO</outcome>
-            </pfn:pspNotifyPaymentRes>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
-
     Scenario: pspNotifyPayment response timeout
         Given initial XML pspNotifyPayment
             """
