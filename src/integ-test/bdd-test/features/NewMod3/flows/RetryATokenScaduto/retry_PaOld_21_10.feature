@@ -24,6 +24,31 @@ Feature: process tests for retryAtokenScaduto
 
   # Verify phase
   Scenario: Execute verifyPaymentNotice request
+    Given initial XML paVerifyPaymentNotice
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+        <soapenv:Header />
+        <soapenv:Body>
+        <paf:paVerifyPaymentNoticeRes>
+        <outcome>OK</outcome>
+        <paymentList>
+        <paymentOptionDescription>
+        <amount>10.00</amount>
+        <options>EQ</options>
+        <dueDate>2021-07-31</dueDate>
+        <detailDescription>pagamentoTest</detailDescription>
+        <allCCP>false</allCCP>
+        </paymentOptionDescription>
+        </paymentList>
+        <paymentDescription>Pagamento di Test</paymentDescription>
+        <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+        <companyName>companyName</companyName>
+        <officeName>officeName</officeName>
+        </paf:paVerifyPaymentNoticeRes>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+    And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
