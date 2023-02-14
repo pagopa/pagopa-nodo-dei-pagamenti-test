@@ -3,14 +3,14 @@ Feature: PAG-2258
     Background:
         Given systems up
 
-    Scenario: activatePaymentNotice request
-        Given initial XML activatePaymentNotice
+    Scenario: activatePaymentNoticeV2 request
+        Given initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
             xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <nod:activatePaymentNoticeReq>
+            <nod:activatePaymentNoticeV2Request>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
@@ -24,7 +24,7 @@ Feature: PAG-2258
             <amount>10.00</amount>
             <dueDate>2021-12-31</dueDate>
             <paymentNote>causale</paymentNote>
-            </nod:activatePaymentNoticeReq>
+            </nod:activatePaymentNoticeV2Request>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -74,7 +74,7 @@ Feature: PAG-2258
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
+            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -103,18 +103,42 @@ Feature: PAG-2258
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
 
-    Scenario: sendPaymentOutcome request
-        Given initial XML sendPaymentOutcome
+    Scenario: closePaymentV2 request
+        Given initial JSON v2/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "$activatePaymentNoticeV2Response.paymentToken"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "idBrokerPSP": "#id_broker_psp#",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "paymentMethod": "TPAY",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "timestampOperation": "2033-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "key": "#psp_transaction_id#"
+                }
+            }
+            """
+
+    Scenario: sendPaymentOutcomeV2 request
+        Given initial XML sendPaymentOutcomeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <nod:sendPaymentOutcomeReq>
+            <nod:sendPaymentOutcomeV2Request>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
-            <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
+            <paymentTokens>
+            <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
+            </paymentTokens>
             <outcome>OK</outcome>
             <!--Optional:-->
             <details>
@@ -147,10 +171,24 @@ Feature: PAG-2258
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>
             </details>
-            </nod:sendPaymentOutcomeReq>
+            </nod:sendPaymentOutcomeV2Req>
             </soapenv:Body>
             </soapenv:Envelope>
             """
+
+    Scenario: pspNotifyPayment response timeout
+        Given initial XML pspNotifyPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentRes>
+            <delay>10000</delay>
+            </pfn:pspNotifyPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
     Scenario: mod3CancelV2
         When job mod3CancelV2 triggered after 4 seconds
@@ -159,15 +197,25 @@ Feature: PAG-2258
     #########################################################################################################
 
     Scenario: Test spov1 KO (part 1)
-        Given the activatePaymentNotice request scenario executed successfully
-        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
+        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        And the activatePaymentNoticeV2 request scenario executed successfully
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
 
-    @bug
     Scenario: Test spov1 KO (part 2)
         Given the Test spov1 KO (part 1) scenario executed successfully
+        And the pspNotifyPayment response timeout scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+    @bug
+    Scenario: Test spov1 KO (part 3)
+        Given the Test spov1 KO (part 2) scenario executed successfully
+        And wait 12 seconds for expiration
         And the mod3CancelV2 scenario executed successfully
-        And the sendPaymentOutcome request scenario executed successfully
-        And outcome with KO in sendPaymentOutcome
-        When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcome response
+        And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
+        And the sendPaymentOutcomeV2 request scenario executed successfully
+        And outcome with KO in sendPaymentOutcomeV2
+        When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
