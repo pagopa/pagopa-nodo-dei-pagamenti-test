@@ -192,6 +192,29 @@ Feature: PAG-2258
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
 
+    # Scenario: Test (part 1)
+    #     Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+    #     And the activatePaymentNoticeV2 request scenario executed successfully
+    #     When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+    #     Then check outcome is OK of activatePaymentNoticeV2 response
+
+    # Scenario: Test (part 2)
+    #     Given the Test (part 1) scenario executed successfully
+    #     And the pspNotifyPayment response timeout scenario executed successfully
+    #     And the closePaymentV2 request scenario executed successfully
+    #     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+    #     Then verify the HTTP status code of v2/closepayment response is 200
+    #     And check outcome is OK of v2/closepayment response
+    # @newfix
+    # Scenario: Test (part 3)
+    #     Given the Test (part 2) scenario executed successfully
+    #     And wait 12 seconds for expiration
+    #     And the mod3CancelV2 scenario executed successfully
+    #     And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
+    #     And the sendPaymentOutcome request scenario executed successfully
+    #     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    #     Then check outcome is OK of sendPaymentOutcome response
+
     Scenario: Test (part 1)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And the activatePaymentNoticeV2 request scenario executed successfully
@@ -212,5 +235,6 @@ Feature: PAG-2258
         And the mod3CancelV2 scenario executed successfully
         And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
         And the sendPaymentOutcome request scenario executed successfully
+        And outcome with KO in sendPaymentOutcome
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
