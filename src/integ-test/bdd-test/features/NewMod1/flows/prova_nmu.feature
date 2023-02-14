@@ -171,7 +171,7 @@ Feature: PAG-2258
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>
             </details>
-            </nod:sendPaymentOutcomeV2Req>
+            </nod:sendPaymentOutcomeV2Request>
             </soapenv:Body>
             </soapenv:Envelope>
             """
