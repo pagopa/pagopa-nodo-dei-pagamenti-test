@@ -82,7 +82,7 @@ Feature: semantic checks for closePayment
         Then verify the HTTP status code of v1/closepayment response is 404
         And check esito is KO of v1/closepayment response
         And check descrizione is Configurazione psp-canale-tipoVersamento non corretta of v1/closepayment response
-    @test @newfix
+    @test 
     # identificativoCanale with Modello di pagamento = ATTIVATO PRESSO PSP [SEM_SPO_10]
     Scenario: Check identificativoCanale ATTIVATO_PRESSO_PSP
         Given the closePayment scenario executed successfully

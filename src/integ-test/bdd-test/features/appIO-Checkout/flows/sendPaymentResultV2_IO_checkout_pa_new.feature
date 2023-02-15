@@ -3568,7 +3568,7 @@ Feature: flow tests for sendPaymentResultV2
         And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-    @test @newfix
+    @test 
     Scenario: T_SPR_V2_13 (part 3)
         Given the T_SPR_V2_13 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds

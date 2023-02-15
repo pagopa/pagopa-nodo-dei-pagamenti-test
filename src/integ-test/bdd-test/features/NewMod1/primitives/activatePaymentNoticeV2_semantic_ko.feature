@@ -89,7 +89,7 @@ Feature: semantic checks KO for activatePaymentNoticeV2Request
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_DOMINIO_SCONOSCIUTO of activatePaymentNoticeV2 response
-    @test @newfix
+    @test 
     # [SEM_APNV2_10]
     Scenario: Check PPT_DOMINIO_DISABILITATO error on disabled pa
         Given fiscalCode with 11111122222 in activatePaymentNoticeV2
@@ -116,7 +116,7 @@ Feature: semantic checks KO for activatePaymentNoticeV2Request
             | 511456789012345678 | SEM_APNV2_12 - aux5 |
             | 011456789012345678 | SEM_APNV2_12 - aux0 |
             | 300456789012345678 | SEM_APNV2_12 - aux3 |
-    @test @newfix
+    @test 
     # [SEM_APNV2_13]
     Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on disabled station
         Given noticeNumber with 006456789012345478 in activatePaymentNoticeV2
