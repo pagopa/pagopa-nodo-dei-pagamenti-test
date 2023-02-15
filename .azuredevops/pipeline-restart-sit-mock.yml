@@ -1,0 +1,110 @@
+pr: none
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+parameters:
+  - name: "restartMockPM"
+    displayName: "Restart mock PM"
+    type: boolean
+    default: true
+  - name: "restartMockPSP"
+    displayName: "Restart mock PSP"
+    type: boolean
+    default: true
+  - name: "restartMockPSPSec"
+    displayName: "Restart mock PSP SEC"
+    type: boolean
+    default: true
+  - name: "restartMockEC"
+    displayName: "Restart mock EC"
+    type: boolean
+    default: true
+  - name: "restartMockECSec"
+    displayName: "Restart mock EC SEC"
+    type: boolean
+    default: true
+
+variables:
+  sitPool: nodopagamenti-agent-pool-sit
+  sitKubeServiceConn: nodo_srvendpoint_kubernetes_sa_dev
+  mockSitNamespace: mock-sit
+  mockECSitNamespace: mock-ec-sit
+  
+stages:
+
+  - stage: restart_mock
+    displayName: "restart mock"
+
+    jobs:
+    
+      - job: restart_mock_pm
+        condition: eq(${{ parameters.restartMockPM }}, 'true')
+        displayName: "restart_mock_pm"
+        pool: $(sitPool) 
+        steps:
+          - checkout: none
+          - task: Kubernetes@1
+            inputs:
+              connectionType: 'Kubernetes Service Connection'
+              kubernetesServiceEndpoint: $(sitKubeServiceConn)
+              namespace: $(mockSitNamespace)
+              command: rollout
+              arguments: restart deployment/mock-pm
+              
+      - job: restart_mock_psp
+        condition: eq(${{ parameters.restartMockPSP }}, 'true')
+        displayName: "restart_mock_psp"
+        pool: $(sitPool) 
+        steps:
+          - checkout: none
+          - task: Kubernetes@1
+            inputs:
+              connectionType: 'Kubernetes Service Connection'
+              kubernetesServiceEndpoint: $(sitKubeServiceConn)
+              namespace: $(mockSitNamespace)
+              command: rollout
+              arguments: restart deployment/mock-psp
+              
+      - job: restart_mock_psp_sec
+        condition: eq(${{ parameters.restartMockPSPSec }}, 'true')
+        displayName: "restart_mock_psp_sec"
+        pool: $(sitPool) 
+        steps:
+          - checkout: none
+          - task: Kubernetes@1
+            inputs:
+              connectionType: 'Kubernetes Service Connection'
+              kubernetesServiceEndpoint: $(sitKubeServiceConn)
+              namespace: $(mockSitNamespace)
+              command: rollout
+              arguments: restart deployment/psp-sec-mock
+              
+      - job: restart_mock_ec
+        condition: eq(${{ parameters.restartMockEC }}, 'true')
+        displayName: "restart_mock_ec"
+        pool: $(sitPool) 
+        steps:
+          - checkout: none
+          - task: Kubernetes@1
+            inputs:
+              connectionType: 'Kubernetes Service Connection'
+              kubernetesServiceEndpoint: $(sitKubeServiceConn)
+              namespace: $(mockECSitNamespace)
+              command: rollout
+              arguments: restart deployment/mock-ec
+              
+      - job: restart_mock_ec_sec
+        condition: eq(${{ parameters.restartMockECSec }}, 'true')
+        displayName: "restart_mock_ec_sec"
+        pool: $(sitPool) 
+        steps:
+          - checkout: none
+          - task: Kubernetes@1
+            inputs:
+              connectionType: 'Kubernetes Service Connection'
+              kubernetesServiceEndpoint: $(sitKubeServiceConn)
+              namespace: $(mockECSitNamespace)
+              command: rollout
+              arguments: restart deployment/mock-ec-sec
