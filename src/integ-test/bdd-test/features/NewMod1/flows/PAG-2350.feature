@@ -215,7 +215,8 @@ Feature: PAG-2258
         And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
         And the sendPaymentOutcome request scenario executed successfully
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcome response
+        Then check outcome is KO of sendPaymentOutcome response
+        And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
 #########################################################################################################
 
@@ -241,4 +242,5 @@ Feature: PAG-2258
         And the sendPaymentOutcome request scenario executed successfully
         And outcome with KO in sendPaymentOutcome
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcome response
+        Then check outcome is KO of sendPaymentOutcome response
+        And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
