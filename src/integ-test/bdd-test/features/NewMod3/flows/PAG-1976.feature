@@ -411,6 +411,7 @@ Feature: PAG-1976
   @test
   Scenario: Posizione non pagabile spov1 KO (part 3)
     Given the Posizione non pagabile spov1 KO (part 2) scenario executed successfully
+    And wait 60 seconds for expiration
     And the sendPaymentOutcome request scenario executed successfully
     And outcome with KO in sendPaymentOutcome
     And paymentToken with $activatePaymentNotice1Response.paymentToken in sendPaymentOutcome
@@ -532,6 +533,7 @@ Feature: PAG-1976
   @test
   Scenario: Posizione non pagabile spov2 KO (part 3)
     Given the Posizione non pagabile spov2 KO (part 2) scenario executed successfully
+    And wait 60 seconds for expiration
     And the sendPaymentOutcomeV2 request scenario executed successfully
     And outcome with KO in sendPaymentOutcomeV2
     And paymentToken with $activatePaymentNotice1Response.paymentToken in sendPaymentOutcomeV2
