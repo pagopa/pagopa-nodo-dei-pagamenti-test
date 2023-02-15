@@ -50,6 +50,7 @@ Feature: PAG-1976
       </details>
       </nod:sendPaymentOutcomeReq>
       </soapenv:Body>
+      </soapenv:Envelope>
       """
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
