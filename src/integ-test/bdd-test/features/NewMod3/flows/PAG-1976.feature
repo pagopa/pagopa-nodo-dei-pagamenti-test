@@ -374,49 +374,49 @@ Feature: PAG-1976
 
   ##########################################################################################
 
-  # Scenario: Posizione ancora pagabile spov1 KO (part 1)
-  #   Given the activatePaymentNotice request scenario executed successfully
-  #   And expirationTime with 2000 in activatePaymentNotice
-  #   When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-  #   Then check outcome is OK of activatePaymentNotice response
+  Scenario: Posizione ancora pagabile spov1 KO (part 1)
+    Given the activatePaymentNotice request scenario executed successfully
+    And expirationTime with 2000 in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
 
-  # @test
-  # Scenario: Posizione ancora pagabile spov1 KO (part 2)
-  #   Given the Posizione ancora pagabile spov1 KO (part 1) scenario executed successfully
-  #   And the mod3CancelV2 scenario executed successfully
-  #   And the sendPaymentOutcome request scenario executed successfully
-  #   And outcome with KO in sendPaymentOutcome
-  #   When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-  #   Then check outcome is KO of sendPaymentOutcome response
-  #   And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
+  @test
+  Scenario: Posizione ancora pagabile spov1 KO (part 2)
+    Given the Posizione ancora pagabile spov1 KO (part 1) scenario executed successfully
+    And the mod3CancelV2 scenario executed successfully
+    And the sendPaymentOutcome request scenario executed successfully
+    And outcome with KO in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
 
   ##########################################################################################
 
-  # Scenario: Posizione non pagabile spov1 KO (part 1)
-  #   Given the activatePaymentNotice request scenario executed successfully
-  #   And expirationTime with 2000 in activatePaymentNotice
-  #   When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-  #   Then check outcome is OK of activatePaymentNotice response
-  #   And save activatePaymentNotice response in activatePaymentNotice1
+  Scenario: Posizione non pagabile spov1 KO (part 1)
+    Given the activatePaymentNotice request scenario executed successfully
+    And expirationTime with 2000 in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+    And save activatePaymentNotice response in activatePaymentNotice1
 
-  # Scenario: Posizione non pagabile spov1 KO (part 2)
-  #   Given the Posizione non pagabile spov1 KO (part 1) scenario executed successfully
-  #   And the mod3CancelV2 scenario executed successfully
-  #   And expirationTime with None in activatePaymentNotice
-  #   And random idempotencyKey having #psp# as idPSP in activatePaymentNotice
-  #   And EC replies to nodo-dei-pagamenti with the paGetPayment
-  #   When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-  #   Then check outcome is OK of activatePaymentNotice response
+  Scenario: Posizione non pagabile spov1 KO (part 2)
+    Given the Posizione non pagabile spov1 KO (part 1) scenario executed successfully
+    And the mod3CancelV2 scenario executed successfully
+    And expirationTime with None in activatePaymentNotice
+    And random idempotencyKey having #psp# as idPSP in activatePaymentNotice
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
 
-  # @test
-  # Scenario: Posizione non pagabile spov1 KO (part 3)
-  #   Given the Posizione non pagabile spov1 KO (part 2) scenario executed successfully
-  #   And the sendPaymentOutcome request scenario executed successfully
-  #   And outcome with KO in sendPaymentOutcome
-  #   And paymentToken with $activatePaymentNotice1Response.paymentToken in sendPaymentOutcome
-  #   When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-  #   Then check outcome is KO of sendPaymentOutcome response
-  #   And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
+  @test
+  Scenario: Posizione non pagabile spov1 KO (part 3)
+    Given the Posizione non pagabile spov1 KO (part 2) scenario executed successfully
+    And the sendPaymentOutcome request scenario executed successfully
+    And outcome with KO in sendPaymentOutcome
+    And paymentToken with $activatePaymentNotice1Response.paymentToken in sendPaymentOutcome
+    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
 
   ##########################################################################################
 
@@ -493,48 +493,48 @@ Feature: PAG-1976
     Then check outcome is KO of sendPaymentOutcomeV2 response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcomeV2 response
 
-##########################################################################################
+  ##########################################################################################
 
-# Scenario: Posizione ancora pagabile spov2 KO (part 1)
-#   Given the activatePaymentNotice request scenario executed successfully
-#   And expirationTime with 2000 in activatePaymentNotice
-#   When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-#   Then check outcome is OK of activatePaymentNotice response
+  Scenario: Posizione ancora pagabile spov2 KO (part 1)
+    Given the activatePaymentNotice request scenario executed successfully
+    And expirationTime with 2000 in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
 
-# @test
-# Scenario: Posizione ancora pagabile spov2 KO (part 2)
-#   Given the Posizione ancora pagabile spov2 KO (part 1) scenario executed successfully
-#   And the mod3CancelV2 scenario executed successfully
-#   And the sendPaymentOutcomeV2 request scenario executed successfully
-#   And outcome with KO in sendPaymentOutcomeV2
-#   When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-#   Then check outcome is KO of sendPaymentOutcomeV2 response
-#   And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcomeV2 response
+  @test
+  Scenario: Posizione ancora pagabile spov2 KO (part 2)
+    Given the Posizione ancora pagabile spov2 KO (part 1) scenario executed successfully
+    And the mod3CancelV2 scenario executed successfully
+    And the sendPaymentOutcomeV2 request scenario executed successfully
+    And outcome with KO in sendPaymentOutcomeV2
+    When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcomeV2 response
+    And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcomeV2 response
 
-##########################################################################################
+  ##########################################################################################
 
-# Scenario: Posizione non pagabile spov2 KO (part 1)
-#   Given the activatePaymentNotice request scenario executed successfully
-#   And expirationTime with 2000 in activatePaymentNotice
-#   When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-#   Then check outcome is OK of activatePaymentNotice response
-#   And save activatePaymentNotice response in activatePaymentNotice1
+  Scenario: Posizione non pagabile spov2 KO (part 1)
+    Given the activatePaymentNotice request scenario executed successfully
+    And expirationTime with 2000 in activatePaymentNotice
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
+    And save activatePaymentNotice response in activatePaymentNotice1
 
-# Scenario: Posizione non pagabile spov2 KO (part 2)
-#   Given the Posizione non pagabile spov2 KO (part 1) scenario executed successfully
-#   And the mod3CancelV2 scenario executed successfully
-#   And expirationTime with None in activatePaymentNotice
-#   And random idempotencyKey having #psp# as idPSP in activatePaymentNotice
-#   And EC replies to nodo-dei-pagamenti with the paGetPayment
-#   When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-#   Then check outcome is OK of activatePaymentNotice response
+  Scenario: Posizione non pagabile spov2 KO (part 2)
+    Given the Posizione non pagabile spov2 KO (part 1) scenario executed successfully
+    And the mod3CancelV2 scenario executed successfully
+    And expirationTime with None in activatePaymentNotice
+    And random idempotencyKey having #psp# as idPSP in activatePaymentNotice
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
+    When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
 
-# @test
-# Scenario: Posizione non pagabile spov2 KO (part 3)
-#   Given the Posizione non pagabile spov2 KO (part 2) scenario executed successfully
-#   And the sendPaymentOutcomeV2 request scenario executed successfully
-#   And outcome with KO in sendPaymentOutcomeV2
-#   And paymentToken with $activatePaymentNotice1Response.paymentToken in sendPaymentOutcomeV2
-#   When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-#   Then check outcome is KO of sendPaymentOutcomeV2 response
-#   And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcomeV2 response
+  @test
+  Scenario: Posizione non pagabile spov2 KO (part 3)
+    Given the Posizione non pagabile spov2 KO (part 2) scenario executed successfully
+    And the sendPaymentOutcomeV2 request scenario executed successfully
+    And outcome with KO in sendPaymentOutcomeV2
+    And paymentToken with $activatePaymentNotice1Response.paymentToken in sendPaymentOutcomeV2
+    When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+    Then check outcome is KO of sendPaymentOutcomeV2 response
+    And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcomeV2 response
