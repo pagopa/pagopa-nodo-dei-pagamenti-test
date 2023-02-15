@@ -604,7 +604,7 @@ Feature: semantic checks for closePaymentV2
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-    @test @newfix
+    @test 
     Scenario: check closePaymentV2 OK 7
         Given the check nodoInviaRPT OK scenario executed successfully
         And the closePaymentV2 scenario executed successfully

@@ -539,7 +539,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And save activatePaymentNotice response in activatePaymentNotice_2
-    @test @newfix
+    @test 
     Scenario: SEM_SPO_37 (part 3)
         Given the SEM_SPO_37 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 with 2 paymentToken scenario executed successfully

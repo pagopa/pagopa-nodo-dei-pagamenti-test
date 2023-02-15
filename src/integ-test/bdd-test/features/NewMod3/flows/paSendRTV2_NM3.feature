@@ -988,7 +988,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @newfix
+    @test 
     Scenario: PSRTV2_ACTV1_03 (part 2)
         Given the PSRTV2_ACTV1_03 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -2127,7 +2127,7 @@ Feature: flow tests for paSendRTV2
         When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
-    @test @newfix
+    @test 
     Scenario: PSRTV2_ACTV1_29 (part 4)
         Given the PSRTV2_ACTV1_29 (part 3) scenario executed successfully
         And wait 12 seconds for expiration
