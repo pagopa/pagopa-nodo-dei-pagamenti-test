@@ -205,6 +205,7 @@ Feature: PAG-2258
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
+        And wait 5 seconds for expiration
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,CANCELLED,FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
