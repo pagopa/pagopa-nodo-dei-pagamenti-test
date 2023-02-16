@@ -2031,6 +2031,7 @@ Feature: flow tests for paSendRTV2
         Given the PSRTV2_ACTV1_28 (part 3) scenario executed successfully
         When job paSendRt triggered after 5 seconds
         Then verify the HTTP status code of paSendRt response is 200
+        And wait 30 seconds for expiration
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING,NOTICE_SENT,NOTICE_PENDING,NOTICE_SENT of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
