@@ -447,15 +447,32 @@ Feature: lispay opzione 2 extended flow
         Then verify the HTTP status code of informazioniPagamento response is 200
 
     Scenario: nodoChiediListaPsp with MBD
+        Given nodo-dei-pagamenti has config parameter chiediListaPSP.listaPspLisPay set to BIC36019
+        And nodo-dei-pagamenti has config parameter chiediListaPSP.listaCanaliLisPay set to 13212880150_07
+        And execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
+        And through the query version retrieve param version at position 0 and save it under the key version
+        And execution query get_psp_mbd to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query get_psp_mbd retrieve param sizeCarte at position 0 and save it under the key sizeCarte
+        And execution query get_psp_mbd to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query get_psp_mbd retrieve param listaCarte at position -1 and save it under the key listaCarte
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
-        And check totalRows is 5 of listaPSP response
-        And check data containsList [6, 7, 8, 9, 10] of listaPSP response
+        Then check totalRows is $sizeCarte of listaPSP response
+        And check data is $listaCarte of listaPSP response
 
     Scenario: nodoChiediListaPsp with IBAN
+        Given nodo-dei-pagamenti has config parameter chiediListaPSP.listaPspLisPay set to BIC36019
+        And nodo-dei-pagamenti has config parameter chiediListaPSP.listaCanaliLisPay set to 13212880150_07
+        And execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
+        And through the query version retrieve param version at position 0 and save it under the key version
+        And execution query get_psp_iban to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
+        And through the query get_psp_iban retrieve param sizeCarte at position 0 and save it under the key sizeCarte
+        And execution query get_psp_iban to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
+        And through the query get_psp_iban retrieve param listaCarte at position -1 and save it under the key listaCarte
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
-        And check totalRows is 0 of listaPSP response
+        Then check totalRows is $sizeCarte of listaPSP response
+        And check data is $listaCarte of listaPSP response
 
     Scenario: nodoInoltraEsitoCarta
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -500,7 +517,7 @@ Feature: lispay opzione 2 extended flow
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @test @newfix
+    @test
     Scenario: Test nodoInviaRPT with MBD
         Given the MB scenario executed successfully
         And the RPT with MBD scenario executed successfully
@@ -511,7 +528,7 @@ Feature: lispay opzione 2 extended flow
         And the RT with MBD scenario executed successfully
         And the nodoInviaRT scenario executed successfully
 
-    @test @newfix
+    @test
     Scenario: Test nodoInviaRPT with IBAN
         Given the RPT with IBAN scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
@@ -521,7 +538,7 @@ Feature: lispay opzione 2 extended flow
         And the RT with IBAN scenario executed successfully
         And the nodoInviaRT scenario executed successfully
 
-    @test @newfix
+    @test 
     Scenario: Test nodoInviaCarrelloRPT with MBD
         Given the MB scenario executed successfully
         And the RPT with MBD scenario executed successfully
@@ -532,7 +549,7 @@ Feature: lispay opzione 2 extended flow
         And the RT with MBD scenario executed successfully
         And the nodoInviaRT scenario executed successfully
 
-    @test @newfix
+    @test 
     Scenario: Test nodoInviaCarrelloRPT with IBAN
         Given the RPT with IBAN scenario executed successfully
         And the nodoInviaCarrelloRPT scenario executed successfully
