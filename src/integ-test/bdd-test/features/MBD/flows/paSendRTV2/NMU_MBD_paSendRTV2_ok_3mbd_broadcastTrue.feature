@@ -307,10 +307,11 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
 
-    @test
+    @test @newfix
     # DB check
     Scenario: execute DB check
         Given the Execute sendPaymentOutcomeV2 scenario executed successfully
+        And updates through the query stationUpdateVersione of the table STAZIONI the parameter VERSIONE_PRIMITIVE with 1 under macro sendPaymentResultV2 on db nodo_cfg
         And updates through the query stationUpdateBroadcast of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro sendPaymentResultV2 on db nodo_cfg
         Then refresh job PA triggered after 10 seconds
         # POSITION_TRANSFER_MBD

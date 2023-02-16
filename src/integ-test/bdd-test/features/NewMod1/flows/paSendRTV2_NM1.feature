@@ -1724,6 +1724,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_24 (part 1)
         Given updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro NewMod1 on db nodo_cfg
+        And updates through the query update_obj_id_3 of the table STAZIONI the parameter VERSIONE_PRIMITIVE with 2 under macro NewMod1 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
@@ -1750,6 +1751,7 @@ Feature: flow tests for paSendRTV2
         When job paSendRt triggered after 12 seconds
         Then verify the HTTP status code of paSendRt response is 200
         And updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro NewMod1 on db nodo_cfg
+        And updates through the query update_obj_id_3 of the table STAZIONI the parameter VERSIONE_PRIMITIVE with 1 under macro NewMod1 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
@@ -1788,6 +1790,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_25 (part 1)
         Given updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro NewMod1 on db nodo_cfg
+        And updates through the query update_obj_id_4 of the table STAZIONI the parameter VERSIONE_PRIMITIVE with 2 under macro NewMod1 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
@@ -1814,6 +1817,7 @@ Feature: flow tests for paSendRTV2
         When job paSendRt triggered after 12 seconds
         Then verify the HTTP status code of paSendRt response is 200
         And updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro NewMod1 on db nodo_cfg
+        And updates through the query update_obj_id_4 of the table STAZIONI the parameter VERSIONE_PRIMITIVE with 1 under macro NewMod1 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
