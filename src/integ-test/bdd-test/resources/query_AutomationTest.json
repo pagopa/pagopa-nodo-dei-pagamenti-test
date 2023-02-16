@@ -231,7 +231,10 @@
         "sblocco_parcheggio": "SELECT columns FROM table_name WHERE IUV='$iuv' AND CCP= '$ccp' AND ID_DOMINIO='$pa' ORDER BY INSERTED_TIMESTAMP",
         "codice_convenzione_session": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$sessionExpected'",
         "checkPlugin": "SELECT columns from table_name c join CANALI_NODO n on n.OBJ_ID=c.FK_CANALI_NODO where c.ID_CANALE='$canaleUsato'",
-        "get_staz_inter_pa": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$sessionExpected' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1)"
+        "get_staz_inter_pa": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$sessionExpected' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1)",
+        "get_psp_mbd": "SELECT columns FROM table_name WHERE FK_SNAPSHOT_VERSION = $version AND PSP_ID <> 'POSTE1' AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1,2) AND CARRELLO_CARTE='Y' AND IMPORTO_MINIMO < 10 AND IMPORTO_MASSIMO >= 10 AND CODICE_CONVENZIONE is null AND PSP_FLAG_BOLLO = 'Y'",
+        "get_psp_mbd_iban": "SELECT columns FROM table_name WHERE FK_SNAPSHOT_VERSION = $version AND PSP_ID <> 'POSTE1' AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1,2) AND CARRELLO_CARTE='Y' AND IMPORTO_MINIMO < 10 AND IMPORTO_MASSIMO >= 10 AND CODICE_CONVENZIONE is null AND PSP_FLAG_BOLLO = 'Y' AND PSP_ID <> 'BIC36019'",
+        "get_psp_iban": "SELECT columns FROM table_name WHERE FK_SNAPSHOT_VERSION = $version AND PSP_ID <> 'POSTE1' AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1,2) AND CARRELLO_CARTE='Y' AND IMPORTO_MINIMO < 10 AND IMPORTO_MASSIMO >= 10 AND CODICE_CONVENZIONE is null AND PSP_ID <> 'BIC36019'"
     },
     "RTPull": {
         "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC",
