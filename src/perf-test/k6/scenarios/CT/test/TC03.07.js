@@ -112,7 +112,7 @@ export const options = {
     'http_req_duration{Verifica:http_req_duration}': [],
     'http_req_duration{Attiva:http_req_duration}': [],
     'http_req_duration{RPT_Semplice:http_req_duration}': [],
-    'http_req_duration{RT_Semplice:http_req_duration}': [],
+    'http_req_duration{RT:http_req_duration}': [],
     'http_req_duration{RPT_Carrello_1:http_req_duration}': [],
     'http_req_duration{RPT_Carrello_5:http_req_duration}': [],
     'http_req_duration{RPT_Semplice_N3:http_req_duration}': [],
