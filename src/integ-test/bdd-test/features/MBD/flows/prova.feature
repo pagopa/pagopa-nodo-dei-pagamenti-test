@@ -399,7 +399,7 @@ Feature: lispay opzione 2
 
     @test @newfix
     Scenario: nodoInviaCarrelloRPT with IBAN
-    Given the Settings scenario executed successfully
+        Given the Settings scenario executed successfully
         And execution query get_psp_iban to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
         And through the query get_psp_iban retrieve param sizeCarte at position 0 and save it under the key sizeCarte
         And execution query get_psp_iban to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
