@@ -197,8 +197,8 @@ Feature: PAG-2258
         Then check outcome is OK of activatePaymentNotice response
 
     @test
-    Scenario: Test spov1 KO (part 3)
-        Given the Test spov1 KO (part 2) scenario executed successfully
+    Scenario: Test spov1 KO (part 2)
+        Given the Test spov1 KO (part 1) scenario executed successfully
         And the mod3CancelV2 scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
         And outcome with KO in sendPaymentOutcome
