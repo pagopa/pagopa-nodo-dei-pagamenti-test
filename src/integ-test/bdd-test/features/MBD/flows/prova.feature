@@ -372,4 +372,3 @@ Feature: lispay opzione 2
         And the nodoChiediInformazioniPagamento scenario executed successfully
         And the nodoChiediListaPsp scenario executed successfully
         Then check totalRows is 0 of listaPSP response
-        And restore initial configurations
