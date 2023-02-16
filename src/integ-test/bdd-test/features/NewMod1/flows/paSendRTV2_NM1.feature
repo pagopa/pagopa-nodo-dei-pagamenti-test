@@ -2026,7 +2026,7 @@ Feature: flow tests for paSendRTV2
         And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    @test @newfix
+    @test
     Scenario: PSRTV2_ACTV1_28 (part 4)
         Given the PSRTV2_ACTV1_28 (part 3) scenario executed successfully
         When job paSendRt triggered after 5 seconds
