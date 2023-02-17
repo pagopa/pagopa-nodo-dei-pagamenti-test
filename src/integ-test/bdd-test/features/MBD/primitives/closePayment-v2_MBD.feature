@@ -128,7 +128,7 @@ Feature: flow tests for closePaymentV2 MBD
                 }
             }
             """
-    @test @newfix
+    @test @newfix @devfix
     Scenario: Channel with VERSIONE_PRIMITIVE != 2
         Given the closePaymentV2 scenario executed successfully
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
