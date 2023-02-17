@@ -155,6 +155,7 @@ Feature: T095_P_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_sbloccoParcheggio_time
         Then verify the HTTP status code of inoltroEsito/carta response is 408
         And check url field not exists in inoltroEsito/carta response
         And check error is Operazione in timeout of inoltroEsito/carta response
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         And verify 1 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And wait 15 seconds for expiration
