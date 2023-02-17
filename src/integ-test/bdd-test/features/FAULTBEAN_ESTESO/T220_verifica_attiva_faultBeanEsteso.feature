@@ -37,8 +37,8 @@ Feature: T220_verifica_attiva_faultBeanEsteso
                 <ws:paaVerificaRPTRisposta>
                     <paaVerificaRPTRisposta>
                         <fault>
-                        <faultCode>PAA_SEMANTICA</faultCode>
-                        <faultString>chiamata da rifiutare</faultString>
+                        <faultCode>PPT_ERRORE_EMESSO_DA_PAA</faultCode>
+                        <faultString>Errore restituito dalla PAA</faultString>
                         <id>#creditor_institution_code_old#</id>
                         </fault>
                         <esito>KO</esito>
