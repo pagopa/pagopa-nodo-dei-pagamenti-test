@@ -127,7 +127,8 @@ Feature: T095_P_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_sbloccoParcheggio_time
                 <soapenv:Body>
                     <ws:pspInviaCarrelloRPTCarteResponse>
                         <pspInviaCarrelloRPTResponse>
-                            <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
+                            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+                            <delay>10000</delay>
                             <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
                             <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
                         </pspInviaCarrelloRPTResponse>
