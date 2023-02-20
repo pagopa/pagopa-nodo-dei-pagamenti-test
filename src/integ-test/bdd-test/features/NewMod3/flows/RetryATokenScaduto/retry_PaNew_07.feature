@@ -118,7 +118,7 @@ Feature: Process tests for retry a token scaduto
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-   @runnable
+   @ciao
     # Payment Outcome Phase outcome OK 
   Scenario: Execute sendPaymentOutcome2 request
     Given the Execute sendPaymentOutcome1 request scenario executed successfully

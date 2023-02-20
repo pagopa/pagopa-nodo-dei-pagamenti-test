@@ -132,7 +132,7 @@ Feature: process tests for Retry_DB_GR_21
     When job mod3CancelV2 triggered after 5 seconds
     Then verify the HTTP status code of mod3CancelV2 response is 200
 
-  @runnable
+  @ciao
   # Payment Outcome Phase outcome KO
   Scenario: Execute sendPaymentOutcome request [Retry_DB_GR_21]
     Given the Poller Annulli Scenario executed successfully

@@ -71,7 +71,7 @@ Feature: Process tests for retry a token scaduto
     And save activatePaymentNotice response in activatePaymentNotice2
     And wait 10 seconds for expiration
 
-@runnable
+@ciao
 # Payment Outcome Phase outcome OK 
   Scenario: Execute sendPaymentOutcome request
     Given the Execute activatePaymentNotice2 request scenario executed successfully
