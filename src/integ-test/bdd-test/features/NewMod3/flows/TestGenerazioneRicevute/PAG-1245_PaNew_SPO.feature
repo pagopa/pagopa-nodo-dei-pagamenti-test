@@ -233,7 +233,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaNew_SPO]
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-@ciao
+@runnable
     Scenario: Execute sendPaymentOutcome
         Given the Execute second activatePaymentNotice request scenario executed successfully
         And initial XML sendPaymentOutcome

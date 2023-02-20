@@ -84,7 +84,7 @@ Feature:  block check for activatePaymentNoticeReq - position status in PAID aft
       And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
    # Activate Phase 2
-   @ciao
+   @runnable
    Scenario: Execute activatePaymentNotice request with same request as Activate Phase 1 except for idempotencyKey, immediately after the Payment Outcome Phase
       # Given same activatePaymentNotice soap-request as Activate Phase 1 except for idempotencyKey
       Given the Execute sendPaymentOutcome request scenario executed successfully
