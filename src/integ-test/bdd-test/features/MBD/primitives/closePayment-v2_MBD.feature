@@ -147,7 +147,7 @@ Feature: flow tests for closePaymentV2 MBD
         And check description is Invalid PSP/Canale for MBD of v2/closepayment response
         And updates through the query update_id_psp of the table PSP the parameter MARCA_BOLLO_DIGITALE with 1 under macro NewMod1 on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
-    @test @devfix
+    @test @newfix
     Scenario: Channel with MARCA_BOLLO_DIGITALE != Y
         Given updates through the query update_obj_id of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with N under macro NewMod1 on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
