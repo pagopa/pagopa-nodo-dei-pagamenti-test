@@ -149,8 +149,8 @@ Feature: flow tests for closePaymentV2 MBD
         And refresh job PSP triggered after 10 seconds
     @test @newfix @devfix
     Scenario: Channel with MARCA_BOLLO_DIGITALE != Y
-        Given execution query select_obj_id to get value on the table CANALI_NODO, with the columns OBJ_ID under macro NewMod1 with db name nodo_cfg
-        And through the query select_obj_id retrieve param obj_id at position 0 and save it under the key obj_id
+        Given execution query select_fk_canali_nodo to get value on the table CANALI, with the columns FK_CANALI_NODO under macro NewMod1 with db name nodo_cfg
+        And through the query select_fk_canali_nodo retrieve param obj_id at position 0 and save it under the key fk_canali_nodo
         And updates through the query update_obj_id of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with N under macro NewMod1 on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
         And the closePaymentV2 scenario executed successfully
