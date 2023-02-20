@@ -1638,6 +1638,7 @@ def step_impl(context, query_name, macro, db_name, table_name, columns):
     selected_query = utils.query_json(context, query_name, macro).replace(
         "columns", columns).replace("table_name", table_name)
     selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_global_variables(selected_query, context)
 
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
