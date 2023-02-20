@@ -143,7 +143,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - not us
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-@@ciao 
+@@runnable 
   # Send payment outcome Phase 2 
   Scenario: Execute again sendPaymentOutcome request before idempotencyKey expires
     Given the Execute sendPaymentOutcome request scenario executed successfully

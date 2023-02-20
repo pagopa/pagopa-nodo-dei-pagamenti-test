@@ -165,7 +165,7 @@ Feature: PRO_ANNULLO_00
         # check correctness POSITION_TRANSFER
         And checks the value Y of the record at column VALID of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
     
-    @runnable 
+    @ciao 
     Scenario: Execute activateIOPayment (Phase 5)
         Given the Execute nodoInoltraEsitoPagamentoCarta (Phase 4) scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti

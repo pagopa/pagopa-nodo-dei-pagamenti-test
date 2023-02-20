@@ -87,7 +87,7 @@ Feature:  block checks for verificaBollettino - position status in INSERTED (mod
 
 
    # Verify Phase 2
-   @ciao
+   @runnable
    Scenario: Execute verificaBollettino request with the same request as Verify Phase 1
       Given the Execute activatePaymentNotice request scenario executed successfully
       When job mod3CancelV2 triggered after 5 seconds
