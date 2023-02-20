@@ -52,7 +52,7 @@ Feature: PAG-2346 2 mbd
             <CodiceFiscale>12345678901</CodiceFiscale>
             <Denominazione>60000000001</Denominazione>
             </PSP>
-            <IUBD>#iubd4#</IUBD>
+            <IUBD>#iubd2#</IUBD>
             <OraAcquisto>2015-02-06T15:00:44.659+01:00</OraAcquisto>
             <Importo>5.00</Importo>
             <TipoBollo>01</TipoBollo>
