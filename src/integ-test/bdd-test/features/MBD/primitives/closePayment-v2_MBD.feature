@@ -147,9 +147,11 @@ Feature: flow tests for closePaymentV2 MBD
         And check description is Invalid PSP/Canale for MBD of v2/closepayment response
         And updates through the query update_id_psp of the table PSP the parameter MARCA_BOLLO_DIGITALE with 1 under macro NewMod1 on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
-    @test @newfix
+    @test @newfix @devfix
     Scenario: Channel with MARCA_BOLLO_DIGITALE != Y
-        Given updates through the query update_obj_id of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with N under macro NewMod1 on db nodo_cfg
+        Given execution query select_obj_id to get value on the table CANALI_NODO, with the columns OBJ_ID under macro NewMod1 with db name nodo_cfg
+        And through the query select_obj_id retrieve param obj_id at position 0 and save it under the key obj_id
+        And updates through the query update_obj_id of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with N under macro NewMod1 on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
         And the closePaymentV2 scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
