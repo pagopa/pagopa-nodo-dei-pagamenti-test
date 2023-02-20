@@ -318,7 +318,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_mod3Cancel]
         Then check esito is OK of nodoInviaRPT response
         And check redirect is 0 of nodoInviaRPT response
 
-@runnable
+@ciao
     Scenario: Execute second Trigger mod3Cancel
         Given the Execute second nodoInviaRPT request scenario executed successfully
         When job mod3CancelV1 triggered after 5 seconds

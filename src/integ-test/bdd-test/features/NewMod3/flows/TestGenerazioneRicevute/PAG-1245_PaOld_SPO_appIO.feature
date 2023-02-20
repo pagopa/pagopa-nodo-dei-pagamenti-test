@@ -383,7 +383,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO_appIO]
             """
         Then check esito is OK of inoltroEsito/paypal response
 
-@runnable
+@ciao
     Scenario: Execute sendPaymentOutcome
         Given the Execute nodoInoltraEsitoPagamentoPaypal request scenario executed successfully
         And initial XML sendPaymentOutcome
