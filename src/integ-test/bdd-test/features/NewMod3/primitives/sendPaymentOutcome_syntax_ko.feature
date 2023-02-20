@@ -63,7 +63,7 @@ Feature: Syntax checks for sendPaymentOutcome - KO
       | elem             | attribute     | value                                     | soapUI test |
       | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_SPO_01  |
 
-  @runnable
+  @ciao
   # element value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
     Given <elem> with <value> in sendPaymentOutcome
