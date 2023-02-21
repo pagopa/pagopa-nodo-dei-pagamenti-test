@@ -972,7 +972,7 @@ Feature: flow tests for paSendRTV2
             <soapenv:Header/>
             <soapenv:Body>
             <paf:paSendRTV2Response>
-            <delay>10000</delay>
+            <delay>20000</delay>
             </paf:paSendRTV2Response>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -1812,6 +1812,9 @@ Feature: flow tests for paSendRTV2
     @test @newfix
     Scenario: PSRTV2_ACTV1_24 (part 3)
         Given the PSRTV2_ACTV1_24 (part 2) scenario executed successfully
+        When job paSendRt triggered after 10 seconds
+        Then verify the HTTP status code of paSendRt response is 200
+        And wait 12 seconds for expiration
         And updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro NewMod1 on db nodo_cfg
         And updates through the query update_obj_id_3 of the table STAZIONI the parameter VERSIONE_PRIMITIVE with 1 under macro NewMod1 on db nodo_cfg
         And updates through the query update_obj_id_5 of the table STAZIONI the parameter VERSIONE with 1 under macro NewMod1 on db nodo_cfg
