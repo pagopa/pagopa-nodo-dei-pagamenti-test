@@ -215,7 +215,7 @@ Feature: T005_nodoInviaRT_esito=4
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @fix
+    @ciao
     Scenario: Execute nodoInviaRT 
         Given the Execute nodoInviaRPT request scenario executed successfully
         And initial XML nodoInviaRT
@@ -240,6 +240,6 @@ Feature: T005_nodoInviaRT_esito=4
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
-        And check faultCode is PPT_SEMANTICA of nodoInviaRT response
+        And check faultCode is PPT_SINTASSI_XSD of nodoInviaRT response
 
 
