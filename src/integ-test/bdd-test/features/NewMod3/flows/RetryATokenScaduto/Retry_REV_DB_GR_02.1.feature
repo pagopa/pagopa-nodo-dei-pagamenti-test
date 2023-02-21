@@ -131,7 +131,7 @@ Feature: process tests for Retry_DB_GR_02.1
     And wait 5 seconds for expiration 
     Then verify the HTTP status code of mod3CancelV2 response is 200
 
-  @runnable
+  @ciao
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
     Given the Poller Annulli Scenario executed successfully
@@ -174,5 +174,5 @@ Feature: process tests for Retry_DB_GR_02.1
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
     And verify 0 record for the table POSITION_RECEIPT retrived by the query position_receipt_retry_rev_db_gr_02_1 on db nodo_online under macro NewMod3

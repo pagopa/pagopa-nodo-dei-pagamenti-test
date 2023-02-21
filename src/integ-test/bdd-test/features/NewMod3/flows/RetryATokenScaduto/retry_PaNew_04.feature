@@ -63,7 +63,7 @@ Feature: Process tests for retry a token scaduto
     When job mod3CancelV2 triggered after 3 seconds
     Then verify the HTTP status code of mod3CancelV2 response is 200
     
-  @runnable
+  @ciao
 # Payment Outcome Phase outcome OK 
   Scenario: Execute sendPaymentOutcome request
     Given the Execute sleep phase1 scenario executed successfully
@@ -107,7 +107,7 @@ Feature: Process tests for retry a token scaduto
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     #Test1
     Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
     #sleep phase2
     And wait 5 seconds for expiration
     #Test2

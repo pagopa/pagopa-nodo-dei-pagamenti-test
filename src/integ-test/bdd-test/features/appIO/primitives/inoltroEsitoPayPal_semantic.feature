@@ -511,7 +511,7 @@ Scenario: Execute nodoInoltroEsitoPaypal (Phase 6) [SEM_NIEPP_01]
     And checks the value responseOK of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
 # [SEM_NIEPP_02]
-@ciao
+@runnable
 Scenario: Execute nodoInoltroEsitoPaypal1 (Phase 5) [SEM_NIEPP_02]
     Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 6000
     And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
