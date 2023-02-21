@@ -42,7 +42,7 @@ Feature: Syntax checks for verifyPaymentReq - KO
     Examples:
       | elem                       | value                                | soapUI test |
       # | soapenv:Body               | None                                 | SIN_VPNR_02 |
-       | soapenv:Body               | Empty                                | SIN_VPNR_03 |
+      # | soapenv:Body               | Empty                                | SIN_VPNR_03 |
       # | nod:verifyPaymentNoticeReq | Empty                                | SIN_VPNR_04 |
       # | idPSP                      | None                                 | SIN_VPNR_05 |
       # | idPSP                      | Empty                                | SIN_VPNR_06 |
@@ -60,7 +60,7 @@ Feature: Syntax checks for verifyPaymentReq - KO
       # | qrCode                     | None                                 | SIN_VPNR_18 |
       # | qrCode                     | RemoveParent                         | SIN_APNR_19 |
       # | qrCode                     | Empty                                | SIN_VPNR_20 |
-      # | fiscalCode                 | None                                 | SIN_VPNR_21 |
+       | fiscalCode                 | None                                 | SIN_VPNR_21 |
       # | fiscalCode                 | Empty                                | SIN_VPNR_22 |
       # | fiscalCode                 | 1234567890                           | SIN_VPNR_23 |
       # | fiscalCode                 | 123456789012                         | SIN_VPNR_24 |
