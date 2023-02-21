@@ -14,7 +14,7 @@ Feature: Syntax checks for verifyPaymentReq - KO
             <password>pwdpwdpwd</password>
             <qrCode>
               <fiscalCode>#creditor_institution_code#</fiscalCode>
-              <noticeNumber>302094719472095710</noticeNumber>
+              <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
           </nod:verifyPaymentNoticeReq>
         </soapenv:Body>
