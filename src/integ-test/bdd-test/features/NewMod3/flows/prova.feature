@@ -722,7 +722,7 @@ Feature: flow tests for paSendRTV2
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>5.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -1797,9 +1797,8 @@ Feature: flow tests for paSendRTV2
         And refresh job PA triggered after 10 seconds
         And the verifyPaymentNotice scenario executed successfully
         And the activatePaymentNotice request scenario executed successfully
-        And fiscalCode with #creditor_institution_code_secondary# in activatePaymentNotice
         And the paGetPaymentV2 response with 2 transfers (2) scenario executed successfully
-        And EC2 replies to nodo-dei-pagamenti with the paGetPaymentV2
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
