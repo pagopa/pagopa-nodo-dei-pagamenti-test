@@ -45,7 +45,7 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
                 </Signature>
             </marcaDaBollo>
             """
-        And IUBD with #iubd# in $MB
+        And IUBD with #iubd# in MB
         And MB generation
             """
             $MB
@@ -484,7 +484,7 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
 @fix
     Scenario: second iuv
         Given the Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO] scenario executed successfully
-        And IUBD with #iubd# in $MB
+        And IUBD with #iubd# in MB
         And MB generation
             """
             $MB
