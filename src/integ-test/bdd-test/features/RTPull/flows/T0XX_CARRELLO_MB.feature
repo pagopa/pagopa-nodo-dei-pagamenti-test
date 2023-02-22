@@ -7,7 +7,7 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
         #Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
         #And refresh job PSP triggered after 10 seconds
         #And wait 10 seconds for expiration
-        Given MB generation
+        Given initial xml MB
             """
             <?xml version="1.0" encoding="UTF-8"?>
                 <marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
@@ -44,6 +44,11 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
                     </KeyInfo>
                 </Signature>
             </marcaDaBollo>
+            """
+        And IUBD with #iubd# in $MB
+        And MB generation
+            """
+            $MB
             """
         And RPT generation
             """
@@ -479,6 +484,11 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
 @fix
     Scenario: second iuv
         Given the Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO] scenario executed successfully
+        And IUBD with #iubd# in $MB
+        And MB generation
+            """
+            $MB
+            """
         And rt with $rt2Attachment in pspChiediRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         And identificativoUnivocoVersamento with $2IUV in pspChiediListaRT
