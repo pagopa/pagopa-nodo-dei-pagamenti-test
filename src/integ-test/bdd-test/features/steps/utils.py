@@ -272,7 +272,6 @@ def replace_global_variables(payload, context):
         if replaced_sharp in context.config.userdata.get("global_configuration"):
             payload = payload.replace(elem, context.config.userdata.get(
                 "global_configuration").get(replaced_sharp))
-    print(payload)
     return payload
 
 
