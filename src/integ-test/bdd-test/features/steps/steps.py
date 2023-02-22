@@ -96,6 +96,12 @@ def step_impl(context, primitive):
         payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
         setattr(context, 'identificativoFlusso', identificativoFlusso)
 
+    if '#iubd#' in payload:
+        iubd = '' + str(random.randint(10000000, 20000000)) + \
+            str(random.randint(10000000, 20000000))
+        payload = payload.replace('#iubd#', iubd)
+        setattr(context, 'iubd', iubd)
+
     if "#ccp#" in payload:
         ccp = str(random.randint(100000000000000, 999999999999999))
         payload = payload.replace('#ccp#', ccp)
