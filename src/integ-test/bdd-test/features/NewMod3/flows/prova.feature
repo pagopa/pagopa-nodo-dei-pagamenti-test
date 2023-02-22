@@ -1806,13 +1806,14 @@ Feature: flow tests for paSendRTV2
         Given the PSRTV2_ACTV1_24 (part 1) scenario executed successfully
         And the paSendRTV2 timeout response scenario executed successfully
         And EC2 replies to nodo-dei-pagamenti with the paSendRTV2
+        And EC2 replies to nodo-dei-pagamenti with the paSendRTV2
         And the sendPaymentOutcome request scenario executed successfully
         When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
     @test @newfix
     Scenario: PSRTV2_ACTV1_24 (part 3)
         Given the PSRTV2_ACTV1_24 (part 2) scenario executed successfully
-        When job paSendRt triggered after 5 seconds
+        When job paSendRt triggered after 22 seconds
         Then verify the HTTP status code of paSendRt response is 200
         And updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro NewMod1 on db nodo_cfg
         And updates through the query update_obj_id_3 of the table STAZIONI the parameter VERSIONE_PRIMITIVE with 1 under macro NewMod1 on db nodo_cfg
