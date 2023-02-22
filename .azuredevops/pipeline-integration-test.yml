@@ -191,7 +191,7 @@ stages:
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
               
-              behave --tags=newfix --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/prova.feature
+              behave --tags=newfix --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/paSendRTV2_NM3.feature
               #behave --tags=devfix --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features
               #behave --tags=newfix --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod1/flows/activatePaymentNoticeV2_flow.feature
 
