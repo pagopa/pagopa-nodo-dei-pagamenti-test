@@ -581,6 +581,7 @@ def step_impl(context):
             str(random.randint(10000000, 20000000))
         payload = payload.replace('#iubd#', iubd)
         setattr(context, 'iubd', iubd)
+    print(">>>>>>>>>>>>", payload)
 
     payload_b = bytes(payload, 'ascii')
     payload_uni = b64.b64encode(payload_b)
