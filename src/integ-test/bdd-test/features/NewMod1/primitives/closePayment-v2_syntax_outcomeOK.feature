@@ -121,7 +121,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
         Examples:
             | elem          | value | soapUI test |
             | paymentMethod | OBEP  | SIN_CPV2_12 |
-            | paymentMethod | CP    | SIN_CPV2_12 |
+            
     @test
     # syntax check - Invalid field - paymentToken
     Scenario Outline: Check syntax error on invalid body element value - paymentToken
@@ -369,6 +369,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | fee                | 2                             | SIN_CPV2_30.2 |
             | timestampOperation | 2033-04-23T18:25:43.372+01:00 | SIN_CPV2_34.1 |
             | transactionDetails | None                          | PAG-2120      |
+            | paymentMethod      | CP                            | PAG-2383      |
 
 
 
