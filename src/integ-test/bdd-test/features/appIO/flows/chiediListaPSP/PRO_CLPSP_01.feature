@@ -173,12 +173,12 @@ Scenario: Check correct PSP list
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
     Then verify the HTTP status code of listaPSP response is 200
-    
+
     # DB Check
     And execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
     And through the query version retrieve param version at position 0 and save it under the key version
     And replace importoTot content with 10.00 content
-    And execution query getPspCarte_poste to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro AppIO with db name nodo_offline
-    And through the query getPspCarte_poste retrieve param listaCarte at position -1 and save it under the key listaCarte
+    And execution query getPspCarte_poste2 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro AppIO with db name nodo_offline
+    And through the query getPspCarte_poste2 retrieve param listaCarte at position -1 and save it under the key listaCarte
     And check data is $listaCarte of listaPSP response
     And restore initial configurations

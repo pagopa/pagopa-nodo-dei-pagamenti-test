@@ -128,7 +128,8 @@
         "select_sprV1_new": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken' AND TIPO_EVENTO = 'sendPaymentResult-v1' ORDER BY DATA_ORA_EVENTO ASC",
         "select_sprV1_old": "SELECT columns FROM table_name WHERE CODICE_CONTESTO_PAGAMENTO = '$ccp' AND TIPO_EVENTO = 'sendPaymentResult-v1' ORDER BY DATA_ORA_EVENTO ASC",
         "retry_spr": "SELECT columns FROM table_name s where s.PAYMENT_TOKEN= '$activateIOPaymentResponse.paymentToken'",
-        "retry_spr_old": "SELECT columns FROM table_name s where s.PAYMENT_TOKEN= '$ccp'"
+        "retry_spr_old": "SELECT columns FROM table_name s where s.PAYMENT_TOKEN= '$ccp'",
+        "getPspCarte_poste2": "SELECT columns FROM table_name WHERE FK_SNAPSHOT_VERSION = $version AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1) AND CARRELLO_CARTE='Y' AND IMPORTO_MINIMO < $importoTot AND IMPORTO_MASSIMO >= $importoTot AND CODICE_CONVENZIONE is null AND FLAG_IO = 'Y' AND CANALE_MOD_PAG != '2' order by ID ",
     },
     "AppIOold": {
         "cd_info_pagamento": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInviaRPT.identificativoUnivocoVersamento' AND s.IDENT_DOMINIO = '#creditor_institution_code#'"
