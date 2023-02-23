@@ -521,7 +521,7 @@ Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         And identificativoUnivocoVersamento with $2IUV in pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
-        #And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When job pspChiediListaAndChiediRt triggered after 5 seconds
         And job paInviaRt triggered after 10 seconds
         And wait 130 seconds for expiration
