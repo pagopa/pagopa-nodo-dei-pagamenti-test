@@ -119,7 +119,8 @@ Feature: semantic checks KO for activatePaymentNoticeV2Request
     @test 
     # [SEM_APNV2_13]
     Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on disabled station
-        Given noticeNumber with 006456789012345478 in activatePaymentNoticeV2
+        #Given noticeNumber with 006456789012345478 in activatePaymentNoticeV2
+        Given noticeNumber with 316456789012345478 in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of activatePaymentNoticeV2 response
