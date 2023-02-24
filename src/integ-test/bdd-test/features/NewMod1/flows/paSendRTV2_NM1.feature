@@ -1743,7 +1743,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test @newfix
+    @test
     Scenario: PSRTV2_ACTV1_24 (part 3)
         Given the PSRTV2_ACTV1_24 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1761,8 +1761,8 @@ Feature: flow tests for paSendRTV2
         And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query recipient_station_id_activatev2 on db nodo_online under macro NewMod1
         And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query recipient_station_id_3_activatev2 on db nodo_online under macro NewMod1
         And verify 5 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query recipient_station_id_3_activatev2 on db nodo_online under macro NewMod1
-        And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query recipient_station_id_4_activatev2 on db nodo_online under macro NewMod1
-        And verify 5 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query recipient_station_id_4_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query recipient_station_id_4_activatev2 on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query recipient_station_id_4_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_RECEIPT_RECIPIENT
         And checks the value NOTIFIED,NOTICE_PENDING,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
