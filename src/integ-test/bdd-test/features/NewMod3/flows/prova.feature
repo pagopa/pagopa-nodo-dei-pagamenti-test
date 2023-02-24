@@ -1813,7 +1813,7 @@ Feature: flow tests for paSendRTV2
     @test @newfix
     Scenario: PSRTV2_ACTV1_24 (part 3)
         Given the PSRTV2_ACTV1_24 (part 2) scenario executed successfully
-        When job paSendRt triggered after 0 seconds
+        When job paSendRt triggered after 12 seconds
         Then verify the HTTP status code of paSendRt response is 200
         And updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro NewMod1 on db nodo_cfg
         And updates through the query update_obj_id_3 of the table STAZIONI the parameter VERSIONE_PRIMITIVE with 1 under macro NewMod1 on db nodo_cfg
