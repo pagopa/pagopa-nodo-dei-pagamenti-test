@@ -367,6 +367,7 @@
         "update_obj_id_3": "UPDATE table_name SET param = 'value' WHERE OBJ_ID IN ('13', '14')",
         "update_obj_id_4": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = '13'",
         "update_obj_id_5": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = '14'",
+        "update_obj_id_6": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = '4329'",
         "checkposition_resp": "SELECT columns FROM table_name WHERE NOTICE_ID = '302$iuv' AND TIPO_EVENTO = 'checkPosition' AND SOTTO_TIPO_EVENTO = 'RESP'",
         "activatev2_resp": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND TIPO_EVENTO = 'activatePaymentNoticeV2' AND SOTTO_TIPO_EVENTO = 'RESP'"
     },
