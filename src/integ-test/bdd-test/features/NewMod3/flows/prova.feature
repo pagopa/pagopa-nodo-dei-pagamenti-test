@@ -1809,7 +1809,7 @@ Feature: flow tests for paSendRTV2
         # And updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro NewMod1 on db nodo_cfg
         And updates through the query update_obj_id_6 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro NewMod1 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
-        And wait 2 seconds for expiration
+        And wait 10 seconds for expiration
         And the paSendRTV2 timeout response scenario executed successfully
         And EC2 replies to nodo-dei-pagamenti with the paSendRTV2
         And the sendPaymentOutcome request scenario executed successfully
