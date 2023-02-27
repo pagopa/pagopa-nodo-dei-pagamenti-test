@@ -1496,7 +1496,7 @@ Feature: flow tests for paSendRTV2
     @test @prova
     Scenario: PSRTV2_ACTV1_20 (part 3)
         Given the PSRTV2_ACTV1_20 (part 2) scenario executed successfully
-        When job paSendRt triggered after 0 seconds
+        When job paSendRt triggered after 12 seconds
         Then verify the HTTP status code of paSendRt response is 200
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
