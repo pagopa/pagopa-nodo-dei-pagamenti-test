@@ -191,7 +191,7 @@ stages:
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
               
-              behave --tags=test --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RTPull/flows/PAG-2346_recovery_1_mbd_1_iban_02.feature
+              behave --tags=test --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/RTPull/flows/PAG-2346_recovery_1_mbd_02.feature
               #behave --tags=test --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/NewMod3/flows/PAnew_GestioneCommissioniEvolute/GEC_commissioni_evolute.feature
 
             displayName: "Run integration test"
