@@ -1,4 +1,4 @@
-Feature: PAG-2346 recovery pull 1 mbd
+Feature: PAG-2346 recovery 1 mbd
 
     Background:
         Given systems up

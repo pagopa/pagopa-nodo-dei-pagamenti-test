@@ -1,4 +1,4 @@
-Feature: PAG-2346 recovery pull 1 iban
+Feature: PAG-2346 recovery 1 iban
 
     Background:
         Given systems up
