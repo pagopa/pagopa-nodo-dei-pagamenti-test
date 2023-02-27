@@ -5,6 +5,9 @@ Feature: PAG-2346 recovery pull 1 mbd 1 iban
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
 
+# per eseguire questo test, è necessario impostare prima del test ENABLED = 'N' nella tabella CANALI per tutti i canali impattati dal job
+# rtPullRecoveryPush, eccetto quello inserito nella nodoInviaCarrelloRPT, e poi impostare di nuovo ENABLED = 'Y' dopo il test
+
     @test 
     Scenario: Test
         Given MB generation

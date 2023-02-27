@@ -244,9 +244,7 @@
         "by_iuv_and_ccp": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' AND s.ccp = '$ccp'",
         "getSchedulerPspRetryAckNegativePollerMaxRetry": "SELECT columns FROM table_name s WHERE s.CONFIG_KEY='scheduler.pspRetryAckNegativePollerMaxRetry'",
         "rpt_id1": "SELECT columns FROM table_name  where IUV = '$iuv1' and ID_DOMINIO= '#creditor_institution_code_old#'",
-        "rpt_id2": "SELECT columns FROM table_name  where IUV = '$iuv2' and ID_DOMINIO= '#creditor_institution_code_old#'",
-        "update_canali_tot": "UPDATE table_name SET param = 'value' WHERE ID_CANALE LIKE '600%'",
-        "update_canale": "UPDATE table_name SET param = 'value' WHERE ID_CANALE = '#canale_IMMEDIATO_MULTIBENEFICIARIO#'"
+        "rpt_id2": "SELECT columns FROM table_name  where IUV = '$iuv2' and ID_DOMINIO= '#creditor_institution_code_old#'"
     },
     "faultBeanEsteso": {
         "by_iuv_ccp_pa": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' AND s.CCP = '$ccp' AND s.ID_DOMINIO = '$pa' ORDER BY INSERTED_TIMESTAMP"
