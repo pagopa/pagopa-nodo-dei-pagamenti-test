@@ -105,7 +105,7 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-  @runable
+  @runnable
   Scenario: Execute paSendRT request
     Given the Execute sendPaymentOutcome request scenario executed successfully
     Then check EC receives paSendRT properly
