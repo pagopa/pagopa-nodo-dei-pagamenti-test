@@ -4,9 +4,6 @@ Feature: PAG-2346 recovery pull 1 iban
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
-        And updates through the query update_canali_tot of the table CANALI the parameter ENABLED with N under macro RTPull on db nodo_cfg
-        And updates through the query update_canale of the table CANALI the parameter ENABLED with Y under macro RTPull on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
 
     @test
     Scenario: Test
@@ -248,8 +245,12 @@ Feature: PAG-2346 recovery pull 1 iban
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And updates through the query update_canali_tot of the table CANALI the parameter ENABLED with N under macro RTPull on db nodo_cfg
+        And updates through the query update_canale of the table CANALI the parameter ENABLED with Y under macro RTPull on db nodo_cfg
+        And refresh job PSP triggered after 10 seconds
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         And job rtPullRecoveryPush triggered after 5 seconds
+        And wait 10 seconds for expiration
         And updates through the query update_canali_tot of the table CANALI the parameter ENABLED with Y under macro RTPull on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
