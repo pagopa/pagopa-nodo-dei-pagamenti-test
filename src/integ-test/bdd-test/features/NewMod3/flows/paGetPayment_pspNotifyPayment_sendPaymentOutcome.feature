@@ -24,7 +24,7 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
                <amount>120.00</amount>
             </nod:activateIOPaymentReq>
          </soapenv:Body>
-      </soapenv:Envelope>
+        </soapenv:Envelope>
         """
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
