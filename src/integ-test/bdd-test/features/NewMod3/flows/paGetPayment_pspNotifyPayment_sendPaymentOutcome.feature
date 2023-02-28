@@ -65,7 +65,7 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
 
   # Send receipt phase
   Scenario: Execute sendPaymentOutcome request
-    Given the Verify consistency between activateIOPaymentRes and pspNotifyPaymentReq scenario executed successfully
+    Given the Execute nodoInoltraEsitoPagamentoCarta request scenario executed successfully
     And initial XML sendPaymentOutcome
     """
      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
