@@ -1210,10 +1210,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
-        # il seguente step è valido soltanto in ambiente DEV, dove è possibile impostare una response arbitraria della sendPaymentResult-v2 con cui il mock PM risponderà, a differenza dell'ambiente SIT dove la risposta del PM è sempre la stessa
-
         # POSITION_RETRY_SENDPAYMENTRESULT
-        # And verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
 
         # STATI_RPT
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ACCETTATA_PSP,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1

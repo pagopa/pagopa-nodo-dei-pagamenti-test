@@ -3323,10 +3323,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
 
-        # il seguente step è valido soltanto in ambiente DEV, dove è possibile impostare una response arbitraria della sendPaymentResult-v2 con cui il mock PM risponderà, a differenza dell'ambiente SIT dove la risposta del PM è sempre la stessa
-
         # POSITION_RETRY_SENDPAYMENTRESULT
-        # And verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
 
         # RE
         And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
@@ -4298,10 +4296,8 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activateio on db nodo_online under macro NewMod1
 
-        # il seguente step è valido soltanto in ambiente DEV, dove è possibile impostare una response arbitraria della sendPaymentResult-v2 con cui il mock PM risponderà, a differenza dell'ambiente SIT dove la risposta del PM è sempre la stessa
-
         # POSITION_RETRY_SENDPAYMENTRESULT
-        # And verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
+        And verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spov2 on db nodo_online under macro NewMod1
 
         # RE
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
