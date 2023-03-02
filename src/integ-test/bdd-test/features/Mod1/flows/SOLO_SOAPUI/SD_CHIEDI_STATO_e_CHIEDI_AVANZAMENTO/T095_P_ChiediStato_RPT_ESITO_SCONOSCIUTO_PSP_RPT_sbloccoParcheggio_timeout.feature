@@ -200,7 +200,7 @@ Feature: T095_P_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_sbloccoParcheggio_time
         And check url field not exists in inoltroEsito/carta response
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         
-    @runnable
+    @ciao
     Scenario: final checks T095_P
         Given the Execution retry Esito Carta scenario executed successfully
         And initial XML pspChiediAvanzamentoRPT
