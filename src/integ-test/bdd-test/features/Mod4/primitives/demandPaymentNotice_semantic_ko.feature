@@ -110,7 +110,7 @@ Feature:  semantic checks for demandPaymentNoticeReq
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_DOMINIO_DISABILITATO of demandPaymentNotice response
-    @test @newfix
+    @test
     # idBrokerPA value check: idBrokerPA not enabled [SEM_DPNR_15] - l'idBrokerPA ricavato è disabilitato
     Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error on not enabled idBrokerPA
         Given updates through the query update_id_intermediario_pa of the table INTERMEDIARI_PA the parameter ENABLED with N under macro Mod4 on db nodo_cfg
@@ -127,7 +127,7 @@ Feature:  semantic checks for demandPaymentNoticeReq
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of demandPaymentNotice response
-    @test @newfix
+    @test
     # idStation value check: idStation not enabled [SEM_DPNR_17] - l'idStation ricavata è disabilitata
     Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on idStation not enabled
         Given updates through the query update_id_stazione of the table STAZIONI the parameter ENABLED with N under macro Mod4 on db nodo_cfg
