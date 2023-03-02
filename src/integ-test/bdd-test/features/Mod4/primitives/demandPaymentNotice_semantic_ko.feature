@@ -96,7 +96,7 @@ Feature:  semantic checks for demandPaymentNoticeReq
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_VERSIONE_SERVIZIO of demandPaymentNotice response
-    @test @newfix
+    @test
     # idDominio value check: idDominio not in PA table [SEM_DPNR_13] - l'idDominio ricavato dalla tabella CDS_SOGGETTO non è presente nella tabella PA
     Scenario: Check PPT_DOMINIO_SCONOSCIUTO error on non-existent idDominio
         Given idSoggettoServizio with 00003 in demandPaymentNotice
