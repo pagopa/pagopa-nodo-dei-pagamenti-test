@@ -82,7 +82,7 @@ Feature:  semantic checks for demandPaymentNoticeReq
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_SERVIZIO_SCONOSCIUTO of demandPaymentNotice response
-    @test
+    @test @newfix
     # idSoggettoServizio value check: idSoggettoServizio inactive [SEM_DPNR_11] - timestamp di arrivo della chiamata non compreso tra i timestamp presenti nei campi DATA_INIZIO_VALIDITA e DATA_FINE_VALIDITA del record trovato all'interno della tabella CDS_SOGGETTO_SERVIZIO
     Scenario: Check PPT_SERVIZIO_NONATTIVO error on inactive idSoggettoServizio
         Given idSoggettoServizio with 00002 in demandPaymentNotice
@@ -96,44 +96,44 @@ Feature:  semantic checks for demandPaymentNoticeReq
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_VERSIONE_SERVIZIO of demandPaymentNotice response
-    @test
+    @test @newfix
     # idDominio value check: idDominio not in PA table [SEM_DPNR_13] - l'idDominio ricavato dalla tabella CDS_SOGGETTO non è presente nella tabella PA
     Scenario: Check PPT_DOMINIO_SCONOSCIUTO error on non-existent idDominio
         Given idSoggettoServizio with 00003 in demandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_DOMINIO_SCONOSCIUTO of demandPaymentNotice response
-    @test
+    @test @newfix
     # idDominio value check: idDominio not enabled in PA table [SEM_DPNR_14] - l'idDominio ricavato dalla tabella CDS_SOGGETTO è presente nella tabella PA ed è disabilitato
     Scenario: Check PPT_DOMINIO_DISABILITATO error on not enabled idDominio
         Given idSoggettoServizio with 00004 in demandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_DOMINIO_DISABILITATO of demandPaymentNotice response
-    @test
+    @test @newfix
     # idBrokerPA value check: idBrokerPA not enabled [SEM_DPNR_15] - l'idBrokerPA ricavato è disabilitato
     Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error on not enabled idBrokerPA
         Given updates through the query update_id_intermediario_pa of the table INTERMEDIARI_PA the parameter ENABLED with N under macro Mod4 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
-        Then check outcome is KO of demandPaymentNotice response
-        And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of demandPaymentNotice response
         And updates through the query update_id_intermediario_pa of the table INTERMEDIARI_PA the parameter ENABLED with Y under macro Mod4 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
-    @test
+        Then check outcome is KO of demandPaymentNotice response
+        And check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of demandPaymentNotice response
+    @test @newfix
     # idStation value check: idStation not enabled to 4 model [SEM_DPNR_16] - l'idStation ricavata non è abilitata al quarto modello
     Scenario: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on idStation not enabled to 4 model
         Given idSoggettoServizio with 80003 in demandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of demandPaymentNotice response
-    @test
+    @test @newfix
     # idStation value check: idStation not enabled [SEM_DPNR_17] - l'idStation ricavata è disabilitata
     Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on idStation not enabled
         Given updates through the query update_id_stazione of the table STAZIONI the parameter ENABLED with N under macro Mod4 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
-        Then check outcome is KO of demandPaymentNotice response
-        And check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of demandPaymentNotice response
         And updates through the query update_id_stazione of the table STAZIONI the parameter ENABLED with Y under macro Mod4 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
+        Then check outcome is KO of demandPaymentNotice response
+        And check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of demandPaymentNotice response
