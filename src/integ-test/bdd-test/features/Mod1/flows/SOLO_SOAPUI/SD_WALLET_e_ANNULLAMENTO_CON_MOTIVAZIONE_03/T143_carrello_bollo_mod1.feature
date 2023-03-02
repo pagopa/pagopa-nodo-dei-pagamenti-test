@@ -244,7 +244,7 @@ Feature: T143_carrello_bollo_mod1
                 "identificativoPsp": "#psp#",
                 "tipoVersamento": "BBT",
                 "identificativoIntermediario": "#psp#",
-                "identificativoCanale": "#canale_ATTIVATO_PRESSO_PSP#",
+                "identificativoCanale": "#canaleRtPush#",
                 "tipoOperazione":"mobile",
                 "mobileToken":"123ABC456"
             }
