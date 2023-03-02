@@ -223,20 +223,6 @@ Feature: T143_carrello_bollo_mod1
     @runnable
     Scenario: Execution Esito Mod1
         Given the Execute nodoChiediListaPSP - carte scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:pspInviaCarrelloRPTCarteResponse>
-            <pspInviaCarrelloRPTResponse>
-            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTCarteResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        #non toccare i valori
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
