@@ -768,7 +768,7 @@ Feature: flow tests for demandPaymentNotice
         And the activatePaymentNotice request scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @newfix 
+    @test  
     Scenario: F_DPNR_01 (part 2)
         Given the F_DPNR_01 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -810,7 +810,7 @@ Feature: flow tests for demandPaymentNotice
         And the activatePaymentNotice request scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @newfix 
+    @test  
     Scenario: F_DPNR_01.1 (part 2)
         Given the F_DPNR_01.1 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -853,7 +853,7 @@ Feature: flow tests for demandPaymentNotice
         And the activatePaymentNotice request scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @newfix 
+    @test  
     Scenario: F_DPNR_02 (part 2)
         Given the F_DPNR_02 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -872,7 +872,7 @@ Feature: flow tests for demandPaymentNotice
         And expirationTime with 2000 in activatePaymentNotice
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @newfix 
+    @test  
     Scenario: F_DPNR_03 (part 2)
         Given the F_DPNR_03 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 4 seconds
@@ -888,7 +888,7 @@ Feature: flow tests for demandPaymentNotice
         And the activatePaymentNotice request with 3 transfers scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @newfix 
+    @test  
     Scenario: F_DPNR_04 (part 2)
         Given the F_DPNR_04 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -905,7 +905,7 @@ Feature: flow tests for demandPaymentNotice
         And the activatePaymentNotice request with 3 transfers scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @newfix 
+    @test  
     Scenario: F_DPNR_05 (part 2)
         Given the F_DPNR_05 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -925,7 +925,7 @@ Feature: flow tests for demandPaymentNotice
         And expirationTime with 2000 in activatePaymentNotice
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @newfix 
+    @test  
     Scenario: F_DPNR_06 (part 2)
         Given the F_DPNR_06 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 4 seconds
@@ -941,7 +941,7 @@ Feature: flow tests for demandPaymentNotice
         And the activatePaymentNotice request scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @newfix 
+    @test  
     Scenario: F_DPNR_07 (part 2)
         Given the F_DPNR_07 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1030,7 +1030,7 @@ Feature: flow tests for demandPaymentNotice
         And the activatePaymentNotice request scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @newfix 
+    @test  
     Scenario: F_DPNR_08 (part 2)
         Given the F_DPNR_08 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1055,7 +1055,7 @@ Feature: flow tests for demandPaymentNotice
         And expirationTime with 2000 in activatePaymentNotice
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @newfix 
+    @test  
     Scenario: F_DPNR_09 (part 2)
         Given the F_DPNR_09 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 4 seconds
