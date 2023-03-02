@@ -3,7 +3,7 @@ Feature: T116_A_ChiediNumeroAvviso_targa_tipo=1_ErroreEmessoDaPA
     Background:
         Given systems up
 
-@noOk
+@ciao
     Scenario: Execute nodoChiediNumeroAvviso (Phase 1)
         Given initial XML nodoChiediNumeroAvviso
         """
