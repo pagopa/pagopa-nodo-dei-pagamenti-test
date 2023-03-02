@@ -30,8 +30,8 @@ Feature: flow tests for nodoChiediNumeroAvviso
             <paaChiediNumeroAvvisoRisposta>
             <esito>OK</esito>
             <numeroAvviso>
-            <auxDigit>0</auxDigit>
-            <applicationCode>02</applicationCode>
+            <auxDigit>3</auxDigit>
+            <applicationCode>12</applicationCode>
             <IUV>#iuv#</IUV>
             </numeroAvviso>
             <datiPagamentoPA>
