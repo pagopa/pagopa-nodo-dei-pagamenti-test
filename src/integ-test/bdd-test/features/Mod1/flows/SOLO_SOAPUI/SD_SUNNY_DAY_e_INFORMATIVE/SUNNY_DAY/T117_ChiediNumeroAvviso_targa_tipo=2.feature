@@ -5,7 +5,7 @@ Feature: T117_ChiediNumeroAvviso_targa_tipo=2
 
 @runnable
     Scenario: Execute nodoChiediNumeroAvviso
-        Given generate 1 notice number and iuv with aux digit 0, segregation code #cod_segr# and application code NA
+        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And initial XML nodoChiediNumeroAvviso
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -32,7 +32,7 @@ Feature: T117_ChiediNumeroAvviso_targa_tipo=2
             <paaChiediNumeroAvvisoRisposta>
             <esito>OK</esito>
             <numeroAvviso>
-            <auxDigit>0</auxDigit>
+            <auxDigit>3</auxDigit>
             <applicationCode>#cod_segr#</applicationCode>
             <IUV>$1iuv</IUV>
             </numeroAvviso>
