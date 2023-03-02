@@ -32,7 +32,7 @@ Feature: T116_A_ChiediNumeroAvviso_targa_tipo=1_ErroreEmessoDaPA
             <fault>
             <faultCode>ciao</faultCode>
             <faultString>errore semantico PA</faultString>
-            <id>#creditor_institution_code#</id>
+            <id>00493410583</id>
             <description>Errore semantico emesso dalla PA</description>
             </fault>
             <esito>KO</esito>
