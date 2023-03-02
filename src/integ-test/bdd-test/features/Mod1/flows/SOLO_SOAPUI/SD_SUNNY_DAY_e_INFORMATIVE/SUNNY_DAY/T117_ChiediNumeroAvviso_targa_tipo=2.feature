@@ -32,7 +32,7 @@ Feature: T117_ChiediNumeroAvviso_targa_tipo=2
             <paaChiediNumeroAvvisoRisposta>
             <esito>OK</esito>
             <numeroAvviso>
-            <auxDigit>0</auxDigit>
+            <auxDigit>3</auxDigit>
             <IUV>#cod_segr_old#$1iuv</IUV>
             </numeroAvviso>
             <datiPagamentoPA>
