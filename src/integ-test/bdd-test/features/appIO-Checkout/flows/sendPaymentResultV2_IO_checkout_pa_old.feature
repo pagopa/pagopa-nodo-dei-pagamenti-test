@@ -863,7 +863,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test
+    @test @newfix
     Scenario: T_SPR_V2_17 (part 2)
         Given the T_SPR_V2_17 (part 1) scenario executed successfully
         And wait 10 seconds for expiration
@@ -1187,7 +1187,7 @@ Feature: flow tests for sendPaymentResultV2
         And job paInviaRt triggered after 5 seconds
         Then check outcome is OK of sendPaymentOutcome response
         And verify the HTTP status code of paInviaRt response is 200
-    @test
+    @test @newfix
     Scenario: T_SPR_V2_23 (part 3)
         Given the T_SPR_V2_23 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds
@@ -1210,8 +1210,10 @@ Feature: flow tests for sendPaymentResultV2
         And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
 
+        # check non eseguibile in sit
+
         # POSITION_RETRY_SENDPAYMENTRESULT
-        And verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
+        # And verify 0 record for the table POSITION_RETRY_SENDPAYMENTRESULT retrived by the query PAYMENT_TOKEN_spo on db nodo_online under macro NewMod1
 
         # STATI_RPT
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ACCETTATA_PSP,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
@@ -1395,7 +1397,7 @@ Feature: flow tests for sendPaymentResultV2
         And job paInviaRt triggered after 5 seconds
         Then check outcome is OK of sendPaymentOutcome response
         And verify the HTTP status code of paInviaRt response is 200
-    @test
+    @test @newfix
     Scenario: T_SPR_V2_26 (part 3)
         Given the T_SPR_V2_26 (part 2) scenario executed successfully
         When job positionRetrySendPaymentResult triggered after 65 seconds
