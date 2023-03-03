@@ -295,7 +295,7 @@ Feature: flow checks for sendPaymentResult with PA new
       Given the T_SPR_01 (part 1) scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
-   @test
+   @test @newfix
    Scenario: T_SPR_01 (part 3)
       Given the T_SPR_01 (part 2) scenario executed successfully
       And the closePayment scenario executed successfully
