@@ -41,6 +41,7 @@ Feature:  semantic checks for paVerifyPaymentNoticeRes faultCode
          </soapenv:Body>
          </soapenv:Envelope>
          """
+      And update through the query param_update_in of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with Y, with where condition OBJ_ID and where value ('16646') under macro update_query on db nodo_cfg
       And faultCode with <faultCodeValue> in paVerifyPaymentNotice
       And faultString with <faultStringValue> in paVerifyPaymentNotice
       And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
@@ -104,3 +105,4 @@ Feature:  semantic checks for paVerifyPaymentNoticeRes faultCode
       When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
       Then check outcome is KO of verifyPaymentNotice response
       And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of verifyPaymentNotice response
+      And update through the query param_update_in of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with N, with where condition OBJ_ID and where value ('16646') under macro update_query on db nodo_cfg
