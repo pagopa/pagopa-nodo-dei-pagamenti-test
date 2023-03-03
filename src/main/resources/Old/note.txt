@@ -1,0 +1,3 @@
+wsdl2java.bat -p eu.sia.nodopa.merged.paaNodo -autoNameResolution -d D:\Sviluppo\Git\pagopa---testsuite\PA_Mock\src\main\java D:\Sviluppo\Git\pagopa---testsuite\PA_Mock\src\main\resources\paForNodeMerged.wsdl
+
+wsdl2java.bat -p eu.sia.nodopa.merged.paaNodoMod4 -autoNameResolution -d D:\Sviluppo\Git\pagopa---testsuite\PA_Mock\src\main\java D:\Sviluppo\Git\pagopa---testsuite\PA_Mock\src\main\resources\PaPerNodoRichiestaAvvisi.wsdl

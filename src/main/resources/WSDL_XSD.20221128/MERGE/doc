@@ -1,0 +1,8 @@
+set JAVA_HOME=D:\Programmi\java\jre1.8.0_201
+#ALTRIMENTI DA' ERRORE SU JAVA 11
+#D:\Programmi\apache-cxf-3.2.6\apache-cxf-3.2.6\bin\wsdl2java.bat -p eu.sia.nodopa.merged.pspnodo -d D:\Works\GIT\OpeIadSccDcc\PagoPa\ServiziPSP\src\main\java D:\Works\GIT\OpeIadSccDcc\PagoPa\ServiziPSP\src\main\resources\wsdl\mergeService\MergedPspNodo2.wsdl
+
+#NMU 20221128
+cd C:\D\Works\GIT\OpeIadSccDcc\PagoPa\ServiziPSP\src\main\resources\wsdl\WSDL_XSD.20221128
+set JAVA_HOME=C:\D\Programmi\java\jre1.8.0_201
+C:\D\Programmi\apache-cxf-3.2.6\apache-cxf-3.2.6\bin\wsdl2java.bat -p merged.pagopa.pagopa_api.pa.pafornode -d C:\D\Works\GIT\OpeIadSccDcc\PagoPa\PA_Mock\src\main\resources\generated\ C:\D\Works\GIT\OpeIadSccDcc\PagoPa\PA_Mock\src\main\resources\WSDL_XSD.20221128\2.0\wsdl\paForNode_merged.wsdl

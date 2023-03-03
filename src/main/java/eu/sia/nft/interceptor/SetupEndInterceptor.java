@@ -11,7 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eu.sia.nft.workers.SendToQueue;
-import merged.ws.ppthead.IntestazionePPT;
+import merged.pagopa.pagopa_api.pa.pafornode.IntestazionePPT;
 
 public class SetupEndInterceptor extends AbstractPhaseInterceptor<Message> {
 
@@ -26,8 +26,10 @@ public class SetupEndInterceptor extends AbstractPhaseInterceptor<Message> {
 	@Override
 	public void handleMessage(Message message) {
 		// GESTIONE SECONDA ATTIVA PER TOKEN SCADUTO
-		if (message.getExchange().getInMessage().getContent(java.util.List.class).get(0).toString().startsWith("merged.ws.PaaAttiva")) {
-			IntestazionePPT intestazionePPT = (IntestazionePPT) message.getExchange().getInMessage().getContent(java.util.List.class).get(1);
+		if (message.getExchange().getInMessage().getContent(java.util.List.class).get(0).toString()
+				.startsWith("merged.pagopa.pagopa_api.pa.pafornode.merged.ws.PaaAttiva")) {
+			IntestazionePPT intestazionePPT = (IntestazionePPT) message.getExchange().getInMessage()
+					.getContent(java.util.List.class).get(1);
 			logger.trace("IntestazionePPT is: " + intestazionePPT);
 			// se nullo ritorno, non mi interessa
 			if (intestazionePPT == null)
@@ -38,8 +40,11 @@ public class SetupEndInterceptor extends AbstractPhaseInterceptor<Message> {
 			String ccp = intestazionePPT.getCodiceContestoPagamento();
 			if (ccp.indexOf("-v2") > -1) {
 				// stringa da salvare
-				String tmp_ts = intestazionePPT.getIdentificativoDominio() + "," + intestazionePPT.getIdentificativoIntermediarioPA() + "," + intestazionePPT.getIdentificativoStazioneIntermediarioPA()
-						+ "," + intestazionePPT.getCodiceContestoPagamento() + "," + intestazionePPT.getIdentificativoUnivocoVersamento();
+				String tmp_ts = intestazionePPT.getIdentificativoDominio() + ","
+						+ intestazionePPT.getIdentificativoIntermediarioPA() + ","
+						+ intestazionePPT.getIdentificativoStazioneIntermediarioPA() + ","
+						+ intestazionePPT.getCodiceContestoPagamento() + ","
+						+ intestazionePPT.getIdentificativoUnivocoVersamento();
 				executors.submit(new SendToQueue(tmp_ts));
 			}
 		}
