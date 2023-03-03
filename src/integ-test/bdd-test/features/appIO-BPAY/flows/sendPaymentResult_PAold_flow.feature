@@ -788,6 +788,9 @@ Feature: flow checks for sendPaymentResult with PA old
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 0 record for the table RE retrived by the query select_sprV1_old on db re under macro AppIO
 
+# i seguenti test sono commentati perché risultano essere validi soltanto in DEV, dove è presente il mock PM, al quale si può richiedere una response particolare della sendPaymentResult-v1 tramite manipolazione del pspTransactionId nella closePayment-v1,
+# mentre risultano essere out of scope in SIT, dove è presente il PM al quale non si può richiedere una response particolare per la sendPaymentResult-v1
+
 # # T_SPR_23
 # Scenario: T_SPR_23 (nodoAttivaRPT)
 #    Given the nodoAttivaRPT scenario executed successfully

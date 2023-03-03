@@ -630,6 +630,8 @@ Feature: flow checks for sendPaymentResult with PA new
       And checking value $XML_RE.pspTransactionId is equal to value $psp_transaction_id
       And checking value $XML_RE.outcome is equal to value KO
 
+# i seguenti test sono commentati perché risultano essere validi soltanto in DEV, dove è presente il mock PM, al quale si può richiedere una response particolare della sendPaymentResult-v1 tramite manipolazione del pspTransactionId nella closePayment-v1,
+# mentre risultano essere out of scope in SIT, dove è presente il PM al quale non si può richiedere una response particolare per la sendPaymentResult-v1
 
 # # T_SPR_09
 # Scenario: T_SPR_09 (activateIOPayment)

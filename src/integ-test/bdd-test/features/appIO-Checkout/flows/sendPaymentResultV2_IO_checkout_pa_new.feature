@@ -1586,6 +1586,9 @@ Feature: flow tests for sendPaymentResultV2
         # RE
         And verify 0 record for the table RE retrived by the query sprv2_req_activateio on db re under macro NewMod1
 
+    # i seguenti test sono commentati perché risultano essere validi soltanto in DEV, dove è presente il mock PM, al quale si può richiedere una response particolare della sendPaymentResult-v2 tramite manipolazione del transactionId nella closePayment-v2,
+    # mentre risultano essere out of scope in SIT, dove è presente il PM al quale non si può richiedere una response particolare per la sendPaymentResult-v2
+
     # # FLUSSO_SPR_08_IO
 
     # Scenario: FLUSSO_SPR_08_IO (part 1)
@@ -3281,6 +3284,9 @@ Feature: flow tests for sendPaymentResultV2
         # RE
         And verify 0 record for the table RE retrived by the query sprv2_req_activateio on db re under macro NewMod1
 
+    # i seguenti test sono commentati perché risultano essere validi soltanto in DEV, dove è presente il mock PM, al quale si può richiedere una response particolare della sendPaymentResult-v2 tramite manipolazione del transactionId nella closePayment-v2,
+    # mentre risultano essere out of scope in SIT, dove è presente il PM al quale non si può richiedere una response particolare per la sendPaymentResult-v2
+
     # # T_SPR_V2_09
 
     # Scenario: T_SPR_V2_09 (part 1)
@@ -4254,6 +4260,9 @@ Feature: flow tests for sendPaymentResultV2
 
         # RE
         And verify 0 record for the table RE retrived by the query sprv2_req_activateio on db re under macro NewMod1
+
+# i seguenti test sono commentati perché risultano essere validi soltanto in DEV, dove è presente il mock PM, al quale si può richiedere una response particolare della sendPaymentResult-v2 tramite manipolazione del transactionId nella closePayment-v2,
+# mentre risultano essere out of scope in SIT, dove è presente il PM al quale non si può richiedere una response particolare per la sendPaymentResult-v2
 
 # # T_SPR_V2_09_V2
 
