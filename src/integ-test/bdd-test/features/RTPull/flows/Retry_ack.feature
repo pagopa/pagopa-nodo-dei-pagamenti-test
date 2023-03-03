@@ -331,7 +331,7 @@ Feature: RTPull flows
         Then check esito is OK of nodoInviaRPT response
         And wait 10 seconds for expiration
 
-    @ciao
+    @fix
     #Retry ACK timeout step2
     Scenario: Retry ack timeout
         Given the Execute nodoInviaRPT_timeout scenario executed successfully 
