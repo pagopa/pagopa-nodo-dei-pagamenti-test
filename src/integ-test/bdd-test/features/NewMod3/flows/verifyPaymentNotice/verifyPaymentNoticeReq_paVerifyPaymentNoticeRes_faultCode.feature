@@ -64,6 +64,7 @@ Feature:  semantic checks for paVerifyPaymentNoticeRes faultCode
          | PAA_PAGAMENTO_SCADUTO       | Pagamento in_attesa risulta scaduto all Ente Creditore.     |
          | PAA_PAGAMENTO_ANNULLATO     | Pagamento in_attesa risulta annullato all Ente Creditore.   |
          | PAA_SYSTEM_ERROR            | Errore generico.                                            |
+         | PAA_CIAO                    | Errore sconosciuto                                          |
 
    # management of KO from PA - PRO_VPNR_06
    @runnable
