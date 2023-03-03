@@ -3689,7 +3689,7 @@ Feature: flow tests for sendPaymentResultV2
     #     And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_01_V2
-    @test @newfix
+    @test
     Scenario: T_SPR_V2_01_V2
         Given the verifyPaymentNotice scenario executed successfully
         And the activateIOPayment scenario executed successfully
@@ -3741,7 +3741,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test
+    @test @prova
     Scenario: T_SPR_V2_02_V2 (part 2)
         Given the T_SPR_V2_02_V2 (part 1) scenario executed successfully
         And wait 12 seconds for expiration
