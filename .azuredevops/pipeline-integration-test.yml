@@ -13,6 +13,15 @@ parameters:
       - sit
     default: dev
 
+  - name: folder
+    displayName: Integration test folder
+    type: string
+    default: /src/integ-test/bdd-test/features/
+  - name: tags
+    type: string
+    default: runnable,fix
+    displayName: Integration test tags
+
 variables:
   archiveName: nodo-dei-pagamenti-NRT.zip
   destinationFolderExtractArtifact: nodo/extracted
