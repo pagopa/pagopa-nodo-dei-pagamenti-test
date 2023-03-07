@@ -190,6 +190,12 @@ stages:
             displayName: "Linux ldconfig Command for Oracle Instant Client"
 
           - script: |
+              echo "Install Git LFS"
+              git lfs install
+
+            displayName: "Install Git LFS"
+
+          - script: |
               export PATH=/usr/bin:/usr/local/bin:$PATH #Add environment variables
               echo 'Install Behave'
               sudo pip3 install behave 
