@@ -50,6 +50,19 @@ stages:
               keyVaultName: $(az-kv-name-${{ parameters.env }})
               secretsFilter: "*"
               runAsPreJob: true
+              
+          - script: |
+              echo "install git START"
+              
+              sudo apt-get update
+              
+              sudo apt-get install git-all
+              
+              echo "Install Git LFS"
+              git lfs install
+
+            displayName: "Install Git and LFS"
+          
 
           - script: |
               function replace {
