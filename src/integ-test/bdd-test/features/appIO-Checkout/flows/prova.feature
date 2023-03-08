@@ -3,6 +3,7 @@ Feature: flow tests for closePaymentV2
     Background:
         Given systems up
 
+    @test
     Scenario: activateIOPayment
         Given initial XML activateIOPayment
             """
