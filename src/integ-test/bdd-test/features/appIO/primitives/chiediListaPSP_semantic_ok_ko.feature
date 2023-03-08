@@ -90,10 +90,11 @@ Feature: Semantic checks for chiediListaPSP primitive
     Scenario: Check semantic correctness - OK [PRO_CLPSP_14]
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends rest GET listaPSP?percorsoPagamento=CARTE&idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 200
+        Then check error is Percorso di Pagamento invalido of listaPSP response 
+        And verify the HTTP status code of listaPSP response is 422
 
     @ciao
-    Scenario Outline: Check semantic correctness - KO [outline PRO_CLPSP_08-14]
+    Scenario Outline: Check semantic correctness - KO [outline PRO_CLPSP_08-13]
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends rest GET <service> to nodo-dei-pagamenti
         Then check error is <value> of listaPSP response
@@ -103,9 +104,8 @@ Feature: Semantic checks for chiediListaPSP primitive
             | listaPSP?idPagamento&percorsoPagamento=CARTE                                         | Richiesta non valida             | 400         | PRO_CLPSP_08 |
             | listaPSP?idPagamento=PAGAMENTOCHENONESISTEDENTROALDB_&percorsoPagamento=CARTE        | Il Pagamento indicato non esiste | 404         | PRO_CLPSP_09 |
             | listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento       | Percorso di Pagamento invalido   | 422         | PRO_CLPSP_12 |
-            | listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=PIPPO | Percorso di Pagamento invalido   | 422         | PRO_CLPSP_13 |
-            | listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=carte | Percorso di Pagamento invalido   | 422         | PRO_CLPSP_14 |
-    
+            | listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=PIPPO | Percorso di Pagamento invalido   | 422         | PRO_CLPSP_13 |    
+   
     @ciao
     Scenario Outline: Check semantic correctness - KO [outline PRO_CLPSP_07/11]
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
