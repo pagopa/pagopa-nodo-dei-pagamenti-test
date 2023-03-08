@@ -85,13 +85,12 @@ Feature: Semantic checks for chiediListaPSP primitive
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-    @ciao
+    @runnable
      # [PRO_CLPSP_14]
     Scenario: Check semantic correctness - OK [PRO_CLPSP_14]
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends rest GET listaPSP?percorsoPagamento=CARTE&idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of listaPSP response is 422
-        And check error is Percorso di Pagamento invalido of listaPSP response 
+        Then verify the HTTP status code of listaPSP response is 200
 
     @runnable
     Scenario Outline: Check semantic correctness - KO [outline PRO_CLPSP_08-13]
