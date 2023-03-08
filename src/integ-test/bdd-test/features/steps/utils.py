@@ -107,9 +107,9 @@ def get_rest_url_nodo(context, primitive):
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == " ":
         if "?idPagamento=" in primitive:
             primitive = primitive.split('?')[0]
-        if "listaPSP" in primitive:
+        elif "listaPSP" in primitive:
             primitive = "listaPSP"
-        if "_json" in primitive:
+        elif "_json" in primitive:
             primitive = primitive.split('_')[0]
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
     else:
