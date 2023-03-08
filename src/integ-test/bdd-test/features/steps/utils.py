@@ -90,11 +90,26 @@ def get_soap_url_nodo(context, primitive=-1):
                 "nodo-dei-pagamenti").get("soap_service")
 
         
-def get_rest_url_nodo(context):
-    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") is not None:
-        return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
-            + context.config.userdata.get("services").get(
-                "nodo-dei-pagamenti").get("rest_service")
+def get_rest_url_nodo(context, primitive):
+    primitive_mapping = { 
+        "avanzamentoPagamento": "/nodo-per-pm/v1",
+        "checkPosition": "/nodo-per-pm/v1",
+        "informazioniPagamento": "/nodo-per-pm/v1",
+        "inoltroEsito/carta": "/nodo-per-pm/v1",
+        "inoltroEsito/mod1": "/nodo-per-pm/v1",
+        "inoltroEsito/mod2": "/nodo-per-pm/v1",
+        "inoltroEsito/paypal": "/nodo-per-pm/v1",
+        "listaPSP": "/nodo-per-pm/v1",
+        "notificaAnnullamento": "/nodo-per-pm/v1",
+        "v1/closepayment": "/nodo-per-pm",
+        "v2/closepayment": "/nodo-per-pm"
+    }
+    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == " ":
+        if "?idPagamento=" in primitive:
+            primitive = primitive.split('?')[0]
+        if "_json" in primitive:
+            primitive = primitive.split('_')[0]
+        return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
     else:
         return ""
 
