@@ -587,7 +587,7 @@ Feature: flow tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @test @prova
+    @test
     Scenario: FLUSSO_OLD_CP_01 (part 2)
         Given the FLUSSO_OLD_CP_01 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
