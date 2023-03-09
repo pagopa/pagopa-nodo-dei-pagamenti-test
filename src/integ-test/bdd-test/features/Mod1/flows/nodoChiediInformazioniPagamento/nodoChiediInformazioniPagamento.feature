@@ -112,7 +112,7 @@ Feature: process tests for nodoChiediInformazioniPagamento
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-    @runnable
+    @ciao
     Scenario: execution nodoChiediInformazioniPagamento - PM_CIP1
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento? to nodo-dei-pagamenti
