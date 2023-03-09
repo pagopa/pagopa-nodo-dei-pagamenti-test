@@ -2,7 +2,7 @@ Feature: flow tests for demandPaymentNotice
 
     Background:
         Given systems up
-    @prova
+    
     Scenario: demandPaymentNotice
         Given initial XML demandPaymentNotice
             """
