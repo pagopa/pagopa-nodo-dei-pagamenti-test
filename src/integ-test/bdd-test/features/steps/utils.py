@@ -105,10 +105,14 @@ def get_rest_url_nodo(context, primitive):
         "v2/closepayment": "/nodo-per-pm"
     }
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == " ":
-        if "?idPagamento=" in primitive:
-            primitive = primitive.split('?')[0]
+        if "avanzamentoPagamento" in primitive:
+            primitive = "avanzamentoPagamento"
+        elif "informazioniPagamento" in primitive:
+            primitive = "informazioniPagamento"
         elif "listaPSP" in primitive:
             primitive = "listaPSP"
+        elif "notificaAnnullamento" in primitive:
+            primitive = "notificaAnnullamento"
         elif "_json" in primitive:
             primitive = primitive.split('_')[0]
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
