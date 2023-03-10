@@ -122,7 +122,7 @@ Feature: FLUSSO_APIO_17_PPALNEW
         And check esito is KO of inoltroEsito/paypal response
         And check errorCode is RIFPSP of inoltroEsito/paypal response
     
-    @runnable   
+    @runnable   @testdev
     Scenario: Execute nodoNotificaAnnullamentoPagamento (Phase 5)
         Given the Execute nodoInoltroEsitoPayPal (Phase 4) scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken&motivoAnnullamento=RIFPSP to nodo-dei-pagamenti

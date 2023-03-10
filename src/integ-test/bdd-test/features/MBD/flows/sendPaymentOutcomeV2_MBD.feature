@@ -239,7 +239,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
       Then verify the HTTP status code of v2/closepayment response is 200
       And check outcome is OK of v2/closepayment response
       And wait 5 seconds for expiration
-   @test
+   @test @testdev
    Scenario: execute sendPaymentOutcomeV2 1
       Given the execute closePaymentV2 1 scenario executed successfully
       And the Define MBD scenario executed successfully

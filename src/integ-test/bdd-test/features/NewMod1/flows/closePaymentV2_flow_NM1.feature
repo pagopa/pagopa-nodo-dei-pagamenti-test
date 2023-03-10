@@ -2,7 +2,7 @@ Feature: flow tests for closePaymentV2
 
     Background:
         Given systems up
-
+@testdev
     Scenario: checkPosition
         Given initial json checkPosition
             """

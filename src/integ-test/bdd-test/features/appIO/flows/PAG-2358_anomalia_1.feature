@@ -302,7 +302,7 @@ Feature: PAG-2358 anomalia 1
         When WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
 
-    @test
+    @test @testdev
     Scenario: Test
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully

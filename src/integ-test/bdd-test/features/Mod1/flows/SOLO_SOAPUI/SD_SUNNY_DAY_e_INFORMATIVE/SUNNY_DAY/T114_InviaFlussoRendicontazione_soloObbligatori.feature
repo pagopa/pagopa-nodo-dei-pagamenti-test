@@ -36,7 +36,7 @@ Feature: T114_InviaFlussoRendicontazione_soloObbligatori
             </pay_i:FlussoRiversamento>
             """
 
-@runnable
+@runnable @testdev
     Scenario: Send nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
