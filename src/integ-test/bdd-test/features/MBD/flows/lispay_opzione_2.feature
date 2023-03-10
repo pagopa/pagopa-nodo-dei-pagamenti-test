@@ -340,6 +340,7 @@ Feature: lispay opzione 2
         And the nodoChiediListaPsp scenario executed successfully
         Then check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
+        And restore initial configurations
 
     @test 
     Scenario: nodoInviaRPT with MBD and IBAN
@@ -354,6 +355,7 @@ Feature: lispay opzione 2
         And the nodoChiediListaPsp scenario executed successfully
         Then check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
+        And restore initial configurations
 
     @test
     Scenario: nodoInviaRPT with IBAN
@@ -368,6 +370,7 @@ Feature: lispay opzione 2
         And the nodoChiediListaPsp scenario executed successfully
         Then check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
+        And restore initial configurations
 
     @test 
     Scenario: nodoInviaCarrelloRPT with MBD
@@ -382,6 +385,7 @@ Feature: lispay opzione 2
         And the nodoChiediListaPsp scenario executed successfully
         Then check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
+        And restore initial configurations
 
     @test 
     Scenario: nodoInviaCarrelloRPT with MBD and IBAN
@@ -396,6 +400,7 @@ Feature: lispay opzione 2
         And the nodoChiediListaPsp scenario executed successfully
         Then check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
+        And restore initial configurations
 
     @test 
     Scenario: nodoInviaCarrelloRPT with IBAN
@@ -410,3 +415,4 @@ Feature: lispay opzione 2
         And the nodoChiediListaPsp scenario executed successfully
         Then check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
+        And restore initial configurations

@@ -459,6 +459,7 @@ Feature: lispay opzione 2 extended flow
         Then verify the HTTP status code of listaPSP response is 200
         Then check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
+        And restore initial configurations
 
     Scenario: nodoChiediListaPsp with IBAN
         Given nodo-dei-pagamenti has config parameter chiediListaPSP.listaPspLisPay set to BIC36019
@@ -473,6 +474,7 @@ Feature: lispay opzione 2 extended flow
         Then verify the HTTP status code of listaPSP response is 200
         Then check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
+        And restore initial configurations
 
     Scenario: nodoInoltraEsitoCarta
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
