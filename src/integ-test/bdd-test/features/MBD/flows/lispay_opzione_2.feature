@@ -327,7 +327,7 @@ Feature: lispay opzione 2
         And execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
         And through the query version retrieve param version at position 0 and save it under the key version
 
-    @test 
+    @test @prova
     Scenario: nodoInviaRPT with MBD
         Given the Settings scenario executed successfully
         And execution query get_psp_mbd to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
