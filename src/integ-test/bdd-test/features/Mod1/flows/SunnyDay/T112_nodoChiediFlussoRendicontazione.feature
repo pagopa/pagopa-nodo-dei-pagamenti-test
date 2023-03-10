@@ -24,7 +24,7 @@ Feature: process tests for nodoChiediElencoFlussiRendicontazione
         And check ppt:nodoChiediElencoFlussiRendicontazioneRisposta field exists in nodoChiediElencoFlussiRendicontazione response
         #And retrieve session token from $nodoChiediElencoFlussiRendicontazioneResponse.url
 
-@runnable      @testdev
+@runnable      
     Scenario: Send nodoChiediFlussiRendicontazione
         Given the Send nodoChiediElencoFlussiRendicontazione scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione

@@ -3,7 +3,7 @@ Feature: T116_ChiediNumeroAvviso_targa_tipo=1
     Background:
         Given systems up
 
-@fix @testdev
+@fix 
     Scenario: Execute nodoChiediNumeroAvviso
         Given initial XML nodoChiediNumeroAvviso
         """

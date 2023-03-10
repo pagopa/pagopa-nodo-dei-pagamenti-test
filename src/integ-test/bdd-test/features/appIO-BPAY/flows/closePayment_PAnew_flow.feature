@@ -1552,7 +1552,7 @@ Feature: flow checks for closePayment - PA new
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @test @testdev
+   @test
    Scenario: FLUSSO_CP_19 (part 4)
       Given the FLUSSO_CP_19 (part 3) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
