@@ -526,7 +526,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
       When job mod3CancelV1 triggered after 3 seconds
       And PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
       Then check outcome is KO of sendPaymentOutcomeV2 response
-      And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
+      And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcomeV2 response
       And wait 5 seconds for expiration
       And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
       And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
