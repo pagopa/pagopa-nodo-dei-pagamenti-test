@@ -235,7 +235,7 @@ Feature: T124_ChiediListePSP_carr_2RPT_noIbanAddebitoEntrambeRPT
     And check totalRows is $sizeConto of listaPSP response
     And check data is $listaConto of listaPSP response
 
-  @fix
+  @runnable
   Scenario: Execute nodoChiediListaPSP - altro
     Given the Execute nodoChiediListaPSP - conto scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti

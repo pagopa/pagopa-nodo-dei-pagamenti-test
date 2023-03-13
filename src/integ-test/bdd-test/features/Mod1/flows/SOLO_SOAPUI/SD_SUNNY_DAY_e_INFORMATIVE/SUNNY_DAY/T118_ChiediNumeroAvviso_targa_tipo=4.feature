@@ -3,7 +3,7 @@ Feature: T118_ChiediNumeroAvviso_targa_tipo=4
     Background:
         Given systems up
 
-@fix
+@runnable
     Scenario: Execute nodoChiediNumeroAvviso
         Given initial XML nodoChiediNumeroAvviso
         """

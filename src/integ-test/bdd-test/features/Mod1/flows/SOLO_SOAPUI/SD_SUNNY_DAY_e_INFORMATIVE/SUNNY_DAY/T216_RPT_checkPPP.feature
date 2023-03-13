@@ -3,7 +3,7 @@ Feature: T216_RPT_checkPPP
     Background:
         Given systems up
 
-@fix
+@runnable
     Scenario: RPT generation
         Given RPT1 generation
             """

@@ -134,7 +134,7 @@ Feature: BUG_PAG_1533_02
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
 
-@fix
+@runnable
     Scenario: Execute job (Phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML pspChiediListaRT

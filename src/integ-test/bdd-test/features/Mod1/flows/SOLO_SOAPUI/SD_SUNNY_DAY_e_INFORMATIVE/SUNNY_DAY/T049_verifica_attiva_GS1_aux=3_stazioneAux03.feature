@@ -32,7 +32,7 @@ Feature: T049_verifica_attiva_GS1_aux=3_stazioneAux03
         Then check esito is OK of nodoVerificaRPT response
         # And check faultCode is  of nodoVerificaRPT response
 
-@fix
+@runnable
     Scenario: Execute nodoAttivaRPT
         Given the Execute nodoVerificaRPT scenario executed successfully
         And initial XML nodoAttivaRPT

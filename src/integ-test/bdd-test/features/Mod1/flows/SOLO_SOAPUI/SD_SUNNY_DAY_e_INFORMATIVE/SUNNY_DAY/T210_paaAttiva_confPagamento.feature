@@ -3,7 +3,7 @@ Feature: T210_paaAttiva_confPagamento
     Background:
         Given systems up
 
-@fix
+@runnable
     Scenario: Execute nodoAttivaRPT
         Given generate 1 notice number and iuv with aux digit 1, segregation code NA and application code NA
         And initial XML nodoAttivaRPT
