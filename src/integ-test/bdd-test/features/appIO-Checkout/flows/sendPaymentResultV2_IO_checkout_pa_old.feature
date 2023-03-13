@@ -908,7 +908,7 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.debtor is equal to value RCCGLD09P09H501E
 
     # T_SPR_V2_18
-    @test
+    @test @newfix
     Scenario: T_SPR_V2_18
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -957,7 +957,7 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.debtor is equal to value RCCGLD09P09H501E
 
     # T_SPR_V2_19
-    @test
+    @test @newfix
     Scenario: T_SPR_V2_19
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully

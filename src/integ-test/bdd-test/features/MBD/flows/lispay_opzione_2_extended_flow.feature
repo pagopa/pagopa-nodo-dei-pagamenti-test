@@ -530,7 +530,7 @@ Feature: lispay opzione 2 extended flow
         And the RT with MBD scenario executed successfully
         And the nodoInviaRT scenario executed successfully
 
-    @test
+    @test @newfix
     Scenario: Test nodoInviaRPT with IBAN
         Given the RPT with IBAN scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
@@ -551,7 +551,7 @@ Feature: lispay opzione 2 extended flow
         And the RT with MBD scenario executed successfully
         And the nodoInviaRT scenario executed successfully
 
-    @test 
+    @test @newfix
     Scenario: Test nodoInviaCarrelloRPT with IBAN
         Given the RPT with IBAN scenario executed successfully
         And the nodoInviaCarrelloRPT scenario executed successfully
