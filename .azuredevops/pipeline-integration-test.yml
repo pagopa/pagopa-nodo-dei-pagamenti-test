@@ -16,7 +16,7 @@ parameters:
   - name: folder
     displayName: Integration test folder
     type: string
-    default: /src/integ-test/bdd-test/features/
+    default: src/integ-test/bdd-test/features/
   - name: tags
     type: string
     default: runnable,fix
