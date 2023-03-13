@@ -155,7 +155,7 @@ Feature: Commissioni evolute process
         And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        And wait 30 seconds for expiration
+        And wait 5 seconds for expiration
         And verify 0 record for the table RE retrived by the query select_fees on db re under macro getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -174,7 +174,7 @@ Feature: Commissioni evolute process
         And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        And wait 30 seconds for expiration
+        And wait 5 seconds for expiration
         And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -203,7 +203,7 @@ Feature: Commissioni evolute process
         And check suggestedIdCiBundle field not exists in activatePaymentNoticeV2 response
         And check suggestedUserFee is 80 of activatePaymentNoticeV2 response
         And check suggestedPaFee is 0 of activatePaymentNoticeV2 response
-        And wait 30 seconds for expiration
+        And wait 5 seconds for expiration
         And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -231,7 +231,7 @@ Feature: Commissioni evolute process
         And check suggestedIdCiBundle field not exists in activatePaymentNoticeV2 response
         And check suggestedUserFee field not exists in activatePaymentNoticeV2 response
         And check suggestedPaFee field not exists in activatePaymentNoticeV2 response
-        And wait 30 seconds for expiration
+        And wait 5 seconds for expiration
         And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -259,7 +259,7 @@ Feature: Commissioni evolute process
         And check suggestedIdCiBundle is 1 of activatePaymentNoticeV2 response
         And check suggestedUserFee is 130 of activatePaymentNoticeV2 response
         And check suggestedPaFee is 20 of activatePaymentNoticeV2 response
-        And wait 30 seconds for expiration
+        And wait 5 seconds for expiration
         And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -282,7 +282,7 @@ Feature: Commissioni evolute process
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        And wait 30 seconds for expiration
+        And wait 5 seconds for expiration
         And verify 2 record for the table RE retrived by the query select_fees on db re under macro getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -303,7 +303,7 @@ Feature: Commissioni evolute process
         And idChannel with #canale_AGID# in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        And wait 30 seconds for expiration
+        And wait 5 seconds for expiration
         And verify 0 record for the table RE retrived by the query select_fees on db re under macro getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -365,7 +365,7 @@ Feature: Commissioni evolute process
         Given the activatePaymentNoticeV2 paGetPaymentV2 KO scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
-        And wait 30 seconds for expiration
+        And wait 5 seconds for expiration
         And verify 0 record for the table RE retrived by the query select_fees on db re under macro getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -387,7 +387,7 @@ Feature: Commissioni evolute process
         And transferAmount with 200.00 in paGetPaymentV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        And wait 60 seconds for expiration
+        And wait 5 seconds for expiration
         Then check outcome is OK of activatePaymentNoticeV2 response
         And verify 8 record for the table RE retrived by the query select_fees on db re under macro getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -409,7 +409,7 @@ Feature: Commissioni evolute process
         And transferAmount with 201.00 in paGetPaymentV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        And wait 60 seconds for expiration
+        And wait 5 seconds for expiration
         Then check outcome is OK of activatePaymentNoticeV2 response
         And verify 8 record for the table RE retrived by the query select_fees on db re under macro getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -431,7 +431,7 @@ Feature: Commissioni evolute process
         And transferAmount with 229.00 in paGetPaymentV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        And wait 60 seconds for expiration
+        And wait 5 seconds for expiration
         Then check outcome is OK of activatePaymentNoticeV2 response
         And verify 8 record for the table RE retrived by the query select_fees on db re under macro getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -453,7 +453,7 @@ Feature: Commissioni evolute process
         And transferAmount with 300.00 in paGetPaymentV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        And wait 60 seconds for expiration
+        And wait 5 seconds for expiration
         Then check outcome is OK of activatePaymentNoticeV2 response
         And verify 8 record for the table RE retrived by the query select_fees on db re under macro getFees
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
