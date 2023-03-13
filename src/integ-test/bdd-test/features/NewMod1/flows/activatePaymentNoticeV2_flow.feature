@@ -225,7 +225,7 @@ Feature: flow tests for activatePaymentNoticeV2Request
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
         And verify 3 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    @test @prova
+    @test
     Scenario: Activate_blocco_02 (part 4)
         Given the Activate_blocco_02 (part 3) scenario executed successfully
         And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2

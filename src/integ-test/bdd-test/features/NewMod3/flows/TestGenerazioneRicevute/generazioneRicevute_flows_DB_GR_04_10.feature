@@ -27,7 +27,7 @@ Feature: process tests for generazioneRicevute
       """
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
-@prova
+
   Scenario: Execute activatePaymentNotice (Phase 2)
     Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
     And initial XML activatePaymentNotice
