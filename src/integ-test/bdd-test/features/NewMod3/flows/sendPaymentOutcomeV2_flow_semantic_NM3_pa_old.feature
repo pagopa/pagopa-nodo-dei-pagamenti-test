@@ -518,7 +518,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
       And the nodoInviaRPT scenario executed successfully
       When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoInviaRPT response
-   @test @newfix
+   @test 
    Scenario: SEM_SPO_32 (part 3)
       Given the SEM_SPO_32 (part 2) scenario executed successfully
       And the sendPaymentOutcomeV2 scenario executed successfully
