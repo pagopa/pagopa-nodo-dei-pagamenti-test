@@ -4,7 +4,9 @@ Feature: T220_verifica_attiva_faultBeanEsteso
         Given systems up
 
     Scenario: Execute nodoVerificaRPT (Phase 1)
-        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+        Given update through the query param_update_in of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with Y, with where condition OBJ_ID and where value ('16646') under macro update_query on db nodo_cfg
+        And refresh job PSP triggered after 10 seconds
+        And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And initial XML nodoVerificaRPT
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
@@ -162,3 +164,5 @@ Feature: T220_verifica_attiva_faultBeanEsteso
         Then check esito is KO of nodoAttivaRPT response
         And check originalFaultCode field exists in nodoAttivaRPT response
         And check id is #creditor_institution_code# of nodoAttivaRPT response
+        And update through the query param_update_in of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with N, with where condition OBJ_ID and where value ('16646') under macro update_query on db nodo_cfg
+        And refresh job PSP triggered after 10 seconds
