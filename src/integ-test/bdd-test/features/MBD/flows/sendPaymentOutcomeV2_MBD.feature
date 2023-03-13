@@ -225,7 +225,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          </soapenv:Body>
          </soapenv:Envelope>
          """
-   @prova
+   
    # sunny day
    Scenario: execute activatePaymentNoticeV2 1
       Given the activatePaymentNoticeV2 scenario executed successfully
