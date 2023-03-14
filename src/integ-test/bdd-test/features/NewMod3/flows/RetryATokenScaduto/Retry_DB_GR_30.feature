@@ -151,7 +151,8 @@ Feature: process tests for Retry_DB_GR_30
     Given the Execute activatePaymentNotice request scenario executed successfully
     When job mod3CancelV2 triggered after 5 seconds
     Then verify the HTTP status code of mod3CancelV2 response is 200
-
+    And wait 5 seconds for expiration
+    
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
     Given the Poller Annulli scenario executed successfully
