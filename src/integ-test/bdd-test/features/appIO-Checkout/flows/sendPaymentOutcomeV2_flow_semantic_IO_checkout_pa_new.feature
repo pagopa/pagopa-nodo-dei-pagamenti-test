@@ -374,7 +374,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test @prova
+    @test @newfix
     Scenario: SEM_SPO_28 (part 4)
         Given the SEM_SPO_28 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -382,7 +382,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
-        And check description is Outcome KO non accettabile of sendPaymentOutcomeV2 response
+        And check description is Esito discorde of sendPaymentOutcomeV2 response
 
     # SEM_SPO_29
 

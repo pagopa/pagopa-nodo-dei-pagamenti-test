@@ -448,7 +448,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And check description contains Esito concorde of sendPaymentOutcomeV2 response
 
     # SEM_SPO_28
-    @test @prova
+    @test @newfix
     Scenario: SEM_SPO_28
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -460,7 +460,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
-        And check description is Outcome KO non accettabile of sendPaymentOutcomeV2 response
+        And check description is Esito discorde of sendPaymentOutcomeV2 response
 
     # SEM_SPO_29
     @test 
