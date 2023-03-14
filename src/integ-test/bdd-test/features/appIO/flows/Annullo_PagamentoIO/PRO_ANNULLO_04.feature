@@ -90,7 +90,7 @@ Feature: PRO_ANNULLO_04
             <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
             </qrCode>
             <!--Optional:-->
-            <expirationTime>6000</expirationTime>
+            <expirationTime>200000</expirationTime>
             <amount>10.00</amount>
             <!--Optional:-->
             <dueDate>2021-12-12</dueDate>
