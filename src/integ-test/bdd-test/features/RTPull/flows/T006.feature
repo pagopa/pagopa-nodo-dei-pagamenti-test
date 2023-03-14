@@ -275,8 +275,8 @@ Feature: Execute nodoInviaRPT - RT_ESITO_SCONOSCIUTO_PA [T006]
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         #And job pspChiediListaAndChiediRt triggered after 5 seconds
-        #And job paInviaRt triggered after 10 seconds
-        And wait 180 seconds for expiration
+        And job paInviaRt triggered after 10 seconds
+        And wait 130 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
         #And refresh job PSP triggered after 10 seconds
