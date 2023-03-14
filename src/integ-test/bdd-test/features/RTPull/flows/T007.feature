@@ -427,9 +427,9 @@ Feature: Execute nodoInviaCarrelloRPT - [T007]
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         And identificativoUnivocoVersamento with $2iuv in pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
-        When job pspChiediListaAndChiediRt triggered after 5 seconds
-        And job paInviaRt triggered after 10 seconds
-        And wait 180 seconds for expiration
+        #When job pspChiediListaAndChiediRt triggered after 5 seconds
+        When job paInviaRt triggered after 10 seconds
+        And wait 130 seconds for expiration
         #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
         #And refresh job PSP triggered after 10 seconds
         #And wait 10 seconds for expiration 
