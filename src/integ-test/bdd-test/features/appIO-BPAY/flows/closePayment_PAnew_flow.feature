@@ -519,7 +519,7 @@ Feature: flow checks for closePayment - PA new
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @test @prova
+   @test 
    Scenario: FLUSSO_CP_02 (part 4)
       Given the FLUSSO_CP_02 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -1316,7 +1316,7 @@ Feature: flow checks for closePayment - PA new
       Then check outcome is KO of sendPaymentOutcome response
       And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
       And check description is Esito discorde of sendPaymentOutcome response
-   @test @prova
+   @test 
    Scenario: FLUSSO_CP_15 (part 5)
       Given the FLUSSO_CP_15 (part 4) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully

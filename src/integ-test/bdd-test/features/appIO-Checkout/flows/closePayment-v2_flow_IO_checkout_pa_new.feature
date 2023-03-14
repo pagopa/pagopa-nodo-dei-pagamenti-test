@@ -664,7 +664,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test @newfix @prova
+    @test @newfix 
     Scenario: FLUSSO_CP_02 (part 3)
         Given the FLUSSO_CP_02 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -3307,7 +3307,7 @@ Feature: flow tests for closePaymentV2
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
         And check description is Esito discorde of sendPaymentOutcome response
-    @test @newfix @prova
+    @test @newfix 
     Scenario: FLUSSO_CP_15 (part 4)
         Given the FLUSSO_CP_15 (part 3) scenario executed successfully
         And outcome with OK in sendPaymentOutcome
