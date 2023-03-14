@@ -450,7 +450,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And check description contains Esito concorde of sendPaymentOutcomeV2 response
 
     # SEM_SPO_28
-    @test @prova
+    @test 
     Scenario: SEM_SPO_28
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
