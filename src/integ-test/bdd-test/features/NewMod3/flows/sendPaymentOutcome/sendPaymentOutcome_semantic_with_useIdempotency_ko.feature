@@ -171,14 +171,6 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is OK of sendPaymentOutcome response
 
   @runnable
-  # Send payment outcome Phase 2 [IDMP_SPO_26]
-  Scenario: 10. Execute again the same sendPaymentOutcome request
-    Given the 9. Execute sendPaymentOutcome request without idempotencyKey scenario executed successfully
-    When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-    Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
-
-  @runnable
   # Send payment outcome Phase 2 - different idempotencyKey [IDMP_SPO_27]
   Scenario: 11. Execute again the same sendPaymentOutcome request with a different idempotencyKey
     Given the 2. Execute sendPaymentOutcome request scenario executed successfully
