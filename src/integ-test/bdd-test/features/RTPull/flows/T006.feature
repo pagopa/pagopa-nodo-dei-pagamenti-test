@@ -274,7 +274,7 @@ Feature: Execute nodoInviaRPT - RT_ESITO_SCONOSCIUTO_PA [T006]
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        #And job pspChiediListaAndChiediRt triggered after 5 seconds
+        And job pspChiediListaAndChiediRt triggered after 5 seconds
         And job paInviaRt triggered after 10 seconds
         And wait 130 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
