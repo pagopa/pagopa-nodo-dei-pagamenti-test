@@ -19,7 +19,7 @@ parameters:
     default: src/integ-test/bdd-test/features/
   - name: tags
     type: string
-    default: runnable,fix
+    default: runnable,test
     displayName: Integration test tags
 
 variables:
