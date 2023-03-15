@@ -294,3 +294,25 @@ Feature: revision checks for sendPaymentOutcome
         And PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+
+    Scenario: REV_SPO_07 (part 1)
+        Given the verifyPaymentNotice scenario executed successfully
+        And the activatePaymentNotice scenario executed successfully
+        And expirationTime with 2000 in activatePaymentNotice
+        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+
+    Scenario: REV_SPO_07 (part 2)
+        Given the REV_SPO_07 (part 1) scenario executed successfully
+        And the sendPaymentOutcome scenario executed successfully
+        When job mod3CancelV1 triggered after 3 seconds
+        And PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcome response
+        And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+
+    @test
+    Scenario: REV_SPO_07 (part 3)
+        Given the REV_SPO_07 (part 2) scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
