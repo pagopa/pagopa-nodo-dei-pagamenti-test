@@ -210,4 +210,4 @@ Feature: revision checks for sendPaymentOutcome
         When job mod3CancelV2 triggered after 3 seconds
         And PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
-        And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
+        And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
