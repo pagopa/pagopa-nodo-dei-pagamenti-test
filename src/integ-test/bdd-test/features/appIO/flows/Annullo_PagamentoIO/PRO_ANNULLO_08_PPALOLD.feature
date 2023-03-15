@@ -262,7 +262,8 @@ Feature: PRO_ANNULLO_08_PPALOLD
             "timestampOperazione": "2012-04-23T18:25:43Z"
         }
         """
-        And job annullamentoRptMaiRichiestaDaPm triggered after 65 seconds
+        And job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
+        And verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
         And wait 15 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/paypal response is 408
         And check error is Operazione in timeout of inoltroEsito/paypal response
