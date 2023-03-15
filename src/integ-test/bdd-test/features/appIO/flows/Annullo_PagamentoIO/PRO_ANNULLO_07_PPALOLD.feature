@@ -225,9 +225,9 @@ Feature: PRO_ANNULLO_07_PPALOLD
         """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And job annullamentoRptMaiRichiesteDaPm triggered after 61 seconds
-        And verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
         And wait 10 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
+        And verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200 
         And verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
         And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
         And verify 0 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
