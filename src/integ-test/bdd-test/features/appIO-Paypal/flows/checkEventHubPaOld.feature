@@ -341,8 +341,7 @@ Feature: checkEventHubPaOld
          """
 
    Scenario: Test (part 1)
-      Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 16000
-      And the nodoVerificaRPT scenario executed successfully
+      Given the nodoVerificaRPT scenario executed successfully
       And the nodoAttivaRPT scenario executed successfully
       When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoAttivaRPT response
@@ -372,8 +371,8 @@ Feature: checkEventHubPaOld
       And check esito is OK of inoltroEsito/paypal response
       
    @test @ciao
-   Scenario: FLUSSO_OLD_CP_01 (part 4)
-      Given the FLUSSO_OLD_CP_01 (part 3) scenario executed successfully
+   Scenario: Test (part 4)
+      Given the Test (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
       When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
       Then check outcome is OK of sendPaymentOutcome response
