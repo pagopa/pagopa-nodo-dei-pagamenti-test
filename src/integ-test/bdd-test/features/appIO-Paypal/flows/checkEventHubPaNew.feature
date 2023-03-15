@@ -1,4 +1,4 @@
-Feature: flow checks for closePayment - PA new
+Feature: checkEventHubPaNew
 
    Background:
       Given systems up
@@ -224,7 +224,6 @@ Feature: flow checks for closePayment - PA new
          """
       Then verify the HTTP status code of inoltroEsito/paypal response is 200
       And check esito is OK of inoltroEsito/paypal response
-      And wait 5 seconds for expiration
       
    @test
    Scenario: Test (part 4)
