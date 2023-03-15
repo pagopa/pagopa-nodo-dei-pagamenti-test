@@ -179,7 +179,7 @@ Feature: task_509
         Given nodo-dei-pagamenti has config parameter scheduler.annullamentoRptMaiRichiesteDaPmPollerMinutesToBack set to 1
         And nodo-dei-pagamenti has config parameter scheduler.jobName_annullamentoRptMaiRichiesteDaPm.enabled set to true
         And the Execute activateIOPayment (Phase 2) scenario executed successfully
-        When job annullamentoRptMaiRichiestaDaPm triggered after 65 seconds
+        When job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
         And verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200 
         And wait 130 seconds for expiration
         Then checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
