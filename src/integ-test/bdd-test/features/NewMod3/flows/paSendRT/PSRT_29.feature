@@ -231,7 +231,7 @@ Feature: process tests for paSendRT [PSRT_29]
 
     @runnable
     Scenario: job paSendRt
-        Given the Define sendPaymentOutcome scenario executed successfully
+        Given the clean paSendRt queue scenario executed successfully
         And initial XML paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
