@@ -173,7 +173,7 @@ Feature: task_509
         Then check token_valid_to is greater than token_valid_from plus default_durata_estensione_token_IO
         And restore initial configurations
     
-    @ciao
+    @runnable
     # [TASK_509_08]
     Scenario: Check debtor position (Phase 3)
         Given nodo-dei-pagamenti has config parameter scheduler.annullamentoRptMaiRichiesteDaPmPollerMinutesToBack set to 1
