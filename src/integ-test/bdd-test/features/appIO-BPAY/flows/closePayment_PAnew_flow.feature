@@ -423,7 +423,7 @@ Feature: flow checks for closePayment - PA new
       And verify 1 record for the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And checks the value #psp# of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
       And check datetime plus number of date default_durata_estensione_token_IO of the record at column TOKEN_VALID_TO of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-   @test @ciao
+   @test
    Scenario: FLUSSO_CP_01 (part 4)
       Given the FLUSSO_CP_01 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
