@@ -1,4 +1,4 @@
-Feature: checkEventHubPaNew
+Feature: checkEventHubPaOld
 
    Background:
       Given systems up
@@ -371,7 +371,7 @@ Feature: checkEventHubPaNew
       Then verify the HTTP status code of inoltroEsito/paypal response is 200
       And check esito is OK of inoltroEsito/paypal response
       
-   @test
+   @test @ciao
    Scenario: FLUSSO_OLD_CP_01 (part 4)
       Given the FLUSSO_OLD_CP_01 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
