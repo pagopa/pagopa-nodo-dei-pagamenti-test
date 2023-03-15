@@ -214,7 +214,7 @@ Feature: checkEventHubPaNew
          {
             "idTransazione": "responseOk",
             "idTransazionePsp": "153016btAE",
-            "idPagamento": "$sessionToken",
+            "idPagamento": "$activateIOPaymentResponse.paymentToken",
             "identificativoIntermediario": "#psp#",
             "identificativoPsp": "#psp#",
             "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
