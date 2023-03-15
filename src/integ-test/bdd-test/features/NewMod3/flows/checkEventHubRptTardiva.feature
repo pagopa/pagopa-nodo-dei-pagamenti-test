@@ -285,7 +285,7 @@ Feature: checkEventHubRptTardiva
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
-    @test @ciao
+    @test 
     Scenario: REV_SPO_08 (part 3)
         Given the REV_SPO_08 (part 2) scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
