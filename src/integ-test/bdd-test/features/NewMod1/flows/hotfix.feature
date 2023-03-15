@@ -1,4 +1,4 @@
-Feature: flow tests for paSendRTV2
+Feature: hotfix
 
     Background:
         Given systems up
