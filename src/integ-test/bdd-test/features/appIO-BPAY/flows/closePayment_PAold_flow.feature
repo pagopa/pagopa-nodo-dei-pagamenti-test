@@ -560,7 +560,7 @@ Feature: flow checks for closePayment - PA old
       And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-   @test @ciao
+   @test 
    Scenario: FLUSSO_OLD_CP_01 (part 4)
       Given the FLUSSO_OLD_CP_01 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
