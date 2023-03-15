@@ -127,14 +127,12 @@ Feature: revision checks for sendPaymentOutcome
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <nod:sendPaymentOutcomeRequest>
+            <nod:sendPaymentOutcomeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
-            <paymentTokens>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-            </paymentTokens>
             <outcome>OK</outcome>
             <!--Optional:-->
             <details>
@@ -167,7 +165,7 @@ Feature: revision checks for sendPaymentOutcome
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>
             </details>
-            </nod:sendPaymentOutcomeRequest>
+            </nod:sendPaymentOutcomeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
