@@ -4,8 +4,8 @@ Feature: Copy of T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParchegg
         Given systems up
 
     Scenario: RPT generation
-        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
-        And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
+        And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And RPT generation
             """
