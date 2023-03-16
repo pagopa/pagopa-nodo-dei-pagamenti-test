@@ -3,7 +3,7 @@ Feature: Block revision for sendPaymentOutcome
     Background:
         Given systems up
 
-    Scenario: Execute verifyPaymentNotice (Phase 1)
+    Scenario: verifyPaymentNotice
         Given initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -25,8 +25,8 @@ Feature: Block revision for sendPaymentOutcome
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
-    Scenario: Execute activatePaymentNotice (Phase 2)
-        Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
+    Scenario: activatePaymentNotice
+        Given the verifyPaymentNotice scenario executed successfully
         And initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -54,7 +54,7 @@ Feature: Block revision for sendPaymentOutcome
         Then check outcome is OK of activatePaymentNotice response
 
     Scenario: nodoInviaRPT
-        Given the Execute activatePaymentNotice (Phase 2) scenario executed successfully
+        Given the activatePaymentNotice scenario executed successfully
         And RPT generation
             """
             <pay_i:RPT xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd " xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -159,7 +159,8 @@ Feature: Block revision for sendPaymentOutcome
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    Scenario: Initialize sendPaymentOutcome (Phase 3)
+    @eventhub
+    Scenario: sendPaymentOutcome
         Given the nodoInviaRPT scenario executed successfully
         And initial XML sendPaymentOutcome
             """
@@ -198,8 +199,5 @@ Feature: Block revision for sendPaymentOutcome
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    @eventhub
-    Scenario: [SPO_REV_03]
-        Given the Initialize sendPaymentOutcome (Phase 3) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response

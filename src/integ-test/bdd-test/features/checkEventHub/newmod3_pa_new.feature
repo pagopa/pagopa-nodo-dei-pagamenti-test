@@ -3,7 +3,7 @@ Feature: Block revision for sendPaymentOutcome
     Background:
         Given systems up
 
-    Scenario: Execute verifyPaymentNotice (Phase 1)
+    Scenario: verifyPaymentNotice
         Given initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -25,8 +25,8 @@ Feature: Block revision for sendPaymentOutcome
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
-    Scenario: Execute activatePaymentNotice (Phase 2)
-        Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
+    Scenario: activatePaymentNotice
+        Given the verifyPaymentNotice scenario executed successfully
         And initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -53,8 +53,9 @@ Feature: Block revision for sendPaymentOutcome
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-    Scenario: Initialize sendPaymentOutcome (Phase 3)
-        Given the Execute activatePaymentNotice (Phase 2) scenario executed successfully
+    @eventhub
+    Scenario: sendPaymentOutcome
+        Given the activatePaymentNotice scenario executed successfully
         And initial XML sendPaymentOutcome
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -92,9 +93,5 @@ Feature: Block revision for sendPaymentOutcome
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    @eventhub
-    Scenario: [SPO_REV_03]
-        Given the Initialize sendPaymentOutcome (Phase 3) scenario executed successfully
-        And EC new version
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response

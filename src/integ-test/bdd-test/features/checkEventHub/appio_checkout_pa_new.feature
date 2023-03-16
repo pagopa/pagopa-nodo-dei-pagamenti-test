@@ -236,7 +236,6 @@ Feature: flow tests for closePaymentV2
     @eventhub 
     Scenario: FLUSSO_CP_01 (part 3)
         Given the FLUSSO_CP_01 (part 2) scenario executed successfully
-        And wait 5 seconds for expiration
         And the sendPaymentOutcome request scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response

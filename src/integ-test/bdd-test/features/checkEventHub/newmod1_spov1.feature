@@ -193,7 +193,6 @@ Feature: revision checks for sendPaymentOutcome
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
     @eventhub
     Scenario: REV_SPO_03 (part 3)
         Given the REV_SPO_03 (part 2) scenario executed successfully

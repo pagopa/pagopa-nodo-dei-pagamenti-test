@@ -291,26 +291,24 @@ Feature: flow checks for closePayment - PA old
       Then check esito is OK of nodoInviaRPT response
       And retrieve session token from $nodoInviaRPTResponse.url
 
-   Scenario: closePayment
-      Given initial json v1/closepayment
+   Scenario: closePaymentV2 request
+      Given initial json v2/closepayment
          """
          {
             "paymentTokens": [
-               "$sessionToken"
+               "$activateIOPaymentResponse.paymentToken"
             ],
             "outcome": "OK",
-            "identificativoPsp": "#psp#",
-            "tipoVersamento": "BPAY",
-            "identificativoIntermediario": "#id_broker_psp#",
-            "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-            "pspTransactionId": "#psp_transaction_id#",
+            "idPSP": "#psp#",
+            "paymentMethod": "TPAY",
+            "idBrokerPSP": "#id_broker_psp#",
+            "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+            "transactionId": "#transaction_id#",
             "totalAmount": 12,
             "fee": 2,
             "timestampOperation": "2012-04-23T18:25:43Z",
             "additionalPaymentInformations": {
-               "transactionId": "#transaction_id#",
-               "outcomePaymentGateway": "EFF",
-               "authorizationCode": "resOK"
+               "key": "#psp_transaction_id#"
             }
          }
          """
@@ -378,12 +376,11 @@ Feature: flow checks for closePayment - PA old
 
    Scenario: FLUSSO_OLD_CP_01 (part 3)
       Given the FLUSSO_OLD_CP_01 (part 2) scenario executed successfully
-      And the closePayment scenario executed successfully
-      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-      Then verify the HTTP status code of v1/closepayment response is 200
-      And check esito is OK of v1/closepayment response
-      And wait 5 seconds for expiration
-      
+      And the closePaymentV2 request scenario executed successfully
+      When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+      Then verify the HTTP status code of v2/closepayment response is 200
+      And check outcome is OK of v2/closepayment response
+
    @eventhub
    Scenario: FLUSSO_OLD_CP_01 (part 4)
       Given the FLUSSO_OLD_CP_01 (part 3) scenario executed successfully
