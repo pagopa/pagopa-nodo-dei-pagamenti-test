@@ -346,7 +346,7 @@ Feature: checkEventHubTokenScadutoPaOld
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+            <pay_i:datiSpecificiRiscossione>1/def</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
             </pay_i:RPT>
