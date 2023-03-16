@@ -1,4 +1,4 @@
-Feature: hotfix
+Feature: hotfix stazione vp 1 2
 
     Background:
         Given systems up
