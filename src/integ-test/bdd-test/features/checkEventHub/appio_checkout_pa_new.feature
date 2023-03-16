@@ -234,7 +234,7 @@ Feature: flow tests for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @eventhub @try
+    @eventhub 
     Scenario: FLUSSO_CP_01 (part 3)
         Given the FLUSSO_CP_01 (part 2) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully

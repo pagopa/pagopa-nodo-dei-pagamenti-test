@@ -380,6 +380,7 @@ Feature: flow checks for closePayment - PA old
       When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v2/closepayment response is 200
       And check outcome is OK of v2/closepayment response
+      And wait 5 seconds for expiration
 
    @eventhub @try
    Scenario: FLUSSO_OLD_CP_01 (part 4)
