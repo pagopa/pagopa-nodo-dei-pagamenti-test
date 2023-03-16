@@ -296,7 +296,7 @@ Feature: flow checks for closePayment - PA old
          """
          {
             "paymentTokens": [
-               "$activateIOPaymentResponse.paymentToken"
+               "$sessionToken"
             ],
             "outcome": "OK",
             "idPSP": "#psp#",
@@ -381,7 +381,7 @@ Feature: flow checks for closePayment - PA old
       Then verify the HTTP status code of v2/closepayment response is 200
       And check outcome is OK of v2/closepayment response
 
-   @eventhub
+   @eventhub @try
    Scenario: FLUSSO_OLD_CP_01 (part 4)
       Given the FLUSSO_OLD_CP_01 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully

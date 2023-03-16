@@ -22,13 +22,13 @@ Feature: process tests for retryAtokenScaduto
       """
 
   # Verify phase
-  Scenario: verifyPaymentNotice
+  Scenario: Execute verifyPaymentNotice request
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
   # Activate Phase
-  Scenario: activatePaymentNotice
-    Given the verifyPaymentNotice scenario executed successfully
+  Scenario: Execute activatePaymentNotice request
+    Given the Execute verifyPaymentNotice request scenario executed successfully
     And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -55,8 +55,8 @@ Feature: process tests for retryAtokenScaduto
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  Scenario: RPT
-    Given the activatePaymentNotice scenario executed successfully
+  Scenario: Define RPT
+    Given the Execute activatePaymentNotice request scenario executed successfully
     And RPT generation
       """
       <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -135,8 +135,8 @@ Feature: process tests for retryAtokenScaduto
       </pay_i:RPT>
       """
 
-  Scenario: nodoInviaRPT
-    Given the RPT scenario executed successfully
+  Scenario: Execute nodoInviaRPT request
+    Given the Define RPT scenario executed successfully
     And initial XML nodoInviaRPT
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -164,14 +164,20 @@ Feature: process tests for retryAtokenScaduto
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
 
-  Scenario: poller Annulli
-    Given the nodoInviaRPT scenario executed successfully
+  Scenario: Execute poller Annulli
+    Given the Execute nodoInviaRPT request scenario executed successfully
     When job mod3CancelV1 triggered after 5 seconds
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
+  Scenario: trigger paInviaRT
+    Given the Execute poller Annulli scenario executed successfully
+    When job paInviaRt triggered after 3 seconds
+    Then verify the HTTP status code of paInviaRt response is 200
+    And wait 5 seconds for expiration
+
   # Payment Outcome Phase outcome OK
-  Scenario: sendPaymentOutcome
-    Given the poller Annulli scenario executed successfully
+  Scenario: Execute sendPaymentOutcome request
+    Given the trigger paInviaRT scenario executed successfully
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -213,8 +219,8 @@ Feature: process tests for retryAtokenScaduto
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
-  Scenario: RPT2
-    Given the sendPaymentOutcome scenario executed successfully
+  Scenario: Define RPT2
+    Given the Execute sendPaymentOutcome request scenario executed successfully
     And RPT generation
       """
       <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -293,9 +299,9 @@ Feature: process tests for retryAtokenScaduto
       </pay_i:RPT>
       """
 
-  @eventhub
-  Scenario: nodoInviaRPT2
-    Given the RPT2 scenario executed successfully
+  @eventhub @try
+  Scenario: Execute nodoInviaRPT2 request
+    Given the Define RPT2 scenario executed successfully
     And initial XML nodoInviaRPT
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
