@@ -297,7 +297,6 @@ Feature: checkEventHubTokenScadutoPaOld
     @test @try
     Scenario: REV_SPO_06 (part 4)
         Given the REV_SPO_06 (part 3) scenario executed successfully
-        And the sendPaymentOutcome scenario executed successfully
         And codiceContestoPagamento with $activatePaymentNoticeResponse.paymentToken-v2 in nodoInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
