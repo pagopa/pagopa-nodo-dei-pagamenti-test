@@ -168,11 +168,16 @@ Feature: process tests for retryAtokenScaduto
     Given the Execute nodoInviaRPT request scenario executed successfully
     When job mod3CancelV1 triggered after 5 seconds
     Then verify the HTTP status code of mod3CancelV1 response is 200
-    And wait 8 seconds for expiration
+
+  Scenario: trigger paInviaRT
+    Given the Execute poller Annulli scenario executed successfully
+    When job paInviaRt triggered after 3 seconds
+    Then verify the HTTP status code of paInviaRt response is 200
+    And wait 5 seconds for expiration
 
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
-    Given the Execute poller Annulli scenario executed successfully
+    Given the trigger paInviaRT scenario executed successfully
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
