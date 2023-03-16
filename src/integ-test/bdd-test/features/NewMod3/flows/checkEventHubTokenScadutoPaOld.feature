@@ -346,7 +346,7 @@ Feature: checkEventHubTokenScadutoPaOld
             <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
-            <pay_i:datiSpecificiRiscossione>1/def</pay_i:datiSpecificiRiscossione>
+            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloVersamento>
             </pay_i:datiVersamento>
             </pay_i:RPT>
@@ -393,6 +393,7 @@ Feature: checkEventHubTokenScadutoPaOld
         Given the REV_SPO_06 (part 2) scenario executed successfully
         And the sendPaymentOutcome scenario executed successfully
         When job mod3CancelV1 triggered after 3 seconds
+        And job paInviaRt triggered after 3 seconds
         And PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
