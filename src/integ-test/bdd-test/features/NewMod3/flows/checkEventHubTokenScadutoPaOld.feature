@@ -286,7 +286,7 @@ Feature: checkEventHubTokenScadutoPaOld
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @test 
+    @test @try
     Scenario: REV_SPO_06 (part 3)
         Given the REV_SPO_06 (part 2) scenario executed successfully
         And the sendPaymentOutcome scenario executed successfully
@@ -310,7 +310,7 @@ Feature: checkEventHubTokenScadutoPaOld
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
-    @test 
+    @test @try
     Scenario: REV_SPO_07 (part 3)
         Given the REV_SPO_07 (part 2) scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
