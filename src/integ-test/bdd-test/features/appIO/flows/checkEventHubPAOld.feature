@@ -366,7 +366,7 @@ Feature: checkEventHubPAOld
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @test @try
+    @test 
     Scenario: check event hub PA old
         Given the RPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully

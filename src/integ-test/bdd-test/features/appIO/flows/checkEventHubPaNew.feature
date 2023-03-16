@@ -109,7 +109,7 @@ Feature: checkEventHubPaNew
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
 
-    @test @try
+    @test 
     Scenario: sendPaymentOutcome
         Given the nodoInoltroEsitoCarta scenario executed successfully
         And initial XML sendPaymentOutcome
