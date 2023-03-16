@@ -400,7 +400,7 @@ Feature: checkEventHubTokenScadutoPaOld
     @test @try
     Scenario: REV_SPO_06 (part 4)
         Given the REV_SPO_06 (part 3) scenario executed successfully
-        And nodoInviaRPT with token v2 scenario executed successfully
+        And the nodoInviaRPT with token v2 scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
