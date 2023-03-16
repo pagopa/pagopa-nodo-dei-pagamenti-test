@@ -302,6 +302,10 @@ Feature: checkEventHubTokenScadutoPaOld
     Scenario: REV_SPO_06 (part 4)
         Given the REV_SPO_06 (part 3) scenario executed successfully
         And pay_i:codiceContestoPagamento with $activatePaymentNoticeResponse.paymentToken-v2 in RPT
+        And RPT generation
+            """
+            $RPT
+            """
         And codiceContestoPagamento with $activatePaymentNoticeResponse.paymentToken-v2 in nodoInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
@@ -321,7 +325,7 @@ Feature: checkEventHubTokenScadutoPaOld
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
-    @test @try
+    @test
     Scenario: REV_SPO_07 (part 3)
         Given the REV_SPO_07 (part 2) scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
