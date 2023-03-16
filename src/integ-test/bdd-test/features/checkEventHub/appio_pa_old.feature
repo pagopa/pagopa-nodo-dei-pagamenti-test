@@ -1,4 +1,4 @@
-Feature: checkEventHubPAOld
+Feature: appio old
 
     Background:
         Given systems up
@@ -89,13 +89,13 @@ Feature: checkEventHubPAOld
             <soapenv:Header/>
             <soapenv:Body>
             <ws:nodoAttivaRPT>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#id_broker_psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID#</identificativoCanale>
             <password>#password#</password>
             <codiceContestoPagamento>$ccp</codiceContestoPagamento>
-            <identificativoIntermediarioPSPPagamento>#id_broker_psp#</identificativoIntermediarioPSPPagamento>
-            <identificativoCanalePagamento>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanalePagamento>
+            <identificativoIntermediarioPSPPagamento>#broker_AGID#</identificativoIntermediarioPSPPagamento>
+            <identificativoCanalePagamento>#canale_AGID_02#</identificativoCanalePagamento>
             <codificaInfrastrutturaPSP>BARCODE-128-AIM</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <aim:aim128>
@@ -219,9 +219,9 @@ Feature: checkEventHubPAOld
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoIntermediarioPSP>#id_broker_psp#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
@@ -230,6 +230,30 @@ Feature: checkEventHubPAOld
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
+
+    Scenario: nodoChiediInformazioniPagamento
+        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 200
+
+    Scenario: nodoInoltraEsitoCarta
+        When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
+            """
+            {
+                "idPagamento": "$sessionToken",
+                "RRN": 10638081,
+                "identificativoPsp": "#psp#",
+                "tipoVersamento": "BBT",
+                "identificativoIntermediario": "#id_broker_psp#",
+                "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "importoTotalePagato": 12.31,
+                "timestampOperazione": "2018-02-08T17:06:03.100+01:00",
+                "codiceAutorizzativo": "123456",
+                "esitoTransazioneCarta": "00"
+            }
+            """
+        Then verify the HTTP status code of inoltroEsito/carta response is 200
+        And check esito is OK of inoltroEsito/carta response
 
     Scenario: nodoInviaRT
         Given RT generation
@@ -342,9 +366,11 @@ Feature: checkEventHubPAOld
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @test
+    @eventhub
     Scenario: check event hub PA old
         Given the RPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
+        And the nodoChiediInformazioniPagamento scenario executed successfully
+        And the nodoInoltraEsitoCarta scenario executed successfully
         And the nodoInviaRT scenario executed successfully

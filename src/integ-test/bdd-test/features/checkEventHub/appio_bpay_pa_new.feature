@@ -239,7 +239,7 @@ Feature: flow checks for closePayment - PA new
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
       
-   @eventhub @try
+   @eventhub
    Scenario: FLUSSO_CP_01 (part 4)
       Given the FLUSSO_CP_01 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully

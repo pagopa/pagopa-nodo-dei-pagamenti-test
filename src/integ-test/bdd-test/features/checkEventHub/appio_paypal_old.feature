@@ -1,4 +1,4 @@
-Feature: flow checks for closePayment - PA old
+Feature: io paypal old
 
    Background:
       Given systems up
@@ -291,30 +291,6 @@ Feature: flow checks for closePayment - PA old
       Then check esito is OK of nodoInviaRPT response
       And retrieve session token from $nodoInviaRPTResponse.url
 
-   Scenario: closePayment
-      Given initial json v1/closepayment
-         """
-         {
-            "paymentTokens": [
-               "$sessionToken"
-            ],
-            "outcome": "OK",
-            "identificativoPsp": "#psp#",
-            "tipoVersamento": "BPAY",
-            "identificativoIntermediario": "#id_broker_psp#",
-            "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-            "pspTransactionId": "#psp_transaction_id#",
-            "totalAmount": 12,
-            "fee": 2,
-            "timestampOperation": "2012-04-23T18:25:43Z",
-            "additionalPaymentInformations": {
-               "transactionId": "#transaction_id#",
-               "outcomePaymentGateway": "EFF",
-               "authorizationCode": "resOK"
-            }
-         }
-         """
-
    Scenario: sendPaymentOutcome
       Given initial XML sendPaymentOutcome
          """
@@ -364,29 +340,39 @@ Feature: flow checks for closePayment - PA old
          </soapenv:Envelope>
          """
 
-   Scenario: FLUSSO_OLD_CP_01 (part 1)
+   Scenario: Test (part 1)
       Given the nodoVerificaRPT scenario executed successfully
       And the nodoAttivaRPT scenario executed successfully
       When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
       Then check esito is OK of nodoAttivaRPT response
 
-   Scenario: FLUSSO_OLD_CP_01 (part 2)
-      Given the FLUSSO_OLD_CP_01 (part 1) scenario executed successfully
+   Scenario: Test (part 2)
+      Given the Test (part 1) scenario executed successfully
       And the nodoInviaRPT scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
 
-   Scenario: FLUSSO_OLD_CP_01 (part 3)
-      Given the FLUSSO_OLD_CP_01 (part 2) scenario executed successfully
-      And the closePayment scenario executed successfully
-      When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-      Then verify the HTTP status code of v1/closepayment response is 200
-      And check esito is OK of v1/closepayment response
-      And wait 5 seconds for expiration
-
-   @eventhub @try
-   Scenario: FLUSSO_OLD_CP_01 (part 4)
-      Given the FLUSSO_OLD_CP_01 (part 3) scenario executed successfully
+   Scenario: Test (part 3)
+      Given the Test (part 2) scenario executed successfully
+      When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
+         """
+         {
+            "idTransazione": "responseOk",
+            "idTransazionePsp": "153016btAE",
+            "idPagamento": "$sessionToken",
+            "identificativoIntermediario": "#psp#",
+            "identificativoPsp": "#psp#",
+            "identificativoCanale": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+            "importoTotalePagato": 10,
+            "timestampOperazione": "2012-04-23T18:25:43Z"
+         }
+         """
+      Then verify the HTTP status code of inoltroEsito/paypal response is 200
+      And check esito is OK of inoltroEsito/paypal response
+      
+   @eventhub
+   Scenario: Test (part 4)
+      Given the Test (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
       When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
       Then check outcome is OK of sendPaymentOutcome response
