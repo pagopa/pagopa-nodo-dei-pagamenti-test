@@ -215,7 +215,7 @@ Feature: response tests for paGetPaymentV2
             </soapenv:Envelope>
             """
 
-    Scenario: paGetPaymentV2 with 11 mapEntry inside transfer
+    Scenario: paGetPaymentV2 with 16 mapEntry inside transfer
         Given initial XML paGetPaymentV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -269,6 +269,26 @@ Feature: response tests for paGetPaymentV2
             <!--Optional:-->
             <transfer>
             <!--1 to 10 repetitions:-->
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
             <mapEntry>
             <key>1</key>
             <value>22</value>
@@ -362,7 +382,7 @@ Feature: response tests for paGetPaymentV2
             </soapenv:Envelope>
             """
 
-    Scenario: paGetPaymentV2 with 11 mapEntry outside transfer
+    Scenario: paGetPaymentV2 with 16 mapEntry outside transfer
         Given initial XML paGetPaymentV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -458,6 +478,26 @@ Feature: response tests for paGetPaymentV2
             <!--Optional:-->
             <metadata>
             <!--1 to 10 repetitions:-->
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
             <mapEntry>
             <key>1</key>
             <value>22</value>
@@ -1270,17 +1310,17 @@ Feature: response tests for paGetPaymentV2
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
     @test
-    # 11 mapEntry inside trasfer
-    Scenario: 11 mapEntry inside transfer
-        Given the paGetPaymentV2 with 11 mapEntry inside transfer scenario executed successfully
+    # 16 mapEntry inside trasfer
+    Scenario: 16 mapEntry inside transfer
+        Given the paGetPaymentV2 with 16 mapEntry inside transfer scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
     @test
-    # 11 mapEntry outside transfer
-    Scenario: 11 mapEntry outside transfer
-        Given the paGetPaymentV2 with 11 mapEntry outside transfer scenario executed successfully
+    # 16 mapEntry outside transfer
+    Scenario: 16 mapEntry outside transfer
+        Given the paGetPaymentV2 with 16 mapEntry outside transfer scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
