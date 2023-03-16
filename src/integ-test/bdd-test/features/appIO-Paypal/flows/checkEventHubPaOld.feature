@@ -370,7 +370,7 @@ Feature: checkEventHubPaOld
       Then verify the HTTP status code of inoltroEsito/paypal response is 200
       And check esito is OK of inoltroEsito/paypal response
       
-   @test
+   @test @try
    Scenario: Test (part 4)
       Given the Test (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
