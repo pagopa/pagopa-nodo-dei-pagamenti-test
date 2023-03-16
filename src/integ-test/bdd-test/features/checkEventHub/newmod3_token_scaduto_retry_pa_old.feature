@@ -299,7 +299,7 @@ Feature: process tests for retryAtokenScaduto
       </pay_i:RPT>
       """
 
-  @eventhub @try
+  @eventhub
   Scenario: Execute nodoInviaRPT2 request
     Given the Define RPT2 scenario executed successfully
     And initial XML nodoInviaRPT
