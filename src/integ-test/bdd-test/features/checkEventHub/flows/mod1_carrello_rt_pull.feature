@@ -251,7 +251,7 @@ Feature: Copy of T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParchegg
                 "identificativoPsp": "#psp#",
                 "tipoVersamento": "CP",
                 "identificativoIntermediario": "#psp#",
-                "identificativoCanale": "#canale#",
+                "identificativoCanale": "#canaleRtPull#",
                 "esitoTransazioneCarta": "123456",
                 "importoTotalePagato": 11.11,
                 "timestampOperazione": "2012-04-23T18:25:43.001Z",
@@ -297,8 +297,8 @@ Feature: Copy of T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParchegg
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        And PSP replies to nodo-dei-pagamenti with the pspChiediRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 5 seconds
         Then verify the HTTP status code of pspChiediListaAndChiediRt response is 200
 
