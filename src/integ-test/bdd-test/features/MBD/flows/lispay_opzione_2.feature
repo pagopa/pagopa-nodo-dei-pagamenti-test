@@ -357,7 +357,7 @@ Feature: lispay opzione 2
         And check data is $listaCarte of listaPSP response
         And restore initial configurations
 
-    @test @newfix
+    @test 
     Scenario: nodoInviaRPT with IBAN
         Given the Settings scenario executed successfully
         And execution query get_psp_iban to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
@@ -402,7 +402,7 @@ Feature: lispay opzione 2
         And check data is $listaCarte of listaPSP response
         And restore initial configurations
 
-    @test @newfix
+    @test 
     Scenario: nodoInviaCarrelloRPT with IBAN
         Given the Settings scenario executed successfully
         And execution query get_psp_iban to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
