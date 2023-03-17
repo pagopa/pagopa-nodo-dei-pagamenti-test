@@ -366,7 +366,7 @@ Feature: Copy of T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParchegg
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
             </listaRPT>
-            <multiBeneficiario>0</multiBeneficiario>
+            <multiBeneficiario>1</multiBeneficiario>
             </ws:nodoInviaCarrelloRPT>
             </soapenv:Body>
             </soapenv:Envelope>
