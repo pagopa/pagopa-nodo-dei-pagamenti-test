@@ -299,7 +299,9 @@ Feature: Copy of T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParchegg
             """
         And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
-        And job pspChiediListaAndChiediRt triggered after 5 seconds
+        When job pspChiediListaAndChiediRt triggered after 5 seconds
+        Then verify the HTTP status code of pspChiediListaAndChiediRt response is 200
+
 
 
 
