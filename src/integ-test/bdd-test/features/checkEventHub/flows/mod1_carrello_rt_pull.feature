@@ -251,7 +251,7 @@ Feature: Copy of T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParchegg
                 "identificativoPsp": "#psp#",
                 "tipoVersamento": "CP",
                 "identificativoIntermediario": "#psp#",
-                "identificativoCanale": "#canaleRtPull#",
+                "identificativoCanale": "#canaleRtPull_sec#",
                 "esitoTransazioneCarta": "123456",
                 "importoTotalePagato": 11.11,
                 "timestampOperazione": "2012-04-23T18:25:43.001Z",
