@@ -5,7 +5,6 @@ Feature: Copy of T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParchegg
 
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
-        And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And RPT generation
             """
@@ -89,7 +88,7 @@ Feature: Copy of T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParchegg
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
@@ -142,7 +141,7 @@ Feature: Copy of T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParchegg
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>BBT</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:codiceContestoPagamento>$1carrello</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
@@ -252,7 +251,7 @@ Feature: Copy of T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParchegg
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoDominio>#creditor_institution_code_secondary#</pay_i:identificativoDominio>
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
@@ -320,13 +319,13 @@ Feature: Copy of T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParchegg
             <pay_i:datiPagamento>
             <pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
             <pay_i:importoTotalePagato>10.00</pay_i:importoTotalePagato>
-            <pay_i:identificativoUnivocoVersamento>$2iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoVersamento>$1iuv</pay_i:identificativoUnivocoVersamento>
             <pay_i:CodiceContestoPagamento>$1carrello</pay_i:CodiceContestoPagamento>
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
             <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
-            <pay_i:identificativoUnivocoRiscossione>$2iuv</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
             </pay_i:datiSingoloPagamento>
@@ -360,8 +359,8 @@ Feature: Copy of T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParchegg
             <rpt>$rptAttachment</rpt>
             </elementoListaRPT>
             <elementoListaRPT>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+            <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <rpt>$rpt2Attachment</rpt>
             </elementoListaRPT>
@@ -470,8 +469,8 @@ Feature: Copy of T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParchegg
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoPSP>#psp#</identificativoPSP>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-            <identificativoUnivocoVersamento>$2iuv</identificativoUnivocoVersamento>
+            <identificativoDominio>#creditor_institution_code_secondary#</identificativoDominio>
+            <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
