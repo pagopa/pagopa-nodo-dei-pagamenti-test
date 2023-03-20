@@ -4,7 +4,7 @@ Feature: PRO_ANNULLO_04
         Given systems up
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
-        Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 10000
+        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 10000
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And initial XML verifyPaymentNotice
             """
@@ -161,7 +161,7 @@ Feature: PRO_ANNULLO_04
             }
             """
         And job mod3CancelV2 triggered after 10 seconds
-        And wait 20 seconds for expiration
+        And wait 10 seconds for expiration
         Then restore initial configurations
         And verify the HTTP status code of inoltroEsito/carta response is 408
         And check error is Operazione in timeout of inoltroEsito/carta response
