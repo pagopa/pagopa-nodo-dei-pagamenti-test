@@ -107,7 +107,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | timestampOperation            | 2012-04-23T18:25                                                                                                                                                                                                                                                 | SIN_CPV2_34   |
             | additionalPaymentInformations | None                                                                                                                                                                                                                                                             | SIN_CPV2_35   |
             | additionalPaymentInformations | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_36   |
-            | transactionDetails            | Empty                                                                                                                                                                                                                                                            |               |
+            | transactionDetails            | Empty                                                                                                                                                                                                                                                            | PAG-2120      |
 
     @test
     # syntax check - Invalid field - payment method
@@ -121,7 +121,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
         Examples:
             | elem          | value | soapUI test |
             | paymentMethod | OBEP  | SIN_CPV2_12 |
-            
+
     @test
     # syntax check - Invalid field - paymentToken
     Scenario Outline: Check syntax error on invalid body element value - paymentToken
@@ -303,7 +303,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 }
             }
             """
-    @test 
+    @test
     Scenario: check closePaymentV2 OK with keys repeated
         Given the closePaymentV2 with keys repeated scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -339,7 +339,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 }
             }
             """
-    @test 
+    @test
     Scenario: check closePaymentV2 OK with key transactionId
         Given the closePaymentV2 with key transactionId scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
