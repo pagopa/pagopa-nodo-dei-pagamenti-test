@@ -66,7 +66,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And execution query idempotency_cache_act to get value on the table IDEMPOTENCY_CACHE, with the columns TOKEN under macro NewMod3 with db name nodo_online
     And through the query idempotency_cache_act retrieve param paymentToken at position 0 in the row 1 and save it under the key paymentToken
     
-    And checks datetime plus number of date 1 of the record at column VALID_TO in the row 1 of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act_orderby_desc on db nodo_online under macro NewMod3
+    And check datetime plus number of date 1 of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act_orderby_desc on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
     And checks the value activatePaymentNotice of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
