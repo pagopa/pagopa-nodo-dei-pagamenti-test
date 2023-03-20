@@ -124,7 +124,7 @@ Feature: T105_ChiediListaPendentiRPT_nonVuota
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                 <rangeDa>#yesterday_date#</rangeDa>
-                <rangeA>#timedate#</rangeA>
+                <!--rangeA>#timedate#</rangeA-->
                 <dimensioneLista>5</dimensioneLista>
             </ws:nodoChiediListaPendentiRPT>
         </soapenv:Body>
