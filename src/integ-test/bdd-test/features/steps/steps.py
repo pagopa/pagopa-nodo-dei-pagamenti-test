@@ -89,6 +89,11 @@ def step_impl(context, primitive):
         payload = payload.replace('#yesterday_date#', yesterday_date)
         setattr(context, 'yesterday_date', yesterday_date)
 
+    if '#tomorrow_date#' in payload:
+        tomorrow_date = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
+        payload = payload.replace('#tomorrow_date#', tomorrow_date)
+        setattr(context, 'tomorrow_date', tomorrow_date)
+
     if '#identificativoFlusso#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
         identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
