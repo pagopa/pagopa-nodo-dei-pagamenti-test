@@ -289,27 +289,27 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
-    Scenario: Test 1.1
+    Scenario: Test 1 (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    Scenario: Test 1.2
-        Given the Test 1.1 scenario executed successfully
+    Scenario: Test 1 (part 2)
+        Given the Test 1 (part 1) scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    Scenario: Test 1.3
-        Given the Test 1.2 scenario executed successfully
+    Scenario: Test 1 (part 3)
+        Given the Test 1 (part 2) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
     @test
-    Scenario: Test 1.4
-        Given the Test 1.3 scenario executed successfully
+    Scenario: Test 1 (part 4)
+        Given the Test 1 (part 3) scenario executed successfully
         And wait 5 seconds for expiration
         And the sendPaymentOutcome scenario executed successfully
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -317,19 +317,19 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
-    Scenario: Test 2.1
+    Scenario: Test 2 (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    Scenario: Test 2.2
-        Given the Test 2.1 scenario executed successfully
+    Scenario: Test 2 (part 2)
+        Given the Test 2 (part 1) scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    Scenario: Test 2.3
-        Given the Test 2.2 scenario executed successfully
+    Scenario: Test 2 (part 3)
+        Given the Test 2 (part 2) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And the pspNotifyPayment malformata scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -337,8 +337,8 @@ Feature: spostamento traduttore
         And check outcome is OK of v2/closepayment response
 
     @test
-    Scenario: Test 2.4
-        Given the Test 2.3 scenario executed successfully
+    Scenario: Test 2 (part 4)
+        Given the Test 2 (part 3) scenario executed successfully
         And wait 5 seconds for expiration
         And the sendPaymentOutcome scenario executed successfully
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -346,21 +346,21 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
-    Scenario: Test 3.1
+    Scenario: Test 3 (part 1)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 2000
         And the activatePaymentNoticeV2 scenario executed successfully
         And expirationTime with 2000 in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    Scenario: Test 3.2
-        Given the Test 3.1 scenario executed successfully
+    Scenario: Test 3 (part 2)
+        Given the Test 3 (part 1) scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    Scenario: Test 3.3
-        Given the Test 3.2 scenario executed successfully
+    Scenario: Test 3 (part 3)
+        Given the Test 3 (part 2) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And the pspNotifyPayment malformata scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -368,28 +368,28 @@ Feature: spostamento traduttore
         And check outcome is OK of v2/closepayment response
 
     @test
-    Scenario: Test 3.4
-        Given the Test 3.3 scenario executed successfully
+    Scenario: Test 3 (part 4)
+        Given the Test 3 (part 3) scenario executed successfully
         When job mod3CancelV1 triggered after 5 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
         And restore initial configurations
 
     #####################################################################################
 
-    Scenario: Test 4.1
+    Scenario: Test 4 (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    Scenario: Test 4.2
-        Given the Test 4.1 scenario executed successfully
+    Scenario: Test 4 (part 2)
+        Given the Test 4 (part 1) scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
     @test
-    Scenario: Test 4.3
-        Given the Test 4.2 scenario executed successfully
+    Scenario: Test 4 (part 3)
+        Given the Test 4 (part 2) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And the pspNotifyPayment KO scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -398,20 +398,20 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
-    Scenario: Test 5.1
+    Scenario: Test 5 (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    Scenario: Test 5.2
-        Given the Test 5.1 scenario executed successfully
+    Scenario: Test 5 (part 2)
+        Given the Test 5 (part 1) scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
     @test
-    Scenario: Test 5.3
-        Given the Test 5.2 scenario executed successfully
+    Scenario: Test 5 (part 3)
+        Given the Test 5 (part 2) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And the pspNotifyPayment irraggiungibile scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -420,20 +420,20 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
-    Scenario: Test 6.1
+    Scenario: Test 6 (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    Scenario: Test 6.2
-        Given the Test 6.1 scenario executed successfully
+    Scenario: Test 6 (part 2)
+        Given the Test 6 (part 1) scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
     @test
-    Scenario: Test 6.3
-        Given the Test 6.2 scenario executed successfully
+    Scenario: Test 6 (part 3)
+        Given the Test 6 (part 2) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And outcome with KO in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -442,33 +442,33 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
-    Scenario: Test 7.1
+    Scenario: Test 7 (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
         And expirationTime with 2000 in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    Scenario: Test 7.2
-        Given the Test 7.1 scenario executed successfully
+    Scenario: Test 7 (part 2)
+        Given the Test 7 (part 1) scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
     @test
-    Scenario: Test 7.3
-        Given the Test 7.2 scenario executed successfully
+    Scenario: Test 7 (part 3)
+        Given the Test 7 (part 2) scenario executed successfully
         When job mod3CancelV1 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
 
     #####################################################################################
 
-    Scenario: Test 8.1
+    Scenario: Test 8 (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    Scenario: Test 8.2
-        Given the Test 8.1 scenario executed successfully
+    Scenario: Test 8 (part 2)
+        Given the Test 8 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 422
@@ -476,21 +476,21 @@ Feature: spostamento traduttore
         And check description is Node did not receive RPT yet of v2/closepayment response
 
     @test
-    Scenario: Test 8.3
-        Given the Test 8.2 scenario executed successfully
+    Scenario: Test 8 (part 3)
+        Given the Test 8 (part 2) scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
     #####################################################################################
 
-    Scenario: Test 9.1
+    Scenario: Test 9 (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    Scenario: Test 9.2
-        Given the Test 9.1 scenario executed successfully
+    Scenario: Test 9 (part 2)
+        Given the Test 9 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And outcome with KO in v2/closePayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -499,28 +499,28 @@ Feature: spostamento traduttore
         And check description is Node did not receive RPT yet of v2/closepayment response
 
     @test
-    Scenario: Test 9.3
-        Given the Test 9.2 scenario executed successfully
+    Scenario: Test 9 (part 3)
+        Given the Test 9 (part 2) scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
     #####################################################################################
 
-    Scenario: Test 10.1
+    Scenario: Test 10 (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
         And expirationTime with 2000 in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    Scenario: Test 10.2
-        Given the Test 10.1 scenario executed successfully
+    Scenario: Test 10 (part 2)
+        Given the Test 10 (part 1) scenario executed successfully
         When job mod3CancelV1 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
 
     @test
-    Scenario: Test 10.3
-        Given the Test 10.2 scenario executed successfully
+    Scenario: Test 10 (part 3)
+        Given the Test 10 (part 2) scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
