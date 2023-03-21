@@ -177,7 +177,7 @@ Feature: spostamento traduttore
                 "idPSP": "#psp#",
                 "paymentMethod": "TPAY",
                 "idBrokerPSP": "#id_broker_psp#",
-                "idChannel": "#canale_versione_primitive_2#",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
                 "transactionId": "#transaction_id#",
                 "totalAmount": 12,
                 "fee": 2,
