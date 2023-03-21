@@ -1,5 +1,8 @@
 Feature: flow tests for activatePaymentNoticeV2Request
 
+    Background:
+        Given systems up
+
     Scenario: activatePaymentNoticeV2
         Given initial XML activatePaymentNoticeV2
             """
