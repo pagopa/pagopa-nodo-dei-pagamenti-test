@@ -158,9 +158,9 @@ Feature: flow tests for activatePaymentNoticeV2Request
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>#password#</password>
-            <identificativoPSP>#psp_AGID#</identificativoPSP>
-            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
-            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+            <identificativoPSP>#pspFittizio#</identificativoPSP>
+            <identificativoIntermediarioPSP>#brokerFittizio#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canaleFittizio#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
