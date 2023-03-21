@@ -120,11 +120,17 @@ def step_impl(context, primitive):
     if "#ccpms2#" in payload:
         ccpms2 = str(utils.current_milli_time()) + '1'
         payload = payload.replace('#ccpms2#', ccpms2)
-        setattr(context, "ccpms2", ccpms2)						
+        setattr(context, "ccpms2", ccpms2)
+
     if "#iuv#" in payload:
         iuv = str(random.randint(100000000000000, 999999999999999))
         payload = payload.replace('#iuv#', iuv)
         setattr(context, "iuv", iuv)
+
+    if "#iuv1#" in payload:
+        iuv1 = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#iuv1#', iuv1)
+        setattr(context, "iuv1", iuv1)
 
     if '#IUV#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
@@ -2898,12 +2904,12 @@ def step_impl(context, url):
     setattr(context, 'url', url)
 
 
-@step('replace {old_attribute} content with {new_attribute} content')
-def step_impl(context, old_attribute, new_attribute):
-    new_attribute = utils.replace_local_variables(new_attribute, context)
-    new_attribute = utils.replace_context_variables(new_attribute, context)
-    new_attribute = utils.replace_global_variables(new_attribute, context)
-    setattr(context, old_attribute, new_attribute)
+@step('replace {new_attribute} content with {old_attribute} content')
+def step_impl(context, new_attribute, old_attribute):
+    old_attribute = utils.replace_local_variables(old_attribute, context)
+    old_attribute = utils.replace_context_variables(old_attribute, context)
+    old_attribute = utils.replace_global_variables(old_attribute, context)
+    setattr(context, new_attribute, old_attribute)
 
 
 @step('Select and Update RT for Test retry_PAold with causale versamento {causaleVers}')
