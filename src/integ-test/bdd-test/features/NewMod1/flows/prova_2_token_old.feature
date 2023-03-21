@@ -224,7 +224,7 @@ Feature: semantic checks for closePaymentV2
             $RPT
             """
         And rpt with $rptAttachment in nodoInviaRPT
-        And identificativoUnivocoVersamento with iuv in nodoInviaRPT
+        And identificativoUnivocoVersamento with $iuv in nodoInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
