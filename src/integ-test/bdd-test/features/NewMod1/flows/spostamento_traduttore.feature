@@ -238,6 +238,56 @@ Feature: spostamento traduttore
             """
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
+    Scenario: pspNotifyPaymentV2 malformata OO
+        Given initial XML pspNotifyPaymentV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentV2Res>
+            <outcome>OO</outcome>
+            </pfn:pspNotifyPaymentV2Res>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
+
+    Scenario: pspNotifyPaymentV2 KO
+        Given initial XML pspNotifyPaymentV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentV2Res>
+            <outcome>KO</outcome>
+            <!--Optional:-->
+            <fault>
+            <faultCode>CANALE_SEMANTICA</faultCode>
+            <faultString>Errore semantico dal psp</faultString>
+            <id>1</id>
+            <!--Optional:-->
+            <description>Errore dal psp</description>
+            </fault>
+            </pfn:pspNotifyPaymentV2Res>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
+
+    Scenario: pspNotifyPaymentV2 irraggiungibile
+        Given initial XML pspNotifyPaymentV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentV2Res>
+            <irraggiungibile/>
+            </pfn:pspNotifyPaymentV2Res>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
+
     Scenario: sendPaymentOutcome
         Given initial XML sendPaymentOutcome
             """
@@ -287,6 +337,57 @@ Feature: spostamento traduttore
             </soapenv:Envelope>
             """
 
+    Scenario: sendPaymentOutcomeV2
+        Given initial XML sendPaymentOutcomeV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:sendPaymentOutcomeV2Request>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <paymentTokens>
+            <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
+            </paymentTokens>
+            <outcome>OK</outcome>
+            <!--Optional:-->
+            <details>
+            <paymentMethod>creditCard</paymentMethod>
+            <!--Optional:-->
+            <paymentChannel>app</paymentChannel>
+            <fee>2.00</fee>
+            <!--Optional:-->
+            <payer>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>name</fullName>
+            <!--Optional:-->
+            <streetName>street</streetName>
+            <!--Optional:-->
+            <civicNumber>civic</civicNumber>
+            <!--Optional:-->
+            <postalCode>postal</postalCode>
+            <!--Optional:-->
+            <city>city</city>
+            <!--Optional:-->
+            <stateProvinceRegion>state</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>prova@test.it</e-mail>
+            </payer>
+            <applicationDate>2021-12-12</applicationDate>
+            <transferDate>2021-12-11</transferDate>
+            </details>
+            </nod:sendPaymentOutcomeV2Request>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
     #####################################################################################
 
     Scenario: Test 1 (part 1)
@@ -317,6 +418,35 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
+    Scenario: Test 1.1 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+    Scenario: Test 1.1 (part 2)
+        Given the Test 1.1 (part 1) scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+    Scenario: Test 1.1 (part 3)
+        Given the Test 1.1 (part 2) scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And idChannel with #canale_versione_primitive_2# in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    @test
+    Scenario: Test 1.1 (part 4)
+        Given the Test 1.1 (part 3) scenario executed successfully
+        And wait 5 seconds for expiration
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+
+    #####################################################################################
+
     Scenario: Test 2 (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -343,6 +473,36 @@ Feature: spostamento traduttore
         And the sendPaymentOutcome scenario executed successfully
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+
+    #####################################################################################
+
+    Scenario: Test 2.1 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+    Scenario: Test 2.1 (part 2)
+        Given the Test 2.1 (part 1) scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+    Scenario: Test 2.1 (part 3)
+        Given the Test 2.1 (part 2) scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And idChannel with #canale_versione_primitive_2# in v2/closepayment
+        And the pspNotifyPaymentV2 malformata scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    @test
+    Scenario: Test 2.1 (part 4)
+        Given the Test 2.1 (part 3) scenario executed successfully
+        And wait 5 seconds for expiration
+        And the sendPaymentOutcomeV2 scenario executed successfully
+        When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
 
     #####################################################################################
 
@@ -376,6 +536,37 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
+    Scenario: Test 3.1 (part 1)
+        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 2000
+        And the activatePaymentNoticeV2 scenario executed successfully
+        And expirationTime with 2000 in activatePaymentNoticeV2
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+    Scenario: Test 3.1 (part 2)
+        Given the Test 3.1 (part 1) scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+    Scenario: Test 3.1 (part 3)
+        Given the Test 3.1 (part 2) scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And idChannel with #canale_versione_primitive_2# in v2/closepayment
+        And the pspNotifyPaymentV2 malformata scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    @test
+    Scenario: Test 3.1 (part 4)
+        Given the Test 3.1 (part 3) scenario executed successfully
+        When job mod3CancelV1 triggered after 5 seconds
+        Then verify the HTTP status code of mod3CancelV1 response is 200
+        And restore initial configurations
+
+    #####################################################################################
+
     Scenario: Test 4 (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -392,6 +583,29 @@ Feature: spostamento traduttore
         Given the Test 4 (part 2) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And the pspNotifyPayment KO scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    #####################################################################################
+
+    Scenario: Test 4.1 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+    Scenario: Test 4.1 (part 2)
+        Given the Test 4.1 (part 1) scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+    @test
+    Scenario: Test 4.1 (part 3)
+        Given the Test 4.1 (part 2) scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And idChannel with #canale_versione_primitive_2# in v2/closepayment
+        And the pspNotifyPaymentV2 KO scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -420,6 +634,29 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
+    Scenario: Test 5.1 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+    Scenario: Test 5.1 (part 2)
+        Given the Test 5.1 (part 1) scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+    @test
+    Scenario: Test 5.1 (part 3)
+        Given the Test 5.1 (part 2) scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And idChannel with #canale_versione_primitive_2# in v2/closepayment
+        And the pspNotifyPaymentV2 irraggiungibile scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    #####################################################################################
+
     Scenario: Test 6 (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -436,6 +673,29 @@ Feature: spostamento traduttore
         Given the Test 6 (part 2) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And outcome with KO in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    #####################################################################################
+
+    Scenario: Test 6.1 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+    Scenario: Test 6.1 (part 2)
+        Given the Test 6.1 (part 1) scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+    @test
+    Scenario: Test 6.1 (part 3)
+        Given the Test 6.1 (part 2) scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And outcome with KO in v2/closepayment
+        And idChannel with #canale_versione_primitive_2# in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -484,6 +744,29 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
+    Scenario: Test 8.1 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+    Scenario: Test 8.1 (part 2)
+        Given the Test 8.1 (part 1) scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And idChannel with #canale_versione_primitive_2# in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 422
+        And check outcome is KO of v2/closepayment response
+        And check description is Node did not receive RPT yet of v2/closepayment response
+
+    @test
+    Scenario: Test 8.1 (part 3)
+        Given the Test 8.1 (part 2) scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+    #####################################################################################
+
     Scenario: Test 9 (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -501,6 +784,30 @@ Feature: spostamento traduttore
     @test
     Scenario: Test 9 (part 3)
         Given the Test 9 (part 2) scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+    #####################################################################################
+
+    Scenario: Test 9.1 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+    Scenario: Test 9.1 (part 2)
+        Given the Test 9.1 (part 1) scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And outcome with KO in v2/closePayment
+        And idChannel with #canale_versione_primitive_2# in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 422
+        And check outcome is KO of v2/closepayment response
+        And check description is Node did not receive RPT yet of v2/closepayment response
+
+    @test
+    Scenario: Test 9.1 (part 3)
+        Given the Test 9.1 (part 2) scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
