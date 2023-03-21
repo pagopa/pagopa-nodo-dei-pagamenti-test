@@ -238,7 +238,7 @@ Feature: spostamento traduttore
             """
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
-    Scenario: pspNotifyPaymentV2 malformata OO
+    Scenario: pspNotifyPaymentV2 malformata
         Given initial XML pspNotifyPaymentV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
