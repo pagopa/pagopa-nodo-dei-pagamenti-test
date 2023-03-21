@@ -340,7 +340,7 @@ Feature: semantic checks for closePaymentV2
                 "outcome": "OK",
                 "idPSP": "#psp#",
                 "idBrokerPSP": "60000000001",
-                "idChannel": "#canale_versione_primitive_2#",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
                 "paymentMethod": "TPAY",
                 "transactionId": "#transaction_id#",
                 "totalAmount": 12,
