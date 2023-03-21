@@ -171,7 +171,7 @@ Feature: spostamento traduttore
             """
             {
                 "paymentTokens": [
-                    "$activatePaymentNoticeV2Response.paymentToken"
+                    "$sessionToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -400,6 +400,7 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
     Scenario: Test 1 (part 3)
         Given the Test 1 (part 2) scenario executed successfully
@@ -428,6 +429,7 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
     Scenario: Test 1.1 (part 3)
         Given the Test 1.1 (part 2) scenario executed successfully
@@ -457,6 +459,7 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
     Scenario: Test 2 (part 3)
         Given the Test 2 (part 2) scenario executed successfully
@@ -486,6 +489,7 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
     Scenario: Test 2.1 (part 3)
         Given the Test 2.1 (part 2) scenario executed successfully
@@ -518,6 +522,7 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
     Scenario: Test 3 (part 3)
         Given the Test 3 (part 2) scenario executed successfully
@@ -548,6 +553,7 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
     Scenario: Test 3.1 (part 3)
         Given the Test 3.1 (part 2) scenario executed successfully
@@ -577,6 +583,7 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
     @test
     Scenario: Test 4 (part 3)
@@ -599,6 +606,7 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
     @test
     Scenario: Test 4.1 (part 3)
@@ -622,6 +630,7 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
     @test
     Scenario: Test 5 (part 3)
@@ -644,6 +653,7 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
     @test
     Scenario: Test 5.1 (part 3)
@@ -667,6 +677,7 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
     @test
     Scenario: Test 6 (part 3)
@@ -689,6 +700,7 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
     @test
     Scenario: Test 6.1 (part 3)
@@ -730,6 +742,7 @@ Feature: spostamento traduttore
     Scenario: Test 8 (part 2)
         Given the Test 8 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
+        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
@@ -752,6 +765,7 @@ Feature: spostamento traduttore
     Scenario: Test 8.1 (part 2)
         Given the Test 8.1 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
+        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
         And idChannel with #canale_versione_primitive_2# in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 422
@@ -775,7 +789,8 @@ Feature: spostamento traduttore
     Scenario: Test 9 (part 2)
         Given the Test 9 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And outcome with KO in v2/closePayment
+        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
+        And outcome with KO in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 422
         And check outcome is KO of v2/closepayment response
@@ -798,7 +813,8 @@ Feature: spostamento traduttore
     Scenario: Test 9.1 (part 2)
         Given the Test 9.1 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And outcome with KO in v2/closePayment
+        And paymentToken with $activatePaymentNoticeV2Response.paymentToken in v2/closepayment
+        And outcome with KO in v2/closepayment
         And idChannel with #canale_versione_primitive_2# in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 422
