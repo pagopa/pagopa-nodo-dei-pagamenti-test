@@ -1,4 +1,4 @@
-Feature: flow tests for activatePaymentNoticeV2Request
+Feature: spostamento traduttore
 
     Background:
         Given systems up
@@ -62,8 +62,6 @@ Feature: flow tests for activatePaymentNoticeV2Request
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
 
     Scenario: nodoInviaRPT
         Given RPT generation
@@ -167,10 +165,14 @@ Feature: flow tests for activatePaymentNoticeV2Request
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
+
+    Scenario: Test 1.1
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
 
     @test
-    Scenario: test
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        And the nodoInviaRPT scenario executed successfully
+    Scenario: Test 1.2
+        Given the nodoInviaRPT scenario executed successfully
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
