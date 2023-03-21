@@ -188,27 +188,27 @@ Feature: spostamento traduttore
             }
             """
 
-    Scenario: pspNotifyPaymentV2 malformata
-        Given initial XML pspNotifyPaymentV2
+    Scenario: pspNotifyPayment malformata
+        Given initial XML pspNotifyPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <pfn:pspNotifyPaymentV2Res>
+            <pfn:pspNotifyPaymentRes>
             <outcome>OO</outcome>
-            </pfn:pspNotifyPaymentV2Res>
+            </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
-    Scenario: pspNotifyPaymentV2 KO
-        Given initial XML pspNotifyPaymentV2
+    Scenario: pspNotifyPayment KO
+        Given initial XML pspNotifyPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <pfn:pspNotifyPaymentV2Res>
+            <pfn:pspNotifyPaymentRes>
             <outcome>KO</outcome>
             <!--Optional:-->
             <fault>
@@ -218,40 +218,38 @@ Feature: spostamento traduttore
             <!--Optional:-->
             <description>Errore dal psp</description>
             </fault>
-            </pfn:pspNotifyPaymentV2Res>
+            </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
-    Scenario: pspNotifyPaymentV2 irraggiungibile
-        Given initial XML pspNotifyPaymentV2
+    Scenario: pspNotifyPayment irraggiungibile
+        Given initial XML pspNotifyPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <pfn:pspNotifyPaymentV2Res>
+            <pfn:pspNotifyPaymentRes>
             <irraggiungibile/>
-            </pfn:pspNotifyPaymentV2Res>
+            </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
 
-    Scenario: sendPaymentOutcomeV2
-        Given initial XML sendPaymentOutcomeV2
+    Scenario: sendPaymentOutcome
+        Given initial XML sendPaymentOutcome
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <nod:sendPaymentOutcomeV2Request>
+            <nod:sendPaymentOutcomeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
-            <paymentTokens>
             <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
-            </paymentTokens>
             <outcome>OK</outcome>
             <!--Optional:-->
             <details>
@@ -284,7 +282,7 @@ Feature: spostamento traduttore
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>
             </details>
-            </nod:sendPaymentOutcomeV2Request>
+            </nod:sendPaymentOutcomeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -313,9 +311,9 @@ Feature: spostamento traduttore
     Scenario: Test 1.4
         Given the Test 1.3 scenario executed successfully
         And wait 5 seconds for expiration
-        And the sendPaymentOutcomeV2 scenario executed successfully
-        When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcomeV2 response
+        And the sendPaymentOutcome scenario executed successfully
+        When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
 
     #####################################################################################
 
@@ -333,7 +331,7 @@ Feature: spostamento traduttore
     Scenario: Test 2.3
         Given the Test 2.2 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And the pspNotifyPaymentV2 malformata scenario executed successfully
+        And the pspNotifyPayment malformata scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -342,9 +340,9 @@ Feature: spostamento traduttore
     Scenario: Test 2.4
         Given the Test 2.3 scenario executed successfully
         And wait 5 seconds for expiration
-        And the sendPaymentOutcomeV2 scenario executed successfully
-        When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcomeV2 response
+        And the sendPaymentOutcome scenario executed successfully
+        When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcome response
 
     #####################################################################################
 
@@ -364,7 +362,7 @@ Feature: spostamento traduttore
     Scenario: Test 3.3
         Given the Test 3.2 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And the pspNotifyPaymentV2 malformata scenario executed successfully
+        And the pspNotifyPayment malformata scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -393,7 +391,7 @@ Feature: spostamento traduttore
     Scenario: Test 4.3
         Given the Test 4.2 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And the pspNotifyPaymentV2 KO scenario executed successfully
+        And the pspNotifyPayment KO scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -415,7 +413,7 @@ Feature: spostamento traduttore
     Scenario: Test 5.3
         Given the Test 5.2 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
-        And the pspNotifyPaymentV2 irraggiungibile scenario executed successfully
+        And the pspNotifyPayment irraggiungibile scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
