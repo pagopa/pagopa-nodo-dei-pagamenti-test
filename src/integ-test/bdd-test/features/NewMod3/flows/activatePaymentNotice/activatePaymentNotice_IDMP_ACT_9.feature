@@ -51,7 +51,6 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <fiscalCode>$activatePaymentNotice.fiscalCode</fiscalCode>
       <noticeNumber>$activatePaymentNotice.noticeNumber</noticeNumber>
       </qrCode>
-      <expirationTime>6000</expirationTime>
       <amount>10.00</amount>
       <paymentNote>causale</paymentNote>
       </nod:activatePaymentNoticeReq>
