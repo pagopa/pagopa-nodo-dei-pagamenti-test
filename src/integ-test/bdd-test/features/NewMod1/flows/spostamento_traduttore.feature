@@ -417,6 +417,22 @@ Feature: spostamento traduttore
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYING_RPT,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 9 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ACCETTATA_PSP,RPT_RISOLTA_OK,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 6 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 1.1 (part 1)
@@ -447,6 +463,22 @@ Feature: spostamento traduttore
         When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYING_RPT,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 9 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ACCETTATA_PSP,RPT_RISOLTA_OK,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 6 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 2 (part 1)
@@ -476,6 +508,22 @@ Feature: spostamento traduttore
         And the sendPaymentOutcome scenario executed successfully
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYING_RPT,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 9 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_RISOLTA_OK,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 5 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -508,6 +556,22 @@ Feature: spostamento traduttore
         When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYING_RPT,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 9 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_RISOLTA_OK,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 5 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 3 (part 1)
@@ -538,6 +602,22 @@ Feature: spostamento traduttore
         When job mod3CancelV1 triggered after 5 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
         And restore initial configurations
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYING_RPT,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 6 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -571,6 +651,22 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of mod3CancelV1 response is 200
         And restore initial configurations
 
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYING_RPT,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 6 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 4 (part 1)
@@ -593,6 +689,22 @@ Feature: spostamento traduttore
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYING_RPT,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_REFUSED,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 6 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -618,6 +730,22 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYING_RPT,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_REFUSED,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 6 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 5 (part 1)
@@ -640,6 +768,22 @@ Feature: spostamento traduttore
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYING_RPT,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_SEND_ERROR,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 6 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -665,6 +809,22 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYING_RPT,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_SEND_ERROR,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 6 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 6 (part 1)
@@ -687,6 +847,22 @@ Feature: spostamento traduttore
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYING_RPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -712,6 +888,22 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYING_RPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 7 (part 1)
@@ -731,6 +923,22 @@ Feature: spostamento traduttore
         Given the Test 7 (part 2) scenario executed successfully
         When job mod3CancelV1 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,PAYING_RPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -754,6 +962,22 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,CANCELLED_NORPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -779,6 +1003,22 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,CANCELLED_NORPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 9 (part 1)
@@ -802,6 +1042,22 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,CANCELLED_NORPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -828,6 +1084,22 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,CANCELLED_NORPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 10 (part 1)
@@ -847,3 +1119,19 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING,CANCELLED_NORPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
