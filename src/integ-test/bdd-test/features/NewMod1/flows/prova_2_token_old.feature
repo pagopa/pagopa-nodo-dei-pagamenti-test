@@ -313,6 +313,7 @@ Feature: semantic checks for closePaymentV2
         Given the test 1.2 scenario executed successfully
         And random iuv in context
         And noticeNumber with 002$iuv in activatePaymentNoticeV2
+        And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
         And causaleVersamento with prova/RFDB/018431538193400/TXT/causale $iuv in paaAttivaRPT
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -325,6 +326,7 @@ Feature: semantic checks for closePaymentV2
             """
             $RPT
             """
+        And rpt with $rptAttachment in nodoInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
