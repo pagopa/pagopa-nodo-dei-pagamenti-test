@@ -107,7 +107,7 @@ Feature: process PAG-590_01
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>$activatePaymentNotice1.fiscalCode</fiscalCode>
-            <noticeNumber>$activatePaymentNotice1.noticeNumber</noticeNumber>
+            <noticeNumber>#notice_number#</noticeNumber>
             </qrCode>
             <amount>10.00</amount>
             <paymentNote>OK_sleep</paymentNote>
