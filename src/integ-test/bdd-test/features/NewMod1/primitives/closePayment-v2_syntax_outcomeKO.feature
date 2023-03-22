@@ -18,6 +18,9 @@ Feature: syntax checks for closePaymentV2 outcome KO
                 "transactionId": "#transaction_id#",
                 "totalAmount": 12,
                 "fee": 2,
+                "primaryCiIncurredFee": 1,
+                "idBundle": "0bf0c282-3054-11ed-af20-acde48001122",
+                "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
                     "key": "#psp_transaction_id#"
@@ -231,6 +234,12 @@ Feature: syntax checks for closePaymentV2 outcome KO
             | transactionDetails            | Empty                                                                                                                                                                                                                                                            | PAG-2120      |
             | key                           | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_37   |
             | key                           | Valore                                                                                                                                                                                                                                                           | SIN_CPV2_40   |
+            | primaryCiIncurredFee          | None                                                                                                                                                                                                                                                             | PAG-2444      |
+            | primaryCiIncurredFee          | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
+            | IdBundle                      | None                                                                                                                                                                                                                                                             | PAG-2444      |
+            | IdBundle                      | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
+            | IdCiBundle                    | None                                                                                                                                                                                                                                                             | PAG-2444      |
+            | IdCiBundle                    | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
 
     # No error with fee 0 [SIN_CPV2_31.2]
     Scenario: check activatePaymentNoticeV2 OK 2

@@ -18,6 +18,9 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "transactionId": "#transaction_id#",
                 "totalAmount": 12,
                 "fee": 2,
+                "primaryCiIncurredFee": 1,
+                "idBundle": "0bf0c282-3054-11ed-af20-acde48001122",
+                "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
                     "key": "#psp_transaction_id#"
@@ -108,6 +111,9 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | additionalPaymentInformations | None                                                                                                                                                                                                                                                             | SIN_CPV2_35   |
             | additionalPaymentInformations | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_36   |
             | transactionDetails            | Empty                                                                                                                                                                                                                                                            | PAG-2120      |
+            | primaryCiIncurredFee          | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
+            | IdBundle                      | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
+            | IdCiBundle                    | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
 
     @test
     # syntax check - Invalid field - payment method
@@ -362,14 +368,17 @@ Feature: syntax checks for closePaymentV2 outcome OK
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Examples:
-            | elem               | value                         | soapUI test   |
-            | totalAmount        | 12.0                          | SIN_CPV2_25   |
-            | totalAmount        | 12                            | SIN_CPV2_25.2 |
-            | fee                | 2.0                           | SIN_CPV2_30   |
-            | fee                | 2                             | SIN_CPV2_30.2 |
-            | timestampOperation | 2033-04-23T18:25:43.372+01:00 | SIN_CPV2_34.1 |
-            | transactionDetails | None                          | PAG-2120      |
-            | paymentMethod      | CP                            | PAG-2383      |
+            | elem                 | value                         | soapUI test   |
+            | totalAmount          | 12.0                          | SIN_CPV2_25   |
+            | totalAmount          | 12                            | SIN_CPV2_25.2 |
+            | fee                  | 2.0                           | SIN_CPV2_30   |
+            | fee                  | 2                             | SIN_CPV2_30.2 |
+            | timestampOperation   | 2033-04-23T18:25:43.372+01:00 | SIN_CPV2_34.1 |
+            | transactionDetails   | None                          | PAG-2120      |
+            | paymentMethod        | CP                            | PAG-2383      |
+            | primaryCiIncurredFee | None                          | PAG-2444      |
+            | IdBundle             | None                          | PAG-2444      |
+            | IdCiBundle           | None                          | PAG-2444      |
 
 
 
