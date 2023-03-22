@@ -638,7 +638,7 @@ Feature: semantic checks for closePaymentV2
         And check outcome is KO of v2/closepayment response
         And check description is Wrong station version of v2/closepayment response
 
-    # check 2 token pa old
+    # check channel versione primitive 2, 2 token pa old
 
     Scenario: activatePaymentNoticeV2 pa old
         Given initial XML activatePaymentNoticeV2
