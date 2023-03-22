@@ -236,4 +236,4 @@ Feature: semantic checks for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
-        And check description is Wrong channel version of v2/closepayment response
+        And check description is Wrong station version of v2/closepayment response
