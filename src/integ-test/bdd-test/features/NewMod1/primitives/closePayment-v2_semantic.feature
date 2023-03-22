@@ -604,7 +604,7 @@ Feature: semantic checks for closePaymentV2
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
-    @test 
+    @test
     Scenario: check closePaymentV2 OK 7
         Given the check nodoInviaRPT OK scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -638,7 +638,7 @@ Feature: semantic checks for closePaymentV2
         And check outcome is KO of v2/closepayment response
         And check description is Wrong station version of v2/closepayment response
 
-        # check 2 token pa old
+    # check 2 token pa old
 
     Scenario: activatePaymentNoticeV2 pa old
         Given initial XML activatePaymentNoticeV2
