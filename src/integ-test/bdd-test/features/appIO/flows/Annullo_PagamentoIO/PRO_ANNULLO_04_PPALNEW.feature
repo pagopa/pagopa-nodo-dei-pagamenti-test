@@ -4,7 +4,7 @@ Feature: FLUSSO_APIO_04_PPALNEW
         Given systems up
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
-    Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 8000
+    Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
         And initial XML verifyPaymentNotice
         """
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -113,14 +113,13 @@ Feature: FLUSSO_APIO_04_PPALNEW
                 "timestampOperazione": "2012-04-23T18:25:43Z"
             }
             """
-        And wait 10 seconds for expiration
         And job mod3CancelV2 triggered after 10 seconds
-        And wait 20 seconds for expiration
+        And wait 10 seconds for expiration
         Then verify the HTTP status code of inoltroEsito/paypal response is 408
         And check error is Operazione in timeout of inoltroEsito/paypal response
-        And refresh job CONFIG triggered after 10 seconds
+        And restore initial configurations
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-        And restore initial configurations
+        
