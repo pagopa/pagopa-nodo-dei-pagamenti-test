@@ -3,7 +3,7 @@ Feature: semantic checks for closePaymentV2
     Background:
         Given systems up
 
-    Scenario: activatePaymentNoticeV2
+    Scenario: activatePaymentNoticeV2 pa old
         Given initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -63,7 +63,7 @@ Feature: semantic checks for closePaymentV2
             """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
 
-    Scenario: nodoInviaRPT
+    Scenario: nodoInviaRPT 2
         Given initial xml RPT
             """
             <pay_i:RPT xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd " xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -170,7 +170,7 @@ Feature: semantic checks for closePaymentV2
             </soapenv:Envelope>
             """
 
-    Scenario: closePaymentV2
+    Scenario: closePaymentV2 6
         Given initial JSON v2/closepayment
             """
             {
@@ -194,13 +194,13 @@ Feature: semantic checks for closePaymentV2
             """
 
     Scenario: test 1.1
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        Given the activatePaymentNoticeV2 pa old scenario executed successfully
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
     Scenario: test 1.2
         Given the test 1.1 scenario executed successfully
-        And the nodoInviaRPT scenario executed successfully
+        And the nodoInviaRPT 2 scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
@@ -232,7 +232,7 @@ Feature: semantic checks for closePaymentV2
     @test
     Scenario: test 1.5
         Given the test 1.4 scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
+        And the closePaymentV2 6 scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
