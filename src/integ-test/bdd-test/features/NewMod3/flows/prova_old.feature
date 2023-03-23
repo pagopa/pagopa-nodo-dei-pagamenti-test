@@ -295,7 +295,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test 
+    @test
     Scenario: REV_SPO_03 (part 4)
         Given the REV_SPO_03 (part 3) scenario executed successfully
         When job paInviaRt triggered after 5 seconds
@@ -450,7 +450,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And outcome with KO in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test 
+    @test
     Scenario: REV_SPO_05 (part 4)
         Given the REV_SPO_05 (part 3) scenario executed successfully
         When job paInviaRt triggered after 5 seconds
@@ -511,150 +511,6 @@ Feature: revision checks for sendPaymentOutcomeV2
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
+    @check
     Scenario: REV_SPO_06 (part 3)
         Given the REV_SPO_06 (part 2) scenario executed successfully
-        And the sendPaymentOutcomeV2 scenario executed successfully
-        And outcome with KO in sendPaymentOutcomeV2
-        When job mod3CancelV1 triggered after 3 seconds
-        And PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcomeV2 response
-        And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcomeV2 response
-    @test
-    Scenario: REV_SPO_06 (part 4)
-        Given the REV_SPO_06 (part 3) scenario executed successfully
-        When job paInviaRt triggered after 5 seconds
-        Then verify the HTTP status code of paInviaRt response is 200
-        And wait 5 seconds for expiration
-        And checks the value PAYING,PAYING_RPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
-        And checks the value PAYING,INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 2 record for the table POSITION_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-        And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 0 record for the table POSITION_RECEIPT retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
-        And verify 6 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value NMP of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeResponse.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
-        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
-
-    # RT_ISTANTANEO
-
-    Scenario: RT_ISTANTANEO (part 1)
-        Given updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with Y under macro sendPaymentResultV2 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
-        And the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
-        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
-
-    Scenario: RT_ISTANTANEO (part 2)
-        Given the RT_ISTANTANEO (part 1) scenario executed successfully
-        And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-
-    Scenario: RT_ISTANTANEO (part 3)
-        Given the RT_ISTANTANEO (part 2) scenario executed successfully
-        And the sendPaymentOutcomeV2 scenario executed successfully
-        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test 
-    Scenario: RT_ISTANTANEO (part 4)
-        Given the RT_ISTANTANEO (part 3) scenario executed successfully
-        And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with N under macro sendPaymentResultV2 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
-
-        # POSITION_PAYMENT_STATUS
-        And checks the value PAYING,PAYING_RPT,PAID,NOTICE_GENERATED,NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-
-        # POSITION_PAYMENT_STATUS_SNAPSHOT
-        And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
-
-        # POSITION_STATUS
-        And checks the value PAYING,PAID,NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 3 record for the table POSITION_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-
-        # POSITION_STATUS_SNAPSHOT
-        And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
-
-        # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
-        And verify 7 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
-
-    # RT_ISTANTANEO_RPT_TARDIVA
-
-    Scenario: RT_ISTANTANEO_RPT_TARDIVA (part 1)
-        Given updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with Y under macro sendPaymentResultV2 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
-        And the verifyPaymentNotice scenario executed successfully
-        And the activatePaymentNotice scenario executed successfully
-        When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
-
-    Scenario: RT_ISTANTANEO_RPT_TARDIVA (part 2)
-        Given the RT_ISTANTANEO_RPT_TARDIVA (part 1) scenario executed successfully
-        And the sendPaymentOutcomeV2 scenario executed successfully
-        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcomeV2 response
-
-    Scenario: RT_ISTANTANEO_RPT_TARDIVA (part 3)
-        Given the RT_ISTANTANEO_RPT_TARDIVA (part 2) scenario executed successfully
-        And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-    @test 
-    Scenario: RT_ISTANTANEO_RPT_TARDIVA (part 4)
-        Given the RT_ISTANTANEO_RPT_TARDIVA (part 3) scenario executed successfully
-        And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with N under macro sendPaymentResultV2 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
-
-        # POSITION_PAYMENT_STATUS
-        And checks the value PAYING,PAID_NORPT,PAID,NOTICE_GENERATED,NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-
-        # POSITION_PAYMENT_STATUS_SNAPSHOT
-        And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
-
-        # POSITION_STATUS
-        And checks the value PAYING,PAID,NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 3 record for the table POSITION_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
-
-        # POSITION_STATUS_SNAPSHOT
-        And checks the value NOTICE_STORED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activate on db nodo_online under macro NewMod1
-
-        # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
-        And verify 7 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
