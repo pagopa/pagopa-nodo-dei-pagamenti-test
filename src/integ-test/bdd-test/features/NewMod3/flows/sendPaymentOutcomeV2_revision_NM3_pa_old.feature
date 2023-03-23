@@ -519,7 +519,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcomeV2 response
-    @test @check
+    @test
     Scenario: REV_SPO_06 (part 4)
         Given the REV_SPO_06 (part 3) scenario executed successfully
         When job paInviaRt triggered after 5 seconds
