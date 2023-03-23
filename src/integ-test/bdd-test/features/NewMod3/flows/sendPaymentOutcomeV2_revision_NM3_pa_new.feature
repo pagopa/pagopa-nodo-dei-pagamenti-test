@@ -368,7 +368,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And expirationTime with 2000 in activatePaymentNotice
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test
+    @test @check
     Scenario: REV_SPO_06 (part 2)
         Given the REV_SPO_06 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
