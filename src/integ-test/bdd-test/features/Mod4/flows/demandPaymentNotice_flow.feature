@@ -768,7 +768,7 @@ Feature: flow tests for demandPaymentNotice
         And the activatePaymentNotice request scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test
+    @test @check
     Scenario: F_DPNR_01 (part 2)
         Given the F_DPNR_01 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
