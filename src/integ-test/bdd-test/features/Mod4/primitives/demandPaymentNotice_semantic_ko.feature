@@ -89,7 +89,7 @@ Feature:  semantic checks for demandPaymentNoticeReq
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_SERVIZIO_NONATTIVO of demandPaymentNotice response
-    @test
+    @test @check
     # idSoggettoServizio value check: idSoggettoServizio version 1 [SEM_DPNR_12]
     Scenario: Check PPT_VERSIONE_SERVIZIO error on idSoggettoServizio with version 1
         Given idSoggettoServizio with 00001 in demandPaymentNotice
