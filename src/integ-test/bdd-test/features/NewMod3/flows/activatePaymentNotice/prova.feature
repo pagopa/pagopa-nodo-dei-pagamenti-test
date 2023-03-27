@@ -19,7 +19,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code_old#</fiscalCode>
-      <noticeNumber>#notice_number_old#</noticeNumber>
+      <noticeNumber>#notice_number#</noticeNumber>
       </qrCode>
       <expirationTime>600000</expirationTime>
       <amount>10.00</amount>
