@@ -121,57 +121,6 @@ Feature: revision checks for sendPaymentOutcomeV2
             """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
 
-    Scenario: sendPaymentOutcomeV2
-        Given initial XML sendPaymentOutcomeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:sendPaymentOutcomeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <paymentTokens>
-            <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-            </paymentTokens>
-            <outcome>OK</outcome>
-            <!--Optional:-->
-            <details>
-            <paymentMethod>creditCard</paymentMethod>
-            <!--Optional:-->
-            <paymentChannel>app</paymentChannel>
-            <fee>2.00</fee>
-            <!--Optional:-->
-            <payer>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>name</fullName>
-            <!--Optional:-->
-            <streetName>street</streetName>
-            <!--Optional:-->
-            <civicNumber>civic</civicNumber>
-            <!--Optional:-->
-            <postalCode>postal</postalCode>
-            <!--Optional:-->
-            <city>city</city>
-            <!--Optional:-->
-            <stateProvinceRegion>state</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
-            </payer>
-            <applicationDate>2021-12-12</applicationDate>
-            <transferDate>2021-12-11</transferDate>
-            </details>
-            </nod:sendPaymentOutcomeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
     Scenario: nodoInviaRPT
         Given MB generation
             """
