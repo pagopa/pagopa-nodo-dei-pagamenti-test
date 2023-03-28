@@ -29,7 +29,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
             </soapenv:Envelope>
             """
         And initial XML paaVerificaRPT
-            """"
+            """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
             <soapenv:Header/>
             <soapenv:Body>

@@ -26,7 +26,7 @@ Feature: process test for NM3 with station migration from V1 to V2
             </soapenv:Envelope>
             """
         And initial xml paaVerificaRPT
-            """"
+            """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
             <soapenv:Header/>
             <soapenv:Body>

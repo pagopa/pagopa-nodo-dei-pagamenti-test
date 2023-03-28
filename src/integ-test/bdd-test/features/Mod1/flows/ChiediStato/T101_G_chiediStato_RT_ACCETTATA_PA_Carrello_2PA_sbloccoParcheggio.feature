@@ -159,7 +159,7 @@ Feature: process tests for T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloc
                 </pay_i:RPT>
             """
         And RT generation
-            """"
+            """
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>

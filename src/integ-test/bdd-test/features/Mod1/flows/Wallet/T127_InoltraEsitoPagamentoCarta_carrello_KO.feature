@@ -165,7 +165,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
     Scenario: RT generation
         Given the RPT2 generation scenario executed successfully
         And RT generation
-            """"
+            """
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
