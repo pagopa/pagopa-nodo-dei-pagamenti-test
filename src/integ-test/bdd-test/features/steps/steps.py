@@ -1207,6 +1207,8 @@ def step_impl(context, sender, method, service, receiver):
                 body["totalAmount"] = float(body["totalAmount"])
             if ('fee' in body.keys()) and (body["fee"] != None):
                 body["fee"] = float(body["fee"])
+            if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
+                body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
             if ('positionslist' in body.keys()) and (body["positionslist"] != None):
                 body["positionslist"] = body["positionslist"]["position"]
                 if type(body["positionslist"]) != list:
