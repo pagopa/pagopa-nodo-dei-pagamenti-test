@@ -395,12 +395,17 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 1 (part 2)
         Given the Test 1 (part 1) scenario executed successfully
@@ -409,6 +414,9 @@ Feature: spostamento traduttore
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
     Scenario: Test 1 (part 3)
         Given the Test 1 (part 2) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -416,7 +424,7 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #id_broker_psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #canale_IMMEDIATO_MULTIBENEFICIARIO# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -458,12 +466,17 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 1.1 (part 2)
         Given the Test 1.1 (part 1) scenario executed successfully
@@ -471,6 +484,9 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 1.1 (part 3)
         Given the Test 1.1 (part 2) scenario executed successfully
@@ -480,7 +496,7 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #id_broker_psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #canale_versione_primitive_2# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -522,12 +538,17 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 2 (part 2)
         Given the Test 2 (part 1) scenario executed successfully
@@ -535,6 +556,9 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 2 (part 3)
         Given the Test 2 (part 2) scenario executed successfully
@@ -544,7 +568,7 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #id_broker_psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #canale_IMMEDIATO_MULTIBENEFICIARIO# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -586,12 +610,17 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 2.1 (part 2)
         Given the Test 2.1 (part 1) scenario executed successfully
@@ -599,6 +628,9 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 2.1 (part 3)
         Given the Test 2.1 (part 2) scenario executed successfully
@@ -609,7 +641,7 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #id_broker_psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #canale_versione_primitive_2# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -653,12 +685,17 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 3 (part 2)
         Given the Test 3 (part 1) scenario executed successfully
@@ -666,6 +703,9 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 3 (part 3)
         Given the Test 3 (part 2) scenario executed successfully
@@ -675,7 +715,7 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #id_broker_psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #canale_IMMEDIATO_MULTIBENEFICIARIO# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -718,12 +758,17 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 3.1 (part 2)
         Given the Test 3.1 (part 1) scenario executed successfully
@@ -731,6 +776,9 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 3.1 (part 3)
         Given the Test 3.1 (part 2) scenario executed successfully
@@ -741,7 +789,7 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #id_broker_psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #canale_versione_primitive_2# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -782,12 +830,17 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 4 (part 2)
         Given the Test 4 (part 1) scenario executed successfully
@@ -795,6 +848,9 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     @test
     Scenario: Test 4 (part 3)
@@ -805,7 +861,7 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #id_broker_psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #canale_IMMEDIATO_MULTIBENEFICIARIO# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -839,12 +895,17 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 4.1 (part 2)
         Given the Test 4.1 (part 1) scenario executed successfully
@@ -852,6 +913,9 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     @test
     Scenario: Test 4.1 (part 3)
@@ -863,7 +927,7 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #id_broker_psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #canale_versione_primitive_2# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -897,12 +961,17 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 5 (part 2)
         Given the Test 5 (part 1) scenario executed successfully
@@ -910,6 +979,9 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     @test
     Scenario: Test 5 (part 3)
@@ -920,7 +992,7 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #id_broker_psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #canale_IMMEDIATO_MULTIBENEFICIARIO# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -954,12 +1026,17 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 5.1 (part 2)
         Given the Test 5.1 (part 1) scenario executed successfully
@@ -967,6 +1044,9 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     @test
     Scenario: Test 5.1 (part 3)
@@ -978,7 +1058,7 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #id_broker_psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #canale_versione_primitive_2# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1012,12 +1092,17 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 6 (part 2)
         Given the Test 6 (part 1) scenario executed successfully
@@ -1025,6 +1110,9 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     @test
     Scenario: Test 6 (part 3)
@@ -1035,7 +1123,7 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #id_broker_psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #canale_IMMEDIATO_MULTIBENEFICIARIO# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1069,12 +1157,17 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 6.1 (part 2)
         Given the Test 6.1 (part 1) scenario executed successfully
@@ -1082,6 +1175,9 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     @test
     Scenario: Test 6.1 (part 3)
@@ -1093,7 +1189,7 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value #psp# of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #id_broker_psp# of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value #canale_versione_primitive_2# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1128,18 +1224,26 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
     Scenario: Test 7 (part 2)
         Given the Test 7 (part 1) scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     @test
     Scenario: Test 7 (part 3)
@@ -1170,12 +1274,17 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 8 (part 2)
         Given the Test 8 (part 1) scenario executed successfully
@@ -1192,6 +1301,9 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,CANCELLED_NORPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1216,12 +1328,17 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 8.1 (part 2)
         Given the Test 8.1 (part 1) scenario executed successfully
@@ -1239,6 +1356,9 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,CANCELLED_NORPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1263,12 +1383,17 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 9 (part 2)
         Given the Test 9 (part 1) scenario executed successfully
@@ -1286,6 +1411,9 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,CANCELLED_NORPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1310,12 +1438,17 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     Scenario: Test 9.1 (part 2)
         Given the Test 9.1 (part 1) scenario executed successfully
@@ -1334,6 +1467,9 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,CANCELLED_NORPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1359,7 +1495,12 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-        # POSITION_ACTIVATE
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1377,6 +1518,9 @@ Feature: spostamento traduttore
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,CANCELLED_NORPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
