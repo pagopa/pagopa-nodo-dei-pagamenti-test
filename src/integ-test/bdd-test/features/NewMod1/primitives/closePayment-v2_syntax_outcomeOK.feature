@@ -112,8 +112,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | additionalPaymentInformations | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_36   |
             | transactionDetails            | Empty                                                                                                                                                                                                                                                            | PAG-2120      |
             | primaryCiIncurredFee          | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
-            | IdBundle                      | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
-            | IdCiBundle                    | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
+            | idBundle                      | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
+            | idCiBundle                    | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
 
     @test
     # syntax check - Invalid field - payment method
@@ -377,8 +377,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | transactionDetails   | None                          | PAG-2120      |
             | paymentMethod        | CP                            | PAG-2383      |
             | primaryCiIncurredFee | None                          | PAG-2444      |
-            | IdBundle             | None                          | PAG-2444      |
-            | IdCiBundle           | None                          | PAG-2444      |
+            | idBundle             | None                          | PAG-2444      |
+            | idCiBundle           | None                          | PAG-2444      |
 
 
 
