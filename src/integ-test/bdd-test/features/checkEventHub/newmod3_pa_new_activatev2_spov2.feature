@@ -67,7 +67,7 @@ Feature: Block revision for sendPaymentOutcomeV2
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
             <paymentTokens>
-            <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
+            <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
             </paymentTokens>
             <outcome>OK</outcome>
             <details>
