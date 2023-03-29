@@ -262,7 +262,7 @@ Feature: Copy of T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParchegg
         And check esito is OK of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
 
-    @eventhub
+    @eventhub @check
     Scenario: RT pull
         Given the Execution Esito Carta scenario executed successfully
         And initial XML pspChiediListaRT
