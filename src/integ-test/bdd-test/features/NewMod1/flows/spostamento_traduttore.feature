@@ -63,6 +63,61 @@ Feature: spostamento traduttore
             """
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
 
+    Scenario: paaAttivaRPT delay
+        Given initial XML paaAttivaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:paaAttivaRPTRisposta>
+            <paaAttivaRPTRisposta>
+            <delay>5000</delay>
+            <esito>OK</esito>
+            <datiPagamentoPA>
+            <importoSingoloVersamento>$activatePaymentNoticeV2.amount</importoSingoloVersamento>
+            <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
+            <bicAccredito>BSCTCH22</bicAccredito>
+            <enteBeneficiario>
+            <pag:identificativoUnivocoBeneficiario>
+            <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+            <pag:codiceIdentificativoUnivoco>#id_station_old#</pag:codiceIdentificativoUnivoco>
+            </pag:identificativoUnivocoBeneficiario>
+            <pag:denominazioneBeneficiario>#broker_AGID#</pag:denominazioneBeneficiario>
+            <pag:codiceUnitOperBeneficiario>#canale_AGID_02#</pag:codiceUnitOperBeneficiario>
+            <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>
+            <pag:indirizzoBeneficiario>"paaAttivaRPT"</pag:indirizzoBeneficiario>
+            <pag:civicoBeneficiario>j</pag:civicoBeneficiario>
+            <pag:capBeneficiario>gt</pag:capBeneficiario>
+            <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>
+            <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>
+            <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>
+            </enteBeneficiario>
+            <credenzialiPagatore>i</credenzialiPagatore>
+            <causaleVersamento>prova/RFDB/018431538193400/TXT/causale $iuv</causaleVersamento>
+            </datiPagamentoPA>
+            </paaAttivaRPTRisposta>
+            </ws:paaAttivaRPTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+
+    Scenario: paaAttivaRPT timeout
+        Given initial XML paaAttivaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:paaAttivaRPTRisposta>
+            <paaAttivaRPTRisposta>
+            <delay>10000</delay>
+            </paaAttivaRPTRisposta>
+            </ws:paaAttivaRPTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+
     Scenario: nodoInviaRPT
         Given RPT generation
             """
@@ -1536,4 +1591,145 @@ Feature: spostamento traduttore
 
         # STATI_RPT_SNAPSHOT
         And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+    #####################################################################################
+
+    Scenario: Test 11 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        And the paaAttivaRPT delay scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+        # RPT_ACTIVATIONS
+        And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+    @test
+    Scenario: Test 11 (part 2)
+        Given the Test 11 (part 1) scenario executed successfully
+        And wait 5 seconds for expiration
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+        # POSITION_PAYMENT
+        And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING_RPT,PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 3 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+    #####################################################################################
+
+    Scenario: Test 12 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        And the paaAttivaRPT timeout scenario executed successfully
+        And the nodoInviaRPT scenario executed successfully
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+        # RPT_ACTIVATIONS
+        And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+    @test
+    Scenario: Test 12 (part 2)
+        Given the Test 12 (part 1) scenario executed successfully
+        And wait 12 seconds for expiration
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+        # POSITION_PAYMENT
+        And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING_RPT,PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 3 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+    #####################################################################################
+
+    Scenario: Test 13 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        And the paaAttivaRPT timeout scenario executed successfully
+        And wait 12 seconds for expiration
+        And the nodoInviaRPT scenario executed successfully
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+        # RPT_ACTIVATIONS
+        And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+    @test
+    Scenario: Test 13 (part 2)
+        Given the Test 13 (part 1) scenario executed successfully
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+        # POSITION_PAYMENT
+        And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS
+        And checks the value PAYING_RPT,PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 2 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And checks the value PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # STATI_RPT
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 3 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # STATI_RPT_SNAPSHOT
+        And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
