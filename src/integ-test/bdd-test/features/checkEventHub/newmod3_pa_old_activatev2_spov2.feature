@@ -1,4 +1,4 @@
-Feature: Block revision for sendPaymentOutcome
+Feature: Block revision for sendPaymentOutcomeV2
 
     Background:
         Given systems up
@@ -159,9 +159,9 @@ Feature: Block revision for sendPaymentOutcome
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @eventhub @check
+    @eventhub
     Scenario: sendPaymentOutcomeV2
-        Given the activatePaymentNoticeV2 scenario executed successfully
+        Given the nodoInviaRPT scenario executed successfully
         And initial XML sendPaymentOutcomeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">

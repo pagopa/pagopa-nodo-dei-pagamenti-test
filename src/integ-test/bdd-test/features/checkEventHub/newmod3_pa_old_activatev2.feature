@@ -159,7 +159,7 @@ Feature: Block revision for sendPaymentOutcome
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @eventhub @check
+    @eventhub 
     Scenario: sendPaymentOutcome
         Given the nodoInviaRPT scenario executed successfully
         And initial XML sendPaymentOutcome
