@@ -742,11 +742,11 @@ Feature: spostamento traduttore
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
@@ -816,11 +816,11 @@ Feature: spostamento traduttore
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
@@ -881,11 +881,11 @@ Feature: spostamento traduttore
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
@@ -947,11 +947,11 @@ Feature: spostamento traduttore
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
@@ -1012,11 +1012,11 @@ Feature: spostamento traduttore
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
@@ -1078,11 +1078,11 @@ Feature: spostamento traduttore
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
@@ -1143,11 +1143,11 @@ Feature: spostamento traduttore
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
@@ -1209,11 +1209,11 @@ Feature: spostamento traduttore
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
@@ -1260,11 +1260,11 @@ Feature: spostamento traduttore
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
@@ -1314,11 +1314,11 @@ Feature: spostamento traduttore
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
@@ -1369,11 +1369,11 @@ Feature: spostamento traduttore
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
@@ -1424,11 +1424,11 @@ Feature: spostamento traduttore
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
@@ -1480,11 +1480,11 @@ Feature: spostamento traduttore
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
@@ -1531,9 +1531,9 @@ Feature: spostamento traduttore
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 4 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RPT_ANNULLATA_WISP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
