@@ -53,7 +53,7 @@ Feature: Block revision for sendPaymentOutcome
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    @eventhub @check
+    @eventhub
     Scenario: sendPaymentOutcome
         Given the activatePaymentNoticeV2 scenario executed successfully
         And initial XML sendPaymentOutcome
