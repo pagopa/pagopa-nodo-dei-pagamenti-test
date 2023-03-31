@@ -282,7 +282,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value v2 of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value 1 of the record at column FEE_PA of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value 0bf0c282-3054-11ed-af20-acde48001122 of the record at column BUNDLE_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value 0bf0c282-3054-11ed-af20-acde48001122 of the record at column BUNDLE_PA_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value 0bf0c35e-3054-11ed-af20-acde48001122 of the record at column BUNDLE_PA_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column RECEIPT_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
