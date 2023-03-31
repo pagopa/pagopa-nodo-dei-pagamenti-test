@@ -186,7 +186,7 @@ Feature: Commissioni evolute process
         And checks the value $activatePaymentNoticeV2Response.suggestedUserFee of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.suggestedPaFee of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test
+    @test @newfix
     # activate without paymentMethod and touchPoint --> fees request with paymentMethod = ANY and touchPoint = PSP -->
     # psp in fees response, same of psp in activate request --> fields related to fee retrieved by fees populated with the first occurrence
     Scenario: Execute activate 3
