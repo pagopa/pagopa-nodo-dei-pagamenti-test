@@ -242,6 +242,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
     @test
     Scenario: check spo ok
         Given the check closePaymentV2 OK scenario executed successfully
+        And wait 5 seconds for expiration
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
