@@ -3060,3 +3060,80 @@ def step_impl(context, name_macro, db_name, query_name, value, column, table_nam
     assert value in query_result, f"check expected element: {value}, obtained: {query_result}"
     
     db.closeConnection(conn)
+
+
+################################################################################################################################################################
+
+
+# def leggi_tabella_con_attesa(context, db_name, conn, tabella):  #step da utilizzare su tabella SNAPSHOT 
+
+#     # Legge i dati dalla tabella specificata utilizzando la connessione fornita
+#     # e continua a controllare periodicamente per gli aggiornamenti fino a quando non viene trovato uno.
+
+#     db_config = context.config.userdata.get("db_configuration")
+#     db_selected = db_config.get(db_name)
+#     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+#     cur = conn.cursor()
+
+#     # cur.execute(f"{query}")
+#     cur.execute(f"SELECT * FROM {tabella}")
+
+#     ultima_modifica = cur.fetchone()
+
+#     while True:
+
+#         cur.execute(f"SELECT * FROM {tabella}")
+#         dati = cur.fetchall()
+#         nuova_modifica = cur.fetchone()  # recupera il primo record dopo l'ultimo fetch
+
+#         if nuova_modifica != ultima_modifica:
+#             print("Trovato aggiornamento!")
+#             break
+        
+#         else:
+#             print("Nessun aggiornamento trovato, attendo...")
+#             time.sleep(3)  # attende 3 secondi prima del prossimo controllo
+        
+#         ultima_modifica = nuova_modifica
+
+#     cur.close()
+#     return dati
+
+
+@step(u"wait until the update to the new state for the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+def leggi_tabella_con_attesa(context, db_name, conn, query_name, name_macro, column, table_name):  #step da utilizzare su tabella SNAPSHOT 
+
+    # Legge i dati dalla tabella specificata utilizzando la connessione fornita
+    # e continua a controllare periodicamente per gli aggiornamenti fino a quando non viene trovato uno.
+
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+    print(selected_query)
+    exec_query = db.executeQuery(conn, selected_query)
+
+    query_result = [t[0] for t in exec_query]
+    print('query_result: ', query_result)
+    
+    ultima_modifica = query_result
+
+    i = 0
+    while i <= 50:
+
+        exec_query = db.executeQuery(conn, selected_query)
+        nuova_modifica = exec_query [0][0]  # recupera il primo record dopo l'ultimo fetch
+
+        if nuova_modifica != ultima_modifica:
+            print("Trovato aggiornamento!")
+            break
+
+        else:
+            print("Nessun aggiornamento trovato, attendo...")
+            time.sleep(3)  # attende 3 secondi prima del prossimo controllo
+            i += 1
+
+    db.closeConnection(conn)
+
+    
