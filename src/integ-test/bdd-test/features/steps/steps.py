@@ -3101,7 +3101,7 @@ def step_impl(context, name_macro, db_name, query_name, value, column, table_nam
 
 
 @step(u"wait until the update to the new state for the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
-def leggi_tabella_con_attesa(context, db_name, conn, query_name, name_macro, column, table_name):  #step da utilizzare su tabella SNAPSHOT 
+def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, table_name):  #step da utilizzare su tabella SNAPSHOT 
 
     # Legge i dati dalla tabella specificata utilizzando la connessione fornita
     # e continua a controllare periodicamente per gli aggiornamenti fino a quando non viene trovato uno.
