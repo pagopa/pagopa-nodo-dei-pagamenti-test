@@ -318,7 +318,8 @@ Feature: FLUSSO_APIO_18_PPALOLD
         Given the Execute nodoInoltroEsitoPayPal (Phase 5) - KO (CONPSP) scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=CONPSP to nodo-dei-pagamenti
         And job paInviaRt triggered after 20 seconds
-        And wait 20 seconds for expiration
+        #And wait 20 seconds for expiration
+        And wait until the update to the new state for the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_SEND_ERROR, CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO

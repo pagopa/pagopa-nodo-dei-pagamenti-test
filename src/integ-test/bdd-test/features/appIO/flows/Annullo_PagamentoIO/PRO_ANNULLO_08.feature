@@ -112,7 +112,8 @@ Feature: PRO_ANNULLO_08
         }
         """
         And job annullamentoRptMaiRichiesteDaPm triggered after 61 seconds
-        And wait 10 seconds for expiration
+        #And wait 10 seconds for expiration
+        And wait until the update to the new state for the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         Then verify the HTTP status code of inoltroEsito/carta response is 408
         And check error is Operazione in timeout of inoltroEsito/carta response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO

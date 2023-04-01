@@ -99,7 +99,8 @@ Feature: PRO_ANNULLO_09
         }
         """
         And job annullamentoRptMaiRichiesteDaPm triggered after 61 seconds
-        And wait 10 seconds for expiration
+        #And wait 10 seconds for expiration
+        And wait until the update to the new state for the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is KO of inoltroEsito/carta response
         And check errorCode is CONPSP of inoltroEsito/carta response

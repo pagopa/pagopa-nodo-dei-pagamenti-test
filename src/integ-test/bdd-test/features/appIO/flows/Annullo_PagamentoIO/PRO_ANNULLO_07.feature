@@ -80,7 +80,8 @@ Feature: PRO_ANNULLO_07
         """
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         And job annullamentoRptMaiRichiesteDaPm triggered after 62 seconds
-        And wait 130 seconds for expiration
+        #And wait 130 seconds for expiration
+        And wait until the update to the new state for the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         Then check outcome is OK of activateIOPayment response
         And checks the value PAYING, CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO

@@ -121,7 +121,8 @@ Feature: PRO_ANNULLO_13_PPALNEW
         }
         """
         And job mod3CancelV2 triggered after 10 seconds
-        And wait 6 seconds for expiration
+        #And wait 6 seconds for expiration
+        And wait until the update to the new state for the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is KO of inoltroEsito/paypal response
         And check errorCode is RIFPSP of inoltroEsito/paypal response
