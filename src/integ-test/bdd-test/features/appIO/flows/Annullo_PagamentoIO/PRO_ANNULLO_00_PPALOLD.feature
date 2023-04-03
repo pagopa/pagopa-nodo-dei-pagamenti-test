@@ -262,6 +262,7 @@ Feature: PRO_ANNULLO_00_PPALOLD
         """
         And job mod3CancelV1 triggered after 6 seconds
         #And wait 15 seconds for expiration
+        And replace iuv content with $1iuv content
         And wait until the update to the new state for the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
         Then verify the HTTP status code of inoltroEsito/paypal response is 408
         And check error is Operazione in timeout of inoltroEsito/paypal response
@@ -319,7 +320,7 @@ Feature: PRO_ANNULLO_00_PPALOLD
         #check correctness STATI_RPT_SNAPSHOT table
         And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
 
-    @runnable
+    @runnable @pippo
     Scenario: Execute nodoNotificaAnnullamento (Phase 6)
         Given the Execute nodoInoltroEsitoPayPal (Phase 5) - Timeout scenario executed successfully
         When WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=SESSCA to nodo-dei-pagamenti
