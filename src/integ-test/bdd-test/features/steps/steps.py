@@ -3065,41 +3065,6 @@ def step_impl(context, name_macro, db_name, query_name, value, column, table_nam
 ################################################################################################################################################################
 
 
-# def leggi_tabella_con_attesa(context, db_name, conn, tabella):  #step da utilizzare su tabella SNAPSHOT 
-
-#     # Legge i dati dalla tabella specificata utilizzando la connessione fornita
-#     # e continua a controllare periodicamente per gli aggiornamenti fino a quando non viene trovato uno.
-
-#     db_config = context.config.userdata.get("db_configuration")
-#     db_selected = db_config.get(db_name)
-#     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
-#     cur = conn.cursor()
-
-#     # cur.execute(f"{query}")
-#     cur.execute(f"SELECT * FROM {tabella}")
-
-#     ultima_modifica = cur.fetchone()
-
-#     while True:
-
-#         cur.execute(f"SELECT * FROM {tabella}")
-#         dati = cur.fetchall()
-#         nuova_modifica = cur.fetchone()  # recupera il primo record dopo l'ultimo fetch
-
-#         if nuova_modifica != ultima_modifica:
-#             print("Trovato aggiornamento!")
-#             break
-        
-#         else:
-#             print("Nessun aggiornamento trovato, attendo...")
-#             time.sleep(3)  # attende 3 secondi prima del prossimo controllo
-        
-#         ultima_modifica = nuova_modifica
-
-#     cur.close()
-#     return dati
-
-
 @step(u"wait until the update to the new state for the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, table_name):  #step da utilizzare su tabella SNAPSHOT 
 
