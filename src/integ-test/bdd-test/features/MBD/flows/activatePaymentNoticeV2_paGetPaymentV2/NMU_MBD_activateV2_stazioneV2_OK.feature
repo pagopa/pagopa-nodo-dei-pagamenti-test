@@ -137,7 +137,7 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
     #DB check
     Scenario: DB check
         Given the activatePaymentNoticeV2 scenario executed successfully
-        And wait 10 seconds for expiration
+        And wait 5 seconds for expiration
         # POSITION_TRANSFER
         Then verify 1 record for the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
         And checks the value $paGetPaymentV2.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2

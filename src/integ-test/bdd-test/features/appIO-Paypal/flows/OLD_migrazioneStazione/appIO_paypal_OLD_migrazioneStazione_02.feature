@@ -386,7 +386,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
         Then verify the HTTP status code of paInviaRt response is 200
         And updates through the query stationUpdate of the table STAZIONI the parameter VERSIONE with 1 under macro sendPaymentResultV2 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
-        And wait 25 seconds for expiration
+        And wait 5 seconds for expiration
         #POSITION_PAYMENT_STATUS
         Then checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED, PAID, NOTICE_GENERATED, NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
         #POSITION_PAYMENT_STATUS_SNAPSHOT
