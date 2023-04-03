@@ -196,7 +196,7 @@ Feature: PRO_ANNULLO_07_PPALOLD
         When IO sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
 
-        @runnable  @pippo     
+        @runnable   
         Scenario: Execute nodoInviaRPT (Phase 3)
         Given the Execute nodoAttivaRPT (Phase 2) scenario executed successfully
         And initial XML nodoInviaRPT

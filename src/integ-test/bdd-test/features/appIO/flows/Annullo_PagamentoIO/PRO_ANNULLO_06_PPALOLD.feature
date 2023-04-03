@@ -238,7 +238,7 @@ Feature: PRO_ANNULLO_06_PPALOLD
       When job annullamentoRptMaiRichiesteDaPm triggered after 0 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
 
-    @runnable @pippo
+    @runnable
     Scenario: check DB  
       Given the Trigger annullamentoRptMaiRichiesteDaPm scenario executed successfully
         And wait 15 seconds for expiration

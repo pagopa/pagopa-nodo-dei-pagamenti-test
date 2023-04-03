@@ -3123,7 +3123,7 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
     while i <= 50:
 
         exec_query = db.executeQuery(conn, selected_query)
-        nuova_modifica = exec_query [0][0]  # recupera il primo record dopo l'ultimo fetch
+        nuova_modifica = exec_query [0][0]
 
         if nuova_modifica != ultima_modifica:
             print("Trovato aggiornamento!")
