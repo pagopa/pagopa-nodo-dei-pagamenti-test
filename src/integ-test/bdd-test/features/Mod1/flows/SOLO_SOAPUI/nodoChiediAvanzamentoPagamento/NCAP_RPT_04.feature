@@ -156,9 +156,10 @@ Feature: NCAP
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
         When WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
-        And job paInviaRt triggered after 20 seconds
+        And job paInviaRt triggered after 10 seconds
         Then verify the HTTP status code of notificaAnnullamento response is 200
-        And wait 10 seconds for expiration
+        And wait until the update to the new state for the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
+        #And wait 10 seconds for expiration
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         # check POSITION_PAYMENT
@@ -167,7 +168,7 @@ Feature: NCAP
         And verify 0 record for the table POSITION_STATUS retrived by the query position_payment on db nodo_online under macro Mod1
         And verify 0 record for the table POSITION_STATUS_SNAPSHOT retrived by the query position_payment on db nodo_online under macro Mod1
 
-    @runnable
+    @runnable @pippo
     Scenario: Execute nodoChiediAvanzamentoPagamento1
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
