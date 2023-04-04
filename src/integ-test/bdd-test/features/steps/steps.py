@@ -123,12 +123,12 @@ def step_impl(context, primitive):
         setattr(context, "ccpms2", ccpms2)
 
     if "#iuv#" in payload:
-        iuv = str(random.randint(100000000000000, 999999999999999))
+        iuv = '11' + str(random.randint(1000000000000, 9999999999999))
         payload = payload.replace('#iuv#', iuv)
         setattr(context, "iuv", iuv)
 
     if "#iuv1#" in payload:
-        iuv1 = str(random.randint(100000000000000, 999999999999999))
+        iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
         payload = payload.replace('#iuv1#', iuv1)
         setattr(context, "iuv1", iuv1)
 
@@ -258,11 +258,11 @@ def step_impl(context, primitive):
     payload = utils.json2xml(jsonDict)
     payload = '<root>' + payload + '</root>'
     if "#iuv#" in payload:
-        iuv = str(random.randint(100000000000000, 999999999999999))
+        iuv = '11' + str(random.randint(1000000000000, 9999999999999))
         payload = payload.replace('#iuv#', iuv)
         setattr(context, "iuv", iuv)
     if "#iuv1#" in payload:
-        iuv1 = str(random.randint(100000000000000, 999999999999999))
+        iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
         payload = payload.replace('#iuv1#', iuv1)
         setattr(context, "iuv1", iuv1)				   
     if '#transaction_id#' in payload:
@@ -1418,7 +1418,7 @@ def step_impl(context, primitive, new_primitive):
 
 @step('random iuv in context')
 def step_impl(context):
-    iuv = str(random.randint(100000000000000, 999999999999999))
+    iuv = '11' + str(random.randint(1000000000000, 9999999999999))
     setattr(context, "iuv", iuv)
 
 @step('current date generation')
