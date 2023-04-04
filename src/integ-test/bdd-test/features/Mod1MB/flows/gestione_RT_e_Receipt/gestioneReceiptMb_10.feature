@@ -502,6 +502,7 @@ Feature: gestioneReceiptMb_10
         And replace noticeNumber content with $1noticeNumber content
         And replace pa content with #creditor_institution_code# content
         And replace psp content with #psp# content
+
         #extraction from POSITION_RECEIPT table
         And execution query by_notice_number_and_pa to get value on the table POSITION_RECEIPT, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_pa retrieve param receptID at position 1 and save it under the key receptID
@@ -633,7 +634,8 @@ Feature: gestioneReceiptMb_10
 
     Scenario: Check POSITION_RETRY_PA_SEND_RT table
         Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
-        And wait 120 seconds for expiration
+        And wait 10 seconds for expiration
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         And EC2 replies to nodo-dei-pagamenti with the paSendRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -646,9 +648,9 @@ Feature: gestioneReceiptMb_10
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
-        When job paSendRt triggered after 5 seconds
-        And wait 15 seconds for expiration
+        When job paSendRt triggered after 15 seconds
+        And wait until the update to the new state for the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
+
         #check POSITION_RETRY_PA_SEND_RT table
         Then checks the value #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -660,10 +662,11 @@ Feature: gestioneReceiptMb_10
 @runnable
     Scenario: Checks
         Given the Check POSITION_RETRY_PA_SEND_RT table scenario executed successfully
-        And wait 60 seconds for expiration
+        #And wait 60 seconds for expiration
         And nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 2
-        When job paSendRt triggered after 20 seconds
-        And wait 400 seconds for expiration
+        When job paSendRt triggered after 10 seconds
+        #And wait 400 seconds for expiration
+        And wait until the update to the new state for the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
         Then execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_payment_token retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
         And through the query by_notice_number_and_payment_token retrieve param noticeID1 at position 2 and save it under the key noticeID1
