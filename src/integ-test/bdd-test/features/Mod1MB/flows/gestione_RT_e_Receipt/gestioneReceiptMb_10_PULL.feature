@@ -416,9 +416,10 @@ Feature: gestioneReceiptMb_10_PULL
         And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
 
+        #And refresh job PA triggered after 10 seconds
         And refresh job PA triggered after 10 seconds
-        And refresh job PA triggered after 10 seconds
-        And wait 10 seconds for expiration
+        #And wait 10 seconds for expiration
+        And wait 5 seconds for expiration
 
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
@@ -672,7 +673,8 @@ Feature: gestioneReceiptMb_10_PULL
 
     Scenario: Check POSITION_RETRY_PA_SEND_RT table
         Given the job pspChiediRT (Phase 4.1) scenario executed successfully
-        And wait 120 seconds for expiration
+        #And wait 120 seconds for expiration
+        And wait 10 seconds for expiration
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         And EC2 replies to nodo-dei-pagamenti with the paSendRT
             """
@@ -700,9 +702,10 @@ Feature: gestioneReceiptMb_10_PULL
     Scenario: Checks
         Given the Check POSITION_RETRY_PA_SEND_RT table scenario executed successfully
         And nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 2
-        And wait 60 seconds for expiration
-        When job paSendRt triggered after 5 seconds
-        And wait 400 seconds for expiration
+        #And wait 60 seconds for expiration
+        When job paSendRt triggered after 10 seconds
+        #And wait 400 seconds for expiration
+        And wait 40 seconds for expiration
         And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_payment_token retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
         And through the query by_notice_number_and_payment_token retrieve param noticeID1 at position 2 and save it under the key noticeID1
