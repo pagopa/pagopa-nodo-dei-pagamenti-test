@@ -19,7 +19,7 @@ Feature: checks for transferCategory
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
-            <expirationTime>6000</expirationTime>
+            <expirationTime>60000</expirationTime>
             <amount>10.00</amount>
             <paymentNote>responseFull</paymentNote>
             </nod:activatePaymentNoticeV2Request>
