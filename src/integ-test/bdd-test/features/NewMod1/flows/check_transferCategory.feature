@@ -17,7 +17,7 @@ Feature: checks for transferCategory
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>302$iuv</noticeNumber>
+            <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
             <expirationTime>60000</expirationTime>
             <amount>10.00</amount>
