@@ -689,7 +689,8 @@ Feature: gestioneReceiptMb_10_PULL
             </soapenv:Envelope>
             """
         When job paSendRt triggered after 15 seconds
-        And wait 30 seconds for expiration
+        #And wait 30 seconds for expiration
+        And wait until the update to the new state for the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         #check POSITION_RETRY_PA_SEND_RT table
         Then checks the value #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -705,7 +706,8 @@ Feature: gestioneReceiptMb_10_PULL
         #And wait 60 seconds for expiration
         When job paSendRt triggered after 10 seconds
         #And wait 400 seconds for expiration
-        And wait 40 seconds for expiration
+        #And wait 40 seconds for expiration
+        And wait until the update to the new state for the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
         And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_payment_token retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
         And through the query by_notice_number_and_payment_token retrieve param noticeID1 at position 2 and save it under the key noticeID1
