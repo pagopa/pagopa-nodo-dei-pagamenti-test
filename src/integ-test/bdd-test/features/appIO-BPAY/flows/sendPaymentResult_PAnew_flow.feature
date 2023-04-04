@@ -340,7 +340,7 @@ Feature: flow checks for sendPaymentResult with PA new
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 15 seconds for expiration
-   @test
+   @test @check
    Scenario: T_SPR_02 (sendPaymentOutcome)
       Given the T_SPR_02 (closePayment) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
