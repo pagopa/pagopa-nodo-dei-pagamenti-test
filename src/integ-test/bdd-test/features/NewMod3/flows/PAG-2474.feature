@@ -26,6 +26,73 @@ Feature: PAG 2474
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        Given initial XML paGetPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header />
+            <soapenv:Body>
+            <paf:paGetPaymentRes>
+            <outcome>OK</outcome>
+            <data>
+            <creditorReferenceId>02$iuv</creditorReferenceId>
+            <paymentAmount>10.00</paymentAmount>
+            <dueDate>2021-12-31</dueDate>
+            <!--Optional:-->
+            <retentionDate>2021-12-31T12:12:12</retentionDate>
+            <!--Optional:-->
+            <lastPayment>1</lastPayment>
+            <description>description</description>
+            <!--Optional:-->
+            <companyName>company</companyName>
+            <!--Optional:-->
+            <officeName>office</officeName>
+            <debtor>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>paGetPaymentName</fullName>
+            <!--Optional:-->
+            <streetName>paGetPaymentStreet</streetName>
+            <!--Optional:-->
+            <civicNumber>paGetPayment99</civicNumber>
+            <!--Optional:-->
+            <postalCode>20155</postalCode>
+            <!--Optional:-->
+            <city>paGetPaymentCity</city>
+            <!--Optional:-->
+            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>paGetPayment@test.it</e-mail>
+            </debtor>
+            <!--Optional:-->
+            <transferList>
+            <!--1 to 5 repetitions:-->
+            <transfer>
+            <idTransfer>1</idTransfer>
+            <transferAmount>10.00</transferAmount>
+            <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
+            <IBAN>IT45R0760103200000000001016</IBAN>
+            <remittanceInformation>testPaGetPayment</remittanceInformation>
+            <transferCategory>paGetPaymentTest</transferCategory>
+            </transfer>
+            </transferList>
+            <!--Optional:-->
+            <metadata>
+            <!--1 to 10 repetitions:-->
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            </metadata>
+            </data>
+            </paf:paGetPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
 
     Scenario: activatePaymentNoticeV2
         Given initial XML activatePaymentNoticeV2
@@ -50,6 +117,73 @@ Feature: PAG 2474
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        Given initial XML paGetPayment
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header />
+            <soapenv:Body>
+            <paf:paGetPaymentRes>
+            <outcome>OK</outcome>
+            <data>
+            <creditorReferenceId>02$iuv</creditorReferenceId>
+            <paymentAmount>10.00</paymentAmount>
+            <dueDate>2021-12-31</dueDate>
+            <!--Optional:-->
+            <retentionDate>2021-12-31T12:12:12</retentionDate>
+            <!--Optional:-->
+            <lastPayment>1</lastPayment>
+            <description>description</description>
+            <!--Optional:-->
+            <companyName>company</companyName>
+            <!--Optional:-->
+            <officeName>office</officeName>
+            <debtor>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>paGetPaymentName</fullName>
+            <!--Optional:-->
+            <streetName>paGetPaymentStreet</streetName>
+            <!--Optional:-->
+            <civicNumber>paGetPayment99</civicNumber>
+            <!--Optional:-->
+            <postalCode>20155</postalCode>
+            <!--Optional:-->
+            <city>paGetPaymentCity</city>
+            <!--Optional:-->
+            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>paGetPayment@test.it</e-mail>
+            </debtor>
+            <!--Optional:-->
+            <transferList>
+            <!--1 to 5 repetitions:-->
+            <transfer>
+            <idTransfer>1</idTransfer>
+            <transferAmount>10.00</transferAmount>
+            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <IBAN>IT45R0760103200000000001016</IBAN>
+            <remittanceInformation>testPaGetPayment</remittanceInformation>
+            <transferCategory>paGetPaymentTest</transferCategory>
+            </transfer>
+            </transferList>
+            <!--Optional:-->
+            <metadata>
+            <!--1 to 10 repetitions:-->
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            </metadata>
+            </data>
+            </paf:paGetPaymentRes>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
 
     Scenario: RPT
         Given initial XML RPT
@@ -160,75 +294,6 @@ Feature: PAG 2474
             </soapenv:Envelope>
             """
 
-    Scenario: paGetPayment
-        Given initial XML paGetPayment
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header />
-            <soapenv:Body>
-            <paf:paGetPaymentRes>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>02$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-31</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-31T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>description</description>
-            <!--Optional:-->
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
-            </debtor>
-            <!--Optional:-->
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>testPaGetPayment</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentRes>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-
     Scenario: paaAttivaRPT
         Given initial XML paaAttivaRPT
             """
@@ -271,7 +336,6 @@ Feature: PAG 2474
 
     Scenario: Pa new 1.1
         Given the activatePaymentNotice scenario executed successfully
-        And the paGetPayment scenario executed successfully
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
@@ -309,8 +373,6 @@ Feature: PAG 2474
 
     Scenario: Pa new 2.1
         Given the activatePaymentNoticeV2 scenario executed successfully
-        And the paGetPayment scenario executed successfully
-        And fiscalCodePA with $activatePaymentNoticeV2.fiscalCode in paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
@@ -391,13 +453,18 @@ Feature: PAG 2474
 
     Scenario: Pa old 1.3
         Given the Pa old 1.2 scenario executed successfully
+        When job mod3CancelV1 triggered after 3 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
+
+    Scenario: Pa old 1.4
+        Given the Pa old 1.3 scenario executed successfully
         # modifiche a paaattivarpt
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
     # @test
-    Scenario: Pa old 1.4
-        Given the Pa old 1.3 scenario executed successfully
+    Scenario: Pa old 1.5
+        Given the Pa old 1.4 scenario executed successfully
         # modifiche a rpt
         And RPT generation
             """
