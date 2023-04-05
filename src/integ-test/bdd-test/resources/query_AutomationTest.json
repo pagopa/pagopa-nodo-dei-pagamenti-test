@@ -20,6 +20,7 @@
         "position_payment_retry_05_token1": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN ='$activatePaymentNotice1Response.paymentToken'",
         "position_payment_retry_05_token2": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN ='$activatePaymentNotice2Response.paymentToken'",
         "position_subject": "SELECT s.columns FROM table_name s JOIN POSITION_PAYMENT p ON s.ID = p.PAYER_ID WHERE p.PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken'",
+        "position_subject_activatev2": "SELECT s.columns FROM table_name s JOIN POSITION_PAYMENT p ON s.ID = p.PAYER_ID WHERE p.PAYMENT_TOKEN ='$activatePaymentNoticeV2Response.paymentToken'",
         "position_receipt": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode'",
         "position_receipt_n": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode'",
         "position_receipt_retry_rev_db_gr_02_1": "SELECT s.columns FROM table_name s where s.NOTICE_ID = '$activatePaymentNotice.noticeNumber' and s.PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode' and s.PAYMENT_TOKEN='$activatePaymentNoticeResponse.paymentToken' ",
