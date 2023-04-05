@@ -208,7 +208,7 @@ Feature: PAG 2474
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -317,6 +317,7 @@ Feature: PAG 2474
         And fullName with nome in paGetPayment
         And streetName with strada in paGetPayment
         And civicNumber with civico in paGetPayment
+        And fiscalCodePA with $activatePaymentNoticeV2.fiscalCode
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
