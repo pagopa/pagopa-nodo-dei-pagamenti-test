@@ -19,7 +19,7 @@ Feature: PAG 2474
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
-            <expirationTime>6000</expirationTime>
+            <expirationTime>2000</expirationTime>
             <amount>10.00</amount>
             <paymentNote>responseFull</paymentNote>
             </nod:activatePaymentNoticeReq>
@@ -43,7 +43,7 @@ Feature: PAG 2474
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
-            <expirationTime>6000</expirationTime>
+            <expirationTime>2000</expirationTime>
             <amount>10.00</amount>
             <paymentNote>responseFull</paymentNote>
             </nod:activatePaymentNoticeV2Request>
@@ -275,9 +275,14 @@ Feature: PAG 2474
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-    @test
     Scenario: Pa new 1.2
         Given the Pa new 1.1 scenario executed successfully
+        When job mod3CancelV2 triggered after 3 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
+
+    @test
+    Scenario: Pa new 1.3
+        Given the Pa new 1.2 scenario executed successfully
         And description with descrizione in paGetPayment
         And companyName with azienda in paGetPayment
         And officeName with ufficio in paGetPayment
@@ -305,19 +310,24 @@ Feature: PAG 2474
     Scenario: Pa new 2.1
         Given the activatePaymentNoticeV2 scenario executed successfully
         And the paGetPayment scenario executed successfully
+        And fiscalCodePA with $activatePaymentNoticeV2.fiscalCode in paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    @test
     Scenario: Pa new 2.2
         Given the Pa new 2.1 scenario executed successfully
+        When job mod3CancelV2 triggered after 3 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
+
+    @test
+    Scenario: Pa new 2.3
+        Given the Pa new 2.2 scenario executed successfully
         And description with descrizione in paGetPayment
         And companyName with azienda in paGetPayment
         And officeName with ufficio in paGetPayment
         And fullName with nome in paGetPayment
         And streetName with strada in paGetPayment
         And civicNumber with civico in paGetPayment
-        And fiscalCodePA with $activatePaymentNoticeV2.fiscalCode
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
