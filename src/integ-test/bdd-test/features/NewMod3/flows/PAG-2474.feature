@@ -458,11 +458,13 @@ Feature: PAG 2474
         And pay_i:anagraficaVersante with nome in RPT
         And pay_i:indirizzoVersante with strada in RPT
         And pay_i:civicoVersante with civico in RPT
+        And pay_i:codiceContestoPagamento with $activatePaymentNotice.paymentToken in RPT
         And RPT generation
             """
             $RPT
             """
         And rpt with $rptAttachment in nodoInviaRPT
+        And codiceContestoPagamento with $activatePaymentNotice.paymentToken in nodoInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
