@@ -453,7 +453,6 @@ Feature: PAG 2474
 
     Scenario: Pa old 1.4
         Given the Pa old 1.3 scenario executed successfully
-        And fiscalCode with #creditor_institution_code_secondary# in activatePaymentNotice
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
