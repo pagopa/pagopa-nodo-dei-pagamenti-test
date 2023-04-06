@@ -428,42 +428,13 @@ Feature: PAG 2474
         And checks the value civico of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrived by the query position_subject_activatev2 on db nodo_online under macro NewMod3
         And verify 1 record for the table POSITION_SUBJECT retrived by the query position_subject_activatev2 on db nodo_online under macro NewMod3
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     ####################################################################################################################
 
     Scenario: Pa old 1.1
         Given the activatePaymentNotice old scenario executed successfully
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @check
+
     Scenario: Pa old 1.2
         Given the Pa old 1.1 scenario executed successfully
         And the RPT scenario executed successfully
@@ -471,33 +442,37 @@ Feature: PAG 2474
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-# Scenario: Pa old 1.3
-#     Given the Pa old 1.2 scenario executed successfully
-#     When job mod3CancelV1 triggered after 3 seconds
-#     Then verify the HTTP status code of mod3CancelV2 response is 200
+    Scenario: Pa old 1.3
+        Given the Pa old 1.2 scenario executed successfully
+        When job mod3CancelV1 triggered after 3 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
 
-# Scenario: Pa old 1.4
-#     Given the Pa old 1.3 scenario executed successfully
-#     # modifiche a paaattivarpt
-#     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-#     Then check outcome is OK of activatePaymentNotice response
+    Scenario: Pa old 1.4
+        Given the Pa old 1.3 scenario executed successfully
+        And fiscalCode with 55555555555 in activatePaymentNotice
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
 
-# @test
-# Scenario: Pa old 1.5
-#     Given the Pa old 1.4 scenario executed successfully
-#     # modifiche a rpt
-#     And RPT generation
-#         """
-#         $RPT
-#         """
-#     And rpt with $rptAttachment in nodoInviaRPT
-#     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-#     Then check esito is OK of nodoInviaRPT response
+    @test @check
+    Scenario: Pa old 1.5
+        Given the Pa old 1.4 scenario executed successfully
+        And pay_i:anagraficaVersante with nome in RPT
+        And pay_i:indirizzoVersante with strada in RPT
+        And pay_i:civicoVersante with civico in RPT
+        And RPT generation
+            """
+            $RPT
+            """
+        And rpt with $rptAttachment in nodoInviaRPT
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
 
-#     # POSITION_SERVICE
-#     # check
-#     And verify 1 record for the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+        # POSITION_SERVICE
+        # check
+        And verify 1 record for the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
 
-#     # POSITION_SUBJECT
-#     # check
-#     And verify 1 record for the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
+        # POSITION_SUBJECT
+        And checks the value nome of the record at column FULL_NAME of the table POSITION_SUBJECT retrived by the query position_subject_activatev2 on db nodo_online under macro NewMod3
+        And checks the value strada of the record at column STREET_NAME of the table POSITION_SUBJECT retrived by the query position_subject_activatev2 on db nodo_online under macro NewMod3
+        And checks the value civico of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrived by the query position_subject_activatev2 on db nodo_online under macro NewMod3
+        And verify 1 record for the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
