@@ -258,7 +258,6 @@ Feature: appio old
     @eventhub
     Scenario: check event hub PA old
         Given the RPT scenario executed successfully
-        And the nodoAttivaRPT scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
         And the nodoChiediInformazioniPagamento scenario executed successfully
         And the nodoInoltraEsitoCarta scenario executed successfully
