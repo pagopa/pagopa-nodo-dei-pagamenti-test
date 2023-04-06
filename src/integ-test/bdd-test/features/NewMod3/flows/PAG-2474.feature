@@ -445,7 +445,7 @@ Feature: PAG 2474
     Scenario: Pa old 1.3
         Given the Pa old 1.2 scenario executed successfully
         When job mod3CancelV1 triggered after 3 seconds
-        Then verify the HTTP status code of mod3CancelV2 response is 200
+        Then verify the HTTP status code of mod3CancelV1 response is 200
 
     Scenario: Pa old 1.4
         Given the Pa old 1.3 scenario executed successfully
