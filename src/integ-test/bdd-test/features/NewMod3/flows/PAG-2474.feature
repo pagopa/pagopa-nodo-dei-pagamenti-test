@@ -375,6 +375,7 @@ Feature: PAG 2474
         And fullName with nome in paGetPayment
         And streetName with strada in paGetPayment
         And civicNumber with civico in paGetPayment
+        And entityUniqueIdentifierValue with 44444444444 in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
@@ -389,6 +390,7 @@ Feature: PAG 2474
         And checks the value nome of the record at column FULL_NAME of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
         And checks the value strada of the record at column STREET_NAME of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
         And checks the value civico of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
+        And checks the value 44444444444 of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
         And verify 1 record for the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
 
     ####################################################################################################################
@@ -412,6 +414,7 @@ Feature: PAG 2474
         And fullName with nome in paGetPayment
         And streetName with strada in paGetPayment
         And civicNumber with civico in paGetPayment
+        And entityUniqueIdentifierValue with 44444444444 in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -426,6 +429,7 @@ Feature: PAG 2474
         And checks the value nome of the record at column FULL_NAME of the table POSITION_SUBJECT retrived by the query position_subject_activatev2 on db nodo_online under macro NewMod3
         And checks the value strada of the record at column STREET_NAME of the table POSITION_SUBJECT retrived by the query position_subject_activatev2 on db nodo_online under macro NewMod3
         And checks the value civico of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrived by the query position_subject_activatev2 on db nodo_online under macro NewMod3
+        And checks the value 44444444444 of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT retrived by the query position_subject_activatev2 on db nodo_online under macro NewMod3
         And verify 1 record for the table POSITION_SUBJECT retrived by the query position_subject_activatev2 on db nodo_online under macro NewMod3
 
     ####################################################################################################################
@@ -452,7 +456,7 @@ Feature: PAG 2474
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-    @test @check
+    @test
     Scenario: Pa old 1.5
         Given the Pa old 1.4 scenario executed successfully
         And pay_i:anagraficaVersante with nome in RPT
@@ -469,7 +473,6 @@ Feature: PAG 2474
         Then check esito is OK of nodoInviaRPT response
 
         # POSITION_SERVICE
-        # check
         And verify 1 record for the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
 
         # POSITION_SUBJECT
