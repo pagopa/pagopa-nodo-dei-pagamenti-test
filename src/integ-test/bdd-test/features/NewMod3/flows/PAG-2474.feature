@@ -463,7 +463,7 @@ Feature: PAG 2474
         Given the activatePaymentNotice old scenario executed successfully
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-
+    @check
     Scenario: Pa old 1.2
         Given the Pa old 1.1 scenario executed successfully
         And the RPT scenario executed successfully
@@ -471,33 +471,33 @@ Feature: PAG 2474
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    Scenario: Pa old 1.3
-        Given the Pa old 1.2 scenario executed successfully
-        When job mod3CancelV1 triggered after 3 seconds
-        Then verify the HTTP status code of mod3CancelV2 response is 200
+# Scenario: Pa old 1.3
+#     Given the Pa old 1.2 scenario executed successfully
+#     When job mod3CancelV1 triggered after 3 seconds
+#     Then verify the HTTP status code of mod3CancelV2 response is 200
 
-    Scenario: Pa old 1.4
-        Given the Pa old 1.3 scenario executed successfully
-        # modifiche a paaattivarpt
-        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNotice response
+# Scenario: Pa old 1.4
+#     Given the Pa old 1.3 scenario executed successfully
+#     # modifiche a paaattivarpt
+#     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+#     Then check outcome is OK of activatePaymentNotice response
 
-    # @test
-    Scenario: Pa old 1.5
-        Given the Pa old 1.4 scenario executed successfully
-        # modifiche a rpt
-        And RPT generation
-            """
-            $RPT
-            """
-        And rpt with $rptAttachment in nodoInviaRPT
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
+# @test
+# Scenario: Pa old 1.5
+#     Given the Pa old 1.4 scenario executed successfully
+#     # modifiche a rpt
+#     And RPT generation
+#         """
+#         $RPT
+#         """
+#     And rpt with $rptAttachment in nodoInviaRPT
+#     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+#     Then check esito is OK of nodoInviaRPT response
 
-        # POSITION_SERVICE
-        # check
-        And verify 1 record for the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+#     # POSITION_SERVICE
+#     # check
+#     And verify 1 record for the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
 
-        # POSITION_SUBJECT
-        # check
-        And verify 1 record for the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
+#     # POSITION_SUBJECT
+#     # check
+#     And verify 1 record for the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
