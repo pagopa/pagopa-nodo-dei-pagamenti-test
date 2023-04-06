@@ -386,10 +386,10 @@ Feature: PAG 2474
         And verify 1 record for the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
 
         # POSITION_SUBJECT
-        And checks the value nome of the record at column FULL_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
-        And checks the value strada of the record at column STREET_NAME of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
-        And checks the value civico of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
-        And verify 1 record for the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
+        And checks the value nome of the record at column FULL_NAME of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
+        And checks the value strada of the record at column STREET_NAME of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
+        And checks the value civico of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
+        And verify 1 record for the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
 
     ####################################################################################################################
 
@@ -500,4 +500,4 @@ Feature: PAG 2474
 
         # POSITION_SUBJECT
         # check
-        And verify 1 record for the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
+        And verify 1 record for the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
