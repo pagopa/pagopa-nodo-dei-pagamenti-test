@@ -1,26 +1,25 @@
-FROM ubuntu:latest
+# Build stage
+FROM maven:3.6.0-jdk-11-slim
+COPY pom.xml /tmp/
+COPY src /tmp/src/
+COPY log4j2.xml /tmp/log4j2.xml
+COPY PA_List.dat /tmp/PA_List.dat
+COPY TS_Config.conf /tmp/TS_Config.conf
+COPY rpt.xml /tmp/rpt.xml
+COPY apm.conf /tmp/apm.conf
+COPY elastic-apm-agent-1.26.0.jar /tmp/elastic-apm-agent-1.26.0.jar
+COPY startPAMock.sh /tmp/startPAMock.sh
 
-## python and relevant tools
-RUN apt-get update && apt-get install -y \
-    curl \
-    build-essential \
-    python3 \
-    python3-pip \
-    git
+WORKDIR /tmp/
 
-## clone the test repository
-RUN git clone https://github.com/pagopa/pagopa-nodo-dei-pagamenti-test.git
+RUN mvn package
 
-## move to the test main folder
-WORKDIR pagopa-nodo-dei-pagamenti-test
+RUN mv startPAMock.sh target/startPAMock.sh
 
-RUN git pull
+WORKDIR target
 
-# copy config.json from local env to docker image
-COPY ./src/integ-test/bdd-test/resources/config.json ./src/integ-test/bdd-test/resources/config.json
+RUN chmod +777 startPAMock.sh
 
-# install python libs
-RUN python3 -m pip install -r requirements.txt
+EXPOSE 8484
 
-# execute behave
-CMD mkdir report && behave -f html -o report/index.html src/integ-test/bdd-test/features/
+ENTRYPOINT ["/bin/sh", "./startPAMock.sh"]

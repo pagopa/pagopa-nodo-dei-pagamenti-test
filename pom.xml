@@ -1,0 +1,250 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>eu.sia.nodo</groupId>
+	<artifactId>PA_Mock</artifactId>
+	<version>1.1.1</version>
+	<name>PA_Mock</name>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<java.version>1.8</java.version>
+		<log4j.version>2.14.1</log4j.version>
+		<disruptor.version>3.4.4</disruptor.version>
+		<cxf.version>3.4.3</cxf.version>
+		<cxf.xjc.version>3.3.1</cxf.xjc.version>
+		<activemq.version>5.14.5</activemq.version>
+		<elastic-apm.version>1.26.0</elastic-apm.version>
+	</properties>
+	<repositories>
+		<!--
+		<repository>
+			<id>sia-public-repository-group</id>
+			<name>Sia Public Maven Repository Group</name>
+			<url>https://toolbox.sia.eu/artifactory/public/</url>
+			<layout>default</layout>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+		-->
+	</repositories>
+	<pluginRepositories>
+		<!--
+		<pluginRepository>
+			<id>central</id>
+			<name>Maven Plugin Repository local</name>
+			<url>https://toolbox.sia.eu/artifactory/public/</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+		</pluginRepository>-->
+	</pluginRepositories>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>co.elastic.apm</groupId>
+			<artifactId>apm-agent-api</artifactId>
+			<version>${elastic-apm.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.lmax</groupId>
+			<artifactId>disruptor</artifactId>
+			<version>${disruptor.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http-jetty</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf.xjc-utils</groupId>
+			<artifactId>cxf-xjc-runtime</artifactId>
+			<version>${cxf.xjc.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-all</artifactId>
+			<version>${activemq.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.12.0</version>
+		</dependency>
+
+	</dependencies>
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.0</version>
+					<configuration>
+						<source>${maven.compiler.source}</source>
+						<target>${maven.compiler.target}</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.cxf</groupId> -->
+			<!-- <artifactId>cxf-codegen-plugin</artifactId> -->
+			<!-- <version>3.4.4</version> -->
+			<!-- <executions> -->
+			<!-- <execution> <id>generate-sources</id> <phase>generate-sources</phase> 
+				<configuration> <sourceRoot>${project.build.directory}/generated-sources/cxf 
+				</sourceRoot> <wsdlOptions> <wsdlOption> <wsdl>${basedir}/src/main/resources/merge2ws.wsdl</wsdl> 
+				</wsdlOption> </wsdlOptions> </configuration> <goals> <goal>wsdl2java</goal> 
+				</goals> </execution> -->
+			<!-- <execution> -->
+			<!-- <id>generate-sources</id> -->
+			<!-- <phase>generate-sources</phase> -->
+			<!-- <configuration> -->
+			<!-- <sourceRoot>${project.build.directory}/generated-sources/cxf -->
+			<!-- </sourceRoot> -->
+			<!-- <wsdlOptions> -->
+			<!-- <wsdlOption> -->
+			<!-- <wsdl>${basedir}/src/main/resources/paForNode.wsdl</wsdl> -->
+			<!-- </wsdlOption> -->
+			<!-- </wsdlOptions> -->
+			<!-- </configuration> -->
+			<!-- <goals> -->
+			<!-- <goal>wsdl2java</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- <execution> -->
+			<!-- <id>generate-sources</id> -->
+			<!-- <phase>generate-sources</phase> -->
+			<!-- <configuration> -->
+			<!-- <sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot> -->
+			<!-- <wsdlOptions> -->
+			<!-- <wsdlOption> -->
+			<!-- <wsdl>${basedir}/src/main/resources/PaPerNodoPagamentoPsp.wsdl</wsdl> -->
+			<!-- </wsdlOption> -->
+			<!-- </wsdlOptions> -->
+			<!-- </configuration> -->
+			<!-- <goals> -->
+			<!-- <goal>wsdl2java</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+
+			<!-- <execution> <id>generate-sources4</id> <phase>generate-sources</phase> 
+				<configuration> <sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot> 
+				<wsdlOptions> <wsdlOption> <wsdl>${basedir}/src/main/resources/PaPerNodoRichiestaAvvisi.wsdl</wsdl> 
+				</wsdlOption> </wsdlOptions> </configuration> <goals> <goal>wsdl2java</goal> 
+				</goals> </execution> -->
+			<!-- <execution> <id>generate-sources5</id> <phase>generate-sources</phase> 
+				<configuration> <sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot> 
+				<wsdlOptions> <wsdlOption> <wsdl>${basedir}/src/main/resources/PaPerNodo.wsdl</wsdl> 
+				</wsdlOption> </wsdlOptions> </configuration> <goals> <goal>wsdl2java</goal> 
+				</goals> </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<!-- <version>3.1.1</version> -->
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>eu.sia.nft.MainPA</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>com.coderplus.maven.plugins</groupId>
+				<artifactId>copy-rename-maven-plugin</artifactId>
+				<version>1.0</version>
+				<executions>
+					<execution>
+						<id>copy-file</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<fileSets>
+								<fileSet>
+									<sourceFile>log4j2.xml</sourceFile>
+									<destinationFile>target/log4j2.xml</destinationFile>
+								</fileSet>
+								<fileSet>
+									<sourceFile>startPAMock.sh</sourceFile>
+									<destinationFile>target/startPAMock.sh</destinationFile>
+								</fileSet>
+								<fileSet>
+									<sourceFile>PA_List.dat</sourceFile>
+									<destinationFile>target/PA_List.dat</destinationFile>
+								</fileSet>
+								<fileSet>
+									<sourceFile>rpt.xml</sourceFile>
+									<destinationFile>target/rpt.xml</destinationFile>
+								</fileSet>
+								<fileSet>
+									<sourceFile>TS_Config.conf</sourceFile>
+									<destinationFile>target/TS_Config.conf</destinationFile>
+								</fileSet>
+							</fileSets>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

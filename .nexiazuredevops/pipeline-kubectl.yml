@@ -1,0 +1,40 @@
+pr: none
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+parameters:
+  - name: env
+    displayName: Environment to deploy
+    type: string
+    default: prf
+    values:
+      - prf
+
+variables:
+  repository: 'mock-ec-prf'
+  dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+  kustomizeFolderApp: '$(Build.SourcesDirectory)/kustomize'
+
+stages:
+
+  - stage: kubectl
+    displayName: "kubectl"
+    variables:
+      - group: nodo-${{ parameters.env }}
+
+    jobs:
+      - job: retrieve_info
+        displayName: "retrieve_info"
+        pool: $(deploy-pool-${{ parameters.env }})
+        steps:
+          - checkout: none
+
+
+          - script: |
+              kubectl get pods -o wide -n prf
+              kubectl get services  -o wide -n prf
+              kubectl get ing -o json | jq -r '.items[].spec.rules[].http.paths[] -n prf
+            displayName: "Retrieve Info in namespace"
+
