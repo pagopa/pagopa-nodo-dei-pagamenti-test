@@ -2,6 +2,7 @@ import http from 'k6/http';
 import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
+import {getBasePath, getHeaders} from "../util/base_path_util.js";
 
 
 
@@ -42,15 +43,15 @@ today = yyyy + '-' + mm + '-' + dd;
 
 export function activatePaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idempotencyKey, paymentNote) {
  
- let res=http.post(baseUrl,
+ let res=http.post(getBasePath(baseUrl, "activatePaymentNotice"),
     activateReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr, idempotencyKey, paymentNote),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'activatePaymentNotice', 'x-forwarded-for':'10.6.189.192' } ,
-	tags: { activatePaymentNotice_NN: 'http_req_duration' , ALL: 'http_req_duration'}
+    { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction':'activatePaymentNotice', 'x-forwarded-for':'10.6.189.192' }) ,
+	tags: { activatePaymentNotice_NN: 'http_req_duration' , ALL: 'http_req_duration', primitiva: "activatePaymentNotice"}
 	}
   );
   
   console.debug("activatePaymentNotice_NN RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
   
   activatePaymentNotice_NN_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);

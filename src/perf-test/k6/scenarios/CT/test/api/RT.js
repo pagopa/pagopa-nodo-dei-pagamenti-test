@@ -3,6 +3,7 @@ import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import * as rptUtil from '../util/rpt.js';
 import { Trend } from 'k6/metrics';
+import {getBasePath, getHeaders} from "../util/base_path_util.js";
 
 
 export const RT_Trend = new Trend('RT');
@@ -40,15 +41,15 @@ export function RT(baseUrl,rndAnagPsp,rndAnagPa,iuv) {
  let rtEncoded = rptUtil.getRtEncoded(rndAnagPa.PA, iuv);
   
  const res = http.post(
-    baseUrl,
+		 getBasePath(baseUrl, "nodoInviaRT"),
     rtReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, rndAnagPa.PA, iuv, rtEncoded),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRT' } ,
-	tags: { RT: 'http_req_duration', ALL: 'http_req_duration'}
+    { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaRT' }) ,
+	tags: { RT: 'http_req_duration', ALL: 'http_req_duration',primitiva:"nodoInviaRT"}
 	}
   );
   
   console.debug("RT RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
 
    RT_Trend.add(res.timings.duration);

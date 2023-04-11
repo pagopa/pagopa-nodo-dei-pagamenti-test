@@ -2,8 +2,7 @@ import http from 'k6/http';
 import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
-
-
+import {getBasePath, getHeaders} from "../util/base_path_util.js";
 
 export const verifyPaymentNotice_NN_Trend = new Trend('verifyPaymentNotice_NN');
 export const All_Trend = new Trend('ALL');
@@ -32,16 +31,18 @@ return `
 export function verifyPaymentNotice_NN(baseUrl,rndAnagPsp,rndAnagPa,noticeNmbr,idempotencyKey) {
  //console.debug("VERIFY="+noticeNmbr);
  
+ console.log(verifyReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr));
+ 
  const res = http.post(
-    baseUrl,
+		 getBasePath(baseUrl, "verifyPaymentNotice"),
     verifyReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF , noticeNmbr),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction':'verifyPaymentNotice', 'x-forwarded-for':'10.6.189.192' } ,
-	tags: { verifyPaymentNotice_NN: 'http_req_duration', ALL: 'http_req_duration'}
+    { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction':'verifyPaymentNotice', 'x-forwarded-for':'10.6.189.192' }) ,
+	tags: { verifyPaymentNotice_NN: 'http_req_duration', ALL: 'http_req_duration',primitiva:"verifyPaymentNotice"}
 	}
   );
   
   console.debug("verifyPaymentNotice_NN RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
 
   verifyPaymentNotice_NN_Trend.add(res.timings.duration);

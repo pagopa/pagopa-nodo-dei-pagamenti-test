@@ -2,6 +2,7 @@ import http from 'k6/http';
 import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
+import {getBasePath, getHeaders} from "../util/base_path_util.js";
 
 
 export const ChiediNumeroAvviso_Trend = new Trend('ChiediNumeroAvviso');
@@ -29,16 +30,17 @@ return `
 
 export function ChiediNumeroAvviso(baseUrl,rndAnagPsp,rndAnagPa) {
  
+  console.log(numAvvisoReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA))
  const res = http.post(
-    baseUrl,
+		 getBasePath(baseUrl, "nodoChiediNumeroAvviso"),
     numAvvisoReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.PA),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'nodoChiediNumeroAvviso' } ,
-	tags: { ChiediNumeroAvviso: 'http_req_duration', ALL: 'http_req_duration'}
+    { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoChiediNumeroAvviso' }) ,
+	tags: { ChiediNumeroAvviso: 'http_req_duration', ALL: 'http_req_duration', primitiva: "nodoChiediNumeroAvviso"}
 	}
   );
   
   console.debug("ChiediNumeroAvviso RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
   ChiediNumeroAvviso_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);

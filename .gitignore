@@ -129,3 +129,6 @@ reports.html
 
 /venv
 venv
+report-nodo
+report/*
+reports

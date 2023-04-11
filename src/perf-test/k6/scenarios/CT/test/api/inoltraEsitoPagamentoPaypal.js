@@ -1,6 +1,7 @@
 import http from 'k6/http';
 import { check, fail } from 'k6';
 import { Trend } from 'k6/metrics';
+import {getBasePath, getHeaders} from "../util/base_path_util.js";
 
 
 export const inoltraEsitoPagamentoPaypal_Trend = new Trend('inoltraEsitoPagamentoPaypal');
@@ -94,16 +95,16 @@ export function inoltraEsitoPagamentoPaypal(baseUrl,rndAnagPsp,paymentToken,valu
           "timestampOperazione":dt};
 
  const res = http.post(
-    baseUrl+'/inoltroEsito/paypal',
+	 getBasePath(baseUrl, "nodoPerPMv1")+'/inoltroEsito/paypal',
     JSON.stringify(body),
     //JSON.stringify(rptReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken)),
-    { headers: { 'Content-Type': 'application/json' } ,
-	tags: { inoltraEsitoPagamentoPaypal: 'http_req_duration', ALL: 'http_req_duration'}
+    { headers: getHeaders({ 'Content-Type': 'application/json' }) ,
+	tags: { inoltraEsitoPagamentoPaypal: 'http_req_duration', ALL: 'http_req_duration', primitiva: "inoltroEsito/paypal"}
 	}
   );
   
   console.debug("inoltraEsitoPagamentoPaypal RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
 
   inoltraEsitoPagamentoPaypal_Trend.add(res.timings.duration);

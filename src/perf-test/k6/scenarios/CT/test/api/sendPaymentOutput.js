@@ -2,7 +2,7 @@ import http from 'k6/http';
 import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
-
+import {getBasePath, getHeaders} from "../util/base_path_util.js";
 
 
 export const sendPaymentOutput_Trend = new Trend('sendPaymentOutput');
@@ -51,17 +51,17 @@ return `
 
 export function sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken) {
  //console.debug("VERIFY="+noticeNmbr);
- 
+ console.log(sendPaymentOutputReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken))
  const res = http.post(
-    baseUrl,
+    getBasePath(baseUrl, "sendPaymentOutcome"),
     sendPaymentOutputReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken),
-    { headers: { 'Content-Type': 'text/xml', 'SOAPAction': 'sendPaymentOutcome' } ,
-	tags: { sendPaymentOutcome: 'http_req_duration', ALL: 'http_req_duration'}
+    { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'sendPaymentOutcome' }) ,
+	tags: { sendPaymentOutcome: 'http_req_duration', ALL: 'http_req_duration',primitiva:"sendPaymentOutcome"}
 	}
   );
   
   console.debug("sendPaymentOutput RES");
-  console.debug(res);
+  console.debug(JSON.stringify(res));
 
   sendPaymentOutput_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);
