@@ -298,7 +298,7 @@ Feature: semantic checks for closePaymentV2
                 }
             }
             """
-    @test
+    @test @check
     Scenario: check closePaymentV2 OK 4
         Given the closePaymentV2 4 scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
