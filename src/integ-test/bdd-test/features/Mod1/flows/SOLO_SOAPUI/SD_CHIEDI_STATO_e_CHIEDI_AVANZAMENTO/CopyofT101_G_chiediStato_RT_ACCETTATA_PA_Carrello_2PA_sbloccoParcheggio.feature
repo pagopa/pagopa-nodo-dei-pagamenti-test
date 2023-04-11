@@ -451,7 +451,7 @@ Feature: Copy of T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloccoParchegg
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRT1 request
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoInviaRT

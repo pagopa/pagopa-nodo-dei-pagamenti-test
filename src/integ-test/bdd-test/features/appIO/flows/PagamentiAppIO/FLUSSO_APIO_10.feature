@@ -201,7 +201,7 @@ Scenario: Execute sendPaymentOutcome (Phase 5)
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-@check
+@runnable
 Scenario: Check sendPaymentOutcome1 response after sendPaymentOutcome with sendPaymentOutcome1 OK, and check correctness of database tables
     Given the Execute sendPaymentOutcome (Phase 5) scenario executed successfully
     And random idempotencyKey having $sendPaymentOutcome.idPSP as idPSP in sendPaymentOutcome

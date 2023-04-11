@@ -331,7 +331,7 @@ Feature: ChiediAvanzamento_RT_RIFIUTATA_NODO_sbloccoParcheggio
         And replace iuv content with $2iuv content
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
 
-    @midCheck
+    @runnable
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute job pspChiediAvanzamentoRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT

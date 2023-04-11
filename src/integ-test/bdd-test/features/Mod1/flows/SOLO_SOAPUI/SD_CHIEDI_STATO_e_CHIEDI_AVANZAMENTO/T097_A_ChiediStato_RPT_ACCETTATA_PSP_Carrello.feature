@@ -318,7 +318,7 @@ Feature: T097_A_ChiediStato_RPT_ACCETTATA_PSP_Carrello
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
-    @midRunnable
+    @runnable
     Scenario: nodoInviaCarrelloRPT duplicato1
         Given the nodoInviaCarrelloRPT duplicato scenario executed successfully
        And initial XML nodoInviaCarrelloRPT

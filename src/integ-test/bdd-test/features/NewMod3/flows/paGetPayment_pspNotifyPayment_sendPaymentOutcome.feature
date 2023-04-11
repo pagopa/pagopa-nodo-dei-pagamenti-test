@@ -5,9 +5,10 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
 
   # Activate Phase
   Scenario: Execute activateIOPayment request
-    Given initial XML activateIOPayment
-    """
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
+    Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+    And initial XML activateIOPayment
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
          <soapenv:Header/>
          <soapenv:Body>
             <nod:activateIOPaymentReq>
@@ -18,14 +19,14 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
                <idempotencyKey>#idempotency_key#</idempotencyKey>
                <qrCode>
                   <fiscalCode>#creditor_institution_code#</fiscalCode>
-                  <noticeNumber>#notice_number#</noticeNumber>
+                  <noticeNumber>$1noticeNumber</noticeNumber>
                </qrCode>
                <amount>120.00</amount>
             </nod:activateIOPaymentReq>
          </soapenv:Body>
-      </soapenv:Envelope>
-    """
-    When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
+        </soapenv:Envelope>
+        """
+    When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
     And paymentToken exists of activateIOPayment response
     And paymentToken length is less than 36 of activateIOPayment response
@@ -64,7 +65,7 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
 
   # Send receipt phase
   Scenario: Execute sendPaymentOutcome request
-    Given the Verify consistency between activateIOPaymentRes and pspNotifyPaymentReq scenario executed successfully
+    Given the Execute nodoInoltraEsitoPagamentoCarta request scenario executed successfully
     And initial XML sendPaymentOutcome
     """
      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">

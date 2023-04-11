@@ -18,7 +18,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>311#iuv#</noticeNumber>
+            <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
             <expirationTime>120000</expirationTime>
             <amount>10.00</amount>
@@ -36,7 +36,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>11$iuv</creditorReferenceId>
+            <creditorReferenceId>02$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -801,7 +801,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Given the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @runnable
+    @test 
     Scenario: semantic check 19 (part 2)
         Given the semantic check 19 (part 1) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -814,7 +814,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 19.1 (part 2)
         Given the semantic check 19.1 (part 1) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -829,7 +829,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 20 (part 2)
         Given the semantic check 20 (part 1) scenario executed successfully
         And noticeNumber with 311019801089138300 in activatePaymentNoticeV2
@@ -839,7 +839,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 20 (part 3)
         Given the semantic check 20 (part 1) scenario executed successfully
         And fiscalCode with 77777777777 in activatePaymentNoticeV2
@@ -847,7 +847,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 20 (part 4)
         Given the semantic check 20 (part 1) scenario executed successfully
         And amount with 6.00 in activatePaymentNoticeV2
@@ -855,7 +855,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-    @runnable
+    @test @newfix
     Scenario: semantic check 20 (part 5)
         Given the semantic check 20 (part 1) scenario executed successfully
         And dueDate with 2021-12-16 in activatePaymentNoticeV2
@@ -863,7 +863,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNoticeV2 response
         And wait 2 seconds for expiration
-    @runnable
+    @test @newfix
     Scenario: semantic check 20 (part 6)
         Given the semantic check 20 (part 1) scenario executed successfully
         And paymentNote with metadati in activatePaymentNoticeV2
@@ -871,7 +871,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNoticeV2 response
         And wait 2 seconds for expiration
-    @runnable
+    @test @newfix
     Scenario: semantic check 20 (part 7)
         Given the semantic check 20 (part 1) scenario executed successfully
         And dueDate with None in activatePaymentNoticeV2
@@ -879,7 +879,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 20 (part 8)
         Given the semantic check 20 (part 1) scenario executed successfully
         And expirationTime with None in activatePaymentNoticeV2
@@ -887,7 +887,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-    @runnable
+    @test @newfix
     Scenario: semantic check 20 (part 9)
         Given the semantic check 20 (part 1) scenario executed successfully
         And paymentNote with None in activatePaymentNoticeV2
@@ -902,24 +902,25 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 20.1 (part 2)
         Given the semantic check 20.1 (part 1) scenario executed successfully
         And random iuv in context
-        And noticeNumber with 311$iuv in activatePaymentNoticeV2
-        And creditorReferenceId with 11$iuv in paGetPayment
+        And noticeNumber with 302$iuv in activatePaymentNoticeV2
+        And creditorReferenceId with 02$iuv in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 20.1 (part 3)
         Given the semantic check 20.1 (part 1) scenario executed successfully
         And fiscalCode with 77777777777 in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
+        Then check outcome is KO of activatePaymentNoticeV2 response
+        And check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 20.1 (part 4)
         Given the semantic check 20.1 (part 1) scenario executed successfully
         And amount with 6.00 in activatePaymentNoticeV2
@@ -927,7 +928,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 20.1 (part 5)
         Given the semantic check 20.1 (part 1) scenario executed successfully
         And dueDate with 2021-12-16 in activatePaymentNoticeV2
@@ -935,7 +936,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 20.1 (part 6)
         Given the semantic check 20.1 (part 1) scenario executed successfully
         And paymentNote with metadati in activatePaymentNoticeV2
@@ -943,7 +944,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 20.1 (part 7)
         Given the semantic check 20.1 (part 1) scenario executed successfully
         And dueDate with None in activatePaymentNoticeV2
@@ -951,7 +952,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 20.1 (part 8)
         Given the semantic check 20.1 (part 1) scenario executed successfully
         And expirationTime with None in activatePaymentNoticeV2
@@ -959,7 +960,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         And wait 1 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 20.1 (part 9)
         Given the semantic check 20.1 (part 1) scenario executed successfully
         And paymentNote with None in activatePaymentNoticeV2
@@ -977,7 +978,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 8 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 21 (part 2)
         Given the semantic check 21 (part 1) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -991,7 +992,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 8 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 21.1 (part 2)
         Given the semantic check 21.1 (part 1) scenario executed successfully
         And expirationTime with 1000 in activatePaymentNoticeV2
@@ -1007,7 +1008,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 4 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 21.2 (part 2)
         Given the semantic check 21.2 (part 1) scenario executed successfully
         And expirationTime with 6000 in activatePaymentNoticeV2
@@ -1025,7 +1026,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 4 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 21.3 (part 2)
         Given the semantic check 21.3 (part 1) scenario executed successfully
         And expirationTime with 9000 in activatePaymentNoticeV2
@@ -1043,7 +1044,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 70 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 22 (part 2)
         Given the semantic check 22 (part 1) scenario executed successfully
         And expirationTime with 1000 in activatePaymentNoticeV2
@@ -1061,7 +1062,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And wait 70 seconds for expiration
-    @runnable
+    @test
     Scenario: semantic check 22.1 (part 2)
         Given the semantic check 22.1 (part 1) scenario executed successfully
         And expirationTime with 1000 in activatePaymentNoticeV2
@@ -1077,7 +1078,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         Given the activatePaymentNoticeV2 + paGetPayment scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @runnable
+    @test
     Scenario: semantic check 23 (part 2)
         Given the semantic check 23 (part 1) scenario executed successfully
         And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
@@ -1092,7 +1093,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
-    @runnable
+    @test
     Scenario: semantic check 23.1 (part 2)
         Given the semantic check 23.1 (part 1) scenario executed successfully
         And idempotencyKey with None in activatePaymentNoticeV2
@@ -1101,7 +1102,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         And nodo-dei-pagamenti has config parameter useIdempotency set to true
         And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    @runnable
+    @test @newfix
     # SEM_APNV2_26
     Scenario: semantic check 26
         Given the activatePaymentNoticeV2 + paGetPaymentV2 scenario executed successfully
@@ -1214,7 +1215,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And verify 1 record for the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     # SEM_APNV2_27
-    @runnable
+    @test
     Scenario: semantic check 27 (part 1)
         Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata chiaveok) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -1225,7 +1226,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And check value $XML_DB is containing value <metadata/>
         And checks the value chiaveok is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
         And checks the value chiaveok is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
-    @runnable
+    @test
     Scenario: semantic check 27 (part 2)
         Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOKFINNULL) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -1233,7 +1234,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And check key is CHIAVEOKFINNULL of activatePaymentNoticeV2 response
         And checks the value CHIAVEOKFINNULL is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
         And checks the value CHIAVEOKFINNULL is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
-    @runnable
+    @test
     Scenario: semantic check 27 (part 3)
         Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOKFININF) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -1244,7 +1245,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And check value $XML_DB is containing value <metadata/>
         And checks the value CHIAVEOKFININF is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
         And checks the value CHIAVEOKFININF is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
-    @runnable
+    @test
     Scenario: semantic check 27 (part 4)
         Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOKINIZSUP) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -1255,7 +1256,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And check value $XML_DB is containing value <metadata/>
         And checks the value CHIAVEOKINIZSUP is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
         And checks the value CHIAVEOKINIZSUP is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
-    @runnable
+    @test
     Scenario: semantic check 27 (part 5)
         Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata chiaveminuscola) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -1266,7 +1267,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And check value $XML_DB is containing value <metadata/>
         And checks the value chiaveminuscola is contained in the record at column METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) retrived by the query metadata on db nodo_online under macro NewMod1
         And checks the value chiaveminuscola is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
-    @runnable
+    @test
     Scenario: semantic check 27 (part 6)
         Given the activatePaymentNoticeV2 + paGetPaymentV2 (metadata CHIAVEOK) scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -1276,7 +1277,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         And checks the value CHIAVEOK is contained in the record at column POSITION_TRANSFER.METADATA of the table POSITION_SERVICE JOIN POSITION_PAYMENT_PLAN ON (POSITION_PAYMENT_PLAN.FK_POSITION_SERVICE=POSITION_SERVICE.ID) JOIN POSITION_TRANSFER ON (POSITION_TRANSFER.FK_PAYMENT_PLAN=POSITION_PAYMENT_PLAN.ID) retrived by the query metadata on db nodo_online under macro NewMod1
 
     # SEM_APNV2_28
-    @runnable
+    @test
     Scenario: semantic check 28
         Given the activatePaymentNoticeV2 + paGetPaymentV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti

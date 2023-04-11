@@ -2,7 +2,7 @@ Feature: Syntax checks KO for nodoPAChiediInformativaPA
     Background:
         Given systems up
 
-    @midRunnable
+    @runnable
     Scenario Outline:Check KO for nodoPAChiediInformativaPA
         Given initial XML nodoPAChiediInformativaPA
             """
@@ -39,7 +39,7 @@ Feature: Syntax checks KO for nodoPAChiediInformativaPA
             | identificativoDominio                 | Empty                                | PACIPA17 |
             | identificativoDominio                 | qertyuop234dcvgtresd567yhbvfrteesd56 | PACIPA18 |
 
-    @midRunnable
+    @runnable
     Scenario: Check OK for nodoPAChiediInformativaPA-[PACIPA3]
         Given initial XML nodoPAChiediInformativaPA
             """
@@ -58,7 +58,7 @@ Feature: Syntax checks KO for nodoPAChiediInformativaPA
         When PSP sends SOAP nodoPAChiediInformativaPA to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoPAChiediInformativaPA response
 
-    @midRunnable
+    @runnable
     Scenario: Check OK for nodoPAChiediInformativaPA-[PACIPA5]
         Given initial XML nodoPAChiediInformativaPA
             """
@@ -77,7 +77,7 @@ Feature: Syntax checks KO for nodoPAChiediInformativaPA
         When PSP sends SOAP nodoPAChiediInformativaPA to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoPAChiediInformativaPA response
 
-    @midRunnable
+    @runnable
     Scenario:Check OK for nodoPAChiediInformativaPA-[PACIPA1]
         Given initial XML nodoPAChiediInformativaPA
             """

@@ -331,7 +331,7 @@ Feature: process tests for retryAtokenScaduto
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
 
-  @check
+  @runnable
   Scenario: check position_payment [retry_PaOld_18]
     Given the Execute nodoInviaRPT2 request scenario executed successfully
     And wait 5 seconds for expiration

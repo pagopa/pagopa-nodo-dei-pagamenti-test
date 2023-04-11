@@ -378,7 +378,7 @@ Feature: T221_notificaAnnullamento_carrello_2RPT_noParam
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And check esito is OK of notificaAnnullamento response
 
-    @midRunnable
+    @runnable
     Scenario: Check DB
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         When job paInviaRt triggered after 5 seconds

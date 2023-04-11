@@ -689,7 +689,7 @@ Feature: flows checks for Bollo
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRT second
         Given the Execute nodoInviaRPT second scenario executed successfully
         And initial XML nodoInviaRT

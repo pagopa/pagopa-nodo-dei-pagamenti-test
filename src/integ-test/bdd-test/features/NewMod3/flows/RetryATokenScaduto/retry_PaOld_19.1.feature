@@ -109,7 +109,7 @@ Feature: process tests for retry a token scaduto
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
 
   @runnable
   # test execution

@@ -16,7 +16,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
             <password>#password#</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>311#iuv#</noticeNumber>
+            <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
@@ -71,7 +71,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>311$iuv</noticeNumber>
+            <noticeNumber>302$iuv</noticeNumber>
             </qrCode>
             <expirationTime>60000</expirationTime>
             <amount>10.00</amount>
@@ -88,7 +88,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>11$iuv</creditorReferenceId>
+            <creditorReferenceId>02$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -239,12 +239,12 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
     Scenario: SEM_SPO_7.1 (part 3)
         Given the SEM_SPO_7.1 (part 2) scenario executed successfully
         And the closePayment scenario executed successfully
-        And idChannel with #canale_versione_primitive_2# in v1/closepayment
+        And identificativoCanale with #canale_versione_primitive_2# in v1/closepayment
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test 
     Scenario: SEM_SPO_7.1 (part 4)
         Given the SEM_SPO_7.1 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -272,7 +272,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test 
     Scenario: SEM_SPO_21 (part 4)
         Given the SEM_SPO_21 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -314,7 +314,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @runnable
+    @test 
     Scenario: SEM_SPO_23 (part 5)
         Given the SEM_SPO_23 (part 4) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -348,7 +348,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @runnable
+    @test 
     Scenario: SEM_SPO_23.1 (part 5)
         Given the SEM_SPO_23.1 (part 4) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -376,7 +376,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test  
     Scenario: SEM_SPO_28 (part 4)
         Given the SEM_SPO_28 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -384,7 +384,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
-        And check description is Outcome KO non accettabile of sendPaymentOutcomeV2 response
+        And check description is Esito discorde of sendPaymentOutcomeV2 response
 
     # SEM_SPO_29
 
@@ -406,7 +406,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test 
     Scenario: SEM_SPO_29 (part 4)
         Given the SEM_SPO_29 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -434,7 +434,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test 
     Scenario: SEM_SPO_31 (part 4)
         Given the SEM_SPO_31 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -464,7 +464,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test 
     Scenario: SEM_SPO_32 (part 4)
         Given the SEM_SPO_32 (part 3) scenario executed successfully
         And updates through the query update_activateio of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with CANCELLED under macro NewMod1 on db nodo_online
@@ -493,7 +493,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test 
     Scenario: SEM_SPO_33 (part 4)
         Given the SEM_SPO_33 (part 3) scenario executed successfully
         And updates through the query update_activateio of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_ACCEPTED under macro NewMod1 on db nodo_online
@@ -521,7 +521,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test 
     Scenario: SEM_SPO_33.1 (part 4)
         Given the SEM_SPO_33.1 (part 3) scenario executed successfully
         And updates through the query update_activateio of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_UNKNOWN under macro NewMod1 on db nodo_online
@@ -550,7 +550,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test 
     Scenario: SEM_SPO_35.1 (part 4)
         Given the SEM_SPO_35.1 (part 3) scenario executed successfully
         And updates through the query update_activateio of the table POSITION_STATUS_SNAPSHOT the parameter ACTIVATION_PENDING with Y under macro NewMod1 on db nodo_online
@@ -580,7 +580,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test 
     Scenario: SEM_SPO_35.2 (part 4)
         Given the SEM_SPO_35.2 (part 3) scenario executed successfully
         And updates through the query update_activateio of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYING under macro NewMod1 on db nodo_online
@@ -610,7 +610,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test 
     Scenario: SEM_SPO_35.4 (part 4)
         Given the SEM_SPO_35.4 (part 3) scenario executed successfully
         And updates through the query update_activateio of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SENT under macro NewMod1 on db nodo_online
@@ -640,7 +640,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test 
     Scenario: SEM_SPO_35.5 (part 4)
         Given the SEM_SPO_35.5 (part 3) scenario executed successfully
         And updates through the query update_activateio of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_SEND_ERROR under macro NewMod1 on db nodo_online
@@ -670,7 +670,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test 
     Scenario: SEM_SPO_35.6 (part 4)
         Given the SEM_SPO_35.6 (part 3) scenario executed successfully
         And updates through the query update_activateio of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAYMENT_REFUSED under macro NewMod1 on db nodo_online
@@ -700,7 +700,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test 
     Scenario: SEM_SPO_36 (part 4)
         Given the SEM_SPO_36 (part 3) scenario executed successfully
         And updates through the query update_activateio of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
@@ -729,7 +729,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test 
     Scenario: SEM_SPO_36.1 (part 4)
         Given the SEM_SPO_36.1 (part 3) scenario executed successfully
         And updates through the query update_activateio of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online

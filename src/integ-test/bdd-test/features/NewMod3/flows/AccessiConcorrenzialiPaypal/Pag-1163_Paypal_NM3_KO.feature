@@ -92,7 +92,7 @@ Feature: Pag-1163_Paypal_NM3_KO
         And check CCP is $activateIOPaymentResponse.paymentToken of informazioniPagamento response
         And check enteBeneficiario field exists in informazioniPagamento response
 
-    @check
+    @runnable
     Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome OK
         Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
         And initial XML sendPaymentOutcome

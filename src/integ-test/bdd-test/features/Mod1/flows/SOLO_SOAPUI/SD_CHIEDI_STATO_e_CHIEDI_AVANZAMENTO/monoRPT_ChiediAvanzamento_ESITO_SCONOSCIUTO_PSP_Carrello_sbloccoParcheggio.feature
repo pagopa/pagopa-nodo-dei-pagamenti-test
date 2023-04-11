@@ -443,7 +443,7 @@ Feature: monoRPT_ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheg
         And wait 10 seconds for expiration
         And checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
     
-    @midRunnable
+    @runnable
     Scenario: Execution Esito Carta retry
         Given the clean pspChiediAvanzamentoRPT queue scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte

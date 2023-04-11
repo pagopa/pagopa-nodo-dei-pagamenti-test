@@ -3,7 +3,7 @@ Feature: T067_C_CarrelloRPT_BBT_soloOK
     Background:
         Given systems up
 
-@midRunnable
+@runnable
     Scenario: RPT generation
         Given RPT1 generation
             """

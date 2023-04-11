@@ -375,7 +375,7 @@ Feature: process tests for retry a token scaduto
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
 
-  @check
+  @runnable
   Scenario: DB check [retry_PaOld_29]
     Given the Execute sendPaymentOutcome2 request scenario executed successfully
     And wait 5 seconds for expiration

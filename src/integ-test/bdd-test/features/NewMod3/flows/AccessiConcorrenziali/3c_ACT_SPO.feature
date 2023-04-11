@@ -182,7 +182,7 @@ Feature: process tests for accessiConCorrenziali [3c_ACT_SPO]
             """
         Then saving sendPaymentOutcome request in sendPaymentOutcome1
 
-    @check
+    @runnable
     Scenario: parallel calls and test scenario
         Given the Excecute sendPaymentOutcome request scenario executed successfully
         And calling primitive activatePaymentNotice_activatePaymentNotice2 POST and sendPaymentOutcome_sendPaymentOutcome1 POST in parallel

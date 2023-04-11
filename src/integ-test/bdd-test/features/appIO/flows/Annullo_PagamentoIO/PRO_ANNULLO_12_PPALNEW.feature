@@ -201,7 +201,8 @@ Feature: PRO_ANNULLO_12_PPALNEW
             """
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         And job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
-        And wait 15 seconds for expiration
+        #And wait 15 seconds for expiration
+        And wait until the update to the new state for the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         Then check outcome is OK of sendPaymentOutcome response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED, PAID, NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO

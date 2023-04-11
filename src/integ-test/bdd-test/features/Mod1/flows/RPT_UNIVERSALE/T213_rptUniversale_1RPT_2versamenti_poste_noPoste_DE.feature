@@ -155,7 +155,7 @@ Feature: flow tests for T213_rptUniversale_1RPT_2versamenti_poste_noPoste_DE
         And check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
 
-    @midRunnable
+    @runnable
     Scenario: execution nodoChiediListaPSP - conto
         Given the execution nodoChiediListaPSP - carte scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC&lingua=$lingua to nodo-dei-pagamenti

@@ -132,3 +132,4 @@ venv
 report-nodo
 report/*
 reports
+/src/perf-test/k6/scenarios/*/test/output

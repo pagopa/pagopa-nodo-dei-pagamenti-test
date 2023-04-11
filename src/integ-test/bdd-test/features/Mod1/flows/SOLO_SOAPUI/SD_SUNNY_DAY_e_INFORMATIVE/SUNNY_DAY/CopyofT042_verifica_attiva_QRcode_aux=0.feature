@@ -10,8 +10,8 @@ Feature: Copy of T042_verifica_attiva_QRcode_aux=0
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
             <pay_i:dominio>
-            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
-            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+            <pay_i:identificativoDominio>#creditor_institution_code_old#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station_old#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
             <pay_i:dataOraMessaggioRichiesta>#timedate#</pay_i:dataOraMessaggioRichiesta>
@@ -96,7 +96,7 @@ Feature: Copy of T042_verifica_attiva_QRcode_aux=0
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>90000000001</qrc:CF>
+            <qrc:CF>#creditor_institution_code#</qrc:CF>
             <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>$1iuv</qrc:CodIUV>
@@ -126,7 +126,7 @@ Feature: Copy of T042_verifica_attiva_QRcode_aux=0
             <codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <qrc:QrCode>
-            <qrc:CF>90000000001</qrc:CF>
+            <qrc:CF>#creditor_institution_code#</qrc:CF>
             <qrc:CodStazPA>#cod_segr#</qrc:CodStazPA>
             <qrc:AuxDigit>0</qrc:AuxDigit>
             <qrc:CodIUV>$1iuv</qrc:CodIUV>
@@ -141,7 +141,7 @@ Feature: Copy of T042_verifica_attiva_QRcode_aux=0
         When EC sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRPT
         Given the Execute nodoAttivaRPT scenario executed successfully
         And initial XML nodoInviaRPT
@@ -149,9 +149,9 @@ Feature: Copy of T042_verifica_attiva_QRcode_aux=0
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>
             <ppt:intestazionePPT>
-            <identificativoIntermediarioPA>#intermediarioPA#</identificativoIntermediarioPA>
-            <identificativoStazioneIntermediarioPA>#id_station#</identificativoStazioneIntermediarioPA>
-            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            <identificativoIntermediarioPA>#creditor_institution_code_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
             <identificativoUnivocoVersamento>$1iuv</identificativoUnivocoVersamento>
             <codiceContestoPagamento>$ccp</codiceContestoPagamento>
             </ppt:intestazionePPT>

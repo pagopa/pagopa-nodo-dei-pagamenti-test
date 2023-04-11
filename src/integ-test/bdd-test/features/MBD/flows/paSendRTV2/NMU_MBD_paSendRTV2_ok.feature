@@ -197,9 +197,9 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
     Scenario: Execute sendPaymentOutcomeV2
         Given the Define MBD scenario executed successfully
         And MB generation
-         """
-         $MB
-         """
+            """
+            $MB
+            """
         And the Execute a closePayment-v2 request scenario executed successfully
         And initial XML sendPaymentOutcomeV2
             """
@@ -257,16 +257,16 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And wait 10 seconds for expiration
+        And wait 5 seconds for expiration
         When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
 
-
+    @test
     # DB check
     Scenario: execute DB check
         Given the Execute sendPaymentOutcomeV2 scenario executed successfully
-        And wait 30 seconds for expiration
+        And wait 5 seconds for expiration
         Then verify 1 record for the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value $MB.TipoBollo of the record at column TIPO_BOLLO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value BD of the record at column TIPO_ALLEGATO_RICEVUTA of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
@@ -294,4 +294,4 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
         # POSITION_RETRY_PA_SEND_RT
         And verify 0 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
 
-        # inserire i check sul blob in RE per l'xml paSendRTV2
+# inserire i check sul blob in RE per l'xml paSendRTV2

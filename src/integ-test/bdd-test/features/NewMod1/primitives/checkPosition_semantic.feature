@@ -10,7 +10,7 @@ Feature: semantic checks for checkPosition outcome OK
                 "positionslist": [
                     {
                         "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "311#iuv#"
+                        "noticeNumber": "302#iuv#"
                     }
                 ]
             }
@@ -37,7 +37,7 @@ Feature: semantic checks for checkPosition outcome OK
             }
             """
 
-    Scenario: checkPosition with 3 activatePaymentNoticeV2 notice numbers
+    Scenario: checkPosition with 3 activated notice numbers
         Given initial json checkPosition
             """
             {
@@ -72,9 +72,9 @@ Feature: semantic checks for checkPosition outcome OK
             <password>#password#</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>311#iuv#</noticeNumber>
+            <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
-            <expirationTime>12345</expirationTime>
+            <expirationTime>120000</expirationTime>
             <amount>10.00</amount>
             <dueDate>2021-12-31</dueDate>
             <paymentNote>causale</paymentNote>
@@ -90,7 +90,7 @@ Feature: semantic checks for checkPosition outcome OK
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>11$iuv</creditorReferenceId>
+            <creditorReferenceId>02$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -150,7 +150,7 @@ Feature: semantic checks for checkPosition outcome OK
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
 
-    @runnable
+    @test
     # SEM_CPO_01
     Scenario: Code 200 OK 1
         Given the checkPosition scenario executed successfully
@@ -163,12 +163,13 @@ Feature: semantic checks for checkPosition outcome OK
         Given the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request
         And updates through the query update_activatev2 of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with INSERTED under macro NewMod1 on db nodo_online
-    @runnable
+    @test
     Scenario: Code 200 OK 2 (part 2)
         Given the Code 200 OK 2 (part 1) scenario executed successfully
         And the checkPosition scenario executed successfully
-        And noticeNumber with 311$iuv in checkPosition
+        And noticeNumber with $activatePaymentNoticeV2Request.noticeNumber in checkPosition
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
@@ -183,8 +184,8 @@ Feature: semantic checks for checkPosition outcome OK
     Scenario: Code 200 KO (part 2)
         Given the Code 200 KO (part 1) scenario executed successfully
         And random iuv in context
-        And noticeNumber with 311$iuv in activatePaymentNoticeV2
-        And creditorReferenceId with 11$iuv in paGetPayment
+        And noticeNumber with 302$iuv in activatePaymentNoticeV2
+        And creditorReferenceId with 02$iuv in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -194,17 +195,17 @@ Feature: semantic checks for checkPosition outcome OK
     Scenario: Code 200 KO (part 3)
         Given the Code 200 KO (part 2) scenario executed successfully
         And random iuv in context
-        And noticeNumber with 311$iuv in activatePaymentNoticeV2
-        And creditorReferenceId with 11$iuv in paGetPayment
+        And noticeNumber with 302$iuv in activatePaymentNoticeV2
+        And creditorReferenceId with 02$iuv in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2Request2
         And updates through the query update_noticeid_pa of the table POSITION_STATUS_SNAPSHOT the parameter STATUS with NOTIFIED under macro NewMod1 on db nodo_online
-    @runnable
+    @test
     Scenario: Code 200 KO (part 4)
         Given the Code 200 KO (part 3) scenario executed successfully
-        And the checkPosition with 3 activatePaymentNoticeV2 notice numbers scenario executed successfully
+        And the checkPosition with 3 activated notice numbers scenario executed successfully
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is KO of checkPosition response
@@ -214,7 +215,7 @@ Feature: semantic checks for checkPosition outcome OK
         And checking value $XML_RE is containing value <description>PAYING</description>
         And checking value $XML_RE is containing value <description>PAID</description>
         And checking value $XML_RE is containing value <description>NOTIFIED</description>
-    @runnable
+    @test
     Scenario Outline: Wrong configuration 1
         Given the checkPosition scenario executed successfully
         And <elem> with <value> in checkPosition
@@ -226,7 +227,7 @@ Feature: semantic checks for checkPosition outcome OK
             | elem         | value       | SoapUI test |
             | fiscalCode   | 12345678902 | SEM_CPO_04  |
             | noticeNumber | 002$iuv     | SEM_CPO_05  |
-    @runnable
+    @test
     # SEM_CPO_06
     Scenario: Wrong configuration 2
         Given the checkPosition with 3 notice numbers scenario executed successfully

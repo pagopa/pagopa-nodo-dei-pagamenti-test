@@ -118,7 +118,7 @@ Feature: T219_Carrello_Mod1_BP_parcheggio_web
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-@midRunnable
+@runnable
     Scenario: Execute nodoInoltroEsitoMod1 (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti

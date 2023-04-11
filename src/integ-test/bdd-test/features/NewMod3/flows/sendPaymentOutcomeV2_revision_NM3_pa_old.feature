@@ -23,7 +23,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             </soapenv:Envelope>
             """
         And initial xml paaVerificaRPT
-            """"
+            """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
             <soapenv:Header/>
             <soapenv:Body>
@@ -295,7 +295,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @runnable
+    @test 
     Scenario: REV_SPO_03 (part 4)
         Given the REV_SPO_03 (part 3) scenario executed successfully
         When job paInviaRt triggered after 5 seconds
@@ -450,7 +450,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And outcome with KO in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @runnable
+    @test 
     Scenario: REV_SPO_05 (part 4)
         Given the REV_SPO_05 (part 3) scenario executed successfully
         When job paInviaRt triggered after 5 seconds
@@ -518,8 +518,8 @@ Feature: revision checks for sendPaymentOutcomeV2
         When job mod3CancelV1 triggered after 3 seconds
         And PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
-        And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
-    @runnable
+        And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcomeV2 response
+    @test
     Scenario: REV_SPO_06 (part 4)
         Given the REV_SPO_06 (part 3) scenario executed successfully
         When job paInviaRt triggered after 5 seconds
@@ -586,10 +586,10 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @runnable
+    @test 
     Scenario: RT_ISTANTANEO (part 4)
         Given the RT_ISTANTANEO (part 3) scenario executed successfully
-        And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with Y under macro sendPaymentResultV2 on db nodo_cfg
+        And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with N under macro sendPaymentResultV2 on db nodo_cfg
         And refresh job PA triggered after 10 seconds
 
         # POSITION_PAYMENT_STATUS
@@ -612,9 +612,6 @@ Feature: revision checks for sendPaymentOutcomeV2
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 7 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
-        And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with N under macro sendPaymentResultV2 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
-
     # RT_ISTANTANEO_RPT_TARDIVA
 
     Scenario: RT_ISTANTANEO_RPT_TARDIVA (part 1)
@@ -636,9 +633,11 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-    @runnable
+    @test 
     Scenario: RT_ISTANTANEO_RPT_TARDIVA (part 4)
         Given the RT_ISTANTANEO_RPT_TARDIVA (part 3) scenario executed successfully
+        And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with N under macro sendPaymentResultV2 on db nodo_cfg
+        And refresh job PA triggered after 10 seconds
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAID_NORPT,PAID,NOTICE_GENERATED,NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
@@ -659,6 +658,3 @@ Feature: revision checks for sendPaymentOutcomeV2
         # STATI_RPT
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 7 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
-
-        And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with N under macro sendPaymentResultV2 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds

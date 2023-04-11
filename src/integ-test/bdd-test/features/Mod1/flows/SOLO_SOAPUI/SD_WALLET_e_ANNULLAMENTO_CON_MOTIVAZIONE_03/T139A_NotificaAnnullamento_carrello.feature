@@ -115,7 +115,7 @@ Feature: T139A_NotificaAnnullamento_carrello
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-    @midRunnable
+    @runnable
      Scenario: Execute nodoNotificaAnnullamento
         Given the RPT generation scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

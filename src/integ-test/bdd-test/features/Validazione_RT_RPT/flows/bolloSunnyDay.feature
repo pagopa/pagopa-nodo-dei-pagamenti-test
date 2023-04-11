@@ -254,7 +254,7 @@ Feature: bolloSunnyDay
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRT [bolloSunnyDay]
         Given the MB generation scenario executed successfully
         And initial XML nodoInviaRT

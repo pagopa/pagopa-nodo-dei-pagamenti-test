@@ -134,7 +134,7 @@ Feature: BUG_PAG_1533_02
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
 
-@check
+@runnable
     Scenario: Execute job (Phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         And initial XML pspChiediListaRT
@@ -153,7 +153,23 @@ Feature: BUG_PAG_1533_02
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML pspInviaAckRT
+            """
+            <soapenv:Envelope
+            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaAckRTResponse>
+            <pspInviaAckRTResponse>
+            <esito>OK</esito>
+            </pspInviaAckRTResponse>
+            </ws:pspInviaAckRTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
         When job pspChiediListaAndChiediRt triggered after 5 seconds
         And wait 10 seconds for expiration
         #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg

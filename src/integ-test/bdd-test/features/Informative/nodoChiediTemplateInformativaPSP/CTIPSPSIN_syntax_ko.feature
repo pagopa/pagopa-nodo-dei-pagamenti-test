@@ -2,7 +2,7 @@ Feature: Syntax checks KO for nodoChiediTemplateInformativaPSP
     Background:
         Given systems up
 
-    @midRunnable
+    @runnable
     Scenario Outline: Check error for nodoChiediTemplateInformativaPSP primitive
         Given initial XML nodoChiediTemplateInformativaPSP
             """
@@ -39,7 +39,7 @@ Feature: Syntax checks KO for nodoChiediTemplateInformativaPSP
             | password                            | s7fhr2                               | CTIPSPSIN17 |
             | password                            | qertyuop234dcvgtresd567yhbvfrteesd56 | CTIPSPSIN18 |
 
-    @midRunnable
+    @runnable
     Scenario: Check error for nodoChiediTemplateInformativaPSP primitive-[CTIPSPSIN1]
         Given initial XML nodoChiediTemplateInformativaPSP
             """
@@ -60,7 +60,7 @@ Feature: Syntax checks KO for nodoChiediTemplateInformativaPSP
         When psp sends SOAP nodoChiediTemplateInformativaPSP to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediTemplateInformativaPSP response
 
-    @midRunnable
+    @runnable
     Scenario: Check error for nodoChiediTemplateInformativaPSP primitive-[CTIPSPSIN3]
         Given initial XML nodoChiediTemplateInformativaPSP
             """
@@ -79,7 +79,7 @@ Feature: Syntax checks KO for nodoChiediTemplateInformativaPSP
         When psp sends SOAP nodoChiediTemplateInformativaPSP to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediTemplateInformativaPSP response
 
-    @midRunnable
+    @runnable
     Scenario: Check error for nodoChiediTemplateInformativaPSP primitive-[CTIPSPSIN5]
         Given initial XML nodoChiediTemplateInformativaPSP
             """

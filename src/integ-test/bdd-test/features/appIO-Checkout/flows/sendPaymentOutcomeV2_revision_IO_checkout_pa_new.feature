@@ -16,7 +16,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             <password>#password#</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>311#iuv#</noticeNumber>
+            <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
@@ -71,7 +71,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>311$iuv</noticeNumber>
+            <noticeNumber>302$iuv</noticeNumber>
             </qrCode>
             <expirationTime>60000</expirationTime>
             <amount>10.00</amount>
@@ -109,7 +109,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>11$iuv</creditorReferenceId>
+            <creditorReferenceId>02$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -277,7 +277,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @runnable
+    @test 
     Scenario: REV_SPO_03 (part 4)
         Given the REV_SPO_03 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -421,7 +421,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 15 seconds for expiration
-    @runnable
+    @test 
     Scenario: REV_SPO_04 (part 4)
         Given the REV_SPO_04 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully

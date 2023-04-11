@@ -217,7 +217,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_02.1]
     And check oggettoPagamento field exists in informazioniPagamento response
     And check urlRedirectEC field exists in informazioniPagamento response
 
-@check
+@runnable
   Scenario: Execute nodoNotificaAnnullamento
     Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
     When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

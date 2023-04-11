@@ -10,11 +10,11 @@ Feature: flow tests for closePaymentV2
                 "positionslist": [
                     {
                         "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "311#iuv#"
+                        "noticeNumber": "302#iuv#"
                     },
                     {
                         "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "311#iuv1#"
+                        "noticeNumber": "302#iuv1#"
                     }
                 ]
             }
@@ -38,7 +38,7 @@ Feature: flow tests for closePaymentV2
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>311$iuv</noticeNumber>
+            <noticeNumber>302$iuv</noticeNumber>
             </qrCode>
             <expirationTime>2000</expirationTime>
             <amount>10.00</amount>
@@ -56,7 +56,7 @@ Feature: flow tests for closePaymentV2
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>11$iuv</creditorReferenceId>
+            <creditorReferenceId>02$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -244,8 +244,8 @@ Feature: flow tests for closePaymentV2
         Given the activatePaymentNoticeV2 request scenario executed successfully
         And idempotencyKey with None in activatePaymentNoticeV2
         And expirationTime with None in activatePaymentNoticeV2
-        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
-        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And noticeNumber with 302$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 02$iuv1 in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -272,8 +272,8 @@ Feature: flow tests for closePaymentV2
     Scenario: activatePaymentNoticeV2 with iuv1 and expirationTime
         Given the activatePaymentNoticeV2 request scenario executed successfully
         And idempotencyKey with None in activatePaymentNoticeV2
-        And noticeNumber with 311$iuv1 in activatePaymentNoticeV2
-        And creditorReferenceId with 11$iuv1 in paGetPayment
+        And noticeNumber with 302$iuv1 in activatePaymentNoticeV2
+        And creditorReferenceId with 02$iuv1 in paGetPayment
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
@@ -296,7 +296,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: FLUSSO_NM1_CP_01 (part 2)
         Given the FLUSSO_NM1_CP_01 (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -458,7 +458,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: FLUSSO_NM1_CP_02 (part 2)
         Given the FLUSSO_NM1_CP_02 (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -616,7 +616,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: FLUSSO_NM1_CP_03 (part 2)
         Given the FLUSSO_NM1_CP_03 (part 1) scenario executed successfully
         And wait 2 seconds for expiration
@@ -642,7 +642,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: FLUSSO_NM1_CP_03.1 (part 2)
         Given the FLUSSO_NM1_CP_03.1 (part 1) scenario executed successfully
         And wait 2 seconds for expiration
@@ -668,7 +668,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: FLUSSO_NM1_CP_03.2 (part 2)
         Given the FLUSSO_NM1_CP_03.2 (part 1) scenario executed successfully
         And wait 2 seconds for expiration
@@ -695,7 +695,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @runnable
+    @test
     Scenario: FLUSSO_NM1_CP_03.3 (part 2)
         Given the FLUSSO_NM1_CP_03.3 (part 1) scenario executed successfully
         And wait 2 seconds for expiration
@@ -706,7 +706,7 @@ Feature: flow tests for closePaymentV2
         And check description is Unacceptable outcome when token has expired of v2/closepayment response
 
     # FLUSSO_NM1_CP_04
-    @runnable
+    @test
     Scenario: FLUSSO_NM1_CP_04
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 with iuv scenario executed successfully
@@ -874,7 +874,7 @@ Feature: flow tests for closePaymentV2
 
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-    @runnable
+    @test
     Scenario: FLUSSO_NM1_CP_05 (part 2)
         Given the FLUSSO_NM1_CP_05 (part 1) scenario executed successfully
         And wait 3 seconds for expiration
@@ -1024,7 +1024,7 @@ Feature: flow tests for closePaymentV2
         And verify 0 record for the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
     # FLUSSO_NM1_CP_06
-    @runnable
+    @test
     Scenario: FLUSSO_NM1_CP_06
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 with iuv scenario executed successfully
@@ -1043,7 +1043,7 @@ Feature: flow tests for closePaymentV2
         And the activatePaymentNoticeV2 with iuv scenario executed successfully
 
     # FLUSSO_NM1_CP_06.1
-    @runnable
+    @test
     Scenario: FLUSSO_NM1_CP_06.1
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 with iuv scenario executed successfully
@@ -1062,7 +1062,7 @@ Feature: flow tests for closePaymentV2
         And the activatePaymentNoticeV2 with iuv and idempotencyKey scenario executed successfully
 
     # FLUSSO_NM1_CP_07
-    @runnable
+    @test
     Scenario: FLUSSO_NM1_CP_07
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 with iuv and paGetPayment KO scenario executed successfully

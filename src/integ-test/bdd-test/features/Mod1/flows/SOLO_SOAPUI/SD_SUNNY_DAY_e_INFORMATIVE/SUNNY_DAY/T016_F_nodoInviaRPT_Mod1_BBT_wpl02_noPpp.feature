@@ -1,9 +1,9 @@
-Feature: T016_E_nodoInviaRPT_Mod1_BBT_idPsp1_noPpp
+Feature: T016_F_nodoInviaRPT_Mod1_BBT_wpl02_noPpp
 
     Background:
         Given systems up
     
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given replace canaleUsato content with WFESP_02_ila content
         And checks the value wpl02 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query chekPlugin on db nodo_cfg under macro Mod1
@@ -100,15 +100,36 @@ Feature: T016_E_nodoInviaRPT_Mod1_BBT_idPsp1_noPpp
             <soapenv:Body>
             <ws:nodoInviaRPT>
             <password>pwdpwdpwd</password>
-            <identificativoPSP>WFESP</identificativoPSP>
-            <identificativoIntermediarioPSP>WFESP</identificativoIntermediarioPSP>
-            <identificativoCanale>WFESP_02_ila</identificativoCanale>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
             <tipoFirma></tipoFirma>
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And initial XML pspInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaRPTResponse>
+            <pspInviaRPTResponse>
+            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+            <listaErroriRPT>
+            <fault>
+            <faultCode>CANALE_SYSTEM_ERROR</faultCode>
+            <faultString>system error</faultString>
+            <id>#psp#</id>
+            </fault>
+            </listaErroriRPT>
+            </pspInviaRPTResponse>
+            </ws:pspInviaRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_CANALE_ERRORE of nodoInviaRPT response

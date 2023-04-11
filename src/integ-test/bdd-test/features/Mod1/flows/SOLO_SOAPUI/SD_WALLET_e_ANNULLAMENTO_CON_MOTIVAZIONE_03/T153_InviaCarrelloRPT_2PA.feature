@@ -182,7 +182,7 @@ Feature: T153_InviaCarrelloRPT_2PA
         </pay_i:RPT>
         """
         And RT generation
-            """"
+            """
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
@@ -481,7 +481,7 @@ Feature: T153_InviaCarrelloRPT_2PA
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRT1 request
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoInviaRT

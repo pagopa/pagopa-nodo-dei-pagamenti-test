@@ -4,7 +4,7 @@ Feature: PRO_ANNULLO_04
         Given systems up
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
-        Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 20000
+        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And initial XML verifyPaymentNotice
             """
@@ -160,13 +160,14 @@ Feature: PRO_ANNULLO_04
                 "esitoTransazioneCarta": "00"
             }
             """
-        And wait 10 seconds for expiration
         And job mod3CancelV2 triggered after 10 seconds
-        And wait 6 seconds for expiration
-        Then verify the HTTP status code of inoltroEsito/carta response is 408
+        #And wait 10 seconds for expiration
+        And wait until the update to the new state for the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
+        Then restore initial configurations
+        And verify the HTTP status code of inoltroEsito/carta response is 408
         And check error is Operazione in timeout of inoltroEsito/carta response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value PAYING of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
-        And restore initial configurations
+        

@@ -26,7 +26,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
             """
 
         And initial xml paaVerificaRPT
-            """"
+            """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
             <soapenv:Header/>
             <soapenv:Body>
@@ -379,10 +379,13 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
 
+    @test
     #DB Check
     Scenario: Execute DB check
         Given the Execute sendPaymentOutcome request scenario executed successfully
-        And wait 25 seconds for expiration
+        When updates through the query stationUpdate of the table STAZIONI the parameter VERSIONE with 1 under macro sendPaymentResultV2 on db nodo_cfg
+        Then refresh job PA triggered after 10 seconds
+        And wait 5 seconds for expiration
         #POSITION_PAYMENT_STATUS
         Then checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
         #POSITION_PAYMENT_STATUS_SNAPSHOT
@@ -417,21 +420,10 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
         #STATI_RPT
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
         #STATI_RPT_SNAPSHOT
-        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stato on db nodo_online under macro AppIO
-        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query stato on db nodo_online under macro AppIO
+        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
         #RT
         Then execution query rt_1 to get value on the table RT, with the columns ID_SESSIONE,CCP,IDENT_DOMINIO,IUV,COD_ESITO,DATA_RICEVUTA,DATA_RICHIESTA,ID_RICEVUTA,ID_RICHIESTA,SOMMA_VERSAMENTI,INSERTED_TIMESTAMP,UPDATED_TIMESTAMP,CANALE,ID under macro NewMod3 with db name nodo_online
         And execution query rt_1 to get value on the table RPT, with the columns CCP,IDENT_DOMINIO,IUV,ID_MSG_RICH,CANALE under macro NewMod3 with db name nodo_online
         And execution query payment_status_old to get value on the table POSITION_PAYMENT, with the columns AMOUNT,FEE,PAYMENT_TOKEN,NOTICE_ID,PA_FISCAL_CODE,OUTCOME,CHANNEL_ID,PAYMENT_CHANNEL,PAYER_ID,PAYMENT_METHOD,ID,APPLICATION_DATE,CREDITOR_REFERENCE_ID,BROKER_PA_ID,STATION_ID under macro AppIO with db name nodo_online
         And verify 0 record for the table RT retrived by the query rt_1 on db nodo_online under macro NewMod3
-
-    #DB update 2
-    Scenario: Execute station version update 2
-        Given the Execute DB check scenario executed successfully
-        Then updates through the query stationUpdate of the table STAZIONI the parameter VERSIONE with 1 under macro sendPaymentResultV2 on db nodo_cfg
-
-
-    #refresh pa e stazioni
-    Scenario: Execute refresh pa e stazioni 2
-        Given the Execute station version update 2 scenario executed successfully
-        Then refresh job PA triggered after 10 seconds

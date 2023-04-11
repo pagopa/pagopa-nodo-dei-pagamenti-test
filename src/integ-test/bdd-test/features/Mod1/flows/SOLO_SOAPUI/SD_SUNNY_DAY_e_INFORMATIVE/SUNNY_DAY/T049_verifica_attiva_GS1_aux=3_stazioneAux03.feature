@@ -19,7 +19,7 @@ Feature: T049_verifica_attiva_GS1_aux=3_stazioneAux03
             <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <bc:BarCode>
-            <bc:Gln>9000000000001</bc:Gln>
+            <bc:Gln>#Gln#</bc:Gln>
             <bc:AuxDigit>3</bc:AuxDigit>
             <bc:CodIUV>#cod_segr_old#$1iuv</bc:CodIUV>
             </bc:BarCode>
@@ -32,7 +32,7 @@ Feature: T049_verifica_attiva_GS1_aux=3_stazioneAux03
         Then check esito is OK of nodoVerificaRPT response
         # And check faultCode is  of nodoVerificaRPT response
 
-@midRunnable
+@runnable
     Scenario: Execute nodoAttivaRPT
         Given the Execute nodoVerificaRPT scenario executed successfully
         And initial XML nodoAttivaRPT
@@ -51,7 +51,7 @@ Feature: T049_verifica_attiva_GS1_aux=3_stazioneAux03
             <codificaInfrastrutturaPSP>BARCODE-GS1-128</codificaInfrastrutturaPSP>
             <codiceIdRPT>
             <bc:BarCode>
-            <bc:Gln>9000000000001</bc:Gln>
+            <bc:Gln>#Gln#</bc:Gln>
             <bc:AuxDigit>3</bc:AuxDigit>
             <bc:CodIUV>#cod_segr_old#$1iuv</bc:CodIUV>
             </bc:BarCode>

@@ -2,7 +2,7 @@ Feature: T105_ChiediListaPendentiRPT_soloObbligatori
    Background:
         Given systems up
 
-@midRunnable        
+@runnable     
     Scenario: Execute nodoChiediListaPendentiRPT request
         Given initial XML nodoChiediListaPendentiRPT
         """
@@ -15,7 +15,7 @@ Feature: T105_ChiediListaPendentiRPT_soloObbligatori
                 <password>pwdpwdpwd</password>
                 <!--identificativoDominio>#creditor_institution_code#</identificativoDominio-->
                 <rangeDa>#yesterday_date#</rangeDa>
-                <rangeA>#timedate#</rangeA>
+                <rangeA>#tomorrow_date#</rangeA>
                 <dimensioneLista>5</dimensioneLista>
             </ws:nodoChiediListaPendentiRPT>
         </soapenv:Body>

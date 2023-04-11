@@ -16,7 +16,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             <password>#password#</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>311#iuv#</noticeNumber>
+            <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
@@ -71,7 +71,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>311$iuv</noticeNumber>
+            <noticeNumber>302$iuv</noticeNumber>
             </qrCode>
             <expirationTime>60000</expirationTime>
             <amount>10.00</amount>
@@ -88,7 +88,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>11$iuv</creditorReferenceId>
+            <creditorReferenceId>02$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -207,7 +207,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the activatePaymentNotice scenario executed successfully
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @runnable
+    @test 
     Scenario: REV_SPO_03 (part 2)
         Given the REV_SPO_03 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -339,7 +339,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the activatePaymentNotice scenario executed successfully
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @runnable
+    @test 
     Scenario: REV_SPO_05 (part 2)
         Given the REV_SPO_05 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -368,7 +368,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And expirationTime with 2000 in activatePaymentNotice
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @runnable
+    @test
     Scenario: REV_SPO_06 (part 2)
         Given the REV_SPO_06 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -376,7 +376,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         When job mod3CancelV2 triggered after 3 seconds
         And PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
-        And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcomeV2 response
         And wait 5 seconds for expiration
         And checks the value PAYING,CANCELLED,FAILED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1

@@ -331,12 +331,13 @@ Feature: RTPull flows
         Then check esito is OK of nodoInviaRPT response
         And wait 10 seconds for expiration
 
-    @check
+    @runnable
     #Retry ACK timeout step2
     Scenario: Retry ack timeout
         Given the Execute nodoInviaRPT_timeout scenario executed successfully 
         And PSP2 replies to nodo-dei-pagamenti with the pspInviaAckRT
         And nodo-dei-pagamenti has config parameter scheduler.jobName_pspRetryAckNegative.enabled set to true
+
         When job pspRetryAckNegative triggered after 5 seconds
         Then wait 10 seconds for expiration
         And execution query getSchedulerPspRetryAckNegativePollerMaxRetry to get value on the table CONFIGURATION_KEYS, with the columns CONFIG_VALUE under macro RTPull with db name nodo_cfg
@@ -381,7 +382,7 @@ Feature: RTPull flows
         Then check esito is OK of nodoInviaRPT response
         And wait 10 seconds for expiration
 
-    @check
+    @runnable
     #Retry ACK system error step2
     Scenario: Retry ack system error
         Given the Execute nodoInviaRPT_systemError scenario executed successfully
@@ -428,7 +429,7 @@ Feature: RTPull flows
         Then check esito is OK of nodoInviaRPT response
         And wait 10 seconds for expiration
 
-    @check
+    @runnable
     #Retry ACK malformed step2
     Scenario: Retry ack malformed
         Given the Execute nodoInviaRPT_malformed scenario executed successfully 
@@ -480,7 +481,7 @@ Feature: RTPull flows
         Then check esito is OK of nodoInviaRPT response
         And wait 15 seconds for expiration
 
-    @check
+    @runnable
     #Retry ACK syntax KO step2
     Scenario: Retry ack syntax KO
         Given the Execute nodoInviaRPT_synKO scenario executed successfully

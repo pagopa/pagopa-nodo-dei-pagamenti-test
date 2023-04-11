@@ -4,25 +4,21 @@ Feature: process PAG-590_01
         Given systems up
         And initial XML activatePaymentNotice
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <nod:activatePaymentNoticeReq>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>pwdpwdpwd</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>#notice_number#</noticeNumber>
-            </qrCode>
-            <expirationTime>2000</expirationTime>
-            <amount>10.00</amount>
-            <dueDate>2021-12-31</dueDate>
-            <paymentNote>OK_sleep</paymentNote>
-            </nod:activatePaymentNoticeReq>
+                <nod:activatePaymentNoticeReq>
+                    <idPSP>#psp#</idPSP>
+                    <idBrokerPSP>#psp#</idBrokerPSP>
+                    <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+                    <password>pwdpwdpwd</password>
+                    <qrCode>
+                        <fiscalCode>#creditor_institution_code#</fiscalCode>
+                        <noticeNumber>#notice_number#</noticeNumber>
+                    </qrCode>
+                    <amount>10.00</amount>
+                    <paymentNote>OK_sleep</paymentNote>
+                </nod:activatePaymentNoticeReq>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -109,13 +105,11 @@ Feature: process PAG-590_01
             <idBrokerPSP>#psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>pwdpwdpwd</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>$activatePaymentNotice1.fiscalCode</fiscalCode>
             <noticeNumber>$activatePaymentNotice1.noticeNumber</noticeNumber>
             </qrCode>
             <amount>10.00</amount>
-            <dueDate>2021-12-31</dueDate>
             <paymentNote>OK_sleep</paymentNote>
             </nod:activatePaymentNoticeReq>
             </soapenv:Body>
@@ -123,7 +117,7 @@ Feature: process PAG-590_01
             """
         Then saving activatePaymentNotice request in activatePaymentNotice2
 
-    @check
+    @runnable
     Scenario: parallel calls and test scenario
         Given the Initial activatePaymentNotice2 request scenario executed successfully
         And calling primitive activatePaymentNotice_activatePaymentNotice1 POST and activatePaymentNotice_activatePaymentNotice2 POST in parallel

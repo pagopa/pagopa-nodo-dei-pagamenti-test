@@ -83,7 +83,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
             """
 
 
-    @midRunnable
+    @runnable
     #CRPTSINSunnyDay
     Scenario: (phase SunnyDay) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
@@ -135,7 +135,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
         When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
-    @midRunnable
+    @runnable
     Scenario Outline: (phase 1) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -175,7 +175,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
             | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | PPT_SINTASSI_EXTRAXSD | CRPTSIN1    |
 
 
-    @midRunnable
+    @runnable
     #CRPTSIN3
     Scenario: (phase 2) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
@@ -211,7 +211,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
         When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaCarrelloRPT response
 
-    @midRunnable
+    @runnable
     #CRPTSIN4
     Scenario: (phase 3) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
@@ -268,7 +268,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
         When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
-    @midRunnable
+    @runnable
     Scenario Outline: (phase 4) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -347,7 +347,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
             | codiceContestoPagamento               | Empty                                | PPT_SINTASSI_EXTRAXSD | CRPTSIN42   |
             | requireLightPayment                   | 4                                    | PPT_SINTASSI_EXTRAXSD | CRPTSIN47   |
 
-    @midRunnable
+    @runnable
     #CRPTSIN39
     Scenario: (phase 5) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
@@ -400,7 +400,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
 
-    @midRunnable
+    @runnable
     #CRPTSIN39.1
     Scenario: (phase 5_1) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
@@ -455,7 +455,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
 
 
 
-    @midRunnable
+    @runnable
     #CRPTSIN40
     Scenario: (phase 6) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
@@ -590,7 +590,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
             </pay_i:RPT>
             """
 
-    @midRunnable
+    @runnable
     Scenario: (phase 7) Execute nodoInviaCarrelloRPT request
         Given the (phase 7) RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
@@ -625,7 +625,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
         When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_XSD of nodoInviaCarrelloRPT response
 
-    @midRunnable
+    @runnable
     #CRPTSIN44
     Scenario: (phase 8) Execute nodoInviaCarrelloRPT request
         Given initial XML nodoInviaCarrelloRPT
@@ -734,7 +734,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaCarrelloRPT response
 
 
-    @midRunnable
+    @runnable
     #CRPTSIN45
     Scenario: (phase 9) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
@@ -786,7 +786,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
         When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
-    @midRunnable
+    @runnable
     #CRPTSIN48
     Scenario: (phase 10) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
@@ -839,7 +839,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
         When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
-    @midRunnable
+    @runnable
     #CRPTSIN49
     Scenario: (phase 11) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
@@ -891,7 +891,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
         When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
-    @midRunnable
+    @runnable
     #CRPTSIN50
     Scenario: (phase 12) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
@@ -928,7 +928,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
         When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaCarrelloRPT response
 
-    @midRunnable
+    @runnable
     #CRPTSIN51
     Scenario: (phase 13) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
@@ -965,7 +965,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
         When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaCarrelloRPT response
 
-    @midRunnable
+    @runnable
     #CRPTSIN52
     Scenario: (phase 14) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
@@ -1002,7 +1002,7 @@ Feature: process tests for nodoInviaCarrelloRPT[CRPTSIN]
         When PSP sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoInviaCarrelloRPT response
 
-    @midRunnable
+    @runnable
     #CRPTSIN46
     Scenario: (phase 15) Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully

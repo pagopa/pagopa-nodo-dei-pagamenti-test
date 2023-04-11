@@ -212,7 +212,8 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
     Scenario: Execution test T221_notificaAnnullamento_carrello_2RPT_RIFPSP
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         When job paInviaRt triggered after 5 seconds
-        And wait 10 seconds for expiration
+        #And wait 10 seconds for expiration
+        And wait until the update to the new state for the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query motivo_annullamento on db nodo_online under macro Mod1
         And replace IUV content with $iuv content
         And replace IUV2 content with $2iuv content
         And replace pa content with #creditor_institution_code# content

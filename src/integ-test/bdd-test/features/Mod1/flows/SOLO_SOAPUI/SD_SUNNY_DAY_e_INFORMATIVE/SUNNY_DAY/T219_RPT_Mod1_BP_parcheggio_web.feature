@@ -126,7 +126,7 @@ Feature: T219_RPT_Mod1_BP_parcheggio_web
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-@midRunnable
+@runnable
     Scenario: Execute nodoInoltroEsitoMod1 (Phase 2)
         Given the Execute nodoInviaRPT (Phase 1) scenario executed successfully
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti

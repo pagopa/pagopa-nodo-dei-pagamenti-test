@@ -4,7 +4,7 @@ Feature: Semantic checks for nodoInviaRPT - OK
         Given systems up
     #And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
 
-@midRunnable
+@runnable
 Scenario Outline: Check OK Step Expected 
     Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
     And initial XML RPT
@@ -144,7 +144,7 @@ Scenario Outline: Check OK Step Expected
     | RPTSEM22  | pay_i:causaleVersamento                | /RFS/RPTSEM_200000/6.00                                                     |
     | RPTSEM23  | pay_i:causaleVersamento                | /RFS/6.00                                                                   |
 
-@midRunnable
+@runnable
 Scenario Outline: Check OK Step Expected tag combination
     Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
     And initial XML RPT

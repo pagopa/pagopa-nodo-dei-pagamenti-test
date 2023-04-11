@@ -3,7 +3,7 @@ Feature: T070_carrelloRPT_2RPT
     Background:
         Given systems up
 
-@midRunnable
+@runnable
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given RPT generation
             """

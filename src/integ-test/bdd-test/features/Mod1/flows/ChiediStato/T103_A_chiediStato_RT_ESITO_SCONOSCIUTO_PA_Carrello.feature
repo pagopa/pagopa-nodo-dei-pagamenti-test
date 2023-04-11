@@ -159,7 +159,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
                 </pay_i:RPT>
             """
         And RT generation
-            """"
+            """
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
@@ -617,7 +617,7 @@ Feature: process tests for T103_A_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-    @check
+    @runnable
     Scenario: Execute fifth nodoChiediStatoRPT request
         Given the Execute fourth nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoChiediStatoRPT

@@ -82,7 +82,7 @@ Feature: process tests for pspInviaRT[IRPTRES8]
             </pay_i:RPT>
             """
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
             And initial XML pspInviaRPT

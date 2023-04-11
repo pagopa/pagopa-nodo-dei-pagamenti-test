@@ -22,7 +22,7 @@ Feature: T112_ChiediFlussoRendicontazione_1000PA
         And check ppt:nodoChiediElencoFlussiRendicontazioneRisposta field exists in nodoChiediElencoFlussiRendicontazione response
         #And retrieve session token from $nodoChiediElencoFlussiRendicontazioneResponse.url
 
-@midRunnable      
+@runnable      
     Scenario: Send nodoChiediFlussiRendicontazione1
         Given the Send nodoChiediElencoFlussiRendicontazione scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione

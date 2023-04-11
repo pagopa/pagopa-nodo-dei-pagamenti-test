@@ -273,7 +273,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And wait 10 seconds for expiration
+        And wait 5 seconds for expiration
         When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
@@ -282,7 +282,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
     # DB check
     Scenario: execute DB check
         Given the Execute sendPaymentOutcomeV2 scenario executed successfully
-        And wait 30 seconds for expiration
+        And wait 5 seconds for expiration
         Then verify 1 record for the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value $MB.TipoBollo of the record at column TIPO_BOLLO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value BD of the record at column TIPO_ALLEGATO_RICEVUTA of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
@@ -312,15 +312,10 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
 
     # inserire i check sul blob in RE per l'xml paSendRTV2
 
-    # clean paSendRT queue
-    Scenario: clean paSendRt queue
-        Given the execute DB check scenario executed successfully
-        When job paSendRt triggered after 10 seconds
-        And wait 15 seconds for expiration
-
+    @test
     # trigger pa send RT retry
     Scenario: Execute paSendRT
-        Given the clean paSendRt queue scenario executed successfully
+        Given the execute DB check scenario executed successfully
         And initial xml paSendRTV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -333,7 +328,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
-        When job paSendRt triggered after 10 seconds
+        When job paSendRt triggered after 0 seconds
         And wait 15 seconds for expiration
         Then verify the HTTP status code of paSendRt response is 200
 

@@ -194,7 +194,7 @@ Feature: process tests for Retry_DB_GR_11
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
 
   @runnable
   Scenario: DB check + db update

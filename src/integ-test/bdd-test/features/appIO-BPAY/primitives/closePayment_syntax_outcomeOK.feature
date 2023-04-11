@@ -26,7 +26,7 @@ Feature: syntax checks for closePayment outcome OK
         }
       }
       """
-  @runnable
+  @test
   # syntax check - Field invalido
   Scenario Outline: Check syntax error on invalid body element value
     Given the closePayment scenario executed successfully
@@ -80,7 +80,7 @@ Feature: syntax checks for closePayment outcome OK
       | authorizationCode           | Empty                                                                                                                                                                                                                                                            | SIN_CP_44   |
       | authorizationCode           | abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fghilmno456pqrst789uvz0WYK_abcde123fgh | SIN_CP_45   |
 
-  @runnable
+  @test
   Scenario Outline: Check syntax error on invalid body element value - paymentToken
     Given the closePayment scenario executed successfully
     And <elem> with <value> in v1/closepayment
@@ -108,7 +108,7 @@ Feature: syntax checks for closePayment outcome OK
       <password>pwdpwdpwd</password>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>311#iuv#</noticeNumber>
+      <noticeNumber>302#iuv#</noticeNumber>
       </qrCode>
       <amount>12.00</amount>
       <!--Optional:-->
@@ -149,7 +149,7 @@ Feature: syntax checks for closePayment outcome OK
       <paf:paGetPaymentRes>
       <outcome>OK</outcome>
       <data>
-      <creditorReferenceId>11$iuv</creditorReferenceId>
+      <creditorReferenceId>02$iuv</creditorReferenceId>
       <paymentAmount>12.00</paymentAmount>
       <dueDate>2021-12-31</dueDate>
       <!--Optional:-->
@@ -235,7 +235,7 @@ Feature: syntax checks for closePayment outcome OK
     Given the check activateIOPayment OK scenario executed successfully
     When WISP sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
-  @runnable
+  @test
   Scenario: check closePayment OK
     Given the nodoChiediInformazioniPagamento scenario executed successfully
     And the closePayment scenario executed successfully
@@ -245,7 +245,7 @@ Feature: syntax checks for closePayment outcome OK
     Then verify the HTTP status code of v1/closepayment response is 200
     And check esito is OK of v1/closepayment response
 
-  @runnable
+  @test
   # syntax check - Richiesta non valida
   Scenario Outline: Check syntax error on invalid request
     Given the closePayment scenario executed successfully
@@ -261,7 +261,7 @@ Feature: syntax checks for closePayment outcome OK
       | additionalPaymentInformations | None  | SIN_CP_35   |
       | additionalPaymentInformations | Empty | SIN_CP_36   |
 
-  @runnable
+  @test
   # syntax check - Il Pagamento indicato non esiste [SIN_CP_31.1]
   Scenario: Check syntax error on fee greater than totalAmount
     Given the closePayment scenario executed successfully
@@ -282,8 +282,8 @@ Feature: syntax checks for closePayment outcome OK
   Scenario: check activateIOPayment2 OK 2 tokens
     Given the check activateIOPayment OK 2 tokens scenario executed successfully
     And random iuv in context
-    And noticeNumber with 311$iuv in activateIOPayment
-    And creditorReferenceId with 11$iuv in paGetPayment
+    And noticeNumber with 302$iuv in activateIOPayment
+    And creditorReferenceId with 02$iuv in paGetPayment
     And EC replies to nodo-dei-pagamenti with the paGetPayment
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
@@ -325,7 +325,7 @@ Feature: syntax checks for closePayment outcome OK
         }
       }
       """
-  @runnable
+  @test
   Scenario: check closePayment OK with 2 tokens
     Given the closePayment 2 tokens scenario executed successfully
     When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
@@ -356,7 +356,7 @@ Feature: syntax checks for closePayment outcome OK
         }
       }
       """
-  @runnable
+  @test
   Scenario: check closePayment without brackets in paymentTokens
     Given the closePayment without brackets in paymentTokens [SIN_CP_03.1] scenario executed successfully
     When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti

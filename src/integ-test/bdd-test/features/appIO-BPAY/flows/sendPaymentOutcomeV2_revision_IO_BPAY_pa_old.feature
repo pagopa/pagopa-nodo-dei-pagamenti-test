@@ -29,7 +29,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             </soapenv:Envelope>
             """
         And initial XML paaVerificaRPT
-            """"
+            """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
             <soapenv:Header/>
             <soapenv:Body>
@@ -402,7 +402,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @runnable
+    @test
     Scenario: REV_SPO_03 (part 2)
         Given the REV_SPO_03 (part 1) scenario executed successfully
         When job paInviaRt triggered after 5 seconds
@@ -533,7 +533,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @runnable
+    @test
     Scenario: REV_SPO_04 (part 2)
         Given the REV_SPO_04 (part 1) scenario executed successfully
         When job paInviaRt triggered after 5 seconds

@@ -294,7 +294,7 @@ Feature: process tests for retry a token scaduto
     Then check outcome is OK of sendPaymentOutcome response
 
  
-  @check
+  @runnable
   Scenario: DB check
     Given the Execute sendPaymentOutcome1 request scenario executed successfully
     And wait 5 seconds for expiration

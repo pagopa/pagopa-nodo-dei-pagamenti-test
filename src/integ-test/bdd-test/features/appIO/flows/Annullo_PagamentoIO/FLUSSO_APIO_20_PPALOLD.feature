@@ -307,7 +307,8 @@ Feature: FLUSSO_APIO_20_PPALOLD
         Given the Execute sendPaymentOutcome (Phase 6) scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         And job paInviaRt triggered after 20 seconds
-        And wait 20 seconds for expiration
+        #And wait 20 seconds for expiration
+        And wait until the update to the new state for the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
         Then verify the HTTP status code of notificaAnnullamento response is 404
         And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_ACCEPTED, PAID, NOTICE_GENERATED, NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO

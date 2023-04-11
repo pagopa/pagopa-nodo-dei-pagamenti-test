@@ -26,13 +26,13 @@ Feature: activatePaymentNoticeV2Request with psp MBD and canale NO MBD
     #DB update
     Scenario: Execute canale update
         Given the Execute checkPosition request scenario executed successfully
-        Then updates through the query canaleEcommerce_update of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with 0 under macro sendPaymentResultV2 on db nodo_cfg
+        Then updates through the query canaleEcommerce_update of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with N under macro sendPaymentResultV2 on db nodo_cfg
 
     #refresh psp e canali
     Scenario: Execute refresh psp e canali
         Given the Execute canale update scenario executed successfully
         Then refresh job PSP triggered after 10 seconds
-
+    @test
     # activateV2 phase
     Scenario: activatePaymentNoticeV2
         Given the Execute refresh psp e canali scenario executed successfully
@@ -137,6 +137,8 @@ Feature: activatePaymentNoticeV2Request with psp MBD and canale NO MBD
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        And updates through the query canaleEcommerce_update of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with Y under macro sendPaymentResultV2 on db nodo_cfg
+        And refresh job PSP triggered after 10 seconds
         Then check outcome is OK of activatePaymentNoticeV2 response
         And check idTransfer is 1 of activatePaymentNoticeV2 response
         And check hashDocumento is ciao of activatePaymentNoticeV2 response

@@ -18,6 +18,9 @@ Feature: syntax checks for closePaymentV2 outcome KO
                 "transactionId": "#transaction_id#",
                 "totalAmount": 12,
                 "fee": 2,
+                "primaryCiIncurredFee": 1,
+                "idBundle": "0bf0c282-3054-11ed-af20-acde48001122",
+                "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
                     "key": "#psp_transaction_id#"
@@ -78,7 +81,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
             <password>#password#</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>311#iuv#</noticeNumber>
+            <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
             <amount>10.00</amount>
             <dueDate>2021-12-31</dueDate>
@@ -95,7 +98,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>11$iuv</creditorReferenceId>
+            <creditorReferenceId>02$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -176,7 +179,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
-    @runnable
+    @test
     # No error
     Scenario Outline: check closePaymentV2 OK
         Given the check activatePaymentNoticeV2 OK scenario executed successfully
@@ -231,6 +234,12 @@ Feature: syntax checks for closePaymentV2 outcome KO
             | transactionDetails            | Empty                                                                                                                                                                                                                                                            | PAG-2120      |
             | key                           | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_37   |
             | key                           | Valore                                                                                                                                                                                                                                                           | SIN_CPV2_40   |
+            | primaryCiIncurredFee          | None                                                                                                                                                                                                                                                             | PAG-2444      |
+            | primaryCiIncurredFee          | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
+            | idBundle                      | None                                                                                                                                                                                                                                                             | PAG-2444      |
+            | idBundle                      | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
+            | idCiBundle                    | None                                                                                                                                                                                                                                                             | PAG-2444      |
+            | idCiBundle                    | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
 
     # No error with fee 0 [SIN_CPV2_31.2]
     Scenario: check activatePaymentNoticeV2 OK 2
@@ -238,7 +247,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
-    @runnable
+    @test
     Scenario: check closePaymentV2 OK with fee 0
         Given the check activatePaymentNoticeV2 OK 2 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -280,7 +289,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
                 }
             }
             """
-    @runnable
+    @test
     Scenario: check closePaymentV2 OK with keys repeated
         Given the closePaymentV2 with keys repeated scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -326,7 +335,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
                 }
             }
             """
-    @runnable
+    @test
     Scenario: check closePaymentV2 OK with different keys
         Given the closePaymentV2 with different keys scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -362,7 +371,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
                 }
             }
             """
-    @runnable
+    @test
     Scenario: check closePaymentV2 OK with key transactionId
         Given the closePaymentV2 with key transactionId scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -387,7 +396,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
                 "outcome": "KO"
             }
             """
-    @runnable
+    @test
     Scenario: check closePaymentV2 OK with paymentTokens and outcome
         Given the closePaymentV2 with paymentTokens and outcome scenario executed successfully
         And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
@@ -395,7 +404,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-    @runnable
+    @test
     # syntax check - Invalid field - paymentToken
     Scenario Outline: Check syntax error on invalid body element value - paymentToken
         Given the closePaymentV2 scenario executed successfully
@@ -434,7 +443,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
                 }
             }
             """
-    @runnable
+    @test
     Scenario: check closePaymentV2 without brackets in paymentTokens
         Given the closePaymentV2 without brackets in paymentTokens [SIN_CPV2_03.1] scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti

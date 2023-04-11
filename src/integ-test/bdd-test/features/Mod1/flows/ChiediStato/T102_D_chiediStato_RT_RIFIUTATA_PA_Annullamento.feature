@@ -204,7 +204,7 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And check esito is OK of notificaAnnullamento response
-        And wait 30 seconds for expiration
+        #And wait 30 seconds for expiration
 
     Scenario: Execute paInviaRT job
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
@@ -228,9 +228,11 @@ Feature: process tests for T102_D_chiediStato_RT_RIFIUTATA_PA_Annullamento
         """
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job paInviaRt triggered after 10 seconds
-        Then wait 130 seconds for expiration
+        #Then wait 130 seconds for expiration
+        And replace iuv content with $IUV content
+        Then wait until the update to the new state for the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro Mod1
 
-@check
+@runnable
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute paInviaRT job scenario executed successfully
         And initial XML nodoChiediStatoRPT

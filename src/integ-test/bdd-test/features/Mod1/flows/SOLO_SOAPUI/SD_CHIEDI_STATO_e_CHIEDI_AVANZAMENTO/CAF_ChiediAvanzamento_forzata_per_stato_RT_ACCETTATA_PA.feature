@@ -85,7 +85,7 @@ Feature: CAF_ChiediAvanzamento_forzata per stato RT_ACCETTATA_PA
             </pay_i:RPT>
             """
         And RT generation
-            """"
+            """
             <pay_i:RT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
             <pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
             <pay_i:dominio>
@@ -281,7 +281,7 @@ Feature: CAF_ChiediAvanzamento_forzata per stato RT_ACCETTATA_PA
         And replace 1ccp content with CCD01 content
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
 
-@midRunnable
+@runnable
     Scenario: Execute nodoChiediStatoRPT
         Given the execution nodoInviaRT scenario executed successfully
         And initial XML nodoChiediStatoRPT

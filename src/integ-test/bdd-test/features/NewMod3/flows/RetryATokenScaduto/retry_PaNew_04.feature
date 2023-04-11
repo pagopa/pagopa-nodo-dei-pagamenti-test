@@ -107,7 +107,7 @@ Feature: Process tests for retry a token scaduto
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     #Test1
     Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+    And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
     #sleep phase2
     And wait 5 seconds for expiration
     #Test2

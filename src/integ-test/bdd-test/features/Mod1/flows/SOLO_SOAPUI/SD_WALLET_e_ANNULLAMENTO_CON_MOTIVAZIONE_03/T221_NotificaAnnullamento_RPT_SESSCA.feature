@@ -123,7 +123,7 @@ Feature: T221_NotificaAnnullamento_RPT_SESSCA
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=SESSCA to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
 
-@midRunnable
+@runnable
     Scenario: Check DB
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         When job paInviaRt triggered after 5 seconds

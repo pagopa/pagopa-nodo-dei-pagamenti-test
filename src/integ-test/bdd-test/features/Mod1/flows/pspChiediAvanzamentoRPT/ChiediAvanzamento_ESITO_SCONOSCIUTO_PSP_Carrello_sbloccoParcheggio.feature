@@ -288,7 +288,8 @@ Feature: process tests for ChiediAvanzamento_ESITO_SCONOSCIUTO_PSP_Carrello_sblo
              """
         And PSP replies to nodo-dei-pagamenti with the pspChiediAvanzamentoRPT
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
-        And wait 10 seconds for expiration
+        #And wait 10 seconds for expiration
+        And wait until the update to the new state for the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
         Then checks the value CART_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
 
     Scenario: Execution retry Esito Carta

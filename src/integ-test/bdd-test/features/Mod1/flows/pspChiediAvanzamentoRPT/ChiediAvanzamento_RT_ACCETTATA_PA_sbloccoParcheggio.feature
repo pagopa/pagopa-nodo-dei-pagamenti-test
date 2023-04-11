@@ -265,9 +265,8 @@ Feature: process tests for ChiediAvanzamento_RT_ACCETTATA_PA_sbloccoParcheggio
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute nodoInviaRT request scenario executed successfully
         When job pspChiediAvanzamentoRpt triggered after 5 seconds
-        And wait 10 seconds for expiration
-        And job paInviaRT triggered after 5 seconds
-        And wait 10 seconds for expiration
+        And job paInviaRT triggered after 10 seconds
+        And wait until the update to the new state for the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
         And verify 0 record for the table RETRY_RPT retrived by the query motivo_annullamento_originale on db nodo_online under macro Mod1
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
 

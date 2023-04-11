@@ -276,7 +276,7 @@ Feature: T093_D_ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello_nonVista+vistaDalPM
         Then checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoChiediStatoRPT2
         Given the Execute nodoChiediStatoRPT1 scenario executed successfully
         And initial XML nodoChiediStatoRPT

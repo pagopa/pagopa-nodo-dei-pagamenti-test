@@ -1,4 +1,4 @@
-import cx_Oracle, traceback, os
+import cx_Oracle, traceback, os, time
 
 def getConnection(host:str, database:str, user:str, password:str, port:str):
     print(f'Connecting to the OracleDB... {user}')
@@ -43,3 +43,6 @@ def executeQuery(conn, query:str) -> list:
     except:
         print('Error executed query')
         traceback.print_exc() 
+
+
+

@@ -27,7 +27,7 @@ Feature: T053_verifica_attiva_AIM_aux=3
         
    
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoAttivaRPT
         Given the Execute nodoVerificaRPT scenario executed successfully
         And initial XML nodoAttivaRPT

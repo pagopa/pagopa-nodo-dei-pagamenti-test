@@ -200,7 +200,7 @@ Feature: T135_InoltraPagamentoMod2_RPT_KO_convenzioni
     And check url contains acards of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
 
-@midRunnable
+@runnable
   Scenario: Execute nodoInoltraEsitoPagamentoMod2 request
     Given the Execute nodoInviaRPT request scenario executed successfully
     When WISP sends REST POST inoltroEsito/mod2 to nodo-dei-pagamenti

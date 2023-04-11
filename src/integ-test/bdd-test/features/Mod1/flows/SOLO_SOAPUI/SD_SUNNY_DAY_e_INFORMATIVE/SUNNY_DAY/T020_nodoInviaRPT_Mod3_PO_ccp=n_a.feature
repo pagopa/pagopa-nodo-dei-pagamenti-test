@@ -3,7 +3,7 @@ Feature: T020_nodoInviaRPT_Mod3_PO_ccp=n_a
     Background:
         Given systems up
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given RPT1 generation
             """

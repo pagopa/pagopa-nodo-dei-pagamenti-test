@@ -242,6 +242,7 @@ Feature: PRO_ANNULLO_06_PPALOLD
     Scenario: check DB  
       Given the Trigger annullamentoRptMaiRichiesteDaPm scenario executed successfully
         And wait 15 seconds for expiration
+        #And wait until the update to the new state for the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
         Then verify 0 record for the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO
         And verify 0 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status_old on db nodo_online under macro AppIO
         And verify 0 record for the table POSITION_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO

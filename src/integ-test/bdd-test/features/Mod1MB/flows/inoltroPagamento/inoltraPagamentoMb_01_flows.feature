@@ -267,7 +267,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [inoltropagamentoMb_01]
       Then verify the HTTP status code of inoltroEsito/carta response is 200
       And check esito is OK of inoltroEsito/carta response
 
-@check
+@runnable
    Scenario: Trigger paInviaRT
       Given the Execute nodoInoltraEsitoCarta scenario executed successfully
       When job paInviaRt triggered after 5 seconds

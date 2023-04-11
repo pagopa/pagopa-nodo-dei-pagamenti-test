@@ -110,7 +110,7 @@ Feature: T135_B_InoltraPagamentoMod2_RPT_BBT_noPPI
         Then check esito is OK of nodoInviaRPT response
          And retrieve session token from $nodoInviaRPTResponse.url
 
-@midRunnable
+@runnable
      Scenario: Execute nodoInoltraEsitoPagamentoMod2 request
         Given the Execute nodoInviaRPT scenario executed successfully
         And initial XML pspInviaRPT 

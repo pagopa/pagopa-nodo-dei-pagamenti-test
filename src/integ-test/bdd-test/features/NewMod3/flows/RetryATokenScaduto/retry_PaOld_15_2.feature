@@ -227,7 +227,7 @@ Feature: process tests for retryAtokenScaduto
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
-  @check
+  @runnable
   Scenario: check position_payment [retry_PaOld_15_2]
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And wait 5 seconds for expiration

@@ -123,7 +123,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_convenzioni
     And check url contains acards of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
 
-@midCheck 
+@runnable 
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
     Given the Execute nodoInviaRPT request scenario executed successfully
     And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 

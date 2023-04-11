@@ -18,6 +18,9 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "transactionId": "#transaction_id#",
                 "totalAmount": 12,
                 "fee": 2,
+                "primaryCiIncurredFee": 1,
+                "idBundle": "0bf0c282-3054-11ed-af20-acde48001122",
+                "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
                     "key": "#psp_transaction_id#"
@@ -63,7 +66,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 }
             }
             """
-    @runnable
+    @test
     # syntax check - Invalid field
     Scenario Outline: Check syntax error on invalid body element value
         Given the closePaymentV2 scenario executed successfully
@@ -107,9 +110,12 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | timestampOperation            | 2012-04-23T18:25                                                                                                                                                                                                                                                 | SIN_CPV2_34   |
             | additionalPaymentInformations | None                                                                                                                                                                                                                                                             | SIN_CPV2_35   |
             | additionalPaymentInformations | Empty                                                                                                                                                                                                                                                            | SIN_CPV2_36   |
-            | transactionDetails            | Empty                                                                                                                                                                                                                                                            |               |
+            | transactionDetails            | Empty                                                                                                                                                                                                                                                            | PAG-2120      |
+            | primaryCiIncurredFee          | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
+            | idBundle                      | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
+            | idCiBundle                    | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
 
-    @runnable
+    @test
     # syntax check - Invalid field - payment method
     Scenario Outline: Check syntax error on invalid body element value - payment method
         Given the closePaymentV2 scenario executed successfully
@@ -121,8 +127,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
         Examples:
             | elem          | value | soapUI test |
             | paymentMethod | OBEP  | SIN_CPV2_12 |
-            | paymentMethod | CP    | SIN_CPV2_12 |
-    @runnable
+
+    @test
     # syntax check - Invalid field - paymentToken
     Scenario Outline: Check syntax error on invalid body element value - paymentToken
         Given the closePaymentV2 scenario executed successfully
@@ -135,7 +141,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | elem         | value                                 | soapUI test |
             | paymentToken | None                                  | SIN_CPV2_02 |
             | paymentToken | 87cacaf799cadf9vs9s7vasdvs676cavv4574 | SIN_CPV2_03 |
-    @runnable
+    @test
     # syntax check - Invalid field - additionalPaymentInformations [SIN_CPV2_37]
     Scenario: Check syntax error on invalid body element value - additionalPaymentInformations
         Given the closePaymentV2 scenario executed successfully
@@ -161,7 +167,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
             <password>#password#</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>311#iuv#</noticeNumber>
+            <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
             <amount>10.00</amount>
             <dueDate>2021-12-31</dueDate>
@@ -178,7 +184,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>11$iuv</creditorReferenceId>
+            <creditorReferenceId>02$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -259,7 +265,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
-    @runnable
+    @test
     Scenario: check closePaymentV2 OK with fee 0
         Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -303,7 +309,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 }
             }
             """
-    @runnable
+    @test
     Scenario: check closePaymentV2 OK with keys repeated
         Given the closePaymentV2 with keys repeated scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -339,7 +345,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 }
             }
             """
-    @runnable
+    @test
     Scenario: check closePaymentV2 OK with key transactionId
         Given the closePaymentV2 with key transactionId scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -352,7 +358,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
-    @runnable
+    @test
     Scenario Outline: check closePaymentV2 OK outline
         Given the check activatePaymentNoticeV2 OK 4 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -362,13 +368,17 @@ Feature: syntax checks for closePaymentV2 outcome OK
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Examples:
-            | elem               | value                         | soapUI test   |
-            | totalAmount        | 12.0                          | SIN_CPV2_25   |
-            | totalAmount        | 12                            | SIN_CPV2_25.2 |
-            | fee                | 2.0                           | SIN_CPV2_30   |
-            | fee                | 2                             | SIN_CPV2_30.2 |
-            | timestampOperation | 2033-04-23T18:25:43.372+01:00 | SIN_CPV2_34.1 |
-            | transactionDetails | None                          | PAG-2120      |
+            | elem                 | value                         | soapUI test   |
+            | totalAmount          | 12.0                          | SIN_CPV2_25   |
+            | totalAmount          | 12                            | SIN_CPV2_25.2 |
+            | fee                  | 2.0                           | SIN_CPV2_30   |
+            | fee                  | 2                             | SIN_CPV2_30.2 |
+            | timestampOperation   | 2033-04-23T18:25:43.372+01:00 | SIN_CPV2_34.1 |
+            | transactionDetails   | None                          | PAG-2120      |
+            | paymentMethod        | CP                            | PAG-2383      |
+            | primaryCiIncurredFee | None                          | PAG-2444      |
+            | idBundle             | None                          | PAG-2444      |
+            | idCiBundle           | None                          | PAG-2444      |
 
 
 
@@ -411,7 +421,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 }
             }
             """
-    @runnable
+    @test
     Scenario: check closePaymentV2 OK with different keys
         Given the closePaymentV2 with different keys scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -440,7 +450,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
-    @runnable
+    @test
     Scenario: Check syntax error on fee greater than totalAmount
         Given the check activatePaymentNoticeV2 OK 6 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -473,7 +483,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 }
             }
             """
-    @runnable
+    @test
     Scenario: check closePaymentV2 without brackets in paymentTokens
         Given the closePaymentV2 without brackets in paymentTokens [SIN_CPV2_03.1] scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti

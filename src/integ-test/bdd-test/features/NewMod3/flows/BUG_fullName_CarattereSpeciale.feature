@@ -2,7 +2,7 @@ Feature: BUG_fullName_CarattereSpeciale
 
     Background:
         Given systems up
-
+    @test
     Scenario: activatePaymentNotice request
         Given initial XML activatePaymentNotice
             """
@@ -17,7 +17,7 @@ Feature: BUG_fullName_CarattereSpeciale
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>311#iuv#</noticeNumber>
+            <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
             <expirationTime>60000</expirationTime>
             <amount>10.00</amount>
@@ -34,7 +34,7 @@ Feature: BUG_fullName_CarattereSpeciale
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>11$iuv</creditorReferenceId>
+            <creditorReferenceId>02$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->

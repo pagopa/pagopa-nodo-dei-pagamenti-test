@@ -81,7 +81,7 @@ Feature: CarrelloRPT_tipo_versamenti_differenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    @midRunnable
+    @runnable
     Scenario Outline: Check outcome is OK for nodoInviaCarrelloRPT
         Given <tag> with <tag_value> in RPT
         And RPT generation

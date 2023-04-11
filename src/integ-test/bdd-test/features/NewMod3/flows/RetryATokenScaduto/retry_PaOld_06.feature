@@ -189,7 +189,7 @@ Feature: process tests for retryAtokenScaduto
     And EC replies to nodo-dei-pagamenti with the paaInviaRT
     When job paInviaRt triggered after 5 seconds
     Then verify the HTTP status code of paInviaRt response is 200
-    And wait 5 seconds for expiration
+    And wait 10 seconds for expiration
     And replace iuv content with $1iuv content
     And checks the value RT_ERRORE_INVIO_A_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
@@ -238,7 +238,7 @@ Feature: process tests for retryAtokenScaduto
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
 
-  @check
+  @runnable
   Scenario: check position_payment
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And wait 5 seconds for expiration

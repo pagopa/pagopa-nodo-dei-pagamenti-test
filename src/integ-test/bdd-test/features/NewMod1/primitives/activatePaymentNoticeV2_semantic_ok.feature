@@ -18,7 +18,7 @@ Feature: semantic checks OK for activatePaymentNoticeV2Request
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>311#iuv#</noticeNumber>
+            <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
             <expirationTime>120000</expirationTime>
             <amount>10.00</amount>
@@ -36,7 +36,7 @@ Feature: semantic checks OK for activatePaymentNoticeV2Request
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>11$iuv</creditorReferenceId>
+            <creditorReferenceId>02$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -181,40 +181,40 @@ Feature: semantic checks OK for activatePaymentNoticeV2Request
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-    @runnable
+    @test
     Scenario: Check valid URL in WSDL namespace
         Given the activatePaymentNoticeV2 with paGetPayment scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @runnable
+    @test
     # [SEM_APNV2_17]
     Scenario: Check outcome OK on non-existent psp in idempotencyKey
         Given the activatePaymentNoticeV2 with paGetPayment scenario executed successfully
         And random idempotencyKey having 00088877799 as idPSP in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @runnable
+    @test
     # [SEM_APNV2_17.1]
     Scenario: Check outcome OK on non-existent psp in idempotencyKey
         Given the activatePaymentNoticeV2 with paGetPaymentV2 scenario executed successfully
         And random idempotencyKey having 00088877799 as idPSP in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @runnable
+    @test
     # [SEM_APNV2_18]
     Scenario: Check outcome OK on disabled psp in idempotencyKey
         Given the activatePaymentNoticeV2 with paGetPayment scenario executed successfully
         And random idempotencyKey having 80000000001 as idPSP in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @runnable
+    @test
     # [SEM_APNV2_18.1]
     Scenario: Check outcome OK on disabled psp in idempotencyKey
         Given the activatePaymentNoticeV2 with paGetPaymentV2 scenario executed successfully
         And random idempotencyKey having 80000000001 as idPSP in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @runnable
+    @test 
     # [SEM_APNV2_24]
     Scenario: Check outcome OK if combination psp-channel-pa in denylist
         Given the activatePaymentNoticeV2 with paGetPayment scenario executed successfully
@@ -222,7 +222,7 @@ Feature: semantic checks OK for activatePaymentNoticeV2Request
         And idChannel with 60000000002_01 in activatePaymentNoticeV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @runnable
+    @test 
     # [SEM_APNV2_24.1]
     Scenario: Check outcome OK if combination psp-channel-pa in denylist
         Given the activatePaymentNoticeV2 with paGetPaymentV2 scenario executed successfully

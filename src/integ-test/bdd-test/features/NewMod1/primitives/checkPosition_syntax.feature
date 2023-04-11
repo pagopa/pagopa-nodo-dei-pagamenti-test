@@ -8,12 +8,12 @@ Feature: syntax checks for checkPosition
                 "positionslist": [
                     {
                         "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "311#iuv#"
+                        "noticeNumber": "302#iuv#"
                     }
                 ]
             }
             """
-
+    @test
     # KO tests
     Scenario Outline: KO tests
         Given <elem> with <value> in checkPosition

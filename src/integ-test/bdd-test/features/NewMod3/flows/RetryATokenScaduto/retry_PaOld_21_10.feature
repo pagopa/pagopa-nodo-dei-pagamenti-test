@@ -2,7 +2,10 @@ Feature: process tests for retryAtokenScaduto
 
   Background:
     Given systems up
-    And initial XML verifyPaymentNotice
+
+  # Verify phase
+  Scenario: Execute verifyPaymentNotice request
+    Given initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
       <soapenv:Header />
@@ -20,10 +23,42 @@ Feature: process tests for retryAtokenScaduto
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC old version
-
-  # Verify phase
-  Scenario: Execute verifyPaymentNotice request
+    And initial XML paaVerificaRPT
+        """
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+        <soapenv:Header/>
+        <soapenv:Body>
+        <ws:paaVerificaRPTRisposta>
+        <paaVerificaRPTRisposta>
+        <esito>OK</esito>
+        <datiPagamentoPA>
+        <importoSingoloVersamento>8.00</importoSingoloVersamento>
+        <ibanAccredito>IT96R0123454321000000012345</ibanAccredito>
+        <bicAccredito>BSCTCH22</bicAccredito>
+        <enteBeneficiario>
+        <pag:identificativoUnivocoBeneficiario>
+        <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+        <pag:codiceIdentificativoUnivoco>#id_station_old#</pag:codiceIdentificativoUnivoco>
+        </pag:identificativoUnivocoBeneficiario>
+        <pag:denominazioneBeneficiario>f6</pag:denominazioneBeneficiario>
+        <pag:codiceUnitOperBeneficiario>r6</pag:codiceUnitOperBeneficiario>
+        <pag:denomUnitOperBeneficiario>yr</pag:denomUnitOperBeneficiario>
+        <pag:indirizzoBeneficiario>\"paaVerificaRPT\"</pag:indirizzoBeneficiario>
+        <pag:civicoBeneficiario>ut</pag:civicoBeneficiario>
+        <pag:capBeneficiario>jyr</pag:capBeneficiario>
+        <pag:localitaBeneficiario>yj</pag:localitaBeneficiario>
+        <pag:provinciaBeneficiario>h8</pag:provinciaBeneficiario>
+        <pag:nazioneBeneficiario>IT</pag:nazioneBeneficiario>
+        </enteBeneficiario>
+        <credenzialiPagatore>of8</credenzialiPagatore>
+        <causaleVersamento>paaVerificaRPT</causaleVersamento>
+        </datiPagamentoPA>
+        </paaVerificaRPTRisposta>
+        </ws:paaVerificaRPTRisposta>
+        </soapenv:Body>
+        </soapenv:Envelope>
+        """
+    And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
@@ -53,6 +88,33 @@ Feature: process tests for retryAtokenScaduto
       </soapenv:Body>
       </soapenv:Envelope>
       """
+    And initial XML paaAttivaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:paaAttivaRPTRisposta>
+                <paaAttivaRPTRisposta>
+                    <esito>OK</esito>
+                    <datiPagamentoPA>
+                        <importoSingoloVersamento>8.00</importoSingoloVersamento>
+                        <ibanAccredito>IT96R0123454321000000012345</ibanAccredito>
+                        <enteBeneficiario>
+                            <pag:identificativoUnivocoBeneficiario>
+                            <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+                            <pag:codiceIdentificativoUnivoco>#creditor_institution_code_old#</pag:codiceIdentificativoUnivoco>
+                            </pag:identificativoUnivocoBeneficiario>
+                            <pag:denominazioneBeneficiario>Pa Gabri</pag:denominazioneBeneficiario>
+                        </enteBeneficiario>
+                        <credenzialiPagatore>tizio caio</credenzialiPagatore>
+                        <causaleVersamento>pagamento fotocopie pratica RPT</causaleVersamento>
+                    </datiPagamentoPA>
+                </paaAttivaRPTRisposta>
+            </ws:paaAttivaRPTRisposta>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
@@ -332,7 +394,7 @@ Feature: process tests for retryAtokenScaduto
     Then check esito is KO of nodoInviaRPT response
     Then check faultCode is PPT_SEMANTICA of nodoInviaRPT response
 
-  @check
+  @runnable
   Scenario: DB check
     Given the Execute nodoInviaRPT2 request scenario executed successfully
     And wait 5 seconds for expiration

@@ -417,8 +417,7 @@ Feature: gestioneReceiptMb_10_PULL
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
 
         And refresh job PA triggered after 10 seconds
-        And refresh job PA triggered after 10 seconds
-        And wait 10 seconds for expiration
+        And wait 5 seconds for expiration
 
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
@@ -495,8 +494,6 @@ Feature: gestioneReceiptMb_10_PULL
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
         When job pspChiediListaAndChiediRt triggered after 7 seconds
-        #And job paInviaRt triggered after 10 seconds
-        #And job paSendRt triggered after 10 seconds
         Then wait 15 seconds for expiration
 
 
@@ -536,10 +533,9 @@ Feature: gestioneReceiptMb_10_PULL
             """
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
         And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
-        #And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         When job pspChiediListaAndChiediRt triggered after 7 seconds
         And job paInviaRt triggered after 10 seconds
-        #And job paSendRt triggered after 10 seconds
+
         Then wait 15 seconds for expiration
 
         And replace pa content with #creditor_institution_code# content
@@ -672,7 +668,7 @@ Feature: gestioneReceiptMb_10_PULL
 
     Scenario: Check POSITION_RETRY_PA_SEND_RT table
         Given the job pspChiediRT (Phase 4.1) scenario executed successfully
-        And wait 120 seconds for expiration
+        And wait 10 seconds for expiration
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         And EC2 replies to nodo-dei-pagamenti with the paSendRT
             """
@@ -687,7 +683,7 @@ Feature: gestioneReceiptMb_10_PULL
             </soapenv:Envelope>
             """
         When job paSendRt triggered after 15 seconds
-        And wait 30 seconds for expiration
+        And wait until the update to the new state for the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         #check POSITION_RETRY_PA_SEND_RT table
         Then checks the value #creditor_institution_code# of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value $1noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
@@ -700,9 +696,8 @@ Feature: gestioneReceiptMb_10_PULL
     Scenario: Checks
         Given the Check POSITION_RETRY_PA_SEND_RT table scenario executed successfully
         And nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 2
-        And wait 60 seconds for expiration
-        When job paSendRt triggered after 5 seconds
-        And wait 400 seconds for expiration
+        When job paSendRt triggered after 10 seconds
+        And wait until the update to the new state for the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
         And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_payment_token retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
         And through the query by_notice_number_and_payment_token retrieve param noticeID1 at position 2 and save it under the key noticeID1

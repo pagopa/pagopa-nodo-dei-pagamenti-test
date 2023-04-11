@@ -88,6 +88,7 @@
         "by_context_payment_token_2": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' AND PAYMENT_TOKEN ='$paymentToken'",
         "by_context_payment_token_3": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND ID_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "position_subject_3": "SELECT s.columns FROM POSITION_SUBJECT s JOIN POSITION_SERVICE pp ON pp.DEBTOR_ID = s.ID where pp.notice_id = '$activatePaymentNotice.noticeNumber' and pp.pa_fiscal_code= '$activatePaymentNotice.fiscalCode'",
+        "position_subject_activatev2": "SELECT s.columns FROM POSITION_SUBJECT s JOIN POSITION_SERVICE pp ON pp.DEBTOR_ID = s.ID where pp.notice_id = '$activatePaymentNoticeV2.noticeNumber' and pp.pa_fiscal_code= '$activatePaymentNoticeV2.fiscalCode'",
         "position_subject_service": "SELECT columns FROM table_name su JOIN POSITION_SERVICE se ON su.ID = se.DEBTOR_ID WHERE se.PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and se.NOTICE_ID='$activatePaymentNotice.noticeNumber' and su.SUBJECT_TYPE='DEBTOR'",
         "get_receipt": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken' and RECIPIENT_STATION_ID ='$recipientStationId' and NOTICE_ID='$activatePaymentNotice.noticeNumber'",
         "position_transfer_2": "SELECT p.* FROM table_name p WHERE p.fk_position_receipt = (SELECT s.ID FROM POSITION_RECEIPT s WHERE s.NOTICE_ID ='$activatePaymentNotice.noticeNumber' and s.PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode')",
@@ -120,6 +121,8 @@
         "info_pagamento": "SELECT columns FROM CD_INFO_PAGAMENTO WHERE ID_SESSIONE='$sessionToken'",
         "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC",
         "getPspCarte": "SELECT columns FROM table_name WHERE FK_SNAPSHOT_VERSION = $version AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1) AND CARRELLO_CARTE='Y' AND IMPORTO_MINIMO < $importoTot AND IMPORTO_MASSIMO >= $importoTot AND CODICE_CONVENZIONE is null AND FLAG_IO = 'Y' AND CODICE_ABI <> '07061'",
+        "getPspCarte_no_poste": "SELECT columns FROM table_name WHERE FK_SNAPSHOT_VERSION = $version AND PSP_ID <> 'POSTE1' AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1) AND CARRELLO_CARTE='Y' AND IMPORTO_MINIMO < $importoTot AND IMPORTO_MASSIMO >= $importoTot AND CODICE_CONVENZIONE is null AND FLAG_IO = 'Y' AND CANALE_MOD_PAG != '2'",
+        "getPspCarte_lingua": "SELECT columns FROM table_name WHERE FK_SNAPSHOT_VERSION = $version AND CODICE_LINGUA = '$lingua' AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1) AND CARRELLO_CARTE='Y' AND IMPORTO_MINIMO < $importoTot AND IMPORTO_MASSIMO >= $importoTot AND CODICE_CONVENZIONE is null AND FLAG_IO = 'Y' AND CANALE_MOD_PAG != '2'",
         "getPspCarte_poste": "SELECT columns FROM table_name WHERE FK_SNAPSHOT_VERSION = $version AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1) AND CARRELLO_CARTE='Y' AND IMPORTO_MINIMO < $importoTot AND IMPORTO_MASSIMO >= $importoTot AND CODICE_CONVENZIONE is null AND FLAG_IO = 'Y'",
         "DB_GEST_ANN_update1": "UPDATE RPT SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IUV = '$iuv' AND IDENT_DOMINIO = '$nodoInviaRPT.identificativoDominio'",
         "pm_session_old_ccp": "SELECT columns FROM PM_SESSION_DATA WHERE ID_SESSIONE = '$ccp'",
@@ -127,7 +130,8 @@
         "select_sprV1_new": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken' AND TIPO_EVENTO = 'sendPaymentResult-v1' ORDER BY DATA_ORA_EVENTO ASC",
         "select_sprV1_old": "SELECT columns FROM table_name WHERE CODICE_CONTESTO_PAGAMENTO = '$ccp' AND TIPO_EVENTO = 'sendPaymentResult-v1' ORDER BY DATA_ORA_EVENTO ASC",
         "retry_spr": "SELECT columns FROM table_name s where s.PAYMENT_TOKEN= '$activateIOPaymentResponse.paymentToken'",
-        "retry_spr_old": "SELECT columns FROM table_name s where s.PAYMENT_TOKEN= '$ccp'"
+        "retry_spr_old": "SELECT columns FROM table_name s where s.PAYMENT_TOKEN= '$ccp'",
+        "getPspCarte_poste2": "SELECT columns FROM table_name WHERE FK_SNAPSHOT_VERSION = $version AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1) AND CARRELLO_CARTE='Y' AND IMPORTO_MINIMO < $importoTot AND IMPORTO_MASSIMO >= $importoTot AND CODICE_CONVENZIONE is null AND FLAG_IO = 'Y' AND CANALE_MOD_PAG != '2' order by ID ",
     },
     "AppIOold": {
         "cd_info_pagamento": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInviaRPT.identificativoUnivocoVersamento' AND s.IDENT_DOMINIO = '#creditor_institution_code#'"
@@ -142,7 +146,7 @@
         "DB_GEST_ANN_update1": "UPDATE STATI_RPT_SNAPSHOT SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IUV = '$iuv' AND ID_DOMINIO = '$nodoInviaCarrelloRPT.identificativoDominio'",
         "DB_GEST_ANN_update2": "UPDATE STATI_RPT_SNAPSHOT SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IUV = '$iuv' AND ID_DOMINIO = '$pa1'",
         "DB_GEST_ANN_notice_number": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '$NOTICE_ID'",
-        "DB_GEST_ANN_stati_position_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '311$iuv' and s.pa_fiscal_code= '$nodoInviaCarrelloRPT.identificativoDominio'",
+        "DB_GEST_ANN_stati_position_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '302$iuv' and s.pa_fiscal_code= '$nodoInviaCarrelloRPT.identificativoDominio'",
         "by_notice_number_and_pa": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = '$noticeNumber' and s.pa_fiscal_code= '$pa'",
         "by_iuv_and_id_dominio": "SELECT s.columns FROM table_name s WHERE s.IUV = '$iuv' and s.ID_DOMINIO = '$pa' ORDER BY INSERTED_TIMESTAMP",
         "by_iuv_and_ident_dominio": "SELECT s.columns FROM table_name s WHERE s.IUV = '$iuv' and s.IDENT_DOMINIO = '$pa'",
@@ -231,7 +235,10 @@
         "sblocco_parcheggio": "SELECT columns FROM table_name WHERE IUV='$iuv' AND CCP= '$ccp' AND ID_DOMINIO='$pa' ORDER BY INSERTED_TIMESTAMP",
         "codice_convenzione_session": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$sessionExpected'",
         "checkPlugin": "SELECT columns from table_name c join CANALI_NODO n on n.OBJ_ID=c.FK_CANALI_NODO where c.ID_CANALE='$canaleUsato'",
-        "get_staz_inter_pa": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$sessionExpected' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1)"
+        "get_staz_inter_pa": "SELECT columns FROM table_name WHERE ID_SESSIONE ='$sessionExpected' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1)",
+        "get_psp_mbd": "SELECT columns FROM table_name WHERE FK_SNAPSHOT_VERSION = $version AND PSP_ID <> 'POSTE1' AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1,2) AND CARRELLO_CARTE='Y' AND IMPORTO_MINIMO < 10 AND IMPORTO_MASSIMO >= 10 AND CODICE_CONVENZIONE is null AND PSP_FLAG_BOLLO = 'Y'",
+        "get_psp_mbd_iban": "SELECT columns FROM table_name WHERE FK_SNAPSHOT_VERSION = $version AND PSP_ID <> 'POSTE1' AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1,2) AND CARRELLO_CARTE='Y' AND IMPORTO_MINIMO < 10 AND IMPORTO_MASSIMO >= 10 AND CODICE_CONVENZIONE is null AND PSP_FLAG_BOLLO = 'Y' AND (PSP_ID, CANALE_ID) NOT IN (('BIC36019','13212880150_07'))",
+        "get_psp_iban": "SELECT columns FROM table_name WHERE FK_SNAPSHOT_VERSION = $version AND PSP_ID <> 'POSTE1' AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1,2) AND CARRELLO_CARTE='Y' AND IMPORTO_MINIMO < 10 AND IMPORTO_MASSIMO >= 10 AND CODICE_CONVENZIONE is null AND (PSP_ID, CANALE_ID) NOT IN (('BIC36019','13212880150_07'))"
     },
     "RTPull": {
         "rpt_stati": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' ORDER BY INSERTED_TIMESTAMP ASC",
@@ -241,7 +248,9 @@
         "by_iuv_and_ccp": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' AND s.ccp = '$ccp'",
         "getSchedulerPspRetryAckNegativePollerMaxRetry": "SELECT columns FROM table_name s WHERE s.CONFIG_KEY='scheduler.pspRetryAckNegativePollerMaxRetry'",
         "rpt_id1": "SELECT columns FROM table_name  where IUV = '$iuv1' and ID_DOMINIO= '#creditor_institution_code_old#'",
-        "rpt_id2": "SELECT columns FROM table_name  where IUV = '$iuv2' and ID_DOMINIO= '#creditor_institution_code_old#'"
+        "rpt_id2": "SELECT columns FROM table_name  where IUV = '$iuv2' and ID_DOMINIO= '#creditor_institution_code_old#'",
+        "update_servizio": "UPDATE table_name SET param = 'value' WHERE SERVIZIO = 'mock-psp-service/api/v1'",
+        "update_canale": "UPDATE table_name SET param = 'value' WHERE ID_CANALE = '#canale_IMMEDIATO_MULTIBENEFICIARIO#'"
     },
     "faultBeanEsteso": {
         "by_iuv_ccp_pa": "SELECT columns FROM table_name s WHERE s.IUV = '$iuv' AND s.CCP = '$ccp' AND s.ID_DOMINIO = '$pa' ORDER BY INSERTED_TIMESTAMP"
@@ -315,8 +324,8 @@
         "update_noticeidrandom": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='311011451292109621'",
         "transactionid": "SELECT columns FROM table_name WHERE TRANSACTION_ID = '$transaction_id'",
         "temptransactionid": "SELECT columns FROM table_name WHERE TRANSACTION_ID = '$temp_transaction_id'",
-        "update_noticeid_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='311$iuv' and PA_FISCAL_CODE='#creditor_institution_code#'",
-        "update_noticeid1_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='311$iuv1' and PA_FISCAL_CODE='#creditor_institution_code#'",
+        "update_noticeid_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='302$iuv' and PA_FISCAL_CODE='#creditor_institution_code#'",
+        "update_noticeid1_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='302$iuv1' and PA_FISCAL_CODE='#creditor_institution_code#'",
         "position_subject": "SELECT columns FROM table_name WHERE ENTITY_UNIQUE_IDENTIFIER_VALUE = '$sendPaymentOutcomeV2.entityUniqueIdentifierValue' and INSERTED_TIMESTAMP > TO_DATE ('$date','YYYY-MM-DD HH24:MI:SS')",
         "position_subject_spo": "SELECT columns FROM table_name WHERE ENTITY_UNIQUE_IDENTIFIER_VALUE = '$sendPaymentOutcome.entityUniqueIdentifierValue' and INSERTED_TIMESTAMP > TO_DATE ('$date','YYYY-MM-DD HH24:MI:SS')",
         "update_validto": "UPDATE table_name SET param = TO_DATE('value', 'YYYY-MM-DD HH24:MI:SS') WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcomeV2.idempotencyKey' AND PSP_ID = '$sendPaymentOutcomeV2.idPSP'",
@@ -344,7 +353,8 @@
         "notice_number_from_iuv": "SELECT columns FROM table_name WHERE NOTICE_ID = '002$iuv' AND PA_FISCAL_CODE = '$nodoInviaRPT.identificativoDominio'",
         "update_notice_number_from_iuv": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID = '002$iuv' AND PA_FISCAL_CODE = '$nodoInviaRPT.identificativoDominio'",
         "update_id_psp": "UPDATE table_name SET param = 'value' WHERE ID_PSP = '#psp#'",
-        "update_obj_id": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = '2685736'",
+        "select_fk_canali_nodo": "SELECT columns FROM table_name WHERE ID_CANALE = '#canale_versione_primitive_2#'",
+        "update_obj_id": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = $fk_canali_nodo",
         "sessiontoken": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$sessionToken'",
         "ccp": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$ccp'",
         "sprv2_req_activatev2": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2_1Response.paymentToken' AND TIPO_EVENTO = 'sendPaymentResult-v2' AND SOTTO_TIPO_EVENTO = 'REQ'",
@@ -360,7 +370,11 @@
         "update_noticeid1_pa_ver2": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='310$iuv1' and PA_FISCAL_CODE='#creditor_institution_code#'",
         "update_obj_id_1": "UPDATE table_name SET param = 'value' WHERE OBJ_ID IN ('4328', '4329')",
         "update_obj_id_2": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = '4328'",
-        "checkposition_resp": "SELECT columns FROM table_name WHERE NOTICE_ID = '311$iuv' AND TIPO_EVENTO = 'checkPosition' AND SOTTO_TIPO_EVENTO = 'RESP'"
+        "update_obj_id_3": "UPDATE table_name SET param = 'value' WHERE OBJ_ID IN ('13', '14')",
+        "update_obj_id_4": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = '13'",
+        "update_obj_id_5": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = '14'",
+        "checkposition_resp": "SELECT columns FROM table_name WHERE NOTICE_ID = '302$iuv' AND TIPO_EVENTO = 'checkPosition' AND SOTTO_TIPO_EVENTO = 'RESP'",
+        "activatev2_resp": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND TIPO_EVENTO = 'activatePaymentNoticeV2' AND SOTTO_TIPO_EVENTO = 'RESP'"
     },
     "sendPaymentResultV2": {
         "select_sprV2_old": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$ccp' AND TIPO_EVENTO = 'sendPaymentResult-v2' ORDER BY ID ASC",
@@ -370,8 +384,8 @@
         "position_transfer_nmu_asc": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' ORDER BY ID ASC",
         "position_transfer_nmu_desc": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' ORDER BY ID DESC",
         "position_transfer_mbd": "SELECT ptm.* FROM POSITION_TRANSFER_MBD ptm JOIN POSITION_TRANSFER pt ON ptm.FK_POSITION_TRANSFER = pt.ID WHERE pt.NOTICE_ID ='$activatePaymentNoticeV2.noticeNumber'",
-        "pspEcommerce_update": "UPDATE table_name SET param = 'value' where ID_PSP = 'pspEcommerce'",
-        "canaleEcommerce_update": "UPDATE table_name SET param = 'value' where OBJ_ID = (SELECT FK_CANALI_NODO FROM CANALI WHERE ID_CANALE = 'canaleEcommerce')",
+        "pspEcommerce_update": "UPDATE table_name SET param = 'value' where ID_PSP = '#pspEcommerce#'",
+        "canaleEcommerce_update": "UPDATE table_name SET param = 'value' where OBJ_ID = (SELECT FK_CANALI_NODO FROM CANALI WHERE ID_CANALE = '#canaleEcommerce#')",
         "select_paSendRTV2": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND TIPO_EVENTO like 'paSendRT%' ORDER BY ID ASC",
         "select_paSendRT": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND TIPO_EVENTO like 'paSendRT%' ORDER BY ID ASC",
         "position_receipt_recipient_v2": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' ORDER BY ID ASC",

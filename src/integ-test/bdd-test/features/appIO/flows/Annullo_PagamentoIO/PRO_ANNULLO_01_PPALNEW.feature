@@ -113,7 +113,8 @@ Feature: FLUSSO_APIO_01_PPALNEW
         }
         """
         And job mod3CancelV2 triggered after 4 seconds
-        And wait 10 seconds for expiration
+        #And wait 10 seconds for expiration
+        And wait until the update to the new state for the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         Then verify the HTTP status code of inoltroEsito/paypal response is 408
         And check error is Operazione in timeout of inoltroEsito/paypal response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN, CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO

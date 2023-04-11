@@ -2,7 +2,7 @@ Feature: Syntax checks KO for nodoAttivaRPT
     Background:
         Given systems up
 
-@midRunnable        
+@runnable        
     Scenario: Check faultCode PPT_SINTASSI_EXTRAXSD error
         Given initial XML nodoAttivaRPT
             """

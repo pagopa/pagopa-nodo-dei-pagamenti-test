@@ -22,7 +22,7 @@ Feature: activatePaymentNoticeV2Request with psp no eCommerce
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-
+    @test
     # activateV2 phase
     Scenario: activatePaymentNoticeV2
         Given the Execute checkPosition request scenario executed successfully

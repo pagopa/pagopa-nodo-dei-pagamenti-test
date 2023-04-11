@@ -273,7 +273,7 @@ Feature: PAG-2212
         And check esito is KO of inoltroEsito/carta response
         And check descrizione is Canale non raggiungibile of inoltroEsito/carta response
 
-    @runnable
+    @test
     Scenario: RT generata nodo (part 2)
         Given the RT generata nodo (part 1) scenario executed successfully
         And the nodoNotificaAnnullamento scenario executed successfully
@@ -296,7 +296,7 @@ Feature: PAG-2212
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @runnable
+    @test
     Scenario: RT generata psp (part 3)
         Given the RT generata psp (part 2) scenario executed successfully
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti

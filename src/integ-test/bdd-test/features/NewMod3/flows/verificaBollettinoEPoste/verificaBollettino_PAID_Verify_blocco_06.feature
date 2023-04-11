@@ -134,7 +134,7 @@ Feature:  block checks for verificaBollettino - position status in PAID after re
 
 
    # Verify Phase 2
-   @check
+   @runnable
    Scenario: Execute verificaBollettino request with the same request as Verify Phase 1
       Given the Execute sendPaymentOutcome request scenario executed successfully
       When psp sends SOAP verificaBollettino to nodo-dei-pagamenti

@@ -110,7 +110,7 @@ Feature: T105_ChiediListaPendentiRPT_nonVuota
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
- @midRunnable
+ @runnable
     Scenario: Execute nodoChiediListaPendentiRPT request
         Given the Execute nodoInviaRPT request scenario executed successfully 
         And initial XML nodoChiediListaPendentiRPT
@@ -124,7 +124,7 @@ Feature: T105_ChiediListaPendentiRPT_nonVuota
                 <password>pwdpwdpwd</password>
                 <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                 <rangeDa>#yesterday_date#</rangeDa>
-                <rangeA>#timedate#</rangeA>
+                <rangeA>#tomorrow_date#</rangeA>
                 <dimensioneLista>5</dimensioneLista>
             </ws:nodoChiediListaPendentiRPT>
         </soapenv:Body>

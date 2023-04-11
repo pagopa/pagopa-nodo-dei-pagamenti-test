@@ -103,7 +103,7 @@ Feature: Syntax checks for RPT - KO
       """
     And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
 
-  @midRunnable
+  @runnable
   Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on invalid RPT tag
     Given <tag> with <tag_value> in RPT
     And RPT generation
@@ -366,7 +366,7 @@ Feature: Syntax checks for RPT - KO
       | RPTSIN194  | pay_i:provinciaResidenza               | MIT                                                                         |
       | RPTSIN195  | pay_i:importoSingoloVersamento         | 999999999.99                                                                |
 
-  @midRunnable
+  @runnable
   Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on invalid RPT tag combination
     Given <tag1> with <tag_value1> in RPT
     And  <tag2> with <tag_value2> in RPT

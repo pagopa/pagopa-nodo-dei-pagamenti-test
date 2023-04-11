@@ -256,7 +256,7 @@ Feature: flows checks for Bollo
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaRPT scenario executed successfully
         #And pay_i:hashDocumento with wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ7F= in RPT

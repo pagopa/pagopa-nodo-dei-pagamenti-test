@@ -3,7 +3,7 @@ Feature: RPTSoloObbligatori
     Background:
         Given systems up
 
-  @midRunnable
+  @runnable
   Scenario: RPTSoloObbligatori
     Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
     And RPT generation

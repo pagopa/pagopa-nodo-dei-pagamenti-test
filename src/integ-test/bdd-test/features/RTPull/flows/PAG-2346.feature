@@ -5,7 +5,7 @@ Feature: PAG-2346
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
 
-    @runnable
+    @test
     Scenario: Test
         Given MB generation
             """
@@ -109,9 +109,6 @@ Feature: PAG-2346
             <pay_i:datiSingoloVersamento>
             <pay_i:importoSingoloVersamento>5.00</pay_i:importoSingoloVersamento>
             <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
-            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
-            <pay_i:ibanAppoggio>IT45R0760103200000000001016</pay_i:ibanAppoggio>
-            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
             <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RPT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
@@ -155,7 +152,7 @@ Feature: PAG-2346
             <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
             </pay_i:dominio>
             <pay_i:identificativoMessaggioRicevuta>TR0001_20120302-10:37:52.0264-F098</pay_i:identificativoMessaggioRicevuta>
-            <pay_i:dataOraMessaggioRicevuta>#timedate#</pay_i:dataOraMessaggioRicevuta>
+            <pay_i:dataOraMessaggioRicevuta>$timedate</pay_i:dataOraMessaggioRicevuta>
             <pay_i:riferimentoMessaggioRichiesta>TR0001_20120302-10:37:52.0264-F098</pay_i:riferimentoMessaggioRichiesta>
             <pay_i:riferimentoDataRichiesta>2012-01-26</pay_i:riferimentoDataRichiesta>
             <pay_i:istitutoAttestante>
@@ -235,7 +232,7 @@ Feature: PAG-2346
             <pay_i:datiSingoloPagamento>
             <pay_i:singoloImportoPagato>3.00</pay_i:singoloImportoPagato>
             <pay_i:esitoSingoloPagamento>TUTTO_OK</pay_i:esitoSingoloPagamento>
-            <pay_i:dataEsitoSingoloPagamento>#date#</pay_i:dataEsitoSingoloPagamento>
+            <pay_i:dataEsitoSingoloPagamento>$date</pay_i:dataEsitoSingoloPagamento>
             <pay_i:identificativoUnivocoRiscossione>$1iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:causaleVersamento>pagamento fotocopie pratica RT</pay_i:causaleVersamento>
             <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
@@ -333,5 +330,5 @@ Feature: PAG-2346
         And job pspChiediListaAndChiediRt triggered after 5 seconds
         And wait 10 seconds for expiration
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
-        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_1iuv on db nodo_online under macro RTPull
-        And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_1iuv on db nodo_online under macro RTPull
+        And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_1iuv on db nodo_online under macro RTPull
+        And checks the value RT_ACCETTATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_1iuv on db nodo_online under macro RTPull

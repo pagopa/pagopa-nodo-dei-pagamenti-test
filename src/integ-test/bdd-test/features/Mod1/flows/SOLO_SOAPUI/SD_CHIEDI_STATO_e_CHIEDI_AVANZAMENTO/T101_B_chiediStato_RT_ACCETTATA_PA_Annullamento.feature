@@ -224,10 +224,12 @@ Feature: T101_B_chiediStato_RT_ACCETTATA_PA_Annullamento
 
     Scenario: Execute job paInviaRt
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
+        And replace iuv content with $1iuv content
+        And replace pa content with #creditor_institution_code# content
         When job paInviaRt triggered after 5 seconds
-        And wait 50 seconds for expiration
+        And wait until the update to the new state for the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
     
-@midRunnable
+@runnable
     Scenario: Execute nodoChiediStatoRPT
         Given the Execute job paInviaRt scenario executed successfully
         And initial XML nodoChiediStatoRPT

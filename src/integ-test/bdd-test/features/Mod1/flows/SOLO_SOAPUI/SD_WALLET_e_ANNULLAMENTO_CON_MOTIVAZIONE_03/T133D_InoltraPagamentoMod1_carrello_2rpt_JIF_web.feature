@@ -402,7 +402,7 @@ Feature: T133D_InoltraPagamentoMod1_carrello_2rpt_JIF_web
     And check urlRedirectPSP field exists in inoltroEsito/mod1 response
     And check substring wpl06 in urlRedirectPSP content of inoltroEsito/mod1 response
 
-@midRunnable   
+@runnable   
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoInoltraEsitoMod1 request scenario executed successfully
     And initial XML nodoInviaRT

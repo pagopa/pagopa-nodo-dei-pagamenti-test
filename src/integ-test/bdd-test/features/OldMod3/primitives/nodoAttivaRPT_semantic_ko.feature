@@ -82,91 +82,91 @@ Feature: Semantic checks KO for nodoAttivaRPT
             </soapenv:Body>
             </soapenv:Envelope>
             """
-@midCheck
+@runnable
   # identificativoPSP value check: identificativoPSP not in configuration [ARPTSEM1]
   Scenario: Check PPT_PSP_SCONOSCIUTO error on non-existent psp
     Given identificativoPSP with pspUnknown in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_PSP_SCONOSCIUTO of nodoAttivaRPT response
 
-@midCheck
+@runnable
   # identificativoPSP value check: identificativoPSP disabled [ARPTSEM2]
   Scenario: Check PPT_PSP_DISABILITATO error on disabled
     Given identificativoPSP with NOT_ENABLED in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_PSP_DISABILITATO of nodoAttivaRPT response
 
-@midCheck
+@runnable
   # identificativoIntermediarioPSP value check: identificativoIntermediarioPSP not in configuration [ARPTSEM3]
   Scenario: Check PPT_INTERMEDIARIO_PSP_SCONOSCIUTO error on non-existent psp
     Given identificativoIntermediarioPSP with brokerPspUnknown in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_INTERMEDIARIO_PSP_SCONOSCIUTO of nodoAttivaRPT response 
 
-@midCheck
+@runnable
   # identificativoIntermediarioPSP value check: identificativoIntermediarioPSP disabled [ARPTSEM4]
   Scenario: Check PPT_INTERMEDIARIO_PSP_DISABILITATO error on disabled psp broker
     Given identificativoIntermediarioPSP with INT_NOT_ENABLED in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_INTERMEDIARIO_PSP_DISABILITATO of nodoAttivaRPT response
 
-@midCheck
+@runnable
   # identificativoCanale value check: identificativoCanale not in configuration [ARPTSEM5]
   Scenario: Check PPT_CANALE_SCONOSCIUTO error on non-existent psp channel
     Given identificativoCanale with channelUnknown in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_CANALE_SCONOSCIUTO of nodoAttivaRPT response
 
-@midCheck
+@runnable
   # identificativoCanale value check: identificativoCanale disabled [ARPTSEM6]
   Scenario: Check PPT_PSP_DISABILITATO error on disabled psp channel
     Given identificativoCanale with CANALE_NOT_ENABLED in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_CANALE_DISABILITATO of nodoAttivaRPT response
 
-@midCheck
+@runnable
   # password value check: wrong password [ARPTSEM7]
   Scenario: Check PPT_AUTENTICAZIONE error on wrong password
     Given password with wrongPassword in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_AUTENTICAZIONE of nodoAttivaRPT response
 
-@midCheck
+@runnable
  # identificativoIntermediarioPSPPagamento value check: identificativoIntermediarioPSPPagamento not in configuration [ARPTSEM8]
   Scenario: Check PPT_INTERMEDIARIO_PSP_SCONOSCIUTO error on non-existent psp
     Given identificativoIntermediarioPSPPagamento with brokerPspUnknown in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_INTERMEDIARIO_PSP_SCONOSCIUTO of nodoAttivaRPT response 
 
-@midCheck
+@runnable
   # identificativoIntermediarioPSPPagamento value check: identificativoIntermediarioPSPPagamento disabled [ARPTSEM9]
   Scenario: Check PPT_INTERMEDIARIO_PSP_DISABILITATO error on disabled psp broker
     Given identificativoIntermediarioPSPPagamento with INT_NOT_ENABLED in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_INTERMEDIARIO_PSP_DISABILITATO of nodoAttivaRPT response
 
-@midCheck
+@runnable
   # identificativoCanalePagamento value check: identificativoCanalePagamento not in configuration [ARPTSEM10]
   Scenario: Check PPT_CANALE_SCONOSCIUTO error on non-existent psp channel
     Given identificativoCanalePagamento with channelUnknown in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_CANALE_SCONOSCIUTO of nodoAttivaRPT response
 
-@midCheck
+@runnable
   # identificativoCanalePagamento value check: identificativoCanalePagamento disabled [ARPTSEM11]
   Scenario: Check PPT_PSP_DISABILITATO error on disabled psp channel
     Given identificativoCanalePagamento with CANALE_NOT_ENABLED in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_CANALE_DISABILITATO of nodoAttivaRPT response
 
-@midCheck
+@runnable
   # codificaInfrastrutturaPSP value check: codificaInfrastrutturaPSP not in configuration [ARPTSEM12]
   Scenario: Check PPT_CODIFICA_PSP_SCONOSCIUTA error on wrong codificaInfrastrutturaPSP
     Given codificaInfrastrutturaPSP with infrastrutturaPSP in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_CODIFICA_PSP_SCONOSCIUTA of nodoAttivaRPT response
 
-@midCheck
+@runnable
   # IUV value check: IUV dimension check 
   Scenario Outline: Check PPT_SEMANTICA error on wrong IUV dimension
     Given <elem> with <value> in nodoAttivaRPT
@@ -178,7 +178,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
       | aim:AuxDigit | 0     | aim:CodIUV | 12312541281233210   | ARPTSEM13  |
       | aim:AuxDigit | 2     | aim:CodIUV | 123455412812332     | ARPTSEM14  |
 
-@midCheck  
+@runnable  
   # codiceIdRPT value check: segregation code check  [ARPTSEM15]
   Scenario: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on segregation code not in configuration
     Given aim:AuxDigit with 3 in nodoAttivaRPT
@@ -187,7 +187,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of nodoAttivaRPT response
 
-@midCheck
+@runnable
   # importoSingoloVersamento KO value check  [ARPTSEM16]
   Scenario: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on importoSingoloVersamento not in configuration
     Given importoSingoloVersamento with 0.00 in nodoAttivaRPT
@@ -215,7 +215,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoAttivaRPT response    
 
-@midCheck
+@runnable
   # identificativoStazioneIntermediarioPA value check [ARPTSEM24]
   Scenario: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on identificativoStazioneIntermediarioPA not in configuration
     Given initial XML nodoAttivaRPT
@@ -295,7 +295,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
     Then check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of nodoAttivaRPT response
 
-@midCheck
+@runnable
   # identificativoStazioneIntermediarioPA value check: identificativoStazioneIntermediarioPA disabled [ARPTSEM25]
   Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on identificativoStazioneIntermediarioPA disabled
     Given aim:AuxDigit with 3 in nodoAttivaRPT
@@ -304,14 +304,14 @@ Feature: Semantic checks KO for nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
     Then check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of nodoAttivaRPT response
 
-@midCheck  
+@runnable  
   # identificativoDominio value check: identificativoDominio not in configuration [ARPTSEM26]
   Scenario: Check PPT_DOMINIO_SCONOSCIUTO error on identificativoDominio not in configuration
     Given aim:CCPost with 712377777777 in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
     Then check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoAttivaRPT response
 
-@midCheck  
+@runnable  
   # identificativoDominio value check: identificativoDominio disabled [ARPTSEM27]
   Scenario: Check PPT_DOMINIO_SCONOSCIUTO error on identificativoDominio disabled
     Given initial XML nodoAttivaRPT
@@ -391,14 +391,14 @@ Feature: Semantic checks KO for nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
     Then check faultCode is PPT_DOMINIO_SCONOSCIUTO of nodoAttivaRPT response
 
-@midCheck    
+@runnable    
   # identificativoCanale value check: identificativoCanale not in configuration [ARPTSEM28]
   Scenario: Check PPT_AUTORIZZAZIONE error on identificativoCanale not in psp configuration
     Given identificativoCanale with #canale# in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
     Then check faultCode is PPT_AUTORIZZAZIONE of nodoAttivaRPT response 
 
-@midCheck
+@runnable
   # Check PPT_SEMANTICA error [ARPTSEM29]
   Scenario: Check PPT_SEMANTICA error on wrong noticeNumber
     Given initial XML nodoAttivaRPT
@@ -478,7 +478,7 @@ Feature: Semantic checks KO for nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti 
     Then check faultCode is PPT_SEMANTICA of nodoAttivaRPT response
 
-@midCheck
+@runnable
   # Check PPT_SEMANTICA error [ARPTSEM30]
   Scenario: Check PPT_SEMANTICA error on wrong noticeNumber
     Given initial XML nodoAttivaRPT

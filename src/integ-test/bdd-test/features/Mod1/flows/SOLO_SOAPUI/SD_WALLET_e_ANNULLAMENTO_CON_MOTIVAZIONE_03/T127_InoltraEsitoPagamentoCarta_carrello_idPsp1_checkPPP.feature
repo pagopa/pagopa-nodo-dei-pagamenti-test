@@ -204,7 +204,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_idPsp1_checkPPP
     And replace canaleUsato content with WFESP_01_gabri content
     And checks the value idPsp1 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query ID_Serv_Plugin on db nodo_cfg under macro Mod1
 
-@midRunnable
+@runnable
   Scenario: Execute nodoInoltraEsitoPagamentoCarta request
     Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
     And initial XML pspInviaCarrelloRPTCarte

@@ -135,7 +135,7 @@ Feature: T096_D_ChiediStato_RPT_ERRORE_INVIO_PSP_mancatoCertificato_https
         And checks stato contains RPT_ERRORE_INVIO_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
 
-    @midRunnable
+    @runnable
      Scenario: execution nodoInviaRPT duplicato
         Given the Execute nodoChiediStatoRPT scenario executed successfully
         And initial XML nodoInviaRPT

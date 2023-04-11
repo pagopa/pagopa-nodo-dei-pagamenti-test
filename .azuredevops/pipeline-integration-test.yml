@@ -13,6 +13,15 @@ parameters:
       - sit
     default: dev
 
+  - name: folder
+    displayName: Integration test folder
+    type: string
+    default: src/integ-test/bdd-test/features/
+  - name: tags
+    type: string
+    default: runnable,test
+    displayName: Integration test tags
+
 variables:
   archiveName: nodo-dei-pagamenti-NRT.zip
   destinationFolderExtractArtifact: nodo/extracted
@@ -41,6 +50,19 @@ stages:
               keyVaultName: $(az-kv-name-${{ parameters.env }})
               secretsFilter: "*"
               runAsPreJob: true
+              
+          - script: |
+              echo "install git START"
+              
+              sudo apt-get update
+              
+              sudo apt-get install git-all
+              
+              echo "Install Git LFS"
+              git lfs install
+
+            displayName: "Install Git and LFS"
+          
 
           - script: |
               function replace {
@@ -190,8 +212,9 @@ stages:
               whereis behave
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
-
               behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/ --tags=runnable,midRunnable
+              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/ --tags=check,midCheck
+              #behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/src/integ-test/bdd-test/features/Mod1/flows/SOLO_SOAPUI --tags=midRunnable
 
             displayName: "Run integration test"
 

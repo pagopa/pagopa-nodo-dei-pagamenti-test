@@ -224,7 +224,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
         Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_RIFIUTATA_NODO of nodoChiediStatoRPT response
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaCarrelloRPT
         Given the Execute nodoChiediStatoRPT scenario executed successfully
         And initial XML nodoInviaCarrelloRPT

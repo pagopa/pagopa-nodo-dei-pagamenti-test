@@ -131,7 +131,7 @@ Feature: T003_nodoInviaRT_esito=0_carrello_senzaNamespace
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And RT1 generation

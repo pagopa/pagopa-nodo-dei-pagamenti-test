@@ -440,7 +440,7 @@ Feature: T135_C_InoltraPagamentoMod2_carrello_BBT_noPPI
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInviaRT 1 (Phase 5)
         Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
         And identificativoUnivocoVersamento with noPPI in nodoInviaRT

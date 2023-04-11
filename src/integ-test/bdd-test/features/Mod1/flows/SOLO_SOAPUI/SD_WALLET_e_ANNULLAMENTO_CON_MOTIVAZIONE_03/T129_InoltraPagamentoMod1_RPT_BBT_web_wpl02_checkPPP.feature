@@ -112,7 +112,7 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_wpl02_checkPPP
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoInoltraEsitoPagamentoMod1 request
         Given the Execute nodoInviaRPT request scenario executed successfully
         And initial XML pspInviaRPT 

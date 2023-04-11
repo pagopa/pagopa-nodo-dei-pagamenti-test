@@ -195,7 +195,7 @@ Feature: NCAP
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
 
-    @midRunnable
+    @runnable
     Scenario: Execute nodoChiediAvanzamentoPagamento2
         Given the Execute nodoChiediAvanzamentoPagamento1 scenario executed successfully
         When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
