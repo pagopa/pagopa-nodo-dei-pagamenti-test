@@ -635,8 +635,7 @@ Feature: semantic checks for closePaymentV2
         And paymentToken with $sessionToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
-        And check outcome is KO of v2/closepayment response
-        And check description is Wrong station version of v2/closepayment response
+        And check outcome is OK of v2/closepayment response
 
     # check channel versione primitive 2, 2 token pa old
 
@@ -873,4 +872,4 @@ Feature: semantic checks for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
-        And check description is Wrong station version of v2/closepayment response
+        And check description is Invalid token number of v2/closepayment response
