@@ -120,7 +120,7 @@ K6_INFLUXDB_CONCURRENT_WRITES=6 K6_INFLUXDB_PUSH_INTERVAL=5s k6 run --out csv=sr
     src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js \
     -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output \
     --out influxdb=http://localhost:8086/nodo_ndp_datastorek6 \
-    -e SUBSCRIPTION_KEY=0f45790079eb45e0b526d15faaf58d95 -v
+    -e SUBSCRIPTION_KEY=<SUBSCRIPTION_KEY> -v
 
 #     \
 #     influxdb=http://k6nodo:siametricssiametricssiametrics@10.101.132.117:8086/k6nodo
