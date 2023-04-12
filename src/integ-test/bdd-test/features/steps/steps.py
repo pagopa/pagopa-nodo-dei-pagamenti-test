@@ -49,7 +49,7 @@ def step_impl(context):
     assert responses
 
 
-@given(u'EC {version:OldNew} version')
+@given(u'EC {version} version')
 def step_impl(context, version):
     # TODO implement with api-config
     pass
