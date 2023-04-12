@@ -10,6 +10,7 @@ from multiprocessing.sharedctypes import Value
 from sre_constants import ASSERT
 from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
+import xmltodict
 if 'NODOPGDB' in os.environ:
     import db_operation_pg as db
 else:
@@ -49,7 +50,7 @@ def step_impl(context):
     assert responses
 
 
-@given(u'EC {version:OldNew} version')
+@given(u'EC {version} version')
 def step_impl(context, version):
     # TODO implement with api-config
     pass
@@ -1092,7 +1093,7 @@ def step_impl(context, tag, primitive):
     assert payment_token is not None
 
 
-@then(u'check {mock:EcPsp} receives {primitive} properly')
+@then(u'check {mock} receives {primitive} properly')
 def step_impl(context, mock, primitive):
     rest_mock = utils.get_rest_mock_ec(
         context) if mock == "EC" else utils.get_rest_mock_psp(context)
@@ -1107,7 +1108,7 @@ def step_impl(context, mock, primitive):
     assert "request" in json and len(json.get("request").keys()) > 0
 
 
-@then(u'check {mock:EcPsp} receives {primitive} {status:ProperlyNotProperly} with noticeNumber {notice_number}')
+@then(u'check {mock} receives {primitive} {status} with noticeNumber {notice_number}')
 def step_impl(context, mock, primitive, status, notice_number):
     rest_mock = utils.get_rest_mock_ec(
         context) if mock == "EC" else utils.get_rest_mock_psp(context)
@@ -1128,7 +1129,7 @@ def step_impl(context, mock, primitive, status, notice_number):
             assert True
 
 
-@then(u'check {mock:EcPsp} receives {primitive} properly having in the receipt {value} as {elem}')
+@then(u'check {mock} receives {primitive} properly having in the receipt {value} as {elem}')
 def step_impl(context, mock, primitive, value, elem):
     json = getattr(context, primitive)
     if "$" in value:
@@ -1138,7 +1139,7 @@ def step_impl(context, mock, primitive, value, elem):
     assert body.get(primitive_name)[0].get("receipt")[0].get(elem)[0] == value
 
 
-@then(u'check {mock:EcPsp} receives {primitive} properly having in the transfer with idTransfer {idTransfer} the same {elem} of {other_primitive}')
+@then(u'check {mock} receives {primitive} properly having in the transfer with idTransfer {idTransfer} the same {elem} of {other_primitive}')
 def step_impl(context, mock, primitive, idTransfer, elem, other_primitive):
     _assert = False
     soap_action = getattr(context, other_primitive)
@@ -1180,7 +1181,7 @@ def step_impl(context, name, n):
             context.execute_steps(text_step)
 
 
-@when(u'{sender} sends rest {method:Method} {service} to {receiver}')
+@when(u'{sender} sends rest {method} {service} to {receiver}')
 def step_impl(context, sender, method, service, receiver):
     # TODO get url according to receiver
     url_nodo = utils.get_rest_url_nodo(context, service)
@@ -1791,7 +1792,7 @@ def step_impl(context, elem, primitive):
         assert False
 
 
-@step("{mock:EcPsp} waits {number} minutes for expiration")
+@step("{mock} waits {number} minutes for expiration")
 def step_impl(context, mock, number):
     seconds = float(number) * 60
     print(f"wait for: {seconds} seconds")
@@ -1805,7 +1806,7 @@ def step_impl(context, number):
     time.sleep(seconds)
 
 
-@step("{mock:EcPsp} waits {number} seconds for expiration")
+@step("{mock} waits {number} seconds for expiration")
 def step_impl(context, mock, number):
     seconds = float(number)
     print(f"wait for: {seconds} seconds")
