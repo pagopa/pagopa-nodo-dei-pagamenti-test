@@ -10,6 +10,7 @@ from multiprocessing.sharedctypes import Value
 from sre_constants import ASSERT
 from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
+import xmltodict
 if 'NODOPGDB' in os.environ:
     import db_operation_pg as db
 else:
