@@ -154,7 +154,7 @@ stages:
               sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
               sudo apt update
               sudo apt install libaio1
-              sudo apt install postgresql postgresql-dev python-dev
+              sudo apt install postgresql postgresql-dev
 
             displayName: "Install Oracle Instant Client"
 
