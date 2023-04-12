@@ -115,18 +115,6 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | idBundle                      | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
             | idCiBundle                    | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
 
-    @test
-    # syntax check - Invalid field - payment method
-    Scenario Outline: Check syntax error on invalid body element value - payment method
-        Given the closePaymentV2 scenario executed successfully
-        And <elem> with <value> in v2/closepayment
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 400
-        And check outcome is KO of v2/closepayment response
-        And check description is Invalid payment method of v2/closepayment response
-        Examples:
-            | elem          | value | soapUI test |
-            | paymentMethod | OBEP  | SIN_CPV2_12 |
 
     @test
     # syntax check - Invalid field - paymentToken
@@ -490,3 +478,26 @@ Feature: syntax checks for closePaymentV2 outcome OK
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid paymentTokens of v2/closepayment response
+
+
+    @test
+    Scenario Outline: check closePaymentV2 OK outline
+        Given the check activatePaymentNoticeV2 OK 4 scenario executed successfully
+        And the closePaymentV2 scenario executed successfully
+        And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
+        And paymentMethod with <value> in v2/closepayment
+        And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        Examples:
+            | value | soapUI test |
+            | AD    | PAG-2482    |
+            | BBT   | PAG-2482    |
+            | BP    | PAG-2482    |
+            | OBEP  | PAG-2482    |
+            | PO    | PAG-2482    |
+            | JIF   | PAG-2482    |
+            | MYBK  | PAG-2482    |
+            | BPAY  | PAG-2482    |
+            | PPAL  | PAG-2482    |
