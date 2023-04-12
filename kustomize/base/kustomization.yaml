@@ -1,9 +1,0 @@
-commonLabels:
-  app: mock-ec-prf
-
-resources:
-  - deployment.yaml
-  - service.yaml
-
-generatorOptions:
-  disableNameSuffixHash: true
