@@ -154,6 +154,7 @@ stages:
               sudo unzip instantclient-basic-linux.x64-21.6.0.0.0dbru.zip
               sudo apt update
               sudo apt install libaio1
+              sudo apt install postgresql postgresql-dev python-dev
 
             displayName: "Install Oracle Instant Client"
 
@@ -204,6 +205,7 @@ stages:
 
           - script: |
               export PATH=/usr/bin:/usr/local/bin:$PATH #Add environment variables
+              export PATH=$PATH:/usr/pgsql-9.3/bin/
               echo 'Install Behave'
               sudo pip3 install behave
               sudo pip3 install psycopg2-binary 
