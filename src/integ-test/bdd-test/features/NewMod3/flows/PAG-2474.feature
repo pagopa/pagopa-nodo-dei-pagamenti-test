@@ -469,14 +469,14 @@ Feature: PAG 2474
             """
         And rpt with $rptAttachment in nodoInviaRPT
         And codiceContestoPagamento with $activatePaymentNoticeResponse.paymentToken in nodoInviaRPT
-        # When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        # Then check esito is OK of nodoInviaRPT response
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
 
-        # # POSITION_SERVICE
-        # And verify 1 record for the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
+        # POSITION_SERVICE
+        And verify 1 record for the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
 
-        # # POSITION_SUBJECT
-        # And checks the value nome of the record at column FULL_NAME of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
-        # And checks the value strada of the record at column STREET_NAME of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
-        # And checks the value civico of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
-        # And verify 1 record for the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
+        # POSITION_SUBJECT
+        And checks the value nome of the record at column FULL_NAME of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
+        And checks the value strada of the record at column STREET_NAME of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
+        And checks the value civico of the record at column CIVIC_NUMBER of the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
+        And verify 1 record for the table POSITION_SUBJECT retrived by the query position_subject_3 on db nodo_online under macro NewMod3
