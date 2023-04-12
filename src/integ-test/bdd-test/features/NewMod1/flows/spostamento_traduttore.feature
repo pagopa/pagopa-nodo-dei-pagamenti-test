@@ -264,7 +264,7 @@ Feature: spostamento traduttore
             """
             {
                 "paymentTokens": [
-                    "$sessionToken"
+                    "$activatePaymentNoticeV2Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -1207,7 +1207,7 @@ Feature: spostamento traduttore
         # RPT_ACTIVATIONS
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test
+    @test @check
     Scenario: Test 6 (part 3)
         Given the Test 6 (part 2) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
