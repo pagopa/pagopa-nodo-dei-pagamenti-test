@@ -1720,14 +1720,14 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
-    @test
+    @test @check
     Scenario: Test 11
         Given the activatePaymentNoticeV2 scenario executed successfully
         And the paaAttivaRPT delay scenario executed successfully
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         And execution query select_activatev2 to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online
         And through the query select_activatev2 retrieve param ccp at position 0 and save it under the key ccp
         And the nodoInviaRPT with ccp from DB scenario executed successfully
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         And EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
@@ -1767,14 +1767,14 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
-    @test
+    @test @check
     Scenario: Test 12
         Given the activatePaymentNoticeV2 scenario executed successfully
         And the paaAttivaRPT timeout scenario executed successfully
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         And execution query select_activatev2 to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online
         And through the query select_activatev2 retrieve param ccp at position 0 and save it under the key ccp
         And the nodoInviaRPT with ccp from DB scenario executed successfully
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         And EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
@@ -1811,15 +1811,15 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
-    @test
+    @test @check
     Scenario: Test 13
         Given the activatePaymentNoticeV2 scenario executed successfully
         And the paaAttivaRPT timeout scenario executed successfully
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         And wait 12 seconds for expiration
         And execution query select_activatev2 to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online
         And through the query select_activatev2 retrieve param ccp at position 0 and save it under the key ccp
         And the nodoInviaRPT with ccp from DB scenario executed successfully
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         And EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And check outcome is KO of activatePaymentNoticeV2 response
@@ -1858,7 +1858,7 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @test
+    @test @check
     Scenario: Test 14 (part 2)
         Given the Test 14 (part 1) scenario executed successfully
         And execution query select_activatev2 to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online
