@@ -259,7 +259,7 @@ Feature: spostamento traduttore
             </soapenv:Envelope>
             """
 
-    Scenario: nodoInviaRPT new
+    Scenario: nodoInviaRPT with ccp from DB
         Given RPT generation
             """
             <pay_i:RPT xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd " xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -319,7 +319,7 @@ Feature: spostamento traduttore
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
             <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>#ccp#</pay_i:codiceContestoPagamento>
+            <pay_i:codiceContestoPagamento>$ccp</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -1724,7 +1724,9 @@ Feature: spostamento traduttore
     Scenario: Test 11
         Given the activatePaymentNoticeV2 scenario executed successfully
         And the paaAttivaRPT delay scenario executed successfully
-        And the nodoInviaRPT new scenario executed successfully
+        And execution query select_activatev2 to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online
+        And through the query select_activatev2 retrieve param ccp at position 0 and save it under the key ccp
+        And the nodoInviaRPT with ccp from DB scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         And EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
@@ -1769,7 +1771,9 @@ Feature: spostamento traduttore
     Scenario: Test 12
         Given the activatePaymentNoticeV2 scenario executed successfully
         And the paaAttivaRPT timeout scenario executed successfully
-        And the nodoInviaRPT new scenario executed successfully
+        And execution query select_activatev2 to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online
+        And through the query select_activatev2 retrieve param ccp at position 0 and save it under the key ccp
+        And the nodoInviaRPT with ccp from DB scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         And EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
@@ -1812,7 +1816,9 @@ Feature: spostamento traduttore
         Given the activatePaymentNoticeV2 scenario executed successfully
         And the paaAttivaRPT timeout scenario executed successfully
         And wait 12 seconds for expiration
-        And the nodoInviaRPT new scenario executed successfully
+        And execution query select_activatev2 to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online
+        And through the query select_activatev2 retrieve param ccp at position 0 and save it under the key ccp
+        And the nodoInviaRPT with ccp from DB scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         And EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
@@ -1854,24 +1860,24 @@ Feature: spostamento traduttore
     @test
     Scenario: Test 14 (part 2)
         Given the Test 14 (part 1) scenario executed successfully
-        And the nodoInviaRPT new scenario executed successfully
+        And execution query select_activatev2 to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online
+        And through the query select_activatev2 retrieve param ccp at position 0 and save it under the key ccp
+        And the nodoInviaRPT with ccp from DB scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
         And check description is RPT non attivata of nodoInviaRPT response
 
-        # POSITION_PAYMENT_STATUS
-        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-
-        # POSITION_PAYMENT_STATUS_SNAPSHOT
-        And checks the value CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        # RPT_ACTIVATIONS
+        And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column PAAATTIVARPTERROR of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # STATI_RPT
-        And checks the value RPT_RICEVUTA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
-        And verify 1 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RPT_RICEVUTA_NODO,RPT_RIFIUTATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 2 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RPT_RICEVUTA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RPT_RIFIUTATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
