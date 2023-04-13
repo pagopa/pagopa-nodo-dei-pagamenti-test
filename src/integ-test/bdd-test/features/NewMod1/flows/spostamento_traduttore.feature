@@ -630,7 +630,7 @@ Feature: spostamento traduttore
         And checks the value v2 of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test @check
+    @test
     Scenario: Test 1 (part 4)
         Given the Test 1 (part 3) scenario executed successfully
         And wait 5 seconds for expiration
@@ -1845,16 +1845,16 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
-    @test
+
     Scenario: Test 14 (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
         And the paaAttivaRPT KO scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
-
+    @test
     Scenario: Test 14 (part 2)
         Given the Test 14 (part 1) scenario executed successfully
-        And the nodoInviaRPT scenario executed successfully
+        And the nodoInviaRPT new scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
