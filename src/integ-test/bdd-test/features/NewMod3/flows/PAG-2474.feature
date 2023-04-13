@@ -459,9 +459,9 @@ Feature: PAG 2474
     @test
     Scenario: Pa old 1.5
         Given the Pa old 1.4 scenario executed successfully
-        And pay_i:anagraficaVersante with nome in RPT
-        And pay_i:indirizzoVersante with strada in RPT
-        And pay_i:civicoVersante with civico in RPT
+        And pay_i:anagraficaPagatore with nome in RPT
+        And pay_i:indirizzoPagatore with strada in RPT
+        And pay_i:civicoPagatore with civico in RPT
         And pay_i:codiceContestoPagamento with $activatePaymentNoticeResponse.paymentToken in RPT
         And RPT generation
             """
