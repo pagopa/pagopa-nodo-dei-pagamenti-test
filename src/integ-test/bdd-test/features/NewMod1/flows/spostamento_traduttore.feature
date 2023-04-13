@@ -1720,7 +1720,7 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
-    @test @check
+    @test 
     Scenario: Test 11
         Given the activatePaymentNoticeV2 scenario executed successfully
         And the paaAttivaRPT delay scenario executed successfully
@@ -1767,7 +1767,7 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
-    @test @check
+    @test 
     Scenario: Test 12
         Given the activatePaymentNoticeV2 scenario executed successfully
         And the paaAttivaRPT timeout scenario executed successfully
@@ -1811,7 +1811,7 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
-    @test @check
+    @test 
     Scenario: Test 13
         Given the activatePaymentNoticeV2 scenario executed successfully
         And the paaAttivaRPT timeout scenario executed successfully
@@ -1858,7 +1858,7 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
-    @test @check
+    @test 
     Scenario: Test 14 (part 2)
         Given the Test 14 (part 1) scenario executed successfully
         And execution query select_activatev2 to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online
