@@ -371,12 +371,16 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         And execution query select_activate to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online
         And through the query select_activate retrieve param ccp at position 0 and save it under the key ccp
+        
+        # RPT_ACTIVATIONS
+        And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value N of the record at column PAAATTIVARPTERROR of the table RPT_ACTIVATIONS retrived by the query select_activate on db nodo_online under macro NewMod1
+        
         And the nodoInviaRPT with ccp from DB scenario executed successfully
         And EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
         # RPT_ACTIVATIONS
-        And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activate on db nodo_online under macro NewMod1
         And checks the value Y of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activate on db nodo_online under macro NewMod1
         And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activate on db nodo_online under macro NewMod1
 
@@ -418,6 +422,11 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         And execution query select_activate to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online
         And through the query select_activate retrieve param ccp at position 0 and save it under the key ccp
+        
+        # RPT_ACTIVATIONS
+        And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value N of the record at column PAAATTIVARPTERROR of the table RPT_ACTIVATIONS retrived by the query select_activate on db nodo_online under macro NewMod1
+        
         And the nodoInviaRPT with ccp from DB scenario executed successfully
         And EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
@@ -463,6 +472,11 @@ Feature: spostamento traduttore
         And wait 12 seconds for expiration
         And execution query select_activate to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online
         And through the query select_activate retrieve param ccp at position 0 and save it under the key ccp
+        
+        # RPT_ACTIVATIONS
+        And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value N of the record at column PAAATTIVARPTERROR of the table RPT_ACTIVATIONS retrived by the query select_activate on db nodo_online under macro NewMod1
+        
         And the nodoInviaRPT with ccp from DB scenario executed successfully
         And EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
@@ -502,6 +516,12 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNotice response
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column PAAATTIVARPTERROR of the table RPT_ACTIVATIONS retrived by the query select_activate on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activate on db nodo_online under macro NewMod1
+
     @test @check
     Scenario: Test 14 (part 2)
         Given the Test 14 (part 1) scenario executed successfully
