@@ -1424,12 +1424,12 @@ def step_impl(context):
 
 @step('current date generation')
 def step_impl(context):
-    date = (datetime.datetime.now() + datetime.timedelta(hours = 1)).strftime("%Y-%m-%d %H:%M:%S")
+    date = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome'))).strftime("%Y-%m-%d %H:%M:%S")
     setattr(context, 'date', date)
 
 @step('current date plus {minutes:d} minutes generation')
 def step_impl(context, minutes):
-    date_plus_minutes = (datetime.datetime.now() + datetime.timedelta(hours = 1, minutes = minutes)).strftime("%Y-%m-%d %H:%M:%S")
+    date_plus_minutes = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(minutes = minutes)).strftime("%Y-%m-%d %H:%M:%S")
     setattr(context, 'date_plus_minutes', date_plus_minutes)
 
 
