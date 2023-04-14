@@ -811,8 +811,8 @@ Feature: semantic checks for closePaymentV2
             """
             {
                 "paymentTokens": [
-                    "$1sessionToken",
-                    "$2sessionToken"
+                    "$activatePaymentNoticeV2_1Response.paymentToken",
+                    "$activatePaymentNoticeV2_2Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -833,14 +833,13 @@ Feature: semantic checks for closePaymentV2
         Given the activatePaymentNoticeV2 pa old scenario executed successfully
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
 
     Scenario: test 1.2
         Given the test 1.1 scenario executed successfully
         And the nodoInviaRPT 2 scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-        And replace 1sessionToken content with $sessionToken content
 
     Scenario: test 1.3
         Given the test 1.2 scenario executed successfully
@@ -851,6 +850,7 @@ Feature: semantic checks for closePaymentV2
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
 
     Scenario: test 1.4
         Given the test 1.3 scenario executed successfully
@@ -863,8 +863,7 @@ Feature: semantic checks for closePaymentV2
         And identificativoUnivocoVersamento with $iuv in nodoInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-        And replace 2sessionToken content with $sessionToken content
+
     @test
     Scenario: test 1.5
         Given the test 1.4 scenario executed successfully
