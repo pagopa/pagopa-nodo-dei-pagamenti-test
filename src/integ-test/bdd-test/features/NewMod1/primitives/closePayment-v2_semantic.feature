@@ -855,12 +855,14 @@ Feature: semantic checks for closePaymentV2
     Scenario: test 1.4
         Given the test 1.3 scenario executed successfully
         And pay_i:identificativoUnivocoVersamento with $iuv in RPT
+        And pay_i:codiceContestoPagamento with $activatePaymentNoticeV2_2.paymentToken in RPT
         And RPT generation
             """
             $RPT
             """
         And rpt with $rptAttachment in nodoInviaRPT
         And identificativoUnivocoVersamento with $iuv in nodoInviaRPT
+        And codiceContestoPagamento with $activatePaymentNoticeV2_2.paymentToken in nodoInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
