@@ -623,7 +623,7 @@ Feature: flow checks for closePayment - PA new
       And execution query select_activateio to get value on the table POSITION_ACTIVATE, with the columns TO_CHAR(TOKEN_VALID_TO, 'YYYY-MM-DD HH24:MI:SS') under macro NewMod1 with db name nodo_online
       And through the query select_activateio retrieve param TO_CHAR(TOKEN_VALID_TO, 'YYYY-MM-DD HH24:MI:SS') at position 0 and save it under the key tokenvalidto
       And check value $date is equal to value $tokenvalidto
-   @test
+   @test @newfix
    Scenario: FLUSSO_CP_03 (part 4)
       Given the FLUSSO_CP_03 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
