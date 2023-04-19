@@ -1677,7 +1677,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test
+    @test @newfix
     Scenario: PSRTV2_ACTV1_23 (part 3)
         Given the PSRTV2_ACTV1_23 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1932,7 +1932,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test
+    @test @newfix
     Scenario: PSRTV2_ACTV1_27 (part 3)
         Given the PSRTV2_ACTV1_27 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
