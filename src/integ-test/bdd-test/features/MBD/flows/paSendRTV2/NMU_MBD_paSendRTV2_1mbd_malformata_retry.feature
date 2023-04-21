@@ -312,7 +312,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
 
     # inserire i check sul blob in RE per l'xml paSendRTV2
 
-    @test
+    @test 
     # trigger pa send RT retry
     Scenario: Execute paSendRT
         Given the execute DB check scenario executed successfully
