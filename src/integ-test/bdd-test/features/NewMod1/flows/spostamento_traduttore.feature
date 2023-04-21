@@ -732,7 +732,7 @@ Feature: spostamento traduttore
         And verify 8 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RT_INVIATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
@@ -1930,7 +1930,6 @@ Feature: spostamento traduttore
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
-
 
     Scenario: Test 14 (part 1)
         Given the activatePaymentNoticeV2 scenario executed successfully
