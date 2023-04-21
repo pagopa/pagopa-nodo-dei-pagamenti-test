@@ -102,7 +102,7 @@ def get_rest_url_nodo(context, primitive):
         "listaPSP": "/nodo-per-pm/v1",
         "notificaAnnullamento": "/nodo-per-pm/v1",
         "v1/closepayment": "/nodo-per-pm",
-        "v2/closepayment": "/nodo-per-pm"
+        "v2/closepayment?clientId&deviceId": "/nodo-per-pm"
     }
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == " ":
         if "avanzamentoPagamento" in primitive:
