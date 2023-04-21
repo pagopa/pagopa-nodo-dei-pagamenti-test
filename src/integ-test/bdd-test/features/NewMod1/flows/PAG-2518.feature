@@ -119,7 +119,7 @@ Feature: PAG-2518
             """
 
     Scenario: closePaymentV2 request
-        Given initial json v2/closepayment
+        Given initial json v2/closepayment?clientId&deviceId
             """
             {
                 "paymentTokens": [
@@ -202,9 +202,9 @@ Feature: PAG-2518
     Scenario: Test (part 2)
         Given the Test (part 1) scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
+        When WISP sends rest POST v2/closepayment?clientId&deviceId_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment?clientId&deviceId response is 200
+        And check outcome is OK of v2/closepayment?clientId&deviceId response
 
         # PM_METADATA
         And checks the value Token,Tipo versamento,key,QUERYSTRING of the record at column KEY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1

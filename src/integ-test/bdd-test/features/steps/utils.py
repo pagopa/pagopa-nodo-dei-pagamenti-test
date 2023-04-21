@@ -102,7 +102,7 @@ def get_rest_url_nodo(context, primitive):
         "listaPSP": "/nodo-per-pm/v1",
         "notificaAnnullamento": "/nodo-per-pm/v1",
         "v1/closepayment": "/nodo-per-pm",
-        "v2/closepayment?clientId&deviceId": "/nodo-per-pm"
+        "v2/closepayment": "/nodo-per-pm"
     }
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == " ":
         if "avanzamentoPagamento" in primitive:
@@ -115,6 +115,8 @@ def get_rest_url_nodo(context, primitive):
             primitive = "notificaAnnullamento"
         elif "_json" in primitive:
             primitive = primitive.split('_')[0]
+            if "v2/closepayment" in primitive:
+                primitive = "v2/closepayment"
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
     else:
         return ""
