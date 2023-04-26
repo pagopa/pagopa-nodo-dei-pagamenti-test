@@ -364,6 +364,7 @@
         "sprv2_req_spov2": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcomeV2.paymentToken' AND TIPO_EVENTO = 'sendPaymentResult-v2' AND SOTTO_TIPO_EVENTO = 'REQ'",
         "cpv2_req_spov2": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcomeV2.paymentToken' AND TIPO_EVENTO = 'closePayment-v2' AND SOTTO_TIPO_EVENTO = 'REQ'",
         "cpv2_req_spo": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcome.paymentToken' AND TIPO_EVENTO = 'closePayment-v2' AND SOTTO_TIPO_EVENTO = 'REQ'",
+        "cpv2_req_activatev2": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2_1Response.paymentToken' AND TIPO_EVENTO = 'closePayment-v2' AND SOTTO_TIPO_EVENTO = 'REQ'",
         "pasendrtv2_req_spo": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcome.paymentToken' AND TIPO_EVENTO = 'paSendRTV2' AND SOTTO_TIPO_EVENTO = 'REQ'",
         "pasendrtv2_req_spov2": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcomeV2.paymentToken' AND TIPO_EVENTO = 'paSendRTV2' AND SOTTO_TIPO_EVENTO = 'REQ'",
         "select_position_transfer_mbd": "SELECT s.columns FROM table_name s JOIN POSITION_TRANSFER pt ON pt.ID = s.FK_POSITION_TRANSFER WHERE pt.NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND pt.PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode'",
