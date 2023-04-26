@@ -119,7 +119,7 @@ Feature: PAG-2518
             """
 
     Scenario: closePaymentV2 request
-        Given initial json v2/closepayment
+        Given initial json v2/closepayment?clientId&deviceId
             """
             {
                 "paymentTokens": [
