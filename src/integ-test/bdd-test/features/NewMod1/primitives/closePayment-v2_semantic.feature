@@ -634,7 +634,7 @@ Feature: semantic checks for closePaymentV2
         And the closePaymentV2 scenario executed successfully
         And paymentToken with $sessionToken in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 400
+        Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
     # check channel versione primitive 2, 2 token pa old
