@@ -35,7 +35,6 @@ Feature: PAG-2518
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>310$iuv</noticeNumber>
             </qrCode>
-            <expirationTime>60000</expirationTime>
             <amount>10.00</amount>
             <paymentNote>responseFull</paymentNote>
             </nod:activatePaymentNoticeV2Request>
@@ -140,6 +139,42 @@ Feature: PAG-2518
             }
             """
 
+    Scenario: pspNotifyPaymentV2 malformata response
+        Given initial XML pspNotifyPaymentV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentV2Res>
+            <outcome>OO</outcome>
+            </pfn:pspNotifyPaymentV2Res>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
+
+    Scenario: pspNotifyPaymentV2 KO response
+        Given initial XML pspNotifyPaymentV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentV2Res>
+            <outcome>KO</outcome>
+            <!--Optional:-->
+            <fault>
+            <faultCode>CANALE_SEMANTICA</faultCode>
+            <faultString>Errore semantico dal psp</faultString>
+            <id>1</id>
+            <!--Optional:-->
+            <description>Errore dal psp</description>
+            </fault>
+            </pfn:pspNotifyPaymentV2Res>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
+
     Scenario: sendPaymentOutcomeV2 request
         Given initial XML sendPaymentOutcomeV2
             """
@@ -191,7 +226,9 @@ Feature: PAG-2518
             </soapenv:Envelope>
             """
 
-    Scenario: Test (part 1)
+    ##########################################################################################################################
+
+    Scenario: Test 1.1
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And the paGetPaymentV2 response scenario executed successfully
@@ -199,8 +236,8 @@ Feature: PAG-2518
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    Scenario: Test (part 2)
-        Given the Test (part 1) scenario executed successfully
+    Scenario: Test 1.2
+        Given the Test 1.1 scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
         When WISP sends rest POST v2/closepayment?clientId&deviceId_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
@@ -213,8 +250,8 @@ Feature: PAG-2518
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
     @test
-    Scenario: Test (part 3)
-        Given the Test (part 2) scenario executed successfully
+    Scenario: Test 1.3
+        Given the Test 1.2 scenario executed successfully
         And wait 5 seconds for expiration
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -224,6 +261,140 @@ Feature: PAG-2518
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $activatePaymentNoticeV2Response.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
+        And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
+        And checking value $XML_RE.QUERYSTRING is equal to value clientId&deviceId
+        And execution query cpv2_req_spov2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query cpv2_req_spov2 retrieve param info at position 0 and save it under the key info
+        And checking value $info is equal to value clientId&deviceId
+
+    ##########################################################################################################################
+
+    Scenario: Test 2.1
+        Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
+        And the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 request scenario executed successfully
+        And the paGetPaymentV2 response scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+    Scenario: Test 2.2
+        Given the Test 2.1 scenario executed successfully
+        And the pspNotifyPaymentV2 malformata response scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        When WISP sends rest POST v2/closepayment?clientId&deviceId_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+        # PM_METADATA
+        And checks the value Token,Tipo versamento,key,QUERYSTRING of the record at column KEY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken,TPAY,$psp_transaction_id,clientId&deviceId of the record at column VALUE of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+
+    @test
+    Scenario: Test 2.3
+        Given the Test 2.2 scenario executed successfully
+        When job mod3CancelV2 triggered after 5 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
+        And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
+
+        # RE
+        And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value KO
+        And checking value $XML_RE.paymentToken is equal to value $activatePaymentNoticeV2Response.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
+        And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
+        And checking value $XML_RE.QUERYSTRING is equal to value clientId&deviceId
+        And execution query cpv2_req_spov2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query cpv2_req_spov2 retrieve param info at position 0 and save it under the key info
+        And checking value $info is equal to value clientId&deviceId
+
+    ##########################################################################################################################
+
+    Scenario: Test 3.1
+        Given the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 request scenario executed successfully
+        And the paGetPaymentV2 response scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+    Scenario: Test 3.2
+        Given the Test 3.1 scenario executed successfully
+        And the pspNotifyPaymentV2 malformata response scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        When WISP sends rest POST v2/closepayment?clientId&deviceId_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+        # PM_METADATA
+        And checks the value Token,Tipo versamento,key,QUERYSTRING of the record at column KEY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken,TPAY,$psp_transaction_id,clientId&deviceId of the record at column VALUE of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+
+    @test
+    Scenario: Test 3.3
+        Given the Test 3.2 scenario executed successfully
+        And wait 5 seconds for expiration
+        And the sendPaymentOutcomeV2 request scenario executed successfully
+        When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+
+        # RE
+        And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $activatePaymentNoticeV2Response.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
+        And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
+        And checking value $XML_RE.QUERYSTRING is equal to value clientId&deviceId
+        And execution query cpv2_req_spov2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query cpv2_req_spov2 retrieve param info at position 0 and save it under the key info
+        And checking value $info is equal to value clientId&deviceId
+
+    ##########################################################################################################################
+
+    Scenario: Test 4.1
+        Given the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 request scenario executed successfully
+        And the paGetPaymentV2 response scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+    @test
+    Scenario: Test 4.2
+        Given the Test 4.1 scenario executed successfully
+        And the pspNotifyPaymentV2 KO response scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        When WISP sends rest POST v2/closepayment?clientId&deviceId_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+        # PM_METADATA
+        And checks the value Token,Tipo versamento,key,QUERYSTRING of the record at column KEY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken,TPAY,$psp_transaction_id,clientId&deviceId of the record at column VALUE of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+        And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
+
+        # RE
+        And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value KO
         And checking value $XML_RE.paymentToken is equal to value $activatePaymentNoticeV2Response.paymentToken
         And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
         And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
