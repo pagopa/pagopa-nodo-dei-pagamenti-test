@@ -362,6 +362,112 @@ Feature: spostamento traduttore
             </soapenv:Envelope>
             """
 
+    Scenario: nodoInviaRPT with MBD
+        Given RPT generation
+            """
+            <pay_i:RPT xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd " xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <pay_i:versioneOggetto>1.0</pay_i:versioneOggetto>
+            <pay_i:dominio>
+            <pay_i:identificativoDominio>#creditor_institution_code#</pay_i:identificativoDominio>
+            <pay_i:identificativoStazioneRichiedente>#id_station#</pay_i:identificativoStazioneRichiedente>
+            </pay_i:dominio>
+            <pay_i:identificativoMessaggioRichiesta>MSGRICHIESTA01</pay_i:identificativoMessaggioRichiesta>
+            <pay_i:dataOraMessaggioRichiesta>2016-09-16T11:24:10</pay_i:dataOraMessaggioRichiesta>
+            <pay_i:autenticazioneSoggetto>CNS</pay_i:autenticazioneSoggetto>
+            <pay_i:soggettoVersante>
+            <pay_i:identificativoUnivocoVersante>
+            <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H502E</pay_i:codiceIdentificativoUnivoco>
+            </pay_i:identificativoUnivocoVersante>
+            <pay_i:anagraficaVersante>Gesualdo;Riccitelli</pay_i:anagraficaVersante>
+            <pay_i:indirizzoVersante>via del gesu</pay_i:indirizzoVersante>
+            <pay_i:civicoVersante>11</pay_i:civicoVersante>
+            <pay_i:capVersante>00186</pay_i:capVersante>
+            <pay_i:localitaVersante>Roma</pay_i:localitaVersante>
+            <pay_i:provinciaVersante>RM</pay_i:provinciaVersante>
+            <pay_i:nazioneVersante>IT</pay_i:nazioneVersante>
+            <pay_i:e-mailVersante>gesualdo.riccitelli@poste.it</pay_i:e-mailVersante>
+            </pay_i:soggettoVersante>
+            <pay_i:soggettoPagatore>
+            <pay_i:identificativoUnivocoPagatore>
+            <pay_i:tipoIdentificativoUnivoco>F</pay_i:tipoIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>RCCGLD09P09H501E</pay_i:codiceIdentificativoUnivoco>
+            </pay_i:identificativoUnivocoPagatore>
+            <pay_i:anagraficaPagatore>Gesualdo;Riccitelli</pay_i:anagraficaPagatore>
+            <pay_i:indirizzoPagatore>via del gesu</pay_i:indirizzoPagatore>
+            <pay_i:civicoPagatore>11</pay_i:civicoPagatore>
+            <pay_i:capPagatore>00186</pay_i:capPagatore>
+            <pay_i:localitaPagatore>Roma</pay_i:localitaPagatore>
+            <pay_i:provinciaPagatore>RM</pay_i:provinciaPagatore>
+            <pay_i:nazionePagatore>IT</pay_i:nazionePagatore>
+            <pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
+            </pay_i:soggettoPagatore>
+            <pay_i:enteBeneficiario>
+            <pay_i:identificativoUnivocoBeneficiario>
+            <pay_i:tipoIdentificativoUnivoco>G</pay_i:tipoIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>11111111117</pay_i:codiceIdentificativoUnivoco>
+            </pay_i:identificativoUnivocoBeneficiario>
+            <pay_i:denominazioneBeneficiario>AZIENDA XXX</pay_i:denominazioneBeneficiario>
+            <pay_i:codiceUnitOperBeneficiario>123</pay_i:codiceUnitOperBeneficiario>
+            <pay_i:denomUnitOperBeneficiario>XXX</pay_i:denomUnitOperBeneficiario>
+            <pay_i:indirizzoBeneficiario>IndirizzoBeneficiario</pay_i:indirizzoBeneficiario>
+            <pay_i:civicoBeneficiario>123</pay_i:civicoBeneficiario>
+            <pay_i:capBeneficiario>22222</pay_i:capBeneficiario>
+            <pay_i:localitaBeneficiario>Roma</pay_i:localitaBeneficiario>
+            <pay_i:provinciaBeneficiario>RM</pay_i:provinciaBeneficiario>
+            <pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
+            </pay_i:enteBeneficiario>
+            <pay_i:datiVersamento>
+            <pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
+            <pay_i:importoTotaleDaVersare>$activatePaymentNoticeV2.amount</pay_i:importoTotaleDaVersare>
+            <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
+            <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:codiceContestoPagamento>$activatePaymentNoticeV2Response.paymentToken</pay_i:codiceContestoPagamento>
+            <pay_i:ibanAddebito>IT96R0123454321000000012345</pay_i:ibanAddebito>
+            <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
+            <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
+            <pay_i:datiSingoloVersamento>
+            <pay_i:importoSingoloVersamento>10.00</pay_i:importoSingoloVersamento>
+            <pay_i:commissioneCaricoPA>1.00</pay_i:commissioneCaricoPA>
+            <pay_i:bicAccredito>ARTIITM1050</pay_i:bicAccredito>
+            <pay_i:bicAppoggio>ARTIITM1050</pay_i:bicAppoggio>
+            <pay_i:credenzialiPagatore>CP1.1</pay_i:credenzialiPagatore>
+            <pay_i:causaleVersamento>pagamento fotocopie pratica</pay_i:causaleVersamento>
+            <pay_i:datiSpecificiRiscossione>1/abc</pay_i:datiSpecificiRiscossione>
+            <pay_i:datiMarcaBolloDigitale>
+            <pay_i:tipoBollo>01</pay_i:tipoBollo>
+            <pay_i:hashDocumento>wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</pay_i:hashDocumento>
+            <pay_i:provinciaResidenza>MI</pay_i:provinciaResidenza>
+            </pay_i:datiMarcaBolloDigitale>
+            </pay_i:datiSingoloVersamento>
+            </pay_i:datiVersamento>
+            </pay_i:RPT>
+            """
+        And initial XML nodoInviaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header>
+            <ppt:intestazionePPT>
+            <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
+            <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
+            <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
+            <identificativoUnivocoVersamento>$iuv</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>$activatePaymentNoticeV2Response.paymentToken</codiceContestoPagamento>
+            </ppt:intestazionePPT>
+            </soapenv:Header>
+            <soapenv:Body>
+            <ws:nodoInviaRPT>
+            <password>#password#</password>
+            <identificativoPSP>#psp_AGID#</identificativoPSP>
+            <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
+            <tipoFirma></tipoFirma>
+            <rpt>$rptAttachment</rpt>
+            </ws:nodoInviaRPT>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+
     Scenario: closePaymentV2
         Given initial json v2/closepayment
             """
@@ -659,6 +765,82 @@ Feature: spostamento traduttore
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
+        # POSITION_RECEIPT
+        And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column RECEIPT_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.outcome of the record at column OUTCOME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.amount of the record at column PAYMENT_AMOUNT of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DESCRIPTION of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column COMPANY_NAME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column OFFICE_NAME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DEBTOR_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value #psp# of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column PSP_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column PSP_VAT_NUMBER of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column PSP_COMPANY_NAME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value #canale_IMMEDIATO_MULTIBENEFICIARIO# of the record at column CHANNEL_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.paymentChannel of the record at column CHANNEL_DESCRIPTION of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column PAYER_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.paymentMethod of the record at column PAYMENT_METHOD of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.fee of the record at column FEE of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column PAYMENT_DATE_TIME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.applicationDate of the record at column APPLICATION_DATE of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.transferDate of the record at column TRANSFER_DATE of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column METADATA of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column RT_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_POSITION_PAYMENT of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_BY of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value sendPaymentOutcome of the record at column UPDATED_BY of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_RECEIPT_XML
+        And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value #id_station_old# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_BY of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value sendPaymentOutcome of the record at column UPDATED_BY of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.amount of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NMP of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 1.1 (part 1)
@@ -735,6 +917,82 @@ Feature: spostamento traduttore
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
+        # POSITION_RECEIPT
+        And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column RECEIPT_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.outcome of the record at column OUTCOME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.amount of the record at column PAYMENT_AMOUNT of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DESCRIPTION of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column COMPANY_NAME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column OFFICE_NAME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DEBTOR_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value #psp# of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column PSP_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column PSP_VAT_NUMBER of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column PSP_COMPANY_NAME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value #canale_versione_primitive_2# of the record at column CHANNEL_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.paymentChannel of the record at column CHANNEL_DESCRIPTION of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column PAYER_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.paymentMethod of the record at column PAYMENT_METHOD of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column PAYMENT_DATE_TIME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.applicationDate of the record at column APPLICATION_DATE of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.transferDate of the record at column TRANSFER_DATE of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column METADATA of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column RT_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_POSITION_PAYMENT of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_BY of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value sendPaymentOutcomeV2 of the record at column UPDATED_BY of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_RECEIPT_XML
+        And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value #id_station_old# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_BY of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value sendPaymentOutcomeV2 of the record at column UPDATED_BY of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.amount of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NMP of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 2 (part 1)
@@ -810,6 +1068,82 @@ Feature: spostamento traduttore
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # POSITION_RECEIPT
+        And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column RECEIPT_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.outcome of the record at column OUTCOME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.amount of the record at column PAYMENT_AMOUNT of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DESCRIPTION of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column COMPANY_NAME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column OFFICE_NAME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DEBTOR_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value #psp# of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column PSP_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column PSP_VAT_NUMBER of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column PSP_COMPANY_NAME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value #canale_IMMEDIATO_MULTIBENEFICIARIO# of the record at column CHANNEL_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.paymentChannel of the record at column CHANNEL_DESCRIPTION of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column PAYER_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.paymentMethod of the record at column PAYMENT_METHOD of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.fee of the record at column FEE of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column PAYMENT_DATE_TIME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.applicationDate of the record at column APPLICATION_DATE of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcome.transferDate of the record at column TRANSFER_DATE of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column METADATA of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column RT_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_POSITION_PAYMENT of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_BY of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value sendPaymentOutcome of the record at column UPDATED_BY of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_RECEIPT_XML
+        And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value #id_station_old# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_BY of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value sendPaymentOutcome of the record at column UPDATED_BY of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.amount of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NMP of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -888,6 +1222,82 @@ Feature: spostamento traduttore
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
+        # POSITION_RECEIPT
+        And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column RECEIPT_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.outcome of the record at column OUTCOME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.amount of the record at column PAYMENT_AMOUNT of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DESCRIPTION of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column COMPANY_NAME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column OFFICE_NAME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DEBTOR_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value #psp# of the record at column PSP_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column PSP_FISCAL_CODE of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column PSP_VAT_NUMBER of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column PSP_COMPANY_NAME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value #canale_versione_primitive_2# of the record at column CHANNEL_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.paymentChannel of the record at column CHANNEL_DESCRIPTION of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column PAYER_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.paymentMethod of the record at column PAYMENT_METHOD of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column PAYMENT_DATE_TIME of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.applicationDate of the record at column APPLICATION_DATE of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $sendPaymentOutcomeV2.transferDate of the record at column TRANSFER_DATE of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value None of the record at column METADATA of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column RT_ID of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_POSITION_PAYMENT of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_BY of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value sendPaymentOutcomeV2 of the record at column UPDATED_BY of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # POSITION_RECEIPT_XML
+        And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $iuv of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value #id_station_old# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_BY of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value sendPaymentOutcomeV2 of the record at column UPDATED_BY of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.amount of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NMP of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 3 (part 1)
@@ -964,6 +1374,35 @@ Feature: spostamento traduttore
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NMP of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -1043,6 +1482,35 @@ Feature: spostamento traduttore
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NMP of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 4 (part 1)
@@ -1111,6 +1579,35 @@ Feature: spostamento traduttore
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value PM of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -1182,6 +1679,35 @@ Feature: spostamento traduttore
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value PM of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 5 (part 1)
@@ -1250,6 +1776,35 @@ Feature: spostamento traduttore
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value PM of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -1321,6 +1876,35 @@ Feature: spostamento traduttore
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value PM of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 6 (part 1)
@@ -1374,7 +1958,6 @@ Feature: spostamento traduttore
         When job paInviaRt triggered after 0 seconds
         Then verify the HTTP status code of paInviaRt response is 200
 
-
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYING_RPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 3 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1390,6 +1973,35 @@ Feature: spostamento traduttore
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value PM of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -1461,6 +2073,35 @@ Feature: spostamento traduttore
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value PM of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 7 (part 1)
@@ -1516,6 +2157,35 @@ Feature: spostamento traduttore
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NMP of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -1574,6 +2244,35 @@ Feature: spostamento traduttore
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NMP of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -1634,6 +2333,35 @@ Feature: spostamento traduttore
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NMP of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 9 (part 1)
@@ -1692,6 +2420,35 @@ Feature: spostamento traduttore
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NMP of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -1753,6 +2510,35 @@ Feature: spostamento traduttore
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NMP of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 10 (part 1)
@@ -1808,6 +2594,35 @@ Feature: spostamento traduttore
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NMP of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
@@ -1905,6 +2720,35 @@ Feature: spostamento traduttore
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NMP of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 13 (part 1)
@@ -1950,6 +2794,35 @@ Feature: spostamento traduttore
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
+        # RT
+        And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column DATA_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_RICHIESTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value 0.00 of the record at column SOMMA_VERSAMENTI of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $nodoInviaRPT.identificativoCanale of the record at column CANALE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NOTIFICA_PROCESSATA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NMP of the record at column GENERATA_DA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+
+        # RT_XML
+        And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column ID_SESSIONE of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 1 record for the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+
     #####################################################################################
 
     Scenario: Test 14 (part 1)
@@ -1958,6 +2831,7 @@ Feature: spostamento traduttore
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
+
     @test
     Scenario: Test 14 (part 2)
         Given the Test 14 (part 1) scenario executed successfully
@@ -1979,3 +2853,32 @@ Feature: spostamento traduttore
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_RIFIUTATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+
+    #####################################################################################
+
+    Scenario: Test 15 (part 1)
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+
+        # POSITION_PAYMENT
+        And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+        # RPT_ACTIVATIONS
+        And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
+    @test
+    Scenario: Test 15 (part 2)
+        Given the Test 15 (part 1) scenario executed successfully
+        And the nodoInviaRPT with MBD scenario executed successfully
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is KO of nodoInviaRPT response
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
