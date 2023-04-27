@@ -2879,6 +2879,4 @@ Feature: spostamento traduttore
         And the nodoInviaRPT with MBD scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRPT response
-
-        # RPT_ACTIVATIONS
-        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
