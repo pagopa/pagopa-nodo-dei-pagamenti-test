@@ -340,6 +340,7 @@ Feature: PAG-2518
         And the sendPaymentOutcome request scenario executed successfully
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+        And wait 5 seconds for expiration
 
         # RE
         And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
@@ -387,6 +388,7 @@ Feature: PAG-2518
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
 
         # RE
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
@@ -433,6 +435,7 @@ Feature: PAG-2518
         And the sendPaymentOutcome request scenario executed successfully
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
+        And wait 5 seconds for expiration
 
         # RE
         And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
@@ -480,6 +483,7 @@ Feature: PAG-2518
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
 
         # RE
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
@@ -528,6 +532,7 @@ Feature: PAG-2518
         When job mod3CancelV2 triggered after 5 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
+        And wait 5 seconds for expiration
 
         # RE
         And execution query sprv2_req_activatev2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
@@ -576,6 +581,7 @@ Feature: PAG-2518
         When job mod3CancelV2 triggered after 5 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
+        And wait 5 seconds for expiration
 
         # RE
         And execution query sprv2_req_activatev2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
@@ -611,6 +617,7 @@ Feature: PAG-2518
         When WISP sends rest POST v2/closepayment?clientId&deviceId_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
 
         # PM_METADATA
         And checks the value Token,Tipo versamento,key,QUERYSTRING of the record at column KEY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
@@ -652,6 +659,7 @@ Feature: PAG-2518
         When WISP sends rest POST v2/closepayment?clientId&deviceId_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
 
         # PM_METADATA
         And checks the value Token,Tipo versamento,key,QUERYSTRING of the record at column KEY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
