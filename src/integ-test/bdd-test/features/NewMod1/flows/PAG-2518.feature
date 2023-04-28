@@ -222,7 +222,7 @@ Feature: PAG-2518
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
-            <paymentToken>$activateIOPaymentResponse.paymentToken</paymentToken>
+            <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
             <outcome>OK</outcome>
             <!--Optional:-->
             <details>
