@@ -445,6 +445,7 @@ Feature: PAG-2518
         Given the Test 2.1 (part 1) scenario executed successfully
         And the pspNotifyPaymentV2 malformata response scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
+        And idChannel with #canale_versione_primitive_2# in v2/closepayment?clientId&deviceId
         When WISP sends rest POST v2/closepayment?clientId&deviceId_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -468,8 +469,8 @@ Feature: PAG-2518
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
         And through the query sprv2_req_spov2 retrieve param info_spr at position 0 and save it under the key info_spr
         And checking value $info_spr is containing value clientId&deviceId
-        And execution query cpv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info_cpv2
+        And execution query cpv2_req_spov2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query cpv2_req_spov2 retrieve param info at position 0 and save it under the key info_cpv2
         And checking value $info_cpv2 is equal to value clientId&deviceId
 
     ##########################################################################################################################
@@ -530,6 +531,7 @@ Feature: PAG-2518
         Given the Test 3.1 (part 1) scenario executed successfully
         And the pspNotifyPaymentV2 malformata response scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
+        And idChannel with #canale_versione_primitive_2# in v2/closepayment?clientId&deviceId
         When WISP sends rest POST v2/closepayment?clientId&deviceId_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -607,6 +609,7 @@ Feature: PAG-2518
         Given the Test 4.1 (part 1) scenario executed successfully
         And the pspNotifyPaymentV2 KO response scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
+        And idChannel with #canale_versione_primitive_2# in v2/closepayment?clientId&deviceId
         When WISP sends rest POST v2/closepayment?clientId&deviceId_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
