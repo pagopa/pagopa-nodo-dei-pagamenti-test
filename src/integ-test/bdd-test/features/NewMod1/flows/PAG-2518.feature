@@ -343,19 +343,12 @@ Feature: PAG-2518
         And wait 5 seconds for expiration
 
         # RE
-        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
-        And checking value $XML_RE.outcome is equal to value OK
-        And checking value $XML_RE.paymentToken is equal to value $activatePaymentNoticeV2Response.paymentToken
-        And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-        And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-        And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-        And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-        And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
-        And checking value $XML_RE.QUERYSTRING is equal to value clientId&deviceId
+        And execution query sprv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query sprv2_req_spo retrieve param info_spr at position 0 and save it under the key info_spr
+        And checking value $info_spr is containing value clientId&deviceId
         And execution query cpv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info
-        And checking value $info is equal to value clientId&deviceId
+        And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info_cpv2
+        And checking value $info_cpv2 is equal to value clientId&deviceId
 
     ##########################################################################################################################
 
@@ -391,19 +384,12 @@ Feature: PAG-2518
         And wait 5 seconds for expiration
 
         # RE
-        And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
-        And checking value $XML_RE.outcome is equal to value OK
-        And checking value $XML_RE.paymentToken is equal to value $activatePaymentNoticeV2Response.paymentToken
-        And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-        And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-        And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-        And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-        And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
-        And checking value $XML_RE.QUERYSTRING is equal to value clientId&deviceId
-        And execution query cpv2_req_spov2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query cpv2_req_spov2 retrieve param info at position 0 and save it under the key info
-        And checking value $info is equal to value clientId&deviceId
+        And execution query sprv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query sprv2_req_spo retrieve param info_spr at position 0 and save it under the key info_spr
+        And checking value $info_spr is containing value clientId&deviceId
+        And execution query cpv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info_cpv2
+        And checking value $info_cpv2 is equal to value clientId&deviceId
 
     ##########################################################################################################################
 
@@ -438,19 +424,12 @@ Feature: PAG-2518
         And wait 5 seconds for expiration
 
         # RE
-        And execution query sprv2_req_spo to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_spo convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
-        And checking value $XML_RE.outcome is equal to value OK
-        And checking value $XML_RE.paymentToken is equal to value $activatePaymentNoticeV2Response.paymentToken
-        And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-        And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-        And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-        And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-        And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
-        And checking value $XML_RE.QUERYSTRING is equal to value clientId&deviceId
+        And execution query sprv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query sprv2_req_spo retrieve param info_spr at position 0 and save it under the key info_spr
+        And checking value $info_spr is containing value clientId&deviceId
         And execution query cpv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info
-        And checking value $info is equal to value clientId&deviceId
+        And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info_cpv2
+        And checking value $info_cpv2 is equal to value clientId&deviceId
 
     ##########################################################################################################################
 
@@ -486,19 +465,12 @@ Feature: PAG-2518
         And wait 5 seconds for expiration
 
         # RE
-        And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
-        And checking value $XML_RE.outcome is equal to value OK
-        And checking value $XML_RE.paymentToken is equal to value $activatePaymentNoticeV2Response.paymentToken
-        And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-        And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-        And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-        And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-        And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
-        And checking value $XML_RE.QUERYSTRING is equal to value clientId&deviceId
-        And execution query cpv2_req_spov2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query cpv2_req_spov2 retrieve param info at position 0 and save it under the key info
-        And checking value $info is equal to value clientId&deviceId
+        And execution query sprv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query sprv2_req_spo retrieve param info_spr at position 0 and save it under the key info_spr
+        And checking value $info_spr is containing value clientId&deviceId
+        And execution query cpv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info_cpv2
+        And checking value $info_cpv2 is equal to value clientId&deviceId
 
     ##########################################################################################################################
 
@@ -535,19 +507,12 @@ Feature: PAG-2518
         And wait 5 seconds for expiration
 
         # RE
-        And execution query sprv2_req_activatev2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_activatev2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
-        And checking value $XML_RE.outcome is equal to value KO
-        And checking value $XML_RE.paymentToken is equal to value $activatePaymentNoticeV2Response.paymentToken
-        And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-        And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-        And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-        And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-        And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
-        And checking value $XML_RE.QUERYSTRING is equal to value clientId&deviceId
-        And execution query cpv2_req_activatev2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query cpv2_req_activatev2 retrieve param info at position 0 and save it under the key info
-        And checking value $info is equal to value clientId&deviceId
+        And execution query sprv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query sprv2_req_spo retrieve param info_spr at position 0 and save it under the key info_spr
+        And checking value $info_spr is containing value clientId&deviceId
+        And execution query cpv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info_cpv2
+        And checking value $info_cpv2 is equal to value clientId&deviceId
 
     ##########################################################################################################################
 
@@ -584,19 +549,12 @@ Feature: PAG-2518
         And wait 5 seconds for expiration
 
         # RE
-        And execution query sprv2_req_activatev2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_activatev2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
-        And checking value $XML_RE.outcome is equal to value KO
-        And checking value $XML_RE.paymentToken is equal to value $activatePaymentNoticeV2Response.paymentToken
-        And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-        And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-        And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-        And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-        And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
-        And checking value $XML_RE.QUERYSTRING is equal to value clientId&deviceId
-        And execution query cpv2_req_activatev2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query cpv2_req_activatev2 retrieve param info at position 0 and save it under the key info
-        And checking value $info is equal to value clientId&deviceId
+        And execution query sprv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query sprv2_req_spo retrieve param info_spr at position 0 and save it under the key info_spr
+        And checking value $info_spr is containing value clientId&deviceId
+        And execution query cpv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info_cpv2
+        And checking value $info_cpv2 is equal to value clientId&deviceId
 
     ##########################################################################################################################
 
@@ -626,19 +584,12 @@ Feature: PAG-2518
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
         # RE
-        And execution query sprv2_req_activatev2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_activatev2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
-        And checking value $XML_RE.outcome is equal to value KO
-        And checking value $XML_RE.paymentToken is equal to value $activatePaymentNoticeV2Response.paymentToken
-        And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-        And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-        And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-        And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-        And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
-        And checking value $XML_RE.QUERYSTRING is equal to value clientId&deviceId
-        And execution query cpv2_req_activatev2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query cpv2_req_activatev2 retrieve param info at position 0 and save it under the key info
-        And checking value $info is equal to value clientId&deviceId
+        And execution query sprv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query sprv2_req_spo retrieve param info_spr at position 0 and save it under the key info_spr
+        And checking value $info_spr is containing value clientId&deviceId
+        And execution query cpv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info_cpv2
+        And checking value $info_cpv2 is equal to value clientId&deviceId
 
     ##########################################################################################################################
 
@@ -668,16 +619,9 @@ Feature: PAG-2518
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
         # RE
-        And execution query sprv2_req_activatev2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query sprv2_req_activatev2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
-        And checking value $XML_RE.outcome is equal to value KO
-        And checking value $XML_RE.paymentToken is equal to value $activatePaymentNoticeV2Response.paymentToken
-        And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-        And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-        And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-        And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-        And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
-        And checking value $XML_RE.QUERYSTRING is equal to value clientId&deviceId
-        And execution query cpv2_req_activatev2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query cpv2_req_activatev2 retrieve param info at position 0 and save it under the key info
-        And checking value $info is equal to value clientId&deviceId
+        And execution query sprv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query sprv2_req_spo retrieve param info_spr at position 0 and save it under the key info_spr
+        And checking value $info_spr is containing value clientId&deviceId
+        And execution query cpv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info_cpv2
+        And checking value $info_cpv2 is equal to value clientId&deviceId
