@@ -384,11 +384,11 @@ Feature: PAG-2518
         And wait 5 seconds for expiration
 
         # RE
-        And execution query sprv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query sprv2_req_spo retrieve param info_spr at position 0 and save it under the key info_spr
+        And execution query sprv2_req_spov2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query sprv2_req_spov2 retrieve param info_spr at position 0 and save it under the key info_spr
         And checking value $info_spr is containing value clientId&deviceId
-        And execution query cpv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info_cpv2
+        And execution query cpv2_req_spov2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query cpv2_req_spov2 retrieve param info at position 0 and save it under the key info_cpv2
         And checking value $info_cpv2 is equal to value clientId&deviceId
 
     ##########################################################################################################################
@@ -465,8 +465,8 @@ Feature: PAG-2518
         And wait 5 seconds for expiration
 
         # RE
-        And execution query sprv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query sprv2_req_spo retrieve param info_spr at position 0 and save it under the key info_spr
+        And execution query sprv2_req_spov2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query sprv2_req_spov2 retrieve param info_spr at position 0 and save it under the key info_spr
         And checking value $info_spr is containing value clientId&deviceId
         And execution query cpv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
         And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info_cpv2
@@ -507,11 +507,11 @@ Feature: PAG-2518
         And wait 5 seconds for expiration
 
         # RE
-        And execution query sprv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query sprv2_req_spo retrieve param info_spr at position 0 and save it under the key info_spr
+        And execution query sprv2_req_activatev2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query sprv2_req_activatev2 retrieve param info_spr at position 0 and save it under the key info_spr
         And checking value $info_spr is containing value clientId&deviceId
-        And execution query cpv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info_cpv2
+        And execution query cpv2_req_activatev2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query cpv2_req_activatev2 retrieve param info at position 0 and save it under the key info_cpv2
         And checking value $info_cpv2 is equal to value clientId&deviceId
 
     ##########################################################################################################################
@@ -549,11 +549,11 @@ Feature: PAG-2518
         And wait 5 seconds for expiration
 
         # RE
-        And execution query sprv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query sprv2_req_spo retrieve param info_spr at position 0 and save it under the key info_spr
+        And execution query sprv2_req_activatev2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query sprv2_req_activatev2 retrieve param info_spr at position 0 and save it under the key info_spr
         And checking value $info_spr is containing value clientId&deviceId
-        And execution query cpv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info_cpv2
+        And execution query cpv2_req_activatev2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query cpv2_req_activatev2 retrieve param info at position 0 and save it under the key info_cpv2
         And checking value $info_cpv2 is equal to value clientId&deviceId
 
     ##########################################################################################################################
@@ -584,11 +584,11 @@ Feature: PAG-2518
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
         # RE
-        And execution query sprv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query sprv2_req_spo retrieve param info_spr at position 0 and save it under the key info_spr
+        And execution query sprv2_req_activatev2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query sprv2_req_activatev2 retrieve param info_spr at position 0 and save it under the key info_spr
         And checking value $info_spr is containing value clientId&deviceId
-        And execution query cpv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info_cpv2
+        And execution query cpv2_req_activatev2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query cpv2_req_activatev2 retrieve param info at position 0 and save it under the key info_cpv2
         And checking value $info_cpv2 is equal to value clientId&deviceId
 
     ##########################################################################################################################
@@ -619,9 +619,9 @@ Feature: PAG-2518
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
         # RE
-        And execution query sprv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query sprv2_req_spo retrieve param info_spr at position 0 and save it under the key info_spr
+        And execution query sprv2_req_activatev2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query sprv2_req_activatev2 retrieve param info_spr at position 0 and save it under the key info_spr
         And checking value $info_spr is containing value clientId&deviceId
-        And execution query cpv2_req_spo to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
-        And through the query cpv2_req_spo retrieve param info at position 0 and save it under the key info_cpv2
+        And execution query cpv2_req_activatev2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
+        And through the query cpv2_req_activatev2 retrieve param info at position 0 and save it under the key info_cpv2
         And checking value $info_cpv2 is equal to value clientId&deviceId
