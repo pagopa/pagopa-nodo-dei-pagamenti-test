@@ -604,6 +604,18 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | paymentGateway        | Empty                                |
             | paymentGateway        | alfthetudjshdrtinshritfhjsihfihjiejf |
 
+    
+    
+    @test
+    Scenario: check closePaymentV2 PAG-2555 OK
+        Given check activatePaymentNoticeV2 OK scenario executed successfully
+        And the closePaymentV2 PAG-2555 scenario executed successfully
+        And paymentToken with $activatePaymentNoticeV21Response.paymentToken
+        And paymentGateway with None in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
     @test
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_PSP_CP = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
