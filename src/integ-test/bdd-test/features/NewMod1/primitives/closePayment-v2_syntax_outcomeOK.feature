@@ -501,3 +501,110 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | MYBK  | PAG-2482    |
             | BPAY  | PAG-2482    |
             | PPAL  | PAG-2482    |
+
+    Scenario: closePaymentV2 PAG-2555
+        Given initial JSON v2/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "idBrokerPSP": "#psp#",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "paymentMethod": "CP",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "primaryCiIncurredFee": 1,
+                "idBundle": "0bf0c282-3054-11ed-af20-acde48001122",
+                "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
+                "timestampOperation": "2033-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "rrn": "11223344",
+                    "outcomePaymentGateway": "00",
+                    "totalAmount": 31,
+                    "fee": 1,
+                    "timestampOperation": "2021-07-09T17:06:03",
+                    "authorizationCode": "123456",
+                    "paymentGateway": "00"
+                },
+                "transactionDetails": {
+                    "origin": "",
+                    "user": {
+                        "fullName": "John Doe",
+                        "type": "F",
+                        "fiscalCode": "JHNDOE00A01F205N",
+                        "notificationEmail": "john.doe@mail.it",
+                        "userId": 1234,
+                        "userStatus": 11,
+                        "userStatusDescription": "REGISTERED_SPID"
+                    },
+                    "walletItem": {
+                        "idWallet": 1234,
+                        "walletType": "CARD",
+                        "enableableFunctions": [],
+                        "pagoPa": false,
+                        "onboardingChannel": "",
+                        "favourite": false,
+                        "createDate": "",
+                        "info": {
+                            "type": "",
+                            "blurredNumber": "",
+                            "holder": "Mario Rossi",
+                            "expireMonth": "",
+                            "expireYear": "",
+                            "brand": "",
+                            "issuerAbi": "",
+                            "issuerName": "Intesa",
+                            "label": "********234"
+                        },
+                        "authRequest": {
+                            "authOutcome": "KO",
+                            "guid": "77e1c83b-7bb0-437b-bc50-a7a58e5660ac",
+                            "correlationId": "f864d987-3ae2-44a3-bdcb-075554495841",
+                            "error": "Not Authorized",
+                            "auth_code": "99"
+                        }
+                    }
+                }
+            }
+            """
+    @test
+    Scenario: update DB
+        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_PSP_CP = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
+        And refresh job PSP triggered after 10 seconds
+
+    @test
+    Scenario Outline: check closePaymentV2 PAG-2555 KO outline
+        Given the closePaymentV2 PAG-2555 scenario executed successfully
+        And <tag> with <value> in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 400
+        And check outcome is KO of v2/closepayment response
+        And check description is Invalid additionalPaymentInformations of v2/closepayment response
+        Examples:
+            | elem                  | value                                |
+            | rrn                   | None                                 |
+            | rrn                   | Empty                                |
+            | outcomePaymentGateway | None                                 |
+            | outcomePaymentGateway | Empty                                |
+            | totalAmount           | None                                 |
+            | totalAmount           | Empty                                |
+            | totalAmount           | 10000000000.00                       |
+            | fee                   | None                                 |
+            | fee                   | Empty                                |
+            | fee                   | 10000000000.00                       |
+            | timestampOperation    | Empty                                |
+            | timestampOperation    | None                                 |
+            | authorizationCode     | None                                 |
+            | authorizationCode     | Empty                                |
+            | authorizationCode     | 1234567                              |
+            | paymentGateway        | Empty                                |
+            | paymentGateway        | alfthetudjshdrtinshritfhjsihfihjiejf |
+
+    @test
+    Scenario: update DB
+        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_PSP_CP = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
+        And refresh job PSP triggered after 10 seconds
