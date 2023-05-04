@@ -524,8 +524,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": 12,
-                    "fee": 2,
+                    "totalAmount": "12",
+                    "fee": "2",
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
@@ -581,7 +581,43 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "fee": 2,
+                    "fee": "2",
+                    "timestampOperation": "2021-07-09T17:06:03",
+                    "authorizationCode": "123456",
+                    "paymentGateway": "00"
+                }
+            }
+            """
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 400
+        And check outcome is KO of v2/closepayment response
+        And check description is Invalid additionalPaymentInformations of v2/closepayment response
+
+    @test
+    Scenario: check closePaymentV2 PAG-2555 KO totalAmount Empty
+        Given initial json v2/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "idBrokerPSP": "#psp#",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "paymentMethod": "CP",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "primaryCiIncurredFee": 1,
+                "idBundle": "0bf0c282-3054-11ed-af20-acde48001122",
+                "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
+                "timestampOperation": "2033-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "rrn": "11223344",
+                    "outcomePaymentGateway": "00",
+                    "totalAmount": null,
+                    "fee": "2",
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
@@ -616,8 +652,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": 9999999999.99,
-                    "fee": 2,
+                    "totalAmount": "9999999999.99",
+                    "fee": "2",
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
@@ -652,7 +688,43 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": 12,
+                    "totalAmount": "12",
+                    "timestampOperation": "2021-07-09T17:06:03",
+                    "authorizationCode": "123456",
+                    "paymentGateway": "00"
+                }
+            }
+            """
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 400
+        And check outcome is KO of v2/closepayment response
+        And check description is Invalid additionalPaymentInformations of v2/closepayment response
+
+    @test
+    Scenario: check closePaymentV2 PAG-2555 KO fee Empty
+        Given initial json v2/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "idBrokerPSP": "#psp#",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "paymentMethod": "CP",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "primaryCiIncurredFee": 1,
+                "idBundle": "0bf0c282-3054-11ed-af20-acde48001122",
+                "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
+                "timestampOperation": "2033-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "rrn": "11223344",
+                    "outcomePaymentGateway": "00",
+                    "totalAmount": "12",
+                    "fee": null,
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
@@ -687,8 +759,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": 12,
-                    "fee": 9999999999.99,
+                    "totalAmount": "12",
+                    "fee": "9999999999.99",
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
@@ -723,8 +795,44 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": 12,
-                    "fee": 2,
+                    "totalAmount": "12",
+                    "fee": "2",
+                    "authorizationCode": "123456",
+                    "paymentGateway": "00"
+                }
+            }
+            """
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 400
+        And check outcome is KO of v2/closepayment response
+        And check description is Invalid additionalPaymentInformations of v2/closepayment response
+
+    @test
+    Scenario: check closePaymentV2 PAG-2555 KO timestampOperation Empty
+        Given initial json v2/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "idBrokerPSP": "#psp#",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "paymentMethod": "CP",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "primaryCiIncurredFee": 1,
+                "idBundle": "0bf0c282-3054-11ed-af20-acde48001122",
+                "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
+                "timestampOperation": "2033-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "rrn": "11223344",
+                    "outcomePaymentGateway": "00",
+                    "totalAmount": "12",
+                    "fee": "2",
+                    "timestampOperation": null,
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
                 }
