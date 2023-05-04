@@ -524,8 +524,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": 31,
-                    "fee": 1,
+                    "totalAmount": 12,
+                    "fee": 2,
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
@@ -592,10 +592,10 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | outcomePaymentGateway | Empty                                |
             | totalAmount           | None                                 |
             | totalAmount           | Empty                                |
-            | totalAmount           | 10000000000.00                       |
+            | totalAmount           | 9999999999.99                        |
             | fee                   | None                                 |
             | fee                   | Empty                                |
-            | fee                   | 10000000000.00                       |
+            | fee                   | 9999999999.99                        |
             | timestampOperation    | Empty                                |
             | timestampOperation    | None                                 |
             | authorizationCode     | None                                 |
@@ -604,13 +604,13 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | paymentGateway        | Empty                                |
             | paymentGateway        | alfthetudjshdrtinshritfhjsihfihjiejf |
 
-    
-    
+
+
     @test
     Scenario: check closePaymentV2 PAG-2555 OK
         Given check activatePaymentNoticeV2 OK scenario executed successfully
         And the closePaymentV2 PAG-2555 scenario executed successfully
-        And paymentToken with $activatePaymentNoticeV21Response.paymentToken
+        And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
         And paymentGateway with None in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
