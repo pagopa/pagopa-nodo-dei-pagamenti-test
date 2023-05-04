@@ -579,7 +579,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
     @test
     Scenario Outline: check closePaymentV2 PAG-2555 KO outline
         Given the closePaymentV2 PAG-2555 scenario executed successfully
-        And <tag> with <value> in v2/closepayment
+        And <elem> with <value> in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
@@ -608,7 +608,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
 
     @test
     Scenario: check closePaymentV2 PAG-2555 OK
-        Given check activatePaymentNoticeV2 OK scenario executed successfully
+        Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And the closePaymentV2 PAG-2555 scenario executed successfully
         And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
         And paymentGateway with None in v2/closepayment
