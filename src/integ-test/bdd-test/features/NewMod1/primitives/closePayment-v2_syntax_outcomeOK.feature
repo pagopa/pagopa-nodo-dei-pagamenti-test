@@ -560,7 +560,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
 
     @test
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount None
-        Given initial json v2/closepayment
+        When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
                 "paymentTokens": [
@@ -581,21 +581,20 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "fee": "2",
+                    "fee": 2,
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
                 }
             }
             """
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
     @test
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount Empty
-        Given initial json v2/closepayment
+        When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
                 "paymentTokens": [
@@ -617,21 +616,20 @@ Feature: syntax checks for closePaymentV2 outcome OK
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
                     "totalAmount": null,
-                    "fee": "2",
+                    "fee": 2,
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
                 }
             }
             """
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
     @test
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount > 9 digits
-        Given initial json v2/closepayment
+        When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
                 "paymentTokens": [
@@ -652,22 +650,21 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": "9999999999.99",
-                    "fee": "2",
+                    "totalAmount": 9999999999.99,
+                    "fee": 2,
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
                 }
             }
             """
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
     @test
     Scenario: check closePaymentV2 PAG-2555 KO fee None
-        Given initial json v2/closepayment
+        When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
                 "paymentTokens": [
@@ -688,21 +685,20 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": "12",
+                    "totalAmount": 12,
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
                 }
             }
             """
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
     @test
     Scenario: check closePaymentV2 PAG-2555 KO fee Empty
-        Given initial json v2/closepayment
+        When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
                 "paymentTokens": [
@@ -723,7 +719,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": "12",
+                    "totalAmount": 12,
                     "fee": null,
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
@@ -731,14 +727,13 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 }
             }
             """
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
     @test
     Scenario: check closePaymentV2 PAG-2555 KO fee > 9 digits
-        Given initial json v2/closepayment
+        When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
                 "paymentTokens": [
@@ -759,22 +754,21 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": "12",
-                    "fee": "9999999999.99",
+                    "totalAmount": 12,
+                    "fee": 9999999999.99,
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
                 }
             }
             """
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
     @test
     Scenario: check closePaymentV2 PAG-2555 KO timestampOperation None
-        Given initial json v2/closepayment
+        When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
                 "paymentTokens": [
@@ -795,21 +789,20 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": "12",
-                    "fee": "2",
+                    "totalAmount": 12,
+                    "fee": 2,
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
                 }
             }
             """
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
     @test
     Scenario: check closePaymentV2 PAG-2555 KO timestampOperation Empty
-        Given initial json v2/closepayment
+        When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
                 "paymentTokens": [
@@ -830,15 +823,14 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": "12",
-                    "fee": "2",
+                    "totalAmount": 12,
+                    "fee": 2,
                     "timestampOperation": null,
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
                 }
             }
             """
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
