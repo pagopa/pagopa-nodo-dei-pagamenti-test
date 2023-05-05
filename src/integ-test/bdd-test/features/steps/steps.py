@@ -1210,11 +1210,6 @@ def step_impl(context, sender, method, service, receiver):
                 body["fee"] = float(body["fee"])
             if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
                 body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
-            if ('additionalPaymentInformations' in body.keys()) and (body["additionalPaymentInformations"] != None):
-                if ('totalAmount' in body["additionalPaymentInformations"].keys()) and (body["additionalPaymentInformations"]["totalAmount"] != None):
-                    body["additionalPaymentInformations"]["totalAmount"] = float(body["additionalPaymentInformations"]["totalAmount"])
-                if ('fee' in body["additionalPaymentInformations"].keys()) and (body["additionalPaymentInformations"]["fee"] != None):
-                    body["additionalPaymentInformations"]["fee"] = float(body["additionalPaymentInformations"]["fee"])
             if ('positionslist' in body.keys()) and (body["positionslist"] != None):
                 body["positionslist"] = body["positionslist"]["position"]
                 if type(body["positionslist"]) != list:

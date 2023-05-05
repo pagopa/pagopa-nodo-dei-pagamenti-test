@@ -581,7 +581,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "fee": 2,
+                    "fee": "2",
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
@@ -616,7 +616,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
                     "totalAmount": null,
-                    "fee": 2,
+                    "fee": "2",
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
@@ -650,8 +650,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": 9999999999.99,
-                    "fee": 2,
+                    "totalAmount": "9999999999.99",
+                    "fee": "2",
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
@@ -685,7 +685,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": 12,
+                    "totalAmount": "12",
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
@@ -719,7 +719,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": 12,
+                    "totalAmount": "12",
                     "fee": null,
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
@@ -754,8 +754,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": 12,
-                    "fee": 9999999999.99,
+                    "totalAmount": "12",
+                    "fee": "9999999999.99",
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
@@ -789,8 +789,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": 12,
-                    "fee": 2,
+                    "totalAmount": "12",
+                    "fee": "2",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
                 }
@@ -823,8 +823,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "rrn": "11223344",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": 12,
-                    "fee": 2,
+                    "totalAmount": "12",
+                    "fee": "2",
                     "timestampOperation": null,
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
