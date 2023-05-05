@@ -323,7 +323,7 @@ def single_thread(context, soap_primitive, type):
         headers = {'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
-        url_nodo = f"{get_rest_url_nodo(context)}/{primitive}"
+        url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
         print(url_nodo)
         soap_response = requests.get(url_nodo, headers=headers, verify=False)
     elif type == 'POST':
