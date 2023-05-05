@@ -331,10 +331,9 @@ def single_thread(context, soap_primitive, type):
         print(body)
         if 'xml' in getattr(context, primitive):
             # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-            if 'NODOPGDB' in os.environ:
-                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive}
-                if 'SUBSCRIPTION_KEY' in os.environ:
-                    headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': 'api.dev.platform.pagopa.it:443'}
+            if 'SUBSCRIPTION_KEY' in os.environ:
+                headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
             url_nodo = get_soap_url_nodo(context, primitive)
         else:
             # headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
