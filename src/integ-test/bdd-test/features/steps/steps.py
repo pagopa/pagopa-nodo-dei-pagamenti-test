@@ -933,7 +933,7 @@ def step_impl(context, tag, value, primitive):
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
     value = utils.replace_global_variables(value, context)
-    print("###################", value)
+    print("###################", value, type(value))
     node_response = getattr(context, primitive + RESPONSE)
     json_response = node_response.json()
     api_list = jo.get_value_from_key(json_response, tag)
