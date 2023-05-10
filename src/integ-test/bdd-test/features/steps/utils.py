@@ -25,7 +25,9 @@ def random_s():
 def compare_lists(lista_api, lista_query):
 
     set_api = set(lista_api)
+    print(set_api)
     set_query = set(lista_query)
+    print(set_query)
 
     return set_api == set_query
 
