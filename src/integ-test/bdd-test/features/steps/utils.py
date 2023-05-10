@@ -22,6 +22,14 @@ def random_s():
     return strNumRand
 
 
+def compare_lists(lista_api, lista_query):
+
+    set_api = set(lista_api)
+    set_query = set(lista_query)
+
+    return set_api == set_que
+
+
 def current_milli_time():
     return round(time.time() * 1000)
 
