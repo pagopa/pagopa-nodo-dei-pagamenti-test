@@ -27,7 +27,7 @@ def compare_lists(lista_api, lista_query):
     set_api = set(lista_api)
     set_query = set(lista_query)
 
-    return set_api == set_que
+    return set_api == set_query
 
 
 def current_milli_time():
