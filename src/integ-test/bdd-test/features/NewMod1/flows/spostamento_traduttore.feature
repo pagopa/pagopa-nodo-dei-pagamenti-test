@@ -126,29 +126,13 @@ Feature: spostamento traduttore
             <soapenv:Body>
             <ws:paaAttivaRPTRisposta>
             <paaAttivaRPTRisposta>
+            <fault>
+            <faultCode>PAA_SEMANTICA_EXTRAXSD</faultCode>
+            <faultString>errore semantico PA</faultString>
+            <id>#creditor_institution_code#</id>
+            <description>Errore semantico emesso dalla PA</description>
+            </fault>
             <esito>KO</esito>
-            <datiPagamentoPA>
-            <importoSingoloVersamento>$activatePaymentNoticeV2.amount</importoSingoloVersamento>
-            <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
-            <bicAccredito>BSCTCH22</bicAccredito>
-            <enteBeneficiario>
-            <pag:identificativoUnivocoBeneficiario>
-            <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
-            <pag:codiceIdentificativoUnivoco>#id_station_old#</pag:codiceIdentificativoUnivoco>
-            </pag:identificativoUnivocoBeneficiario>
-            <pag:denominazioneBeneficiario>#broker_AGID#</pag:denominazioneBeneficiario>
-            <pag:codiceUnitOperBeneficiario>#canale_AGID_02#</pag:codiceUnitOperBeneficiario>
-            <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>
-            <pag:indirizzoBeneficiario>"paaAttivaRPT"</pag:indirizzoBeneficiario>
-            <pag:civicoBeneficiario>j</pag:civicoBeneficiario>
-            <pag:capBeneficiario>gt</pag:capBeneficiario>
-            <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>
-            <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>
-            <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>
-            </enteBeneficiario>
-            <credenzialiPagatore>i</credenzialiPagatore>
-            <causaleVersamento>prova/RFDB/018431538193400/TXT/causale $iuv</causaleVersamento>
-            </datiPagamentoPA>
             </paaAttivaRPTRisposta>
             </ws:paaAttivaRPTRisposta>
             </soapenv:Body>
@@ -2636,14 +2620,11 @@ Feature: spostamento traduttore
         And the nodoInviaRPT with ccp from DB scenario executed successfully
         And EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-
-        # RPT_ACTIVATIONS
-        And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value Y of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-
         And wait 5 seconds for expiration
         And check outcome is OK of activatePaymentNoticeV2 response
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT
         And checks the value 1 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -2651,9 +2632,6 @@ Feature: spostamento traduttore
         And checks the value MOD3 of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-
-        # RPT_ACTIVATIONS
-        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYING_RPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -2682,14 +2660,12 @@ Feature: spostamento traduttore
         And the nodoInviaRPT with ccp from DB scenario executed successfully
         And EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-
-        # RPT_ACTIVATIONS
-        And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value Y of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-
         And wait 12 seconds for expiration
         Then check outcome is KO of activatePaymentNoticeV2 response
+        And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNoticeV2 response
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     @test
     Scenario: Test 12 (part 2)
@@ -2700,9 +2676,6 @@ Feature: spostamento traduttore
         # POSITION_PAYMENT
         And checks the value Y of the record at column FLAG_ACTIVATE_RESP_MISSING of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-
-        # RPT_ACTIVATIONS
-        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING_RPT,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -2723,7 +2696,7 @@ Feature: spostamento traduttore
         # RT
         And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $ccp of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
@@ -2740,7 +2713,7 @@ Feature: spostamento traduttore
 
         # RT_XML
         And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $ccp of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
@@ -2762,17 +2735,16 @@ Feature: spostamento traduttore
         And EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And check outcome is KO of activatePaymentNoticeV2 response
+        And check faultCode is PPT_STAZIONE_INT_PA_TIMEOUT of activatePaymentNoticeV2 response
+
+        # RPT_ACTIVATIONS
+        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
     @test
     Scenario: Test 13 (part 2)
         Given the Test 13 (part 1) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
         Then verify the HTTP status code of paInviaRt response is 200
-
-        # RPT_ACTIVATIONS
-        And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value Y of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # POSITION_PAYMENT
         And checks the value Y of the record at column FLAG_ACTIVATE_RESP_MISSING of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -2797,7 +2769,7 @@ Feature: spostamento traduttore
         # RT
         And checks the value NotNone of the record at column ID of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column ID_SESSIONE of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $ccp of the record at column CCP of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value 1 of the record at column COD_ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NON_ESEGUITO of the record at column ESITO of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column DATA_RICEVUTA of the table RT retrived by the query iuv on db nodo_online under macro NewMod1
@@ -2814,7 +2786,7 @@ Feature: spostamento traduttore
 
         # RT_XML
         And checks the value NotNone of the record at column ID of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
+        And checks the value $ccp of the record at column CCP of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column FK_RT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value None of the record at column TIPO_FIRMA of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query iuv on db nodo_online under macro NewMod1
@@ -2830,7 +2802,7 @@ Feature: spostamento traduttore
         And the paaAttivaRPT KO scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
-        And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activatePaymentNoticeV2 response
+        And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activatePaymentNoticeV2 response
 
     @test
     Scenario: Test 14 (part 2)
@@ -2844,15 +2816,14 @@ Feature: spostamento traduttore
         And check description is RPT non attivata of nodoInviaRPT response
 
         # RPT_ACTIVATIONS
-        And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
         # STATI_RPT
         And checks the value RPT_RICEVUTA_NODO,RPT_RIFIUTATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 2 record for the table STATI_RPT retrived by the query iuv on db nodo_online under macro NewMod1
 
         # STATI_RPT_SNAPSHOT
-        And checks the value RPT_RIFIUTATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
+        And verify 0 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
 
     #####################################################################################
 
