@@ -15,7 +15,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
       <idempotencyKey>#idempotency_key#</idempotencyKey>
       <qrCode>
       <fiscalCode>#creditor_institution_code#</fiscalCode>
-      <noticeNumber>#notice_number_old#</noticeNumber>
+      <noticeNumber>#notice_number#</noticeNumber>
       </qrCode>
       <expirationTime>120000</expirationTime>
       <amount>10.00</amount>
