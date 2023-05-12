@@ -115,6 +115,8 @@ def get_rest_url_nodo(context, primitive):
             primitive = "notificaAnnullamento"
         elif "_json" in primitive:
             primitive = primitive.split('_')[0]
+            if "v2/closepayment" in primitive:
+                primitive = "v2/closepayment"
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
     else:
         return ""
