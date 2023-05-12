@@ -100,7 +100,7 @@ Feature:  block checks for verificaBollettino - position status in PAID after re
             <idChannel>#channelPoste#</idChannel>
             <password>pwdpwdpwd</password>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-            <outcome>KO</outcome>
+            <outcome>OK</outcome>
             <details>
                <paymentMethod>creditCard</paymentMethod>
                <paymentChannel>app</paymentChannel>
@@ -130,7 +130,7 @@ Feature:  block checks for verificaBollettino - position status in PAID after re
       When job mod3CancelV2 triggered after 10 seconds
       And wait 6 seconds for expiration
       And psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-      Then check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
+      Then check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
 
    # Verify Phase 2
