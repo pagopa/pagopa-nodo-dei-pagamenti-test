@@ -294,6 +294,7 @@
     },
     "NewMod1": {
         "select_activatev2": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode'",
+        "select_activatev2_order_by": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' ORDER BY INSERTED_TIMESTAMP ASC",
         "update_activatev2": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode'",
         "idempotency_cache": "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNoticeV2.idempotencyKey'",
         "idempotency_cache_1": "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = '$activatePaymentNoticeV2_1Request.idempotencyKey'",
