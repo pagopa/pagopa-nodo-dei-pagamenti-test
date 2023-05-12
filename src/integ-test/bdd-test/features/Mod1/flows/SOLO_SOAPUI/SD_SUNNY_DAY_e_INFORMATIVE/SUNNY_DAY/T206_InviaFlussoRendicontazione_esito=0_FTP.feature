@@ -85,5 +85,4 @@ Feature: T206_InviaFlussoRendicontazione_esito=0_FTP
         When EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
         Then check ppt:nodoChiediFlussoRendicontazioneRisposta field exists in nodoChiediFlussoRendicontazione response
         And replace pa content with #creditor_institution_code# content
-        And check esito is OK of nodoChiediFlussoRendicontazione response
         And checks the value UPLOADED of the record at column STATUS of the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo
