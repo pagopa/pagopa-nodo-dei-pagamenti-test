@@ -100,7 +100,7 @@ Feature:  block checks for verificaBollettino - position status in PAID after re
             <idChannel>#channelPoste#</idChannel>
             <password>pwdpwdpwd</password>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-            <outcome>OK</outcome>
+            <outcome>KO</outcome>
             <details>
                <paymentMethod>creditCard</paymentMethod>
                <paymentChannel>app</paymentChannel>
