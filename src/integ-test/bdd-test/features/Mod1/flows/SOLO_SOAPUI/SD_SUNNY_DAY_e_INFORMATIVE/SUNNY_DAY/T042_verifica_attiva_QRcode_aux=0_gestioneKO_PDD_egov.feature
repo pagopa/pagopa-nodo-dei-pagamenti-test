@@ -32,7 +32,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_egov
         Then check esito is KO of nodoVerificaRPT response
         And check faultCode is PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO of nodoVerificaRPT response
         
-    @runnable
+    @runnable @prova
     Scenario: Execute nodoAttivaRPT
         Given the Execute nodoVerificaRPT scenario executed successfully
         And initial XML nodoAttivaRPT

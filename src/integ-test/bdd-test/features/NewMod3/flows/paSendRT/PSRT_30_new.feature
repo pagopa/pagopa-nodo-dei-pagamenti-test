@@ -216,7 +216,7 @@ Feature: process tests for paSendRT [PSRT_30]
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-    @runnable
+    @runnable @prova
     Scenario: 21 job paSendRt
         Given the 21 Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT
@@ -447,7 +447,7 @@ Feature: process tests for paSendRT [PSRT_30]
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-    @runnable
+    @runnable @prova
     Scenario: 22 job paSendRt
         Given the 22 Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT
@@ -681,7 +681,7 @@ Feature: process tests for paSendRT [PSRT_30]
     #When job paSendRt triggered after 5 seconds
     #Then verify the HTTP status code of paSendRt response is 200
 
-    @runnable
+    @runnable @prova
     Scenario: 23 DB check + db update
         Given the 23 Define sendPaymentOutcome scenario executed successfully
         And wait 10 seconds for expiration
@@ -915,7 +915,7 @@ Feature: process tests for paSendRT [PSRT_30]
     #When job paSendRt triggered after 5 seconds
     #Then verify the HTTP status code of paSendRt response is 200
 
-    @runnable
+    @runnable @prova
     Scenario: 24 DB check + db update
         Given the 24 Define sendPaymentOutcome scenario executed successfully
         And wait 10 seconds for expiration
@@ -1400,7 +1400,7 @@ Feature: process tests for paSendRT [PSRT_30]
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-    @runnable
+    @runnable @prova
     Scenario: 27 job paSendRt
         Given the 27 Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT

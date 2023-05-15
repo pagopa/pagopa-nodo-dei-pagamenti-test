@@ -82,7 +82,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             </pay_i:RPT>
             """
 
-    @runnable
+    @runnable @prova
     Scenario Outline: (phase 1) Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -134,7 +134,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
             #| identificativoCanale                  | 60000000001_04                  | PPT_AUTORIZZAZIONE                 | IRPTSEM21.2 |
 
 
-    @runnable
+    @runnable @prova
     #IRPTSEM2
     Scenario: (phase 2) Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
@@ -165,7 +165,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
         When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of nodoInviaRPT response
 
-    @runnable
+    @runnable @prova
     #IRPTSEM4
     Scenario: (phase 2.1) Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully

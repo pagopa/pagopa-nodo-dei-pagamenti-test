@@ -486,7 +486,7 @@ Feature: Semantic checks for nodoInviaRT - KO
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_SEMANTICA of nodoInviaRT response
 
-    @runnable
+    @runnable @prova
     Scenario: Semantic checks [RTSEM3]
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
         And initial XML RPT
