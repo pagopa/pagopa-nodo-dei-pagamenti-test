@@ -133,7 +133,7 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
         And check tipoBollo is 01 of activatePaymentNoticeV2 response
         And check provinciaResidenza is MI of activatePaymentNoticeV2 response
 
-    @test
+    @test @newfix
     #DB check
     Scenario: DB check
         Given the activatePaymentNoticeV2 scenario executed successfully
