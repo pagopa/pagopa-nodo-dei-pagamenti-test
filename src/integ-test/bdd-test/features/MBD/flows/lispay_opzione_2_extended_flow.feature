@@ -519,7 +519,7 @@ Feature: lispay opzione 2 extended flow
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @test @newfix
+    @test
     Scenario: Test nodoInviaRPT with MBD
         Given the MB scenario executed successfully
         And the RPT with MBD scenario executed successfully

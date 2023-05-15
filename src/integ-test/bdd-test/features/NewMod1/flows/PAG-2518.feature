@@ -334,7 +334,7 @@ Feature: PAG-2518
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
-    @test @newfix
+    @test 
     Scenario: Test 1 (part 3)
         Given the Test 1 (part 2) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -415,7 +415,7 @@ Feature: PAG-2518
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
-    @test @newfix
+    @test 
     Scenario: Test 2 (part 3)
         Given the Test 2 (part 2) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -456,7 +456,7 @@ Feature: PAG-2518
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
-    @test @newfix
+    @test 
     Scenario: Test 2.1 (part 3)
         Given the Test 2.1 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -499,7 +499,7 @@ Feature: PAG-2518
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
-    @test @newfix
+    @test 
     Scenario: Test 3 (part 3)
         Given the Test 3 (part 2) scenario executed successfully
         When job mod3CancelV2 triggered after 5 seconds
@@ -542,7 +542,7 @@ Feature: PAG-2518
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
-    @test @newfix
+    @test 
     Scenario: Test 3.1 (part 3)
         Given the Test 3.1 (part 2) scenario executed successfully
         When job mod3CancelV2 triggered after 5 seconds
@@ -569,7 +569,7 @@ Feature: PAG-2518
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
 
-    @test @newfix
+    @test 
     Scenario: Test 4 (part 2)
         Given the Test 4 (part 1) scenario executed successfully
         And the pspNotifyPayment KO response scenario executed successfully
