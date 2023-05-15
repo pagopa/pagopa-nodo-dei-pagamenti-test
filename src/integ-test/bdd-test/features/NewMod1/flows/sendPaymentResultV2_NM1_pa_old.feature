@@ -461,7 +461,7 @@ Feature: flow tests for sendPaymentResultV2
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @test @newfix
+    @test 
     Scenario: FLUSSO_SPR_01_IO_OLD (part 2)
         Given the FLUSSO_SPR_01_IO_OLD (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -615,7 +615,7 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.debtor is equal to value RCCGLD09P09H501E
 
     # T_SPR_V2_15
-    @test @newfix
+    @test 
     Scenario: T_SPR_V2_15
         Given the activatePaymentNoticeV2 scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
@@ -663,7 +663,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test @newfix
+    @test 
     Scenario: T_SPR_V2_16 (part 2)
         Given the T_SPR_V2_16 (part 1) scenario executed successfully
         And wait 12 seconds for expiration
@@ -717,7 +717,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test @newfix
+    @test 
     Scenario: T_SPR_V2_17 (part 2)
         Given the T_SPR_V2_17 (part 1) scenario executed successfully
         And wait 10 seconds for expiration
@@ -761,7 +761,7 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.debtor is equal to value RCCGLD09P09H501E
 
     # T_SPR_V2_18
-    @test @newfix
+    @test 
     Scenario: T_SPR_V2_18
         Given the activatePaymentNoticeV2 scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
@@ -807,7 +807,7 @@ Feature: flow tests for sendPaymentResultV2
         And checking value $XML_RE.debtor is equal to value RCCGLD09P09H501E
 
     # T_SPR_V2_19
-    @test @newfix
+    @test 
     Scenario: T_SPR_V2_19
         Given the activatePaymentNoticeV2 scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
@@ -864,7 +864,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test @newfix
+    @test 
     Scenario: T_SPR_V2_20 (part 2)
         Given the T_SPR_V2_20 (part 1) scenario executed successfully
         When job mod3CancelV1 triggered after 0 seconds
@@ -918,7 +918,7 @@ Feature: flow tests for sendPaymentResultV2
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test @newfix
+    @test 
     Scenario: T_SPR_V2_21 (part 2)
         Given the T_SPR_V2_21 (part 1) scenario executed successfully
         When job mod3CancelV1 triggered after 5 seconds

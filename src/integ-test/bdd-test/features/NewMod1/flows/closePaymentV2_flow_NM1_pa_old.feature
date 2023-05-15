@@ -1499,7 +1499,7 @@ Feature: flow tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @test @newfix
+    @test 
     Scenario: FLUSSO_OLD_CP_05 (part 2)
         Given the FLUSSO_OLD_CP_05 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1798,7 +1798,7 @@ Feature: flow tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @test @newfix
+    @test 
     Scenario: FLUSSO_OLD_CP_06 (part 2)
         Given the FLUSSO_OLD_CP_06 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -2098,7 +2098,7 @@ Feature: flow tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @test @newfix
+    @test 
     Scenario: FLUSSO_OLD_CP_07 (part 2)
         Given the FLUSSO_OLD_CP_07 (part 1) scenario executed successfully
         When job mod3CancelV1 triggered after 0 seconds
@@ -2365,7 +2365,7 @@ Feature: flow tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @test @newfix
+    @test 
     Scenario: FLUSSO_OLD_CP_11 (part 3)
         Given the FLUSSO_OLD_CP_11 (part 2) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -2673,7 +2673,7 @@ Feature: flow tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @test @newfix
+    @test 
     Scenario: FLUSSO_OLD_CP_12 (part 3)
         Given the FLUSSO_OLD_CP_12 (part 2) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -2944,7 +2944,7 @@ Feature: flow tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @test @newfix
+    @test 
     Scenario: FLUSSO_OLD_CP_13 (part 3)
         Given the FLUSSO_OLD_CP_13 (part 2) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -3249,7 +3249,7 @@ Feature: flow tests for closePaymentV2
 
         # PM_METADATA
         And verify 0 record for the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
-    @test @newfix
+    @test 
     Scenario: FLUSSO_OLD_CP_14 (part 3)
         Given the FLUSSO_OLD_CP_14 (part 2) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -3514,7 +3514,7 @@ Feature: flow tests for closePaymentV2
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check description is Outcome KO non accettabile of sendPaymentOutcome response
-    @test @newfix
+    @test 
     Scenario: FLUSSO_OLD_CP_15 (part 3)
         Given the FLUSSO_OLD_CP_15 (part 2) scenario executed successfully
         And outcome with OK in sendPaymentOutcome
@@ -3954,7 +3954,7 @@ Feature: flow tests for closePaymentV2
         And checks the value $nodoInviaRPT.identificativoDominio of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value #id_station_old# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
-    @test @newfix
+    @test 
     Scenario: FLUSSO_OLD_CP_16 (part 3)
         Given the FLUSSO_OLD_CP_16 (part 2) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -4117,7 +4117,7 @@ Feature: flow tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @test @newfix
+    @test 
     Scenario: FLUSSO_OLD_CP_17 (part 2)
         Given the FLUSSO_OLD_CP_17 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -4557,7 +4557,7 @@ Feature: flow tests for closePaymentV2
         And checks the value $nodoInviaRPT.identificativoDominio of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And checks the value #id_station_old# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
-    @test @newfix
+    @test 
     Scenario: FLUSSO_OLD_CP_18 (part 3)
         Given the FLUSSO_OLD_CP_18 (part 2) scenario executed successfully
         And execution query transactionid to get value on the table PM_METADATA, with the columns * under macro NewMod1 with db name nodo_online
@@ -4727,14 +4727,14 @@ Feature: flow tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @test @newfix
+    @test 
     Scenario: FLUSSO_OLD_CP_19 (part 2)
         Given the FLUSSO_OLD_CP_19 (part 1) scenario executed successfully
         When PM sends REST GET avanzamentoPagamento?idPagamento=$activatePaymentNoticeV2Response.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of avanzamentoPagamento response is 200
 
     # FLUSSO_OLD_CP_20
-    @test @newfix
+    @test 
     Scenario: FLUSSO_OLD_CP_20
         Given the activatePaymentNoticeV2 scenario executed successfully
         And the nodoInviaRPT scenario executed successfully
@@ -4906,7 +4906,7 @@ Feature: flow tests for closePaymentV2
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @test @newfix 
+    @test  
     Scenario: FLUSSO_OLD_CP_21 (part 2)
         Given the FLUSSO_OLD_CP_21 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully

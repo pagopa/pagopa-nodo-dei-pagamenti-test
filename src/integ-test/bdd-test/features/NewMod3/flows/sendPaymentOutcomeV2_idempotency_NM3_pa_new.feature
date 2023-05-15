@@ -521,7 +521,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test  @newfix
+    @test  
     Scenario: IDMP_SPO_22 (part 3)
         Given the IDMP_SPO_22 (part 2) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
