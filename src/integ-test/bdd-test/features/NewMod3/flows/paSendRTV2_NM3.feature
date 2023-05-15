@@ -1107,7 +1107,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test  @newfix
+    @test  
     Scenario: PSRTV2_ACTV1_06 (part 2)
         Given the PSRTV2_ACTV1_06 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1144,7 +1144,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test  @newfix
+    @test  
     Scenario: PSRTV2_ACTV1_07 (part 2)
         Given the PSRTV2_ACTV1_07 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1181,7 +1181,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test  @newfix
+    @test  
     Scenario: PSRTV2_ACTV1_08 (part 2)
         Given the PSRTV2_ACTV1_08 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1218,7 +1218,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test  @newfix
+    @test  
     Scenario: PSRTV2_ACTV1_09 (part 2)
         Given the PSRTV2_ACTV1_09 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1255,7 +1255,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test  @newfix
+    @test  
     Scenario: PSRTV2_ACTV1_10 (part 2)
         Given the PSRTV2_ACTV1_10 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
@@ -1745,7 +1745,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcome request scenario executed successfully
         When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-    @test @newfix
+    @test 
     Scenario: PSRTV2_ACTV1_23 (part 3)
         Given the PSRTV2_ACTV1_23 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1874,7 +1874,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcome request scenario executed successfully
         When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-    @test  @newfix
+    @test  
     Scenario: PSRTV2_ACTV1_25 (part 3)
         Given the PSRTV2_ACTV1_25 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1929,7 +1929,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcome request scenario executed successfully
         When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-    @test @newfix
+    @test 
     Scenario: PSRTV2_ACTV1_26 (part 3)
         Given the PSRTV2_ACTV1_26 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
