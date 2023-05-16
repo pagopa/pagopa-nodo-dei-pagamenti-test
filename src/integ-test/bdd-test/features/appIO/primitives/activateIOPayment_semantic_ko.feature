@@ -2,7 +2,10 @@ Feature: Semantic checks for activateIOPayment - KO
 
   Background:
     Given systems up
-    And nodo-dei-pagamenti has config parameter scheduler.jobName_annullamentoRptMaiRichiesteDaPm.enabled set to false
+
+  @runnable
+  Scenario: set config parameter scheduler
+    Given nodo-dei-pagamenti has config parameter scheduler.jobName_annullamentoRptMaiRichiesteDaPm.enabled set to false
 
   @runnable @prova
   Scenario Outline: Check errors on activateIOPayment
