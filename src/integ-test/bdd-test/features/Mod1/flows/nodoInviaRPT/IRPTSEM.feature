@@ -115,7 +115,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM]
         Then check faultCode is <error> of nodoInviaRPT response
         Examples:
             | tag                                   | tagvalue                        | error                              | soapUI test |
-            | identificativoIntermediarioPA         | ciao                           | PPT_INTERMEDIARIO_PA_SCONOSCIUTO   | IRPTSEM1    |
+            | identificativoIntermediarioPA         | ciao                            | PPT_INTERMEDIARIO_PA_SCONOSCIUTO   | IRPTSEM1    |
             | identificativoStazioneIntermediarioPA | sconosciuto                     | PPT_STAZIONE_INT_PA_SCONOSCIUTA    | IRPTSEM3    |
             | identificativoDominio                 | sconosciuto                     | PPT_DOMINIO_SCONOSCIUTO            | IRPTSEM5    |
             | identificativoDominio                 | NOT_ENABLED                     | PPT_DOMINIO_DISABILITATO           | IRPTSEM6    |
