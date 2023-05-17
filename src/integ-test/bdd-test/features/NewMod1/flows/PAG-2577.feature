@@ -119,6 +119,7 @@ Feature: flow tests for activatePaymentNoticeV2Request
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
+        And wait 5 seconds for expiration
 
         # RE
         And execution query paGetv2_req_activatev2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
