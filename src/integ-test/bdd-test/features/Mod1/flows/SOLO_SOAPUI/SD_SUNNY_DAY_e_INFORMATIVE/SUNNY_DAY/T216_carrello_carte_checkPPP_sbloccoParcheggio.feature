@@ -309,7 +309,7 @@ Feature: T216_carrello_carte_checkPPP_sbloccoParcheggio
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
-@runnable @prova
+@runnable
     Scenario: Execute nodoChiediStatoRPT2
         Given the Execute nodoInviaCarrelloRPT duplicato scenario executed successfully
         And initial XML nodoChiediStatoRPT

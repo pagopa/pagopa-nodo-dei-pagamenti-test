@@ -206,7 +206,7 @@ Feature: T216_RPT_checkPPI_sbloccoParcheggio
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
 
-@runnable @prova
+@runnable
     Scenario: Execute nodoChiediStatoRPT1
         Given the Execute nodoInviaRPT duplicata scenario executed successfully
         And initial XML nodoChiediStatoRPT

@@ -4,7 +4,7 @@ Feature: T216_carrello_checkPPP
     Background:
         Given systems up
 
-@runnable @prova
+@runnable
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given RPT generation
             """
