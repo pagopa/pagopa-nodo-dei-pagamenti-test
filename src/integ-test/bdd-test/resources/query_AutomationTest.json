@@ -363,6 +363,7 @@
         "sprv2_req_ccp": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$ccp' AND TIPO_EVENTO = 'sendPaymentResult-v2' AND SOTTO_TIPO_EVENTO = 'REQ'",
         "sprv2_req_spo": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcome.paymentToken' AND TIPO_EVENTO = 'sendPaymentResult-v2' AND SOTTO_TIPO_EVENTO = 'REQ'",
         "sprv2_req_spov2": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcomeV2.paymentToken' AND TIPO_EVENTO = 'sendPaymentResult-v2' AND SOTTO_TIPO_EVENTO = 'REQ'",
+        "paGetv2_req_activatev2": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND TIPO_EVENTO = 'paGetPaymentV2' AND SOTTO_TIPO_EVENTO = 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE)",
         "cpv2_req_spov2": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcomeV2.paymentToken' AND TIPO_EVENTO = 'closePayment-v2' AND SOTTO_TIPO_EVENTO = 'REQ'",
         "cpv2_req_spo": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcome.paymentToken' AND TIPO_EVENTO = 'closePayment-v2' AND SOTTO_TIPO_EVENTO = 'REQ'",
         "cpv2_req_activatev2": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2_1Response.paymentToken' AND TIPO_EVENTO = 'closePayment-v2' AND SOTTO_TIPO_EVENTO = 'REQ'",
