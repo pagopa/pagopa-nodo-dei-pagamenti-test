@@ -246,17 +246,6 @@ def step_impl(context, primitive):
 
     setattr(context, primitive, payload)
 
-    # payload_b = bytes(payload, 'UTF-8')
-    # payload_uni = b64.b64encode(payload_b)
-    # payload_c = f"{payload_uni}".split("'")[1]
-
-    # print("Xml generato: ", payload_c)
-    # setattr(context, 'b64encode', payload_c)
-
-    # payload = b64.b64decode(payload_c).decode('ascii')
-
-    # setattr(context, primitive, payload)
-
 
 @given('initial JSON {primitive}')
 def step_impl(context, primitive):
