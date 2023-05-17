@@ -122,5 +122,5 @@ Feature: flow tests for activatePaymentNoticeV2Request
 
         # RE
         And execution query paGetv2_req_activatev2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-        And through the query paGetv2_req_activatev2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And through the query paGetv2_req_activatev2 retrieve xml PAYLOAD at position 0 and save it under the key XML_RE
         And checking value $XML_RE.transferType is equal to value PAGOPA
