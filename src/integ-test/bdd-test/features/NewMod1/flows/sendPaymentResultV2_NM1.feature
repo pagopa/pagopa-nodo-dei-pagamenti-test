@@ -10,11 +10,11 @@ Feature: flow tests for sendPaymentResultV2
                 "positionslist": [
                     {
                         "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "302#iuv#"
+                        "noticeNumber": "310#iuv#"
                     },
                     {
                         "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "302#iuv1#"
+                        "noticeNumber": "310#iuv1#"
                     }
                 ]
             }

@@ -31,7 +31,7 @@ Feature: semantic checks for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 404
         And check outcome is KO of v2/closepayment response
-        And check description is Unknown token of v2/closepayment response
+        And check description is The indicated payment does not exist of v2/closepayment response
     @test
     # identificativoPsp value check
     Scenario Outline: Check semantic error on idPSP
@@ -592,50 +592,52 @@ Feature: semantic checks for closePaymentV2
             </soapenv:Envelope>
             """
 
-    # mismatched amount between CPV2 and RPT [SEM_CP_12.1]
-    Scenario: check nodoAttivaRPT OK
-        Given the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
+    # i seguenti test sono out of scope dopo lo spostamento del traduttore
 
-    Scenario: check nodoInviaRPT OK
-        Given the check nodoAttivaRPT OK scenario executed successfully
-        And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-    @test
-    Scenario: check closePaymentV2 OK 7
-        Given the check nodoInviaRPT OK scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
-        And paymentToken with $sessionToken in v2/closepayment
-        And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
-        And totalAmount with 14 in v2/closepayment
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 400
-        And check outcome is KO of v2/closepayment response
-        And check description is Mismatched amount of v2/closepayment response
+    # # mismatched amount between CPV2 and RPT [SEM_CP_12.1]
+    # Scenario: check nodoAttivaRPT OK
+    #     Given the nodoAttivaRPT scenario executed successfully
+    #     When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+    #     Then check esito is OK of nodoAttivaRPT response
 
-    # check channel versione primitive 2 PA old [SEM_CP_16]
-    Scenario: check nodoAttivaRPT OK 2
-        Given the nodoAttivaRPT scenario executed successfully
-        When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoAttivaRPT response
+    # Scenario: check nodoInviaRPT OK
+    #     Given the check nodoAttivaRPT OK scenario executed successfully
+    #     And the nodoInviaRPT scenario executed successfully
+    #     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+    #     Then check esito is OK of nodoInviaRPT response
+    #     And retrieve session token from $nodoInviaRPTResponse.url
+    # @test
+    # Scenario: check closePaymentV2 OK 7
+    #     Given the check nodoInviaRPT OK scenario executed successfully
+    #     And the closePaymentV2 scenario executed successfully
+    #     And paymentToken with $sessionToken in v2/closepayment
+    #     And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
+    #     And totalAmount with 14 in v2/closepayment
+    #     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+    #     Then verify the HTTP status code of v2/closepayment response is 400
+    #     And check outcome is KO of v2/closepayment response
+    #     And check description is Mismatched amount of v2/closepayment response
 
-    Scenario: check nodoInviaRPT OK 2
-        Given the check nodoAttivaRPT OK 2 scenario executed successfully
-        And the nodoInviaRPT scenario executed successfully
-        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
-        Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-    @test
-    Scenario: check closePaymentV2 OK 8
-        Given the check nodoInviaRPT OK 2 scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
-        And paymentToken with $sessionToken in v2/closepayment
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 400
-        And check outcome is OK of v2/closepayment response
+    # # check channel versione primitive 2 PA old [SEM_CP_16]
+    # Scenario: check nodoAttivaRPT OK 2
+    #     Given the nodoAttivaRPT scenario executed successfully
+    #     When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+    #     Then check esito is OK of nodoAttivaRPT response
+
+    # Scenario: check nodoInviaRPT OK 2
+    #     Given the check nodoAttivaRPT OK 2 scenario executed successfully
+    #     And the nodoInviaRPT scenario executed successfully
+    #     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+    #     Then check esito is OK of nodoInviaRPT response
+    #     And retrieve session token from $nodoInviaRPTResponse.url
+    # @test
+    # Scenario: check closePaymentV2 OK 8
+    #     Given the check nodoInviaRPT OK 2 scenario executed successfully
+    #     And the closePaymentV2 scenario executed successfully
+    #     And paymentToken with $sessionToken in v2/closepayment
+    #     When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+    #     Then verify the HTTP status code of v2/closepayment response is 200
+    #     And check outcome is OK of v2/closepayment response
 
     # check channel versione primitive 2, 2 token pa old
 
@@ -811,8 +813,8 @@ Feature: semantic checks for closePaymentV2
             """
             {
                 "paymentTokens": [
-                    "$1sessionToken",
-                    "$2sessionToken"
+                    "$activatePaymentNoticeV2_1Response.paymentToken",
+                    "$activatePaymentNoticeV2_2Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -833,14 +835,13 @@ Feature: semantic checks for closePaymentV2
         Given the activatePaymentNoticeV2 pa old scenario executed successfully
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
 
     Scenario: test 1.2
         Given the test 1.1 scenario executed successfully
         And the nodoInviaRPT 2 scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-        And replace 1sessionToken content with $sessionToken content
 
     Scenario: test 1.3
         Given the test 1.2 scenario executed successfully
@@ -851,20 +852,22 @@ Feature: semantic checks for closePaymentV2
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
 
     Scenario: test 1.4
         Given the test 1.3 scenario executed successfully
         And pay_i:identificativoUnivocoVersamento with $iuv in RPT
+        And pay_i:codiceContestoPagamento with $activatePaymentNoticeV2_2Response.paymentToken in RPT
         And RPT generation
             """
             $RPT
             """
         And rpt with $rptAttachment in nodoInviaRPT
         And identificativoUnivocoVersamento with $iuv in nodoInviaRPT
+        And codiceContestoPagamento with $activatePaymentNoticeV2_2Response.paymentToken in nodoInviaRPT
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        And retrieve session token from $nodoInviaRPTResponse.url
-        And replace 2sessionToken content with $sessionToken content
+
     @test
     Scenario: test 1.5
         Given the test 1.4 scenario executed successfully
