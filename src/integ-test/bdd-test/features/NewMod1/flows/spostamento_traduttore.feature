@@ -727,7 +727,7 @@ Feature: spostamento traduttore
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
-    @test
+    @test 
     Scenario: Test 1 (part 5)
         Given the Test 1 (part 4) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -879,7 +879,7 @@ Feature: spostamento traduttore
         When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
-    @test
+    @test 
     Scenario: Test 1.1 (part 5)
         Given the Test 1.1 (part 4) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -1031,7 +1031,7 @@ Feature: spostamento traduttore
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
-    @test
+    @test 
     Scenario: Test 2 (part 5)
         Given the Test 2 (part 4) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -1184,7 +1184,7 @@ Feature: spostamento traduttore
         When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
-    @test
+    @test 
     Scenario: Test 2.1 (part 5)
         Given the Test 2.1 (part 4) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -1337,7 +1337,7 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of mod3CancelV1 response is 200
         And restore initial configurations
 
-    @test
+    @test 
     Scenario: Test 3 (part 5)
         Given the Test 3 (part 4) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -1444,7 +1444,7 @@ Feature: spostamento traduttore
         Then verify the HTTP status code of mod3CancelV1 response is 200
         And restore initial configurations
 
-    @test
+    @test 
     Scenario: Test 3.1 (part 5)
         Given the Test 3.1 (part 4) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -1542,7 +1542,7 @@ Feature: spostamento traduttore
         And checks the value v2 of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test
+    @test 
     Scenario: Test 4 (part 4)
         Given the Test 4 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -1641,7 +1641,7 @@ Feature: spostamento traduttore
         And checks the value v2 of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test
+    @test 
     Scenario: Test 4.1 (part 4)
         Given the Test 4.1 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -1739,7 +1739,7 @@ Feature: spostamento traduttore
         And checks the value v2 of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test
+    @test 
     Scenario: Test 5 (part 4)
         Given the Test 5 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -1838,7 +1838,7 @@ Feature: spostamento traduttore
         And checks the value v2 of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test
+    @test 
     Scenario: Test 5.1 (part 4)
         Given the Test 5.1 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -1936,7 +1936,7 @@ Feature: spostamento traduttore
         And checks the value None of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test
+    @test 
     Scenario: Test 6 (part 4)
         Given the Test 6 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -2035,7 +2035,7 @@ Feature: spostamento traduttore
         And checks the value None of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test
+    @test 
     Scenario: Test 6.1 (part 4)
         Given the Test 6.1 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -2120,7 +2120,7 @@ Feature: spostamento traduttore
         When job mod3CancelV1 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
 
-    @test
+    @test 
     Scenario: Test 7 (part 4)
         Given the Test 7 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -2204,7 +2204,7 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @test
+    @test 
     Scenario: Test 8 (part 4)
         Given the Test 8 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -2292,7 +2292,7 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @test
+    @test 
     Scenario: Test 8.1 (part 4)
         Given the Test 8.1 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -2380,7 +2380,7 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @test
+    @test 
     Scenario: Test 9 (part 4)
         Given the Test 9 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -2469,7 +2469,7 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @test
+    @test 
     Scenario: Test 9.1 (part 4)
         Given the Test 9.1 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -2554,7 +2554,7 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @test
+    @test 
     Scenario: Test 10 (part 4)
         Given the Test 10 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -2610,7 +2610,7 @@ Feature: spostamento traduttore
 
     #####################################################################################
 
-    @test
+    @test 
     Scenario: Test 11
         Given the activatePaymentNoticeV2 scenario executed successfully
         And the paaAttivaRPT delay scenario executed successfully
@@ -2667,7 +2667,7 @@ Feature: spostamento traduttore
         # RPT_ACTIVATIONS
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test
+    @test 
     Scenario: Test 12 (part 2)
         Given the Test 12 (part 1) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -2740,7 +2740,7 @@ Feature: spostamento traduttore
         # RPT_ACTIVATIONS
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test
+    @test 
     Scenario: Test 13 (part 2)
         Given the Test 13 (part 1) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -2804,7 +2804,7 @@ Feature: spostamento traduttore
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activatePaymentNoticeV2 response
 
-    @test
+    @test 
     Scenario: Test 14 (part 2)
         Given the Test 14 (part 1) scenario executed successfully
         And execution query select_activatev2 to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online
@@ -2844,7 +2844,7 @@ Feature: spostamento traduttore
         And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test
+    @test 
     Scenario: Test 15 (part 2)
         Given the Test 15 (part 1) scenario executed successfully
         And the nodoInviaRPT with MBD scenario executed successfully

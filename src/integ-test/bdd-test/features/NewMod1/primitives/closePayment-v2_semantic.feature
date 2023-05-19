@@ -868,7 +868,7 @@ Feature: semantic checks for closePaymentV2
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @test
+    @test 
     Scenario: test 1.5
         Given the test 1.4 scenario executed successfully
         And the closePaymentV2 6 scenario executed successfully

@@ -262,7 +262,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
 
-    @test
+    @test 
     # DB check
     Scenario: execute DB check
         Given the Execute sendPaymentOutcomeV2 scenario executed successfully
