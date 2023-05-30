@@ -229,7 +229,7 @@ Feature: T101_B_chiediStato_RT_ACCETTATA_PA_Annullamento
         When job paInviaRt triggered after 5 seconds
         And wait until the update to the new state for the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
     
-@runnable
+@runnable @lazy @dependentread
     Scenario: Execute nodoChiediStatoRPT
         Given the Execute job paInviaRt scenario executed successfully
         And initial XML nodoChiediStatoRPT

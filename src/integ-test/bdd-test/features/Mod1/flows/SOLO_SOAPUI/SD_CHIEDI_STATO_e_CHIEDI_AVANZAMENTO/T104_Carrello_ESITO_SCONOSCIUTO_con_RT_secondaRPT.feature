@@ -540,7 +540,7 @@ Feature: T104_Carrello_ESITO_SCONOSCIUTO_con_RT_secondaRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
 
-    @runnable
+    @runnable @dependentread @lazy
    Scenario: Execute nodoInviaRT
         Given the MB generation scenario executed successfully
         And initial XML paaInviaRT

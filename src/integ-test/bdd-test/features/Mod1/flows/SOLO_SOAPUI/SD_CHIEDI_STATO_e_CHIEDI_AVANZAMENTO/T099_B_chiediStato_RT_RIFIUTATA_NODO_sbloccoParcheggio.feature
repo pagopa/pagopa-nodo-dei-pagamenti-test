@@ -546,7 +546,7 @@ Feature: T099_B_chiediStato_RT_RIFIUTATA_NODO_sbloccoParcheggio
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInviaRT1
         Given the nodoInviaCarrelloRPT duplicato scenario executed successfully
         And initial XML nodoInviaRT

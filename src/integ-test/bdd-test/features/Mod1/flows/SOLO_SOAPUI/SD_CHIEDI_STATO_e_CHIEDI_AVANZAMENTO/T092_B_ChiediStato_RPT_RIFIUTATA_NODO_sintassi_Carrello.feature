@@ -223,7 +223,7 @@ Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_RPT_SCONOSCIUTA of nodoChiediStatoRPT response
 
-    @runnable
+    @runnable @dependentread
     Scenario: Execute nodoInviaCarrelloRPT
         Given the Execute nodoChiediStatoRPT scenario executed successfully
         And initial XML nodoInviaCarrelloRPT

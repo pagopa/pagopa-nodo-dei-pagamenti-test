@@ -152,7 +152,7 @@ Feature: T095_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
         And checks stato contains RPT_INVIATA_A_PSP of nodoChiediStatoRPT response
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
 
-    @runnable
+    @runnable @independent
      Scenario: execution nodoInviaRPT duplicato
         Given the Execute nodoChiediStatoRPT scenario executed successfully
         And initial XML nodoInviaRPT

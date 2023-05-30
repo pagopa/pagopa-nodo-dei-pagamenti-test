@@ -128,7 +128,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_1
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -143,7 +143,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 400
         And check error is Richiesta non valida of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_2
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -159,7 +159,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 404
         And check error is Il Pagamento indicato non esiste of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_3
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -175,7 +175,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 404
         And check error is Il Pagamento indicato non esiste of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_4
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -190,7 +190,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 400
         And check error is Richiesta non valida of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_5
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -206,7 +206,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 404
         And check error is Il PSP indicato non esiste of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_6
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -222,7 +222,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 404
         And check error is Il PSP indicato non esiste of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_7
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -238,7 +238,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 404
         And check error is Il PSP indicato non esiste of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_8
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -254,7 +254,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 422
         And check error is Tipo Versamento invalido of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_8.1
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -269,7 +269,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
             """
         Then verify the HTTP status code of inoltroEsito/mod2 response is 200
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_8.2
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -284,7 +284,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
             """
         Then verify the HTTP status code of inoltroEsito/mod2 response is 200
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_8.3
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -299,7 +299,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
             """
         Then verify the HTTP status code of inoltroEsito/mod2 response is 200
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_8.4
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -315,7 +315,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 422
         And check error is Tipo Versamento invalido of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_8.5
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -331,7 +331,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 422
         And check error is Tipo Versamento invalido of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_8.6
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -347,7 +347,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 400
         And check error is Richiesta non valida of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_9
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -362,7 +362,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 400
         And check error is Richiesta non valida of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_10
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -378,7 +378,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 400
         And check error is Richiesta non valida of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_11
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -394,7 +394,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 400
         And check error is Richiesta non valida of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_12
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -410,7 +410,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 400
         And check error is Richiesta non valida of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_13
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -425,7 +425,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 400
         And check error is Richiesta non valida of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_14
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -441,7 +441,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 404
         And check error is L'Intermediario indicato non esiste of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_15
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -457,7 +457,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 404
         And check error is L'Intermediario indicato non esiste of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_16
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -473,7 +473,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 404
         And check error is L'Intermediario indicato non esiste of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_17
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -488,7 +488,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 400
         And check error is Richiesta non valida of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_18
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -504,7 +504,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 404
         And check error is Il Canale indicato non esiste of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_19
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -520,7 +520,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 404
         And check error is Il Canale indicato non esiste of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_20
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -536,7 +536,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 404
         And check error is Il Canale indicato non esiste of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_21
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti
@@ -552,7 +552,7 @@ Feature: process tests for nodoInoltraPagamentoMod2
         Then verify the HTTP status code of inoltroEsito/mod2 response is 404
         And check error is Configurazione intermediario-canale non corretta of inoltroEsito/mod2 response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoMod2 - PM_IPM2_22
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod2 to nodo-dei-pagamenti

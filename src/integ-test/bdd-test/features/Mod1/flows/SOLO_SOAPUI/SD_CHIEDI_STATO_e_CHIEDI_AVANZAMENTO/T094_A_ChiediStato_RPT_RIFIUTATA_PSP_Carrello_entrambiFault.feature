@@ -310,7 +310,7 @@ Feature: T094_A_ChiediStato_RPT_RIFIUTATA_PSP_Carrello_entrambiFault
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoChiediStatoRPT3
         Given the Execute nodoInviaCarrelloRPT2 scenario executed successfully
         And initial XML nodoChiediStatoRPT

@@ -703,7 +703,7 @@ Feature: T103_C_chiediStato_RT_ERRORE_INVIO_A_PA_Carrello_sbloccoParcheggio
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-    @runnable
+    @runnable @independent @lazy
     Scenario: Execute nodoChiediStatoRPT5
         Given the Execute nodoChiediStatoRPT4 scenario executed successfully
         And initial XML nodoChiediStatoRPT

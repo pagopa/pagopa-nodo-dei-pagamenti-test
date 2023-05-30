@@ -299,7 +299,7 @@ Feature: process tests for ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParch
         And check esito is OK of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
 
-    @runnable
+    @runnable @dependentread @lazy
     Scenario: Execute third check DB-RPT
         Given the Execution Esito CartaRetry scenario executed successfully
         Then checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_RPT_noOrder on db nodo_online under macro Mod1
