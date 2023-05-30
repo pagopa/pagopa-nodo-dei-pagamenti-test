@@ -2,7 +2,7 @@ Feature: Syntax checks for nodoChiediInformativaPA - KO
     Background:
         Given systems up
 
-    @runnable
+    @runnable @independent
     Scenario Outline: Check error for nodoChiediInformativaPA primitive
         Given initial XML nodoChiediInformativaPA
             """
@@ -42,7 +42,7 @@ Feature: Syntax checks for nodoChiediInformativaPA - KO
             | identificativoDominio          | Empty                                | CIPASIN17 |
             | identificativoDominio          | qertyuop234dcvgtresd567yhbvfrteesd56 | CIPASIN18 |
 
-    @runnable
+    @runnable @independent
     Scenario: Check error for nodoChiediInformativaPA primitive-[CIPASIN1]
         Given initial XML nodoChiediInformativaPA
             """
@@ -59,7 +59,7 @@ Feature: Syntax checks for nodoChiediInformativaPA - KO
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediInformativaPA response
         And check faultString is Errore di sintassi extra XSD. of nodoChiediInformativaPA response
 
-    @runnable
+    @runnable @independent
     Scenario: Check error for nodoChiediInformativaPA primitive-[CIPASIN3]
         Given initial XML nodoChiediInformativaPA
             """
