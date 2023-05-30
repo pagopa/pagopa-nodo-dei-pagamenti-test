@@ -111,7 +111,7 @@ Feature: process tests for notificaAnnullamento_RPT-T139
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then retrieve session token from $nodoInviaRPTResponse.url
 
-@runnable
+@runnable @independent
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

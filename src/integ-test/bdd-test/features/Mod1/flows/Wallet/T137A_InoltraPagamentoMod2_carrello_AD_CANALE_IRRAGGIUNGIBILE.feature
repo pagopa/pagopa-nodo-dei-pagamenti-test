@@ -457,7 +457,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
-@runnable
+@runnable @independent
     Scenario: Execute nodoInviaRT2 request
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoInviaRT

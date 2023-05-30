@@ -699,7 +699,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
     
-    @runnable
+    @runnable @independent
     Scenario: Execution idPagamento
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti

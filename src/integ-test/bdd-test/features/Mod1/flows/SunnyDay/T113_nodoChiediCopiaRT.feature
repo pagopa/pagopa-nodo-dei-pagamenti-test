@@ -240,7 +240,7 @@ Feature: process tests for nodoChiediCopiaRT
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-@runnable
+@runnable @independent
     Scenario: Execute nodoChiediCopiaRT
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoChiediCopiaRT

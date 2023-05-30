@@ -204,7 +204,7 @@ Feature: process tests for notificaAnnullamento_Carrello_2RPT-T139B
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-@runnable
+@runnable @independent
     Scenario: Execute nodoNotificaAnnullamento
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

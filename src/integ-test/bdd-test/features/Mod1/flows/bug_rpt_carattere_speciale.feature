@@ -31,6 +31,7 @@ Feature: bug rpt carattere speciale
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
+    @test @independent
     Scenario: nodoInviaCarrelloRPT
         Given initial XML nodoInviaCarrelloRPT
             """

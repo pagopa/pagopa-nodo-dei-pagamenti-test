@@ -81,7 +81,7 @@ Feature: process tests for nodoInviaRT
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+@runnable @independent
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
@@ -209,7 +209,7 @@ Feature: process tests for nodoInviaRT
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+@runnable @independent
     Scenario: Execute second nodoInviaRPT request
         Given the RPT2 generation scenario executed successfully
         And initial XML nodoInviaRPT
