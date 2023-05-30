@@ -454,7 +454,7 @@ Feature: process tests for T101_G_chiediStato_RT_ACCETTATA_PA_Carrello_2PA_sbloc
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-@runnable
+@runnable @independent @lazy
     Scenario: Execute nodoInviaRT request
         Given the Execute second nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoInviaRT

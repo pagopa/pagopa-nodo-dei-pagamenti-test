@@ -160,7 +160,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_PSP
         And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
     
-    @runnable
+    @runnable @independent
     Scenario: Execute second nodoInviaRPT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoInviaRPT

@@ -138,7 +138,7 @@ Feature: process tests for ChiediStato_RPT_RIFIUTATA_NODO_sintassi
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_RPT_SCONOSCIUTA of nodoChiediStatoRPT response
        
-@runnable
+@runnable @independent
 	Scenario: Execute nodoInviaRPT Duplicato
 		Given the Execute nodoChiediStatoRPT scenario executed successfully
 		And initial XML nodoInviaRPT

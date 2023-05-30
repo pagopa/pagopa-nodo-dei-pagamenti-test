@@ -81,7 +81,7 @@ Feature: process tests for T100_ChiediStato_RPT_SCONOSCIUTA
                 </pay_i:datiVersamento>
                 </pay_i:RPT>
             """
-@runnable
+@runnable @independent
     Scenario: Execute nodoChiediStatoRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoChiediStatoRPT

@@ -269,7 +269,7 @@ Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
         And checks stato contains RPT_ESITO_SCONOSCIUTO_PSP of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute second nodoInviaCarrelloRPT request
         Given the Execute second nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
