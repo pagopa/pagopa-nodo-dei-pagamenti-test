@@ -149,7 +149,7 @@ Feature: PRO_ANNULLO_12_PPALNEW
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is OK of inoltroEsito/paypal response
 
-    @runnable
+    @runnable @dependentread @dependentwrite @lazy
     Scenario: Execute sendPaymentOutcome (Phase 5)
         Given the Execute nodoInoltroEsitoPaypal (Phase 4) scenario executed successfully
         And initial XML sendPaymentOutcome

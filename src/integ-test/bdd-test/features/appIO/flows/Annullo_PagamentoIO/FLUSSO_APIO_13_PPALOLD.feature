@@ -294,7 +294,7 @@ Feature: FLUSSO_APIO_13_PPALOLD
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-@runnable
+@runnable @dependentread @lazy
     Scenario: Execute nodoNotificaAnnullamento (Phase 5)
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         When WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
