@@ -261,7 +261,7 @@ Feature: T220_RT_faultBeanEsteso
         Then check esito is OK of nodoInviaRT response
         And wait 10 seconds for expiration
 
-@runnable
+@runnable @independent @lazy
     Scenario: Execute nodoChiediStatoRPT (Phase 3)
         Given the Execute nodoInviaRT (Phase 2) scenario executed successfully
         And initial XML nodoChiediStatoRPT
