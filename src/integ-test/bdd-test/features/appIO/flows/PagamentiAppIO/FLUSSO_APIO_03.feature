@@ -176,7 +176,7 @@ Feature: FLUSSO_APIO_03
         And checks the value $activateIOPayment.dueDate of the record at column DUE_DATE of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value $activateIOPayment.amount of the record at column AMOUNT of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-@runnable
+@runnable @dependentread
     Scenario: Check sendPaymentOutcome response with pspNotifyPayment OK and sendPaymentOutcome KO, and check correctness of database tables
         Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
         And initial XML sendPaymentOutcome

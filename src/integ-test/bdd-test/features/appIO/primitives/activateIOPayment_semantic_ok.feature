@@ -52,7 +52,7 @@ Feature: Semantic checks for activateIOPaymentReq - OK
             </soapenv:Envelope>
             """
 
-    @runnable
+    @runnable @independent
     Scenario Outline: Check Unknown/Disabled PSP in idempotencyKey
         Given <tag> with <tag_value> in activateIOPayment
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
@@ -62,7 +62,7 @@ Feature: Semantic checks for activateIOPaymentReq - OK
             | idempotencyKey | 12345678901_1244gtg684 | SEM_AIPR_17 |
             | idempotencyKey | 80000000001_1244gtg684 | SEM_AIPR_18 |
     
-    @runnable
+    @runnable @dependentread
     # [SEM_AIPR_19]
     Scenario: Execute activateIOPayment (Phase 1)
         Given nodo-dei-pagamenti has config parameter useIdempotency set to true
@@ -70,7 +70,7 @@ Feature: Semantic checks for activateIOPaymentReq - OK
         And save activateIOPayment response in activateIOPayment_first
         Then check outcome is OK of activateIOPayment_first response
     
-    @runnable
+    @runnable @dependentread
     Scenario: Check second activateIOPayment is equal to the first
         Given the Execute activateIOPayment (Phase 1) scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
@@ -79,7 +79,7 @@ Feature: Semantic checks for activateIOPaymentReq - OK
         And restore initial configurations
 
     # [SEM_AIPR_31]
-    @runnable
+    @runnable @dependentread
     Scenario: Check activateIOPayment response with parameters in deny list
         Given generate 1 notice number and iuv with aux digit 3, segregation code 11 and application code NA
         And noticeNumber with $1noticeNumber in activateIOPayment
