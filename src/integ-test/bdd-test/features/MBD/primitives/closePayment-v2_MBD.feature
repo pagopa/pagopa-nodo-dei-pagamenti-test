@@ -128,7 +128,7 @@ Feature: flow tests for closePaymentV2 MBD
                 }
             }
             """
-    @test  
+    @test @independent  
     Scenario: Channel with VERSIONE_PRIMITIVE != 2
         Given the closePaymentV2 scenario executed successfully
         And idChannel with #canale_IMMEDIATO_MULTIBENEFICIARIO# in v2/closepayment
@@ -136,7 +136,7 @@ Feature: flow tests for closePaymentV2 MBD
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid PSP/Canale for MBD of v2/closepayment response
-    @test 
+    @test @dependentwrite @lazy 
     Scenario: Psp with MARCA_BOLLO_DIGITALE != 1
         Given updates through the query update_id_psp of the table PSP the parameter MARCA_BOLLO_DIGITALE with 0 under macro NewMod1 on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
@@ -147,7 +147,7 @@ Feature: flow tests for closePaymentV2 MBD
         And check description is Invalid PSP/Canale for MBD of v2/closepayment response
         And updates through the query update_id_psp of the table PSP the parameter MARCA_BOLLO_DIGITALE with 1 under macro NewMod1 on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
-    @test 
+    @test @dependentwrite @lazy 
     Scenario: Channel with MARCA_BOLLO_DIGITALE != Y
         Given execution query select_fk_canali_nodo to get value on the table CANALI, with the columns FK_CANALI_NODO under macro NewMod1 with db name nodo_cfg
         And through the query select_fk_canali_nodo retrieve param fk_canali_nodo at position 0 and save it under the key fk_canali_nodo
@@ -160,7 +160,7 @@ Feature: flow tests for closePaymentV2 MBD
         And check description is Invalid PSP/Canale for MBD of v2/closepayment response
         And updates through the query update_obj_id of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with Y under macro NewMod1 on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
-    @test 
+    @test @independent 
     Scenario: Sunny Day
         Given the closePaymentV2 scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
