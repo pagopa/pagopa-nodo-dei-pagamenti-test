@@ -133,7 +133,7 @@ Feature: T069_D_CarrelloRPT_AD_ProxyError502
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaCarrelloRPT response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoChiediStatoRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoChiediStatoRPT

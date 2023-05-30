@@ -141,7 +141,7 @@ Feature: Copy of T042_verifica_attiva_QRcode_aux=0
         When EC sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRPT
         Given the Execute nodoAttivaRPT scenario executed successfully
         And initial XML nodoInviaRPT

@@ -2,7 +2,7 @@ Feature: T001A_DYNAMIC_RPT_RT_Bollo_hash72char
     Background:
         Given systems up
 
-    @runnable
+    @runnable @independent
     Scenario: MB generation
         Given MB generation
             """

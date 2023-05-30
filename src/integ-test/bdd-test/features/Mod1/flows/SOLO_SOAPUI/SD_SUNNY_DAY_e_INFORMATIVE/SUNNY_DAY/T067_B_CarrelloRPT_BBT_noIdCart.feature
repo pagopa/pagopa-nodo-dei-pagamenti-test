@@ -3,7 +3,7 @@ Feature: T067_B_CarrelloRPT_BBT_noIdCart
     Background:
         Given systems up
 
-@runnable
+@runnable @independent
     Scenario: RPT generation
         Given RPT1 generation
             """

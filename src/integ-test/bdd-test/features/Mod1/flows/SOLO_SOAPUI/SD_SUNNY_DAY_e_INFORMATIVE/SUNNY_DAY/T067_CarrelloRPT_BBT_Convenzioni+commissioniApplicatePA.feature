@@ -224,7 +224,7 @@ Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA
         And wait 20 seconds for expiration 
         And checks the value codiceConvenzione$1IUV of the record at column CODICE_CONVENZIONE of the table CARRELLO retrived by the query codice_convenzione on db nodo_online under macro Mod1
 
-@runnable
+@runnable @dependentread @lazy
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaCarrelloRPT scenario executed successfully
         And initial XMl nodoInviaRT

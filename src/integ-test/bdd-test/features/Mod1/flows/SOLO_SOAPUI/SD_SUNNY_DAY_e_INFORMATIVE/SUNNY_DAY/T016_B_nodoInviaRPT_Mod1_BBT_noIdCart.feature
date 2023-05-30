@@ -3,7 +3,7 @@ Feature: T016_B_ nodoInviaRPT_Mod1_BBT_noIdCart
     Background:
         Given systems up
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given RPT generation
             """

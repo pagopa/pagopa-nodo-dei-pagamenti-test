@@ -2,7 +2,7 @@ Feature: T016_C_nodoInviaRPT_Mod1_BBT_soloOK
     Background:
         Given systems up
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given RPT generation
             """

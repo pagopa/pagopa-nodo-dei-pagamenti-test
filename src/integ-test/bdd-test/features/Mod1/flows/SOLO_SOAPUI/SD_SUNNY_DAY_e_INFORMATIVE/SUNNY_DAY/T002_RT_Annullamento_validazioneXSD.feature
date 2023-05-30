@@ -223,7 +223,7 @@ Feature: T002_RT_Annullamento_validazioneXSD
         And check esito is OK of notificaAnnullamento response
         And wait 7 seconds for expiration 
 
-    @runnable 
+    @runnable @independent @lazy 
     Scenario: Execute nodoChiediStatoRPT (Phase 2)
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         And initial XML nodoChiediStatoRPT

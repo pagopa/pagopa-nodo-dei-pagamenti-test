@@ -3,7 +3,7 @@ Feature: T018_A_nodoInviaRPT_Mod2_AD_noPPI
     Background:
         Given systems up
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given RPT1 generation
             """

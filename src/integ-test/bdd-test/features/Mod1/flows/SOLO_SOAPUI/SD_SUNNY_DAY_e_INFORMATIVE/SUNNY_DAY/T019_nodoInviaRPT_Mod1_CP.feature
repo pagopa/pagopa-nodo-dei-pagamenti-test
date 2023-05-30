@@ -3,7 +3,7 @@ Feature: T019_nodoInviaRPT_Mod1_CP
     Background:
         Given systems up
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given RPT1 generation
             """

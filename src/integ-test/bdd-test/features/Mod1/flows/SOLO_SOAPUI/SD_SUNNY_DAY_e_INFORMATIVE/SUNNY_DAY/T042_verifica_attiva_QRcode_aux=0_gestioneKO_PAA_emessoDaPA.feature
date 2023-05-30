@@ -51,7 +51,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PAA_emessoDaPA
         Then check esito is KO of nodoVerificaRPT response
         And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of nodoVerificaRPT response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoAttivaRPT
         Given the Execute nodoVerificaRPT scenario executed successfully
         And initial XML nodoAttivaRPT

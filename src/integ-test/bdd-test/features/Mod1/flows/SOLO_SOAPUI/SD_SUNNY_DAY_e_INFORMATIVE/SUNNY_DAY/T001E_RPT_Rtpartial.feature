@@ -482,7 +482,7 @@ Feature: T001E_RPT_Rtpartial
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute second nodoInviaRT
         Given the Execute nodoInviaRT scenario executed successfully
         And initial XML nodoInviaRT

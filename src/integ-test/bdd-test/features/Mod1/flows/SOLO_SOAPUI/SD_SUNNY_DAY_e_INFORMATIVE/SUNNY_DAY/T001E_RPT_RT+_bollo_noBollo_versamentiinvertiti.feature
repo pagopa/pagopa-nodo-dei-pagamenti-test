@@ -312,7 +312,7 @@ Feature: T001E_RPT_RT+_bollo_noBollo_versamentiinvertiti
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInoltroEsitoMod1 scenario executed successfully
         And initial XMl nodoInviaRT
