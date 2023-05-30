@@ -123,7 +123,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=CONPSP to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
 
-    @runnable
+    @runnable @dependentread @lazy
     Scenario: Execution test T221_NotificaAnnullamento_RPT_CONPSP
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         When job paInviaRt triggered after 5 seconds

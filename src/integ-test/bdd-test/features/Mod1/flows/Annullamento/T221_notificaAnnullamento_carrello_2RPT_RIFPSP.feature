@@ -208,7 +208,7 @@ Feature: process tests for NotificaAnnullamento_RPT_CONPSP
         Then verify the HTTP status code of notificaAnnullamento response is 200
 
     #And check esito is OK of notificaAnnullamento response
-    @runnable
+    @runnable @dependentread @lazy
     Scenario: Execution test T221_notificaAnnullamento_carrello_2RPT_RIFPSP
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         When job paInviaRt triggered after 5 seconds
