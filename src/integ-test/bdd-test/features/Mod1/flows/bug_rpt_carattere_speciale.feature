@@ -3,6 +3,7 @@ Feature: bug rpt carattere speciale
     Background:
         Given systems up
 
+    @test @independent
     Scenario: nodoInviaRPT
         Given initial XML nodoInviaRPT
             """
