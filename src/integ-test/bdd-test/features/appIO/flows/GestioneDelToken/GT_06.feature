@@ -26,7 +26,7 @@ Feature: GT_06
             """
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-@runnable
+@runnable @lazy @dependentwrite
     Scenario: Execute activateIOPayment (Phase 2)
         Given nodo-dei-pagamenti has config parameter default_token_duration_validity_millis set to 7000
         And nodo-dei-pagamenti has config parameter default_durata_token_IO set to 15000

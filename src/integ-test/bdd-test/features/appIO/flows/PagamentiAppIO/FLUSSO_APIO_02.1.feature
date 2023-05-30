@@ -85,7 +85,7 @@ Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-@runnable
+@runnable @dependentread
 Scenario: Check sendPaymentOutcome response before nodoInoltroEsitoCarta with sendPaymentOutcome outcome KO, and check correctness of database tables
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     And initial XML sendPaymentOutcome

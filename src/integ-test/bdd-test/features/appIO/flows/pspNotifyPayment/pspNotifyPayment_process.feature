@@ -86,7 +86,7 @@ Feature: process checks for pspNotifyPayment
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
 
-  @runnable 
+  @runnable @dependentread 
   #nodoInoltraEsitoPagamentoCarte phase - OK [PRO_PNP_01]
   Scenario: Check nodoInoltroEsitoPagamentoCarta response - OK
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
@@ -150,7 +150,7 @@ Feature: process checks for pspNotifyPayment
     And checks the value None of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
     And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
-@runnable
+@runnable @dependentread
 # nodoInoltraEsitoPagamentoCarte phase - Timeout [PRO_PNP_02]
   Scenario: Check nodoInoltraEsitoPagamentoCarte response contains {"error": "Operazione in timeout"} when pspNotifyPaymentResponse is in timeout
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
@@ -228,7 +228,7 @@ Feature: process checks for pspNotifyPayment
     And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
 
-@runnable
+@runnable @dependentread
   # nodoInoltraEsitoPagamentoCarte phase - outcome KO [PRO_PNP_03]
   Scenario: Check nodoInoltraEsitoPagamentoCarte response contains { "esito": "KO", "errorCode": "RIFPSP", "descrizione": "Risposta negativa del Canale" } when pspNotifyPaymentResponse is KO
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
@@ -313,7 +313,7 @@ Feature: process checks for pspNotifyPayment
     And checks the value None of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
     And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
-@runnable
+@runnable @dependentread
 Scenario: Check inoltroEsitoPagamentoCarta response - Malformed response
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment
@@ -388,7 +388,7 @@ Scenario: Check inoltroEsitoPagamentoCarta response - Malformed response
     And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
 
-@runnable
+@runnable @dependentread
 # nodoInoltraEsitoPagamentoCarte phase - psp Irraggiungibile [PRO_PNP_05]
   Scenario: Check nodoInoltraEsitoPagamentoCarte response contains {"esito" : "KO","errorCode" :  "CONPSP", “descrizione”: "Risposta negativa del Canale"} when psp is unreachable
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully

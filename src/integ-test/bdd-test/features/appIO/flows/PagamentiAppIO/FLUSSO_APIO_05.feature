@@ -166,7 +166,7 @@ Feature: FLUSSO_APIO_05
         And checks the value None of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
         And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
-@runnable
+@runnable @dependentread
     Scenario: Check sendPaymentOutcome response with pspNotifyPayment KO and sendPaymentOutcome KO, and check correctness of database tables
         Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
         And initial XML sendPaymentOutcome

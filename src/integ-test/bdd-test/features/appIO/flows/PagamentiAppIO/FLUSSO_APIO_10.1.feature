@@ -201,7 +201,7 @@ Scenario: (Phase 5)
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-@runnable
+@runnable @dependentread @lazy
 Scenario: Check sendPaymentOutcome1 response after sendPaymentOutcome with sendPaymentOutcome1 OK, and check correctness of database tables
     Given the (Phase 5) scenario executed successfully
     And outcome with KO in sendPaymentOutcome

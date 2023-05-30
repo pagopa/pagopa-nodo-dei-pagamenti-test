@@ -80,7 +80,7 @@ Scenario: Execute activateIOPayment (Phase 2)
     When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
 
-@runnable
+@runnable @dependentread
 Scenario: Check nodoNotificaAnnullamento response after activateIOPayment
     Given the Execute activateIOPayment (Phase 2) scenario executed successfully
     And checks the value N of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
