@@ -378,7 +378,7 @@ Feature: revision checks for sendPaymentOutcomeV2
             """
 
     # SEM_SPO_7.1
-    @test
+   @test @lazy
     Scenario: SEM_SPO_7.1
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -391,7 +391,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
     # SEM_SPO_21
-    @test
+  @test @dependentread @lazy
     Scenario: SEM_SPO_21
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -422,7 +422,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test
+   @test @lazy
     Scenario: SEM_SPO_23 (part 2)
         Given the SEM_SPO_23 (part 1) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -441,7 +441,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test
+   @test @lazy
     Scenario: SEM_SPO_23.1 (part 2)
         Given the SEM_SPO_23.1 (part 1) scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -450,7 +450,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And check description contains Esito concorde of sendPaymentOutcomeV2 response
 
     # SEM_SPO_28
-    @test  
+   @test @lazy  
     Scenario: SEM_SPO_28
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -465,7 +465,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And check description is Esito discorde of sendPaymentOutcomeV2 response
 
     # SEM_SPO_29
-    @test
+   @test @lazy
     Scenario: SEM_SPO_29
         Given the nodoVerificaRPT scenario executed successfully
         Given the nodoVerificaRPT scenario executed successfully
@@ -479,7 +479,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
     # SEM_SPO_31
-    @test
+ @test @dependentwrite @dependentread @lazy
     Scenario: SEM_SPO_31
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -494,7 +494,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And check faultCode is PPT_PAGAMENTO_SCONOSCIUTO of sendPaymentOutcomeV2 response
 
     # SEM_SPO_32
-    @test
+  @test @dependentwrite @lazy
     Scenario: SEM_SPO_32
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -508,7 +508,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
 
     # SEM_SPO_33
-    @test
+   @test @lazy
     Scenario: SEM_SPO_33
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -521,7 +521,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Then check outcome is OK of sendPaymentOutcomeV2 response
 
     # SEM_SPO_33.1
-    @test
+ @test @dependentwrite @dependentread @lazy
     Scenario: SEM_SPO_33.1
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -535,7 +535,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And verify 0 record for the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
 
     # SEM_SPO_35.1
-    @test
+  @test @dependentwrite @lazy
     Scenario: SEM_SPO_35.1
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -550,7 +550,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
     # SEM_SPO_35.2
-    @test
+  @test @dependentwrite @lazy
     Scenario: SEM_SPO_35.2
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -565,7 +565,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
     # SEM_SPO_35.4
-    @test
+  @test @dependentwrite @lazy
     Scenario: SEM_SPO_35.4
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -580,7 +580,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
     # SEM_SPO_35.5
-    @test
+  @test @dependentwrite @lazy
     Scenario: SEM_SPO_35.5
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -595,7 +595,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
     # SEM_SPO_35.6
-    @test
+  @test @dependentwrite @lazy
     Scenario: SEM_SPO_35.6
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -610,7 +610,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And check description is Outcome non accettabile per stato pagamento of sendPaymentOutcomeV2 response
 
     # SEM_SPO_36
-    @test
+  @test @dependentwrite @lazy
     Scenario: SEM_SPO_36
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
@@ -624,7 +624,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And check faultCode is PPT_PAGAMENTO_DUPLICATO of sendPaymentOutcomeV2 response
 
     # SEM_SPO_36.1
-    @test
+  @test @dependentwrite @lazy
     Scenario: SEM_SPO_36.1
         Given the nodoVerificaRPT scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
