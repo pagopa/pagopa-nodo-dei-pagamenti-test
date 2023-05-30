@@ -110,7 +110,7 @@ Feature: process tests for ChiediInformazioniPagamento to checkMail
         And check url field exists in nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-@runnable
+@runnable @independent
     Scenario: Execute nodoChiediInfoPag request
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti

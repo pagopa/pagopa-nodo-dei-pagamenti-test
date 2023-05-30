@@ -227,7 +227,7 @@ Feature: process tests for 2 RPT da 3 Versamenti
         And check url contains acardste of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-@runnable 
+@runnable @independent 
     Scenario: Execute nodoChiediInfoPag request
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti

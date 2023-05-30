@@ -264,7 +264,7 @@ Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_KO_PSP
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And check esito is KO of avanzamentoPagamento response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
         And initial XML nodoInviaRT

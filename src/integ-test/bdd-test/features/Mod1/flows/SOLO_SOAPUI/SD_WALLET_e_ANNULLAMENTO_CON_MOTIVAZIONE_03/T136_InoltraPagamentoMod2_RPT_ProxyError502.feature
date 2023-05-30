@@ -261,7 +261,7 @@ Feature: T136_InoltraPagamentoMod2_RPT_ProxyError502
     And check esito field exists in avanzamentoPagamento response
     And check esito is ACK_UNKNOWN of avanzamentoPagamento response
 
-  @runnable
+  @runnable @independent
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
     And initial XML nodoInviaRT

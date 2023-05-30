@@ -295,7 +295,7 @@ Feature: T123_ChiediListePSP_Carr_Bollo
     And check totalRows is $sizeAltro of listaPSP response
     And check data is $listaAltro of listaPSP response
 
-@runnable
+@runnable @dependentread
   Scenario: Execute nodoChiediListaPSP - carte
     Given the Execute nodoChiediListaPSP - altro scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE&lingua=$lingua to nodo-dei-pagamenti

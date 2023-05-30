@@ -241,7 +241,7 @@ Feature: process tests for nodoInviaRT_esito=1
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
         
-    @runnable
+    @runnable @independent
     Scenario: Execute second nodoInviaRT request
         Given the Execute nodoInviaRT request scenario executed successfully
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti

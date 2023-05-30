@@ -455,7 +455,7 @@ Feature: T129_G_InoltraPagamentoMod1_carrello_BBT_web_soloOK
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRT 1 (Phase 5)
         Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
         And identificativoUnivocoVersamento with soloOK in nodoInviaRT
