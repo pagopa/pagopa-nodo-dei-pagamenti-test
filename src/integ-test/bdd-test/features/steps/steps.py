@@ -535,57 +535,6 @@ def step_impl(context, number):
         payload = payload.replace(f'#iuv{number}#', iuv)
         setattr(context, f'{number}iuv', iuv)
 
-    # if '#idCarrello#' in payload:
-    #     idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-    #     payload = payload.replace('#idCarrello#', idCarrello)
-    #     setattr(context, 'idCarrello', idCarrello)
-
-    # if '#carrello#' in payload:
-    #     carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-    #     payload = payload.replace('#carrello#', carrello)
-    #     setattr(context, 'carrello', carrello)
-
-    # if '#carrello1#' in payload:
-    #     carrello1 = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
-    #     payload = payload.replace('#carrello1#', carrello1)
-    #     setattr(context, 'carrello1', carrello1)
-
-    # if '#secCarrello#' in payload:
-    #     secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(
-    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-    #     payload = payload.replace('#secCarrello#', secCarrello)
-    #     setattr(context, 'secCarrello', secCarrello)
-
-    # if '#thrCarrello#' in payload:
-    #     thrCarrello = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(
-    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-    #     payload = payload.replace('#thrCarrello#', thrCarrello)
-    #     setattr(context, 'thrCarrello', thrCarrello)
-
-    # if '#carrNOTENABLED#' in payload:
-    #     carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-    #         random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-    #     payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
-    #     setattr(context, 'carrNOTENABLED', carrNOTENABLED)
-
-    # if "nodoVerificaRPT_IUV" in payload:
-        # nodoVerificaRPT = getattr(context, 'nodoVerificaRPT')
-        # my_document = parseString(nodoVerificaRPT.content)
-        # aux_digit = my_document.getElementsByTagName('AuxDigit')
-        # if aux_digit == '0' or aux_digit == '1' or aux_digit == '2':
-        #     iuv = ''+random.randint(10000, 20000)+random.randint(10000,
-        #                                                          20000)+random.randint(10000, 20000)
-        # elif aux_digit == '3':
-        #     # per pa_old
-        #     iuv = '11' + (int)(random.randint(10000, 20000)) + \
-        #         (int)(random.randint(10000, 20000)) + \
-        #         (int)(random.randint(10000, 20000))
-        # payload = payload.replace('iuv', iuv)
-        # setattr(context, 'iuv', iuv)
-
     setattr(context, f'rpt{number}', payload)
     payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
@@ -926,6 +875,18 @@ def step_impl(context, tag, value, primitive):
         print(
             f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
         assert str(founded_value) == value
+
+
+@then('compare list between {tag} in {primitive} response and {value}')
+def step_impl(context, tag, value, primitive):
+    value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
+    value = utils.replace_global_variables(value, context)
+    print("###################", value)
+    node_response = getattr(context, primitive + RESPONSE)
+    json_response = node_response.json()
+    api_list = jo.get_value_from_key(json_response, tag)
+    assert utils.compare_lists(api_list, eval(value)), "Le liste non sono uguali"
 
 
 @then('checks {tag} is not {value} of {primitive} response')
