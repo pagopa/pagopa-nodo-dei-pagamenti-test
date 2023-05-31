@@ -76,7 +76,7 @@ Feature:  block check for activatePaymentNoticeReq - position status in PAID [Ac
       When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
       Then check outcome is OK of activatePaymentNotice response
 
-   @runnable
+   @runnable @independent
    Scenario: Execute activatePaymentNotice request with same request as Activate Phase 1 except for idempotencyKey, immediately after the Payment Outcome Phase
       Given EC replies to nodo-dei-pagamenti with the paSendRT
          """

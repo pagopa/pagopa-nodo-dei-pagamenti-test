@@ -3,7 +3,7 @@ Feature: Process for activatePaymentNoticeReq
     Background:
         Given systems up
 
-@runnable
+@runnable @independent
     Scenario: initial activate paold
         And initial XML activatePaymentNotice
             """
@@ -31,7 +31,7 @@ Feature: Process for activatePaymentNoticeReq
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-@runnable
+@runnable @independent
     Scenario: initial activate panew
         Given initial XML activatePaymentNotice
             """

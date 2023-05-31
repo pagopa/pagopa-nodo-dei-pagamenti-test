@@ -220,7 +220,7 @@ Feature: process tests for REGR_retryTokenScaduto_OK
     And checks the value Y of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query token on db nodo_online under macro NewMod3
     And checks the value N of the record at column NODOINVIARPTREQ of the table RPT_ACTIVATIONS retrived by the query token on db nodo_online under macro NewMod3
 
-  @runnable
+  @runnable @dependentread @lazy
   Scenario: RPT2 generation
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And RPT2 generation

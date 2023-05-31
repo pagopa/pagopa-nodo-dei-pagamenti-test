@@ -208,7 +208,7 @@ Feature: process tests for retry on a NOTICE_STORED transaction with different t
 
 
     #activate phase2
-    @runnable
+    @runnable @dependentread @lazy
     Scenario: Execute activatePaymentNotice2 request
         Given the Execute sendPaymentOutcome request scenario executed successfully
         And initial XML activatePaymentNotice

@@ -167,7 +167,7 @@ Feature: PAG-1163_Paypal_NA_err
         And check enteBeneficiario is $ragione_sociale of informazioniPagamento response
         And check ragioneSociale is $ragione_sociale of informazioniPagamento response
 
-    @runnable
+    @runnable @dependentread
     Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and nodoNotificaAnnullamento
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And initial JSON inoltroEsito/paypal

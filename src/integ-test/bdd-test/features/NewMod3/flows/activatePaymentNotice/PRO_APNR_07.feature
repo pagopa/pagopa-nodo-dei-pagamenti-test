@@ -27,7 +27,7 @@ Feature: process check for activatePaymentNotice - KO
       """
     And EC old version
   
-  @runnable
+  @runnable @independent
   # Timeout from PA [PRO_APNR_07]
   Scenario: Check PPT_STAZIONE_INT_PA_TIMEOUT error when paGetPaymentRes is in timeout
     Given EC replies to nodo-dei-pagamenti with the paGetPayment

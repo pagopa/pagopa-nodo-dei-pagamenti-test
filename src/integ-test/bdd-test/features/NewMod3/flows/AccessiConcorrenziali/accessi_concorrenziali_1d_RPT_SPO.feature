@@ -192,7 +192,7 @@ Feature: process tests for accessiConCorrenziali [1d - RPT+SPO]
             """
         Then saving sendPaymentOutcome request in sendPaymentOutcome
 
-    @runnable
+    @runnable @independent
     Scenario: parallel calls and test scenario
         Given the Excecute second primitives request scenario executed successfully
         And calling primitive sendPaymentOutcome_sendPaymentOutcome POST and nodoInviaRPT_nodoInviaRPT POST in parallel

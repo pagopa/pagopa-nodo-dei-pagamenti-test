@@ -115,7 +115,7 @@ Feature: process tests for accessiConCorrenziali [3e_ACT_SPO]
             """
         Then saving sendPaymentOutcome request in sendPaymentOutcome1
 
-    @runnable
+    @runnable @lazy
     Scenario: parallel calls and test scenario
         Given the Excecute sendPaymentOutcome request scenario executed successfully
         And initial XML paaAttivaRPT

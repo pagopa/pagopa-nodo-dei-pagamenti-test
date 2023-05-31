@@ -65,7 +65,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And saving activatePaymentNotice request in activatePaymentNotice2
 
   #DB check
-  @runnable
+  @runnable @dependentread @lazy @dependentwrite 
   Scenario: DB check + idempotencyCacheClean
     Given the Execute activatePaymentNotice2 request scenario executed successfully
     When job idempotencyCacheClean triggered after 15 seconds

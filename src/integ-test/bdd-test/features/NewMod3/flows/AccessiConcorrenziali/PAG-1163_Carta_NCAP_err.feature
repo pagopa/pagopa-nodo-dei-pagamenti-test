@@ -164,7 +164,7 @@ Feature: DB checks for nodoChiediEsitoPagamento
         And check idDominio is $verifyPaymentNotice.fiscalCode of informazioniPagamento response
         And check enteBeneficiario field exists in informazioniPagamento response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInoltraEsitoPagamentoCarta
         Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
         And initial JSON inoltroEsito/carta

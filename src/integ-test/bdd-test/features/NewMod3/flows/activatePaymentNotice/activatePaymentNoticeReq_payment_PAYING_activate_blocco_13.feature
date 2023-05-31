@@ -35,7 +35,7 @@ Feature: process tests for retry on a PAYING transaction with different noticeNu
 
 
     #activate phase2
-    @runnable
+    @runnable @dependentread
     Scenario: Execute activatePaymentNotice2 request
         Given the Execute activatePaymentNotice1 request scenario executed successfully
         And initial XML activatePaymentNotice

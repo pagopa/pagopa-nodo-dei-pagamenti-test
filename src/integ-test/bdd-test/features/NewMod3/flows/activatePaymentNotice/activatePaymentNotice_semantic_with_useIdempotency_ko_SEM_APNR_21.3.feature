@@ -34,7 +34,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
 
 
 
-    @runnable
+    @runnable @lazy @dependentread 
     # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO SEM_APNR_21.3]
     Scenario: Execute again activatePaymentNotice request right after expirationTime has passed
         #Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 10
