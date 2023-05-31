@@ -5,7 +5,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And nodo-dei-pagamenti has config parameter useIdempotency set to true
 
 
-  @runnable
+  @runnable @dependentread @lazy @dependentwrite 
   Scenario: Execute activatePaymentNotice request
     Given initial XML activatePaymentNotice
       """

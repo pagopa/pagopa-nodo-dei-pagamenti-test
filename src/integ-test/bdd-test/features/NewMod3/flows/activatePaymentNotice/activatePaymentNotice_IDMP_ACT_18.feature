@@ -48,7 +48,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And checks the value NotNone of the record at column RESPONSE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
 
-  @runnable
+  @runnable @dependentread @lazy @dependentwrite 
   Scenario: Execute activatePaymentNotice1 request
     Given the DB check1 scenario executed successfully
     And wait 62 seconds for expiration

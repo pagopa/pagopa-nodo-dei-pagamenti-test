@@ -146,7 +146,7 @@ Feature: process tests for retry on a PAYING_RPT transaction with different toke
 
 
     #activate phase2
-    @runnable
+    @runnable @dependentread
     Scenario: Execute activatePaymentNotice2 request
         Given the Execute nodoInviaRPT request scenario executed successfully
         And initial XML activatePaymentNotice

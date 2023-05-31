@@ -149,12 +149,11 @@ Feature: Pag-1163_Paypal_NCAP_Setup
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
 
-    @runnable
+    @runnable @dependentread
     Scenario: Execute nodoChiediInformazioniPagamento request
         Given the Execute activateIOPayment request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti      
         Then verify the HTTP status code of informazioniPagamento response is 200
-
         And check importo field exists in informazioniPagamento response
         And check ragioneSociale field exists in informazioniPagamento response
         And check oggettoPagamento field exists in informazioniPagamento response
@@ -164,7 +163,6 @@ Feature: Pag-1163_Paypal_NCAP_Setup
         And check dettagli field exists in informazioniPagamento response
         And check idDominio is $verifyPaymentNotice.fiscalCode of informazioniPagamento response
         And check enteBeneficiario field exists in informazioniPagamento response
-
         And execution query dbcheck_json to get value on the table PA, with the columns RAGIONE_SOCIALE under macro NewMod3 with db name nodo_cfg
         And through the query dbcheck_json retrieve param ragione_sociale at position 0 and save it under the key ragione_sociale
         And check enteBeneficiario is $ragione_sociale of informazioniPagamento response

@@ -96,7 +96,6 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
         </soapenv:Envelope>
         """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
@@ -255,7 +254,7 @@ Feature: process tests for accessiConCorrenziali [1a - RPT+SPO]
             </soapenv:Envelope>
             """
     
-    @runnable
+    @runnable @independent
     Scenario: parallel calls and test scenario
         Given the Excecute primitives request scenario executed successfully
         And calling primitive nodoInviaRPT_nodoInviaRPT POST and sendPaymentOutcome_sendPaymentOutcome POST in parallel

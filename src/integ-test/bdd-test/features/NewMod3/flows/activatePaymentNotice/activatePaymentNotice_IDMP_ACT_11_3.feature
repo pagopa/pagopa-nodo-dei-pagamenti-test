@@ -6,7 +6,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 30
     And nodo-dei-pagamenti has config parameter default_token_duration_validity_millis set to 1800000
 
-  @runnable
+  @runnable @dependentread @lazy @dependentwrite 
   Scenario: Execute activatePaymentNotice request
     Given initial XML activatePaymentNotice
       """

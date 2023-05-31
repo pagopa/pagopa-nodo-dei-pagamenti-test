@@ -117,7 +117,7 @@ Feature: process PAG-590_01
             """
         Then saving activatePaymentNotice request in activatePaymentNotice2
 
-    @runnable
+    @runnable @dependentread
     Scenario: parallel calls and test scenario
         Given the Initial activatePaymentNotice2 request scenario executed successfully
         And calling primitive activatePaymentNotice_activatePaymentNotice1 POST and activatePaymentNotice_activatePaymentNotice2 POST in parallel

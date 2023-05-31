@@ -237,7 +237,7 @@ Feature: Pag-1163_Carta_OLD_err
         And check CCP is $ccp of informazioniPagamento response
         And check enteBeneficiario field exists in informazioniPagamento response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute parallel request
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         And RT generation

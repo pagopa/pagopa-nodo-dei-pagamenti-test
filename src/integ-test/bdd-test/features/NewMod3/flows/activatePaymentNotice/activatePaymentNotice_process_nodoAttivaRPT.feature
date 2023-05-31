@@ -3,7 +3,7 @@ Feature: Process for activatePaymentNoticeReq
   Background:
     Given systems up
 
-@runnable
+@runnable @independent
   #[PRO_APNR_03]
   Scenario: initial nodoattivarpt paold
     Given initial XML nodoAttivaRPT
@@ -83,7 +83,7 @@ Feature: Process for activatePaymentNoticeReq
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoAttivaRPT response
 
-@runnable
+@runnable @independent
   #[PRO_APNR_04]
   Scenario: initial nodoattivarpt panew
     Given initial XML nodoAttivaRPT

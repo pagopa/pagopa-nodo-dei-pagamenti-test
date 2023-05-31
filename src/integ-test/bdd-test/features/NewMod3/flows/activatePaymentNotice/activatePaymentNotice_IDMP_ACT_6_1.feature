@@ -31,7 +31,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     Then check outcome is OK of activatePaymentNotice response
     And save activatePaymentNotice response in activatePaymentNotice1
 
-@runnable
+@runnable @dependentread @lazy @dependentwrite 
   Scenario: Execute activatePaymentNotice1 request
     Given the Execute activatePaymentNotice request scenario executed successfully
     And initial XML activatePaymentNotice

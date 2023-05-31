@@ -77,7 +77,7 @@ Feature:  block check for activatePaymentNoticeReq - position status in INSERTED
       Then check outcome is OK of sendPaymentOutcome response
 
    # Activate Phase 2
-   @runnable
+   @runnable @independent
    Scenario: Execute activatePaymentNotice request with same request as Activate Phase 1 except for idempotencyKey
       Given the Execute sendPaymentOutcome request scenario executed successfully
       When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
