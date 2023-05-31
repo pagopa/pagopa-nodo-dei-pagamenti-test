@@ -130,10 +130,15 @@ Feature: parkedList checks
         And replace pa content with #creditor_institution_code# content
         And replace noticeNumber content with $1carrello content
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
-    
-    @test
+
     Scenario: RPT_PARCHEGGIATA_NODO (part 2)
         Given the RPT_PARCHEGGIATA_NODO (part 1) scenario executed successfully
+        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 200
+
+    @test
+    Scenario: RPT_PARCHEGGIATA_NODO (part 3)
+        Given the RPT_PARCHEGGIATA_NODO (part 2) scenario executed successfully
         When WISP sends rest GET v1/parkedList to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 200
         And check idPaymentList contains $sessionToken of v1/parkedList response
