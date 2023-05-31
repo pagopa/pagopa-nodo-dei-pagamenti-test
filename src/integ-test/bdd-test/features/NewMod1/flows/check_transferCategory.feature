@@ -94,14 +94,14 @@ Feature: checks for transferCategory
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
 
-    @test
+    @test @independent
     Scenario: activatePaymentNoticeV2 PSP
         Given the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And check transferCategory field exists in activatePaymentNoticeV2 response
 
-    @test
+    @test @independent
     Scenario: activatePaymentNoticeV2 eCommerce
         Given the activatePaymentNoticeV2 scenario executed successfully
         And idPSP with #pspEcommerce# in activatePaymentNoticeV2

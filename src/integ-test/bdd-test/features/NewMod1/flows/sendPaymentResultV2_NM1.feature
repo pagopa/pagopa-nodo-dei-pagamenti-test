@@ -339,7 +339,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test 
+    @test @dependentread @lazy 
     Scenario: FLUSSO_SPR_01 (part 3)
         Given the FLUSSO_SPR_01 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -527,7 +527,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test 
+    @test @dependentread @lazy 
     Scenario: FLUSSO_SPR_02 (part 4)
         Given the FLUSSO_SPR_02 (part 3) scenario executed successfully
         And wait 5 seconds for expiration
@@ -710,7 +710,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test 
+    @test @dependentread @lazy 
     Scenario: FLUSSO_SPR_03 (part 4)
         Given the FLUSSO_SPR_03 (part 3) scenario executed successfully
         And wait 5 seconds for expiration
@@ -885,7 +885,7 @@ Feature: flow tests for sendPaymentResultV2
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
         And saving paGetPaymentV2 request in paGetPaymentV2_2Request
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_SPR_04 (part 3)
         Given the FLUSSO_SPR_04 (part 2) scenario executed successfully
         And the pspNotifyPaymentV2 KO response scenario executed successfully
@@ -940,7 +940,7 @@ Feature: flow tests for sendPaymentResultV2
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
         And saving paGetPaymentV2 request in paGetPaymentV2_2Request
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_SPR_05 (part 3)
         Given the FLUSSO_SPR_05 (part 2) scenario executed successfully
         And the pspNotifyPaymentV2 irraggiungibile response scenario executed successfully
@@ -1004,7 +1004,7 @@ Feature: flow tests for sendPaymentResultV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test
+    @test @dependentread @dependentwrite @lazy
     Scenario: FLUSSO_SPR_06 (part 4)
         Given the FLUSSO_SPR_06 (part 3) scenario executed successfully
         When job mod3CancelV2 triggered after 5 seconds
@@ -1062,7 +1062,7 @@ Feature: flow tests for sendPaymentResultV2
         Given the FLUSSO_SPR_07 (part 2) scenario executed successfully
         When job mod3CancelV2 triggered after 5 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_SPR_07 (part 4)
         Given the FLUSSO_SPR_07 (part 3) scenario executed successfully
         And the closePaymentV2 request with 2 paymentToken scenario executed successfully
@@ -1119,7 +1119,7 @@ Feature: flow tests for sendPaymentResultV2
         Given the FLUSSO_SPR_08 (part 2) scenario executed successfully
         When job mod3CancelV2 triggered after 5 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_SPR_08 (part 4)
         Given the FLUSSO_SPR_08 (part 3) scenario executed successfully
         And the closePaymentV2 request with 2 paymentToken scenario executed successfully

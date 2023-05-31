@@ -243,7 +243,7 @@ Feature: flow checks for mod3CancelV2 in NM1
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_NM1_M3CV2_01 (part 3)
         Given the FLUSSO_NM1_M3CV2_01 (part 2) scenario executed successfully
         And the pspNotifyPaymentV2 timeout scenario executed successfully
@@ -279,7 +279,7 @@ Feature: flow checks for mod3CancelV2 in NM1
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_NM1_M3CV2_02 (part 3)
         Given the FLUSSO_NM1_M3CV2_02 (part 2) scenario executed successfully
         And the pspNotifyPaymentV2 malformata scenario executed successfully
@@ -333,7 +333,7 @@ Feature: flow checks for mod3CancelV2 in NM1
         And with the query transactionid check assert beetwen elem VALID_TO in position 0 and elem TOKEN_VALID_TO with position 0 of the query select_activatev2
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_NM1_M3CV2_03 (part 4)
         Given the FLUSSO_NM1_M3CV2_03 (part 3) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -379,7 +379,7 @@ Feature: flow checks for mod3CancelV2 in NM1
         And with the query transactionid check assert beetwen elem VALID_TO in position 0 and elem TOKEN_VALID_TO with position 0 of the query select_activatev2
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
-    @test
+    @test @dependentread @dependentwrite @lazy
     Scenario: FLUSSO_NM1_M3CV2_04 (part 4)
         Given the FLUSSO_NM1_M3CV2_04 (part 3) scenario executed successfully
         When job mod3CancelV2 triggered after 0 seconds
@@ -432,7 +432,7 @@ Feature: flow checks for mod3CancelV2 in NM1
         And with the query transactionid check assert beetwen elem VALID_TO in position 0 and elem TOKEN_VALID_TO with position 0 of the query select_activatev2
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
-    @test
+    @test @dependentread @dependentwrite @lazy
     Scenario: FLUSSO_NM1_M3CV2_05 (part 4)
         Given the FLUSSO_NM1_M3CV2_05 (part 3) scenario executed successfully
         When job mod3CancelV2 triggered after 2 seconds
@@ -498,7 +498,7 @@ Feature: flow checks for mod3CancelV2 in NM1
         And with the query transactionid check assert beetwen elem VALID_TO in position 0 and elem TOKEN_VALID_TO with position 0 of the query select_activatev2
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
-    @test
+    @test @dependentread @dependentwrite @lazy
     Scenario: FLUSSO_NM1_M3CV2_06 (part 4)
         Given the FLUSSO_NM1_M3CV2_06 (part 3) scenario executed successfully
         And updates through the query update_noticeid_pa_ver2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
@@ -566,7 +566,7 @@ Feature: flow checks for mod3CancelV2 in NM1
         And with the query transactionid check assert beetwen elem VALID_TO in position 0 and elem TOKEN_VALID_TO with position 0 of the query select_activatev2
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2 of the record at column INSERTED_BY of the table NMU_CANCEL_UTILITY retrived by the query transactionid on db nodo_online under macro NewMod1
-    @test
+    @test @dependentread @dependentwrite @lazy
     Scenario: FLUSSO_NM1_M3CV2_07 (part 4)
         Given the FLUSSO_NM1_M3CV2_07 (part 3) scenario executed successfully
         And updates through the query update_noticeid_pa_ver2 of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATUS with PAID under macro NewMod1 on db nodo_online
