@@ -58,7 +58,7 @@ Feature: syntax checks for demandPaymentNotice - KO
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    @test
+    @test @independent
     # attribute value check
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
         Given the demandPaymentNotice scenario executed successfully
@@ -69,7 +69,7 @@ Feature: syntax checks for demandPaymentNotice - KO
         Examples:
             | elem             | attribute     | value                                     | soapUI test |
             | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_DPNR_01 |
-    @test
+    @test @independent
     # element value check
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
         Given the demandPaymentNotice scenario executed successfully
@@ -103,7 +103,7 @@ Feature: syntax checks for demandPaymentNotice - KO
             | datiSpecificiServizio          | Empty                                | SIN_DPNR_23   |
             | datiSpecificiServizio          | cia                                  | SIN_DPNR_24   |
             | datiSpecificiServizio          | cia$                                 | SIN_DPNR_25   |
-    @test
+    @test @independent
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid demandPaymentNotice
         Given the demandPaymentNotice with two occurrences of <value> scenario executed successfully
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
