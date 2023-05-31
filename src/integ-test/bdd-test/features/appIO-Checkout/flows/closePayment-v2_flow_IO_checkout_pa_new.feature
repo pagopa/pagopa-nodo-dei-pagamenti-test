@@ -2040,7 +2040,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test 
+    @test  
     Scenario: FLUSSO_CP_09 (part 3)
         Given the FLUSSO_CP_09 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -4635,8 +4635,8 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 404
         And check outcome is KO of v2/closepayment response
-        And check description is Unknown token of v2/closepayment response
-    @test 
+        And check description is The indicated payment does not exist of v2/closepayment response
+    @test  
     Scenario: FLUSSO_CP_22 (part 3)
         Given the FLUSSO_CP_22 (part 2) scenario executed successfully
         And the sendPaymentOutcome with arbitrary paymentToken request scenario executed successfully
@@ -4664,8 +4664,8 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 404
         And check outcome is KO of v2/closepayment response
-        And check description is Unknown token of v2/closepayment response
-    @test 
+        And check description is The indicated payment does not exist of v2/closepayment response
+    @test  
     Scenario: FLUSSO_CP_23 (part 3)
         Given the FLUSSO_CP_23 (part 2) scenario executed successfully
         And the sendPaymentOutcome with arbitrary paymentToken request scenario executed successfully

@@ -139,14 +139,14 @@ Feature: T123_ChiediListePSP_noPoste_IbanSlovenia
     When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC&lingua=$lingua to nodo-dei-pagamenti
     Then verify the HTTP status code of listaPSP response is 200
     And check totalRows is $sizeConto of listaPSP response
-    And check data is $listaConto of listaPSP response
+    And compare list between data in listaPSP response and $listaConto
 
   Scenario: Execute nodoChiediListaPSP - altro
     Given the Execute nodoChiediListaPSP - conto scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
     Then verify the HTTP status code of listaPSP response is 200
     And check totalRows is $sizeAltro of listaPSP response
-    And check data is $listaAltro of listaPSP response
+    And compare list between data in listaPSP response and $listaAltro
 
 @runnable
   Scenario: Execute nodoChiediListaPSP - carte
@@ -154,4 +154,4 @@ Feature: T123_ChiediListePSP_noPoste_IbanSlovenia
     When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE&lingua=$lingua to nodo-dei-pagamenti
     Then verify the HTTP status code of listaPSP response is 200
     And check totalRows is $sizeCarte of listaPSP response
-    And check data is $listaCarte of listaPSP response
+    And compare list between data in listaPSP response and $listaCarte

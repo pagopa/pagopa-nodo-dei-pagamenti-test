@@ -346,7 +346,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
-    @test
+    @test 
     Scenario Outline: check closePaymentV2 OK outline
         Given the check activatePaymentNoticeV2 OK 4 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -532,12 +532,12 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 }
             }
             """
-    @test
+    @test 
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_PSP_CP = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds
 
-    @test
+    @test 
     Scenario Outline: check closePaymentV2 PAG-2555 KO outline
         Given the closePaymentV2 PAG-2555 scenario executed successfully
         And <elem> with <value> in v2/closepayment
@@ -556,7 +556,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
             | paymentGateway        | Empty                                |
 
 
-    @test
+    @test 
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount None
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
@@ -625,7 +625,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test
+    @test 
     Scenario: check closePaymentV2 PAG-2555 KO fee None
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
@@ -694,7 +694,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test
+    @test 
     Scenario: check closePaymentV2 PAG-2555 KO timestampOperation None
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
@@ -773,7 +773,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-    @test
+    @test 
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_PSP_CP = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job PSP triggered after 10 seconds

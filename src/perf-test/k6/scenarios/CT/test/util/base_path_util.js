@@ -31,6 +31,9 @@ export function getBasePath(baseUrl, primitive) {
 		"nodoPerPMv1": "/nodo-per-pm/v1",
 		"nodoPerPMv2": "/nodo-per-pm/v2",
 	}
+	if(baseUrl.includes("nodo-dei-pagamenti-")){
+		return baseUrl;
+	}
 	return baseUrl + primitiveMapping[primitive]
 }
 

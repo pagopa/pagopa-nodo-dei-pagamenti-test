@@ -177,7 +177,7 @@ Feature: activatePaymentNoticeV2Request with 5 MBD flow OK
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    @test
+    @test 
     #DB check
     Scenario: DB check
         Given the activatePaymentNoticeV2 scenario executed successfully
