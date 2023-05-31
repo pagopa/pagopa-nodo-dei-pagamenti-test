@@ -106,7 +106,7 @@ Feature: PAG 2553
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
 
-    @test
+    @test @dependentread @lazy
     Scenario: Test 1 (part 3)
         Given the Test 1 (part 2) scenario executed successfully
         And key with chiave in paGetPayment

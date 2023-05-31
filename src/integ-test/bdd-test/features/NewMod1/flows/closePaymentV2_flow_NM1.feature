@@ -296,7 +296,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_NM1_CP_01 (part 2)
         Given the FLUSSO_NM1_CP_01 (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -458,7 +458,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_NM1_CP_02 (part 2)
         Given the FLUSSO_NM1_CP_02 (part 1) scenario executed successfully
         And wait 5 seconds for expiration
@@ -616,7 +616,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_NM1_CP_03 (part 2)
         Given the FLUSSO_NM1_CP_03 (part 1) scenario executed successfully
         And wait 2 seconds for expiration
@@ -642,7 +642,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_NM1_CP_03.1 (part 2)
         Given the FLUSSO_NM1_CP_03.1 (part 1) scenario executed successfully
         And wait 2 seconds for expiration
@@ -668,7 +668,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_NM1_CP_03.2 (part 2)
         Given the FLUSSO_NM1_CP_03.2 (part 1) scenario executed successfully
         And wait 2 seconds for expiration
@@ -695,7 +695,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_NM1_CP_03.3 (part 2)
         Given the FLUSSO_NM1_CP_03.3 (part 1) scenario executed successfully
         And wait 2 seconds for expiration
@@ -706,7 +706,7 @@ Feature: flow tests for closePaymentV2
         And check description is Unacceptable outcome when token has expired of v2/closepayment response
 
     # FLUSSO_NM1_CP_04
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_NM1_CP_04
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 with iuv scenario executed successfully
@@ -874,7 +874,7 @@ Feature: flow tests for closePaymentV2
 
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_NM1_CP_05 (part 2)
         Given the FLUSSO_NM1_CP_05 (part 1) scenario executed successfully
         And wait 3 seconds for expiration
@@ -1024,7 +1024,7 @@ Feature: flow tests for closePaymentV2
         And verify 0 record for the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
     # FLUSSO_NM1_CP_06
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_NM1_CP_06
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 with iuv scenario executed successfully
@@ -1043,7 +1043,7 @@ Feature: flow tests for closePaymentV2
         And the activatePaymentNoticeV2 with iuv scenario executed successfully
 
     # FLUSSO_NM1_CP_06.1
-    @test
+    @test @dependentread @lazy
     Scenario: FLUSSO_NM1_CP_06.1
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 with iuv scenario executed successfully
@@ -1062,7 +1062,7 @@ Feature: flow tests for closePaymentV2
         And the activatePaymentNoticeV2 with iuv and idempotencyKey scenario executed successfully
 
     # FLUSSO_NM1_CP_07
-    @test
+    @test @dependentread
     Scenario: FLUSSO_NM1_CP_07
         Given the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 with iuv and paGetPayment KO scenario executed successfully
