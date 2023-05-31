@@ -26,7 +26,7 @@ Feature: semantic checks for closePayment
                 }
             }
             """
-    @test
+    @test @independent
     # paymentToken unknown [SEM_CP_01]
     Scenario: Check unknown paymentToken
         Given the closePayment scenario executed successfully
@@ -34,7 +34,7 @@ Feature: semantic checks for closePayment
         Then verify the HTTP status code of v1/closepayment response is 404
         And check esito is KO of v1/closepayment response
         And check descrizione is Il Pagamento indicato non esiste of v1/closepayment response
-    @test
+    @test @independent
     # identificativoPsp value check
     Scenario Outline: Check semantic error on identificativoPsp
         Given the closePayment scenario executed successfully
@@ -47,7 +47,7 @@ Feature: semantic checks for closePayment
             | elem              | value       | soapUI test |
             | identificativoPsp | 12345678987 | SEM_CP_03   |
             | identificativoPsp | NOT_ENABLED | SEM_CP_04   |
-    @test
+    @test @independent
     # identificativoIntermediario value check
     Scenario Outline: Check semantic error on identificativoIntermediario
         Given the closePayment scenario executed successfully
@@ -60,7 +60,7 @@ Feature: semantic checks for closePayment
             | elem                        | value           | soapUI test |
             | identificativoIntermediario | 12545678987     | SEM_CP_05   |
             | identificativoIntermediario | INT_NOT_ENABLED | SEM_CP_06   |
-    @test
+    @test @independent
     # identificativoCanale value check
     Scenario Outline: Check semantic error on identificativoCanale
         Given the closePayment scenario executed successfully
@@ -73,7 +73,7 @@ Feature: semantic checks for closePayment
             | elem                 | value              | soapUI test |
             | identificativoCanale | 12345671234_09     | SEM_CP_07   |
             | identificativoCanale | CANALE_NOT_ENABLED | SEM_CP_08   |
-    @test
+    @test @independent
     # identificativoCanale not associated to BPAY [SEM_SPO_09]
     Scenario: Check identificativoCanale not associated to BPAY
         Given the closePayment scenario executed successfully
@@ -82,7 +82,7 @@ Feature: semantic checks for closePayment
         Then verify the HTTP status code of v1/closepayment response is 404
         And check esito is KO of v1/closepayment response
         And check descrizione is Configurazione psp-canale-tipoVersamento non corretta of v1/closepayment response
-    @test 
+    @test @independent 
     # identificativoCanale with Modello di pagamento = ATTIVATO PRESSO PSP [SEM_SPO_10]
     Scenario: Check identificativoCanale ATTIVATO_PRESSO_PSP
         Given the closePayment scenario executed successfully
@@ -91,7 +91,7 @@ Feature: semantic checks for closePayment
         Then verify the HTTP status code of v1/closepayment response is 400
         And check esito is KO of v1/closepayment response
         And check descrizione is Modello pagamento non valido of v1/closepayment response
-    @test
+    @test @independent
     # identificativoIntermediario-identificativoCanale-identificativoPsp not associated [SEM_SPO_11]
     Scenario: Check "esito":"KO" on identificativoPsp not associated to identificativoIntermediario and identificativoCanale
         Given the closePayment scenario executed successfully
@@ -238,7 +238,7 @@ Feature: semantic checks for closePayment
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
         And save activateIOPayment response in activateIOPaymentResponse
-    @test
+    @test @independent
     Scenario: check closePayment
         Given the check activateIOPayment OK scenario executed successfully
         And the closePayment scenario executed successfully
@@ -255,7 +255,7 @@ Feature: semantic checks for closePayment
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
         And save activateIOPayment response in activateIOPaymentResponse
-    @test
+    @test @independent
     Scenario: check closePayment OK 2
         Given the check activateIOPayment OK 2 scenario executed successfully
         And the closePayment scenario executed successfully
@@ -270,7 +270,7 @@ Feature: semantic checks for closePayment
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
         And save activateIOPayment response in activateIOPaymentResponse
-    @test
+    @test @independent
     Scenario: check closePayment OK 3
         Given the check activateIOPayment OK 3 scenario executed successfully
         And the closePayment scenario executed successfully
