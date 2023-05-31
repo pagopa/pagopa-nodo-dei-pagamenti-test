@@ -253,7 +253,7 @@ Feature: process tests for inoltropagamentoMb_04
       Then verify the HTTP status code of inoltroEsito/carta response is 200
       And check esito is OK of inoltroEsito/carta response
 
-@runnable
+@runnable @dependentread @lazy
    Scenario: Trigger paInviaRT
       Given the Execute nodoInoltraEsitoCarta scenario executed successfully
       When job paInviaRt triggered after 5 seconds

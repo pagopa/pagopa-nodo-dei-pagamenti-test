@@ -265,7 +265,7 @@ Feature: process tests for inoltropagamentoMb_06
         And check esito is OK of inoltroEsito/mod2 response
         And check url field not exists in inoltroEsito/mod2 response
 
-@runnable
+@runnable @dependentread @lazy
     Scenario: Trigger paInviaRT
         Given the Execute nodoInoltraPagamentoMod2 scenario executed successfully
         When job paInviaRt triggered after 5 seconds

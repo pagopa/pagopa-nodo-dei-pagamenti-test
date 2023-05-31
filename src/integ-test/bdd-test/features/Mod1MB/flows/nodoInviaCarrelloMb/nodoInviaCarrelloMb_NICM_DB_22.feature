@@ -168,7 +168,7 @@ Feature: process tests for nodoInviaCarrelloMb
             </pay_i:RPT>
             """
 
-@runnable
+@runnable @dependentread
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML paaInviaRT

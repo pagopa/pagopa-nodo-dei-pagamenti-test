@@ -644,7 +644,7 @@ Feature: process tests for nodoInviaCarrelloMB
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+@runnable @independent
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation SECOND PART scenario executed successfully
         And initial XML paaInviaRT

@@ -83,7 +83,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:RPT>
          """
 
-   @runnable
+   @runnable @independent
    Scenario: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error for nodoInviaCarrelloRPT primitive
       Given the Define RPT scenario executed successfully
       And initial XML nodoInviaCarrelloRPT

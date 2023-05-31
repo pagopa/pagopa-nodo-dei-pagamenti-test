@@ -374,7 +374,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02]
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
 
-@runnable
+@runnable @dependentread @dependentwrite @lazy
     Scenario: Execute sendPaymentOutcome request
         Given the Execute nodoInoltroEsitoCarta scenario executed successfully
         And initial XML sendPaymentOutcome

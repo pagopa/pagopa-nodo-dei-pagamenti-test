@@ -208,7 +208,7 @@ Feature: NICM_DB_15
         And generic update through the query param_update_generic_where_condition of the table POSITION_STATUS the parameter STATUS = 'INSERTED', with where condition NOTICE_ID = '$noticeNumber' and PA_FISCAL_CODE='$pa' under macro update_query on db nodo_online
         And verify 1 record for the table POSITION_SERVICE retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
-@runnable
+@runnable @dependentread @dependentwrite
     Scenario: Execute nodoInviaCarrelloRPT (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         # And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA

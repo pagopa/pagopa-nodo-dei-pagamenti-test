@@ -230,7 +230,7 @@ Feature: Flows checks for nodoInviaCarrelloRPT [annulli_04.1]
       # And update through the query DB_GEST_ANN_update2 with date $date under macro Mod1Mb on db nodo_online
       # And wait 10 seconds for expiration
 
-@runnable
+@runnable @dependentread @lazy
    # Activate phase
    Scenario: Trigger annullamentoRptMaiRichiesteDaPm
       Given the update column valid_to UPDATED_TIMESTAMP scenario executed successfully

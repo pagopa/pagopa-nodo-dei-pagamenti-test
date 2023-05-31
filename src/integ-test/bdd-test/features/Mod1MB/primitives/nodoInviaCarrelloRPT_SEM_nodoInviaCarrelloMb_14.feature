@@ -214,7 +214,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
       Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
 
-   @runnable
+   @runnable @independent
    Scenario: Check PPT_ID_CARRELLO_DUPLICATO error for nodoInviaCarrelloRPT primitive
       Given the No error for nodoInviaCarrelloRPT primitive scenario executed successfully
       And initial XML nodoInviaCarrelloRPT

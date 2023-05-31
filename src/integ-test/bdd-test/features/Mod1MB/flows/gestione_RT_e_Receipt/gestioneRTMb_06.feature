@@ -475,7 +475,7 @@ Feature: gestioneRTMb_06
         And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And wait 5 seconds for expiration
 
-@runnable
+@runnable @dependentread @dependentwrite @lazy
     Scenario: Execute nodoInviaRT1 (Phase 5)
         Given the Execute nodoInviaRT2 (Phase 4) scenario executed successfully
         And identificativoDominio with #creditor_institution_code# in nodoInviaRT

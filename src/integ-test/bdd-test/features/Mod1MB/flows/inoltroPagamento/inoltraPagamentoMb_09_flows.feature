@@ -231,6 +231,7 @@ Feature: process tests for inoltropagamentoMb_09
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
 
+    @runnable @dependentread
     Scenario: Execute nodoInoltraPagamentoMod2
         Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
         And initial XML pspInviaCarrelloRPT
