@@ -438,7 +438,7 @@ Feature: flow checks for sendPaymentResult with PA old
       And the nodoInviaRPT scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
-   @test 
+   @test @dependentread @lazy 
    Scenario: T_SPR_15 (part 3)
       Given the T_SPR_15 (part 2) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -486,7 +486,7 @@ Feature: flow checks for sendPaymentResult with PA old
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 15 seconds for expiration
-   @test
+   @test @dependentread @lazy
    Scenario: T_SPR_16 (sendPaymentOutcome)
       Given the T_SPR_16 (closePayment) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -534,7 +534,7 @@ Feature: flow checks for sendPaymentResult with PA old
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @test
+   @test @dependentread @lazy
    Scenario: T_SPR_17 (sendPaymentOutcome)
       Given the T_SPR_17 (closePayment) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -573,7 +573,7 @@ Feature: flow checks for sendPaymentResult with PA old
       And the nodoInviaRPT scenario executed successfully
       When PM sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
       Then verify the HTTP status code of informazioniPagamento response is 200
-   @test 
+   @test @dependentread @lazy 
    Scenario: T_SPR_18 (closePayment)
       Given the T_SPR_18 (informazioniPagamento) scenario executed successfully
       And the pspNotifyPayment KO scenario executed successfully
@@ -624,7 +624,7 @@ Feature: flow checks for sendPaymentResult with PA old
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @test
+   @test @dependentread @lazy @dependentwrite
    Scenario: T_SPR_19 (mod3CancelV1)
       Given the T_SPR_19 (closePayment) scenario executed successfully
       When job mod3CancelV1 triggered after 20 seconds
@@ -674,7 +674,7 @@ Feature: flow checks for sendPaymentResult with PA old
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @test
+   @test @dependentread @lazy @dependentwrite
    Scenario: T_SPR_20 (mod3CancelV1)
       Given the T_SPR_20 (closePayment) scenario executed successfully
       When job mod3CancelV1 triggered after 5 seconds
@@ -724,7 +724,7 @@ Feature: flow checks for sendPaymentResult with PA old
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @test 
+   @test @dependentread @lazy @dependentwrite
    Scenario: T_SPR_21 (mod3CancelV1)
       Given the T_SPR_21 (closePayment) scenario executed successfully
       When job mod3CancelV1 triggered after 5 seconds
@@ -767,7 +767,7 @@ Feature: flow checks for sendPaymentResult with PA old
       When job annullamentoRptMaiRichiesteDaPm triggered after 70 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
       And wait 5 seconds for expiration
-   @test
+   @test @dependentread @lazy @dependentwrite
    Scenario: T_SPR_22 (closePayment)
       Given the T_SPR_22 (annullamentoRptMaiRichiesteDaPm) scenario executed successfully
       And the closePayment scenario executed successfully

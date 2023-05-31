@@ -402,7 +402,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test
+   @test @dependentread @lazy
     Scenario: REV_SPO_03 (part 2)
         Given the REV_SPO_03 (part 1) scenario executed successfully
         When job paInviaRt triggered after 5 seconds
@@ -533,7 +533,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test
+   @test @dependentread @lazy
     Scenario: REV_SPO_04 (part 2)
         Given the REV_SPO_04 (part 1) scenario executed successfully
         When job paInviaRt triggered after 5 seconds

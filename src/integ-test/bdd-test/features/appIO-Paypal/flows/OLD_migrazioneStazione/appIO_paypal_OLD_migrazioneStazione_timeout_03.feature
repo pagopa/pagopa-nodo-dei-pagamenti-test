@@ -394,7 +394,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 befo
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
-    @test
+    @test @dependentread @dependentwrite @lazy
     #DB Check
     Scenario: Execute DB check
         Given the Execute sendPaymentOutcome request scenario executed successfully
