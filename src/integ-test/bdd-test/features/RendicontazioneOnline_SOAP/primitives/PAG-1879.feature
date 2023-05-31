@@ -58,7 +58,7 @@ Feature: PAG-1879
             </soapenv:Envelope>
             """
 
-    @test
+    @test @independent
     Scenario Outline: Test syntax error
         Given pay_i:denominazioneRicevente with <value> in REND
         And REND generation
@@ -74,7 +74,7 @@ Feature: PAG-1879
             | Empty                                                                                                                                         |
             | aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa |
 
-    @test
+    @test @independent
     Scenario Outline: Test OK
         Given pay_i:denominazioneRicevente with <value> in REND
         And REND generation

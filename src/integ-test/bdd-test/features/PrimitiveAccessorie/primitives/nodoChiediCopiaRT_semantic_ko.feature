@@ -19,7 +19,7 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             </soapenv:Envelope>
             """
 
-@runnable
+@runnable @independent
     Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
         Given <tag> with <tag_value> in nodoChiediCopiaRT
         When EC sends SOAP nodoChiediCopiaRT to nodo-dei-pagamenti
@@ -37,7 +37,7 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             | codiceContestoPagamento               | wrongPaymentContextCode | PPT_RT_SCONOSCIUTA                | CCRTSEM9    |
             | identificativoIntermediarioPA         | 77777777777             | PPT_AUTORIZZAZIONE                | CCRTSEM12   |
 
-@runnable
+@runnable @independent
 Scenario Outline: Check semantic errors for nodoChiediCopiaRT primitive
         Given replace status content with RPT_ACCETTATA_PSP content
         And replace pa content with #creditor_institution_code_old# content

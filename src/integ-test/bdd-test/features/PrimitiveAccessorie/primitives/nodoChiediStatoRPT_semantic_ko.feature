@@ -19,7 +19,7 @@ Feature: Semantic checks for nodoChiediStatoRPT - KO
             </soapenv:Envelope>
             """
 
-@runnable
+@runnable @independent
     Scenario Outline: Check semantic errors for nodoChiediStatoRPT primitive
         Given <tag> with <tag_value> in nodoChiediStatoRPT
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
@@ -37,7 +37,7 @@ Feature: Semantic checks for nodoChiediStatoRPT - KO
             | codiceContestoPagamento               | wrongPaymentContextCode | PPT_RPT_SCONOSCIUTA               | CSRPTSEM9   |
             | identificativoIntermediarioPA         | 77777777777             | PPT_AUTORIZZAZIONE                | CSRPTSEM11  |
 
-@runnable
+@runnable @independent
     Scenario Outline: Check semantic errors for nodoChiediStatoRPT primitive
         Given identificativoUnivocoVersamento with <iuv_value_in_db> in nodoChiediStatoRPT
         And codiceContestoPagamento with <ccp_value_in_db> in nodoChiediStatoRPT

@@ -3,7 +3,7 @@ Feature: Semantic checks for nodoChiediListaPendentiRPT - OK
     Background:
         Given systems up
 
-@runnable
+@runnable @independent
     Scenario Outline: Check semantic errors for nodoChiediListaPendentiRPT primitive
         Given initial XML nodoChiediListaPendentiRPT
             """

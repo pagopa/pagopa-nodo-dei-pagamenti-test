@@ -3,7 +3,7 @@ Feature: Syntax checks for nodoChiediListaPendentiRPT - KO
     Background:
         Given systems up
 
-@runnable
+@runnable @independent
     # [CLPRPTSIN1]
     Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediListaPendentiRPT primitive
         Given initial XML nodoChiediListaPendentiRPT
@@ -26,7 +26,7 @@ Feature: Syntax checks for nodoChiediListaPendentiRPT - KO
         When EC sends SOAP nodoChiediListaPendentiRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediListaPendentiRPT response
 
-@runnable
+@runnable @independent
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediListaPendentiRPT primitive
         Given initial XML nodoChiediListaPendentiRPT
             """

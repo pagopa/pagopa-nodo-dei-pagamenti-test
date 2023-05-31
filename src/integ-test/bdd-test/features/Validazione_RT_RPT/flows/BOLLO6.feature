@@ -274,7 +274,7 @@ Feature: process tests for RPT-RT bollo
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRT
         Given the MB generation scenario executed successfully
         And initial XML nodoInviaRT

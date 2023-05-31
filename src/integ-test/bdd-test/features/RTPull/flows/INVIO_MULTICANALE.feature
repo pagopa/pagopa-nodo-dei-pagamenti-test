@@ -577,7 +577,7 @@ Feature: INVIO_MULTICANALE
         And wait 10 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
 
-    @runnable
+    @runnable @independent @lazy
     Scenario: execute scenario n times
         Then start from Execute nodoInviaRPT - multicanale_b scenario 2 times 
 

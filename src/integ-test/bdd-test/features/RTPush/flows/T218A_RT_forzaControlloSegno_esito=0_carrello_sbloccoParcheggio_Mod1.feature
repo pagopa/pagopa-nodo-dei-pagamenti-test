@@ -424,7 +424,7 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_carrello_sbloccoParcheggio_Mod1
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-@runnable
+@runnable @independent
     Scenario: Execute nodoInviaRT2 (Phase 4) [forzaControlloSegnoPresente]
         Given the Execute nodoInviaRT (Phase 3) [forzaControlloSegnoPresente] scenario executed successfully
         And identificativoUnivocoVersamento with $2IUV in nodoInviaRT
@@ -456,7 +456,7 @@ Feature: T218A_RT_forzaControlloSegno_esito=0_carrello_sbloccoParcheggio_Mod1
             """
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-@runnable
+@runnable @independent
     Scenario: Execute nodoInviaRT2 (Phase 4) [forzaControlloSegnoAssente]
         Given the Execute nodoInviaRT (Phase 3) [forzaControlloSegnoAssente] scenario executed successfully
         And identificativoUnivocoVersamento with $2IUV in nodoInviaRT

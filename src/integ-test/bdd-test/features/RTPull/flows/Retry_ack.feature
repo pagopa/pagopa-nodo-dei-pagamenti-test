@@ -331,7 +331,7 @@ Feature: RTPull flows
         Then check esito is OK of nodoInviaRPT response
         And wait 10 seconds for expiration
 
-    @runnable
+    @runnable @dependentwrite @dependentread @lazy
     #Retry ACK timeout step2
     Scenario: Retry ack timeout
         Given the Execute nodoInviaRPT_timeout scenario executed successfully 
@@ -382,7 +382,7 @@ Feature: RTPull flows
         Then check esito is OK of nodoInviaRPT response
         And wait 10 seconds for expiration
 
-    @runnable
+    @runnable @dependentwrite @dependentread @lazy
     #Retry ACK system error step2
     Scenario: Retry ack system error
         Given the Execute nodoInviaRPT_systemError scenario executed successfully
@@ -429,7 +429,7 @@ Feature: RTPull flows
         Then check esito is OK of nodoInviaRPT response
         And wait 10 seconds for expiration
 
-    @runnable
+    @runnable @dependentwrite @dependentread @lazy
     #Retry ACK malformed step2
     Scenario: Retry ack malformed
         Given the Execute nodoInviaRPT_malformed scenario executed successfully 
@@ -481,7 +481,7 @@ Feature: RTPull flows
         Then check esito is OK of nodoInviaRPT response
         And wait 15 seconds for expiration
 
-    @runnable
+    @runnable @dependentwrite @dependentread @lazy
     #Retry ACK syntax KO step2
     Scenario: Retry ack syntax KO
         Given the Execute nodoInviaRPT_synKO scenario executed successfully
