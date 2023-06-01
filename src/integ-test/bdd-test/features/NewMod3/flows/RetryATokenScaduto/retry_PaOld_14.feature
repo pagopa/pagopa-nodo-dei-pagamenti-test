@@ -254,7 +254,7 @@ Feature: process tests for retryAtokenScaduto
     And checks the value N of the record at column PAAATTIVARPTRESP of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table RPT_ACTIVATIONS retrived by the query rpt_activision-v2 on db nodo_online under macro NewMod3
 
-  @runnable
+  @runnable @lazy @dependentread @dependentwrite
   Scenario: Execute paRetryAttivaRpt
     Given the Execute paInviaRT scenario executed successfully
     And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryAttivaRpt.enabled set to true

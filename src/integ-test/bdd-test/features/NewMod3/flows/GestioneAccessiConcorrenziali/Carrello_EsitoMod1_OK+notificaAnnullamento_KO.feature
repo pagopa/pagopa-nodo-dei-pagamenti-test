@@ -153,7 +153,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
     And check substring wfesp-sit-npa-wfesp.ocp-tst-npaspc.sia.eu in urlRedirectPSP content of inoltroEsito/mod1 response
     And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
 
-    @runnable
+    @runnable @lazy @dependentread
   Scenario: Carrello_EsitoMod1_OK+notificaAnnullamento_KO (part 3)
     Given the Carrello_EsitoMod1_OK+notificaAnnullamento_KO (part 2) scenario executed successfully
     Then checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query stati_rpt_IUV on db nodo_online under macro NewMod3

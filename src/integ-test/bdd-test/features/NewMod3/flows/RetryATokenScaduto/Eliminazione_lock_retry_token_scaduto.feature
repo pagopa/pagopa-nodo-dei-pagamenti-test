@@ -397,7 +397,7 @@ Feature: Eliminazione_lock_retry_token_scaduto
 
         # STATI_RPT_SNAPSHOT
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
-    @test 
+    @test @lazy @dependentread
     Scenario: No regression 1 (part 4)
         Given the No regression 1 (part 3) scenario executed successfully
         And the sendPaymentOutcome scenario executed successfully
@@ -505,7 +505,7 @@ Feature: Eliminazione_lock_retry_token_scaduto
         Given the No regression 2 (part 3) scenario executed successfully
         When job paRetryAttivaRpt triggered after 5 seconds
         Then verify the HTTP status code of paRetryAttivaRpt response is 200
-    @test 
+    @test @lazy @dependentread
     Scenario: No regression 2 (part 5)
         Given the No regression 2 (part 4) scenario executed successfully
         And wait 5 seconds for expiration
@@ -661,7 +661,7 @@ Feature: Eliminazione_lock_retry_token_scaduto
         Given the Test 1 (part 4) scenario executed successfully
         When job paRetryAttivaRpt triggered after 5 seconds
         Then verify the HTTP status code of paRetryAttivaRpt response is 200
-    @test 
+    @test @lazy @dependentread @dependentwrite
     Scenario: Test 1 (part 6)
         Given the Test 1 (part 5) scenario executed successfully
         And wait 5 seconds for expiration
@@ -763,7 +763,7 @@ Feature: Eliminazione_lock_retry_token_scaduto
         Given the Test 2 (part 5) scenario executed successfully
         When job paRetryAttivaRpt triggered after 0 seconds
         Then verify the HTTP status code of paRetryAttivaRpt response is 200
-    @test 
+    @test @lazy @dependentread @dependentwrite
     Scenario: Test 2 (part 7)
         Given the Test 2 (part 6) scenario executed successfully
         And wait 5 seconds for expiration

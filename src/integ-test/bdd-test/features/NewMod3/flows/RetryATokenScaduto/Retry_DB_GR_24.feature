@@ -196,7 +196,7 @@ Feature: process tests for Retry_DB_GR_24
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO_KO of sendPaymentOutcome response
 
-  @runnable
+  @runnable @lazy @dependentread @dependentwrite
   Scenario: DB check
     Given the Execute sendPaymentOutcome request scenario executed successfully 
     And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3

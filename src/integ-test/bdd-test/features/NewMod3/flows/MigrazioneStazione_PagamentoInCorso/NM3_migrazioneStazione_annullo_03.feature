@@ -190,7 +190,7 @@ Feature: process tests for NM3 with station migration from V1 to V2
         When job mod3CancelV1 triggered after 6 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
 
-    @test 
+    @test @lazy @dependentread @dependentwrite
     # test execution
     Scenario: Execution db check
         Given the Execute mod3CancelV1 scenario executed successfully

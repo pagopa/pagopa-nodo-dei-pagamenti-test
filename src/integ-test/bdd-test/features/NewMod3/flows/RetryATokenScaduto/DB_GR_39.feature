@@ -173,7 +173,7 @@ Feature: process tests for DB_GR_39
     When job paSendRt triggered after 5 seconds
     Then verify the HTTP status code of paSendRt response is 200
 
-  @runnable
+  @runnable @lazy @dependentread @dependentwrite
   Scenario: DB check + db update
     Given the trigger jobs paSendRt scenario executed successfully
     And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3

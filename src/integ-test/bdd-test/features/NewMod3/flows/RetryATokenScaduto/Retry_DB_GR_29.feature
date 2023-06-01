@@ -203,7 +203,7 @@ Feature: process tests for Retry_DB_GR_29
     And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status2 on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status2 on db nodo_online under macro NewMod3
   
-  @runnable
+  @runnable @lazy @dependentread @dependentwrite
   Scenario: job refresh pa (2)
     Given the DB check + db update scenario executed successfully
     Then refresh job PA triggered after 10 seconds
