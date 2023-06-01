@@ -24,7 +24,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
             </soapenv:Envelope>
             """
 
-@runnable
+@runnable @independent
     Scenario Outline: Check faultCode error on non-existent or invalid field
         Given <field> with <value> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
@@ -40,7 +40,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
             | password                       | test_wrong_pwd     | PPT_AUTENTICAZIONE                 | VRPTSEM7    |
             | codificaInfrastrutturaPSP      | codificaErrata     | PPT_CODIFICA_PSP_SCONOSCIUTA       | VRPTSEM8    |
 
-@runnable
+@runnable @independent
     Scenario Outline: Check faultCode on invalid body element
         Given <field_1> with <value_1> in nodoVerificaRPT
         And <field_2> with <value_2> in nodoVerificaRPT
@@ -51,7 +51,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
             | qrc:AuxDigit | 0       | qrc:CodIUV | 12345678901234567 |  PPT_SEMANTICA                           |VRPTSEM9    |
             | qrc:AuxDigit | 1       | qrc:CodIUV | 123456789012345   |  PPT_SEMANTICA                           |VRPTSEM10   |
 
-@runnable
+@runnable @independent
     Scenario Outline: Check faultCode error on invalid iuv
         Given <field_1> with <value_1> in nodoVerificaRPT
         And <field_2> with <value_2> in nodoVerificaRPT
@@ -64,7 +64,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
             | qrc:AuxDigit | 3       | qrc:CodStazPA   | None       | qrc:CodIUV       |00012711162144900|qrc:CF  |#id_broker_old#|PPT_STAZIONE_INT_PA_SCONOSCIUTA  |VRPTSEM11   |
             | qrc:AuxDigit | 3       | qrc:CodStazPA   | 02         | qrc:CodIUV       |00012711162144900|qrc:CF  |#id_broker_old#|PPT_SEMANTICA                    |VRPTSEM12   |
 
-@runnable
+@runnable @independent
     Scenario: Check faultCode error PPT_INTERMEDIARIO_PA_DISABILITATO [VRPTSEM13]
         Given initial XML nodoVerificaRPT
         """
@@ -86,7 +86,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_INTERMEDIARIO_PA_DISABILITATO of nodoVerificaRPT response
 
-@runnable
+@runnable @independent
     Scenario: Check faultCode error PPT_STAZIONE_INT_PA_SCONOSCIUTA [VRPTSEM15]
         Given initial XML nodoVerificaRPT
         """
@@ -108,7 +108,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_STAZIONE_INT_PA_SCONOSCIUTA of nodoVerificaRPT response
 
-@runnable
+@runnable @independent
     Scenario Outline: Check faultCode error on unknown or invalid CodStazPA
         Given <field> with <value> in nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
@@ -120,7 +120,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
             | qrc:CF        | 11111122222 | PPT_DOMINIO_SCONOSCIUTO | VRPTSEM18   |
             | qrc:CodStazPA | None        | PPT_SEMANTICA           | VRPTSEM19   |
 
-@runnable
+@runnable @independent
     Scenario: Check faultCode error PPT_AUTORIZZAZIONE [VRPTSEM20]
         Given initial XML nodoVerificaRPT
         """
@@ -142,7 +142,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
         When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_AUTORIZZAZIONE of nodoVerificaRPT response
 
-@runnable
+@runnable @independent
     Scenario: Check PPT_AUTORIZZAZIONE error on unreachable station [VRPTSEM21]
         Given initial XML nodoVerificaRPT
         """
