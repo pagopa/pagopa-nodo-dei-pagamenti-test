@@ -146,7 +146,7 @@ Feature: parkedList checks
     Scenario: RPT_PARCHEGGIATA_NODO (part 3)
         Given the RPT_PARCHEGGIATA_NODO (part 2) scenario executed successfully
         And wait 61 seconds for expiration
-        When WISP sends rest GET v1/parkedList to nodo-dei-pagamenti
+        When WISP sends rest GET v1/parkedList?maxOccurences=1 to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 200
         And check idPaymentList contains $sessionToken of v1/parkedList response
 
@@ -327,7 +327,7 @@ Feature: parkedList checks
     Scenario: RPT_RIFIUTATA_PSP (part 4)
         Given the RPT_RIFIUTATA_PSP (part 3) scenario executed successfully
         And wait 61 seconds for expiration
-        When WISP sends rest GET v1/parkedList to nodo-dei-pagamenti
+        When WISP sends rest GET v1/parkedList?maxOccurences=1 to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 200
         And check idPaymentList contains $sessionToken of v1/parkedList response
 
@@ -487,14 +487,14 @@ Feature: parkedList checks
     Scenario: RPT_ERRORE_INVIO_A_PSP (part 4)
         Given the RPT_ERRORE_INVIO_A_PSP (part 3) scenario executed successfully
         And wait 61 seconds for expiration
-        When WISP sends rest GET v1/parkedList to nodo-dei-pagamenti
+        When WISP sends rest GET v1/parkedList?maxOccurences=1 to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 200
         And check idPaymentList contains $sessionToken of v1/parkedList response
 
     ###############################################################################################
 
     @test @dependentwrite @dependentread @lazy
-    Scenario: update configurations
+    Scenario: restore configurations
         Given restore initial configurations
 
     ###############################################################################################
