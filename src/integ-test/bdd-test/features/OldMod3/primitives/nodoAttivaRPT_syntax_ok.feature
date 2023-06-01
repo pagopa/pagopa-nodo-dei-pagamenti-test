@@ -76,7 +76,7 @@ Feature: Syntax checks ok for nodoAttivaRPT
             </soapenv:Envelope>
             """
 
-@runnable
+@runnable @independent
     Scenario Outline: Check esito OK invalid body element value
         Given <elem> with <value> in nodoAttivaRPT
         When PSP sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
