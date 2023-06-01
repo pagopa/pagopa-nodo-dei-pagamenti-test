@@ -146,7 +146,7 @@ Feature: parkedList checks
     Scenario: RPT_PARCHEGGIATA_NODO (part 3)
         Given the RPT_PARCHEGGIATA_NODO (part 2) scenario executed successfully
         And wait 61 seconds for expiration
-        When WISP sends rest GET v1/parkedList?maxOccurences=1 to nodo-dei-pagamenti
+        When WISP sends rest GET v1/parkedList to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 200
         And check idPaymentList contains $sessionToken of v1/parkedList response
 
@@ -327,7 +327,7 @@ Feature: parkedList checks
     Scenario: RPT_RIFIUTATA_PSP (part 4)
         Given the RPT_RIFIUTATA_PSP (part 3) scenario executed successfully
         And wait 61 seconds for expiration
-        When WISP sends rest GET v1/parkedList?maxOccurences=1 to nodo-dei-pagamenti
+        When WISP sends rest GET v1/parkedList to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 200
         And check idPaymentList contains $sessionToken of v1/parkedList response
 
@@ -487,7 +487,7 @@ Feature: parkedList checks
     Scenario: RPT_ERRORE_INVIO_A_PSP (part 4)
         Given the RPT_ERRORE_INVIO_A_PSP (part 3) scenario executed successfully
         And wait 61 seconds for expiration
-        When WISP sends rest GET v1/parkedList?maxOccurences=1 to nodo-dei-pagamenti
+        When WISP sends rest GET v1/parkedList to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 200
         And check idPaymentList contains $sessionToken of v1/parkedList response
 
@@ -511,7 +511,7 @@ Feature: parkedList checks
 
     @test @independent
     Scenario: parkedList wrong URL (part 2)
-        When WISP sends rest GET v1/parkedList?maxOccurences= to nodo-dei-pagamenti
+        When WISP sends rest GET v1/parkedList?maxOccurrences= to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 400
         And check esito is KO of v1/parkedList response
         And check descrizione is ... of v1/parkedList response
@@ -521,7 +521,7 @@ Feature: parkedList checks
 
     @test @independent
     Scenario: parkedList wrong URL (part 3)
-        When WISP sends rest GET v1/parkedList?maxOccurences=ciao to nodo-dei-pagamenti
+        When WISP sends rest GET v1/parkedList?maxOccurrences=ciao to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 400
         And check esito is KO of v1/parkedList response
         And check descrizione is ... of v1/parkedList response
@@ -538,5 +538,5 @@ Feature: parkedList checks
 
     @test @independent
     Scenario: parkedList URL OK (part 2)
-        When WISP sends rest GET v1/parkedList?maxOccurences=10 to nodo-dei-pagamenti
+        When WISP sends rest GET v1/parkedList?maxOccurrences=10 to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 200
