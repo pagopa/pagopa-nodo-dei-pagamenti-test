@@ -3,6 +3,12 @@ Feature: parkedList checks
     Background:
         Given systems up
 
+    @test @dependentwrite @dependentread @lazy
+    Scenario: update configurations
+        Given nodo-dei-pagamenti has config parameter parkedList_pollerMinutesToBack set to 1
+
+    ###############################################################################################
+
     Scenario: RPT_PARCHEGGIATA_NODO (part 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
@@ -136,9 +142,10 @@ Feature: parkedList checks
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-    @test @dependentread
+    @test @dependentwrite @dependentread @lazy
     Scenario: RPT_PARCHEGGIATA_NODO (part 3)
         Given the RPT_PARCHEGGIATA_NODO (part 2) scenario executed successfully
+        And wait 61 seconds for expiration
         When WISP sends rest GET v1/parkedList to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 200
         And check idPaymentList contains $sessionToken of v1/parkedList response
@@ -271,6 +278,11 @@ Feature: parkedList checks
 
     Scenario: RPT_RIFIUTATA_PSP (part 2)
         Given the RPT_RIFIUTATA_PSP (part 1) scenario executed successfully
+        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 200
+
+    Scenario: RPT_RIFIUTATA_PSP (part 3)
+        Given the RPT_RIFIUTATA_PSP (part 2) scenario executed successfully
         And initial XML pspInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -311,9 +323,10 @@ Feature: parkedList checks
         And replace noticeNumber content with $1carrello content
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_RIFIUTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
 
-    @test @dependentread
-    Scenario: RPT_RIFIUTATA_PSP (part 3)
-        Given the RPT_RIFIUTATA_PSP (part 2) scenario executed successfully
+    @test @dependentwrite @dependentread @lazy
+    Scenario: RPT_RIFIUTATA_PSP (part 4)
+        Given the RPT_RIFIUTATA_PSP (part 3) scenario executed successfully
+        And wait 61 seconds for expiration
         When WISP sends rest GET v1/parkedList to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 200
         And check idPaymentList contains $sessionToken of v1/parkedList response
@@ -446,6 +459,11 @@ Feature: parkedList checks
 
     Scenario: RPT_ERRORE_INVIO_A_PSP (part 2)
         Given the RPT_ERRORE_INVIO_A_PSP (part 1) scenario executed successfully
+        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 200
+
+    Scenario: RPT_ERRORE_INVIO_A_PSP (part 3)
+        Given the RPT_ERRORE_INVIO_A_PSP (part 2) scenario executed successfully
         When WISP sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
@@ -465,12 +483,19 @@ Feature: parkedList checks
         And replace noticeNumber content with $1carrello content
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO, RPT_INVIATA_A_PSP, RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
 
-    @test @dependentread
-    Scenario: RPT_ERRORE_INVIO_A_PSP (part 3)
-        Given the RPT_ERRORE_INVIO_A_PSP (part 2) scenario executed successfully
+    @test @dependentwrite @dependentread @lazy
+    Scenario: RPT_ERRORE_INVIO_A_PSP (part 4)
+        Given the RPT_ERRORE_INVIO_A_PSP (part 3) scenario executed successfully
+        And wait 61 seconds for expiration
         When WISP sends rest GET v1/parkedList to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 200
         And check idPaymentList contains $sessionToken of v1/parkedList response
+
+    ###############################################################################################
+
+    @test @dependentwrite @dependentread @lazy
+    Scenario: update configurations
+        Given restore initial configurations
 
     ###############################################################################################
 
