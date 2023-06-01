@@ -495,7 +495,7 @@ Feature: parkedList checks
 
     @test @dependentwrite @dependentread @lazy
     Scenario: restore configurations
-        Given restore initial configurations
+        Then restore initial configurations
 
     ###############################################################################################
 
