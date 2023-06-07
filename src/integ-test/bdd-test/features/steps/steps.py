@@ -1556,7 +1556,7 @@ def step_impl(context, job_name):
     #nodo_response = requests.get(
     #f"{url_nodo}nodo-dev/config/refresh/{job_name}", headers=headers, verify=False)
     # pipeline
-    time.sleep(61)
+    time.sleep(10)
     nodo_response = requests.get(
         f"{url_nodo}/monitoring/v1/config/refresh/{job_name}", headers=headers, verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
