@@ -6,7 +6,7 @@ Feature: Execute nodoInviaRPT - MOD2 [T0XX]
 @runnable
     Scenario: Execute nodoInviaRPT - MOD2 [T0XX]
         #Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canale_DIFFERITO_MOD2#' under macro update_query on db nodo_cfg
-        #And refresh job PSP triggered after 10 seconds
+        #And refresh job ALL triggered after 10 seconds
         #And wait 10 seconds for expiration
         Given MB generation
             """
@@ -295,7 +295,7 @@ Feature: Execute nodoInviaRPT - MOD2 [T0XX]
         And wait 130 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
-        #And refresh job PSP triggered after 10 seconds
+        #And refresh job ALL triggered after 10 seconds
         #And wait 10 seconds for expiration
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull

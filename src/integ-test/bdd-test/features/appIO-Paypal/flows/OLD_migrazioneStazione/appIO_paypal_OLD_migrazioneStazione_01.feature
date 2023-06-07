@@ -314,7 +314,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
     #refresh pa e stazioni
     Scenario: Execute refresh pa e stazioni
         Given the Execute station version update scenario executed successfully
-        Then refresh job PA triggered after 10 seconds
+        Then refresh job ALL triggered after 10 seconds
 
     # nodoInoltraEsitoPagamentoPaypal
     Scenario: Execute nodoInoltroEsitoPayPal OK
@@ -387,7 +387,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 betw
     #refresh pa e stazioni
     Scenario: Execute refresh pa e stazioni 2
         Given the Execute station version update 2 scenario executed successfully
-        Then refresh job PA triggered after 10 seconds
+        Then refresh job ALL triggered after 10 seconds
     @test
     #DB Check
     Scenario: Execute DB check

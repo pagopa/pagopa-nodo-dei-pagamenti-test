@@ -415,7 +415,7 @@ Feature: gestioneReceiptMb_11
         And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
         
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And wait 5 seconds for expiration
 
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 2)
@@ -505,7 +505,7 @@ Feature: gestioneReceiptMb_11
         And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
 
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And wait 5 seconds for expiration
 
         And replace noticeNumber content with $1noticeNumber content

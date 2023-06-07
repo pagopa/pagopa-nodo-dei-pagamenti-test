@@ -290,12 +290,12 @@ Feature: PAG-2346 recovery 1 mbd
         And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         And updates through the query update_servizio of the table CANALI the parameter ENABLED with N under macro RTPull on db nodo_cfg
         And updates through the query update_canale of the table CANALI the parameter ENABLED with Y under macro RTPull on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         And job rtPullRecoveryPush triggered after 5 seconds
         And wait 10 seconds for expiration
         And updates through the query update_servizio of the table CANALI the parameter ENABLED with Y under macro RTPull on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And verify the HTTP status code of rtPullRecoveryPush response is 200
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_1iuv on db nodo_online under macro RTPull

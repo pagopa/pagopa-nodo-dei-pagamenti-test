@@ -5,7 +5,7 @@ Feature: process tests for Retry_DB_GR_11
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
 
   Scenario: job refresh pa (1)
-    Given refresh job PA triggered after 10 seconds
+    Given refresh job ALL triggered after 10 seconds
 
   Scenario: initial verifyPaymentNotice
     Given the job refresh pa (1) scenario executed successfully

@@ -6,7 +6,7 @@ Feature: process tests for DB_GR_13
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
 
   Scenario: job refresh pa (1)
-    Given refresh job PA triggered after 10 seconds
+    Given refresh job ALL triggered after 10 seconds
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -253,7 +253,7 @@ Feature: process tests for DB_GR_13
     And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And verify 3 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
     Then update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
-    And refresh job PA triggered after 10 seconds
+    And refresh job ALL triggered after 10 seconds
 
 
 

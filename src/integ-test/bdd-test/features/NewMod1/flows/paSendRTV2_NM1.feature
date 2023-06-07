@@ -1072,7 +1072,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_05 (part 1)
         Given updates through the query update_fk_pa of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And the paGetPaymentV2 response with 3 transfers (1) scenario executed successfully
@@ -1109,7 +1109,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_06 (part 1)
         Given updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And the paGetPaymentV2 response with 3 transfers (1) scenario executed successfully
@@ -1126,7 +1126,7 @@ Feature: flow tests for paSendRTV2
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 5 seconds for expiration
         And updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1148,7 +1148,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_07 (part 1)
         Given updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And the paGetPaymentV2 response with 2 transfers scenario executed successfully
@@ -1165,7 +1165,7 @@ Feature: flow tests for paSendRTV2
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 10 seconds for expiration
         And updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1187,7 +1187,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_08 (part 1)
         Given updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And the paGetPaymentV2 response with 3 transfers (2) scenario executed successfully
@@ -1204,7 +1204,7 @@ Feature: flow tests for paSendRTV2
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 10 seconds for expiration
         And updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1226,7 +1226,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_09 (part 1)
         Given updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And the paGetPaymentV2 response with 3 transfers (2) scenario executed successfully
@@ -1243,7 +1243,7 @@ Feature: flow tests for paSendRTV2
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 10 seconds for expiration
         And updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1265,7 +1265,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_10 (part 1)
         Given updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And the paGetPaymentV2 response with 3 transfers (3) scenario executed successfully
@@ -1282,7 +1282,7 @@ Feature: flow tests for paSendRTV2
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 10 seconds for expiration
         And updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1304,7 +1304,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_11 (part 1)
         Given updates through the query update_fk_pa_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And the paGetPaymentV2 response scenario executed successfully
@@ -1342,7 +1342,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_12 (part 1)
         Given updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And the paGetPaymentV2 response scenario executed successfully
@@ -1358,7 +1358,7 @@ Feature: flow tests for paSendRTV2
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1411,7 +1411,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_17 (part 1)
         Given updates through the query update_fk_pa of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And expirationTime with 4000 in activatePaymentNoticeV2
@@ -1443,7 +1443,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_18 (part 1)
         Given updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And expirationTime with 4000 in activatePaymentNoticeV2
@@ -1455,7 +1455,7 @@ Feature: flow tests for paSendRTV2
     Scenario: PSRTV2_ACTV1_18 (part 2)
         Given the PSRTV2_ACTV1_18 (part 1) scenario executed successfully
         And updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         When job mod3CancelV2 triggered after 0 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
 
@@ -1598,7 +1598,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_22 (part 1)
         Given updates through the query update_fk_pa of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And the paGetPaymentV2 response with 3 transfers (1) scenario executed successfully
@@ -1660,7 +1660,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_23 (part 1)
         Given updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And the paGetPaymentV2 response with 3 transfers (1) scenario executed successfully
@@ -1686,7 +1686,7 @@ Feature: flow tests for paSendRTV2
         When job paSendRt triggered after 12 seconds
         Then verify the HTTP status code of paSendRt response is 200
         And updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1724,7 +1724,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_24 (part 1)
         Given updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro NewMod1 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And the paGetPaymentV2 response with 2 transfers (2) scenario executed successfully
@@ -1750,7 +1750,7 @@ Feature: flow tests for paSendRTV2
         When job paSendRt triggered after 12 seconds
         Then verify the HTTP status code of paSendRt response is 200
         And updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro NewMod1 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query recipient_station_id_activatev2 on db nodo_online under macro NewMod1
@@ -1788,7 +1788,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_25 (part 1)
         Given updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro NewMod1 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And the paGetPaymentV2 response with 3 transfers (4) scenario executed successfully
@@ -1814,7 +1814,7 @@ Feature: flow tests for paSendRTV2
         When job paSendRt triggered after 12 seconds
         Then verify the HTTP status code of paSendRt response is 200
         And updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro NewMod1 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTICE_PENDING,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1844,7 +1844,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_26 (part 1)
         Given updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And the paGetPaymentV2 response with 3 transfers (3) scenario executed successfully
@@ -1870,7 +1870,7 @@ Feature: flow tests for paSendRTV2
         When job paSendRt triggered after 12 seconds
         Then verify the HTTP status code of paSendRt response is 200
         And updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -1908,7 +1908,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_27 (part 1)
         Given updates through the query update_fk_pa_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And the paGetPaymentV2 response scenario executed successfully
@@ -1963,7 +1963,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_28 (part 1)
         Given updates through the query update_fk_pa of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully
         And the paGetPaymentV2 response with 3 transfers (1) scenario executed successfully
@@ -2049,7 +2049,7 @@ Feature: flow tests for paSendRTV2
 
     Scenario: PSRTV2_ACTV1_29 (part 1)
         Given updates through the query update_fk_pa of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And the checkPosition scenario executed successfully
         And the activatePaymentNoticeV2 request scenario executed successfully

@@ -5,7 +5,7 @@ Feature: T220_verifica_attiva_faultBeanEsteso
 
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given update through the query param_update_in of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with Y, with where condition OBJ_ID and where value ('16646') under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And initial XML nodoVerificaRPT
         """
@@ -165,4 +165,4 @@ Feature: T220_verifica_attiva_faultBeanEsteso
         And check originalFaultCode field exists in nodoAttivaRPT response
         And check id is #creditor_institution_code# of nodoAttivaRPT response
         And update through the query param_update_in of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with N, with where condition OBJ_ID and where value ('16646') under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds

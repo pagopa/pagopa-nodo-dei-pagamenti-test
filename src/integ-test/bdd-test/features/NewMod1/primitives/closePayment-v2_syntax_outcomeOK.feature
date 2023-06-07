@@ -535,7 +535,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
     @test 
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_PSP_CP = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
     @test 
     Scenario Outline: check closePaymentV2 PAG-2555 KO outline
@@ -776,4 +776,4 @@ Feature: syntax checks for closePaymentV2 outcome OK
     @test 
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_PSP_CP = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
