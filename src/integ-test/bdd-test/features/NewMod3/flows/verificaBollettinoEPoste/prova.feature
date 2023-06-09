@@ -1,0 +1,63 @@
+Feature:  block checks for verificaBollettino - position status in PAID after retry with expired token [VerificaBollettino_blocco_06]
+
+  Background:
+    Given systems up
+    And EC new version
+
+
+  # Verify Phase 1
+  Scenario: Execute verificaBollettino request
+    Given initial XML verificaBollettino
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+      <soapenv:Header />
+      <soapenv:Body>
+         <nod:verificaBollettinoReq>
+            <idPSP>#pspPoste#</idPSP>
+            <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+            <idChannel>#channelPoste#</idChannel>
+            <password>pwdpwdpwd</password>
+            <ccPost>#ccPoste#</ccPost>
+            <noticeNumber>#notice_number#</noticeNumber>
+         </nod:verificaBollettinoReq>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+    Then check outcome is OK of verificaBollettino response
+
+
+   # Activate Phase
+   Scenario: Execute activatePaymentNotice request
+      Given the Execute verificaBollettino request scenario executed successfully
+      And initial XML activatePaymentNotice
+         """
+         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+         <soapenv:Header/>
+         <soapenv:Body>
+            <nod:activatePaymentNoticeReq>
+               <idPSP>#pspPoste#</idPSP>
+               <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+               <idChannel>#channelPoste#</idChannel>
+               <password>pwdpwdpwd</password>
+               <qrCode>
+                  <fiscalCode>$verificaBollettinoResponse.fiscalCodePA</fiscalCode>
+                  <noticeNumber>$verificaBollettino.noticeNumber</noticeNumber>
+               </qrCode>
+               <expirationTime>2000</expirationTime>
+               <amount>10.00</amount>
+            </nod:activatePaymentNoticeReq>
+         </soapenv:Body>
+         </soapenv:Envelope>
+         """
+      When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+      Then check outcome is OK of activatePaymentNotice response
+
+   # Verify Phase 2
+   @runnable @hello
+   Scenario: Execute verificaBollettino request with the same request as Verify Phase 1
+      Given the Execute activatePaymentNotice request scenario executed successfully
+      When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
+      Then check outcome is OK of verificaBollettino response
+      And wait 5 seconds for expiration
+      And checks the value PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
