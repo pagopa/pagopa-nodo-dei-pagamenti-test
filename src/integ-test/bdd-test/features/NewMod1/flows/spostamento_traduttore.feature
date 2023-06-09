@@ -1645,7 +1645,8 @@ Feature: spostamento traduttore
     @test @hello
     Scenario: Test 4.1 (part 4)
         Given the Test 4.1 (part 3) scenario executed successfully
-        When job paInviaRt triggered after 0 seconds
+        When job paInviaRt triggered after 1 seconds
+        And wait 5 seconds for expiration
         Then verify the HTTP status code of paInviaRt response is 200
 
         # POSITION_PAYMENT_STATUS
@@ -1743,7 +1744,8 @@ Feature: spostamento traduttore
     @test @hello
     Scenario: Test 5 (part 4)
         Given the Test 5 (part 3) scenario executed successfully
-        When job paInviaRt triggered after 0 seconds
+        When job paInviaRt triggered after 1 seconds
+        And wait 5 seconds for expiration
         Then verify the HTTP status code of paInviaRt response is 200
 
         # POSITION_PAYMENT_STATUS
@@ -1842,7 +1844,8 @@ Feature: spostamento traduttore
     @test @hello
     Scenario: Test 5.1 (part 4)
         Given the Test 5.1 (part 3) scenario executed successfully
-        When job paInviaRt triggered after 0 seconds
+        When job paInviaRt triggered after 1 seconds
+        And wait 5 seconds for expiration
         Then verify the HTTP status code of paInviaRt response is 200
 
         # POSITION_PAYMENT_STATUS
