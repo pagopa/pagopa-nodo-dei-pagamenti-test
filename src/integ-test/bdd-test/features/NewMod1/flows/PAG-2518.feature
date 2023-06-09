@@ -456,14 +456,14 @@ Feature: PAG-2518
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
-    @test 
+    @test @ciao
     Scenario: Test 2.1 (part 3)
         Given the Test 2.1 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-        And wait 5 seconds for expiration
+        And wait 10 seconds for expiration
 
         # RE
         And execution query sprv2_req_spov2 to get value on the table RE, with the columns INFO under macro NewMod1 with db name re
