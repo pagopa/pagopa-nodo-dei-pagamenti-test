@@ -312,7 +312,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
         And verify 1 record for the table POSITION_RETRY_PA_SEND_RT retrived by the query position_receipt_recipient_v2 on db nodo_online under macro sendPaymentResultV2
 
     # inserire i check sul blob in RE per l'xml paSendRTV2
-    @test  @hello
+    @test  
     # trigger pa send RT retry
     Scenario: Execute paSendRT
         Given the execute DB check scenario executed successfully

@@ -278,7 +278,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
         And the activatePaymentNotice scenario executed successfully
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test @hello
+    @test 
     Scenario: IDMP_SPO_14 (part 2)
         Given the IDMP_SPO_14 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
