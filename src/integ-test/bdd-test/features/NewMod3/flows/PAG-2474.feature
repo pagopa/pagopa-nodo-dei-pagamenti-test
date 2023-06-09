@@ -405,7 +405,7 @@ Feature: PAG 2474
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
 
-    @test
+    @test @hello
     Scenario: Pa new 2.3
         Given the Pa new 2.2 scenario executed successfully
         And description with descrizione in paGetPayment

@@ -885,7 +885,7 @@ Feature: flow tests for sendPaymentResultV2
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
         And saving paGetPaymentV2 request in paGetPaymentV2_2Request
-    @test
+    @test @hello
     Scenario: FLUSSO_SPR_04 (part 3)
         Given the FLUSSO_SPR_04 (part 2) scenario executed successfully
         And the pspNotifyPaymentV2 KO response scenario executed successfully

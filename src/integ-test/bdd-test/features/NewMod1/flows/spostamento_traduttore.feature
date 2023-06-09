@@ -1542,7 +1542,7 @@ Feature: spostamento traduttore
         And checks the value v2 of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test 
+    @test @hello
     Scenario: Test 4 (part 4)
         Given the Test 4 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -1641,7 +1641,7 @@ Feature: spostamento traduttore
         And checks the value v2 of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test 
+    @test @hello
     Scenario: Test 4.1 (part 4)
         Given the Test 4.1 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -1739,7 +1739,7 @@ Feature: spostamento traduttore
         And checks the value v2 of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test 
+    @test @hello
     Scenario: Test 5 (part 4)
         Given the Test 5 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -1838,7 +1838,7 @@ Feature: spostamento traduttore
         And checks the value v2 of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test 
+    @test @hello
     Scenario: Test 5.1 (part 4)
         Given the Test 5.1 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds

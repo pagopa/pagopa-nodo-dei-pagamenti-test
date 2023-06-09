@@ -423,7 +423,7 @@ Feature: idempotency tests for activatePaymentNoticeV2Request
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_AUTENTICAZIONE of activatePaymentNoticeV2 response
-    @test
+    @test @hello
     Scenario: IDMP_APNV2_15.2 (part 2)
         Given the IDMP_APNV2_15.2 (part 1) scenario executed successfully
         And password with pwdpwdpwd in activatePaymentNoticeV2
@@ -702,7 +702,7 @@ Feature: idempotency tests for activatePaymentNoticeV2Request
         Then check outcome is OK of activatePaymentNoticeV2 response
         And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-    @test  
+    @test @hello
     Scenario: IDMP_APNV2_20 (part 2)
         Given the IDMP_APNV2_20 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 7 seconds
