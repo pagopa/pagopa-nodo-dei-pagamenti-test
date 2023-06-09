@@ -58,6 +58,7 @@ Feature:  block checks for verificaBollettino - position status in PAID after re
    Scenario: Execute verificaBollettino request with the same request as Verify Phase 1
       Given the Execute activatePaymentNotice request scenario executed successfully
       When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
-      Then check outcome is OK of verificaBollettino response
+      Then check outcome is KO of verificaBollettino response
+      And check faultCode is PPT_PAGAMENTO_IN_CORSO of verificaBollettino response
       And wait 5 seconds for expiration
       And checks the value PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
