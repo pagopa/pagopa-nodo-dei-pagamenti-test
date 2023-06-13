@@ -1,4 +1,4 @@
-Feature: parkedList checks
+Feature: parkedList check
 
     Background:
         Given systems up
