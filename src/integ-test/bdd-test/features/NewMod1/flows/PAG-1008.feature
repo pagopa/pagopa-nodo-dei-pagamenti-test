@@ -4,7 +4,7 @@ Feature: PAG-1008/1198
         Given systems up
 
     @test @dependentread
-    Scenario: activatePaymentNoticeV2 and paGetPaymentV2 with MBD
+    Scenario: activatePaymentNoticeV2 eCommerce and paGetPaymentV2 with MBD
         Given initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
@@ -105,7 +105,7 @@ Feature: PAG-1008/1198
 
 
     @test @dependentread
-    Scenario: activatePaymentNoticeV2 and paGetPaymentV2 with IBAN
+    Scenario: activatePaymentNoticeV2 eCommerce and paGetPaymentV2 with IBAN
         Given initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
@@ -269,7 +269,7 @@ Feature: PAG-1008/1198
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
             <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
@@ -298,7 +298,7 @@ Feature: PAG-1008/1198
 
 
     @test @dependentread
-    Scenario: activatePaymentNoticeV2 and paGetPaymentV2 with MBD
+    Scenario: activatePaymentNoticeV2 psp and paGetPaymentV2 with MBD
         Given initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
