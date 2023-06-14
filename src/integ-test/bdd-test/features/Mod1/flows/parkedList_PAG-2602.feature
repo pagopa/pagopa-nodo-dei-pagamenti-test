@@ -514,7 +514,7 @@ Feature: parkedList checks
         When WISP sends rest GET v1/parkedList?maxOccurrences= to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 400
         And check esito is KO of v1/parkedList response
-        And check descrizione is ... of v1/parkedList response
+        And check error is maxOccurences must be a positive integer of v1/parkedList response
     # descrizione da popolare
 
     ###############################################################################################
@@ -524,7 +524,7 @@ Feature: parkedList checks
         When WISP sends rest GET v1/parkedList?maxOccurrences=ciao to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 400
         And check esito is KO of v1/parkedList response
-        And check descrizione is ... of v1/parkedList response
+        And check error is maxOccurences must be a positive integer of v1/parkedList response
     # descrizione da popolare
 
     ###############################################################################################
