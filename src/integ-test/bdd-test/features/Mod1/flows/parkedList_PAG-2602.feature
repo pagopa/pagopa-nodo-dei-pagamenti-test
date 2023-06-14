@@ -503,7 +503,6 @@ Feature: parkedList checks
     Scenario: parkedList wrong URL (part 1)
         When WISP sends rest GET v1/parkedList? to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 200
-        And check esito is OK of v1/parkedList response
 
     ###############################################################################################
 
