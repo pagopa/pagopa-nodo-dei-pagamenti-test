@@ -298,7 +298,7 @@ Feature: PAG-1008/1198
 
 
     @test @dependentread
-    Scenario: activatePaymentNoticeV2 psp and paGetPaymentV2 with MBD
+    Scenario: activatePaymentNoticeV2 psp and paGetPaymentV2 with IBAN
         Given initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
