@@ -503,9 +503,7 @@ Feature: parkedList checks
     Scenario: parkedList wrong URL (part 1)
         When WISP sends rest GET v1/parkedList? to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 400
-        And check esito is KO of v1/parkedList response
-        And check descrizione is ... of v1/parkedList response
-    # descrizione da popolare
+        And check esito is OK of v1/parkedList response
 
     ###############################################################################################
 
@@ -522,6 +520,16 @@ Feature: parkedList checks
     @test @independent
     Scenario: parkedList wrong URL (part 3)
         When WISP sends rest GET v1/parkedList?maxOccurrences=ciao to nodo-dei-pagamenti
+        Then verify the HTTP status code of v1/parkedList response is 400
+        And check esito is KO of v1/parkedList response
+        And check error is maxOccurences must be a positive integer of v1/parkedList response
+    # descrizione da popolare
+
+    ###############################################################################################
+
+    @test @independent
+    Scenario: parkedList wrong URL (part 4)
+        When WISP sends rest GET v1/parkedList?maxOccurrences=0 to nodo-dei-pagamenti
         Then verify the HTTP status code of v1/parkedList response is 400
         And check esito is KO of v1/parkedList response
         And check error is maxOccurences must be a positive integer of v1/parkedList response
