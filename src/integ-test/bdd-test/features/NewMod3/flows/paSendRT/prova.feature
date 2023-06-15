@@ -197,6 +197,21 @@ Feature: process tests for paSendRT [PSRT_27]
 
     ##############################################################################################################
 
+    Scenario: checkPosition
+        Given initial json checkPosition
+            """
+            {
+                "positionslist": [
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "310#iuv#"
+                    }
+                ]
+            }
+            """
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
 
     Scenario: activatePaymentNoticeV2 request
         Given initial XML activatePaymentNoticeV2
@@ -371,7 +386,8 @@ Feature: process tests for paSendRT [PSRT_27]
             """
 
     Scenario: PSRTV2_ACTV1_03 (part 1)
-        Given the activatePaymentNoticeV2 request scenario executed successfully
+        Given the checkPosition scenario executed successfully
+        And the activatePaymentNoticeV2 request scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
