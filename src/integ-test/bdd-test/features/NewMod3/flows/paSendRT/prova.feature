@@ -4,7 +4,7 @@ Feature: process tests for paSendRT [PSRT_27]
         Given systems up
 
     Scenario: Execute verifyPaymentNotice request
-        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        Given generate 1 notice number and iuv with aux digit 3, segregation code 10 and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
         And initial XML verifyPaymentNotice
             """
@@ -38,7 +38,7 @@ Feature: process tests for paSendRT [PSRT_27]
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>#cod_segr#$1iuv</creditorReferenceId>
+            <creditorReferenceId>10$1iuv</creditorReferenceId>
             <paymentAmount>15.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
