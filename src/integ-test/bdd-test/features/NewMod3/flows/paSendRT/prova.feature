@@ -197,21 +197,6 @@ Feature: process tests for paSendRT [PSRT_27]
 
     ##############################################################################################################
 
-    Scenario: checkPosition
-        Given initial json checkPosition
-            """
-            {
-                "positionslist": [
-                    {
-                        "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "310#iuv#"
-                    }
-                ]
-            }
-            """
-        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of checkPosition response is 200
-        And check outcome is OK of checkPosition response
 
     Scenario: activatePaymentNoticeV2 request
         Given initial XML activatePaymentNoticeV2
@@ -227,7 +212,7 @@ Feature: process tests for paSendRT [PSRT_27]
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310$iuv</noticeNumber>
+            <noticeNumber>310#iuv#</noticeNumber>
             </qrCode>
             <expirationTime>60000</expirationTime>
             <amount>10.00</amount>
@@ -283,6 +268,7 @@ Feature: process tests for paSendRT [PSRT_27]
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>company</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -386,8 +372,7 @@ Feature: process tests for paSendRT [PSRT_27]
             """
 
     Scenario: PSRTV2_ACTV1_03 (part 1)
-        Given the checkPosition scenario executed successfully
-        And the activatePaymentNoticeV2 request scenario executed successfully
+        Given the activatePaymentNoticeV2 request scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
