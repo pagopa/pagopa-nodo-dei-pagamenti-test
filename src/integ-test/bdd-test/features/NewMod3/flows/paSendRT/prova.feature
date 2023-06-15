@@ -122,7 +122,7 @@ Feature: process tests for paSendRT [PSRT_27]
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-
+    @prova
     Scenario: Define sendPaymentOutcome
         Given the Execute activatePaymentNotice request scenario executed successfully
         And initial XML paSendRT
