@@ -928,6 +928,24 @@ def step_impl(context, tag, value, primitive):
         assert str(founded_value) == value
 
 
+
+# a partire da un tag passato in input, la funzione verifica che il valore cercato corrisponda all'intera sottostringa del tag 
+@then('check from {path_tag} the {value} of {primitive} response')
+def step_impl(context, path_tag, value, primitive):
+    soap_response = getattr(context, primitive + RESPONSE)
+    value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
+    value = utils.replace_global_variables(value, context)
+    print('soap_response: ', soap_response.headers)
+    if 'xml' in soap_response.headers['content-type']:
+        my_document = parseString(soap_response.content)
+        list_tag_value = []
+        list_tag_value = utils.searchValueTag(my_document, path_tag, False)
+        data = list_tag_value[0]
+        print(f'check path tag "{path_tag}" - expected: {value}, obtained: {data}')
+        assert value == data
+
+
 @then('checks {tag} is not {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
     soap_response = getattr(context, primitive + RESPONSE)

@@ -101,7 +101,7 @@ Feature: PAG-1008/1198
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And checks the value companySec of the record at column COMPANY_NAME_SECONDARY of the table POSITION_TRANSFER retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And check companyName is companySec of activatePaymentNoticeV2 response
+        And check from transferList.transfer.companyName the companySec of activatePaymentNoticeV2 response
 
 
     @test @dependentread
@@ -198,7 +198,7 @@ Feature: PAG-1008/1198
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And checks the value companySec of the record at column COMPANY_NAME_SECONDARY of the table POSITION_TRANSFER retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And check companyName is companySec of activatePaymentNoticeV2 response
+        And check from transferList.transfer.companyName the companySec of activatePaymentNoticeV2 response
 
     @test @dependentread
     Scenario: activatePaymentNotice request
@@ -391,4 +391,4 @@ Feature: PAG-1008/1198
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And checks the value companySec of the record at column COMPANY_NAME_SECONDARY of the table POSITION_TRANSFER retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And check companyName is companySec of activatePaymentNoticeV2 response
+        And check from transferList.transfer.companyName the companySec of activatePaymentNoticeV2 response
