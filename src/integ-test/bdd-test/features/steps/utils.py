@@ -12,6 +12,8 @@ import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
+import xml.etree.ElementTree as ET
+
 def random_s():
     import random
     cont = 5
@@ -431,3 +433,34 @@ def parallel_executor(context, feature_name, scenario):
     # os.chdir(testenv.PARALLEACTIONS_PATH)
     behave_main(
         '-i {} -n {} --tags=@test --no-skipped --no-capture'.format(feature_name, scenario))
+    
+
+def searchValueTag(xml_string, path_tag, flag_all_value_tag):
+  list_tag = path_tag.split(".")
+  size_list = len(list_tag)
+
+  tag_padre = list_tag[0]
+  tag = list_tag[size_list-1]
+
+  tree = ET.ElementTree(ET.fromstring(xml_string))
+  root = tree.getroot()
+  list_value_tag = []
+  full_list_tag = []
+  for single_tag in root.findall('.//' + tag_padre):
+    list_value_tag = searchValueTagRecursive(tag_padre, tag, single_tag)
+    full_list_tag.append(list_value_tag)
+    if flag_all_value_tag == False:
+      if list_value_tag: break
+  return full_list_tag
+
+
+def searchValueTagRecursive(tag_padre, tag, single_tag):
+  list_tag = []
+
+  if tag_padre == tag:
+    list_tag = single_tag.text
+  else:
+    for next_tag in single_tag:
+      list_tag = searchValueTagRecursive(next_tag.tag, tag, next_tag)
+      if list_tag: break
+  return list_tag    
