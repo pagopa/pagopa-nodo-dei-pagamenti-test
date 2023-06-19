@@ -24,11 +24,7 @@ def search_value(json_file: dict, tag: str, value) -> bool:
                 #check for completeness
                 if isinstance(element, dict):
                     find = search_value(element, tag, value)
-                    if find: break
-                elif isinstance(element, str):
-                    if element == value:
-                       find = True
-                       if find: break                 
+                    if find: break                
         if find: break
     return find
 
