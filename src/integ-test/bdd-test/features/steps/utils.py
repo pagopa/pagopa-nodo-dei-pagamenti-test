@@ -446,7 +446,7 @@ def searchValueTag(xml_string, path_tag, flag_all_value_tag):
   root = tree.getroot()
   list_value_tag = []
   full_list_tag = []
-  for single_tag in root.findall(tag_padre):
+  for single_tag in root.findall('.//' + tag_padre):
     list_value_tag = searchValueTagRecursive(tag_padre, tag, single_tag)
     full_list_tag.append(list_value_tag)
     if flag_all_value_tag == False:
