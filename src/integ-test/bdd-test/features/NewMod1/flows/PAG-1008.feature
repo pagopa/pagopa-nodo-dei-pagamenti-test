@@ -3,7 +3,7 @@ Feature: PAG-1008/1198
     Background:
         Given systems up
 
-    @test @dependentread
+    @test @dependentread @newmethod
     Scenario: activatePaymentNoticeV2 eCommerce and paGetPaymentV2 with MBD
         Given initial XML activatePaymentNoticeV2
             """

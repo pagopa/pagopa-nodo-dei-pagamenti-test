@@ -939,6 +939,7 @@ def step_impl(context, path_tag, value, primitive):
     print('soap_response: ', soap_response.headers)
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
+        print("MY DOCUMENT IS: ", my_document)
         list_tag_value = []
         list_tag_value = utils.searchValueTag(my_document, path_tag, False)
         data = list_tag_value[0]
