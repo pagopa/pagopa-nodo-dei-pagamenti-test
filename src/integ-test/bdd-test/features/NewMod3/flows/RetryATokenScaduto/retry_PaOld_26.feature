@@ -266,7 +266,7 @@ Feature: process tests for retry a token scaduto
 
 
   
-  @runnable
+  @runnable @lazy @dependentread
   # test execution
   Scenario: Execution test rety_PaOld_26
     Given the Execute sendPaymentOutcome request scenario executed successfully

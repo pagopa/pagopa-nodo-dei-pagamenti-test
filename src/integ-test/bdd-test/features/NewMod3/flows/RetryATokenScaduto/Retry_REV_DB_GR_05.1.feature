@@ -101,7 +101,7 @@ Feature: process tests for Retry_REV_DB_GR_05.1
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>4.00</transferAmount>
-            <fiscalCodePA>77777777777</fiscalCodePA>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -109,7 +109,7 @@ Feature: process tests for Retry_REV_DB_GR_05.1
             <transfer>
             <idTransfer>2</idTransfer>
             <transferAmount>3.00</transferAmount>
-            <fiscalCodePA>77777777777</fiscalCodePA>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -117,7 +117,7 @@ Feature: process tests for Retry_REV_DB_GR_05.1
             <transfer>
             <idTransfer>3</idTransfer>
             <transferAmount>3.00</transferAmount>
-            <fiscalCodePA>77777777777</fiscalCodePA>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -146,6 +146,7 @@ Feature: process tests for Retry_REV_DB_GR_05.1
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
 
+    @runnable @lazy @dependentread
     # Payment Outcome Phase outcome OK
     Scenario: Execute sendPaymentOutcome request
         Given the Poller Annulli Scenario executed successfully

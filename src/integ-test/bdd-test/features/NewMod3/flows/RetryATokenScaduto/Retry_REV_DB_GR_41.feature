@@ -108,7 +108,7 @@ Feature: process tests for Retry_Rev_DB_GR_41
       <transfer>
       <idTransfer>1</idTransfer>
       <transferAmount>10.00</transferAmount>
-      <fiscalCodePA>77777777777</fiscalCodePA>
+      <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
       <IBAN>IT45R0760103200000000001016</IBAN>
       <remittanceInformation>testPaGetPayment</remittanceInformation>
       <transferCategory>paGetPaymentTest</transferCategory>
@@ -196,6 +196,7 @@ Feature: process tests for Retry_Rev_DB_GR_41
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
+  @runnable @lazy @dependentread @dependentwrite
   Scenario: DB check
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And wait 5 seconds for expiration 

@@ -227,7 +227,7 @@ Feature: process tests for retry a token scaduto (retry_PaOd_24)
     And check redirect is 0 of nodoInviaRPT response
 
 
-  @runnable
+  @runnable @lazy @dependentread
   # test execution
   Scenario: Execution test rety_PaOld_24
     Given the Execute nodoInviaRPT request scenario executed successfully

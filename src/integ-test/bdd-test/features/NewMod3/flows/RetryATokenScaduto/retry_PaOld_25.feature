@@ -226,7 +226,7 @@ Feature: process tests for retry a token scaduto
     When job paInviaRt triggered after 0 seconds
     Then verify the HTTP status code of paInviaRt response is 200
 
-  @runnable
+  @runnable @lazy @dependentread
   # test execution
   Scenario: Execution test rety_PaOld_25
     Given the Execute paaInviaRT scenario executed successfully

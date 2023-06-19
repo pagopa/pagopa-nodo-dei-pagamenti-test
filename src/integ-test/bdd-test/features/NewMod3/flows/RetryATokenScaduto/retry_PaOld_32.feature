@@ -306,7 +306,7 @@ Feature: process tests for retry a token scaduto
         </pay_i:RPT>
         """ 
 
-  @runnable
+  @runnable @lazy @dependentread
   Scenario: Execute nodoInviaRPT1 request
     Given the RPT2 generation scenario executed successfully
     And initial XML nodoInviaRPT
