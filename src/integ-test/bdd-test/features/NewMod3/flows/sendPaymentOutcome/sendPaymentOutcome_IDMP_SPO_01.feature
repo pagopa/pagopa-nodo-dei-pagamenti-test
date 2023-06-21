@@ -76,7 +76,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - not us
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
  
- @runnable
+ @runnable @dependentread
   Scenario: DB check
     Given the Execute sendPaymentOutcome request scenario executed successfully
     Then check datetime plus number of date 2 of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod3

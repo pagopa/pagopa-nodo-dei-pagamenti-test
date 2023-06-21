@@ -117,7 +117,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-@runnable
+@runnable @dependentread @dependentwrite
   # Second activate check [IDMP_SPO_18]
   Scenario: Execute again activatePaymentNotice2 request of Activate Phase 2
     Given the Execute again activatePaymentNotice1 request of Activate Phase 1 scenario executed successfully
@@ -174,7 +174,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
     
 
-@runnable    
+@runnable @dependentread @dependentwrite    
   # First activate check [IDMP_SPO_20.1]
   Scenario: Execute again activatePaymentNotice3 request
     Given the Semantic error for sendPaymentOutcome response executed on token of Activate Phase 1 scenario executed successfully

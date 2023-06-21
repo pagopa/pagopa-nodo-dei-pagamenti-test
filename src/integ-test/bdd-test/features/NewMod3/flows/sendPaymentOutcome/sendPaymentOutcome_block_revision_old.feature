@@ -93,7 +93,7 @@ Feature: Block revision for sendPaymentOutcome - PA old
             </soapenv:Envelope>
             """
 
-@runnable
+@runnable @lazy @dependentread
     Scenario: [SPO_REV_01]
         Given the Initialize sendPaymentOutcome (Phase 3) scenario executed successfully
         And EC old version
@@ -107,7 +107,7 @@ Feature: Block revision for sendPaymentOutcome - PA old
         And checks the value $sendPaymentOutcome.entityUniqueIdentifierType of the record at column ENTITY_UNIQUE_IDENTIFIER_TYPE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
         And checks the value $sendPaymentOutcome.entityUniqueIdentifierValue of the record at column ENTITY_UNIQUE_IDENTIFIER_VALUE of the table POSITION_SUBJECT retrived by the query position_subject on db nodo_online under macro NewMod3
 
-@runnable
+@runnable @lazy @dependentread
     Scenario: [SPO_REV_02]
         Given the Initialize sendPaymentOutcome (Phase 3) scenario executed successfully
         And EC new version

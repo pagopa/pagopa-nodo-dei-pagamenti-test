@@ -154,7 +154,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_13]
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
-    @runnable
+    @runnable @lazy @dependentread
     Scenario: Excecute nodoInviaRPT
         Given the Execute sendPaymentOutcome request scenario executed successfully
         And initial XML nodoInviaRPT

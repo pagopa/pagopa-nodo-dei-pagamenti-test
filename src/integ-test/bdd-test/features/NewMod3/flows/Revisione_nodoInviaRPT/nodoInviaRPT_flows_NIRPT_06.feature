@@ -139,7 +139,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_06]
             </pay_i:RPT>
             """
 
-    @runnable
+    
     Scenario: Excecute nodoInviaRPT
         Given the Define RPT scenario executed successfully
         And initial XML nodoInviaRPT
@@ -171,6 +171,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_06]
         And wait 10 seconds for expiration
 
     # Activate phase
+    @runnable @lazy @dependentread
     Scenario: Trigger mod3Cancel
         Given the Excecute nodoInviaRPT scenario executed successfully
         When job mod3CancelV1 triggered after 3 seconds

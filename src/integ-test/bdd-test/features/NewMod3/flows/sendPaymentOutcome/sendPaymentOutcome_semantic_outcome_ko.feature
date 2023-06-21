@@ -83,7 +83,7 @@ Feature: Semantic checks for sendPaymentOutcome - OUTCOME KO [SEM_SPO_22]
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-@runnable    
+@runnable @independent
   # activatePaymentNoticeReq phase 2
   Scenario: Execute a new activatePaymentNotice request
     Given the Execute a sendPaymentOutcome request scenario executed successfully

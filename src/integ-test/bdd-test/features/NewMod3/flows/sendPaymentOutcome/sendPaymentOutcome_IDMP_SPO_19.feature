@@ -122,7 +122,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     Then check outcome is OK of activatePaymentNotice response
     And verify the paymentToken of the activatePaymentNotice response is equals to paymentTokenPhase1
 
-  @runnable
+  @runnable @dependentread
   # Second activate check [IDMP_SPO_19]
   Scenario: Execute again activatePaymentNotice request of Activate Phase 2
     Given the Execute again activatePaymentNotice request of Activate Phase 1 scenario executed successfully

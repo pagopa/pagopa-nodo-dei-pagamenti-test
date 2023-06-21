@@ -295,7 +295,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    @runnable
+    @runnable @lazy @dependentread
     Scenario: Execute nodoInviaRPT3
         Given the Define RPT3 scenario executed successfully
         And initial XML nodoInviaRPT

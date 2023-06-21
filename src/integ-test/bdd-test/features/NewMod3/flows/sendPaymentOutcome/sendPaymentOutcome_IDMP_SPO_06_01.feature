@@ -122,7 +122,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcome response
 
-@runnable 
+@runnable @dependentread @dependentwrite 
   Scenario: DB check
     Given the Execute sendPaymentOutcome request 1 scenario executed successfully
     Then checks the value PAYING,PAID_NORPT of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_pay on db nodo_online under macro NewMod3

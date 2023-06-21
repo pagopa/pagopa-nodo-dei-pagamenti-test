@@ -81,7 +81,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
     Then check outcome is OK of sendPaymentOutcome response
     And save sendPaymentOutcome response in sendPaymentOutcome2
 
-@runnable
+@runnable @dependentread @dependentwrite
   Scenario: DB check
     Given the Execute sendPaymentOutcome request 1 scenario executed successfully
     Then sendPaymentOutcome1 response is equal to sendPaymentOutcome2 response

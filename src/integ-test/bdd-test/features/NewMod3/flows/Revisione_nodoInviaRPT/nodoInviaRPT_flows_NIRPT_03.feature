@@ -189,7 +189,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_03]
             </pay_i:RPT>
             """
 
-    @runnable
+    @runnable @dependentread
     Scenario: Excecute nodoInviaRPT
         Given the Define RPT scenario executed successfully
         And initial XML nodoInviaRPT

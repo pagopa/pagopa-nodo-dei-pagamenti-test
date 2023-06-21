@@ -53,7 +53,7 @@ Feature: Check semantic payment status
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-@runnable
+@runnable @dependentread
     Scenario: Verify  in POSITION_STATUS table
         Given the Execute activatePaymentNotice scenario executed successfully
         And initial XML sendPaymentOutcome
