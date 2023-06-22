@@ -27,9 +27,9 @@ variables:
   destinationFolderExtractArtifact: nodo/extracted
   deploy-pool: nodopagamenti-agent-pool-sit
   ${{ if eq(parameters['env'], 'dev') }}:
-    NODO_URL: "https://10.230.8.5:443/nodo-dev"    
+    NODO_URL: "https://api.dev.platform.pagopa.it/nodo-dev"    
   ${{ if eq(parameters['env'], 'sit') }}:
-    NODO_URL: "https://10.230.8.5:443/nodo"
+    NODO_URL: "https://api.dev.platform.pagopa.it/nodo"
 
 stages:
   - stage: prepare_env
