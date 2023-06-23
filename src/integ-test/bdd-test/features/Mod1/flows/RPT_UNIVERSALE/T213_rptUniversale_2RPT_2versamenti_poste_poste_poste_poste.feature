@@ -244,14 +244,14 @@ Feature: flow tests for T213_rptUniversale_2RPT_2versamenti_poste_poste_poste_po
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
         And check totalRows is $sizeCarte of listaPSP response
-        And check data is $listaCarte of listaPSP response
+        And compare list between data in listaPSP response and $listaCarte
 
     Scenario: execution nodoChiediListaPSP - conto
         Given the execution nodoChiediListaPSP - carte scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
         And check totalRows is $sizeConto of listaPSP response
-        And check data is $listaConto of listaPSP response
+        And compare list between data in listaPSP response and $listaConto
 
     @runnable
     Scenario: execution nodoChiediListaPSP - altro
@@ -259,5 +259,5 @@ Feature: flow tests for T213_rptUniversale_2RPT_2versamenti_poste_poste_poste_po
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
         And check totalRows is $sizeAltro of listaPSP response
-        And check data is $listaAltro of listaPSP response
+        And compare list between data in listaPSP response and $listaAltro
 
