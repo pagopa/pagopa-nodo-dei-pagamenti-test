@@ -295,7 +295,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test 
+    @test @lazy @dependentread
     Scenario: REV_SPO_03 (part 4)
         Given the REV_SPO_03 (part 3) scenario executed successfully
         When job paInviaRt triggered after 5 seconds
@@ -450,7 +450,8 @@ Feature: revision checks for sendPaymentOutcomeV2
         And outcome with KO in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test 
+        
+    @test @lazy @dependentread
     Scenario: REV_SPO_05 (part 4)
         Given the REV_SPO_05 (part 3) scenario executed successfully
         When job paInviaRt triggered after 5 seconds
@@ -586,7 +587,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the sendPaymentOutcomeV2 scenario executed successfully
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test 
+    @test @lazy @dependentread @dependentwrite
     Scenario: RT_ISTANTANEO (part 4)
         Given the RT_ISTANTANEO (part 3) scenario executed successfully
         And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with N under macro sendPaymentResultV2 on db nodo_cfg
@@ -633,7 +634,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         And the nodoInviaRPT scenario executed successfully
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-    @test 
+    @test @lazy @dependentread @dependentwrite
     Scenario: RT_ISTANTANEO_RPT_TARDIVA (part 4)
         Given the RT_ISTANTANEO_RPT_TARDIVA (part 3) scenario executed successfully
         And updates through the query stationUpdate of the table STAZIONI the parameter INVIO_RT_ISTANTANEO with N under macro sendPaymentResultV2 on db nodo_cfg

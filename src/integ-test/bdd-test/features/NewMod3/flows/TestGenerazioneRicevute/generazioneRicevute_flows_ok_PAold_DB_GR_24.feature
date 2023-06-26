@@ -173,7 +173,7 @@ Feature: process tests for generazioneRicevute [DB_GR_24]
     And check redirect is 0 of nodoInviaRPT response
     And verify 0 record for the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
 
-  @runnable
+  @runnable @dependentwrite @lazy
   # Payment Outcome Phase outcome KO
   Scenario: Execute sendPaymentOutcome request
     Given the Execute nodoInviaRPT request scenario executed successfully

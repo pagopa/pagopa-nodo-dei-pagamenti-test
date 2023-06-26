@@ -65,7 +65,7 @@ Feature: PAG 2474
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@test @lazy @dependentread.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -156,7 +156,7 @@ Feature: PAG 2474
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
+            <e-mail>paGetPayment@test @lazy @dependentread.it</e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -366,7 +366,7 @@ Feature: PAG 2474
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
 
-    @test
+    @test @lazy @dependentread
     Scenario: Pa new 1.3
         Given the Pa new 1.2 scenario executed successfully
         And description with descrizione in paGetPayment
@@ -405,7 +405,7 @@ Feature: PAG 2474
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
 
-    @test
+    @test @lazy @dependentread
     Scenario: Pa new 2.3
         Given the Pa new 2.2 scenario executed successfully
         And description with descrizione in paGetPayment
@@ -456,7 +456,7 @@ Feature: PAG 2474
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-    @test
+    @test @lazy @dependentread
     Scenario: Pa old 1.5
         Given the Pa old 1.4 scenario executed successfully
         And pay_i:anagraficaPagatore with nome in RPT

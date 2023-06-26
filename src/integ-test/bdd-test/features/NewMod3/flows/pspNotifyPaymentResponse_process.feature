@@ -62,7 +62,7 @@ Feature: process checks for pspNotifyPayment
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
 
-  @runnable
+  @runnable @independent
   # nodoInoltraEsitoPagamentoCarte phase - psp Irraggiungibile [PRO_PNP_05]
   Scenario: Check nodoInoltraEsitoPagamentoCarte response contains {"esito" : "KO","errorCode" :  "CONPSP", “descrizione”: "Risposta negativa del Canale"} when psp is unreachable
     Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
@@ -86,7 +86,7 @@ Feature: process checks for pspNotifyPayment
     And check errorCode is CONPSP of inoltroEsito/carta response
     And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response
 
-  @runnable
+  @runnable @independent
   # nodoInoltraEsitoPagamentoCarte phase - outcome KO [PRO_PNP_03]
   Scenario: Check nodoInoltraEsitoPagamentoCarte response contains { "esito": "KO", "errorCode": "RIFPSP", "descrizione": "Risposta negativa del Canale" } when pspNotifyPaymentResponse is KO
     Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
@@ -129,7 +129,7 @@ Feature: process checks for pspNotifyPayment
     And check errorCode is RIFPSP of inoltroEsito/carta response
     And check descrizione is Risposta negativa del Canale of inoltroEsito/carta response
 
-  @runnable
+  @runnable @independent
   # nodoInoltraEsitoPagamentoCarte phase - Timeout [PRO_PNP_02]
   Scenario: Check nodoInoltraEsitoPagamentoCarte response contains {"error": "Operazione in timeout"} when pspNotifyPaymentResponse is in timeout
     Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully

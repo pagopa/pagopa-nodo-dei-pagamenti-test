@@ -64,7 +64,7 @@ Feature: PAG-1976
       <!--Optional:-->
       <country>IT</country>
       <!--Optional:-->
-      <e-mail>paGetPayment@test.it</e-mail>
+      <e-mail>paGetPayment@test @lazy @dependentread.it</e-mail>
       </debtor>
       <!--Optional:-->
       <transferList>
@@ -136,7 +136,7 @@ Feature: PAG-1976
       <!--Optional:-->
       <country>IT</country>
       <!--Optional:-->
-      <e-mail>prova@test.it</e-mail>
+      <e-mail>prova@test @lazy @dependentread.it</e-mail>
       </payer>
       <applicationDate>2021-12-12</applicationDate>
       <transferDate>2021-12-11</transferDate>
@@ -185,7 +185,7 @@ Feature: PAG-1976
       <!--Optional:-->
       <country>IT</country>
       <!--Optional:-->
-      <e-mail>prova@test.it</e-mail>
+      <e-mail>prova@test @lazy @dependentread.it</e-mail>
       </payer>
       <applicationDate>2021-12-12</applicationDate>
       <transferDate>2021-12-11</transferDate>
@@ -236,7 +236,7 @@ Feature: PAG-1976
       <!--Optional:-->
       <country>IT</country>
       <!--Optional:-->
-      <e-mail>prova@test.it</e-mail>
+      <e-mail>prova@test @lazy @dependentread.it</e-mail>
       </payer>
       <applicationDate>2021-12-12</applicationDate>
       <transferDate>2021-12-11</transferDate>
@@ -287,7 +287,7 @@ Feature: PAG-1976
       <!--Optional:-->
       <country>IT</country>
       <!--Optional:-->
-      <e-mail>prova@test.it</e-mail>
+      <e-mail>prova@test @lazy @dependentread.it</e-mail>
       </payer>
       <applicationDate>2021-12-12</applicationDate>
       <transferDate>2021-12-11</transferDate>
@@ -305,7 +305,7 @@ Feature: PAG-1976
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @test
+  @test @lazy @dependentread
   Scenario: Posizione ancora pagabile spov1 OK (part 2)
     Given the Posizione ancora pagabile spov1 OK (part 1) scenario executed successfully
     And the mod3CancelV2 scenario executed successfully
@@ -342,7 +342,7 @@ Feature: PAG-1976
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @test
+  @test @lazy @dependentread
   Scenario: Posizione non pagabile spov1 OK (part 3)
     Given the Posizione non pagabile spov1 OK (part 2) scenario executed successfully
     And the sendPaymentOutcome request scenario executed successfully
@@ -362,7 +362,7 @@ Feature: PAG-1976
 
   ##########################################################################################
 
-  @test
+  @test @lazy @dependentread
   Scenario: Token sconosciuto spov1 KO
     Given the sendPaymentOutcome with unknown token request scenario executed successfully
     And outcome with KO in sendPaymentOutcome
@@ -384,7 +384,7 @@ Feature: PAG-1976
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-  @test
+  @test @lazy @dependentread
   Scenario: Esito già acquisito spov1 KO (part 3)
     Given the Esito già acquisito spov1 KO (part 2) scenario executed successfully
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
@@ -408,7 +408,7 @@ Feature: PAG-1976
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @test
+  @test @lazy @dependentread
   Scenario: Posizione ancora pagabile spov1 KO (part 2)
     Given the Posizione ancora pagabile spov1 KO (part 1) scenario executed successfully
     And the mod3CancelV2 scenario executed successfully
@@ -445,7 +445,7 @@ Feature: PAG-1976
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @test
+  @test @lazy @dependentread
   Scenario: Posizione non pagabile spov1 KO (part 3)
     Given the Posizione non pagabile spov1 KO (part 2) scenario executed successfully
     And the sendPaymentOutcome request scenario executed successfully
@@ -472,7 +472,7 @@ Feature: PAG-1976
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @test
+  @test @lazy @dependentread
   Scenario: Posizione ancora pagabile spov2 OK (part 2)
     Given the Posizione ancora pagabile spov2 OK (part 1) scenario executed successfully
     And the mod3CancelV2 scenario executed successfully
@@ -509,7 +509,7 @@ Feature: PAG-1976
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @test
+  @test @lazy @dependentread
   Scenario: Posizione non pagabile spov2 OK (part 3)
     Given the Posizione non pagabile spov2 OK (part 2) scenario executed successfully
     And the sendPaymentOutcomeV2 request scenario executed successfully
@@ -529,7 +529,7 @@ Feature: PAG-1976
 
   ##########################################################################################
 
-  @test
+  @test @lazy @dependentread
   Scenario: Token sconosciuto spov2 KO
     Given the sendPaymentOutcomeV2 with unknown token request scenario executed successfully
     And outcome with KO in sendPaymentOutcomeV2
@@ -551,7 +551,7 @@ Feature: PAG-1976
     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcomeV2 response
 
-  @test
+  @test @lazy @dependentread
   Scenario: Esito già acquisito spov2 KO (part 3)
     Given the Esito già acquisito spov2 KO (part 2) scenario executed successfully
     When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
@@ -575,7 +575,7 @@ Feature: PAG-1976
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @test
+  @test @lazy @dependentread
   Scenario: Posizione ancora pagabile spov2 KO (part 2)
     Given the Posizione ancora pagabile spov2 KO (part 1) scenario executed successfully
     And the mod3CancelV2 scenario executed successfully
@@ -612,7 +612,7 @@ Feature: PAG-1976
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @test
+  @test @lazy @dependentread
   Scenario: Posizione non pagabile spov2 KO (part 3)
     Given the Posizione non pagabile spov2 KO (part 2) scenario executed successfully
     And the sendPaymentOutcomeV2 request scenario executed successfully

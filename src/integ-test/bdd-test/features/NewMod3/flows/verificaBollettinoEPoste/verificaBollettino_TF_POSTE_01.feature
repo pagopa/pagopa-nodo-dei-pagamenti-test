@@ -199,7 +199,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_01]
         And checks the value IT45R0760103200#ccPoste# of the record at column IBAN of the table POSITION_TRANSFER retrived by the query position_transfer on db nodo_online under macro NewMod3
 
     # nodoInviaRPT phase
-    @runnable
+    @runnable @dependentread
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT

@@ -27,7 +27,7 @@ Feature: Checks for EC new and nodoVerificaRPT
       """
     And EC new version
 
-  @runnable
+  @runnable @independent
   # check PPT_MULTI_BENEFICIARIO error - PRO_VPNR_04
   Scenario: Check PPT_MULTI_BENEFICIARIO error
     When psp sends SOAP nodoVerificaRPT to nodo-dei-pagamenti

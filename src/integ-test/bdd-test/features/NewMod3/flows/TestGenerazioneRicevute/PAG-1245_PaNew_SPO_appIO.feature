@@ -286,7 +286,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaNew_SPO_appIO]
         And check esito is OK of inoltroEsito/carta response
         And check url field not exists in informazioniPagamento response
 
-@runnable
+@runnable @dependentwrite @lazy @dependentwrite
     Scenario: Execute sendPaymentOutcome
         Given the Execute nodoInoltroEsitoCarta scenario executed successfully
         And initial XML sendPaymentOutcome

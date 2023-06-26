@@ -131,7 +131,7 @@ Feature: process tests for generazioneRicevute [DB_GR_15]
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-@runnable
+@runnable @dependentwrite @lazy @dependentwrite
   # Trigger Poller Annulli
   Scenario: Trigger Poller Annulli
     Given the Execute activatePaymentNotice request scenario executed successfully

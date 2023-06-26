@@ -29,7 +29,7 @@ Feature: Syntax checks for sendPaymentOutcome - OK
     """
     And PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
 
-    @runnable
+    @runnable @independent
     # [SIN_SPO_00]
     Scenario: Check sendPaymentOutcome response with mandatory fields
       Given initial XML sendPaymentOutcome
@@ -86,7 +86,7 @@ Feature: Syntax checks for sendPaymentOutcome - OK
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-  @runnable
+  @runnable @independent
   # element value check
   Scenario Outline: Check sendPaymentOutcome response with missing optional fields
     Given initial XML sendPaymentOutcome

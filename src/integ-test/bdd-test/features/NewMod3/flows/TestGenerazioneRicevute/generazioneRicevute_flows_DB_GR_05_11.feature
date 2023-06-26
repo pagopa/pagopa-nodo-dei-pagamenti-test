@@ -122,7 +122,7 @@ Feature: process tests for generazioneRicevute
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-@runnable
+@runnable @dependentwrite @lazy @dependentwrite
   # Payment Outcome Phase outcome OK with paymentchannel
   Scenario: Execute sendPaymentOutcome (Phase 1)
     Given the Execute activatePaymentNotice (Phase 2) scenario executed successfully

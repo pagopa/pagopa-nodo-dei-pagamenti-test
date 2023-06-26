@@ -333,7 +333,7 @@ Feature: process tests for generazioneRicevute
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query rpt_activision on db nodo_online under macro NewMod3
 
 
-    @runnable
+    @runnable @dependentread
     # Payment Outcome Phase outcome ok
     Scenario: Execute sendPaymentOutcome request
         Given the Execute nodoInviaRPT2 request scenario executed successfully

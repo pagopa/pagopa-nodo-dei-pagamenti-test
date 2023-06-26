@@ -266,7 +266,7 @@ Feature: spostamento traduttore
         # RPT_ACTIVATIONS
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activate on db nodo_online under macro NewMod1
 
-    @test
+    @test @lazy @dependentread
     Scenario: Test 2 (part 2)
         Given the Test 2 (part 1) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -339,7 +339,7 @@ Feature: spostamento traduttore
         # RPT_ACTIVATIONS
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activate on db nodo_online under macro NewMod1
 
-    @test
+    @test @lazy @dependentread
     Scenario: Test 3 (part 2)
         Given the Test 3 (part 1) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
@@ -403,7 +403,7 @@ Feature: spostamento traduttore
         Then check outcome is KO of activatePaymentNotice response
         And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activatePaymentNotice response
 
-    @test
+    @test @lazy @dependentread
     Scenario: Test 4 (part 2)
         Given the Test 4 (part 1) scenario executed successfully
         And execution query select_activate to get value on the table RPT_ACTIVATIONS, with the columns PAYMENT_TOKEN under macro NewMod1 with db name nodo_online

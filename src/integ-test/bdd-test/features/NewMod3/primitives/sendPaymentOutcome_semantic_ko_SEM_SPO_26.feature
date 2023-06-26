@@ -85,7 +85,7 @@ Feature: Semantic checks for sendPaymentOutcome - KO - SEM_SPO_26
     When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-  @runnable
+  @runnable @independent
   Scenario: Execute a sendPaymentOutcome request with outcome OK
     Given the Execute a sendPaymentOutcome1 request scenario executed successfully
     And initial XML sendPaymentOutcome

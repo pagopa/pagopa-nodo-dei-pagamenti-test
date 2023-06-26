@@ -52,7 +52,7 @@ Feature: Syntax checks for sendPaymentOutcome - KO
       """
     And EC new version
 
-  @runnable
+  @runnable @independent
   # attribute value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
     Given <attribute> set <value> for <elem> in sendPaymentOutcome
@@ -63,7 +63,7 @@ Feature: Syntax checks for sendPaymentOutcome - KO
       | elem             | attribute     | value                                     | soapUI test |
       | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_SPO_01  |
 
-  @runnable
+  @runnable @independent
   # element value check
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
     Given <elem> with <value> in sendPaymentOutcome

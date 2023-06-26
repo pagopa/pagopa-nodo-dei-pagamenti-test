@@ -92,7 +92,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_09]
 
 
   # Payment Outcome Phase outcome OK
-  @runnable
+  @runnable @dependentwrite @lazy
   Scenario: Execute sendPaymentOutcome request
     Given the Execute activatePaymentNotice request scenario executed successfully
     Given initial XML sendPaymentOutcome

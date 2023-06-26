@@ -23,7 +23,7 @@ Feature: process checks for VerifyPaymentNoticeReq - EC old
     And EC old version
    # verifyPaymentNotice KO - EC old [PRO_VPNR_07]
 
-@runnable
+@runnable @independent
   Scenario: Check PPT_STAZIONE_INT_PA_TIMEOUT error when paVerifyPaymentRes is in timeout
     Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
       """

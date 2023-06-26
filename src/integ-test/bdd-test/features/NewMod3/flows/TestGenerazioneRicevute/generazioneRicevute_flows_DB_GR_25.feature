@@ -98,7 +98,7 @@ Feature: process tests for generazioneRicevute
       When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
       Then check outcome is OK of sendPaymentOutcome response
 
-@runnable
+@runnable @lazy
   Scenario: Execution test DB_GR_25
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And initial XML activatePaymentNotice

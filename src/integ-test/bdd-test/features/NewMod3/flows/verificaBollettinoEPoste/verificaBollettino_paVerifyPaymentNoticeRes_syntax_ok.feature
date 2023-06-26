@@ -20,7 +20,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
     """
     And EC new version
 
-  @runnable
+  @runnable @independent
   Scenario Outline: Check paVerifyPayment response with missing optional fields
     Given EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
     """

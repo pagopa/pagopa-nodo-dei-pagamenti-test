@@ -51,7 +51,7 @@ Feature: process tests for TF_POSTE_04
         Then check outcome is OK of verificaBollettino response
         And verify 0 record for the table VERIFICA_BOLLETTINO retrived by the query verifica_bollettino on db nodo_online under macro NewMod3
 
-    @runnable
+    @runnable @dependentwrite
     Scenario: Execute activatePaymentNotice request
         Given the Execute verificaBollettino request scenario executed successfully
         And initial XML activatePaymentNotice

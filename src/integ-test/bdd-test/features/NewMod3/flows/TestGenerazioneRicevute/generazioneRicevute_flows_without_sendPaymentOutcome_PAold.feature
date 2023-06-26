@@ -173,7 +173,7 @@ Feature: process tests for generazioneRicevute
     When job mod3CancelV1 triggered after 5 seconds
     Then verify the HTTP status code of mod3CancelV1 response is 200
 
-@runnable
+@runnable @dependentwrite @lazy
   # test execution
   Scenario: Execution test DB_GR_23
     Given the trigger poller annulli scenario executed successfully

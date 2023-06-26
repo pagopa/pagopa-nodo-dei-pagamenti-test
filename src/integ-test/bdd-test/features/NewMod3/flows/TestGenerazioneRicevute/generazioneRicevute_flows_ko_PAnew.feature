@@ -164,7 +164,7 @@ Feature: process tests for generazioneRicevute
       </soapenv:Envelope>
       """
 
-@runnable
+@runnable @dependentwrite
   # test execution
   Scenario: Execution test DB_GR_02/08
     Given the Execute sendPaymentOutcome request scenario executed successfully

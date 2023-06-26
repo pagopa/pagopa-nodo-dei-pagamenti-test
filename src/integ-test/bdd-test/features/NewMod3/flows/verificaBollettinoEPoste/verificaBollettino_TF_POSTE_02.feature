@@ -66,7 +66,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_02]
 
 
     # activatePaymentNoticeReq phase
-    @runnable
+    @runnable @dependentread
     Scenario: Execute activatePaymentNotice request
         Given the Execute verificaBollettino request scenario executed successfully
         And initial XML paaAttivaRPT

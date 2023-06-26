@@ -88,7 +88,7 @@ Feature:  block checks for verificaBollettino - position status in PAYING [Verif
 
 
    # Verify Phase 2
-   @runnable
+   @runnable @independent
    Scenario: Execute verificaBollettino2 request with the same request as Verify Phase 1
       Given the Execute activatePaymentNotice request scenario executed successfully
       When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
