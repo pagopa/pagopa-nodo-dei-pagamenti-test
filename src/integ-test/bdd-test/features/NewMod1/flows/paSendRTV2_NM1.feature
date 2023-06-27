@@ -60,7 +60,6 @@ Feature: flow tests for paSendRTV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -91,6 +90,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -135,7 +135,6 @@ Feature: flow tests for paSendRTV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -166,6 +165,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>1</idTransfer>
             <transferAmount>3.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -182,6 +182,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>2</idTransfer>
             <transferAmount>3.00</transferAmount>
             <fiscalCodePA>90000000001</fiscalCodePA>
+            <companyName>companyTer</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -198,6 +199,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>3</idTransfer>
             <transferAmount>4.00</transferAmount>
             <fiscalCodePA>90000000002</fiscalCodePA>
+            <companyName>companyQua</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -242,7 +244,6 @@ Feature: flow tests for paSendRTV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -273,6 +274,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>1</idTransfer>
             <transferAmount>3.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -289,6 +291,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>2</idTransfer>
             <transferAmount>3.00</transferAmount>
             <fiscalCodePA>90000000001</fiscalCodePA>
+            <companyName>companyTer</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -305,6 +308,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>3</idTransfer>
             <transferAmount>4.00</transferAmount>
             <fiscalCodePA>90000000001</fiscalCodePA>
+            <companyName>companyQua</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -349,7 +353,6 @@ Feature: flow tests for paSendRTV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -380,6 +383,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>1</idTransfer>
             <transferAmount>3.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -396,6 +400,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>2</idTransfer>
             <transferAmount>3.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companyTer</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -412,6 +417,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>3</idTransfer>
             <transferAmount>4.00</transferAmount>
             <fiscalCodePA>90000000001</fiscalCodePA>
+            <companyName>companyQua</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -456,7 +462,6 @@ Feature: flow tests for paSendRTV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -503,6 +508,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>2</idTransfer>
             <transferAmount>3.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -519,6 +525,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>3</idTransfer>
             <transferAmount>4.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
+            <companyName>companyTer</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -563,7 +570,6 @@ Feature: flow tests for paSendRTV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -594,6 +600,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>1</idTransfer>
             <transferAmount>5.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -610,6 +617,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>2</idTransfer>
             <transferAmount>5.00</transferAmount>
             <fiscalCodePA>90000000001</fiscalCodePA>
+            <companyName>companyTer</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -654,7 +662,6 @@ Feature: flow tests for paSendRTV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -685,6 +692,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>1</idTransfer>
             <transferAmount>5.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -701,6 +709,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>2</idTransfer>
             <transferAmount>5.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
+            <companyName>companyTer</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -745,7 +754,6 @@ Feature: flow tests for paSendRTV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -776,6 +784,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -820,7 +829,6 @@ Feature: flow tests for paSendRTV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -851,6 +859,7 @@ Feature: flow tests for paSendRTV2
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -991,7 +1000,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test
+    @test @company
     Scenario: PSRTV2_ACTV1_03 (part 2)
         Given the PSRTV2_ACTV1_03 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -1034,7 +1043,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test
+    @test @company
     Scenario: PSRTV2_ACTV1_04 (part 2)
         Given the PSRTV2_ACTV1_04 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -1079,7 +1088,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test
+    @test @company
     Scenario: PSRTV2_ACTV1_05 (part 2)
         Given the PSRTV2_ACTV1_05 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -1116,7 +1125,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test 
+    @test @company
     Scenario: PSRTV2_ACTV1_06 (part 2)
         Given the PSRTV2_ACTV1_06 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -1155,7 +1164,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test 
+    @test @company
     Scenario: PSRTV2_ACTV1_07 (part 2)
         Given the PSRTV2_ACTV1_07 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -1194,7 +1203,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test 
+    @test @company
     Scenario: PSRTV2_ACTV1_08 (part 2)
         Given the PSRTV2_ACTV1_08 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -1233,7 +1242,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test 
+    @test @company
     Scenario: PSRTV2_ACTV1_09 (part 2)
         Given the PSRTV2_ACTV1_09 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -1272,7 +1281,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test 
+    @test @company
     Scenario: PSRTV2_ACTV1_10 (part 2)
         Given the PSRTV2_ACTV1_10 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -1312,7 +1321,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test
+    @test @company
     Scenario: PSRTV2_ACTV1_11 (part 2)
         Given the PSRTV2_ACTV1_11 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -1349,7 +1358,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test
+    @test @company
     Scenario: PSRTV2_ACTV1_12 (part 2)
         Given the PSRTV2_ACTV1_12 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -1386,7 +1395,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test
+    @test @company
     Scenario: PSRTV2_ACTV1_16 (part 2)
         Given the PSRTV2_ACTV1_16 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
@@ -1419,7 +1428,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test
+    @test @company
     Scenario: PSRTV2_ACTV1_17 (part 2)
         Given the PSRTV2_ACTV1_17 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 6 seconds
@@ -1451,7 +1460,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test
+    @test @company
     Scenario: PSRTV2_ACTV1_18 (part 2)
         Given the PSRTV2_ACTV1_18 (part 1) scenario executed successfully
         And updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
@@ -1493,7 +1502,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test 
+    @test @company
     Scenario: PSRTV2_ACTV1_20 (part 3)
         Given the PSRTV2_ACTV1_20 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1553,7 +1562,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test  
+    @test @company
     Scenario: PSRTV2_ACTV1_21 (part 3)
         Given the PSRTV2_ACTV1_21 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1615,7 +1624,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test 
+    @test @company
     Scenario: PSRTV2_ACTV1_22 (part 3)
         Given the PSRTV2_ACTV1_22 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1677,7 +1686,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test  
+    @test @company
     Scenario: PSRTV2_ACTV1_23 (part 3)
         Given the PSRTV2_ACTV1_23 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1741,7 +1750,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test
+    @test @company
     Scenario: PSRTV2_ACTV1_24 (part 3)
         Given the PSRTV2_ACTV1_24 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1805,7 +1814,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test  
+    @test @company
     Scenario: PSRTV2_ACTV1_25 (part 3)
         Given the PSRTV2_ACTV1_25 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1861,7 +1870,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test 
+    @test @company
     Scenario: PSRTV2_ACTV1_26 (part 3)
         Given the PSRTV2_ACTV1_26 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1926,7 +1935,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test 
+    @test @company
     Scenario: PSRTV2_ACTV1_27 (part 3)
         Given the PSRTV2_ACTV1_27 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -2020,7 +2029,7 @@ Feature: flow tests for paSendRTV2
         And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    @test 
+    @test @company
     Scenario: PSRTV2_ACTV1_28 (part 4)
         Given the PSRTV2_ACTV1_28 (part 3) scenario executed successfully
         When job paSendRt triggered after 5 seconds
@@ -2075,7 +2084,7 @@ Feature: flow tests for paSendRTV2
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
-    @test
+    @test @company
     Scenario: PSRTV2_ACTV1_29 (part 4)
         Given the PSRTV2_ACTV1_29 (part 3) scenario executed successfully
         And wait 12 seconds for expiration
@@ -2119,7 +2128,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test
+    @test @company
     Scenario: PSRTV2_ACTV1_30 (part 2)
         Given the PSRTV2_ACTV1_30 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 request scenario executed successfully
@@ -2141,7 +2150,7 @@ Feature: flow tests for paSendRTV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test
+    @test @company
     Scenario: PSRTV2_ACTV1_31 (part 2)
         Given the PSRTV2_ACTV1_31 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 request scenario executed successfully

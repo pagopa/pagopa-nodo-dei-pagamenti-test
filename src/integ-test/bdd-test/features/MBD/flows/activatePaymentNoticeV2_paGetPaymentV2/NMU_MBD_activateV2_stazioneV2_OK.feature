@@ -63,7 +63,6 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -95,6 +94,7 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <richiestaMarcaDaBollo>
             <hashDocumento>ciao</hashDocumento>
             <tipoBollo>01</tipoBollo>

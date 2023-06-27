@@ -60,7 +60,6 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -91,6 +90,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             <idTransfer>1</idTransfer>
             <transferAmount>2.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <richiestaMarcaDaBollo>
             <hashDocumento>wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</hashDocumento>
             <tipoBollo>01</tipoBollo>
@@ -111,6 +111,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             <idTransfer>2</idTransfer>
             <transferAmount>4.00</transferAmount>
             <fiscalCodePA>90000000001</fiscalCodePA>
+            <companyName>companyTer</companyName>
             <richiestaMarcaDaBollo>
             <hashDocumento>ciao</hashDocumento>
             <tipoBollo>01</tipoBollo>
@@ -123,6 +124,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             <idTransfer>3</idTransfer>
             <transferAmount>4.00</transferAmount>
             <fiscalCodePA>90000000002</fiscalCodePA>
+            <companyName>companyQua</companyName>
             <richiestaMarcaDaBollo>
             <hashDocumento>ciao</hashDocumento>
             <tipoBollo>01</tipoBollo>

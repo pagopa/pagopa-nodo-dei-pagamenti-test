@@ -63,7 +63,6 @@ Feature: activatePaymentNoticeV2Request with 5 MBD flow OK
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -95,6 +94,7 @@ Feature: activatePaymentNoticeV2Request with 5 MBD flow OK
             <idTransfer>1</idTransfer>
             <transferAmount>1.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <richiestaMarcaDaBollo>
             <hashDocumento>ciao</hashDocumento>
             <tipoBollo>01</tipoBollo>
@@ -115,6 +115,7 @@ Feature: activatePaymentNoticeV2Request with 5 MBD flow OK
             <idTransfer>2</idTransfer>
             <transferAmount>2.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyTer</companyName>
             <richiestaMarcaDaBollo>
             <hashDocumento>ciao</hashDocumento>
             <tipoBollo>01</tipoBollo>
@@ -127,6 +128,7 @@ Feature: activatePaymentNoticeV2Request with 5 MBD flow OK
             <idTransfer>3</idTransfer>
             <transferAmount>2.50</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyQua</companyName>
             <richiestaMarcaDaBollo>
             <hashDocumento>ciao</hashDocumento>
             <tipoBollo>01</tipoBollo>
@@ -139,6 +141,7 @@ Feature: activatePaymentNoticeV2Request with 5 MBD flow OK
             <idTransfer>4</idTransfer>
             <transferAmount>2.50</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyCin</companyName>
             <richiestaMarcaDaBollo>
             <hashDocumento>ciao</hashDocumento>
             <tipoBollo>01</tipoBollo>
@@ -151,6 +154,7 @@ Feature: activatePaymentNoticeV2Request with 5 MBD flow OK
             <idTransfer>5</idTransfer>
             <transferAmount>2.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySei</companyName>
             <richiestaMarcaDaBollo>
             <hashDocumento>ciao</hashDocumento>
             <tipoBollo>01</tipoBollo>
