@@ -46,7 +46,6 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          <!--Optional:-->
          <lastPayment>1</lastPayment>
          <description>test</description>
-         <!--Optional:-->
          <companyName>company</companyName>
          <!--Optional:-->
          <officeName>office</officeName>
@@ -77,6 +76,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          <idTransfer>1</idTransfer>
          <transferAmount>10.00</transferAmount>
          <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+         <companyName>companySec</companyName>
          <richiestaMarcaDaBollo>
          <hashDocumento>wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</hashDocumento>
          <tipoBollo>01</tipoBollo>
@@ -305,7 +305,6 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          <!--Optional:-->
          <lastPayment>1</lastPayment>
          <description>test</description>
-         <!--Optional:-->
          <companyName>company</companyName>
          <!--Optional:-->
          <officeName>office</officeName>
@@ -336,6 +335,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          <idTransfer>1</idTransfer>
          <transferAmount>6.00</transferAmount>
          <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+         <companyName>companySec</companyName>
          <richiestaMarcaDaBollo>
          <hashDocumento>wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</hashDocumento>
          <tipoBollo>01</tipoBollo>
@@ -348,6 +348,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          <idTransfer>2</idTransfer>
          <transferAmount>2.00</transferAmount>
          <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+         <companyName>companyTer</companyName>
          <IBAN>IT45R0760103200000000001016</IBAN>
          <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
          <transferCategory>paGetPaymentTest</transferCategory>
@@ -356,6 +357,7 @@ Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
          <idTransfer>3</idTransfer>
          <transferAmount>2.00</transferAmount>
          <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+         <companyName>companyQua</companyName>
          <richiestaMarcaDaBollo>
          <hashDocumento>wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</hashDocumento>
          <tipoBollo>01</tipoBollo>
