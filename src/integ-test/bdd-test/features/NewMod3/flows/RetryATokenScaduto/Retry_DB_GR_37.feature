@@ -7,7 +7,7 @@ Feature: process tests for Retry_DB_GR_37
     And EC new version
 
   Scenario: job refresh pa (1)
-    Given refresh job PA triggered after 10 seconds
+    Given refresh job ALL triggered after 10 seconds
 
   Scenario: initial verifyPaymentNotice
     Given the job refresh pa (1) scenario executed successfully
@@ -218,7 +218,7 @@ Feature: process tests for Retry_DB_GR_37
   @runnable
   Scenario: job refresh pa (2)
     Given the DB check + db update scenario executed successfully
-    Then refresh job PA triggered after 10 seconds
+    Then refresh job ALL triggered after 10 seconds
 
 
 

@@ -5,7 +5,7 @@ Feature: TXX0_RT-PULL_CARRELLO 1 RPT EsitoSconosciutoPSP MOD1
 
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         #Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
-        #And refresh job PSP triggered after 10 seconds
+        #And refresh job ALL triggered after 10 seconds
         Given generate 1 notice number and iuv with aux digit 3, segregation code 12 and application code NA
         And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
         And RPT1 generation
@@ -266,7 +266,7 @@ Feature: TXX0_RT-PULL_CARRELLO 1 RPT EsitoSconosciutoPSP MOD1
         And job paInviaRt triggered after 10 seconds
         And wait 130 seconds for expiration
         #Then generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
-        #And refresh job PSP triggered after 10 seconds
+        #And refresh job ALL triggered after 10 seconds
         #And wait 10 seconds for expiration
         Then checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RPT_ESITO_SCONOSCIUTO_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull

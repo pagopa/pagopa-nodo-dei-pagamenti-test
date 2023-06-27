@@ -1,42 +1,11 @@
-# Il test verifica che il nodo accetti una MBD se il psp è abilitato e il canale no
-
-Feature: activatePaymentNoticeV2Request with psp MBD and canale NO MBD
+Feature: flow tests for activatePaymentNoticeV2Request
 
     Background:
         Given systems up
-        And EC new version
 
-    # checkPosition phase
-    Scenario: Execute checkPosition request
-        Given initial json checkPosition
-            """
-            {
-                "positionslist": [
-                    {
-                        "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "310#iuv#"
-                    }
-                ]
-            }
-            """
-        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of checkPosition response is 200
-        And check outcome is OK of checkPosition response
-
-    #DB update
-    Scenario: Execute canale update
-        Given the Execute checkPosition request scenario executed successfully
-        Then updates through the query canaleEcommerce_update of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with N under macro sendPaymentResultV2 on db nodo_cfg
-
-    #refresh psp e canali
-    Scenario: Execute refresh psp e canali
-        Given the Execute canale update scenario executed successfully
-        Then refresh job ALL triggered after 10 seconds
-    @test 
-    # activateV2 phase
+    @test
     Scenario: activatePaymentNoticeV2
-        Given the Execute refresh psp e canali scenario executed successfully
-        And initial XML activatePaymentNoticeV2
+        Given initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -49,7 +18,7 @@ Feature: activatePaymentNoticeV2Request with psp MBD and canale NO MBD
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310$iuv</noticeNumber>
+            <noticeNumber>310#iuv#</noticeNumber>
             </qrCode>
             <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
@@ -61,25 +30,27 @@ Feature: activatePaymentNoticeV2Request with psp MBD and canale NO MBD
         And initial XML paGetPaymentV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
             <soapenv:Body>
             <paf:paGetPaymentV2Response>
             <outcome>OK</outcome>
             <data>
             <creditorReferenceId>10$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-30</dueDate>
+            <dueDate>2021-12-12</dueDate>
             <!--Optional:-->
             <retentionDate>2021-12-30T12:12:12</retentionDate>
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
+            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
             <debtor>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
+            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
             </uniqueIdentifier>
             <fullName>paGetPaymentName</fullName>
             <!--Optional:-->
@@ -93,23 +64,33 @@ Feature: activatePaymentNoticeV2Request with psp MBD and canale NO MBD
             <!--Optional:-->
             <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
             <!--Optional:-->
-            <country>DE</country>
+            <country>IT</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail>paGetPayment@test.it</e-mail>
             </debtor>
-            <!--Optional:-->
             <transferList>
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companySec</companyName>
-            <richiestaMarcaDaBollo>
-            <hashDocumento>ciao</hashDocumento>
-            <tipoBollo>01</tipoBollo>
-            <provinciaResidenza>MI</provinciaResidenza>
-            </richiestaMarcaDaBollo>
+            <transferAmount>5.00</transferAmount>
+            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <IBAN>IT45R0760103200000000001016</IBAN>
+            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
+            <transferCategory>paGetPaymentTest</transferCategory>
+            <!--Optional:-->
+            <metadata>
+            <!--1 to 10 repetitions:-->
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            </metadata>
+            </transfer>
+            <transfer>
+            <idTransfer>2</idTransfer>
+            <transferAmount>5.00</transferAmount>
+            <fiscalCodePA>90000000001</fiscalCodePA>
+            <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
             <!--Optional:-->
@@ -136,11 +117,11 @@ Feature: activatePaymentNoticeV2Request with psp MBD and canale NO MBD
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        And updates through the query canaleEcommerce_update of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with Y under macro sendPaymentResultV2 on db nodo_cfg
-        And refresh job ALL triggered after 10 seconds
+        When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        And check idTransfer is 1 of activatePaymentNoticeV2 response
-        And check hashDocumento is ciao of activatePaymentNoticeV2 response
-        And check tipoBollo is 01 of activatePaymentNoticeV2 response
-        And check provinciaResidenza is MI of activatePaymentNoticeV2 response
+        And wait 5 seconds for expiration
+
+        # RE
+        And execution query paGetv2_req_activatev2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query paGetv2_req_activatev2 retrieve xml PAYLOAD at position 0 and save it under the key XML_RE
+        And checking value $XML_RE.transferType is equal to value PAGOPA

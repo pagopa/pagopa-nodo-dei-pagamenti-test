@@ -5,7 +5,7 @@ Feature: process tests for DB_GR_27
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
 
   Scenario: job refresh pa (1)
-    Given refresh job PA triggered after 10 seconds
+    Given refresh job ALL triggered after 10 seconds
 
   Scenario: initial verifyPaymentNotice
     Given the job refresh pa (1) scenario executed successfully
@@ -197,7 +197,7 @@ Feature: process tests for DB_GR_27
     Then check outcome is OK of sendPaymentOutcome response
     And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
-    And refresh job PA triggered after 10 seconds
+    And refresh job ALL triggered after 10 seconds
 
    #Scenario: trigger jobs paSendRt
     #Given the Execute sendPaymentOutcome request scenario executed successfully

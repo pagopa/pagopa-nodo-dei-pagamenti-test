@@ -216,7 +216,7 @@ Feature: process tests for paSendRT [PSRT_30]
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-    @runnable
+    @runnable 
     Scenario: 21 job paSendRt
         Given the 21 Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT
@@ -472,7 +472,7 @@ Feature: process tests for paSendRT [PSRT_30]
 
     Scenario: 23 job refresh pa (1)
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
     Scenario: 23 Execute verifyPaymentNotice request
         Given the 23 job refresh pa (1) scenario executed successfully
@@ -704,7 +704,7 @@ Feature: process tests for paSendRT [PSRT_30]
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         # Scenario: 23 job refresh pa (2)
         #     Given the 23 DB check + db update scenario executed successfully
-        Then refresh job PA triggered after 10 seconds
+        Then refresh job ALL triggered after 10 seconds
 
 
 
@@ -713,7 +713,7 @@ Feature: process tests for paSendRT [PSRT_30]
 
     Scenario: 24 job refresh pa (1)
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
     Scenario: 24 Execute verifyPaymentNotice request
         Given the 24 job refresh pa (1) scenario executed successfully
@@ -939,14 +939,14 @@ Feature: process tests for paSendRT [PSRT_30]
 
         # Scenario: 24 job refresh pa (2)
         #     Given the 24 DB check + db update scenario executed successfully
-        Then refresh job PA triggered after 10 seconds
+        Then refresh job ALL triggered after 10 seconds
         And restore initial configurations
 
 
     # PSRT_26
     Scenario: 26 Execute verifyPaymentNotice request
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And wait 5 seconds for expiration
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
@@ -1148,7 +1148,7 @@ Feature: process tests for paSendRT [PSRT_30]
         And wait 10 seconds for expiration
         Then check outcome is OK of sendPaymentOutcome response
         And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And wait 10 seconds for expiration
         # DB Check
         #And execution query position_transfer to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
@@ -1174,7 +1174,7 @@ Feature: process tests for paSendRT [PSRT_30]
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-    @ciao
+    
     Scenario: 26 job paSendRt
         Given the 26 Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT
@@ -1200,7 +1200,7 @@ Feature: process tests for paSendRT [PSRT_30]
 
     Scenario: 27 Execute verifyPaymentNotice request
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6') under macro update_query on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And wait 5 seconds for expiration
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
@@ -1426,7 +1426,7 @@ Feature: process tests for paSendRT [PSRT_30]
 
     Scenario: 29 Execute verifyPaymentNotice request
         Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('6','8') under macro update_query on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And wait 5 seconds for expiration
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
@@ -1649,7 +1649,7 @@ Feature: process tests for paSendRT [PSRT_30]
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-    @ciao
+    
     Scenario: 29 job paSendRt
         Given the 29 Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT

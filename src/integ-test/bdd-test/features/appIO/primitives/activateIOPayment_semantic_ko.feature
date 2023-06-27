@@ -635,7 +635,7 @@ Feature: Semantic checks for activateIOPayment - KO
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
     And restore initial configurations
 
-  @runnable
+  @runnable 
   # [SEM_AIPR_28]
   Scenario: [SEM_AIPR_28]
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
