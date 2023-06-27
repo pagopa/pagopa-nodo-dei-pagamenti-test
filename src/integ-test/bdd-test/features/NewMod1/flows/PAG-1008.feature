@@ -18,7 +18,7 @@ Feature: PAG-1008/1198
             <password>#password#</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>309#iuv#</noticeNumber>
+            <noticeNumber>310#iuv#</noticeNumber>
             </qrCode>
             <expirationTime>120000</expirationTime>
             <amount>10.00</amount>
@@ -36,7 +36,7 @@ Feature: PAG-1008/1198
             <paf:paGetPaymentV2Response>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>09$iuv</creditorReferenceId>
+            <creditorReferenceId>10$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-12</dueDate>
             <!--Optional:-->
@@ -119,7 +119,7 @@ Feature: PAG-1008/1198
             <password>#password#</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>309#iuv#</noticeNumber>
+            <noticeNumber>310#iuv#</noticeNumber>
             </qrCode>
             <expirationTime>120000</expirationTime>
             <amount>10.00</amount>
@@ -137,7 +137,7 @@ Feature: PAG-1008/1198
             <paf:paGetPaymentV2Response>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>09$iuv</creditorReferenceId>
+            <creditorReferenceId>10$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-12</dueDate>
             <!--Optional:-->
@@ -215,7 +215,7 @@ Feature: PAG-1008/1198
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>309#iuv#</noticeNumber>
+            <noticeNumber>310#iuv#</noticeNumber>
             </qrCode>
             <expirationTime>60000</expirationTime>
             <amount>10.00</amount>
@@ -232,7 +232,7 @@ Feature: PAG-1008/1198
             <paf:paGetPaymentV2Response>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>09$iuv</creditorReferenceId>
+            <creditorReferenceId>10$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-12</dueDate>
             <!--Optional:-->
@@ -311,7 +311,7 @@ Feature: PAG-1008/1198
             <password>#password#</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>309#iuv#</noticeNumber>
+            <noticeNumber>310#iuv#</noticeNumber>
             </qrCode>
             <expirationTime>120000</expirationTime>
             <amount>10.00</amount>
@@ -329,7 +329,7 @@ Feature: PAG-1008/1198
             <paf:paGetPaymentV2Response>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>09$iuv</creditorReferenceId>
+            <creditorReferenceId>10$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-12</dueDate>
             <!--Optional:-->
