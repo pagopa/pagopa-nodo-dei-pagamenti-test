@@ -31,7 +31,7 @@ Feature: process tests for generazioneRicevute [DB_GR_19.1]
     And execution query get_broadcast to get value on the table PA_STAZIONE_PA, with the columns psp.OBJ_ID under macro costanti with db name nodo_cfg
     And through the query get_broadcast retrieve param objId at position 0 and save it under the key objId
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '$objId' under macro update_query on db nodo_cfg
-    When refresh job PA triggered after 10 seconds
+    When refresh job ALL triggered after 10 seconds
     And wait 15 seconds for expiration
     And PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
@@ -178,7 +178,7 @@ Feature: process tests for generazioneRicevute [DB_GR_19.1]
 
     # set broadcast=false
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '$objId' under macro update_query on db nodo_cfg
-    And refresh job PA triggered after 10 seconds
+    And refresh job ALL triggered after 10 seconds
     And wait 10 seconds for expiration
 
     #POSITION_RECEIPT_RECIPIENT query

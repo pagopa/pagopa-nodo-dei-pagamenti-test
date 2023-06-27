@@ -12,7 +12,7 @@ Feature: process tests for paSendRT [PSRT_26]
         Given the clean paSendRt queue scenario executed successfully
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to false
         And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And wait 5 seconds for expiration
         And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber
@@ -215,7 +215,7 @@ Feature: process tests for paSendRT [PSRT_26]
         And wait 10 seconds for expiration
         Then check outcome is OK of sendPaymentOutcome response
         And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And wait 5 seconds for expiration
         # DB Check
         And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_transfer on db nodo_online under macro NewMod3

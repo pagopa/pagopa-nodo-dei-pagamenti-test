@@ -7,7 +7,7 @@ Feature: process tests for Retry_DB_GR_14
     Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition BROADCAST and where value ('Y') under macro update_query on db nodo_cfg
     And wait 5 seconds for expiration
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
-    And refresh job PA triggered after 10 seconds
+    And refresh job ALL triggered after 10 seconds
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -201,5 +201,5 @@ Feature: process tests for Retry_DB_GR_14
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition BROADCAST and where value ('Y') under macro update_query on db nodo_cfg
-    Then refresh job PA triggered after 10 seconds
+    Then refresh job ALL triggered after 10 seconds
     

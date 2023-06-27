@@ -31,7 +31,7 @@ Feature: activatePaymentNoticeV2Request with psp MBD and canale NO MBD
     #refresh psp e canali
     Scenario: Execute refresh psp e canali
         Given the Execute canale update scenario executed successfully
-        Then refresh job PSP triggered after 10 seconds
+        Then refresh job ALL triggered after 10 seconds
     @test 
     # activateV2 phase
     Scenario: activatePaymentNoticeV2
@@ -138,7 +138,7 @@ Feature: activatePaymentNoticeV2Request with psp MBD and canale NO MBD
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         And updates through the query canaleEcommerce_update of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with Y under macro sendPaymentResultV2 on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         Then check outcome is OK of activatePaymentNoticeV2 response
         And check idTransfer is 1 of activatePaymentNoticeV2 response
         And check hashDocumento is ciao of activatePaymentNoticeV2 response

@@ -3,7 +3,7 @@ Feature: process tests for DB_GR_19.1
   Background:
     Given systems up
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition FK_PA and where value ('16629') under macro update_query on db nodo_cfg
-    And refresh job PA triggered after 10 seconds
+    And refresh job ALL triggered after 10 seconds
 
   Scenario: initial verifyPaymentNotice
     Given initial XML verifyPaymentNotice
@@ -237,7 +237,7 @@ Feature: process tests for DB_GR_19.1
   @runnable
   Scenario: job refresh pa (2)
     Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('16629') under macro update_query on db nodo_cfg
-    Then refresh job PA triggered after 10 seconds
+    Then refresh job ALL triggered after 10 seconds
 
 
 

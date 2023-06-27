@@ -1074,7 +1074,7 @@ Feature: flow tests for demandPaymentNotice
 
     Scenario: F_DPNR_10 (part 1)
         Given updates through the query update_fk_pa of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request with 3 transfers scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
@@ -1165,7 +1165,7 @@ Feature: flow tests for demandPaymentNotice
 
     Scenario: F_DPNR_11 (part 1)
         Given updates through the query update_fk_pa of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request with 3 transfers scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
@@ -1191,7 +1191,7 @@ Feature: flow tests for demandPaymentNotice
 
     Scenario: F_DPNR_12 (part 1)
         Given updates through the query update_fk_pa of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request with 3 transfers scenario executed successfully
         And expirationTime with 2000 in activatePaymentNotice
@@ -1216,7 +1216,7 @@ Feature: flow tests for demandPaymentNotice
 
     Scenario: F_DPNR_13 (part 1)
         Given updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         Given the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request with 3 transfers scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
@@ -1229,7 +1229,7 @@ Feature: flow tests for demandPaymentNotice
         Then check outcome is OK of sendPaymentOutcome response
         And wait 5 seconds for expiration
         And updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT
         And checks the value $paGetPayment.creditorReferenceId,$paGetPayment.creditorReferenceId,$paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
@@ -1382,7 +1382,7 @@ Feature: flow tests for demandPaymentNotice
 
     Scenario: F_DPNR_14 (part 1)
         Given updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         Given the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request with 3 transfers scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
@@ -1396,7 +1396,7 @@ Feature: flow tests for demandPaymentNotice
         Then check outcome is OK of sendPaymentOutcome response
         And wait 5 seconds for expiration
         And updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT
         And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
@@ -1411,7 +1411,7 @@ Feature: flow tests for demandPaymentNotice
 
     Scenario: F_DPNR_15 (part 1)
         Given updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         Given the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request with 3 transfers scenario executed successfully
         And expirationTime with 2000 in activatePaymentNotice
@@ -1423,7 +1423,7 @@ Feature: flow tests for demandPaymentNotice
         When job mod3CancelV2 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
         And updates through the query update_obj_id of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT
         And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
@@ -1438,7 +1438,7 @@ Feature: flow tests for demandPaymentNotice
 
     Scenario: F_DPNR_16 (part 1)
         Given updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         Given the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request with 2 transfers scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
@@ -1451,7 +1451,7 @@ Feature: flow tests for demandPaymentNotice
         Then check outcome is OK of sendPaymentOutcome response
         And wait 5 seconds for expiration
         And updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT
         And checks the value $paGetPayment.creditorReferenceId,$paGetPayment.creditorReferenceId,$paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
@@ -1603,7 +1603,7 @@ Feature: flow tests for demandPaymentNotice
 
     Scenario: F_DPNR_17 (part 1)
         Given updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         Given the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request with 3 transfers (1.1) scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
@@ -1616,7 +1616,7 @@ Feature: flow tests for demandPaymentNotice
         Then check outcome is OK of sendPaymentOutcome response
         And wait 7 seconds for expiration
         And updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT
         And checks the value $paGetPayment.creditorReferenceId,$paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
@@ -1721,7 +1721,7 @@ Feature: flow tests for demandPaymentNotice
 
     Scenario: F_DPNR_18 (part 1)
         Given updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         Given the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request with 3 transfers (1.1) scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
@@ -1734,7 +1734,7 @@ Feature: flow tests for demandPaymentNotice
         Then check outcome is OK of sendPaymentOutcome response
         And wait 5 seconds for expiration
         And updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT
         And checks the value $paGetPayment.creditorReferenceId,$paGetPayment.creditorReferenceId,$paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
@@ -1755,7 +1755,7 @@ Feature: flow tests for demandPaymentNotice
 
     Scenario: F_DPNR_18.1 (part 1)
         Given updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         Given the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request with 3 transfers (1.2) scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
@@ -1768,7 +1768,7 @@ Feature: flow tests for demandPaymentNotice
         Then check outcome is OK of sendPaymentOutcome response
         And wait 7 seconds for expiration
         And updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT
         And checks the value $paGetPayment.creditorReferenceId,$paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
@@ -1791,7 +1791,7 @@ Feature: flow tests for demandPaymentNotice
 
     Scenario: F_DPNR_19 (part 1)
         Given updates through the query update_fk_pa_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         Given the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request scenario executed successfully
         And fiscalCodePA with 90000000001 in paGetPayment
@@ -1829,7 +1829,7 @@ Feature: flow tests for demandPaymentNotice
 
     Scenario: F_DPNR_19.1 (part 1)
         Given updates through the query update_obj_id_3 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         Given the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
@@ -1842,7 +1842,7 @@ Feature: flow tests for demandPaymentNotice
         Then check outcome is OK of sendPaymentOutcome response
         And wait 5 seconds for expiration
         And updates through the query update_obj_id_3 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT
         And checks the value $paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
@@ -1867,7 +1867,7 @@ Feature: flow tests for demandPaymentNotice
 
     Scenario: F_DPNR_20 (part 1)
         Given updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         Given the demandPaymentNotice scenario executed successfully
         And the activatePaymentNotice request with 3 transfers (1.1) scenario executed successfully
         When PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
@@ -1880,7 +1880,7 @@ Feature: flow tests for demandPaymentNotice
         Then check outcome is OK of sendPaymentOutcome response
         And wait 5 seconds for expiration
         And updates through the query update_obj_id_2 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro Mod4 on db nodo_cfg
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
         And checks the value $paGetPayment.creditorReferenceId,$paGetPayment.creditorReferenceId,$paGetPayment.creditorReferenceId,$paGetPayment.creditorReferenceId,$paGetPayment.creditorReferenceId,$paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activate on db nodo_online under macro NewMod1
