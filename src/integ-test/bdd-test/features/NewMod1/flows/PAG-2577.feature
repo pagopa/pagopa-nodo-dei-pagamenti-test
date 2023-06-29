@@ -43,7 +43,6 @@ Feature: flow tests for activatePaymentNoticeV2Request
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -74,6 +73,7 @@ Feature: flow tests for activatePaymentNoticeV2Request
             <idTransfer>1</idTransfer>
             <transferAmount>5.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -90,6 +90,7 @@ Feature: flow tests for activatePaymentNoticeV2Request
             <idTransfer>2</idTransfer>
             <transferAmount>5.00</transferAmount>
             <fiscalCodePA>90000000001</fiscalCodePA>
+            <companyName>companyTer</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>

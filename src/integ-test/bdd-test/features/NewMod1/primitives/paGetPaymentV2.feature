@@ -1209,6 +1209,7 @@ Feature: response tests for paGetPaymentV2
             | description                 | Empty                                                                                                                                                                                                                                                             |
             | description                 | sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e37572efnsfigt609w3ut0592uhngpisdugw09tutwjeodngvgeriyrw8t29762f9qef0qfurf                                                                                                                     |
             | companyName                 | Empty                                                                                                                                                                                                                                                             |
+            | companyName                 | None                                                                                                                                                                                                                                                              |
             | companyName                 | sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e37572efnsfigt609w3ut0592uhngpisdugw09tutwjeodngvgeriyrw8t29762f9qef0qfurf                                                                                                                     |
             | officeName                  | Empty                                                                                                                                                                                                                                                             |
             | officeName                  | sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e37572efnsfigt609w3ut0592uhngpisdugw09tutwjeodngvgeriyrw8t29762f9qef0qfurf                                                                                                                     |
@@ -1306,7 +1307,6 @@ Feature: response tests for paGetPaymentV2
             | fiscalCodePA        | #creditor_institution_code_secondary# |
             | metadata            | None                                  |
             | city                | None                                  |
-            | companyName         | None                                  |
             | country             | None                                  |
             | e-mail              | None                                  |
             | lastPayment         | None                                  |
