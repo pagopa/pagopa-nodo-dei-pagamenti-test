@@ -845,6 +845,7 @@ def step_impl(context, job_name, seconds):
     nodo_response = requests.get(
         f"{url_nodo}/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
     setattr(context, job_name + RESPONSE, nodo_response)
+    assert nodo_response.status_code == 200
 
 
 # verifica che il valore cercato corrisponda all'intera sottostringa del tag
