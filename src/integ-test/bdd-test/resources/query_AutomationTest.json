@@ -310,6 +310,7 @@
         "position_status_snapshot": "SELECT columns FROM table_name WHERE POSITION_STATUS_SNAPSHOT.PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' AND POSITION_STATUS_SNAPSHOT.NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber'",
         "position_payment": "SELECT columns FROM table_name WHERE POSITION_PAYMENT.PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' AND POSITION_PAYMENT.NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber'",
         "position_payment_status_snapshot": "SELECT columns FROM table_name WHERE POSITION_PAYMENT_STATUS_SNAPSHOT.PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode' AND POSITION_PAYMENT_STATUS_SNAPSHOT.NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber'",
+        "paGetv2_req_activatev2": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND TIPO_EVENTO = 'paGetPaymentV2' AND SOTTO_TIPO_EVENTO = 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE)",
         "id_sessione": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$activatePaymentNoticeV2Response.paymentToken'",
         "id_sessione_activateio": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$activateIOPaymentResponse.paymentToken'",
         "payment_token": "SELECT columns FROM table_name WHERE TOKEN = '$activatePaymentNoticeV2Response.paymentToken'",
