@@ -473,7 +473,7 @@ Feature: gestioneReceiptMb_10
             <codiceContestoPagamento>$1carrello</codiceContestoPagamento>
             <tipoFirma></tipoFirma>
             <forzaControlloSegno>1</forzaControlloSegno>
-            <rt>$rt2Attachment</rt>
+            <rt>$rt1Attachment</rt>
             </ws:nodoInviaRT>
             </soapenv:Body>
             </soapenv:Envelope>
