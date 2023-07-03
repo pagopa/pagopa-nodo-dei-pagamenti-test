@@ -7,7 +7,7 @@ Feature: gestioneReceiptMb_10
         Given nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
         When job paSendRt triggered after 5 seconds
         And wait 15 seconds for expiration
-    @paperino
+    
     Scenario: Execute nodoInviaCarrelloRPT (Phase 1)
         Given the clean paSendRt queue scenario executed successfully
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to false
@@ -414,3 +414,41 @@ Feature: gestioneReceiptMb_10
 
         And refresh job ALL triggered after 10 seconds
         And wait 5 seconds for expiration
+
+
+        Scenario: Execute nodoChiediInformazioniPagamento (Phase 2)
+        Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
+        When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 200
+    @paperino
+    Scenario: Execute nodoInoltroEsitoMod1 (Phase 3)
+        Given the Execute nodoChiediInformazioniPagamento (Phase 2) scenario executed successfully
+        And initial XML pspInviaCarrelloRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
+            """
+            {
+                "idPagamento": "$sessionToken",
+                "identificativoPsp": "#psp#",
+                "tipoVersamento": "BP",
+                "identificativoIntermediario": "#psp#",
+                "identificativoCanale": "#canale#",
+                "tipoOperazione": "web"
+            }
+            """
+        Then verify the HTTP status code of inoltroEsito/mod1 response is 200
+        And check esito is OK of inoltroEsito/mod1 response
