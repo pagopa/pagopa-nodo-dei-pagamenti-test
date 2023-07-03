@@ -3689,7 +3689,7 @@ Feature: flow tests for sendPaymentResultV2
     #     And checking value $XML_RE.officeName is equal to value $paGetPayment.officeName
 
     # T_SPR_V2_01_V2
-    @test 
+    @test @pippo
     Scenario: T_SPR_V2_01_V2
         Given the verifyPaymentNotice scenario executed successfully
         And the activateIOPayment scenario executed successfully

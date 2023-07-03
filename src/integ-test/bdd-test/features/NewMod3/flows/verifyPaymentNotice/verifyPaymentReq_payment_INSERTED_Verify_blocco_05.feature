@@ -178,7 +178,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
 
 
    # Verify Phase 2
-   @runnable
+   @runnable @pippo
    Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1
       Given the Execute mod3CancelV1 poller scenario executed successfully
       When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
