@@ -195,7 +195,7 @@ Feature: process tests for Retry_DB_GR_30
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
-    And wait 3 seconds for expiration
+    And wait 10 seconds for expiration
 
   @runnable @pippo
   Scenario: DB check + db update [retry_DB_GR_30]
