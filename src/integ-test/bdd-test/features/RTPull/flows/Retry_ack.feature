@@ -429,7 +429,7 @@ Feature: RTPull flows
         Then check esito is OK of nodoInviaRPT response
         And wait 10 seconds for expiration
 
-    @runnable
+    @runnable 
     #Retry ACK malformed step2
     Scenario: Retry ack malformed
         Given the Execute nodoInviaRPT_malformed scenario executed successfully 

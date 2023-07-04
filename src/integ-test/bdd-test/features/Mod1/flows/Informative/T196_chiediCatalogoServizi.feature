@@ -2,7 +2,7 @@ Feature: process tests for nodoChiediCatalogoServizi
 
     Background:
         Given systems up
-@runnable
+@runnable 
     Scenario: Send nodoChiediCatalogoServizi
         Given initial XML nodoChiediCatalogoServizi
             """
