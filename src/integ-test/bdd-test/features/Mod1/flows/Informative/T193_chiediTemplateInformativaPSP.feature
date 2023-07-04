@@ -2,7 +2,7 @@ Feature: process tests for nodoChiediTemplateInformativaPSP
 
     Background:
         Given systems up
-@runnable @pippo
+@runnable 
     Scenario: Send nodoChiediTemplateInformativaPSP
         Given initial XML nodoChiediTemplateInformativaPSP
             """

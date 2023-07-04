@@ -249,7 +249,7 @@ Feature: idempotency checks for sendPaymentOutcomeV2
             """
 
     # IDMP_SPO_11
-    @test @pippo
+    @test 
     Scenario: IDMP_SPO_11
         Given nodo-dei-pagamenti has config parameter useIdempotency set to true
         And the activatePaymentNoticeV2 scenario executed successfully

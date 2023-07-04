@@ -2671,7 +2671,7 @@ Feature: spostamento traduttore
         # RPT_ACTIVATIONS
         And verify 0 record for the table RPT_ACTIVATIONS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test @pippo
+    @test 
     Scenario: Test 12 (part 2)
         Given the Test 12 (part 1) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
