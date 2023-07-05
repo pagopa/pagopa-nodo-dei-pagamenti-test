@@ -796,7 +796,8 @@ def step_impl(context, sender, soap_primitive, receiver):
             headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
     else:
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
-    url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
+   # url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
+    url_nodo = "http://localhost:81/nodo-sit/webservices/input"
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
@@ -855,7 +856,8 @@ def step_impl(context, tag, value, primitive):
     value = utils.replace_context_variables(value, context)
     value = utils.replace_global_variables(value, context)
     print('soap_response: ', soap_response.headers)
-    if 'xml' in soap_response.headers['content-type']:
+    if 'xml' in soap_response.headers['content-type'] or '<soapenv' in soap_response.request.body:
+        print("############################",soap_response.content)
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
             print("fault code: ", my_document.getElementsByTagName(

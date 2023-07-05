@@ -20,12 +20,6 @@
          "soap_service": "",
          "rest_service": ""
       },
-      "mock-pm": {
-         "url": "http://localhost:81/PerfPMMock",
-         "healthcheck": "/info",
-         "soap_service": "",
-         "rest_service": ""
-       },
       "secondary-mock-ec": {
          "url": "http://localhost:81/secondary-mock-ec-sit/secondary-mock-ec",
          "healthcheck": "/info",
