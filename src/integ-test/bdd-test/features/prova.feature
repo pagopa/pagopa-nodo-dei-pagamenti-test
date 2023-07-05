@@ -2,7 +2,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_stazioneAux03
 
     Background:
         Given systems up
-
+    @pippo
     Scenario: Execute nodoVerificaRPT
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And initial XML nodoVerificaRPT
