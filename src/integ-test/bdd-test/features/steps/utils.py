@@ -10,7 +10,12 @@ import time
 from threading import Thread
 import requests
 from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
+
+# Decommentare per test in pipeline
+#from requests.packages.urllib3.util.retry import Retry 
+
+# Commentare per test in pipeline
+from urllib3.util.retry import Retry
 
 import xml.etree.ElementTree as ET
 
