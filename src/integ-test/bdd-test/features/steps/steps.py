@@ -856,6 +856,7 @@ def step_impl(context, tag, value, primitive):
     value = utils.replace_global_variables(value, context)
     print('soap_response: ', soap_response.headers)
     if 'xml' in soap_response.headers['content-type']:
+        print("#################", soap_response.content)
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
             print("fault code: ", my_document.getElementsByTagName(
