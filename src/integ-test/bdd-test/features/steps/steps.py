@@ -1202,15 +1202,26 @@ def step_impl(context, sender, method, service, receiver):
     body = utils.replace_context_variables(body, context)
     body = utils.replace_global_variables(body, context)
     print(body)
-    service = utils.replace_local_variables(service, context)
-    service = utils.replace_context_variables(service, context)
-    print(f"{url_nodo}/{service}")
+    run_local = False
+    if service in url_nodo:
+        url_nodo = utils.replace_local_variables(url_nodo, context)
+        url_nodo = utils.replace_context_variables(url_nodo, context)
+        run_local = True
+        print(f"{url_nodo}")
+    else:
+        service = utils.replace_local_variables(service, context)
+        service = utils.replace_context_variables(service, context)
+        print(f"{url_nodo}/{service}")
     if len(body) > 1:
         json_body = json.loads(body)
     else:
         json_body = None
-    nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers,
-                                     json=json_body, verify=False)
+    if run_local:
+        nodo_response = requests.request(method, f"{url_nodo}", headers=headers,
+                                    json=json_body, verify=False)
+    else:
+        nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers,
+                                        json=json_body, verify=False)
     setattr(context, service.split('?')[0], json_body)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
     print(service.split('?')[0] + RESPONSE)

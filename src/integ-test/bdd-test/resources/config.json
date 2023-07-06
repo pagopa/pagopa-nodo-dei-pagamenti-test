@@ -5,7 +5,7 @@
          "url": "http://localhost:81/nodo-sit",
          "healthcheck": "/monitor/health",
          "soap_service": "/webservices/input",
-         "rest_service": "",
+         "rest_service": "runlocal",
          "refresh_config_service": "/monitoring/v1/config/refresh/ALL"
       },
       "mock-ec": {
