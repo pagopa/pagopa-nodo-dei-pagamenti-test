@@ -4,7 +4,7 @@
       "nodo-dei-pagamenti": {
          "url": "http://localhost:81/nodo-sit",
          "healthcheck": "/monitor/health",
-         "soap_service": "",
+         "soap_service": "/webservices/input",
          "rest_service": "",
          "refresh_config_service": "/monitoring/v1/config/refresh/ALL"
       },

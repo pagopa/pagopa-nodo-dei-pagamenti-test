@@ -98,7 +98,6 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoChiediQuadraturaPA": "/nodo-per-pa/v1"
         #"nodoChiediSceltaWISP":"//v1"
     }
-   
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") == " ":
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
     else:
@@ -122,24 +121,25 @@ def get_rest_url_nodo(context, primitive):
         "v2/closepayment": "/nodo-per-pm",
         "v1/parkedList": "/nodo-per-pm"
     }
+    if "avanzamentoPagamento" in primitive:
+        primitive = "avanzamentoPagamento"
+    elif "informazioniPagamento" in primitive:
+        primitive = "informazioniPagamento"
+    elif "listaPSP" in primitive:
+        primitive = "listaPSP"
+    elif "notificaAnnullamento" in primitive:
+        primitive = "notificaAnnullamento"
+    elif "v1/parkedList" in primitive:
+        primitive = "v1/parkedList"
+    elif "_json" in primitive:
+        primitive = primitive.split('_')[0]
+    if "v2/closepayment" in primitive:
+        primitive = "v2/closepayment"
+        
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == " ":
-        if "avanzamentoPagamento" in primitive:
-            primitive = "avanzamentoPagamento"
-        elif "informazioniPagamento" in primitive:
-            primitive = "informazioniPagamento"
-        elif "listaPSP" in primitive:
-            primitive = "listaPSP"
-        elif "notificaAnnullamento" in primitive:
-            primitive = "notificaAnnullamento"
-        elif "v1/parkedList" in primitive:
-            primitive = "v1/parkedList"
-        elif "_json" in primitive:
-            primitive = primitive.split('_')[0]
-            if "v2/closepayment" in primitive:
-                primitive = "v2/closepayment"
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
     else:
-        return ""
+        return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive
 
 
 def get_soap_mock_ec(context):

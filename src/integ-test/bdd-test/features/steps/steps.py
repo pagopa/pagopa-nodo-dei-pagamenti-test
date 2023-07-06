@@ -796,8 +796,8 @@ def step_impl(context, sender, soap_primitive, receiver):
             headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
     else:
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
-   # url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
-    url_nodo = "http://localhost:81/nodo-sit/webservices/input"
+    url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
+    #url_nodo = "http://localhost:81/nodo-sit/webservices/input"
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
