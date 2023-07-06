@@ -139,7 +139,7 @@ def get_rest_url_nodo(context, primitive):
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == " ":
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
     else:
-        return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive
+        return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + "/" + primitive
 
 
 def get_soap_mock_ec(context):
