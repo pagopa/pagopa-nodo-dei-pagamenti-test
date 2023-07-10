@@ -17,7 +17,8 @@ def before_all(context):
 
     lib_dir = ""
     if 'NODOPGDB' not in os.environ :
-        print("#####################primo if")  
+        print("#####################primo if")
+        print("#####################primo if", os.environ.get("USERPROFILE"))
         try:
             if f'C:\\Users\\luca.acone' in os.environ.get("USERPROFILE"):
                 print("#####################if prima", lib_dir) 
