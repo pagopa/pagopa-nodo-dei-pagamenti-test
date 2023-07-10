@@ -21,6 +21,7 @@ def before_all(context):
         print("#####################primo if", flag_local_env) 
         try:
             temp = os.environ.get("USERPROFILE")
+            print("#####################trytemp", temp) 
             flag_local_env = True
             print("#####################try", flag_local_env) 
         except TypeError as error:
