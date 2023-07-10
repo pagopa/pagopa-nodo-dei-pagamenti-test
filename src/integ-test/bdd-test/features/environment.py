@@ -16,19 +16,14 @@ def before_all(context):
     print('Global settings...')
 
     lib_dir = ""
-    flag_local_env = False
     if 'NODOPGDB' not in os.environ :
         print("#####################primo if", flag_local_env) 
         try:
             temp = os.environ.get("USERPROFILE")
             print("#####################trytemp", temp) 
-            flag_local_env = True
-            print("#####################try", flag_local_env) 
         except TypeError as error:
             print('exception', error)
-            print("#####################except", flag_local_env)
-        print("#####################fine", flag_local_env) 
-        if flag_local_env:
+        if temp != None:
             lib_dir = r"\Program Files\Oracle\instantclient_19_9"
             print("#####################lib_dir", lib_dir) 
         else:
