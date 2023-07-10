@@ -16,10 +16,16 @@ def before_all(context):
     print('Global settings...')
 
     lib_dir = ""
-    if 'NODOPGDB' not in os.environ and "C:\\Users\\" in os.environ.get("USERPROFILE"):
-        lib_dir = r"\Program Files\Oracle\instantclient_19_9"
-    else:
-        lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
+    if 'NODOPGDB' not in os.environ :
+        print("#####################primo if")  
+        if "C:\\Users\\" in os.environ.get("USERPROFILE"):
+            print("#####################if prima", lib_dir) 
+            lib_dir = r"\Program Files\Oracle\instantclient_19_9"
+            print("#####################if dopo", lib_dir) 
+        else:
+            print("#####################else prima", lib_dir) 
+            lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
+            print("#####################else dopo", lib_dir) 
     print("#####################", lib_dir)  
     cx_Oracle.init_oracle_client(lib_dir = lib_dir)
 
