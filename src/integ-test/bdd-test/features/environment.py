@@ -18,7 +18,7 @@ def before_all(context):
     lib_dir = ""
     if 'NODOPGDB' not in os.environ :
         print("#####################primo if")  
-        if f'C:\\Users\\' in os.environ.get("USERPROFILE"):
+        if f'C:\\Users\\luca.acone' in os.environ.get("USERPROFILE"):
             print("#####################if prima", lib_dir) 
             lib_dir = r"\Program Files\Oracle\instantclient_19_9"
             print("#####################if dopo", lib_dir) 
