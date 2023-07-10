@@ -16,21 +16,20 @@ def before_all(context):
     print('Global settings...')
 
     lib_dir = ""
+    flag_local_env = False
     if 'NODOPGDB' not in os.environ :
-        print("#####################primo if")
-        print("#####################primo if", os.environ.get("USERPROFILE"))
         try:
-            if f'C:\\Users\\luca.acone' in os.environ.get("USERPROFILE"):
-                print("#####################if prima", lib_dir) 
-                lib_dir = r"\Program Files\Oracle\instantclient_19_9"
-                print("#####################if dopo", lib_dir) 
-            else:
-                print("#####################else prima", lib_dir) 
-                lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
-                print("#####################else dopo", lib_dir)
+            temp = os.environ.get("USERPROFILE")
+            flag_local_env = True
         except TypeError as error:
             print('exception', error)
-    print("#####################", lib_dir)  
+        if flag_local_env:
+            lib_dir = r"\Program Files\Oracle\instantclient_19_9"
+            print("#####################lib_dir", lib_dir) 
+        else:
+            lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
+            print("#####################lib_dir", lib_dir) 
+     
     cx_Oracle.init_oracle_client(lib_dir = lib_dir)
 
     more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
