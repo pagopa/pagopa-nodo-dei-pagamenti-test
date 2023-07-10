@@ -6,7 +6,7 @@
          "healthcheck": "/monitor/health",
          "soap_service": "/webservices/input",
          "rest_service": "runlocal",
-         "refresh_config_service": "/monitoring/v1/config/refresh/ALL"
+         "refresh_config_service": "/monitor/keys"
       },
       "mock-ec": {
          "url": "http://localhost:81/mock-ec-sit/servizi/PagamentiTelematiciRPT",

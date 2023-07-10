@@ -1580,16 +1580,16 @@ def step_impl(context, job_name):
     url_nodo = context.config.userdata.get(
         "services").get("nodo-dei-pagamenti").get("url")
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+
     # DA UTILIZZARE IN LOCALE (DECOMMENTARE LE 2 RIGHE DI SEGUITO E COMMENTARE LE 2 RIGHE SOTTO pipeline)
-    #nodo_response = requests.get(
-    #f"{url_nodo}nodo-dev/config/refresh/{job_name}", headers=headers, verify=False)
+    # nodo_response = requests.get("https://api.dev.platform.pagopa.it/nodo/monitoring/v1/config/refresh/ALL", headers=headers, verify=False)
+
     # pipeline
+    # nodo_response = requests.get(f"{url_nodo}/monitoring/v1/config/refresh/{job_name}", headers=headers, verify=False)
+    
+    refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+    setattr(context, job_name + RESPONSE, refresh_response)
     time.sleep(10)
-    nodo_response = requests.get(
-        f"{url_nodo}/monitoring/v1/config/refresh/{job_name}", headers=headers, verify=False)
-    setattr(context, job_name + RESPONSE, nodo_response)
-    refresh_response = requests.get(utils.get_refresh_config_url(
-        context), headers=headers, verify=False)
     assert refresh_response.status_code == 200
 
 
