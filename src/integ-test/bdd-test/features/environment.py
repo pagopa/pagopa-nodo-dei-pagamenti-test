@@ -19,9 +19,10 @@ def before_all(context):
     try:
         os.environ.get("USERPROFILE")
         flag_env_local = True
+        print('########################################interno', flag_env_local)
     except:
-        print('Env Pipeline')
-    
+        print('########################################Env Pipeline')
+    print('########################################esterno', flag_env_local)
     if 'NODOPGDB' not in os.environ and flag_env_local:
         lib_dir = r"\Program Files\Oracle\instantclient_19_9"
     else:
