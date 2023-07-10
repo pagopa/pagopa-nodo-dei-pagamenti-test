@@ -17,10 +17,8 @@ def before_all(context):
 
     lib_dir = ""
     if 'NODOPGDB' not in os.environ :
-        try:
-            user_profile = os.environ.get("USERPROFILE")
-        except TypeError as error:
-            print('exception', error)
+        user_profile = os.environ.get("USERPROFILE")
+        
         if user_profile != None:
             lib_dir = r"\Program Files\Oracle\instantclient_19_9"
             print("#####################lib_dir", lib_dir) 
