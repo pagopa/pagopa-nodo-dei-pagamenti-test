@@ -18,14 +18,17 @@ def before_all(context):
     lib_dir = ""
     if 'NODOPGDB' not in os.environ :
         print("#####################primo if")  
-        if f'C:\\Users\\luca.acone' in os.environ.get("USERPROFILE"):
-            print("#####################if prima", lib_dir) 
-            lib_dir = r"\Program Files\Oracle\instantclient_19_9"
-            print("#####################if dopo", lib_dir) 
-        else:
-            print("#####################else prima", lib_dir) 
-            lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
-            print("#####################else dopo", lib_dir) 
+        try:
+            if f'C:\\Users\\luca.acone' in os.environ.get("USERPROFILE"):
+                print("#####################if prima", lib_dir) 
+                lib_dir = r"\Program Files\Oracle\instantclient_19_9"
+                print("#####################if dopo", lib_dir) 
+            else:
+                print("#####################else prima", lib_dir) 
+                lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
+                print("#####################else dopo", lib_dir)
+        except TypeError as error:
+            print('exception', error)
     print("#####################", lib_dir)  
     cx_Oracle.init_oracle_client(lib_dir = lib_dir)
 
