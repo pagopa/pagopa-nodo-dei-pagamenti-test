@@ -4,9 +4,7 @@ Feature: FLUSSO_APIO_01
         Given systems up
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
-        Given updates through the query update_activateio of the table POSITION_STATUS_SNAPSHOT the parameter ACTIVATION_PENDING with N under macro NewMod1 on db nodo_online
-        And refresh job ALL triggered after 10 seconds
-        And initial XML verifyPaymentNotice
+        Given initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -26,6 +24,8 @@ Feature: FLUSSO_APIO_01
             """
         When AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
+        And updates through the query update_activateio of the table POSITION_STATUS_SNAPSHOT the parameter ACTIVATION_PENDING with N under macro NewMod1 on db nodo_online
+        And refresh job ALL triggered after 10 seconds
 
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
