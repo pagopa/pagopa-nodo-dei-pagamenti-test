@@ -94,7 +94,7 @@ Feature: FLUSSO_APIO_01
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And check esito is OK of notificaAnnullamento response
 
-        And checks the value N of the record at column ACTIVATION_PENDING of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value N of the record at column ACTIVATION_PENDING of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
         And updates through the query update_activateio of the table POSITION_STATUS_SNAPSHOT the parameter ACTIVATION_PENDING with Y under macro NewMod1 on db nodo_online
         And refresh job ALL triggered after 10 seconds
 
