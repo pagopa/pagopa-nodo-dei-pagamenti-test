@@ -24,8 +24,7 @@ Feature: FLUSSO_APIO_01
             """
         When AppIO sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-        And updates through the query update_activateio of the table POSITION_STATUS_SNAPSHOT the parameter ACTIVATION_PENDING with N under macro NewMod1 on db nodo_online
-        And refresh job ALL triggered after 10 seconds
+        
 
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
@@ -80,6 +79,8 @@ Feature: FLUSSO_APIO_01
             """
         When AppIO sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
+        And updates through the query update_activateio of the table POSITION_STATUS_SNAPSHOT the parameter ACTIVATION_PENDING with N under macro NewMod1 on db nodo_online
+        And refresh job ALL triggered after 10 seconds
 
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
