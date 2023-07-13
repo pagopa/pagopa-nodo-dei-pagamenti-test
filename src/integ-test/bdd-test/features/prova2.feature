@@ -64,8 +64,8 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <pay_i:dataEsecuzionePagamento>#date#</pay_i:dataEsecuzionePagamento>
             <pay_i:importoTotaleDaVersare>10.00</pay_i:importoTotaleDaVersare>
             <pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
-            <pay_i:identificativoUnivocoVersamento>12113657407470181</pay_i:identificativoUnivocoVersamento>
-            <pay_i:codiceContestoPagamento>8cc05fa98d214fc489a0d40cbf9ae400</pay_i:codiceContestoPagamento>
+            <pay_i:identificativoUnivocoVersamento>12113657407470182</pay_i:identificativoUnivocoVersamento>
+            <pay_i:codiceContestoPagamento>da5bb37260824b179eecc4e13af3e024</pay_i:codiceContestoPagamento>
             <pay_i:ibanAddebito>IT45R0760103200000000001016</pay_i:ibanAddebito>
             <pay_i:bicAddebito>ARTIITM1045</pay_i:bicAddebito>
             <pay_i:firmaRicevuta>0</pay_i:firmaRicevuta>
@@ -91,8 +91,8 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
             <identificativoIntermediarioPA>#id_broker_old#</identificativoIntermediarioPA>
             <identificativoStazioneIntermediarioPA>#id_station_old#</identificativoStazioneIntermediarioPA>
             <identificativoDominio>#creditor_institution_code_old#</identificativoDominio>
-            <identificativoUnivocoVersamento>12113657407470181</identificativoUnivocoVersamento>
-            <codiceContestoPagamento>8cc05fa98d214fc489a0d40cbf9ae400</codiceContestoPagamento>
+            <identificativoUnivocoVersamento>12113657407470182</identificativoUnivocoVersamento>
+            <codiceContestoPagamento>da5bb37260824b179eecc4e13af3e024</codiceContestoPagamento>
             </ppt:intestazionePPT>
             </soapenv:Header>
             <soapenv:Body>
