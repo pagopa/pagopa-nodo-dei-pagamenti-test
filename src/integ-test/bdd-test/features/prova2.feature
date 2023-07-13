@@ -4,6 +4,7 @@ Feature: T092_A_ChiediStato_RPT_RIFIUTATA_NODO_Carrello
     Background:
         Given systems up
 
+    @runnable
     Scenario: RPT generation
         Given RPT generation
             """
