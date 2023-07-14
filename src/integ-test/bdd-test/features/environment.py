@@ -30,8 +30,6 @@ def before_all(context):
 
     more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
     context.config.update_userdata(more_userdata)
-    #services = context.config.userdata.get("services")
-    #db_config = context.config.userdata.get("db_configuration")
     db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
     selected_query = utils.query_json(context, 'select_config', 'configurations')
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))

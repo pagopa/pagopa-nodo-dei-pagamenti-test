@@ -835,16 +835,18 @@ def step_impl(context, sender, soap_primitive, receiver):
 def step_impl(context, job_name, seconds):
     seconds = utils.replace_local_variables(seconds, context)
     time.sleep(int(seconds))
-    url_nodo = context.config.userdata.get(
-        "services").get("nodo-dei-pagamenti").get("url")
-    print(f">>>>>>>>>>>>>>>>>> {url_nodo}/monitoring/v1/jobs/trigger/{job_name}")
+    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
-    # DA UTILIZZARE IN LOCALE (DECOMMENTARE LE 2 RIGHE DI SEGUITO E COMMENTARE LE 2 RIGHE SOTTO pipeline)
-    #nodo_response = requests.get(
-    #f"{url_nodo}nodo-dev/jobs/trigger/{job_name}", headers=headers, verify=False)
-    # pipeline
-    nodo_response = requests.get(
-        f"{url_nodo}/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
+
+    user_profile = os.environ.get("USERPROFILE")
+    
+    if user_profile != None:
+        nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
+        print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
+    else:
+        nodo_response = requests.get(f"{url_nodo}/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
+        print(f">>>>>>>>>>>>>>>>>> {url_nodo}/monitoring/v1/jobs/trigger/{job_name}")
+    
     setattr(context, job_name + RESPONSE, nodo_response)
 
 
