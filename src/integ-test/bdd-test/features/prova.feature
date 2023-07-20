@@ -4,8 +4,7 @@ Feature: Block revision for sendPaymentOutcome
         Given systems up
 
     Scenario: activatePaymentNotice
-        Given the verifyPaymentNotice scenario executed successfully
-        And initial XML activatePaymentNotice
+        Given initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
