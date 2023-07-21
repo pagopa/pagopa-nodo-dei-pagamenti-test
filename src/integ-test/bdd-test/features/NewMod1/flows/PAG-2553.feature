@@ -142,7 +142,7 @@ Feature: PAG 2553
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
-            <expirationTime>60000</expirationTime>
+            <expirationTime>2000</expirationTime>
             <amount>10.00</amount>
             <paymentNote>responseFull</paymentNote>
             </nod:activatePaymentNoticeReq>
