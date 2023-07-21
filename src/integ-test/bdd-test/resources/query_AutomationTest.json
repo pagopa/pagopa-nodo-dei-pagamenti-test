@@ -6,6 +6,7 @@
     },
     "NewMod3": {
         "payment_status": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
+        "payment_status_orderby_time": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' ORDER BY INSERTED_TIMESTAMP ASC",
         "payment_status_only_act1": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice1.fiscalCode'",
         "payment_status_v2": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' AND PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken-v2'",
         "payment_status_1": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice1.fiscalCode'",
