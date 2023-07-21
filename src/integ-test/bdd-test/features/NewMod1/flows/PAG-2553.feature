@@ -220,7 +220,7 @@ Feature: PAG 2553
     ####################################################################################################################
 
     Scenario: Test 2 (part 1)
-        Given the activatePaymentNotice scenario executed successfully
+        Given the activatePaymentNotice request scenario executed successfully
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
