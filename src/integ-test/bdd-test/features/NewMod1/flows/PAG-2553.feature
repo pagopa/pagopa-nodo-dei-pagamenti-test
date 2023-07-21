@@ -246,4 +246,4 @@ Feature: PAG 2553
         And checking value $metadata1 is containing value 22
         And checking value $metadata2 is containing value chiave
         And checking value $metadata2 is containing value valore
-        And verify 2 record for the table POSITION_PAYMENT_PLAN retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 2 record for the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro NewMod1
