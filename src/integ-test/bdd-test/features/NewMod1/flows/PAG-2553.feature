@@ -219,18 +219,18 @@ Feature: PAG 2553
 
     ####################################################################################################################
 
-    Scenario: Test 1 (part 1)
+    Scenario: Test 2 (part 1)
         Given the activatePaymentNotice scenario executed successfully
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-    Scenario: Test 1 (part 2)
+    Scenario: Test 2 (part 2)
         Given the Test 1 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 3 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
 
     @test
-    Scenario: Test 1 (part 3)
+    Scenario: Test 2 (part 3)
         Given the Test 1 (part 2) scenario executed successfully
         And key with chiave in paGetPayment
         And value with valore in paGetPayment
