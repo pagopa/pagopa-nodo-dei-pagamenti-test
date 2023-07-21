@@ -346,7 +346,7 @@ Feature: PAG 2553
 
     Scenario: Test 3 (part 2)
         Given the Test 3 (part 1) scenario executed successfully
-        When job mod3CancelV2 triggered after 3 seconds
+        When job annullamentoRptMaiRichiesteDaPm triggered after 61 seconds
         Then verify the HTTP status code of mod3CancelV2 response is 200
 
     @test
