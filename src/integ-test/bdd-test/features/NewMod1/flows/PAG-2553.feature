@@ -196,7 +196,7 @@ Feature: PAG 2553
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
