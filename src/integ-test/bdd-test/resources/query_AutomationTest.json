@@ -110,6 +110,7 @@
     },
     "AppIO": {
         "payment_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
+        "payment_status_order_by": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode' ORDER BY INSERTED_TIMESTAMP ASC",
         "payment_status_old": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='002$iuv' AND s.PA_FISCAL_CODE = '$nodoInviaRPT.identificativoDominio'",
         "position_subject": "SELECT columns FROM POSITION_SERVICE ps RIGHT JOIN table_name ps2 ON ps.DEBTOR_ID = ps2.ID WHERE ps.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode' AND  ps.NOTICE_ID = '$activateIOPayment.noticeNumber'",
         "position_subject2": "SELECT s.columns FROM table_name s WHERE s.FULL_NAME = 'SPOname_$activateIOPaymentResponse.paymentToken'",
