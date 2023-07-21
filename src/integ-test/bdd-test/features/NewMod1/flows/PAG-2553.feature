@@ -239,11 +239,11 @@ Feature: PAG 2553
         Then check outcome is OK of activatePaymentNotice response
 
         # POSITION_PAYMENT_PLAN
-        And execution query payment_status_orderby_time to get value on the table POSITION_PAYMENT_PLAN, with the columns METADATA under macro NewMod1 with db name nodo_online
+        And execution query payment_status_orderby_time to get value on the table POSITION_PAYMENT_PLAN, with the columns METADATA under macro NewMod3 with db name nodo_online
         And through the query payment_status_orderby_time retrieve param metadata1 at position 0 in the row 0 and save it under the key metadata1
         And through the query payment_status_orderby_time retrieve param metadata2 at position 0 in the row 1 and save it under the key metadata2
         And checking value $metadata1 is containing value 1
         And checking value $metadata1 is containing value 22
         And checking value $metadata2 is containing value chiave
         And checking value $metadata2 is containing value valore
-        And verify 2 record for the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro NewMod1
+        And verify 2 record for the table POSITION_PAYMENT_PLAN retrived by the query payment_status on db nodo_online under macro NewMod3
