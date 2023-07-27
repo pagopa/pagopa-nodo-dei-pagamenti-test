@@ -22,6 +22,9 @@ Feature: classic happy flow tests for NM1
 
     Scenario: activatePaymentNoticeV2
         Given the checkPosition scenario executed successfully
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1201' under macro update_query on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
         And initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -90,10 +93,26 @@ Feature: classic happy flow tests for NM1
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
+            <transferAmount>3.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
+            <transferCategory>paGetPaymentTest</transferCategory>
+            </transfer>
+            <transfer>
+            <idTransfer>2</idTransfer>
+            <transferAmount>3.00</transferAmount>
+            <fiscalCodePA>90000000001</fiscalCodePA>
+            <IBAN>IT45R0760103200000000001016</IBAN>
+            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
+            <transferCategory>paGetPaymentTest</transferCategory>
+            </transfer>
+            <transfer>
+            <idTransfer>3</idTransfer>
+            <transferAmount>4.00</transferAmount>
+            <fiscalCodePA>90000000002</fiscalCodePA>
+            <IBAN>IT45R0760103200000000001016</IBAN>
+            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
             </transfer>
             </transferList>
@@ -197,7 +216,7 @@ Feature: classic happy flow tests for NM1
             """
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-        And wait 5 seconds for expiration
+        And wait 10 seconds for expiration
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -301,7 +320,7 @@ Feature: classic happy flow tests for NM1
         And checks the value #id_station# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_BY of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value sendPaymentOutcomeV2 of the record at column UPDATED_BY of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $paGetPayment.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -315,7 +334,11 @@ Feature: classic happy flow tests for NM1
         And checks the value NotNone of the record at column FK_RECEIPT_XML of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NotNone of the record at column INSERTED_BY of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value sendPaymentOutcomeV2 of the record at column UPDATED_BY of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 9 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '1201' under macro update_query on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        
 
