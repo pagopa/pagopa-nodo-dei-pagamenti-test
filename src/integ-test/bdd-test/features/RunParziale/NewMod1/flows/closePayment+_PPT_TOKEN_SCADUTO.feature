@@ -5,6 +5,7 @@ Feature: flow with closePayment + and PPT_TOKEN_SCADUTO
 
     Scenario: checkPosition
         Given current date generation
+        And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3000
         And initial json checkPosition
             """
             {
@@ -114,14 +115,25 @@ Feature: flow with closePayment + and PPT_TOKEN_SCADUTO
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    Scenario: mod3CancelV2
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        When job mod3CancelV2 triggered after 4 seconds
-        Then verify the HTTP status code of mod3CancelV2 response is 200
 
-    @happyNM1
+    Scenario: pspNotifyPaymentV2 malformata
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        And initial XML pspNotifyPaymentV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <pfn:pspNotifyPaymentV2Res>
+            <outcome>OO</outcome>
+            </pfn:pspNotifyPaymentV2Res>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
+
+    
     Scenario: closePaymentV2
-        Given the mod3CancelV2 scenario executed successfully
+        Given the pspNotifyPaymentV2 malformata scenario executed successfully
         And wait 3 seconds for expiration
         And initial json v2/closepayment
             """
@@ -129,24 +141,32 @@ Feature: flow with closePayment + and PPT_TOKEN_SCADUTO
                 "paymentTokens": [
                     "$activatePaymentNoticeV2Response.paymentToken"
                 ],
-                "outcome": "KO",
+                "outcome": "OK",
                 "idPSP": "#psp#",
                 "paymentMethod": "TPAY",
                 "idBrokerPSP": "#id_broker_psp#",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "idChannel": "#canale_versione_primitive_2#",
                 "transactionId": "#transaction_id#",
                 "totalAmount": 12,
                 "fee": 2,
-                "primaryCiIncurredFee": 1,
-                "idBundle": "0bf0c282-3054-11ed-af20-acde48001122",
-                "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
-                "timestampOperation": "2033-04-23T18:25:43Z",
+                "timestampOperation": "2012-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
                     "key": "12345678"
                 }
             }
             """
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then check outcome is KO of v2/closepayment response
-        And check description is Unacceptable outcome when token has expired of v2/closepayment response
-        And verify the HTTP status code of v2/closepayment response is 400
+        Then check outcome is OK of v2/closepayment response
+        And verify the HTTP status code of v2/closepayment response is 200
+        And wait 12 seconds for expiration
+
+    @happyNM1
+    Scenario: mod3CancelV2
+        Given the closePaymentV2 scenario executed successfully
+        When job mod3CancelV2 triggered after 6 seconds
+        Then verify the HTTP status code of mod3CancelV2 response is 200
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
