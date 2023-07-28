@@ -122,7 +122,7 @@ Feature: BUG-PROD MULTITOKEN
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
         And saving paGetPayment request in paGetPayment_1Request
 
-    @multiToken
+    
     Scenario: second activatePaymentNoticeV2 request
         Given the first activatePaymentNoticeV2 request scenario executed successfully
         And initial XML activatePaymentNoticeV2
@@ -220,6 +220,92 @@ Feature: BUG-PROD MULTITOKEN
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_2Request
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
         And saving paGetPaymentV2 request in paGetPaymentV2_2Request
+
+
+
+    Scenario: closePaymentV2 with 2 paymentToken
+        Given the second activatePaymentNoticeV2 request scenario executed successfully
+        And initial json v2/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "$activatePaymentNoticeV2_1Response.paymentToken",
+                    "$activatePaymentNoticeV2_2Response.paymentToken"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "paymentMethod": "TPAY",
+                "idBrokerPSP": "#id_broker_psp#",
+                "idChannel": "#canale_versione_primitive_2#",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 22,
+                "fee": 2,
+                "timestampOperation": "2012-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "key": "12345678"
+                }
+            }
+            """
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+
+    @multiToken
+    Scenario: sendPaymentOutcomeV2 with 2 paymentToken
+        Given the closePaymentV2 with 2 paymentToken scenario executed successfully
+        And initial XML sendPaymentOutcomeV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:sendPaymentOutcomeV2Request>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <paymentTokens>
+            <paymentToken>$activatePaymentNoticeV2_1Response.paymentToken</paymentToken>
+            <paymentToken>$activatePaymentNoticeV2_2Response.paymentToken</paymentToken>
+            </paymentTokens>
+            <outcome>OK</outcome>
+            <!--Optional:-->
+            <details>
+            <paymentMethod>creditCard</paymentMethod>
+            <!--Optional:-->
+            <paymentChannel>app</paymentChannel>
+            <fee>2.00</fee>
+            <!--Optional:-->
+            <payer>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>name</fullName>
+            <!--Optional:-->
+            <streetName>street</streetName>
+            <!--Optional:-->
+            <civicNumber>civic</civicNumber>
+            <!--Optional:-->
+            <postalCode>postal</postalCode>
+            <!--Optional:-->
+            <city>city</city>
+            <!--Optional:-->
+            <stateProvinceRegion>state</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>prova@test.it</e-mail>
+            </payer>
+            <applicationDate>2021-12-12</applicationDate>
+            <transferDate>2021-12-11</transferDate>
+            </details>
+            </nod:sendPaymentOutcomeV2Request>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
 
     # Scenario: third activatePaymentNoticeV2 request
     #     Given the second activatePaymentNoticeV2 request scenario executed successfully
