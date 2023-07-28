@@ -128,10 +128,10 @@ def step_impl(context, primitive):
         payload = payload.replace('#iuv#', iuv)
         setattr(context, "iuv", iuv)
 
-    if "#iuv{number:d}#" in payload:
-        iuv = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv1#', iuv)
-        setattr(context, "iuv{number:d}", iuv)
+    if "#iuv1#" in payload:
+        iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv1#', iuv1)
+        setattr(context, "iuv1", iuv1)
 
     if '#IUV#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
