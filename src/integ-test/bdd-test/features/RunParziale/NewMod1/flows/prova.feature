@@ -14,19 +14,19 @@ Feature: BUG-PROD MULTITOKEN
                     },
                     {
                         "fiscalCode": "90000000002",
-                        "noticeNumber": "355#iuv2#"
+                        "noticeNumber": "355#iuv1#"
                     },
                     {
                         "fiscalCode": "90000000001",
-                        "noticeNumber": "001#iuv3#"
+                        "noticeNumber": "311#iuv2#"
                     },
                     {
                         "fiscalCode": "55555555555",
-                        "noticeNumber": "311#iuv4#"
+                        "noticeNumber": "311#iuv3#"
                     },
                     {
-                        "fiscalCode": "55555555558",
-                        "noticeNumber": "311#iuv5#"
+                        "fiscalCode": "55555666666",
+                        "noticeNumber": "311#iuv4#"
                     }
                 ]
             }
@@ -150,7 +150,7 @@ Feature: BUG-PROD MULTITOKEN
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>90000000002</fiscalCode>
-            <noticeNumber>355$iuv2</noticeNumber>
+            <noticeNumber>355$iuv1</noticeNumber>
             </qrCode>
             <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
@@ -168,7 +168,7 @@ Feature: BUG-PROD MULTITOKEN
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>55$iuv2</creditorReferenceId>
+            <creditorReferenceId>55$iuv1</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -249,7 +249,7 @@ Feature: BUG-PROD MULTITOKEN
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>90000000001</fiscalCode>
-            <noticeNumber>001$iuv3</noticeNumber>
+            <noticeNumber>311$iuv2</noticeNumber>
             </qrCode>
             <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
@@ -267,7 +267,7 @@ Feature: BUG-PROD MULTITOKEN
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>01$iuv3</creditorReferenceId>
+            <creditorReferenceId>11$iuv2</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -348,7 +348,7 @@ Feature: BUG-PROD MULTITOKEN
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>55555555555</fiscalCode>
-            <noticeNumber>311$iuv4</noticeNumber>
+            <noticeNumber>311$iuv3</noticeNumber>
             </qrCode>
             <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
@@ -366,7 +366,7 @@ Feature: BUG-PROD MULTITOKEN
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>11$iuv4</creditorReferenceId>
+            <creditorReferenceId>11$iuv3</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -447,8 +447,8 @@ Feature: BUG-PROD MULTITOKEN
             <password>#password#</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
-            <fiscalCode>55555555558</fiscalCode>
-            <noticeNumber>311$iuv5</noticeNumber>
+            <fiscalCode>55555666666</fiscalCode>
+            <noticeNumber>311$iuv4</noticeNumber>
             </qrCode>
             <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
@@ -466,7 +466,7 @@ Feature: BUG-PROD MULTITOKEN
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>11$iuv5</creditorReferenceId>
+            <creditorReferenceId>11$iuv4</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
