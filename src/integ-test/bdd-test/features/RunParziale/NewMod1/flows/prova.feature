@@ -132,6 +132,7 @@ Feature: BUG-PROD MULTITOKEN
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1Request
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
+        And saving paGetPayment request in paGetPayment_1Request
 
     Scenario: second activatePaymentNoticeV2 request
         Given the first activatePaymentNoticeV2 request scenario executed successfully
@@ -230,6 +231,7 @@ Feature: BUG-PROD MULTITOKEN
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_2Request
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
+        And saving paGetPayment request in paGetPayment_2Request
 
     Scenario: third activatePaymentNoticeV2 request
         Given the second activatePaymentNoticeV2 request scenario executed successfully
@@ -328,6 +330,7 @@ Feature: BUG-PROD MULTITOKEN
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_3Request
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_3
+        And saving paGetPayment request in paGetPayment_3Request
 
     Scenario: fourth activatePaymentNoticeV2 request
         Given the third activatePaymentNoticeV2 request scenario executed successfully
@@ -426,6 +429,7 @@ Feature: BUG-PROD MULTITOKEN
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_4Request
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_4
+        And saving paGetPayment request in paGetPayment_4Request
     
     @multiToken
     Scenario: fifth activatePaymentNoticeV2 request
@@ -525,3 +529,4 @@ Feature: BUG-PROD MULTITOKEN
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_5Request
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_5
+        And saving paGetPayment request in paGetPayment_5Request
