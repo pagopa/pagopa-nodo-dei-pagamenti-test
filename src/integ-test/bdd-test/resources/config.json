@@ -6,7 +6,7 @@
          "healthcheck": "/monitor/health",
          "soap_service": "/webservices/input",
          "rest_service": "runlocal",
-         "refresh_config_service": "/monitor/keys"
+         "refresh_config_service": "/config/refresh/ALL"
       },
       "mock-ec": {
          "url": "http://localhost:81/mock-ec-sit/servizi/PagamentiTelematiciRPT",
@@ -89,7 +89,7 @@
    "db_configuration": {
       "nodo_cfg": {
          "host": "localhost",
-         "database": "NDPSPCT_NODO_ONLINE",
+         "database": "NDPSPCT_NODO4_CFG",
          "user": "NODO4_CFG",
          "password": "NODO4_CFG",
          "port": "1522"
@@ -103,7 +103,7 @@
       },
       "nodo_offline": {
          "host": "localhost",
-         "database": "NDPSPCT_NODO_ONLINE",
+         "database": "NDPSPCT_NODO_OFFLINE",
          "user": "NODO_OFFLINE",
          "password": "NODO_OFFLINE",
          "port": "1522"
