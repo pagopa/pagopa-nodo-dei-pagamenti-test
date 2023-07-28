@@ -265,7 +265,19 @@ def step_impl(context, primitive):
     if "#iuv1#" in payload:
         iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
         payload = payload.replace('#iuv1#', iuv1)
-        setattr(context, "iuv1", iuv1)				   
+        setattr(context, "iuv1", iuv1)	
+    if "#iuv2#" in payload:
+        iuv2 = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv2#', iuv2)
+        setattr(context, "iuv2", iuv2)
+    if "#iuv3#" in payload:
+        iuv3 = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv3#', iuv3)
+        setattr(context, "iuv3", iuv3)
+    if "#iuv4#" in payload:
+        iuv4 = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv4#', iuv4)
+        setattr(context, "iuv4", iuv4)			   
     if '#transaction_id#' in payload:
         transaction_id = str(random.randint(10000000, 99999999))
         payload = payload.replace('#transaction_id#', transaction_id)
