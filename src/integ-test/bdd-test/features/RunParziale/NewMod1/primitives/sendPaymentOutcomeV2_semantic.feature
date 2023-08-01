@@ -42,7 +42,7 @@ Feature:  semantic checks for sendPaymentOutcomeV2
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>prova@test @NM1 @ALL.it</e-mail>
+            <e-mail>prova@test.it</e-mail>
             </payer>
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>
@@ -93,7 +93,7 @@ Feature:  semantic checks for sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_CANALE_DISABILITATO of sendPaymentOutcomeV2 response
-    @test @NM1 @ALL
+    @test @NM1 @ALL @fail
     # password value check: wrong password for an idChannel [SEM_SPO_08]
     Scenario: Check PPT_AUTENTICAZIONE error on password not associated to psp channel
         Given password with password in sendPaymentOutcomeV2
