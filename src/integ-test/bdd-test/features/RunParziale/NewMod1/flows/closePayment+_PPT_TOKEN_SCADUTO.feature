@@ -160,7 +160,7 @@ Feature: flow with closePayment + and PPT_TOKEN_SCADUTO
         And verify the HTTP status code of v2/closepayment response is 200
         And wait 12 seconds for expiration
 
-    @happyNM1
+    @tokenScaduto @NM1 @ALL
     Scenario: mod3CancelV2
         Given the closePaymentV2 scenario executed successfully
         When job mod3CancelV2 triggered after 6 seconds

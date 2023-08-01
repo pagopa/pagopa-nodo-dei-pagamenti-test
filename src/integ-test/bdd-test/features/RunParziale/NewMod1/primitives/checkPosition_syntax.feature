@@ -13,7 +13,7 @@ Feature: syntax checks for checkPosition
                 ]
             }
             """
-    @test
+    @test @NM1 @ALL
     # KO tests
     Scenario Outline: KO tests
         Given <elem> with <value> in checkPosition

@@ -42,7 +42,7 @@ Feature:  semantic checks for sendPaymentOutcomeV2
             <!--Optional:-->
             <country>IT</country>
             <!--Optional:-->
-            <e-mail>prova@test.it</e-mail>
+            <e-mail>prova@test @NM1 @ALL.it</e-mail>
             </payer>
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>
@@ -51,70 +51,70 @@ Feature:  semantic checks for sendPaymentOutcomeV2
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    @test
+    @test @NM1 @ALL
     # idPSP value check: idPSP not in db [SEM_SPO_01]
     Scenario: Check PPT_PSP_SCONOSCIUTO error on non-existent psp
         Given idPSP with 1230984759 in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_PSP_SCONOSCIUTO of sendPaymentOutcomeV2 response
-    @test
+    @test @NM1 @ALL
     # idPSP value check: idPSP with field ENABLED = N [SEM_SPO_02]
     Scenario: Check PPT_PSP_DISABILITATO error on disabled psp
         Given idPSP with NOT_ENABLED in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_PSP_DISABILITATO of sendPaymentOutcomeV2 response
-    @test
+    @test @NM1 @ALL
     # idBrokerPSP value check: idBrokerPSP not present in db [SEM_SPO_03]
     Scenario: Check PPT_INTERMEDIARIO_PSP_SCONOSCIUTO error on non-existent psp broker
         Given idBrokerPSP with 1230984759 in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_INTERMEDIARIO_PSP_SCONOSCIUTO of sendPaymentOutcomeV2 response
-    @test
+    @test @NM1 @ALL
     # idBrokerPSP value check: idBrokerPSP with field ENABLED = N [SEM_SPO_04]
     Scenario: Check PPT_INTERMEDIARIO_PSP_DISABILITATO error on disabled psp broker
         Given idBrokerPSP with INT_NOT_ENABLED in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_INTERMEDIARIO_PSP_DISABILITATO of sendPaymentOutcomeV2 response
-    @test
+    @test @NM1 @ALL
     # idChannel value check: idChannel not in db [SEM_SPO_05]
     Scenario: Check PPT_CANALE_SCONOSCIUTO error on non-existent psp channel
         Given idChannel with 1230984759 in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_CANALE_SCONOSCIUTO of sendPaymentOutcomeV2 response
-    @test
+    @test @NM1 @ALL
     # idChannel value check: idChannel with field ENABLED = N [SEM_SPO_06]
     Scenario: Check PPT_CANALE_DISABILITATO error on disabled psp channel
         Given idChannel with CANALE_NOT_ENABLED in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_CANALE_DISABILITATO of sendPaymentOutcomeV2 response
-    @test
+    @test @NM1 @ALL
     # password value check: wrong password for an idChannel [SEM_SPO_08]
     Scenario: Check PPT_AUTENTICAZIONE error on password not associated to psp channel
         Given password with password in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_AUTENTICAZIONE of sendPaymentOutcomeV2 response
-    @test
+    @test @NM1 @ALL
     # SEM_SPO_09
     Scenario: SEM_SPO_09
         Given paymentToken with 111111111111112 in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcomeV2 response
-    @test
+    @test @NM1 @ALL
     # paymentToken value check: token+idPsp not present in POSITION_ACTIVATE table of nodo-dei-pagamenti db [SEM_SPO_10]
     Scenario: Check PPT_TOKEN_SCONOSCIUTO error on non-existent couple token+idPsp
         Given paymentToken with 7ff1180be4814c4d909f123a943eeb27 in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcomeV2 response
-    @test
+    @test @NM1 @ALL
     # idBrokerPSP-idPSP value check: idBrokerPSP not associated to idPSP [SEM_SPO_11]
     Scenario: Check PPT_AUTORIZZAZIONE error on psp broker not associated to psp
         Given idBrokerPSP with 91000000001 in sendPaymentOutcomeV2

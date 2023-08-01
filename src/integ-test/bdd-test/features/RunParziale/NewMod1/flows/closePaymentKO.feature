@@ -115,40 +115,17 @@ Feature: flow with pspNptifyPaymentKO
         Then check outcome is OK of activatePaymentNoticeV2 response
 
 
-    Scenario: pspNotifyPaymentV2 KO
-        Given the activatePaymentNoticeV2 scenario executed successfully
-        And initial XML pspNotifyPaymentV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <pfn:pspNotifyPaymentV2Res>
-            <outcome>KO</outcome>
-            <!--Optional:-->
-            <fault>
-            <faultCode>CANALE_SEMANTICA</faultCode>
-            <faultString>Errore semantico dal psp</faultString>
-            <id>1</id>
-            <!--Optional:-->
-            <description>Errore dal psp</description>
-            </fault>
-            </pfn:pspNotifyPaymentV2Res>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And PSP replies to nodo-dei-pagamenti with the pspNotifyPaymentV2
-
-    @pspNotifyPaymentKO @NM1 @ALL
+    @closePaymentKO @NM1 @ALL
     Scenario: closePaymentV2
-        Given the pspNotifyPaymentV2 KO scenario executed successfully
+        Given the activatePaymentNoticeV2 scenario executed successfully
         And wait 3 seconds for expiration
         And initial json v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "$activatePaymentNoticeV2Response.paymentToken"
+                    ""
                 ],
-                "outcome": "OK",
+                "outcome": "KO",
                 "idPSP": "#psp#",
                 "paymentMethod": "TPAY",
                 "idBrokerPSP": "#id_broker_psp#",
@@ -163,11 +140,8 @@ Feature: flow with pspNptifyPaymentKO
             }
             """
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then check outcome is OK of v2/closepayment response
-        And verify the HTTP status code of v2/closepayment response is 200
-        And wait until the update to the new state for the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_REFUSED,CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And checks the value CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        Then check outcome is KO of v2/closepayment response
+        Then verify the HTTP status code of v2/closepayment response is 400
+        And check outcome is KO of v2/closepayment response
+        And check description is Invalid paymentTokens of v2/closepayment response
     

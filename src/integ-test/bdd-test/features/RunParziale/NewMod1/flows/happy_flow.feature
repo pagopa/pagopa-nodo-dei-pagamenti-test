@@ -162,7 +162,7 @@ Feature: classic happy flow tests for NM1
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-    @happyNM1
+    @happyNM1 @NM1 @ALL
     Scenario: sendPaymentOutcomeV2
         Given the closePaymentV2 scenario executed successfully
         And initial XML sendPaymentOutcomeV2
