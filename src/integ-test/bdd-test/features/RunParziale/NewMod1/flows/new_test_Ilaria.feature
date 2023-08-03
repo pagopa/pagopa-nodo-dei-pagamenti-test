@@ -95,7 +95,7 @@ Feature: NEW TEST ILARIA MULTITOKEN
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
+            <transferAmount>5.00</transferAmount>
             <fiscalCodePA>90000000001</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -103,7 +103,7 @@ Feature: NEW TEST ILARIA MULTITOKEN
             </transfer>
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
+            <transferAmount>5.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
@@ -202,7 +202,7 @@ Feature: NEW TEST ILARIA MULTITOKEN
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
+            <transferAmount>5.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
             <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
@@ -211,7 +211,7 @@ Feature: NEW TEST ILARIA MULTITOKEN
             </transfer>
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
+            <transferAmount>5.00</transferAmount>
             <fiscalCodePA>90000000001</fiscalCodePA>
             <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
