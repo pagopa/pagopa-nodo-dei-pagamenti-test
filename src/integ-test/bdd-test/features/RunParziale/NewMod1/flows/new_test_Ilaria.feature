@@ -10,7 +10,7 @@ Feature: NEW TEST ILARIA MULTITOKEN
                 "positionslist": [
                     {
                         "fiscalCode": "#creditor_institution_code_secondary#",
-                        "noticeNumber": "303#iuv#"
+                        "noticeNumber": "302#iuv#"
                     },
                     {
                         "fiscalCode": "#creditor_institution_code#",
@@ -39,7 +39,7 @@ Feature: NEW TEST ILARIA MULTITOKEN
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code_secondary#</fiscalCode>
-            <noticeNumber>303$iuv</noticeNumber>
+            <noticeNumber>302$iuv</noticeNumber>
             </qrCode>
             <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
@@ -57,7 +57,7 @@ Feature: NEW TEST ILARIA MULTITOKEN
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>03$iuv</creditorReferenceId>
+            <creditorReferenceId>02$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
