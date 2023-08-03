@@ -1,4 +1,4 @@
-Feature: happy flow multitoken test for NM1 
+Feature: NEW TEST ILARIA MULTITOKEN
 
     Background:
         Given systems up
@@ -9,8 +9,8 @@ Feature: happy flow multitoken test for NM1
             {
                 "positionslist": [
                     {
-                        "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "302#iuv#"
+                        "fiscalCode": "#creditor_institution_code_secondary#",
+                        "noticeNumber": "303#iuv#"
                     },
                     {
                         "fiscalCode": "#creditor_institution_code#",
@@ -38,8 +38,8 @@ Feature: happy flow multitoken test for NM1
             <password>#password#</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>302$iuv</noticeNumber>
+            <fiscalCode>#creditor_institution_code_secondary#</fiscalCode>
+            <noticeNumber>303$iuv</noticeNumber>
             </qrCode>
             <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
@@ -57,7 +57,7 @@ Feature: happy flow multitoken test for NM1
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>02$iuv</creditorReferenceId>
+            <creditorReferenceId>03$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -96,7 +96,15 @@ Feature: happy flow multitoken test for NM1
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <fiscalCodePA>90000000001</fiscalCodePA>
+            <IBAN>IT45R0760103200000000001016</IBAN>
+            <remittanceInformation>testPaGetPayment</remittanceInformation>
+            <transferCategory>paGetPaymentTest</transferCategory>
+            </transfer>
+            <transfer>
+            <idTransfer>1</idTransfer>
+            <transferAmount>10.00</transferAmount>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -122,7 +130,8 @@ Feature: happy flow multitoken test for NM1
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
         And saving paGetPayment request in paGetPayment_1Request
 
-    
+
+
     Scenario: second activatePaymentNoticeV2 request
         Given the first activatePaymentNoticeV2 request scenario executed successfully
         And initial XML activatePaymentNoticeV2
@@ -194,7 +203,16 @@ Feature: happy flow multitoken test for NM1
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
+            <companyName>companySec</companyName>
+            <IBAN>IT45R0760103200000000001016</IBAN>
+            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
+            <transferCategory>paGetPaymentTest</transferCategory>
+            </transfer>
+            <transfer>
+            <idTransfer>1</idTransfer>
+            <transferAmount>10.00</transferAmount>
+            <fiscalCodePA>90000000001</fiscalCodePA>
             <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
@@ -221,106 +239,6 @@ Feature: happy flow multitoken test for NM1
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
         And saving paGetPaymentV2 request in paGetPaymentV2_2Request
 
-
-
-    # Scenario: third activatePaymentNoticeV2 request
-    #     Given the second activatePaymentNoticeV2 request scenario executed successfully
-    #     And initial XML activatePaymentNoticeV2
-    #         """
-    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-    #         xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-    #         <soapenv:Header/>
-    #         <soapenv:Body>
-    #         <nod:activatePaymentNoticeV2Request>
-    #         <idPSP>#psp#</idPSP>
-    #         <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-    #         <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-    #         <password>#password#</password>
-    #         <idempotencyKey>#idempotency_key#</idempotencyKey>
-    #         <qrCode>
-    #         <fiscalCode>90000000001</fiscalCode>
-    #         <noticeNumber>311$iuv2</noticeNumber>
-    #         </qrCode>
-    #         <expirationTime>6000</expirationTime>
-    #         <amount>10.00</amount>
-    #         <dueDate>2021-12-31</dueDate>
-    #         <paymentNote>causale</paymentNote>
-    #         </nod:activatePaymentNoticeV2Request>
-    #         </soapenv:Body>
-    #         </soapenv:Envelope>
-    #         """
-    #     And initial XML paGetPayment
-    #         """
-    #         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-    #         <soapenv:Header />
-    #         <soapenv:Body>
-    #         <paf:paGetPaymentRes>
-    #         <outcome>OK</outcome>
-    #         <data>
-    #         <creditorReferenceId>11$iuv2</creditorReferenceId>
-    #         <paymentAmount>10.00</paymentAmount>
-    #         <dueDate>2021-12-31</dueDate>
-    #         <!--Optional:-->
-    #         <retentionDate>2021-12-31T12:12:12</retentionDate>
-    #         <!--Optional:-->
-    #         <lastPayment>1</lastPayment>
-    #         <description>description</description>
-    #         <!--Optional:-->
-    #         <companyName>company</companyName>
-    #         <!--Optional:-->
-    #         <officeName>office</officeName>
-    #         <debtor>
-    #         <uniqueIdentifier>
-    #         <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-    #         <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
-    #         </uniqueIdentifier>
-    #         <fullName>paGetPaymentName</fullName>
-    #         <!--Optional:-->
-    #         <streetName>paGetPaymentStreet</streetName>
-    #         <!--Optional:-->
-    #         <civicNumber>paGetPayment99</civicNumber>
-    #         <!--Optional:-->
-    #         <postalCode>20155</postalCode>
-    #         <!--Optional:-->
-    #         <city>paGetPaymentCity</city>
-    #         <!--Optional:-->
-    #         <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-    #         <!--Optional:-->
-    #         <country>IT</country>
-    #         <!--Optional:-->
-    #         <e-mail>paGetPayment@test.it</e-mail>
-    #         </debtor>
-    #         <!--Optional:-->
-    #         <transferList>
-    #         <!--1 to 5 repetitions:-->
-    #         <transfer>
-    #         <idTransfer>1</idTransfer>
-    #         <transferAmount>10.00</transferAmount>
-    #         <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
-    #         <IBAN>IT45R0760103200000000001016</IBAN>
-    #         <remittanceInformation>testPaGetPayment</remittanceInformation>
-    #         <transferCategory>paGetPaymentTest</transferCategory>
-    #         </transfer>
-    #         </transferList>
-    #         <!--Optional:-->
-    #         <metadata>
-    #         <!--1 to 10 repetitions:-->
-    #         <mapEntry>
-    #         <key>1</key>
-    #         <value>22</value>
-    #         </mapEntry>
-    #         </metadata>
-    #         </data>
-    #         </paf:paGetPaymentRes>
-    #         </soapenv:Body>
-    #         </soapenv:Envelope>
-    #         """
-    #     And EC replies to nodo-dei-pagamenti with the paGetPayment
-    #     When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-    #     Then check outcome is OK of activatePaymentNoticeV2 response
-    #     And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_3Request
-    #     And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_3
-    #     And saving paGetPayment request in paGetPayment_3Request
 
 
     Scenario: closePaymentV2 with 2 paymentToken
@@ -351,7 +269,7 @@ Feature: happy flow multitoken test for NM1
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
 
-    @multiToken @NM1 @ALL
+    @ilaria
     Scenario: sendPaymentOutcomeV2 with 2 paymentToken
         Given the closePaymentV2 with 2 paymentToken scenario executed successfully
         And initial XML sendPaymentOutcomeV2
