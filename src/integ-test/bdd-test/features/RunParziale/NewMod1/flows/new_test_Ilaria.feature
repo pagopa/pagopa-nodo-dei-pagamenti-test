@@ -102,7 +102,7 @@ Feature: NEW TEST ILARIA MULTITOKEN
             <transferCategory>paGetPaymentTest</transferCategory>
             </transfer>
             <transfer>
-            <idTransfer>1</idTransfer>
+            <idTransfer>2</idTransfer>
             <transferAmount>5.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
@@ -210,7 +210,7 @@ Feature: NEW TEST ILARIA MULTITOKEN
             <transferCategory>paGetPaymentTest</transferCategory>
             </transfer>
             <transfer>
-            <idTransfer>1</idTransfer>
+            <idTransfer>2</idTransfer>
             <transferAmount>5.00</transferAmount>
             <fiscalCodePA>90000000001</fiscalCodePA>
             <companyName>companySec</companyName>
