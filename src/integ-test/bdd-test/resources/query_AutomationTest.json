@@ -416,5 +416,10 @@
     },
     "getFees": {
         "select_fees": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND IDENTIFICATIVO_DOMINIO = '$activatePaymentNoticeV2.fiscalCode' AND TIPO_EVENTO = 'fees' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE) ORDER BY ID ASC"
+    },
+    "newtest": {
+        "stationUpdateBroadcastNewTestForSecStations": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('11991','4339')",
+        "stationUpdateBroadcastNewTestForPriStations": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('1689962','1340001','1380001')",
+        "stationUpdateBroadcastNewTestForPriSecStations": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('1689962','1340001','11991','4339','1380001')"
     }
 }
