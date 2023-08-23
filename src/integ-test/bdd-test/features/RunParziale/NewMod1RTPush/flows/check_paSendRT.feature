@@ -4,7 +4,7 @@ Feature: NEW TEST 8 CASE
         Given systems up
 
 
-### NEW TEST 1 ACTIVATE - PA PRINCIPALE SENZA BROADCAST E PA SECONDARIA SENZA BROADCAST - VER. PRIMITIVE 1
+### CHECK PaSendRT TEST 1 ACTIVATE - PA PRINCIPALE SENZA BROADCAST E PA SECONDARIA SENZA BROADCAST - VER. PRIMITIVE 1
 
     Scenario: checkPosition staz principale ver uno
         Given initial json checkPosition
@@ -149,7 +149,7 @@ Feature: NEW TEST 8 CASE
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
 
-    @newtest1activate
+    @checkpasendrt1activate @activate @ALL
     Scenario: sendPaymentOutcomeV2 - PA principale senza broadcast e pa secondaria senza broadcast - ver. primitive 1
         Given the closePaymentV2 with activatePaymentNoticeV2 staz principale ver uno scenario executed successfully
         And initial XML sendPaymentOutcomeV2
@@ -203,16 +203,17 @@ Feature: NEW TEST 8 CASE
             """
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
+        #CHECK PASENDRT ON TABLE POSITION_RECEIPT_RECIPIENT
+        And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_pos_receipt_recipient_with_act_tok_by_PAY_TOKEN on db nodo_online under macro check_pa_send_rt
 
-
-### NEW TEST 2 ACTIVATE - PA PRINCIPALE SENZA BROADCAST E PA SECONDARIA CON 2 BROADCAST - VER. PRIMITIVE 1
+### CHECK PaSendRT TEST 2 ACTIVATE - PA PRINCIPALE SENZA BROADCAST E PA SECONDARIA CON 2 BROADCAST - VER. PRIMITIVE 1
 
     Scenario: Update broadcast for secondary pa
-        Given updates through the query stationUpdateBroadcastNewTestForSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro newtest on db nodo_cfg
+        Given updates through the query stationUpdateBroadcastNewTestForSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro check_pa_send_rt on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
 
 
-    @newtest2activate
+    @checkpasendrt2activate @activate @ALL
     Scenario: sendPaymentOutcomeV2 - PA principale senza broadcast e pa secondaria con 2 broadcast - ver. primitive 1
         Given the Update broadcast for secondary pa scenario executed successfully
         And the closePaymentV2 with activatePaymentNoticeV2 staz principale ver uno scenario executed successfully
@@ -267,18 +268,20 @@ Feature: NEW TEST 8 CASE
             """
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-        And updates through the query stationUpdateBroadcastNewTestForSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro newtest on db nodo_cfg
+        And updates through the query stationUpdateBroadcastNewTestForSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
+        #CHECK PASENDRT ON TABLE POSITION_RECEIPT_RECIPIENT
+        And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_pos_receipt_recipient_with_act_tok_by_PAY_TOKEN on db nodo_online under macro check_pa_send_rt
 
 
-### NEW TEST 3 ACTIVATE - PA PRINCIPALE CON 2 BROADCAST E PA SECONDARIA SENZA BROADCAST - VER. PRIMITIVE 1
+### CHECK PaSendRT TEST 3 ACTIVATE - PA PRINCIPALE CON 2 BROADCAST E PA SECONDARIA SENZA BROADCAST - VER. PRIMITIVE 1
 
     Scenario: Update broadcast for primary pa
-        Given updates through the query stationUpdateBroadcastNewTestForPriStations of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro newtest on db nodo_cfg
+        Given updates through the query stationUpdateBroadcastNewTestForPriStations of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro check_pa_send_rt on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
 
 
-    @newtest3activate
+    @checkpasendrt3activate @activate @ALL
     Scenario: sendPaymentOutcomeV2 - PA principale con 2 broadcast e pa secondaria senza broadcast - ver. primitive 1
         Given the Update broadcast for primary pa scenario executed successfully
         And the closePaymentV2 with activatePaymentNoticeV2 staz principale ver uno scenario executed successfully
@@ -333,18 +336,20 @@ Feature: NEW TEST 8 CASE
             """
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-        And updates through the query stationUpdateBroadcastNewTestForPriStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro newtest on db nodo_cfg
+        And updates through the query stationUpdateBroadcastNewTestForPriStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
+        #CHECK PASENDRT ON TABLE POSITION_RECEIPT_RECIPIENT
+        And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_pos_receipt_recipient_with_act_tok_by_PAY_TOKEN on db nodo_online under macro check_pa_send_rt
 
 
-### NEW TEST 4 ACTIVATE - PA PRINCIPALE CON 2 BROADCAST E PA SECONDARIA CON 2 BROADCAST - VER. PRIMITIVE 1
+### CHECK PaSendRT TEST 4 ACTIVATE - PA PRINCIPALE CON 2 BROADCAST E PA SECONDARIA CON 2 BROADCAST - VER. PRIMITIVE 1
 
     Scenario: Update broadcast for primary and secondary pa
-        Given updates through the query stationUpdateBroadcastNewTestForPriSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro newtest on db nodo_cfg
+        Given updates through the query stationUpdateBroadcastNewTestForPriSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro check_pa_send_rt on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
 
 
-    @newtest4activate
+    @checkpasendrt4activate @activate @ALL
     Scenario: sendPaymentOutcomeV2 - PA principale con 2 broadcast e pa secondaria con 2 broadcast - ver. primitive 1
         Given the Update broadcast for primary and secondary pa scenario executed successfully
         And the closePaymentV2 with activatePaymentNoticeV2 staz principale ver uno scenario executed successfully
@@ -399,11 +404,13 @@ Feature: NEW TEST 8 CASE
             """
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-        And updates through the query stationUpdateBroadcastNewTestForPriSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro newtest on db nodo_cfg
+        And updates through the query stationUpdateBroadcastNewTestForPriSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
+        #CHECK PASENDRT ON TABLE POSITION_RECEIPT_RECIPIENT
+        And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_pos_receipt_recipient_with_act_tok_by_PAY_TOKEN on db nodo_online under macro check_pa_send_rt
 
 
-### NEW TEST 5 ACTIVATE - PA PRINCIPALE SENZA BROADCAST E PA SECONDARIA SENZA BROADCAST - VER. PRIMITIVE 2
+### CHECK PaSendRT TEST 5 ACTIVATE - PA PRINCIPALE SENZA BROADCAST E PA SECONDARIA SENZA BROADCAST - VER. PRIMITIVE 2
 
     Scenario: checkPosition staz principale ver due
         Given initial json checkPosition
@@ -557,7 +564,7 @@ Feature: NEW TEST 8 CASE
         And wait 5 seconds for expiration
 
 
-    @newtest5activate
+    @checkpasendrt5activate @activate @ALL
     Scenario: sendPaymentOutcomeV2 - PA principale senza broadcast e pa secondaria senza broadcast - ver. primitive 2
         Given the closePaymentV2 with activatePaymentNoticeV2 staz principale ver due scenario executed successfully
         And initial XML sendPaymentOutcomeV2
@@ -611,11 +618,12 @@ Feature: NEW TEST 8 CASE
             """
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
+        #CHECK PASENDRT ON TABLE POSITION_RECEIPT_RECIPIENT
+        And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_pos_receipt_recipient_with_act_tok_by_PAY_TOKEN on db nodo_online under macro check_pa_send_rt
 
+### CHECK PaSendRT TEST 6 ACTIVATE - PA PRINCIPALE SENZA BROADCAST E PA SECONDARIA CON 2 BROADCAST - VER. PRIMITIVE 2
 
-### NEW TEST 6 ACTIVATE - PA PRINCIPALE SENZA BROADCAST E PA SECONDARIA CON 2 BROADCAST - VER. PRIMITIVE 2
-
-    @newtest6activate
+    @checkpasendrt6activate @activate @ALL
     Scenario: sendPaymentOutcomeV2 - PA principale senza broadcast e pa secondaria con 2 broadcast - ver. primitive 2
         Given the Update broadcast for secondary pa scenario executed successfully
         And the closePaymentV2 with activatePaymentNoticeV2 staz principale ver due scenario executed successfully
@@ -670,14 +678,15 @@ Feature: NEW TEST 8 CASE
             """
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-        And updates through the query stationUpdateBroadcastNewTestForSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro newtest on db nodo_cfg
+        And updates through the query stationUpdateBroadcastNewTestForSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
+        #CHECK PASENDRT ON TABLE POSITION_RECEIPT_RECIPIENT
+        And verify 3 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_pos_receipt_recipient_with_act_tok_by_PAY_TOKEN on db nodo_online under macro check_pa_send_rt
 
 
+### CHECK PaSendRT TEST 7 ACTIVATE - PA PRINCIPALE CON 2 BROADCAST E PA SECONDARIA SENZA BROADCAST - VER. PRIMITIVE 2
 
-### NEW TEST 7 ACTIVATE - PA PRINCIPALE CON 2 BROADCAST E PA SECONDARIA SENZA BROADCAST - VER. PRIMITIVE 2
-
-    @newtest7activate
+    @checkpasendrt7activate @activate @ALL
     Scenario: sendPaymentOutcomeV2 - PA principale con 2 broadcast e pa secondaria senza broadcast - ver. primitive 2
         Given the Update broadcast for primary pa scenario executed successfully
         And the closePaymentV2 with activatePaymentNoticeV2 staz principale ver due scenario executed successfully
@@ -732,14 +741,16 @@ Feature: NEW TEST 8 CASE
             """
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-        And updates through the query stationUpdateBroadcastNewTestForPriStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro newtest on db nodo_cfg
+        And updates through the query stationUpdateBroadcastNewTestForPriStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
+        #CHECK PASENDRT ON TABLE POSITION_RECEIPT_RECIPIENT
+        And verify 2 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_pos_receipt_recipient_with_act_tok_by_PAY_TOKEN on db nodo_online under macro check_pa_send_rt
 
 
 
-### NEW TEST 8 ACTIVATE - PA PRINCIPALE CON 2 BROADCAST E PA SECONDARIA CON 2 BROADCAST - VER. PRIMITIVE 2
+### CHECK PaSendRT TEST 8 ACTIVATE - PA PRINCIPALE CON 2 BROADCAST E PA SECONDARIA CON 2 BROADCAST - VER. PRIMITIVE 2
 
-    @newtest8activate
+    @checkpasendrt8activate @activate @ALL
     Scenario: sendPaymentOutcomeV2 - PA principale con 2 broadcast e pa secondaria con 2 broadcast - ver. primitive 2
         Given the Update broadcast for primary and secondary pa scenario executed successfully
         And the closePaymentV2 with activatePaymentNoticeV2 staz principale ver due scenario executed successfully
@@ -794,13 +805,15 @@ Feature: NEW TEST 8 CASE
             """
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-        And updates through the query stationUpdateBroadcastNewTestForPriSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro newtest on db nodo_cfg
+        And updates through the query stationUpdateBroadcastNewTestForPriSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
+        #CHECK PASENDRT ON TABLE POSITION_RECEIPT_RECIPIENT
+        And verify 4 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_pos_receipt_recipient_with_act_tok_by_PAY_TOKEN on db nodo_online under macro check_pa_send_rt
 
 
 #### CARRELLO
 
-### NEW TEST 1 CARRELLO - PA PRINCIPALE SENZA BROADCAST E PA SECONDARIA SENZA BROADCAST - VER. PRIMITIVE 1
+### CHECK PaSendRT TEST 1 CARRELLO - PA PRINCIPALE SENZA BROADCAST E PA SECONDARIA SENZA BROADCAST - VER. PRIMITIVE 1
 
     Scenario: RPT generation staz principale ver uno
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
@@ -1255,7 +1268,7 @@ Feature: NEW TEST 8 CASE
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @newtest1carrello
+    @checkpasendrt1carrello @carrello @ALL
     Scenario: Execute nodoInviaRT request - PA principale senza broadcast e pa secondaria senza broadcast - ver. primitive 1
         Given the Execute nodoInviaRT staz principale ver uno scenario executed successfully
         And initial XML nodoInviaRT
@@ -1280,12 +1293,14 @@ Feature: NEW TEST 8 CASE
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
+        #CHECK PASENDRT ON TABLE POSITION_RECEIPT_RECIPIENT
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_pos_receipt_recipient_with_id_carrello_by_PAY_TOKEN on db nodo_online under macro check_pa_send_rt
 
 
-### NEW TEST 2 CARRELLO - PA PRINCIPALE SENZA BROADCAST E PA SECONDARIA CON 2 BROADCAST - VER. PRIMITIVE 1
+### CHECK PaSendRT TEST 2 CARRELLO - PA PRINCIPALE SENZA BROADCAST E PA SECONDARIA CON 2 BROADCAST - VER. PRIMITIVE 1
 
 
-    @newtest2carrello
+    @checkpasendrt2carrello @carrello @ALL
     Scenario: Execute nodoInviaRT request - PA principale senza broadcast e pa secondaria con 2 broadcast - ver. primitive 1
         Given the Update broadcast for secondary pa scenario executed successfully
         And the Execute nodoInviaRT staz principale ver uno scenario executed successfully
@@ -1311,14 +1326,16 @@ Feature: NEW TEST 8 CASE
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-        And updates through the query stationUpdateBroadcastNewTestForSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro newtest on db nodo_cfg
+        And updates through the query stationUpdateBroadcastNewTestForSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
+        #CHECK PASENDRT ON TABLE POSITION_RECEIPT_RECIPIENT
+        And verify 2 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_pos_receipt_recipient_with_id_carrello_by_PAY_TOKEN on db nodo_online under macro check_pa_send_rt
 
 
 
-### NEW TEST 3 CARRELLO - PA PRINCIPALE CON 2 BROADCAST E PA SECONDARIA SENZA BROADCAST - VER. PRIMITIVE 1
+### CHECK PaSendRT TEST 3 CARRELLO - PA PRINCIPALE CON 2 BROADCAST E PA SECONDARIA SENZA BROADCAST - VER. PRIMITIVE 1
 
-    @newtest3carrello
+    @checkpasendrt3carrello @carrello @ALL
     Scenario: Execute nodoInviaRT request - PA principale con 2 broadcast e pa secondaria senza broadcast - ver. primitive 1
         Given the Update broadcast for primary pa scenario executed successfully
         And the Execute nodoInviaRT staz principale ver uno scenario executed successfully
@@ -1344,16 +1361,18 @@ Feature: NEW TEST 8 CASE
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-        And updates through the query stationUpdateBroadcastNewTestForPriStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro newtest on db nodo_cfg
+        And updates through the query stationUpdateBroadcastNewTestForPriStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
+        #CHECK PASENDRT ON TABLE POSITION_RECEIPT_RECIPIENT
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_pos_receipt_recipient_with_id_carrello_by_PAY_TOKEN on db nodo_online under macro check_pa_send_rt
 
 
 
 
-### NEW TEST 4 CARRELLO - PA PRINCIPALE CON 2 BROADCAST E PA SECONDARIA CON 2 BROADCAST - VER. PRIMITIVE 1
+### CHECK PaSendRT TEST 4 CARRELLO - PA PRINCIPALE CON 2 BROADCAST E PA SECONDARIA CON 2 BROADCAST - VER. PRIMITIVE 1
 
 
-    @newtest4carrello
+    @checkpasendrt4carrello @carrello @ALL
     Scenario: Execute nodoInviaRT request - PA principale con 2 broadcast e pa secondaria con 2 broadcast - ver. primitive 1
         Given the Update broadcast for primary and secondary pa scenario executed successfully
         And the Execute nodoInviaRT staz principale ver uno scenario executed successfully
@@ -1379,12 +1398,14 @@ Feature: NEW TEST 8 CASE
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-        And updates through the query stationUpdateBroadcastNewTestForPriSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro newtest on db nodo_cfg
+        And updates through the query stationUpdateBroadcastNewTestForPriSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
+        #CHECK PASENDRT ON TABLE POSITION_RECEIPT_RECIPIENT
+        And verify 2 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_pos_receipt_recipient_with_id_carrello_by_PAY_TOKEN on db nodo_online under macro check_pa_send_rt
 
 
 
-### NEW TEST 5 CARRELLO - PA PRINCIPALE SENZA BROADCAST E PA SECONDARIA SENZA BROADCAST - VER. PRIMITIVE 2
+### CHECK PaSendRT TEST 5 CARRELLO - PA PRINCIPALE SENZA BROADCAST E PA SECONDARIA SENZA BROADCAST - VER. PRIMITIVE 2
 
     Scenario: RPT generation staz principale ver due
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
@@ -1839,7 +1860,7 @@ Feature: NEW TEST 8 CASE
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @newtest5carrello
+    @checkpasendrt5carrello @carrello @ALL
     Scenario: Execute nodoInviaRT request - PA principale senza broadcast e pa secondaria senza broadcast - ver. primitive 2
         Given the Execute nodoInviaRT staz principale ver due scenario executed successfully
         And initial XML nodoInviaRT
@@ -1864,12 +1885,14 @@ Feature: NEW TEST 8 CASE
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
+        #CHECK PASENDRT ON TABLE POSITION_RECEIPT_RECIPIENT
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_pos_receipt_recipient_with_id_carrello_by_PAY_TOKEN on db nodo_online under macro check_pa_send_rt
 
 
-### NEW TEST 6 CARRELLO - PA PRINCIPALE SENZA BROADCAST E PA SECONDARIA CON 2 BROADCAST - VER. PRIMITIVE 2
+### CHECK PaSendRT TEST 6 CARRELLO - PA PRINCIPALE SENZA BROADCAST E PA SECONDARIA CON 2 BROADCAST - VER. PRIMITIVE 2
 
 
-    @newtest6carrello
+    @checkpasendrt6carrello @carrello @ALL
     Scenario: Execute nodoInviaRT request - PA principale senza broadcast e pa secondaria con 2 broadcast - ver. primitive 2
         Given the Update broadcast for secondary pa scenario executed successfully
         And the Execute nodoInviaRT staz principale ver due scenario executed successfully
@@ -1895,16 +1918,18 @@ Feature: NEW TEST 8 CASE
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-        And updates through the query stationUpdateBroadcastNewTestForSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro newtest on db nodo_cfg
+        And updates through the query stationUpdateBroadcastNewTestForSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
+        #CHECK PASENDRT ON TABLE POSITION_RECEIPT_RECIPIENT
+        And verify 2 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_pos_receipt_recipient_with_id_carrello_by_PAY_TOKEN on db nodo_online under macro check_pa_send_rt
 
 
 
 
-### NEW TEST 7 CARRELLO - PA PRINCIPALE CON 2 BROADCAST E PA SECONDARIA SENZA BROADCAST - VER. PRIMITIVE 2
+### CHECK PaSendRT TEST 7 CARRELLO - PA PRINCIPALE CON 2 BROADCAST E PA SECONDARIA SENZA BROADCAST - VER. PRIMITIVE 2
 
 
-    @newtest7carrello
+    @checkpasendrt7carrello @carrello @ALL
     Scenario: Execute nodoInviaRT request - PA principale con 2 broadcast e pa secondaria senza broadcast - ver. primitive 2
         Given the Update broadcast for primary pa scenario executed successfully
         And the Execute nodoInviaRT staz principale ver due scenario executed successfully
@@ -1930,16 +1955,18 @@ Feature: NEW TEST 8 CASE
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-        And updates through the query stationUpdateBroadcastNewTestForPriStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro newtest on db nodo_cfg
+        And updates through the query stationUpdateBroadcastNewTestForPriStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
+        #CHECK PASENDRT ON TABLE POSITION_RECEIPT_RECIPIENT
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_pos_receipt_recipient_with_id_carrello_by_PAY_TOKEN on db nodo_online under macro check_pa_send_rt
 
 
 
 
-### NEW TEST 8 CARRELLO - PA PRINCIPALE CON 2 BROADCAST E PA SECONDARIA CON 2 BROADCAST - VER. PRIMITIVE 2
+### CHECK PaSendRT TEST 8 CARRELLO - PA PRINCIPALE CON 2 BROADCAST E PA SECONDARIA CON 2 BROADCAST - VER. PRIMITIVE 2
 
 
-    @newtest8carrello
+    @checkpasendrt8carrello @carrello @ALL
     Scenario: Execute nodoInviaRT request - PA principale con 2 broadcast e pa secondaria con 2 broadcast - ver. primitive 2
         Given the Update broadcast for primary and secondary pa scenario executed successfully
         And the Execute nodoInviaRT staz principale ver due scenario executed successfully
@@ -1965,5 +1992,7 @@ Feature: NEW TEST 8 CASE
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-        And updates through the query stationUpdateBroadcastNewTestForPriSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro newtest on db nodo_cfg
+        And updates through the query stationUpdateBroadcastNewTestForPriSecStations of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
+        #CHECK PASENDRT ON TABLE POSITION_RECEIPT_RECIPIENT
+        And verify 2 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_pos_receipt_recipient_with_id_carrello_by_PAY_TOKEN on db nodo_online under macro check_pa_send_rt
