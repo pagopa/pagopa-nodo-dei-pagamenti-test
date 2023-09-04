@@ -151,7 +151,9 @@ Feature: NEW TEST 8 CASE
 
     @checkpasendrt1activate @activate @ALL
     Scenario: sendPaymentOutcomeV2 - PA principale senza broadcast e pa secondaria senza broadcast - ver. primitive 1
-        Given the closePaymentV2 with activatePaymentNoticeV2 staz principale ver uno scenario executed successfully
+        Given updates through the query broadcastAllN of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the closePaymentV2 with activatePaymentNoticeV2 staz principale ver uno scenario executed successfully
         And initial XML sendPaymentOutcomeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -215,7 +217,9 @@ Feature: NEW TEST 8 CASE
 
     @checkpasendrt2activate @activate @ALL
     Scenario: sendPaymentOutcomeV2 - PA principale senza broadcast e pa secondaria con 2 broadcast - ver. primitive 1
-        Given the Update broadcast for secondary pa scenario executed successfully
+        Given updates through the query broadcastAllN of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the Update broadcast for secondary pa scenario executed successfully
         And the closePaymentV2 with activatePaymentNoticeV2 staz principale ver uno scenario executed successfully
         And initial XML sendPaymentOutcomeV2
             """
@@ -283,7 +287,9 @@ Feature: NEW TEST 8 CASE
 
     @checkpasendrt3activate @activate @ALL
     Scenario: sendPaymentOutcomeV2 - PA principale con 2 broadcast e pa secondaria senza broadcast - ver. primitive 1
-        Given the Update broadcast for primary pa scenario executed successfully
+        Given updates through the query broadcastAllN of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the Update broadcast for primary pa scenario executed successfully
         And the closePaymentV2 with activatePaymentNoticeV2 staz principale ver uno scenario executed successfully
         And initial XML sendPaymentOutcomeV2
             """
@@ -351,7 +357,9 @@ Feature: NEW TEST 8 CASE
 
     @checkpasendrt4activate @activate @ALL
     Scenario: sendPaymentOutcomeV2 - PA principale con 2 broadcast e pa secondaria con 2 broadcast - ver. primitive 1
-        Given the Update broadcast for primary and secondary pa scenario executed successfully
+        Given updates through the query broadcastAllN of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the Update broadcast for primary and secondary pa scenario executed successfully
         And the closePaymentV2 with activatePaymentNoticeV2 staz principale ver uno scenario executed successfully
         And initial XML sendPaymentOutcomeV2
             """
@@ -566,7 +574,9 @@ Feature: NEW TEST 8 CASE
 
     @checkpasendrt5activate @activate @ALL
     Scenario: sendPaymentOutcomeV2 - PA principale senza broadcast e pa secondaria senza broadcast - ver. primitive 2
-        Given the closePaymentV2 with activatePaymentNoticeV2 staz principale ver due scenario executed successfully
+        Given updates through the query broadcastAllN of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the closePaymentV2 with activatePaymentNoticeV2 staz principale ver due scenario executed successfully
         And initial XML sendPaymentOutcomeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -625,7 +635,9 @@ Feature: NEW TEST 8 CASE
 
     @checkpasendrt6activate @activate @ALL
     Scenario: sendPaymentOutcomeV2 - PA principale senza broadcast e pa secondaria con 2 broadcast - ver. primitive 2
-        Given the Update broadcast for secondary pa scenario executed successfully
+        Given updates through the query broadcastAllN of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the Update broadcast for secondary pa scenario executed successfully
         And the closePaymentV2 with activatePaymentNoticeV2 staz principale ver due scenario executed successfully
         And initial XML sendPaymentOutcomeV2
             """
@@ -688,7 +700,9 @@ Feature: NEW TEST 8 CASE
 
     @checkpasendrt7activate @activate @ALL
     Scenario: sendPaymentOutcomeV2 - PA principale con 2 broadcast e pa secondaria senza broadcast - ver. primitive 2
-        Given the Update broadcast for primary pa scenario executed successfully
+        Given updates through the query broadcastAllN of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the Update broadcast for primary pa scenario executed successfully
         And the closePaymentV2 with activatePaymentNoticeV2 staz principale ver due scenario executed successfully
         And initial XML sendPaymentOutcomeV2
             """
@@ -752,7 +766,9 @@ Feature: NEW TEST 8 CASE
 
     @checkpasendrt8activate @activate @ALL
     Scenario: sendPaymentOutcomeV2 - PA principale con 2 broadcast e pa secondaria con 2 broadcast - ver. primitive 2
-        Given the Update broadcast for primary and secondary pa scenario executed successfully
+        Given updates through the query broadcastAllN of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the Update broadcast for primary and secondary pa scenario executed successfully
         And the closePaymentV2 with activatePaymentNoticeV2 staz principale ver due scenario executed successfully
         And initial XML sendPaymentOutcomeV2
             """
@@ -1270,7 +1286,9 @@ Feature: NEW TEST 8 CASE
 
     @checkpasendrt1carrello @carrello @ALL
     Scenario: Execute nodoInviaRT request - PA principale senza broadcast e pa secondaria senza broadcast - ver. primitive 1
-        Given the Execute nodoInviaRT staz principale ver uno scenario executed successfully
+        Given updates through the query broadcastAllN of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the Execute nodoInviaRT staz principale ver uno scenario executed successfully
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -1302,7 +1320,9 @@ Feature: NEW TEST 8 CASE
 
     @checkpasendrt2carrello @carrello @ALL
     Scenario: Execute nodoInviaRT request - PA principale senza broadcast e pa secondaria con 2 broadcast - ver. primitive 1
-        Given the Update broadcast for secondary pa scenario executed successfully
+        Given updates through the query broadcastAllN of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the Update broadcast for secondary pa scenario executed successfully
         And the Execute nodoInviaRT staz principale ver uno scenario executed successfully
         And initial XML nodoInviaRT
             """
@@ -1337,7 +1357,9 @@ Feature: NEW TEST 8 CASE
 
     @checkpasendrt3carrello @carrello @ALL
     Scenario: Execute nodoInviaRT request - PA principale con 2 broadcast e pa secondaria senza broadcast - ver. primitive 1
-        Given the Update broadcast for primary pa scenario executed successfully
+        Given updates through the query broadcastAllN of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the Update broadcast for primary pa scenario executed successfully
         And the Execute nodoInviaRT staz principale ver uno scenario executed successfully
         And initial XML nodoInviaRT
             """
@@ -1374,7 +1396,9 @@ Feature: NEW TEST 8 CASE
 
     @checkpasendrt4carrello @carrello @ALL
     Scenario: Execute nodoInviaRT request - PA principale con 2 broadcast e pa secondaria con 2 broadcast - ver. primitive 1
-        Given the Update broadcast for primary and secondary pa scenario executed successfully
+        Given updates through the query broadcastAllN of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the Update broadcast for primary and secondary pa scenario executed successfully
         And the Execute nodoInviaRT staz principale ver uno scenario executed successfully
         And initial XML nodoInviaRT
             """
@@ -1862,7 +1886,9 @@ Feature: NEW TEST 8 CASE
 
     @checkpasendrt5carrello @carrello @ALL
     Scenario: Execute nodoInviaRT request - PA principale senza broadcast e pa secondaria senza broadcast - ver. primitive 2
-        Given the Execute nodoInviaRT staz principale ver due scenario executed successfully
+        Given updates through the query broadcastAllN of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the Execute nodoInviaRT staz principale ver due scenario executed successfully
         And initial XML nodoInviaRT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -1894,7 +1920,9 @@ Feature: NEW TEST 8 CASE
 
     @checkpasendrt6carrello @carrello @ALL
     Scenario: Execute nodoInviaRT request - PA principale senza broadcast e pa secondaria con 2 broadcast - ver. primitive 2
-        Given the Update broadcast for secondary pa scenario executed successfully
+        Given updates through the query broadcastAllN of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the Update broadcast for secondary pa scenario executed successfully
         And the Execute nodoInviaRT staz principale ver due scenario executed successfully
         And initial XML nodoInviaRT
             """
@@ -1931,7 +1959,9 @@ Feature: NEW TEST 8 CASE
 
     @checkpasendrt7carrello @carrello @ALL
     Scenario: Execute nodoInviaRT request - PA principale con 2 broadcast e pa secondaria senza broadcast - ver. primitive 2
-        Given the Update broadcast for primary pa scenario executed successfully
+        Given updates through the query broadcastAllN of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the Update broadcast for primary pa scenario executed successfully
         And the Execute nodoInviaRT staz principale ver due scenario executed successfully
         And initial XML nodoInviaRT
             """
@@ -1968,7 +1998,9 @@ Feature: NEW TEST 8 CASE
 
     @checkpasendrt8carrello @carrello @ALL
     Scenario: Execute nodoInviaRT request - PA principale con 2 broadcast e pa secondaria con 2 broadcast - ver. primitive 2
-        Given the Update broadcast for primary and secondary pa scenario executed successfully
+        Given updates through the query broadcastAllN of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro check_pa_send_rt on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the Update broadcast for primary and secondary pa scenario executed successfully
         And the Execute nodoInviaRT staz principale ver due scenario executed successfully
         And initial XML nodoInviaRT
             """

@@ -422,6 +422,7 @@
         "select_pos_receipt_recipient_with_id_carrello_by_PAY_TOKEN": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$nodoInviaCarrelloRPT.identificativoCarrello' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE)",
         "stationUpdateBroadcastNewTestForSecStations": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('11991','4339')",
         "stationUpdateBroadcastNewTestForPriStations": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('1689962','1340001','1380001')",
-        "stationUpdateBroadcastNewTestForPriSecStations": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('1689962','1340001','11991','4339','1380001')"
+        "stationUpdateBroadcastNewTestForPriSecStations": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('1689962','1340001','11991','4339','1380001')",
+        "broadcastAllN": "UPDATE table_name SET param = 'value' where OBJ_ID IN ('1689962','1340001','1380001','1201','11991','4339','11993','11995')"
     }
 }
