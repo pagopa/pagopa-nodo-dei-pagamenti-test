@@ -1,4 +1,4 @@
-Feature: happy flow multitoken test for NM1 
+Feature: failure scenario SPO
 
     Background:
         Given systems up
@@ -251,8 +251,8 @@ Feature: happy flow multitoken test for NM1
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
 
-    @multiToken @NM1 @ALL
-    Scenario: sendPaymentOutcomeV2 with 2 paymentToken
+    @failureSPO1 @NM1 @ALL
+    Scenario: sendPaymentOutcomeV2 without 1 paymentToken
         Given the closePaymentV2 with 2 paymentToken scenario executed successfully
         And initial XML sendPaymentOutcomeV2
             """
@@ -266,7 +266,6 @@ Feature: happy flow multitoken test for NM1
             <password>#password#</password>
             <paymentTokens>
             <paymentToken>$activatePaymentNoticeV2_1Response.paymentToken</paymentToken>
-            <paymentToken>$activatePaymentNoticeV2_2Response.paymentToken</paymentToken>
             </paymentTokens>
             <outcome>OK</outcome>
             <!--Optional:-->
