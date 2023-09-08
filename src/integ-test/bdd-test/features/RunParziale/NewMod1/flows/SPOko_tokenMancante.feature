@@ -1,4 +1,4 @@
-Feature: failure scenario SPO
+Feature: failure scenario SPO without second paymentToken
 
     Background:
         Given systems up
@@ -251,7 +251,7 @@ Feature: failure scenario SPO
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
 
-    @failureSPO1 @NM1 @ALL
+
     Scenario: sendPaymentOutcomeV2 without 1 paymentToken
         Given the closePaymentV2 with 2 paymentToken scenario executed successfully
         And initial XML sendPaymentOutcomeV2
@@ -304,4 +304,66 @@ Feature: failure scenario SPO
             </soapenv:Envelope>
             """
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcomeV2 response
+
+    @failureSPO1 @NM1 @ALL
+    Scenario: sendPaymentOutcomeV2 OK
+        Given the sendPaymentOutcomeV2 without 1 paymentToken scenario executed successfully
+        And initial XML sendPaymentOutcomeV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:sendPaymentOutcomeV2Request>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <paymentTokens>
+            <paymentToken>$activatePaymentNoticeV2_1Response.paymentToken</paymentToken>
+            <paymentToken>$activatePaymentNoticeV2_2Response.paymentToken</paymentToken>
+            </paymentTokens>
+            <outcome>OK</outcome>
+            <!--Optional:-->
+            <details>
+            <paymentMethod>creditCard</paymentMethod>
+            <!--Optional:-->
+            <paymentChannel>app</paymentChannel>
+            <fee>2.00</fee>
+            <!--Optional:-->
+            <payer>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>name</fullName>
+            <!--Optional:-->
+            <streetName>street</streetName>
+            <!--Optional:-->
+            <civicNumber>civic</civicNumber>
+            <!--Optional:-->
+            <postalCode>postal</postalCode>
+            <!--Optional:-->
+            <city>city</city>
+            <!--Optional:-->
+            <stateProvinceRegion>state</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>prova@test.it</e-mail>
+            </payer>
+            <applicationDate>2021-12-12</applicationDate>
+            <transferDate>2021-12-11</transferDate>
+            </details>
+            </nod:sendPaymentOutcomeV2Request>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait until the update to the new state for the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
