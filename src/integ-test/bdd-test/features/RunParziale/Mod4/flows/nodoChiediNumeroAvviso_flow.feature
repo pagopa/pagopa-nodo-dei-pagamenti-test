@@ -383,7 +383,7 @@ Feature: flow tests for nodoChiediNumeroAvviso
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @test
+    @chiediNumeroAvviso @Mod4 @ALL
     Scenario: Test
         Given the nodoChiediNumeroAvviso scenario executed successfully
         And the nodoAttivaRPT scenario executed successfully
