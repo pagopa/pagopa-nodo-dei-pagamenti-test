@@ -241,8 +241,7 @@ def manipulate_soap_action(soap_action, elem, value):
             original_node = cloned_node
             cloned_node = original_node.cloneNode(2)
     else:
-        node = my_document.getElementsByTagName(
-            elem)[0] if my_document.getElementsByTagName(elem) else None
+        node = my_document.getElementsByTagName(elem)[0] if my_document.getElementsByTagName(elem) else None
 
         if node is None:
             # create

@@ -777,8 +777,7 @@ def step_impl(context, elem, value, action):
         value = utils.replace_local_variables(value, context)
         value = utils.replace_context_variables(value, context)
         value = utils.replace_global_variables(value, context)
-        xml = utils.manipulate_soap_action(
-            getattr(context, action), elem, value)
+        xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
         setattr(context, action, xml)
 
 
