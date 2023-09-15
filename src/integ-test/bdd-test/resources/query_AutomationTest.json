@@ -78,7 +78,7 @@
         "verifica_bollettino": "SELECT columns FROM table_name WHERE NOTICE_ID ='$verificaBollettino.noticeNumber' AND CCPOST = '$verificaBollettino.ccPost'",
         "pos_subj_deb": "SELECT columns FROM table_name su JOIN POSITION_SERVICE se ON su.ID = se.DEBTOR_ID WHERE se.PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and se.NOTICE_ID='$activatePaymentNotice.noticeNumber' and su.SUBJECT_TYPE='DEBTOR'",
         "pos_subj_payer": "SELECT columns FROM table_name su JOIN POSITION_SERVICE se ON su.ID = se.DEBTOR_ID WHERE se.PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and se.NOTICE_ID='$activatePaymentNotice.noticeNumber' and su.SUBJECT_TYPE='PAYER'",
-        "position_subject_2": "SELECT s.columns FROM POSITION_SUBJECT s JOIN POSITION_SERVICE pp ON pp.DEBTOR_ID = $DEBTOR_ID where pp.notice_id = '$activatePaymentNotice.noticeNumber' and pp.pa_fiscal_code= '$activatePaymentNotice.fiscalCode'",
+        "position_subject_2": "SELECT s.columns FROM POSITION_SUBJECT s JOIN POSITION_SERVICE pp ON pp.DEBTOR_ID = s.ID where DEBTOR_ID = $DEBTOR_ID and pp.notice_id = '$activatePaymentNotice.noticeNumber' and pp.pa_fiscal_code= '$activatePaymentNotice.fiscalCode'",
         "retry_pa_invia_rt_only_ccp": "SELECT columns FROM table_name  where CCP = '$activatePaymentNoticeResponse.paymentToken'",
         "retry_pa_invia_rt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND ID_DOMINIO= '$activatePaymentNotice.fiscalCode' ORDER BY ID ASC",
         "retry_pa_invia_rpt": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND PA_FISCAL_CODE= '$activatePaymentNotice.fiscalCode' ORDER BY ID ASC",
