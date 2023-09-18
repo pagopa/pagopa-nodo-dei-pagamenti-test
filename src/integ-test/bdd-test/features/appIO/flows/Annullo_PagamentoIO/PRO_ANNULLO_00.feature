@@ -85,10 +85,9 @@ Feature: PRO_ANNULLO_00
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>#cod_segr#$1iuv</creditorReferenceId>
+            <creditorReferenceId>#cod_segr#$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-07-31</dueDate>
-            <lastPayment>1</lastPayment>
             <description>TARI 2021</description>
             <companyName>company PA</companyName>
             <officeName>office PA</officeName>
@@ -116,6 +115,11 @@ Feature: PRO_ANNULLO_00
             <transferCategory>0101101IM</transferCategory>
             </transfer>
             </transferList>
+            <mapEntry>
+            <key>1</key>
+            <value>22</value>
+            </mapEntry>
+            </metadata>
             </data>
             </paf:paGetPaymentRes>
             </soapenv:Body>
@@ -214,6 +218,7 @@ Feature: PRO_ANNULLO_00
     @runnable
     Scenario: Execute activateIOPayment (Phase 5)
         Given the Execute nodoInoltraEsitoPagamentoCarta (Phase 4) scenario executed successfully
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
         And checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN, CANCELLED, PAYING of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
