@@ -260,7 +260,8 @@
     "costanti": {
         "get_broadcast": "SELECT columns FROM PA p, table_name psp WHERE p.OBJ_ID = psp.FK_PA AND p.ID_DOMINIO = '$verifyPaymentNotice.fiscalCode' AND psp.SEGREGAZIONE = '#cod_segr#'",
         "get_pa_id": "SELECT columns FROM table_name WHERE ID_DOMINIO = '$pa'",
-        "by_station_id": "SELECT columns FROM table_name WHERE ID_STAZIONE = '$station_id'"
+        "by_station_id": "SELECT columns FROM table_name WHERE ID_STAZIONE = '$station_id'",
+        "select_noticeGroup": "SELECT columns FROM table_name ps JOIN POSITION_PAYMENT_PLAN ppp ON ps.ID = ppp.FK_POSITION_SERVICE JOIN POSITION_STATUS_SNAPSHOT pss ON ps.ID = pss.FK_POSITION_SERVICE WHERE pss.PA_FISCAL_CODE = '66666666666' AND pss.STATUS = 'INSERTED' AND rownum <= 10 ORDER BY pss.INSERTED_TIMESTAMP ASC"
     },
     "update_query": {
         "idempotency_update": "UPDATE IDEMPOTENCY_CACHE SET VALID_TO = TO_DATE('date', 'YYYY-MM-DD HH24:MI:SS') WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcome.idempotencyKey' AND PSP_ID = '$sendPaymentOutcome.idPSP'",
