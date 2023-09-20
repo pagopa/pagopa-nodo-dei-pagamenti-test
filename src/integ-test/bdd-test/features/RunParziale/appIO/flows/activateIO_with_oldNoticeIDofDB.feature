@@ -4,8 +4,15 @@ Feature: activateIO with old notice number retrieved from DB
         Given systems up
 
     Scenario: Execute verifyPaymentNotice with old notice number retrieved from DB
-        Given execution query select_noticeGroup to get value on the table POSITION_SERVICE, with the columns ppp.NOTICE_ID, ppp.DUE_DATE, ppp.AMOUNT, ppp.FK_POSITION_SERVICE, ps.DESCRIPTION, ps.COMPANY_NAME, ps.OFFICE_NAME under macro costanti with db name nodo_online
-        And proof through the query select_noticeGroup retrieve param noticeID at position 0 and save it under the key noticeID
+        Given execution query select_noticeGroup to get value on the table POSITION_SERVICE, with the columns ppp.NOTICE_ID, ppp.CREDITOR_REFERENCE_ID, ppp.DUE_DATE, ppp.AMOUNT, ppp.FK_POSITION_SERVICE, ps.DESCRIPTION, ps.COMPANY_NAME, ps.OFFICE_NAME under macro costanti with db name nodo_online
+        And through the query select_noticeGroup retrieve valid noticeID from POSITION_PAYMENT_PLAN on db nodo_online
+        And retrieve param noticeID at position 0 and save it under the key noticeID through the query select_noticeGroup
+        And retrieve param creditorID at position 1 and save it under the key creditorID through the query select_noticeGroup
+        And retrieve param dueDate at position 2 and save it under the key dueDate through the query select_noticeGroup
+        And retrieve param amount at position 3 and save it under the key amount through the query select_noticeGroup
+        And retrieve param description at position 5 and save it under the key description through the query select_noticeGroup
+        And retrieve param companyName at position 6 and save it under the key companyName through the query select_noticeGroup
+        And retrieve param officeName at position 7 and save it under the key officeName through the query select_noticeGroup
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -18,7 +25,7 @@ Feature: activateIO with old notice number retrieved from DB
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>302119418687855040</noticeNumber>
+            <noticeNumber>$noticeID</noticeNumber>
             </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
@@ -47,13 +54,13 @@ Feature: activateIO with old notice number retrieved from DB
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>302119418687855040</noticeNumber>
+            <noticeNumber>$noticeID</noticeNumber>
             </qrCode>
             <!--Optional:-->
             <expirationTime>60000</expirationTime>
-            <amount>10.00</amount>
+            <amount>$amount.00</amount>
             <!--Optional:-->
-            <dueDate>2021-12-31</dueDate>
+            <dueDate>$dueDate</dueDate>
             <!--Optional:-->
             <paymentNote>responseFull</paymentNote>
             <!--Optional:-->
@@ -90,12 +97,12 @@ Feature: activateIO with old notice number retrieved from DB
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>02119418687855040</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-31</dueDate>
-            <description>description</description>
-            <companyName>company</companyName>
-            <officeName>office</officeName>
+            <creditorReferenceId>$creditorID</creditorReferenceId>
+            <paymentAmount>$amount.00</paymentAmount>
+            <dueDate>$dueDate</dueDate>
+            <description>$description</description>
+            <companyName>$companyName</companyName>
+            <officeName>$officeName</officeName>
             <debtor>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>F</entityUniqueIdentifierType>
@@ -134,7 +141,4 @@ Feature: activateIO with old notice number retrieved from DB
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-
-
-# amount, due date, company, description, office name, fk position service sia unico record dentro la position payment plan
 

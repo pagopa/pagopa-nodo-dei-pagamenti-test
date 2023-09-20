@@ -3107,36 +3107,51 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
     db.closeConnection(conn)
 
     
-@step(u"retrieve noticeID from DB ")
+
 
 
 
 
 
 # step per salvare nel context una variabile key recuperata dal db tramite query query_name
-@step("proof through the query {query_name} retrieve param {param} at position {position:d} and save it under the key {key}")
-def step_impl(context, query_name, param, position, key):
+@step("through the query {query_name} retrieve valid noticeID from POSITION_PAYMENT_PLAN on db {db_name}")
+def step_impl(context, query_name, db_name):
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
 
-    rowExpexted = "empty"
+    rowExpected = "empty"
 
     for row in result_query:
         notice_temp = row[0]
         print(row)
 
-        #QUERY
+        query = f"SELECT * FROM POSITION_PAYMENT_PLAN ppp WHERE NOTICE_ID = {notice_temp}"
 
-        if len(res) == 1:
-            rowExpexted = row
+        conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+
+        exec_query = db.executeQuery(conn, query)
+
+        if len(exec_query) == 1:
+            rowExpected = row
             break
 
-    assert rowExpexted != "empty", f"check expected element: {value}, obtained: {query_result}"
+    assert rowExpected != "empty", f"row is empty !"
+    
+    setattr(context, query_name, rowExpected)
 
 
+@step(u"retrieve param {param} at position {position:d} and save it under the key {key} through the query {query_name}")
+def step_impl(context, param, position, key, query_name):
+    rowExpected = getattr(context, query_name)
     if position == -1:  # il -1 recupera tutti i record
-        selected_element = [t[0] for t in result_query]
+        selected_element = [t[0] for t in rowExpected]
     else:
-        selected_element = result_query[0][position]
+        selected_element = rowExpected[position]
+        if key == "dueDate":
+            selected_element = selected_element[:9]
+
     print(f'{param}: {selected_element}')
     setattr(context, key, selected_element)
