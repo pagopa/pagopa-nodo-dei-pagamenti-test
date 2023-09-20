@@ -5,6 +5,7 @@ Feature: activateIO with old notice number retrieved from DB
 
     Scenario: Execute verifyPaymentNotice with old notice number retrieved from DB
         Given execution query select_noticeGroup to get value on the table POSITION_SERVICE, with the columns ppp.NOTICE_ID, ppp.DUE_DATE, ppp.AMOUNT, ppp.FK_POSITION_SERVICE, ps.DESCRIPTION, ps.COMPANY_NAME, ps.OFFICE_NAME under macro costanti with db name nodo_online
+        And proof through the query select_noticeGroup retrieve param noticeID at position 0 and save it under the key noticeID
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">

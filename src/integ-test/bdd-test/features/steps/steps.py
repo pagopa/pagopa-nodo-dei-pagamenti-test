@@ -3114,10 +3114,25 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
 
 
 # step per salvare nel context una variabile key recuperata dal db tramite query query_name
-@step("through the query {query_name} retrieve param {param} at position {position:d} and save it under the key {key}")
+@step("proof through the query {query_name} retrieve param {param} at position {position:d} and save it under the key {key}")
 def step_impl(context, query_name, param, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
+
+    rowExpexted = "empty"
+
+    for row in result_query:
+        notice_temp = row[0]
+        print(row)
+
+        #QUERY
+
+        if len(res) == 1:
+            rowExpexted = row
+            break
+
+    assert rowExpexted != "empty", f"check expected element: {value}, obtained: {query_result}"
+
 
     if position == -1:  # il -1 recupera tutti i record
         selected_element = [t[0] for t in result_query]
