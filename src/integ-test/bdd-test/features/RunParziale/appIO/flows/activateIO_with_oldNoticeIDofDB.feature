@@ -58,7 +58,7 @@ Feature: activateIO with old notice number retrieved from DB
             </qrCode>
             <!--Optional:-->
             <expirationTime>60000</expirationTime>
-            <amount>$amount.00</amount>
+            <amount>$amount</amount>
             <!--Optional:-->
             <dueDate>$dueDate</dueDate>
             <!--Optional:-->
@@ -98,7 +98,7 @@ Feature: activateIO with old notice number retrieved from DB
             <outcome>OK</outcome>
             <data>
             <creditorReferenceId>$creditorID</creditorReferenceId>
-            <paymentAmount>$amount.00</paymentAmount>
+            <paymentAmount>$amount</paymentAmount>
             <dueDate>$dueDate</dueDate>
             <description>$description</description>
             <companyName>$companyName</companyName>

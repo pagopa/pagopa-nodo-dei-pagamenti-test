@@ -3139,7 +3139,6 @@ def step_impl(context, query_name, db_name):
             break
 
     assert rowExpected != "empty", f"row is empty !"
-    
     setattr(context, query_name, rowExpected)
 
 
@@ -3151,7 +3150,9 @@ def step_impl(context, param, position, key, query_name):
     else:
         selected_element = rowExpected[position]
         if key == "dueDate":
-            selected_element = selected_element[:9]
+            selected_element = f"{selected_element.year}-{selected_element.month}-{selected_element.day}"
+        if key == "amount":
+            selected_element = f"{format(float(selected_element), '.2f')}"
 
     print(f'{param}: {selected_element}')
     setattr(context, key, selected_element)
