@@ -3,7 +3,8 @@ Feature: response tests for paDemandPaymentNotice
     Background:
         Given systems up
 
-    Scenario: demandPaymentNotice
+    @paDemandPaymentNotice_1 @Mod4 @ALL
+    Scenario Outline: Check paDemandPaymentNotice response with missing optional fields
         Given initial XML demandPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -20,9 +21,7 @@ Feature: response tests for paDemandPaymentNotice
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
-    Scenario: paDemandPaymentNotice
-        Given initial XML paDemandPaymentNotice
+        And initial XML paDemandPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Header/>
@@ -53,117 +52,6 @@ Feature: response tests for paDemandPaymentNotice
             </soapenv:Body>
             </soapenv:Envelope>
             """
-
-    Scenario: paDemandPaymentNotice with 2 paymentList
-        Given initial XML paDemandPaymentNotice
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <paf:paDemandPaymentNoticeResponse>
-            <outcome>OK</outcome>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>302#iuv#</noticeNumber>
-            </qrCode>
-            <paymentList>
-            <paymentOptionDescription>
-            <amount>10.00</amount>
-            <options>EQ</options>
-            <!--Optional:-->
-            <dueDate>2022-06-25</dueDate>
-            <!--Optional:-->
-            <detailDescription>descrizione dettagliata lato PA</detailDescription>
-            <!--Optional:-->
-            <allCCP>false</allCCP>
-            </paymentOptionDescription>
-            </paymentList>
-            <paymentList>
-            <paymentOptionDescription>
-            <amount>10.00</amount>
-            <options>EQ</options>
-            <!--Optional:-->
-            <dueDate>2022-06-25</dueDate>
-            <!--Optional:-->
-            <detailDescription>descrizione dettagliata lato PA</detailDescription>
-            <!--Optional:-->
-            <allCCP>false</allCCP>
-            </paymentOptionDescription>
-            </paymentList>
-            <paymentDescription>paymentDescription</paymentDescription>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companyName</companyName>
-            <officeName>officeName</officeName>
-            </paf:paDemandPaymentNoticeResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-    Scenario: paDemandPaymentNotice with 2 paymentOptionDescription
-        Given initial XML paDemandPaymentNotice
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <paf:paDemandPaymentNoticeResponse>
-            <outcome>OK</outcome>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>302#iuv#</noticeNumber>
-            </qrCode>
-            <paymentList>
-            <paymentOptionDescription>
-            <amount>10.00</amount>
-            <options>EQ</options>
-            <!--Optional:-->
-            <dueDate>2022-06-25</dueDate>
-            <!--Optional:-->
-            <detailDescription>descrizione dettagliata lato PA</detailDescription>
-            <!--Optional:-->
-            <allCCP>false</allCCP>
-            </paymentOptionDescription>
-            <paymentOptionDescription>
-            <amount>10.00</amount>
-            <options>EQ</options>
-            <!--Optional:-->
-            <dueDate>2022-06-25</dueDate>
-            <!--Optional:-->
-            <detailDescription>descrizione dettagliata lato PA</detailDescription>
-            <!--Optional:-->
-            <allCCP>false</allCCP>
-            </paymentOptionDescription>
-            </paymentList>
-            <paymentDescription>paymentDescription</paymentDescription>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companyName</companyName>
-            <officeName>officeName</officeName>
-            </paf:paDemandPaymentNoticeResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-
-    Scenario: paDemandPaymentNotice KO
-        Given initial XML paDemandPaymentNotice
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <paf:paDemandPaymentNoticeResponse>
-            <outcome>KO</outcome>
-            <fault>
-            <faultCode>PAA_SEMANTICA</faultCode>
-            <faultString>chiamata da rifiutare</faultString>
-            <id>#creditor_institution_code#</id>
-            <description>chiamata da rifiutare</description>
-            </fault>
-            </paf:paDemandPaymentNoticeResponse>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-    @paDemandPaymentNotice_1 @Mod4 @ALL 
-    Scenario Outline: Check paDemandPaymentNotice response with missing optional fields
-        Given the demandPaymentNotice scenario executed successfully
-        And the paDemandPaymentNotice scenario executed successfully
         And <elem> with <value> in paDemandPaymentNotice
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
@@ -175,19 +63,109 @@ Feature: response tests for paDemandPaymentNotice
             | detailDescription | None  | TRES_PDPN_42 |
             | officeName        | None  | TRES_PDPN_58 |
 
-    # TRES_PDPN_02
+
     @paDemandPaymentNotice_2 @Mod4 @ALL 
-    Scenario: TRES_PDPN_02
-        Given the demandPaymentNotice scenario executed successfully
-        And the paDemandPaymentNotice scenario executed successfully
+    Scenario: Check paDemandPaymentNotice response OK
+        Given initial XML demandPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:demandPaymentNoticeRequest>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <idSoggettoServizio>00042</idSoggettoServizio>
+            <datiSpecificiServizio>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHRhOnRhc3NhQXV0byB4bWxuczp0YT0iaHR0cDovL1B1bnRvQWNjZXNzb1BTUC5zcGNvb3AuZ292Lml0L1Rhc3NhQXV0byIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vUHVudG9BY2Nlc3NvUFNQLnNwY29vcC5nb3YuaXQvVGFzc2FBdXRvIFRhc3NhQXV0b21vYmlsaXN0aWNhXzFfMF8wLnhzZCAiPgo8dGE6dmVpY29sb0NvblRhcmdhPgo8dGE6dGlwb1ZlaWNvbG9UYXJnYT4xPC90YTp0aXBvVmVpY29sb1RhcmdhPgo8dGE6dmVpY29sb1RhcmdhPkFCMzQ1Q0Q8L3RhOnZlaWNvbG9UYXJnYT4KPC90YTp2ZWljb2xvQ29uVGFyZ2E+CjwvdGE6dGFzc2FBdXRvPg==</datiSpecificiServizio>
+            </nod:demandPaymentNoticeRequest>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML paDemandPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paDemandPaymentNoticeResponse>
+            <outcome>OK</outcome>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>302#iuv#</noticeNumber>
+            </qrCode>
+            <paymentList>
+            <paymentOptionDescription>
+            <amount>10.00</amount>
+            <options>EQ</options>
+            <!--Optional:-->
+            <dueDate>2022-06-25</dueDate>
+            <!--Optional:-->
+            <detailDescription>descrizione dettagliata lato PA</detailDescription>
+            <!--Optional:-->
+            <allCCP>false</allCCP>
+            </paymentOptionDescription>
+            </paymentList>
+            <paymentDescription>paymentDescription</paymentDescription>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyName</companyName>
+            <officeName>officeName</officeName>
+            </paf:paDemandPaymentNoticeResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of demandPaymentNotice response
     
     @paDemandPaymentNotice_3 @Mod4 @ALL 
     Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
-        Given the demandPaymentNotice scenario executed successfully
-        And the paDemandPaymentNotice scenario executed successfully
+        Given initial XML demandPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:demandPaymentNoticeRequest>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <idSoggettoServizio>00042</idSoggettoServizio>
+            <datiSpecificiServizio>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHRhOnRhc3NhQXV0byB4bWxuczp0YT0iaHR0cDovL1B1bnRvQWNjZXNzb1BTUC5zcGNvb3AuZ292Lml0L1Rhc3NhQXV0byIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vUHVudG9BY2Nlc3NvUFNQLnNwY29vcC5nb3YuaXQvVGFzc2FBdXRvIFRhc3NhQXV0b21vYmlsaXN0aWNhXzFfMF8wLnhzZCAiPgo8dGE6dmVpY29sb0NvblRhcmdhPgo8dGE6dGlwb1ZlaWNvbG9UYXJnYT4xPC90YTp0aXBvVmVpY29sb1RhcmdhPgo8dGE6dmVpY29sb1RhcmdhPkFCMzQ1Q0Q8L3RhOnZlaWNvbG9UYXJnYT4KPC90YTp2ZWljb2xvQ29uVGFyZ2E+CjwvdGE6dGFzc2FBdXRvPg==</datiSpecificiServizio>
+            </nod:demandPaymentNoticeRequest>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML paDemandPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paDemandPaymentNoticeResponse>
+            <outcome>OK</outcome>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>302#iuv#</noticeNumber>
+            </qrCode>
+            <paymentList>
+            <paymentOptionDescription>
+            <amount>10.00</amount>
+            <options>EQ</options>
+            <!--Optional:-->
+            <dueDate>2022-06-25</dueDate>
+            <!--Optional:-->
+            <detailDescription>descrizione dettagliata lato PA</detailDescription>
+            <!--Optional:-->
+            <allCCP>false</allCCP>
+            </paymentOptionDescription>
+            </paymentList>
+            <paymentDescription>paymentDescription</paymentDescription>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyName</companyName>
+            <officeName>officeName</officeName>
+            </paf:paDemandPaymentNoticeResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         And <elem> with <value> in paDemandPaymentNotice
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
@@ -252,11 +230,56 @@ Feature: response tests for paDemandPaymentNotice
             | officeName                        | Empty                                                                                                                                           | TRES_PDPN_59 |
             | officeName                        | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | TRES_PDPN_60 |
 
-    # TRES_PDPN_11
+
     @paDemandPaymentNotice_4 @Mod4 @ALL 
-    Scenario: TRES_PDPN_11
-        Given the demandPaymentNotice scenario executed successfully
-        And the paDemandPaymentNotice scenario executed successfully
+    Scenario: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error 
+        Given initial XML demandPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:demandPaymentNoticeRequest>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <idSoggettoServizio>00042</idSoggettoServizio>
+            <datiSpecificiServizio>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHRhOnRhc3NhQXV0byB4bWxuczp0YT0iaHR0cDovL1B1bnRvQWNjZXNzb1BTUC5zcGNvb3AuZ292Lml0L1Rhc3NhQXV0byIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vUHVudG9BY2Nlc3NvUFNQLnNwY29vcC5nb3YuaXQvVGFzc2FBdXRvIFRhc3NhQXV0b21vYmlsaXN0aWNhXzFfMF8wLnhzZCAiPgo8dGE6dmVpY29sb0NvblRhcmdhPgo8dGE6dGlwb1ZlaWNvbG9UYXJnYT4xPC90YTp0aXBvVmVpY29sb1RhcmdhPgo8dGE6dmVpY29sb1RhcmdhPkFCMzQ1Q0Q8L3RhOnZlaWNvbG9UYXJnYT4KPC90YTp2ZWljb2xvQ29uVGFyZ2E+CjwvdGE6dGFzc2FBdXRvPg==</datiSpecificiServizio>
+            </nod:demandPaymentNoticeRequest>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML paDemandPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paDemandPaymentNoticeResponse>
+            <outcome>OK</outcome>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>302#iuv#</noticeNumber>
+            </qrCode>
+            <paymentList>
+            <paymentOptionDescription>
+            <amount>10.00</amount>
+            <options>EQ</options>
+            <!--Optional:-->
+            <dueDate>2022-06-25</dueDate>
+            <!--Optional:-->
+            <detailDescription>descrizione dettagliata lato PA</detailDescription>
+            <!--Optional:-->
+            <allCCP>false</allCCP>
+            </paymentOptionDescription>
+            </paymentList>
+            <paymentDescription>paymentDescription</paymentDescription>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyName</companyName>
+            <officeName>officeName</officeName>
+            </paf:paDemandPaymentNoticeResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         And outcome with KO in paDemandPaymentNotice
         And qrCode with None in paDemandPaymentNotice
         And paymentList with None in paDemandPaymentNotice
@@ -266,33 +289,175 @@ Feature: response tests for paDemandPaymentNotice
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
 
-    # TRES_PDPN_26
+
     @paDemandPaymentNotice_5 @Mod4 @ALL 
-    Scenario: TRES_PDPN_26
-        Given the demandPaymentNotice scenario executed successfully
-        And the paDemandPaymentNotice with 2 paymentList scenario executed successfully
+    Scenario: paDemandPaymentNotice with 2 paymentList
+        Given initial XML demandPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:demandPaymentNoticeRequest>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <idSoggettoServizio>00042</idSoggettoServizio>
+            <datiSpecificiServizio>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHRhOnRhc3NhQXV0byB4bWxuczp0YT0iaHR0cDovL1B1bnRvQWNjZXNzb1BTUC5zcGNvb3AuZ292Lml0L1Rhc3NhQXV0byIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vUHVudG9BY2Nlc3NvUFNQLnNwY29vcC5nb3YuaXQvVGFzc2FBdXRvIFRhc3NhQXV0b21vYmlsaXN0aWNhXzFfMF8wLnhzZCAiPgo8dGE6dmVpY29sb0NvblRhcmdhPgo8dGE6dGlwb1ZlaWNvbG9UYXJnYT4xPC90YTp0aXBvVmVpY29sb1RhcmdhPgo8dGE6dmVpY29sb1RhcmdhPkFCMzQ1Q0Q8L3RhOnZlaWNvbG9UYXJnYT4KPC90YTp2ZWljb2xvQ29uVGFyZ2E+CjwvdGE6dGFzc2FBdXRvPg==</datiSpecificiServizio>
+            </nod:demandPaymentNoticeRequest>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML paDemandPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paDemandPaymentNoticeResponse>
+            <outcome>OK</outcome>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>302#iuv#</noticeNumber>
+            </qrCode>
+            <paymentList>
+            <paymentOptionDescription>
+            <amount>10.00</amount>
+            <options>EQ</options>
+            <!--Optional:-->
+            <dueDate>2022-06-25</dueDate>
+            <!--Optional:-->
+            <detailDescription>descrizione dettagliata lato PA</detailDescription>
+            <!--Optional:-->
+            <allCCP>false</allCCP>
+            </paymentOptionDescription>
+            </paymentList>
+            <paymentList>
+            <paymentOptionDescription>
+            <amount>10.00</amount>
+            <options>EQ</options>
+            <!--Optional:-->
+            <dueDate>2022-06-25</dueDate>
+            <!--Optional:-->
+            <detailDescription>descrizione dettagliata lato PA</detailDescription>
+            <!--Optional:-->
+            <allCCP>false</allCCP>
+            </paymentOptionDescription>
+            </paymentList>
+            <paymentDescription>paymentDescription</paymentDescription>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyName</companyName>
+            <officeName>officeName</officeName>
+            </paf:paDemandPaymentNoticeResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
 
-    # TRES_PDPN_29
+
     @paDemandPaymentNotice_6 @Mod4 @ALL 
-    Scenario: TRES_PDPN_29
-        Given the demandPaymentNotice scenario executed successfully
-        And the paDemandPaymentNotice with 2 paymentOptionDescription scenario executed successfully
+    Scenario: paDemandPaymentNotice with 2 paymentOptionDescription
+        Given initial XML demandPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:demandPaymentNoticeRequest>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <idSoggettoServizio>00042</idSoggettoServizio>
+            <datiSpecificiServizio>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHRhOnRhc3NhQXV0byB4bWxuczp0YT0iaHR0cDovL1B1bnRvQWNjZXNzb1BTUC5zcGNvb3AuZ292Lml0L1Rhc3NhQXV0byIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vUHVudG9BY2Nlc3NvUFNQLnNwY29vcC5nb3YuaXQvVGFzc2FBdXRvIFRhc3NhQXV0b21vYmlsaXN0aWNhXzFfMF8wLnhzZCAiPgo8dGE6dmVpY29sb0NvblRhcmdhPgo8dGE6dGlwb1ZlaWNvbG9UYXJnYT4xPC90YTp0aXBvVmVpY29sb1RhcmdhPgo8dGE6dmVpY29sb1RhcmdhPkFCMzQ1Q0Q8L3RhOnZlaWNvbG9UYXJnYT4KPC90YTp2ZWljb2xvQ29uVGFyZ2E+CjwvdGE6dGFzc2FBdXRvPg==</datiSpecificiServizio>
+            </nod:demandPaymentNoticeRequest>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML paDemandPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paDemandPaymentNoticeResponse>
+            <outcome>OK</outcome>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>302#iuv#</noticeNumber>
+            </qrCode>
+            <paymentList>
+            <paymentOptionDescription>
+            <amount>10.00</amount>
+            <options>EQ</options>
+            <!--Optional:-->
+            <dueDate>2022-06-25</dueDate>
+            <!--Optional:-->
+            <detailDescription>descrizione dettagliata lato PA</detailDescription>
+            <!--Optional:-->
+            <allCCP>false</allCCP>
+            </paymentOptionDescription>
+            <paymentOptionDescription>
+            <amount>10.00</amount>
+            <options>EQ</options>
+            <!--Optional:-->
+            <dueDate>2022-06-25</dueDate>
+            <!--Optional:-->
+            <detailDescription>descrizione dettagliata lato PA</detailDescription>
+            <!--Optional:-->
+            <allCCP>false</allCCP>
+            </paymentOptionDescription>
+            </paymentList>
+            <paymentDescription>paymentDescription</paymentDescription>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyName</companyName>
+            <officeName>officeName</officeName>
+            </paf:paDemandPaymentNoticeResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
 
-    # TRES_PDPN_61
 
-    Scenario: TRES_PDPN_61 (part 1)
+    Scenario: paDemandPaymentNotice KO - check originalFault field exists after FAULT_BEAN_ESTESO with Y
         Given updates through the query update_id_intermediario_psp of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with Y under macro Mod4 on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
-        And the demandPaymentNotice scenario executed successfully
-        And the paDemandPaymentNotice KO scenario executed successfully
+        And initial XML demandPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:demandPaymentNoticeRequest>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <idSoggettoServizio>00042</idSoggettoServizio>
+            <datiSpecificiServizio>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHRhOnRhc3NhQXV0byB4bWxuczp0YT0iaHR0cDovL1B1bnRvQWNjZXNzb1BTUC5zcGNvb3AuZ292Lml0L1Rhc3NhQXV0byIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vUHVudG9BY2Nlc3NvUFNQLnNwY29vcC5nb3YuaXQvVGFzc2FBdXRvIFRhc3NhQXV0b21vYmlsaXN0aWNhXzFfMF8wLnhzZCAiPgo8dGE6dmVpY29sb0NvblRhcmdhPgo8dGE6dGlwb1ZlaWNvbG9UYXJnYT4xPC90YTp0aXBvVmVpY29sb1RhcmdhPgo8dGE6dmVpY29sb1RhcmdhPkFCMzQ1Q0Q8L3RhOnZlaWNvbG9UYXJnYT4KPC90YTp2ZWljb2xvQ29uVGFyZ2E+CjwvdGE6dGFzc2FBdXRvPg==</datiSpecificiServizio>
+            </nod:demandPaymentNoticeRequest>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML paDemandPaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <paf:paDemandPaymentNoticeResponse>
+            <outcome>KO</outcome>
+            <fault>
+            <faultCode>PAA_SEMANTICA</faultCode>
+            <faultString>chiamata da rifiutare</faultString>
+            <id>#creditor_institution_code#</id>
+            <description>chiamata da rifiutare</description>
+            </fault>
+            </paf:paDemandPaymentNoticeResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response
@@ -302,8 +467,8 @@ Feature: response tests for paDemandPaymentNotice
         And check originalDescription field exists in demandPaymentNotice response
     
     @paDemandPaymentNotice_7 @Mod4 @ALL 
-    Scenario: TRES_PDPN_61 (part 2)
-        Given the TRES_PDPN_61 (part 1) scenario executed successfully
+    Scenario: paDemandPaymentNotice KO - check originalFault field not exists after FAULT_BEAN_ESTESO with N
+        Given the paDemandPaymentNotice KO - check originalFault field exists after FAULT_BEAN_ESTESO with Y scenario executed successfully
         And updates through the query update_id_intermediario_psp of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with N under macro Mod4 on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
