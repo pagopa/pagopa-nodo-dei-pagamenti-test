@@ -19,7 +19,8 @@ Feature: semantic checks
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    @test
+
+    @chiediNumeroAvvisoSemKO_1 @Mod4 @ALL
     Scenario Outline: KO with description
         Given <tag> with <value> in nodoChiediNumeroAvviso
         When PSP sends SOAP nodoChiediNumeroAvviso to nodo-dei-pagamenti
@@ -31,7 +32,8 @@ Feature: semantic checks
             | idServizio                     | 99999       | PPT_SERVIZIO_SCONOSCIUTO | Servizio inesistente sul sistema pagoPA          |
             | idServizio                     | 00200       | PPT_VERSIONE_SERVIZIO    | Versione servizio incompatibile con la chiamata  |
             | identificativoIntermediarioPSP | 91000000001 | PPT_AUTORIZZAZIONE       | Configurazione intermediario-canale non corretta |
-    @test
+    
+    @chiediNumeroAvvisoSemKO_2 @Mod4 @ALL
     Scenario Outline: KO
         Given <tag> with <value> in nodoChiediNumeroAvviso
         When PSP sends SOAP nodoChiediNumeroAvviso to nodo-dei-pagamenti

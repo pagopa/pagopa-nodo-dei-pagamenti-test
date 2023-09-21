@@ -20,8 +20,8 @@ Feature: process tests for pspInviaCarrelloRPT
             </soapenv:Envelope>
             """
 
-    @runnable
-    Scenario: Execute nodoChiediNumeroAvviso [CNARES1]
+    @paachiediNumeroAvviso_1 @Mod4 @ALL
+    Scenario: Execute nodoChiediNumeroAvviso without PSP
         Given initial XML paaChiediNumeroAvviso
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
@@ -49,8 +49,8 @@ Feature: process tests for pspInviaCarrelloRPT
         Then check esito is KO of nodoChiediNumeroAvviso response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoChiediNumeroAvviso response
 
-    @runnable
-    Scenario: Execute nodoChiediNumeroAvviso [CNARES2]
+    @paachiediNumeroAvviso_2 @Mod4 @ALL
+    Scenario: Execute nodoChiediNumeroAvviso with PSP
         Given initial XML paaChiediNumeroAvviso
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
@@ -80,8 +80,8 @@ Feature: process tests for pspInviaCarrelloRPT
         Then check esito is KO of nodoChiediNumeroAvviso response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoChiediNumeroAvviso response
 
-    @runnable
-    Scenario Outline: Execute nodoChiediNumeroAvviso - outline
+    @paachiediNumeroAvviso_3 @Mod4 @ALL
+    Scenario Outline: Execute nodoChiediNumeroAvviso - first outline
         Given initial XML paaChiediNumeroAvviso
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
@@ -120,8 +120,8 @@ Feature: process tests for pspInviaCarrelloRPT
             | esito                            | OK        | PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | CNARES13    |
             | esito                            | CIAO      | PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | CNARES14    |
 
-    @runnable
-    Scenario: Execute nodoChiediNumeroAvviso [CNARES12]
+    @paachiediNumeroAvviso_4 @Mod4 @ALL
+    Scenario: Execute nodoChiediNumeroAvviso with tag esito KO
         Given initial XML paaChiediNumeroAvviso
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
@@ -142,8 +142,8 @@ Feature: process tests for pspInviaCarrelloRPT
         Then check esito is KO of nodoChiediNumeroAvviso response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of nodoChiediNumeroAvviso response
 
-    @runnable
-    Scenario Outline: Execute nodoChiediNumeroAvviso - 2outline
+    @paachiediNumeroAvviso_5 @Mod4 @ALL
+    Scenario Outline: Execute nodoChiediNumeroAvviso - second outline
         Given initial XML paaChiediNumeroAvviso
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">

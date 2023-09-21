@@ -61,7 +61,7 @@ Feature: syntax checks for nodoChiediNumeroAvviso - KO
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    @test
+    @chiediNumeroAvvisoSinKO_1 @Mod4 @ALL
     # attribute value check
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
         Given the nodoChiediNumeroAvviso scenario executed successfully
@@ -72,7 +72,8 @@ Feature: syntax checks for nodoChiediNumeroAvviso - KO
         Examples:
             | elem             | attribute     | value                                     |
             | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ |
-    @test
+    
+    @chiediNumeroAvvisoSinKO_2 @Mod4 @ALL
     # element value check
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
         Given the nodoChiediNumeroAvviso scenario executed successfully
@@ -109,7 +110,8 @@ Feature: syntax checks for nodoChiediNumeroAvviso - KO
             | datiSpecificiServizio          | Empty                                |
             | datiSpecificiServizio          | cia                                  |
             | datiSpecificiServizio          | cia$                                 |
-    @test
+    
+    @chiediNumeroAvvisoSinKO_3 @Mod4 @ALL
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid nodoChiediNumeroAvviso
         Given the nodoChiediNumeroAvviso with two occurrences of <value> scenario executed successfully
         When PSP sends SOAP nodoChiediNumeroAvviso to nodo-dei-pagamenti
