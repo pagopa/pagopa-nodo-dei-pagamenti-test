@@ -28,7 +28,12 @@ def before_all(context):
      
     cx_Oracle.init_oracle_client(lib_dir = lib_dir)
 
-    more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
+
+    myconfigfile = context.config.userdata["conffile"]
+    configfile = context.config.userdata.get("configfile", myconfigfile)
+    more_userdata = json.load(open(configfile))
+
+  #  more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
     context.config.update_userdata(more_userdata)
     db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
     selected_query = utils.query_json(context, 'select_config', 'configurations')
