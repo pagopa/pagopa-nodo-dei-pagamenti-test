@@ -11,7 +11,7 @@ parameters:
     values:
       - dev
       - sit
-    default: dev
+    default: sit
 
   - name: folder
     displayName: Integration test folder
@@ -21,6 +21,10 @@ parameters:
     type: string
     default: runnable,test
     displayName: Integration test tags
+  - name: config
+    type: string
+    default: -D conffile=src/integ-test/bdd-test/resources/config_sit.json
+    displayName: Integration test config attribute
 
 variables:
   archiveName: nodo-dei-pagamenti-NRT.zip
