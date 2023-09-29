@@ -23,7 +23,7 @@ parameters:
     displayName: Integration test tags
   - name: config
     type: string
-    default: -D conffile=src/integ-test/bdd-test/resources/config_sit.json
+    default: src/integ-test/bdd-test/resources/config_sit.json
     displayName: Integration test config attribute
 
 variables:
@@ -218,7 +218,7 @@ stages:
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
               
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/${{ parameters.folder }} --tags=${{ parameters.tags }}
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/${{ parameters.folder }} --tags=${{ parameters.tags }} -D conffile=${{ parameters.config}}
 
             displayName: "Run integration test"
 
