@@ -31,7 +31,6 @@ def before_all(context):
     print(context.config.userdata["conffile"])
     myconfigfile = context.config.userdata["conffile"]
     configfile = context.config.userdata.get("configfile", myconfigfile)
-    print(configfile)
     more_userdata = json.load(open(configfile))
     print(more_userdata)
 

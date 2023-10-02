@@ -221,7 +221,7 @@ stages:
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
               
-              fileBehave=$(Build.SourcesDirectory)/${{ parameters.config }}
+              fileBehave=${{ parameters.config }}
               echo ">>>>>>>>>>>>>>>>>>>> name is $fileBehave"
               echo "current dir is $PWD"
               behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/${{ parameters.folder }} --tags=${{ parameters.tags }} -D conffile=$fileBehave
