@@ -30,8 +30,11 @@ def before_all(context):
 
 
     myconfigfile = context.config.userdata["conffile"]
+    print(myconfigfile)
     configfile = context.config.userdata.get("configfile", myconfigfile)
+    print(configfile)
     more_userdata = json.load(open(configfile))
+    print(more_userdata)
 
   #  more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
     context.config.update_userdata(more_userdata)
