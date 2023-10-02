@@ -224,6 +224,8 @@ stages:
               fileBehave=${{ parameters.config }}
               echo ">>>>>>>>>>>>>>>>>>>> name is $fileBehave"
               echo "current dir is $PWD"
+              echo "list"
+              ls -lrt
               behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/${{ parameters.folder }} --tags=${{ parameters.tags }} -D conffile=$fileBehave
 
             displayName: "Run integration test"
