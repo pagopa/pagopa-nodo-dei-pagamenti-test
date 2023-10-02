@@ -81,9 +81,6 @@ stages:
               echo ">>>>>>>>>>>>>>>>>>>> name is $file"
               echo "current dir is $PWD"
 
-              fileBehave=${{ parameters.config }}
-              echo ">>>>>>>>>>>>>>>>>>>> name is $fileBehave"
-
 
               # replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo-pagamenti/api/v1"
               # replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"
@@ -224,6 +221,7 @@ stages:
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
               
+              fileBehave=$(Build.SourcesDirectory)/${{ parameters.config }}
               echo ">>>>>>>>>>>>>>>>>>>> name is $fileBehave"
               echo "current dir is $PWD"
               behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/${{ parameters.folder }} --tags=${{ parameters.tags }} -D conffile=$fileBehave
