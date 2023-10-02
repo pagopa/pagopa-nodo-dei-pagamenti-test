@@ -78,7 +78,7 @@ stages:
               }
 
               file=$(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/${{ parameters.config }}
-              echo ">>>>>>>>>>>>>>>>>>>> name is $(file)"
+              echo ">>>>>>>>>>>>>>>>>>>> name is $file"
 
 
               # replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo-pagamenti/api/v1"
