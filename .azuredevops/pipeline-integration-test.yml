@@ -78,6 +78,9 @@ stages:
               }
 
               file=$(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/${{ parameters.config }}
+              print(file)
+              print(###########################)
+
 
               # replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo-pagamenti/api/v1"
               # replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"

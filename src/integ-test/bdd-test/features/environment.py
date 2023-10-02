@@ -28,9 +28,8 @@ def before_all(context):
      
     cx_Oracle.init_oracle_client(lib_dir = lib_dir)
 
-
+    print(context.config.userdata["conffile"])
     myconfigfile = context.config.userdata["conffile"]
-    print(myconfigfile)
     configfile = context.config.userdata.get("configfile", myconfigfile)
     print(configfile)
     more_userdata = json.load(open(configfile))
