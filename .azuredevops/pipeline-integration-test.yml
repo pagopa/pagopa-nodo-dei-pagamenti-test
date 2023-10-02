@@ -82,6 +82,7 @@ stages:
               echo "current dir is $PWD"
 
               fileBehave=${{ parameters.config }}
+              echo ">>>>>>>>>>>>>>>>>>>> name is $fileBehave"
 
 
               # replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo-pagamenti/api/v1"
