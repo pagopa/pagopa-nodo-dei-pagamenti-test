@@ -23,7 +23,7 @@ parameters:
     displayName: Integration test tags
   - name: config
     type: string
-    default: config_sit.json
+    default: src/integ-test/bdd-test/resources/config_sit.json
     displayName: Integration test config attribute
 
 variables:
@@ -77,8 +77,11 @@ stages:
                   contents=$(jq "$key = \"$value\"" $file) && echo "${contents}" > $file
               }
 
-              file=$(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/${{ parameters.config }}
+              file=$(Build.SourcesDirectory)/${{ parameters.config }}
               echo ">>>>>>>>>>>>>>>>>>>> name is $file"
+              echo "current dir is $PWD"
+
+              fileBehave=${{ parameters.config }}
 
 
               # replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo-pagamenti/api/v1"
@@ -220,7 +223,7 @@ stages:
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
               
-              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/${{ parameters.folder }} --tags=${{ parameters.tags }} -D conffile=$file
+              behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/${{ parameters.folder }} --tags=${{ parameters.tags }} -D conffile=$fileBehave
 
             displayName: "Run integration test"
 
