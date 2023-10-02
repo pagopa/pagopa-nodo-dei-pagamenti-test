@@ -221,11 +221,11 @@ stages:
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
               
-              fileBehave=${{ parameters.config }}
+              fileBehave=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/${{ parameters.config }}
               echo ">>>>>>>>>>>>>>>>>>>> name is $fileBehave"
               echo "current dir is $PWD"
               echo "list"
-              ls -lrt
+              ls -lrt $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/${{ parameters.config }}
               behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/${{ parameters.folder }} --tags=${{ parameters.tags }} -D conffile=$fileBehave
 
             displayName: "Run integration test"
