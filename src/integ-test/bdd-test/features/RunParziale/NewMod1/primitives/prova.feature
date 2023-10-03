@@ -17,7 +17,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
             <password>#password#</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310#iuv#</noticeNumber>
+            <noticeNumber>302#iuv#</noticeNumber>
             </qrCode>
             <amount>10.00</amount>
             <dueDate>2021-12-31</dueDate>
@@ -34,7 +34,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
+            <creditorReferenceId>02$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
