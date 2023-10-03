@@ -21,19 +21,20 @@ parameters:
     type: string
     default: runnable,test
     displayName: Integration test tags
-  - name: config
-    type: string
-    default: src/integ-test/bdd-test/resources/config_sit.json
-    displayName: Integration test config attribute
+
 
 variables:
   archiveName: nodo-dei-pagamenti-NRT.zip
   destinationFolderExtractArtifact: nodo/extracted
   deploy-pool: nodopagamenti-agent-pool-sit
   ${{ if eq(parameters['env'], 'dev') }}:
-    NODO_URL: "https://api.dev.platform.pagopa.it/nodo-dev"    
+    NODO_URL: "https://api.dev.platform.pagopa.it/nodo-dev"
+    file_config: $(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/config_dev.json
+    file_behave: src/integ-test/bdd-test/resources/config_dev.json    
   ${{ if eq(parameters['env'], 'sit') }}:
     NODO_URL: "https://api.dev.platform.pagopa.it/nodo"
+    file_config: $(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/config_sit.json
+    file_behave: src/integ-test/bdd-test/resources/config_sit.json
 
 stages:
   - stage: prepare_env
@@ -77,7 +78,8 @@ stages:
                   contents=$(jq "$key = \"$value\"" $file) && echo "${contents}" > $file
               }
 
-              file=$(Build.SourcesDirectory)/${{ parameters.config }}
+              file=$(file_config)
+              echo ">>>>>>>>>>>>> name is $file"
 
               # replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://10.230.8.5:443/nodo-pagamenti/api/v1"
               # replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"
@@ -218,7 +220,7 @@ stages:
               which behave
               export PATH=/usr/local/bin/behave:/usr/bin:/usr/local/bin:$PATH #Add environment variables
               
-              fileBehave=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/${{ parameters.config }}
+              fileBehave=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/$(file_behave)
 
               behave --junit-directory=$(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/report --junit $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/${{ parameters.folder }} --tags=${{ parameters.tags }} -D conffile=$fileBehave
 
