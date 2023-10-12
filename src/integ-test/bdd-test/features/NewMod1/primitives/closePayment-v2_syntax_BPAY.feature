@@ -136,6 +136,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
+                    "transactionId": "#transaction_id#",
                     "outcomePaymentGateway": "00",
                     "totalAmount": "12",
                     "fee": "2",
@@ -191,6 +192,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
+                    "transactionId": "#transaction_id#",
                     "outcomePaymentGateway": "00",
                     "fee": "2",
                     "timestampOperation": "2021-07-09T17:06:03",
@@ -224,7 +226,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
-                    "rrn": "11223344",
+                    "transactionId": "#transaction_id#",
                     "outcomePaymentGateway": "00",
                     "totalAmount": 9999999999.99,
                     "fee": "2",
@@ -260,7 +262,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
-                    "rrn": "11223344",
+                    "transactionId": "#transaction_id#",
                     "outcomePaymentGateway": "00",
                     "totalAmount": null,
                     "fee": "2",
@@ -295,7 +297,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
-                    "rrn": "11223344",
+                    "transactionId": "#transaction_id#",
                     "outcomePaymentGateway": "00",
                     "totalAmount": "12",
                     "timestampOperation": "2021-07-09T17:06:03",
@@ -329,7 +331,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
-                    "rrn": "11223344",
+                    "transactionId": "#transaction_id#",
                     "outcomePaymentGateway": "00",
                     "totalAmount": "9999999999.99",
                     "fee": "2",
@@ -365,7 +367,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
-                    "rrn": "11223344",
+                    "transactionId": "#transaction_id#",
                     "outcomePaymentGateway": "00",
                     "totalAmount": "12",
                     "fee": null,
@@ -400,7 +402,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
-                    "rrn": "11223344",
+                    "transactionId": "#transaction_id#",
                     "outcomePaymentGateway": "00",
                     "totalAmount": "12",
                     "fee": "2",
@@ -434,7 +436,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
-                    "rrn": "11223344",
+                    "transactionId": "#transaction_id#",
                     "outcomePaymentGateway": "00",
                     "totalAmount": "12",
                     "fee": "2",
