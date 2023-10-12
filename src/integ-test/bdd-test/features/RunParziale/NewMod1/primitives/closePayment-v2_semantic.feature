@@ -24,7 +24,7 @@ Feature: semantic checks for closePaymentV2
                 }
             }
             """
-    @test @NM1 @ALL
+    @NM1 @ALL
     # paymentToken unknown [SEM_CP_01]
     Scenario: Check unknown paymentToken
         Given the closePaymentV2 scenario executed successfully
@@ -32,7 +32,7 @@ Feature: semantic checks for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 404
         And check outcome is KO of v2/closepayment response
         And check description is The indicated payment does not exist of v2/closepayment response
-    @test @NM1 @ALL
+    @NM1 @ALL
     # identificativoPsp value check
     Scenario Outline: Check semantic error on idPSP
         Given the closePaymentV2 scenario executed successfully
@@ -45,7 +45,7 @@ Feature: semantic checks for closePaymentV2
             | elem  | value       | soapUI test |
             | idPSP | 12345678987 | SEM_CP_03   |
             | idPSP | NOT_ENABLED | SEM_CP_04   |
-    @test @NM1 @ALL
+    @NM1 @ALL
     # identificativoIntermediario value check
     Scenario Outline: Check semantic error on idBrokerPSP
         Given the closePaymentV2 scenario executed successfully
@@ -58,7 +58,7 @@ Feature: semantic checks for closePaymentV2
             | elem        | value           | soapUI test |
             | idBrokerPSP | 12545678987     | SEM_CP_05   |
             | idBrokerPSP | INT_NOT_ENABLED | SEM_CP_06   |
-    @test @NM1 @ALL
+    @NM1 @ALL
     # identificativoCanale value check
     Scenario Outline: Check semantic error on identificativoCanale
         Given the closePaymentV2 scenario executed successfully
@@ -71,7 +71,7 @@ Feature: semantic checks for closePaymentV2
             | elem      | value              | soapUI test |
             | idChannel | 12345671234_09     | SEM_CP_07   |
             | idChannel | CANALE_NOT_ENABLED | SEM_CP_08   |
-    @test @NM1 @ALL
+    @NM1 @ALL
     # identificativoCanale not associated to BPAY [SEM_CPV2_09]
     Scenario: Check identificativoCanale not associated to BPAY
         Given the closePaymentV2 scenario executed successfully
@@ -80,7 +80,7 @@ Feature: semantic checks for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 404
         And check outcome is KO of v2/closepayment response
         And check description is Incorrect PSP-brokerPSP-Channel-Payment type configuration of v2/closepayment response
-    @test @NM1 @ALL
+    @NM1 @ALL
     # identificativoCanale with Modello di pagamento = ATTIVATO PRESSO PSP [SEM_CPV2_10]
     Scenario: Check identificativoCanale ATTIVATO_PRESSO_PSP
         Given the closePaymentV2 scenario executed successfully
@@ -89,7 +89,7 @@ Feature: semantic checks for closePaymentV2
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Invalid payment type of v2/closepayment response
-    @test @NM1 @ALL
+    @NM1 @ALL
     # identificativoIntermediario-identificativoCanale-identificativoPsp not associated [SEM_CPV2_11]
     Scenario: identificativoIntermediario-identificativoCanale-identificativoPsp not associated
         Given the closePaymentV2 scenario executed successfully
@@ -213,7 +213,7 @@ Feature: semantic checks for closePaymentV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
-    @test @NM1 @ALL
+    @NM1 @ALL
     Scenario: check closePaymentV2
         Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -230,7 +230,7 @@ Feature: semantic checks for closePaymentV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
-    @test @NM1 @ALL
+    @NM1 @ALL
     Scenario: check closePaymentV2 OK 2
         Given the check activatePaymentNoticeV2 OK 2 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -245,7 +245,7 @@ Feature: semantic checks for closePaymentV2
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV23
-    @test @NM1 @ALL
+    @NM1 @ALL
     Scenario: check closePaymentV2 OK 3
         Given the check activatePaymentNoticeV2 OK 3 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -298,7 +298,7 @@ Feature: semantic checks for closePaymentV2
                 }
             }
             """
-    @test @NM1 @ALL
+    @NM1 @ALL
     Scenario: check closePaymentV2 OK 4
         Given the closePaymentV2 4 scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -337,7 +337,7 @@ Feature: semantic checks for closePaymentV2
                 }
             }
             """
-    @test @NM1 @ALL
+    @NM1 @ALL
     Scenario: check closePaymentV2 OK 5
         Given the closePaymentV2 5 scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
@@ -359,7 +359,7 @@ Feature: semantic checks for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test @NM1 @ALL
+    @NM1 @ALL
     Scenario: check closePaymentV2 OK 6_2
         Given the check activatePaymentNoticeV2 OK 6 scenario executed successfully
         And the check closePaymentV2 OK 6 scenario executed successfully
@@ -606,7 +606,7 @@ Feature: semantic checks for closePaymentV2
     #     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     #     Then check esito is OK of nodoInviaRPT response
     #     And retrieve session token from $nodoInviaRPTResponse.url
-    # @test @NM1 @ALL
+    # @NM1 @ALL
     # Scenario: check closePaymentV2 OK 7
     #     Given the check nodoInviaRPT OK scenario executed successfully
     #     And the closePaymentV2 scenario executed successfully
@@ -630,7 +630,7 @@ Feature: semantic checks for closePaymentV2
     #     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     #     Then check esito is OK of nodoInviaRPT response
     #     And retrieve session token from $nodoInviaRPTResponse.url
-    # @test @NM1 @ALL
+    # @NM1 @ALL
     # Scenario: check closePaymentV2 OK 8
     #     Given the check nodoInviaRPT OK 2 scenario executed successfully
     #     And the closePaymentV2 scenario executed successfully
@@ -868,7 +868,7 @@ Feature: semantic checks for closePaymentV2
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @test @NM1 @ALL 
+    @NM1 @ALL 
     Scenario: test 1.5
         Given the test 1.4 scenario executed successfully
         And the closePaymentV2 6 scenario executed successfully

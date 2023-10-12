@@ -32,7 +32,7 @@ Feature: Semantic checks for sendPaymentOutcomeReq - OK [SEM_SPO_07]
   
 	# idChannel value check: idChannel with value in NODO4_CFG.CANALI whose field MODELLO_PAGAMENTO in NODO4_CFG.CANALI_NODO table of nodo-dei-pagamenti database does not contain value 'ATTIVATO_PRESSO_PSP' (e.g. contains 'IMMEDIATO_MULTIBENEFICIARIO')
   
-  @runnable
+  @ALL
   #sendPaymentOutcome phase
   Scenario: Execute a sendPaymentOutcome request on psp channel not enabled for payment model 3
     Given the Execute activatePaymentNotice request scenario executed successfully

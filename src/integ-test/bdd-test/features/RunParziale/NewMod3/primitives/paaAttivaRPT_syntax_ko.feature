@@ -27,7 +27,7 @@ Feature: check syntax KO for paaAttivaRPT
             """
         And EC old version
 
-@runnable
+@ALL
     Scenario Outline:
         Given initial XML paaAttivaRPT
             """

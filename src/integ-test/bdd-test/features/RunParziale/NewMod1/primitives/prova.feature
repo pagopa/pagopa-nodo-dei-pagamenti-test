@@ -180,7 +180,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
 
-    @test @NM1 @ALL
+    @NM1 @ALL
     # No error
     Scenario: check closePaymentV2 OK
         Given the check activatePaymentNoticeV2 OK scenario executed successfully

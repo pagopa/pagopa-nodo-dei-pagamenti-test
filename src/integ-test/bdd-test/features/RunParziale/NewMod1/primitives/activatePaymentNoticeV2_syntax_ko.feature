@@ -28,7 +28,7 @@ Feature: syntax checks KO for activatePaymentNoticeV2Request
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    @test @NM1 @ALL @newfix
+    @NM1 @ALL @newfix
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
         Given <attribute> set <value> for <elem> in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -37,7 +37,7 @@ Feature: syntax checks KO for activatePaymentNoticeV2Request
         Examples:
             | elem             | attribute     | value                                     | soapUI test  |
             | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_APNV2_01 |
-    @test @NM1 @ALL @newfix
+    @NM1 @ALL @newfix
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
         Given <elem> with <value> in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
