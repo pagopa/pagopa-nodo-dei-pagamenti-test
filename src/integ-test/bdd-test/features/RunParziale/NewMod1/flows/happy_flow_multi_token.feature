@@ -1,4 +1,4 @@
-Feature: happy flow multitoken test for NM1 
+Feature: happy flow multitoken test for NM1
 
     Background:
         Given systems up
@@ -9,7 +9,7 @@ Feature: happy flow multitoken test for NM1
             {
                 "positionslist": [
                     {
-                        "fiscalCode": "#creditor_institution_code#",
+                        "fiscalCode": "#creditor_institution_code_secondary#",
                         "noticeNumber": "302#iuv#"
                     },
                     {
@@ -38,7 +38,7 @@ Feature: happy flow multitoken test for NM1
             <password>#password#</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <fiscalCode>#creditor_institution_code_secondary#</fiscalCode>
             <noticeNumber>302$iuv</noticeNumber>
             </qrCode>
             <expirationTime>6000</expirationTime>
@@ -95,8 +95,16 @@ Feature: happy flow multitoken test for NM1
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <transferAmount>5.00</transferAmount>
+            <fiscalCodePA>90000000001</fiscalCodePA>
+            <IBAN>IT45R0760103200000000001016</IBAN>
+            <remittanceInformation>testPaGetPayment</remittanceInformation>
+            <transferCategory>paGetPaymentTest</transferCategory>
+            </transfer>
+            <transfer>
+            <idTransfer>2</idTransfer>
+            <transferAmount>5.00</transferAmount>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -122,7 +130,8 @@ Feature: happy flow multitoken test for NM1
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
         And saving paGetPayment request in paGetPayment_1Request
 
-    
+
+
     Scenario: second activatePaymentNoticeV2 request
         Given the first activatePaymentNoticeV2 request scenario executed successfully
         And initial XML activatePaymentNoticeV2
@@ -193,8 +202,17 @@ Feature: happy flow multitoken test for NM1
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <transferAmount>5.00</transferAmount>
+            <fiscalCodePA>#creditor_institution_code_secondary#</fiscalCodePA>
+            <companyName>companySec</companyName>
+            <IBAN>IT45R0760103200000000001016</IBAN>
+            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
+            <transferCategory>paGetPaymentTest</transferCategory>
+            </transfer>
+            <transfer>
+            <idTransfer>2</idTransfer>
+            <transferAmount>5.00</transferAmount>
+            <fiscalCodePA>90000000001</fiscalCodePA>
             <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>

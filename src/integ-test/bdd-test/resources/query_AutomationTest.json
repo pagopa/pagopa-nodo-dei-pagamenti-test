@@ -332,6 +332,7 @@
         "update_noticeid_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='302$iuv' and PA_FISCAL_CODE='#creditor_institution_code#'",
         "update_noticeid1_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='302$iuv1' and PA_FISCAL_CODE='#creditor_institution_code#'",
         "position_subject": "SELECT columns FROM table_name WHERE ENTITY_UNIQUE_IDENTIFIER_VALUE = '$sendPaymentOutcomeV2.entityUniqueIdentifierValue' and INSERTED_TIMESTAMP > TO_DATE ('$date','YYYY-MM-DD HH24:MI:SS')",
+        "position_subject_new_proof": "SELECT columns FROM table_name WHERE ENTITY_UNIQUE_IDENTIFIER_VALUE = '$sendPaymentOutcomeV2.entityUniqueIdentifierValue' and CITY = '$sendPaymentOutcomeV2.city'",
         "position_subject_spo": "SELECT columns FROM table_name WHERE ENTITY_UNIQUE_IDENTIFIER_VALUE = '$sendPaymentOutcome.entityUniqueIdentifierValue' and INSERTED_TIMESTAMP > TO_DATE ('$date','YYYY-MM-DD HH24:MI:SS')",
         "update_validto": "UPDATE table_name SET param = TO_DATE('value', 'YYYY-MM-DD HH24:MI:SS') WHERE IDEMPOTENCY_KEY = '$sendPaymentOutcomeV2.idempotencyKey' AND PSP_ID = '$sendPaymentOutcomeV2.idPSP'",
         "update_noticeid_activate1": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='$activatePaymentNoticeRequest1.noticeNumber'",
