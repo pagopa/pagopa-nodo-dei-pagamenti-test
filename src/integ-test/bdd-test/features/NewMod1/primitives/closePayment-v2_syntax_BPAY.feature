@@ -151,7 +151,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
 
-    @test @pippolorenzo
+    @test
     Scenario Outline: check closePaymentV2 PAG-2555 KO outline
         Given the closePaymentV2 PAG-2555 scenario executed successfully
         And <elem> with <value> in v2/closepayment
@@ -173,6 +173,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
 
     @test 
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount None
+        Given initial JSON v2/closepayment
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
@@ -207,6 +208,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
 
     @test
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount oversize
+        Given initial JSON v2/closepayment
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
@@ -241,8 +243,9 @@ Feature: syntax checks for closePaymentV2 outcome OK
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
 
-    @test
+    @test @pippolorenzo
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount oversize external additional payment informations
+        Given initial JSON v2/closepayment
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
@@ -264,7 +267,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "transactionId": "#transaction_id#",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": 12,
+                    "totalAmount": "12",
                     "fee": "2",
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
@@ -279,6 +282,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
 
     @test
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount Empty
+        Given initial JSON v2/closepayment
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
@@ -314,6 +318,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
 
     @test 
     Scenario: check closePaymentV2 PAG-2555 KO fee None
+        Given initial JSON v2/closepayment
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
@@ -346,8 +351,9 @@ Feature: syntax checks for closePaymentV2 outcome OK
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test 
+    @test @pippolorenzo
     Scenario: check closePaymentV2 PAG-2555 KO fee oversize
+        Given initial JSON v2/closepayment
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
@@ -369,8 +375,8 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "transactionId": "#transaction_id#",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": "9999999999.99",
-                    "fee": "2",
+                    "totalAmount": "12",
+                    "fee": 9999999999.99,
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
@@ -384,6 +390,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
 
     @test
     Scenario: check closePaymentV2 PAG-2555 KO fee Empty
+        Given initial JSON v2/closepayment
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
@@ -419,6 +426,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
 
     @test 
     Scenario: check closePaymentV2 PAG-2555 KO timestampOperation None
+        Given initial JSON v2/closepayment
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
@@ -453,6 +461,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
 
     @test
     Scenario: check closePaymentV2 PAG-2555 KO timestampOperation Empty
+        Given initial JSON v2/closepayment
         When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
             """
             {
