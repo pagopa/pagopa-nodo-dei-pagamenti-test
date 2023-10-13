@@ -266,7 +266,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 "additionalPaymentInformations": {
                     "transactionId": "#transaction_id#",
                     "outcomePaymentGateway": "00",
-                    "totalAmount": "null",
+                    "totalAmount": null,
                     "fee": "2",
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
@@ -375,7 +375,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
                     "transactionId": "#transaction_id#",
                     "outcomePaymentGateway": "00",
                     "totalAmount": "12",
-                    "fee": "null",
+                    "fee": null,
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
                     "paymentGateway": "00"
