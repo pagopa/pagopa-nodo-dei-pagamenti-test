@@ -146,12 +146,12 @@ Feature: syntax checks for closePaymentV2 outcome OK
                 }
             }
             """
-    @test 
+    @test @pippolorenzo
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
 
-    @test 
+    @test @pippolorenzo
     Scenario Outline: check closePaymentV2 PAG-2555 KO outline
         Given the closePaymentV2 PAG-2555 scenario executed successfully
         And <elem> with <value> in v2/closepayment
@@ -229,6 +229,42 @@ Feature: syntax checks for closePaymentV2 outcome OK
                     "transactionId": "#transaction_id#",
                     "outcomePaymentGateway": "00",
                     "totalAmount": 9999999999.99,
+                    "fee": "2",
+                    "timestampOperation": "2021-07-09T17:06:03",
+                    "authorizationCode": "123456",
+                    "paymentGateway": "00"
+                }
+            }
+            """
+        Then verify the HTTP status code of v2/closepayment response is 400
+        And check outcome is KO of v2/closepayment response
+        And check description is Invalid additionalPaymentInformations of v2/closepayment response
+
+
+    @test
+    Scenario: check closePaymentV2 PAG-2555 KO totalAmount oversize external additional payment informations
+        When WISP sends rest POST v2/closepayment to nodo-dei-pagamenti
+            """
+            {
+                "paymentTokens": [
+                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "idBrokerPSP": "#psp#",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "paymentMethod": "BPAY",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 9999999999.99,
+                "fee": 2,
+                "primaryCiIncurredFee": 1,
+                "idBundle": "0bf0c282-3054-11ed-af20-acde48001122",
+                "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
+                "timestampOperation": "2033-04-23T18:25:43Z",
+                "additionalPaymentInformations": {
+                    "transactionId": "#transaction_id#",
+                    "outcomePaymentGateway": "00",
+                    "totalAmount": 12,
                     "fee": "2",
                     "timestampOperation": "2021-07-09T17:06:03",
                     "authorizationCode": "123456",
@@ -460,7 +496,7 @@ Feature: syntax checks for closePaymentV2 outcome OK
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-    @test 
+    @test @pippolorenzo
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
