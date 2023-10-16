@@ -557,7 +557,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
                     "transactionId": "#transaction_id#",
-                    "pspTransactionId": "null",
+                    "pspTransactionId": null,
                     "totalAmount": "12",
                     "fee": "2",
                     "timestampOperation": "2021-07-09T17:06:03"
