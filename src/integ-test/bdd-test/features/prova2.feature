@@ -4,7 +4,9 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         Given systems up
 
     Scenario: activatePaymentNoticeV2
-        Given initial XML activatePaymentNoticeV2
+        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
             xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -145,3 +147,6 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
+
+        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
