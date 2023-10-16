@@ -119,7 +119,7 @@ Feature: FLUSSO_APIO_17_PPALNEW
         }
         """
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
-        And check esito is OK of inoltroEsito/paypal response
+        And check esito is KO of inoltroEsito/paypal response
         And check errorCode is RIFPSP of inoltroEsito/paypal response
     
     @runnable   
