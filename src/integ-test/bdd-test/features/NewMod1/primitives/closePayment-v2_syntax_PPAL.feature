@@ -164,7 +164,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
 
 
 
-    @test @pippo
+    @test
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount None
         Given initial JSON v2/closepayment
             """
@@ -401,7 +401,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test @pippoalf
+    @test
     Scenario: check closePaymentV2 PAG-2555 KO timestampOperation Empty
         Given initial JSON v2/closepayment
             """
@@ -469,7 +469,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
     @test
-    Scenario: check closePaymentV2 PAG-2555 KO pspTransactionId Empty
+    Scenario: check closePaymentV2 PAG-2555 KO transactionId Empty
         Given initial JSON v2/closepayment
             """
             {
@@ -503,7 +503,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
     @test 
-    Scenario: check closePaymentV2 PAG-2555 KO transactionId None
+    Scenario: check closePaymentV2 PAG-2555 KO pspTransactionId None
         Given initial JSON v2/closepayment
             """
             {
@@ -574,7 +574,6 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And the closePaymentV2 PAG-2555 scenario executed successfully
         And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
-        And paymentGateway with None in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
