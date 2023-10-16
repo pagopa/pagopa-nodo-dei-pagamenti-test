@@ -244,7 +244,7 @@ Feature: syntax checks for closePaymentV2 - BPAY
 
 
     @test
-    Scenario: check closePaymentV2 PAG-2555 KO totalAmount Empty
+    Scenario: check closePaymentV2 PAG-2555 KO totalAmount null
         Given initial JSON v2/closepayment
             """
             {
@@ -352,7 +352,7 @@ Feature: syntax checks for closePaymentV2 - BPAY
 
 
     @test
-    Scenario: check closePaymentV2 PAG-2555 KO fee Empty
+    Scenario: check closePaymentV2 PAG-2555 KO fee null
         Given initial JSON v2/closepayment
             """
             {
@@ -423,7 +423,7 @@ Feature: syntax checks for closePaymentV2 - BPAY
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
     @test @pippoalf
-    Scenario: check closePaymentV2 PAG-2555 KO timestampOperation Empty
+    Scenario: check closePaymentV2 PAG-2555 KO timestampOperation null
         Given initial JSON v2/closepayment
             """
             {

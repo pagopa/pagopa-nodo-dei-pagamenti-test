@@ -468,40 +468,6 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test
-    Scenario: check closePaymentV2 PAG-2555 KO transactionId Empty
-        Given initial JSON v2/closepayment
-            """
-            {
-                "paymentTokens": [
-                    "a3738f8bff1f4a32998fc197bd0a6b05"
-                ],
-                "outcome": "OK",
-                "idPSP": "#psp#",
-                "idBrokerPSP": "#psp#",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-                "paymentMethod": "PPAL",
-                "transactionId": "#transaction_id#",
-                "totalAmount": 12,
-                "fee": 2,
-                "primaryCiIncurredFee": 1,
-                "idBundle": "0bf0c282-3054-11ed-af20-acde48001122",
-                "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
-                "timestampOperation": "2033-04-23T18:25:43Z",
-                "additionalPaymentInformations": {
-                    "transactionId": null,
-                    "pspTransactionId": "#psp_transaction_id#",
-                    "totalAmount": "12",
-                    "fee": "2",
-                    "timestampOperation": "2021-07-09T17:06:03"
-                }
-            }
-            """
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 400
-        And check outcome is KO of v2/closepayment response
-        And check description is Invalid additionalPaymentInformations of v2/closepayment response
-
     @test 
     Scenario: check closePaymentV2 PAG-2555 KO pspTransactionId None
         Given initial JSON v2/closepayment
@@ -524,40 +490,6 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
                 "timestampOperation": "2033-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
                     "transactionId": "#transaction_id#",
-                    "totalAmount": "12",
-                    "fee": "2",
-                    "timestampOperation": "2021-07-09T17:06:03"
-                }
-            }
-            """
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 400
-        And check outcome is KO of v2/closepayment response
-        And check description is Invalid additionalPaymentInformations of v2/closepayment response
-
-    @test
-    Scenario: check closePaymentV2 PAG-2555 KO pspTransactionId Empty
-        Given initial JSON v2/closepayment
-            """
-            {
-                "paymentTokens": [
-                    "a3738f8bff1f4a32998fc197bd0a6b05"
-                ],
-                "outcome": "OK",
-                "idPSP": "#psp#",
-                "idBrokerPSP": "#psp#",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
-                "paymentMethod": "PPAL",
-                "transactionId": "#transaction_id#",
-                "totalAmount": 12,
-                "fee": 2,
-                "primaryCiIncurredFee": 1,
-                "idBundle": "0bf0c282-3054-11ed-af20-acde48001122",
-                "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
-                "timestampOperation": "2033-04-23T18:25:43Z",
-                "additionalPaymentInformations": {
-                    "transactionId": "#transaction_id#",
-                    "pspTransactionId": null,
                     "totalAmount": "12",
                     "fee": "2",
                     "timestampOperation": "2021-07-09T17:06:03"
