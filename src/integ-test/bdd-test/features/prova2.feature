@@ -109,6 +109,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
     @test
