@@ -111,7 +111,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-
+    @test
     Scenario: closePaymentV2 PAG-2555
         Given the activatePaymentNoticeV2 scenario executed successfully
         And initial JSON v2/closepayment
