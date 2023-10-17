@@ -261,29 +261,30 @@ def manipulate_soap_action(soap_action, elem, value):
     return my_document.toxml()
 
 def manipulate_json(data, key, value):
+    json_body = json.loads(data)
     if value == "None":
-        if key in data:
-            del data[key]
+        if key in json_body:
+            del json_body[key]
     elif value == "Empty":
-        if key in data and isinstance(data[key], (list, dict)):
-            data[key] = {}
-        elif key in data:
-            data[key] = ""
+        if key in json_body and isinstance(json_body[key], (list, dict)):
+            json_body[key] = {}
+        elif key in json_body:
+            json_body[key] = ""
     elif value == 'RemoveParent':
         parent_key = key.rsplit('.', 1)[0]
-        if parent_key in data and isinstance(data[parent_key], dict):
-            if key in data[parent_key]:
-                data[parent_key][key] = data[key]
-            del data[key]
+        if parent_key in json_body and isinstance(json_body[parent_key], dict):
+            if key in json_body[parent_key]:
+                json_body[parent_key][key] = json_body[key]
+            del json_body[key]
     elif value.startswith("Occurrences"):
         occurrences = int(value.split(",")[1])
-        if key in data and isinstance(data[key], list):
-            data[key] = data[key] * occurrences
+        if key in json_body and isinstance(json_body[key], list):
+            json_body[key] = json_body[key] * occurrences
     else:
-        if key in data:
-            data[key] = value
+        if key in json_body:
+            json_body[key] = value
 
-    return data
+    return json.dumps(json_body)
 
 
 def replace_context_variables(body, context):

@@ -511,9 +511,9 @@ def step_impl(context, primitive, filebody):
     payload = utils.replace_global_variables(payload, context)
     setattr(context, f"{primitive}JSON", payload)
 
-    jsonDict = json.loads(payload)
-    payload = utils.json2xml(jsonDict)
-    payload = '<root>' + payload + '</root>'
+   # jsonDict = json.loads(payload)
+  #  payload = utils.json2xml(jsonDict)
+  #  payload = '<root>' + payload + '</root>'
     if "#iuv#" in payload:
         iuv = '11' + str(random.randint(1000000000000, 9999999999999))
         payload = payload.replace('#iuv#', iuv)
@@ -1025,17 +1025,7 @@ def step_impl(context):
     setattr(context, 'rendAttachment', payload)
 
 
-@given('{elem} with {value} in {action}')
-def step_impl(context, elem, value, action):
-    # use - to skip
-    if elem != "-":
-        value = utils.replace_local_variables(value, context)
-        value = utils.replace_context_variables(value, context)
-        value = utils.replace_global_variables(value, context)
-        xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
-        setattr(context, action, xml)
-
-@step('for {type} replace {tag} with {value} in {primitive}')
+@given('for {type} replace {tag} with {value} in {primitive}')
 def step_impl(context, type, tag, value, primitive):
     if tag != "-":
         value = utils.replace_local_variables(value, context)
@@ -1048,6 +1038,19 @@ def step_impl(context, type, tag, value, primitive):
         elif type_string == "JSON":
             json = utils.manipulate_json(getattr(context, primitive), tag, value)
             setattr(context, primitive, json)
+
+
+@given('{elem} with {value} in {action}')
+def step_impl(context, elem, value, action):
+    # use - to skip
+    if elem != "-":
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
+        value = utils.replace_global_variables(value, context)
+        xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
+        setattr(context, action, xml)
+
+
         
 
 
@@ -1455,42 +1458,42 @@ def step_impl(context, sender, method, service, receiver):
     if '_json' in service:
         service = service.split('_')[0]
         print(service)
-        bodyXml = getattr(context, service)
-        body = xmltodict.parse(bodyXml)
-        body = body["root"]
-        if body != None:
-            if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
-                body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
-                if type(body["paymentTokens"]) != list:
-                    l = list()
-                    l.append(body["paymentTokens"])
-                    body["paymentTokens"] = l
-            if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
-                body["totalAmount"] = float(body["totalAmount"])
-            if ('fee' in body.keys()) and (body["fee"] != None):
-                body["fee"] = float(body["fee"])
-            if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
-                body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
-            if ('positionslist' in body.keys()) and (body["positionslist"] != None):
-                body["positionslist"] = body["positionslist"]["position"]
-                if type(body["positionslist"]) != list:
-                    l = list()
-                    l.append(body["positionslist"])
-                    body["positionslist"] = l
-            body = json.dumps(body, indent=4)
-        else:
-            body = """{}"""
-    print(body)
-    body = utils.replace_local_variables(body, context)
-    body = utils.replace_context_variables(body, context)
-    body = utils.replace_global_variables(body, context)
+        body = getattr(context, service)
+        # body = xmltodict.parse(bodyXml)
+        # body = body["root"]
+        # if body != None:
+        #     if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
+        #         body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+        #         if type(body["paymentTokens"]) != list:
+        #             l = list()
+        #             l.append(body["paymentTokens"])
+        #             body["paymentTokens"] = l
+        #     if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
+        #         body["totalAmount"] = float(body["totalAmount"])
+        #     if ('fee' in body.keys()) and (body["fee"] != None):
+        #         body["fee"] = float(body["fee"])
+        #     if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
+        #         body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
+        #     if ('positionslist' in body.keys()) and (body["positionslist"] != None):
+        #         body["positionslist"] = body["positionslist"]["position"]
+        #         if type(body["positionslist"]) != list:
+        #             l = list()
+        #             l.append(body["positionslist"])
+        #             body["positionslist"] = l
+        #     body = json.dumps(body, indent=4)
+        # else:
+        #     body = """{}"""
+    # print(body)
+    # body = utils.replace_local_variables(body, context)
+    # body = utils.replace_context_variables(body, context)
+    # body = utils.replace_global_variables(body, context)
     print(body)
     run_local = False
     if service in url_nodo:
         url_nodo = utils.replace_local_variables(url_nodo, context)
         url_nodo = utils.replace_context_variables(url_nodo, context)
         run_local = True
-        print(f"{url_nodo}")
+        
     else:
         service = utils.replace_local_variables(service, context)
         service = utils.replace_context_variables(service, context)
@@ -1502,12 +1505,13 @@ def step_impl(context, sender, method, service, receiver):
     if run_local:
         if '_json' in url_nodo:
             url_nodo = url_nodo.split('_')[0]
+            print(f"{url_nodo}")
             nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
         else:
            nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False) 
     else:
-        nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False)
-    setattr(context, service.split('?')[0], json_body)
+        nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=body, verify=False)
+    setattr(context, service.split('?')[0], body)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
     print(service.split('?')[0] + RESPONSE)
     print(nodo_response.content)
@@ -1515,8 +1519,7 @@ def step_impl(context, sender, method, service, receiver):
 
 @then('verify the HTTP status code of {action} response is {value}')
 def step_impl(context, action, value):
-    print(
-        f'HTTP status expected: {value} - obtained:{getattr(context, action + RESPONSE).status_code}')
+    print(f'HTTP status expected: {value} - obtained:{getattr(context, action + RESPONSE).status_code}')
     assert int(value) == getattr(context, action + RESPONSE).status_code
 
 
