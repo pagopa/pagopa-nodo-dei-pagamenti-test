@@ -1035,6 +1035,21 @@ def step_impl(context, elem, value, action):
         xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
         setattr(context, action, xml)
 
+@step('for {type} replace {tag} with {value} in {primitive}')
+def step_impl(context, type, tag, value, primitive):
+    if tag != "-":
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
+        value = utils.replace_global_variables(value, context)
+        type_string = type.upper() 
+        if type_string == "XML":
+            xml = utils.manipulate_soap_action(getattr(context, primitive), tag, value)
+            setattr(context, primitive, xml)
+        elif type_string == "JSON":
+            json = utils.manipulate_json(getattr(context, primitive), tag, value)
+            setattr(context, primitive, json)
+        
+
 
 @given('replace {old_tag} tag in {action} with {new_tag}')
 def step_impl(context, old_tag, new_tag, action):

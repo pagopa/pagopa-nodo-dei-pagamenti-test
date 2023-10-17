@@ -1,0 +1,12 @@
+{
+    "positionslist": [
+        {
+            "fiscalCode": "#creditor_institution_code_secondary#",
+            "noticeNumber": "302#iuv#"
+        },
+        {
+            "fiscalCode": "#creditor_institution_code#",
+            "noticeNumber": "310#iuv1#"
+        }
+    ]
+}
