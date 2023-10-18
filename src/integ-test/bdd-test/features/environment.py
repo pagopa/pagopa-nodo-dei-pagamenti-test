@@ -3,30 +3,12 @@ from behave.model import Table
 import os, requests
 import steps.utils as utils
 import time
-if 'NODOPGDB' in os.environ:
-    import steps.db_operation_pg as db
-    import psycopg2
-    from psycopg2 import OperationalError    
-else:
-    import steps.db_operation as db
-    import os, cx_Oracle, requests
-
+import steps.db_operation_pg as db
+import psycopg2
+from psycopg2 import OperationalError    
 
 def before_all(context):
     print('Global settings...')
-
-    lib_dir = ""
-    if 'NODOPGDB' not in os.environ :
-        user_profile = os.environ.get("USERPROFILE")
-        
-        if user_profile != None:
-            lib_dir = r"\Program Files\Oracle\instantclient_19_9"
-            print("#####################lib_dir", lib_dir) 
-        else:
-            lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
-            print("#####################lib_dir", lib_dir) 
-     
-    cx_Oracle.init_oracle_client(lib_dir = lib_dir)
 
     myconfigfile = context.config.userdata["conffile"]
     configfile = context.config.userdata.get("configfile", myconfigfile)
