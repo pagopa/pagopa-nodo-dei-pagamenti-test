@@ -1,5 +1,5 @@
-#FROM toolbox.sia.eu/docker-pagopa/python:3.9
-FROM python:3.9
+FROM toolbox.sia.eu/docker-pagopa/python:3.9
+#FROM python:3.9
 #set required env variable from args
 ARG tags_arg
 ARG folder_arg
