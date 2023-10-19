@@ -1,4 +1,4 @@
-FROM python:3.9.18-slim-bullseye
+FROM toolbox.sia.eu/docker/python:3.9.18-slim-bullseye
  
 ENV http_proxy=http://csproxy:8080
 ENV https_proxy=http://csproxy:8080
