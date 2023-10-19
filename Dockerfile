@@ -1,5 +1,8 @@
-FROM toolbox.sia.eu/docker-pagopa/python:3.9
-#FROM python:3.9
+FROM python:3.9.18-slim-bullseye
+ 
+ENV http_proxy=http://csproxy:8080
+ENV https_proxy=http://csproxy:8080
+ENV no_proxy=toolbox.sia.eu
 
 #install jq and openjdk-17
 RUN apt-get update && \
