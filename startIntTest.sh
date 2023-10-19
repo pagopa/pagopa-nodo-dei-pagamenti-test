@@ -81,8 +81,7 @@ replace $file ".db_configuration.wfesp.port"      $db_wfesp_port_sit
 
 echo "replace config file END"
 
-echo "executing command: behave --junit-directory=/report --junit $folder --tags=$tags -D conffile=$file"
-behave --junit-directory=/report --junit $folder --tags=$tags -D conffile=$file
+echo "executing command: behave -f allure_behave.formatter:AllureFormatter -o /allure $folder --tags=$tags --no-capture --no-capture-stderrhelpcls -D conffile=$file_config"
+behave -f allure_behave.formatter:AllureFormatter -o /allure $folder --tags=$tags --no-capture --no-capture-stderrhelpcls -D conffile=$file_config
 
-#avoid the exit of the script. This is a workaround, it will be replaced with allure server 
-tail -f requirements.txt
+allure serve /allure -p 8081
