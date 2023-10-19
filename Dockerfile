@@ -1,4 +1,5 @@
 FROM python:3.9.18-slim-bullseye
+#FROM python:3.9
  
 ENV http_proxy=http://csproxy:8080
 ENV https_proxy=http://csproxy:8080
