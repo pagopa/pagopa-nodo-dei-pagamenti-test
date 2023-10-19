@@ -1,5 +1,4 @@
 FROM python:3.9.18-slim-bullseye
-#FROM python:3.9
  
 ENV http_proxy=http://csproxy:8080
 ENV https_proxy=http://csproxy:8080
@@ -8,7 +7,8 @@ ENV no_proxy=toolbox.sia.eu
 #install jq and openjdk-17
 RUN apt-get update && \
 	apt-get install -y jq && \
-	apt-get install openjdk-17-jdk -y
+	apt-get install openjdk-17-jdk -y && \
+	apt-get install libpq-dev python3-dev build-essential wget unzip -y
 
 #copy test script
 ADD src/integ-test test/src/integ-test
