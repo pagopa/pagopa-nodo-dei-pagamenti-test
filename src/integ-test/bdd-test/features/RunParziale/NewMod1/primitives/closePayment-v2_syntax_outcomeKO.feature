@@ -179,7 +179,7 @@ Feature: syntax checks for closePaymentV2 outcome KO
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV21
-    @NM1 @ALL
+    @NM1 @ALL@ALL@ALL
     # No error
     Scenario Outline: check closePaymentV2 OK
         Given the check activatePaymentNoticeV2 OK scenario executed successfully
