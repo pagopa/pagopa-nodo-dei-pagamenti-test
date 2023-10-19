@@ -1458,35 +1458,35 @@ def step_impl(context, sender, method, service, receiver):
     if '_json' in service:
         service = service.split('_')[0]
         print(service)
-        body = getattr(context, service)
-        # body = xmltodict.parse(bodyXml)
-        # body = body["root"]
-        # if body != None:
-        #     if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
-        #         body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
-        #         if type(body["paymentTokens"]) != list:
-        #             l = list()
-        #             l.append(body["paymentTokens"])
-        #             body["paymentTokens"] = l
-        #     if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
-        #         body["totalAmount"] = float(body["totalAmount"])
-        #     if ('fee' in body.keys()) and (body["fee"] != None):
-        #         body["fee"] = float(body["fee"])
-        #     if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
-        #         body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
-        #     if ('positionslist' in body.keys()) and (body["positionslist"] != None):
-        #         body["positionslist"] = body["positionslist"]["position"]
-        #         if type(body["positionslist"]) != list:
-        #             l = list()
-        #             l.append(body["positionslist"])
-        #             body["positionslist"] = l
-        #     body = json.dumps(body, indent=4)
-        # else:
-        #     body = """{}"""
-    # print(body)
-    # body = utils.replace_local_variables(body, context)
-    # body = utils.replace_context_variables(body, context)
-    # body = utils.replace_global_variables(body, context)
+        bodyXml = getattr(context, service)
+        body = xmltodict.parse(bodyXml)
+        body = body["root"]
+        if body != None:
+            if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
+                body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+                if type(body["paymentTokens"]) != list:
+                    l = list()
+                    l.append(body["paymentTokens"])
+                    body["paymentTokens"] = l
+            if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
+                body["totalAmount"] = float(body["totalAmount"])
+            if ('fee' in body.keys()) and (body["fee"] != None):
+                body["fee"] = float(body["fee"])
+            if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
+                body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
+            if ('positionslist' in body.keys()) and (body["positionslist"] != None):
+                body["positionslist"] = body["positionslist"]["position"]
+                if type(body["positionslist"]) != list:
+                    l = list()
+                    l.append(body["positionslist"])
+                    body["positionslist"] = l
+            body = json.dumps(body, indent=4)
+        else:
+            body = """{}"""
+    print(body)
+    body = utils.replace_local_variables(body, context)
+    body = utils.replace_context_variables(body, context)
+    body = utils.replace_global_variables(body, context)
     print(body)
     run_local = False
     if service in url_nodo:

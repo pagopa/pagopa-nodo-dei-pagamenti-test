@@ -260,32 +260,6 @@ def manipulate_soap_action(soap_action, elem, value):
 
     return my_document.toxml()
 
-def manipulate_json(data, key, value):
-    json_body = json.loads(data)
-    if value == "None":
-        if key in json_body:
-            del json_body[key]
-    elif value == "Empty":
-        if key in json_body and isinstance(json_body[key], (list, dict)):
-            json_body[key] = {}
-        elif key in json_body:
-            json_body[key] = ""
-    elif value == 'RemoveParent':
-        parent_key = key.rsplit('.', 1)[0]
-        if parent_key in json_body and isinstance(json_body[parent_key], dict):
-            if key in json_body[parent_key]:
-                json_body[parent_key][key] = json_body[key]
-            del json_body[key]
-    elif value.startswith("Occurrences"):
-        occurrences = int(value.split(",")[1])
-        if key in json_body and isinstance(json_body[key], list):
-            json_body[key] = json_body[key] * occurrences
-    else:
-        if key in json_body:
-            json_body[key] = value
-
-    return json.dumps(json_body)
-
 
 def replace_context_variables(body, context):
     pattern = re.compile('\\$\\w+')
