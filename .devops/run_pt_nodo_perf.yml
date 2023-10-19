@@ -22,7 +22,7 @@ parameters:
     default: rampa_1_1_10
     values:
       - rampa_1_1_1
-      - rampa_1_1_10
+      - rampa_1_1_10_SMOKE
       - rampa_1_10_10
       - rampa_4_40_10
       - rampa_10_350_10_1

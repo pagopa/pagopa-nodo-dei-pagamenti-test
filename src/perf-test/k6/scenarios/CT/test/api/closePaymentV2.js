@@ -111,7 +111,7 @@ let body = `{\"paymentTokens\":[\"${paymentToken}\"],\"outcome\":\"${outcome}\",
               
 
  const res = http.post(
-		 getBasePath(baseUrl, "nodoPerPMv2")+'/closepayment',
+		 getBasePath(baseUrl, "nodoPerPMv2")+'/v2/closepayment',
     //JSON.stringify(closePaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId)),
     body,
     { headers: getHeaders({ 'Content-Type': 'application/json' }) ,

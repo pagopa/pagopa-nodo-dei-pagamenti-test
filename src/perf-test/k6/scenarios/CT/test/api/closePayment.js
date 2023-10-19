@@ -113,7 +113,7 @@ export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transacti
 
 
  const res = http.post(
-    getBasePath(baseUrl, "nodoPerPMv1")+'/closepayment',
+    getBasePath(baseUrl, "nodoPerPMv1")+'/v1/closepayment',
     //JSON.stringify(closePaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId)),
     JSON.stringify(body),
     { headers: getHeaders({ 'Content-Type': 'application/json' }) ,
