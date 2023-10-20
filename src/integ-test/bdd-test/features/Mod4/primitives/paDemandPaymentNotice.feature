@@ -289,7 +289,7 @@ Feature: response tests for paDemandPaymentNotice
 
     Scenario: TRES_PDPN_61 (part 1)
         Given updates through the query update_id_intermediario_psp of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with Y under macro Mod4 on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the demandPaymentNotice scenario executed successfully
         And the paDemandPaymentNotice KO scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
@@ -303,7 +303,7 @@ Feature: response tests for paDemandPaymentNotice
     Scenario: TRES_PDPN_61 (part 2)
         Given the TRES_PDPN_61 (part 1) scenario executed successfully
         And updates through the query update_id_intermediario_psp of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with N under macro Mod4 on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of demandPaymentNotice response

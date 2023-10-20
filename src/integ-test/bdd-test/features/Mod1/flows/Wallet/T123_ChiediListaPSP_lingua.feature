@@ -146,4 +146,4 @@ Feature: process tests for chiediListaPSP
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
         And check totalRows is $sizeConto of listaPSP response
-        And check data is $listaConto of listaPSP response
+        And compare list between data in listaPSP response and $listaConto

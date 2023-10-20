@@ -5,7 +5,7 @@ Feature: process tests for DB_GR_26
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13','1201') under macro update_query on db nodo_cfg
 
   Scenario: job refresh pa (1)
-    Given refresh job PA triggered after 10 seconds
+    Given refresh job ALL triggered after 10 seconds
 
   Scenario: initial verifyPaymentNotice
     Given the job refresh pa (1) scenario executed successfully
@@ -258,7 +258,7 @@ Feature: process tests for DB_GR_26
   @runnable @lazy @dependentread @dependentwrite
   Scenario: job refresh pa (2)
     Given the DB check + db update scenario executed successfully
-    Then refresh job PA triggered after 10 seconds
+    Then refresh job ALL triggered after 10 seconds
 
 
 

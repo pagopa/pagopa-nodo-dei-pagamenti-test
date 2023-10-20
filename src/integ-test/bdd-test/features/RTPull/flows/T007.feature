@@ -5,7 +5,7 @@ Feature: Execute nodoInviaCarrelloRPT - [T007]
 
     Scenario: Execute nodoInviaCarrelloRPT - [T007]
         #Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
-        #And refresh job PSP triggered after 10 seconds
+        #And refresh job ALL triggered after 10 seconds
         #And wait 10 seconds for expiration
         Given RPT generation
             """

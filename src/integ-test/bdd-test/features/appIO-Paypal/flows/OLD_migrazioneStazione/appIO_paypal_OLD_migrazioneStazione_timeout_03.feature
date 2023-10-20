@@ -306,7 +306,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 befo
     #refresh pa e stazioni
     Scenario: Execute refresh pa e stazioni
         Given the Execute station version update scenario executed successfully
-        Then refresh job PA triggered after 10 seconds
+        Then refresh job ALL triggered after 10 seconds
 
     # nodoChiediInformazioniPagamento phase
     Scenario: Execute nodoChiediInformazioniPagamento request
@@ -399,7 +399,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 befo
     Scenario: Execute DB check
         Given the Execute sendPaymentOutcome request scenario executed successfully
         When updates through the query stationUpdate of the table STAZIONI the parameter VERSIONE with 1 under macro sendPaymentResultV2 on db nodo_cfg
-        Then refresh job PA triggered after 10 seconds
+        Then refresh job ALL triggered after 10 seconds
         And wait 5 seconds for expiration
         #POSITION_PAYMENT_STATUS
         Then checks the value PAYING, PAYMENT_SENT, PAYMENT_UNKNOWN, PAID, NOTICE_GENERATED, NOTICE_STORED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query payment_status_old on db nodo_online under macro AppIO

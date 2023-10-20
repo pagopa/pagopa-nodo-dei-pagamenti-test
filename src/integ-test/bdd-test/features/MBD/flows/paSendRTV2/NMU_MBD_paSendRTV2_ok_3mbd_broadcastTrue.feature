@@ -17,7 +17,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
     #refresh pa e stazioni
     Scenario: Execute refresh pa e stazioni
         Given the Execute station update scenario executed successfully
-        And refresh job PA triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
 
     Scenario: Execute activatePaymentNoticeV2
         Given the Execute refresh pa e stazioni scenario executed successfully
@@ -60,7 +60,6 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -91,6 +90,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             <idTransfer>1</idTransfer>
             <transferAmount>2.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <richiestaMarcaDaBollo>
             <hashDocumento>wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</hashDocumento>
             <tipoBollo>01</tipoBollo>
@@ -111,6 +111,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             <idTransfer>2</idTransfer>
             <transferAmount>4.00</transferAmount>
             <fiscalCodePA>90000000001</fiscalCodePA>
+            <companyName>companyTer</companyName>
             <richiestaMarcaDaBollo>
             <hashDocumento>ciao</hashDocumento>
             <tipoBollo>01</tipoBollo>
@@ -123,6 +124,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             <idTransfer>3</idTransfer>
             <transferAmount>4.00</transferAmount>
             <fiscalCodePA>90000000002</fiscalCodePA>
+            <companyName>companyQua</companyName>
             <richiestaMarcaDaBollo>
             <hashDocumento>ciao</hashDocumento>
             <tipoBollo>01</tipoBollo>
@@ -313,7 +315,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
         Given the Execute sendPaymentOutcomeV2 scenario executed successfully
         And updates through the query stationUpdateVersione of the table STAZIONI the parameter VERSIONE_PRIMITIVE with 1 under macro sendPaymentResultV2 on db nodo_cfg
         And updates through the query stationUpdateBroadcast of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro sendPaymentResultV2 on db nodo_cfg
-        Then refresh job PA triggered after 10 seconds
+        Then refresh job ALL triggered after 10 seconds
         # POSITION_TRANSFER_MBD
         Then verify 3 record for the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1
         And checks the value $MB.TipoBollo of the record at column TIPO_BOLLO of the table POSITION_TRANSFER_MBD retrived by the query select_position_transfer_mbd on db nodo_online under macro NewMod1

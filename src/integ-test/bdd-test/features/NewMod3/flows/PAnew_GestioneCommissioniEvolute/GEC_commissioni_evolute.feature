@@ -42,7 +42,6 @@ Feature: Commissioni evolute process
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -74,6 +73,7 @@ Feature: Commissioni evolute process
             <idTransfer>1</idTransfer>
             <transferAmount>6801.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentV2Test</transferCategory>
@@ -82,6 +82,7 @@ Feature: Commissioni evolute process
             <idTransfer>2</idTransfer>
             <transferAmount>200.00</transferAmount>
             <fiscalCodePA>44444444444</fiscalCodePA>
+            <companyName>companyTer</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentV2Test2</transferCategory>

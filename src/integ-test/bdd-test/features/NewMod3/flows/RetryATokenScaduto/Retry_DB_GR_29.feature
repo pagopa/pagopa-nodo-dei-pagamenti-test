@@ -7,7 +7,7 @@ Feature: process tests for Retry_DB_GR_29
   Scenario: Execute verifyPaymentNotice request
     Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('1201') under macro update_query on db nodo_cfg
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('11993') under macro update_query on db nodo_cfg
-    And refresh job PA triggered after 10 seconds
+    And refresh job ALL triggered after 10 seconds
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -206,7 +206,7 @@ Feature: process tests for Retry_DB_GR_29
   @runnable @lazy @dependentread @dependentwrite
   Scenario: job refresh pa (2)
     Given the DB check + db update scenario executed successfully
-    Then refresh job PA triggered after 10 seconds
+    Then refresh job ALL triggered after 10 seconds
 
 
 

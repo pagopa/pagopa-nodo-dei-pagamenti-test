@@ -180,5 +180,6 @@ Scenario: Check correct PSP list
     And replace importoTot content with 10.00 content
     And execution query getPspCarte_poste2 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro AppIO with db name nodo_offline
     And through the query getPspCarte_poste2 retrieve param listaCarte at position -1 and save it under the key listaCarte
-    And check data is $listaCarte of listaPSP response
+    And compare list between data in listaPSP response and $listaCarte
+    #And check data is $listaCarte of listaPSP response
     And restore initial configurations

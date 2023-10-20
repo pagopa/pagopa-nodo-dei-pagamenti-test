@@ -5,8 +5,8 @@ Feature: TXX
 
     Scenario: Initialize all mock responses
         #Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '7000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg
-        #And refresh job PSP triggered after 10 seconds
-        #And refresh job PSP triggered after 10 seconds
+        #And refresh job ALL triggered after 10 seconds
+        #And refresh job ALL triggered after 10 seconds
         #And wait 10 seconds for expiration
         Given initial XML pspInviaAckRT
             """
@@ -480,8 +480,8 @@ Feature: TXX
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
         #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '7000%' under macro update_query on db nodo_cfg
         #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '7000%' AND ID_CANALE <> '#canaleRtPush#' under macro update_query on db nodo_cfg
-        #And refresh job PSP triggered after 10 seconds
-        #And refresh job PSP triggered after 10 seconds
+        #And refresh job ALL triggered after 10 seconds
+        #And refresh job ALL triggered after 10 seconds
         And wait 10 seconds for expiration
     
     Scenario: Execute nodoInviaRPT3 (Phase 3)
@@ -840,19 +840,11 @@ Feature: TXX
         And parametriPagamentoImmediato with idBruciatura=$4iuv in pspInviaRPT
         And identificativoUnivocoVersamento with $4iuv in pspChiediListaRT
         And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
-        #And PSP replies to nodo-dei-pagamenti with the pspChiediListaRT
-        #And PSP replies to nodo-dei-pagamenti with the pspChiediRT
         And wait 10 seconds for expiration
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
-        #And job pspChiediListaAndChiediRt triggered after 5 seconds
-        #And job paInviaRt triggered after 10 seconds
-        #And wait 10 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         And check stato is RPT_ACCETTATA_PSP of nodoChiediStatoRPT response
-        #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '7000%' under macro update_query on db nodo_cfg
-        #And refresh job PSP triggered after 10 seconds
-        #And refresh job PSP triggered after 10 seconds
         And wait 10 seconds for expiration
         # check correctness STATI_RPT 1
         And replace iuv content with $1iuv content

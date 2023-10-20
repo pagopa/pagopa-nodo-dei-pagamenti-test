@@ -73,7 +73,6 @@ Feature: activatePaymentNoticeV2Request with psp MBD and canale NO MBD
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -105,6 +104,7 @@ Feature: activatePaymentNoticeV2Request with psp MBD and canale NO MBD
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <richiestaMarcaDaBollo>
             <hashDocumento>ciao</hashDocumento>
             <tipoBollo>01</tipoBollo>
@@ -138,7 +138,7 @@ Feature: activatePaymentNoticeV2Request with psp MBD and canale NO MBD
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         And updates through the query canaleEcommerce_update of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with Y under macro sendPaymentResultV2 on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         Then check outcome is OK of activatePaymentNoticeV2 response
         And check idTransfer is 1 of activatePaymentNoticeV2 response
         And check hashDocumento is ciao of activatePaymentNoticeV2 response

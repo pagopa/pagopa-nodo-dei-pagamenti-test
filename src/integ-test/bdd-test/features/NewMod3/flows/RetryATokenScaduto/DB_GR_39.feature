@@ -5,7 +5,7 @@ Feature: process tests for DB_GR_39
     
   Scenario: Execute verifyPaymentNotice request
     Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('16639') under macro update_query on db nodo_cfg
-    And refresh job PA triggered after 10 seconds
+    And refresh job ALL triggered after 10 seconds
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -229,7 +229,7 @@ Feature: process tests for DB_GR_39
     @runnable
   Scenario: job refresh pa (2)
     Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition OBJ_ID and where value ('16639') under macro update_query on db nodo_cfg
-    Then refresh job PA triggered after 10 seconds
+    Then refresh job ALL triggered after 10 seconds
   
 
 

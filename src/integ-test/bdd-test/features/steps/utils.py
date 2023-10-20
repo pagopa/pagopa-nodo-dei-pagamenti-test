@@ -12,6 +12,8 @@ import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
+import xml.etree.ElementTree as ET
+
 def random_s():
     import random
     cont = 5
@@ -20,6 +22,16 @@ def random_s():
         strNumRand += str(random.randint(0, 9))
         cont -= 1
     return strNumRand
+
+
+def compare_lists(lista_api, lista_query):
+
+    set_api = set(lista_api)
+    print(set_api)
+    set_query = set(lista_query)
+    print(set_query)
+
+    return set_api == set_query
 
 
 def current_milli_time():
@@ -102,7 +114,8 @@ def get_rest_url_nodo(context, primitive):
         "listaPSP": "/nodo-per-pm/v1",
         "notificaAnnullamento": "/nodo-per-pm/v1",
         "v1/closepayment": "/nodo-per-pm",
-        "v2/closepayment": "/nodo-per-pm"
+        "v2/closepayment": "/nodo-per-pm",
+        "v1/parkedList": "/nodo-per-pm"
     }
     if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == " ":
         if "avanzamentoPagamento" in primitive:
@@ -113,6 +126,8 @@ def get_rest_url_nodo(context, primitive):
             primitive = "listaPSP"
         elif "notificaAnnullamento" in primitive:
             primitive = "notificaAnnullamento"
+        elif "v1/parkedList" in primitive:
+            primitive = "v1/parkedList"
         elif "_json" in primitive:
             primitive = primitive.split('_')[0]
             if "v2/closepayment" in primitive:
@@ -322,10 +337,10 @@ def single_thread(context, soap_primitive, type):
     
     if type == 'GET':
         
-        # headers = {'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+        headers = {'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
-        url_nodo = f"{get_rest_url_nodo(context)}/{primitive}"
+        url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
         print(url_nodo)
         soap_response = requests.get(url_nodo, headers=headers, verify=False)
     elif type == 'POST':
@@ -333,13 +348,13 @@ def single_thread(context, soap_primitive, type):
         print(body)
         if 'xml' in getattr(context, primitive):
             # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive}
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': 'api.dev.platform.pagopa.it:443'}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
             url_nodo = get_soap_url_nodo(context, primitive)
         else:
             # headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-            headers = {'Content-Type': 'application/json'}
+            headers = {'Content-Type': 'application/json', 'Host': 'api.dev.platform.pagopa.it:443'}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')            
             url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
@@ -428,3 +443,34 @@ def parallel_executor(context, feature_name, scenario):
     # os.chdir(testenv.PARALLEACTIONS_PATH)
     behave_main(
         '-i {} -n {} --tags=@test --no-skipped --no-capture'.format(feature_name, scenario))
+    
+
+def searchValueTag(xml_string, path_tag, flag_all_value_tag):
+  list_tag = path_tag.split(".")
+  size_list = len(list_tag)
+
+  tag_padre = list_tag[0]
+  tag = list_tag[size_list-1]
+
+  tree = ET.ElementTree(ET.fromstring(xml_string))
+  root = tree.getroot()
+  list_value_tag = []
+  full_list_tag = []
+  for single_tag in root.findall('.//' + tag_padre):
+    list_value_tag = searchValueTagRecursive(tag_padre, tag, single_tag)
+    full_list_tag.append(list_value_tag)
+    if flag_all_value_tag == False:
+      if list_value_tag: break
+  return full_list_tag
+
+
+def searchValueTagRecursive(tag_padre, tag, single_tag):
+  list_tag = []
+
+  if tag_padre == tag:
+    list_tag = single_tag.text
+  else:
+    for next_tag in single_tag:
+      list_tag = searchValueTagRecursive(next_tag.tag, tag, next_tag)
+      if list_tag: break
+  return list_tag    

@@ -15,7 +15,7 @@ Feature: T206_InviaFlussoRendicontazione_esito=0_FTP
             <pay_i:istitutoMittente>
             <pay_i:identificativoUnivocoMittente>
             <pay_i:tipoIdentificativoUnivoco>B</pay_i:tipoIdentificativoUnivoco>
-            <pay_i:codiceIdentificativoUnivoco>#psp#</pay_i:codiceIdentificativoUnivoco>
+            <pay_i:codiceIdentificativoUnivoco>IDPSPFNZ</pay_i:codiceIdentificativoUnivoco>
             </pay_i:identificativoUnivocoMittente>
             <pay_i:denominazioneMittente>denMitt_1</pay_i:denominazioneMittente>
             </pay_i:istitutoMittente>
@@ -30,8 +30,8 @@ Feature: T206_InviaFlussoRendicontazione_esito=0_FTP
             <pay_i:numeroTotalePagamenti>1</pay_i:numeroTotalePagamenti>
             <pay_i:importoTotalePagamenti>10.00</pay_i:importoTotalePagamenti>
             <pay_i:datiSingoliPagamenti>
-            <pay_i:identificativoUnivocoVersamento>#iuv#</pay_i:identificativoUnivocoVersamento>
-            <pay_i:identificativoUnivocoRiscossione>#iuv#</pay_i:identificativoUnivocoRiscossione>
+            <pay_i:identificativoUnivocoVersamento>$iuv</pay_i:identificativoUnivocoVersamento>
+            <pay_i:identificativoUnivocoRiscossione>$iuv</pay_i:identificativoUnivocoRiscossione>
             <pay_i:indiceDatiSingoloPagamento>1</pay_i:indiceDatiSingoloPagamento>
             <pay_i:singoloImportoPagato>10.00</pay_i:singoloImportoPagato>
             <pay_i:codiceEsitoSingoloPagamento>0</pay_i:codiceEsitoSingoloPagamento>

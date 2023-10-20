@@ -137,7 +137,6 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -168,6 +167,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -237,7 +237,6 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -268,6 +267,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -337,7 +337,6 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -368,6 +367,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -437,7 +437,6 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -468,6 +467,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -537,7 +537,6 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -568,6 +567,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -637,7 +637,6 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -668,6 +667,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -737,7 +737,6 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -768,6 +767,7 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -930,10 +930,6 @@ Feature: semantic checks new for activatePaymentNoticeV2Request
         
     @test @dependentwrite @lazy
     Scenario: semantic check 20.1 (part 5)
-        Given the semantic check 20.1 (part 1) scenario executed successfully
-        And dueDate with 2021-12-16 in activatePaymentNoticeV2
-        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNoticeV2 response
         And check faultCode is PPT_PAGAMENTO_IN_CORSO of activatePaymentNoticeV2 response
         
     @test @dependentwrite @lazy

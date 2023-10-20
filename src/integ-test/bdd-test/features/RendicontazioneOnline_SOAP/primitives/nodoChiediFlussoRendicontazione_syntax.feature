@@ -130,7 +130,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          <password>pwdpwdpwd</password>
          <identificativoDominio>#creditor_institution_code#</identificativoDominio>
          <identificativoPSP>#psp#</identificativoPSP>
-         <identificativoFlusso>${#TestSuite#flussoPsp1}</identificativoFlusso>
+         <identificativoFlusso>#identificativoFlusso#</identificativoFlusso>
          </ws:nodoChiediFlussoRendicontazione>
          </soapenv:Body>
          </soapenv:Envelope>

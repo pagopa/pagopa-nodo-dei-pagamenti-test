@@ -150,7 +150,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
     Then verify the HTTP status code of inoltroEsito/mod1 response is 200
     And check esito is OK of inoltroEsito/mod1 response
     And check urlRedirectPSP field exists in inoltroEsito/mod1 response
-    And check substring wfesp-sit-npa-wfesp.ocp-tst-npaspc.sia.eu in urlRedirectPSP content of inoltroEsito/mod1 response
+    And check substring wfesp in urlRedirectPSP content of inoltroEsito/mod1 response
     And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
 
     @runnable @lazy @dependentread

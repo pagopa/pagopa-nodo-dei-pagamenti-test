@@ -42,7 +42,6 @@ Feature: flow tests for closePaymentV2 MBD
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -73,6 +72,7 @@ Feature: flow tests for closePaymentV2 MBD
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <companyName>companySec</companyName>
             <richiestaMarcaDaBollo>
             <hashDocumento>wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E=</hashDocumento>
             <tipoBollo>01</tipoBollo>
@@ -139,7 +139,7 @@ Feature: flow tests for closePaymentV2 MBD
     @test @dependentwrite @lazy 
     Scenario: Psp with MARCA_BOLLO_DIGITALE != 1
         Given updates through the query update_id_psp of the table PSP the parameter MARCA_BOLLO_DIGITALE with 0 under macro NewMod1 on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the closePaymentV2 scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
@@ -152,7 +152,7 @@ Feature: flow tests for closePaymentV2 MBD
         Given execution query select_fk_canali_nodo to get value on the table CANALI, with the columns FK_CANALI_NODO under macro NewMod1 with db name nodo_cfg
         And through the query select_fk_canali_nodo retrieve param fk_canali_nodo at position 0 and save it under the key fk_canali_nodo
         And updates through the query update_obj_id of the table CANALI_NODO the parameter MARCA_BOLLO_DIGITALE with N under macro NewMod1 on db nodo_cfg
-        And refresh job PSP triggered after 10 seconds
+        And refresh job ALL triggered after 10 seconds
         And the closePaymentV2 scenario executed successfully
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400

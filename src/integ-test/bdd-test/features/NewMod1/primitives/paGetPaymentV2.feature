@@ -41,7 +41,6 @@ Feature: response tests for paGetPaymentV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -73,6 +72,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -116,7 +116,6 @@ Feature: response tests for paGetPaymentV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -148,6 +147,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>1</idTransfer>
             <transferAmount>1.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -164,6 +164,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>2</idTransfer>
             <transferAmount>2.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyTer</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>info2</remittanceInformation>
             <transferCategory>category2</transferCategory>
@@ -172,6 +173,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>3</idTransfer>
             <transferAmount>2.50</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyQua</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>info3</remittanceInformation>
             <transferCategory>category3</transferCategory>
@@ -180,6 +182,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>4</idTransfer>
             <transferAmount>2.50</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyCin</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>info4</remittanceInformation>
             <transferCategory>category4</transferCategory>
@@ -188,6 +191,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>5</idTransfer>
             <transferAmount>2.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySei</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>info5</remittanceInformation>
             <transferCategory>category5</transferCategory>
@@ -196,6 +200,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>6</idTransfer>
             <transferAmount>2.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySet</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>info6</remittanceInformation>
             <transferCategory>category6</transferCategory>
@@ -231,7 +236,6 @@ Feature: response tests for paGetPaymentV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -263,6 +267,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>1</idTransfer>
             <transferAmount>1.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -339,6 +344,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>2</idTransfer>
             <transferAmount>2.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyTer</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>info2</remittanceInformation>
             <transferCategory>category2</transferCategory>
@@ -347,6 +353,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>3</idTransfer>
             <transferAmount>2.50</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyQua</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>info3</remittanceInformation>
             <transferCategory>category3</transferCategory>
@@ -355,6 +362,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>4</idTransfer>
             <transferAmount>2.50</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyCin</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>info4</remittanceInformation>
             <transferCategory>category4</transferCategory>
@@ -363,6 +371,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>5</idTransfer>
             <transferAmount>2.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySei</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>info5</remittanceInformation>
             <transferCategory>category5</transferCategory>
@@ -398,7 +407,6 @@ Feature: response tests for paGetPaymentV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -430,6 +438,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>1</idTransfer>
             <transferAmount>1.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -446,6 +455,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>2</idTransfer>
             <transferAmount>2.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyTer</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>info2</remittanceInformation>
             <transferCategory>category2</transferCategory>
@@ -454,6 +464,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>3</idTransfer>
             <transferAmount>2.50</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyQua</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>info3</remittanceInformation>
             <transferCategory>category3</transferCategory>
@@ -462,6 +473,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>4</idTransfer>
             <transferAmount>2.50</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyCin</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>info4</remittanceInformation>
             <transferCategory>category4</transferCategory>
@@ -470,6 +482,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>5</idTransfer>
             <transferAmount>2.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySei</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>info5</remittanceInformation>
             <transferCategory>category5</transferCategory>
@@ -565,7 +578,6 @@ Feature: response tests for paGetPaymentV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -597,6 +609,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>1</idTransfer>
             <transferAmount>5.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -613,6 +626,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>3</idTransfer>
             <transferAmount>5.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyTer</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -656,7 +670,6 @@ Feature: response tests for paGetPaymentV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -688,6 +701,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -729,7 +743,6 @@ Feature: response tests for paGetPaymentV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -761,6 +774,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -802,7 +816,6 @@ Feature: response tests for paGetPaymentV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -834,6 +847,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -869,7 +883,6 @@ Feature: response tests for paGetPaymentV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -901,6 +914,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -942,7 +956,6 @@ Feature: response tests for paGetPaymentV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -974,6 +987,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -1012,7 +1026,6 @@ Feature: response tests for paGetPaymentV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -1044,6 +1057,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -1098,7 +1112,6 @@ Feature: response tests for paGetPaymentV2
             <!--Optional:-->
             <lastPayment>1</lastPayment>
             <description>test</description>
-            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
@@ -1130,6 +1143,7 @@ Feature: response tests for paGetPaymentV2
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
             <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -1195,6 +1209,7 @@ Feature: response tests for paGetPaymentV2
             | description                 | Empty                                                                                                                                                                                                                                                             |
             | description                 | sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e37572efnsfigt609w3ut0592uhngpisdugw09tutwjeodngvgeriyrw8t29762f9qef0qfurf                                                                                                                     |
             | companyName                 | Empty                                                                                                                                                                                                                                                             |
+            | companyName                 | None                                                                                                                                                                                                                                                              |
             | companyName                 | sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e37572efnsfigt609w3ut0592uhngpisdugw09tutwjeodngvgeriyrw8t29762f9qef0qfurf                                                                                                                     |
             | officeName                  | Empty                                                                                                                                                                                                                                                             |
             | officeName                  | sanoei38932nfdiou%&ncdoaifer9eukvmpweuw9tunfgadkvaifuewtudnvahv89u3e37572efnsfigt609w3ut0592uhngpisdugw09tutwjeodngvgeriyrw8t29762f9qef0qfurf                                                                                                                     |
@@ -1292,7 +1307,6 @@ Feature: response tests for paGetPaymentV2
             | fiscalCodePA        | #creditor_institution_code_secondary# |
             | metadata            | None                                  |
             | city                | None                                  |
-            | companyName         | None                                  |
             | country             | None                                  |
             | e-mail              | None                                  |
             | lastPayment         | None                                  |
