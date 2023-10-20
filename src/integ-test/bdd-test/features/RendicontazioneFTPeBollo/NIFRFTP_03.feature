@@ -52,7 +52,7 @@ Feature: NIFRFTP
                     <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
                     <identificativoCanale>#canale#</identificativoCanale>
                     <password>pwdpwdpwd</password>
-                    <identificativoDominio>44444444445</identificativoDominio>
+                    <identificativoDominio>44444444444</identificativoDominio>
                     <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
                     <dataOraFlusso>$timedate</dataOraFlusso>
                     <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
