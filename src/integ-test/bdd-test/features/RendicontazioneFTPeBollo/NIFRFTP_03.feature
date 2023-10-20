@@ -52,7 +52,7 @@ Feature: NIFRFTP
                     <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
                     <identificativoCanale>#canale#</identificativoCanale>
                     <password>pwdpwdpwd</password>
-                    <identificativoDominio>11111111111</identificativoDominio>
+                    <identificativoDominio>44444444445</identificativoDominio>
                     <identificativoFlusso>$identificativoFlusso</identificativoFlusso>
                     <dataOraFlusso>$timedate</dataOraFlusso>
                     <xmlRendicontazione>$rendAttachment</xmlRendicontazione>
@@ -63,7 +63,7 @@ Feature: NIFRFTP
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-        And replace pa content with 11111111111 content
+        And replace pa content with 44444444445 content
 
         # Rendicontazione
         And checks the value 0 of the record at column OPTLOCK of the table RENDICONTAZIONE retrived by the query rendicontazione on db nodo_offline under macro RendicontazioneFTPeBollo
@@ -103,8 +103,8 @@ Feature: NIFRFTP
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediFlussoRendicontazione>
-                    <identificativoIntermediarioPA>$pa</identificativoIntermediarioPA>
-                    <identificativoStazioneIntermediarioPA>11111111111_01</identificativoStazioneIntermediarioPA>
+                    <identificativoIntermediarioPA>44444444444</identificativoIntermediarioPA>
+                    <identificativoStazioneIntermediarioPA>44444444444_01</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
                     <identificativoDominio>$pa</identificativoDominio>
                     <identificativoPSP>#psp#</identificativoPSP>
