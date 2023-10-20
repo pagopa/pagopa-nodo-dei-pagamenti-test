@@ -1,14 +1,8 @@
-FROM toolbox.sia.eu/docker/python:3.9.18-slim-bullseye
+FROM toolbox.sia.eu/docker-pagopa/integration-test-base-image:1.0.0
  
 ENV http_proxy=http://csproxy:8080
 ENV https_proxy=http://csproxy:8080
 ENV no_proxy=toolbox.sia.eu
-
-#install jq and openjdk-17
-RUN apt-get update && \
-	apt-get install -y jq && \
-	apt-get install openjdk-17-jdk -y && \
-	apt-get install libpq-dev python3-dev build-essential wget unzip -y
 
 #copy test script
 ADD src/integ-test test/src/integ-test
@@ -17,11 +11,6 @@ ADD requirements.txt test/requirements.txt
 
 #install requirements
 RUN pip3 install -U -r test/requirements.txt
-
-#install allure
-RUN wget https://github.com/allure-framework/allure2/releases/download/2.24.1/allure-2.24.1.zip && \
-	unzip allure-2.24.1.zip && \
-	rm allure-2.24.1.zip
 
 #setting env varialbes
 ARG tags_arg
