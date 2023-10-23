@@ -13,8 +13,10 @@ ADD requirements.txt test/requirements.txt
 RUN pip3 install -U -r test/requirements.txt
 
 #setting env varialbes
-ARG tags
-ARG folder
+ARG ARG_TAGS
+ARG ARG_FOLDER
+ENV tags=$ARG_TAGS
+ENV folder=$ARG_FOLDER
 ENV file_config=src/integ-test/bdd-test/resources/config_sit.json
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ENV PATH=$PATH:$JAVA_HOME/bin:/allure-2.24.1/bin/
@@ -23,6 +25,9 @@ ENV PATH=$PATH:$JAVA_HOME/bin:/allure-2.24.1/bin/
 WORKDIR /test
 
 RUN chmod +x startIntTest.sh
+RUN chmod -R 777 src/integ-test
+RUN mkdir /test/allure
+RUN chmod 777 /test/allure
 
 RUN echo $tags
 RUN echo $folder
