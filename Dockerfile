@@ -22,7 +22,7 @@ ENV PATH=$PATH:$JAVA_HOME/bin:/allure-2.24.1/bin/
 #set working directory
 WORKDIR /test
 
-RUN chmod +x
+RUN chmod +x startIntTest.sh
 
 RUN echo $tags
 RUN echo $folder
