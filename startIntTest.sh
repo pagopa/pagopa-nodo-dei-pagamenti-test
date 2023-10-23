@@ -81,6 +81,8 @@ replace $file ".db_configuration.wfesp.port"      $db_wfesp_port_sit
 
 echo "replace config file END"
 
+export
+
 echo "executing command: behave -f allure_behave.formatter:AllureFormatter -o /allure $folder --tags=$tags --no-capture --no-capture-stderrhelpcls -D conffile=$file_config"
 behave -f allure_behave.formatter:AllureFormatter -o ./allure $folder --tags=$tags --no-capture --no-capture-stderr -D conffile=$file_config
 

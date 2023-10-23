@@ -23,6 +23,7 @@ ENV PATH=$PATH:$JAVA_HOME/bin:/allure-2.24.1/bin/
 WORKDIR /test
 
 RUN chmod +x startIntTest.sh
+RUN chmod -R 777 src/integ-test
 
 RUN echo $tags
 RUN echo $folder
