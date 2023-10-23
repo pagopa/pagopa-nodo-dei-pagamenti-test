@@ -35,4 +35,6 @@ ENV PATH=$PATH:$JAVA_HOME/bin:/allure-2.24.1/bin/
 #set working directory
 WORKDIR /test
 
+RUN chmod +x
+
 ENTRYPOINT ["./startIntTest.sh"]
