@@ -66,7 +66,7 @@ def after_all(context):
     config_dict = getattr(context, 'configurations')
     for key, value in config_dict.items():
         #print(key, value)
-        selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
+        selected_query = utils.query_json(context, 'update_config_pg', 'configurations').replace('value', value).replace('key', key)
         db.executeQuery(conn, selected_query)  
     
     db.closeConnection(conn)
