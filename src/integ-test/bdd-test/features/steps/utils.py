@@ -270,8 +270,11 @@ def manipulate_json(data, key, value):
         if key in data:
             del data[key]
     elif value == "Empty":
-        if key in data and isinstance(data[key], (list, dict)):
-            data[key] = {}
+        json_temp = json.loads(data)
+        if key in data and isinstance(json_temp.get(key), list):
+            json_temp[key] = []
+        elif key in data and isinstance(json_temp.get(key), dict):
+            json_temp[key] = {}
         elif key in data:
             data[key] = ""
     elif value == 'RemoveParent':
