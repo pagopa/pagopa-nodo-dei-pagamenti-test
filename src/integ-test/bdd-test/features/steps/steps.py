@@ -1484,9 +1484,9 @@ def step_impl(context, sender, method, service, receiver):
     #     else:
     #         body = """{}"""
     # print(body)
-    # body = utils.replace_local_variables(body, context)
-    # body = utils.replace_context_variables(body, context)
-    # body = utils.replace_global_variables(body, context)
+    body = utils.replace_local_variables(body, context)
+    body = utils.replace_context_variables(body, context)
+    body = utils.replace_global_variables(body, context)
     print(body)
     run_local = False
     if service in url_nodo:
