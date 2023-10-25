@@ -13,6 +13,7 @@ Feature: flow with pspNptifyPaymentKO
     Scenario: activatePaymentNoticeV2
         Given the checkPosition scenario executed successfully
         And from body activatePaymentNoticeV2Body initial XML activatePaymentNoticeV2
+        And for xml replace expirationTime with 2000 in activatePaymentNoticeV2
         And from body paGetPayment_1transferBody initial XML paGetPayment  
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
