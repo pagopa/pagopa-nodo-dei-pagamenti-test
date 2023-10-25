@@ -1,0 +1,194 @@
+name: integration-test
+namespace: nodo-p-sit-int-test
+
+database:
+  type: postgresql
+  host: sestruldbpodb01
+  port_re: 5444
+  port_spc: 5444
+  database_name_spc: ndpspct
+  database_name_re: ndpareht
+
+
+secrets:
+    integration_db_config:
+        name: integration-db-config
+        password: AgATOHBNx/lkJXPjVXTuZRRGKCSlGI7I/QCT5UmiY9YpuH7YIXSkij2t3zDefSGzPWtBsB2WqEvgKk739LpNGw62dTSOEGertM/G/PaFoIbOHhvR40W2Uri4MtjKN9nMZ6bMGsfvD9eu5FgS9tLvPxXdZ20PPI/dFRr/tMasgru/cqOHlmd8HFuN4foktm4Niia7vqm+0lqXKL+Z9xfIwBKzDfXVwEjql/DuTQE74+Up9aEyRXp1/kjLq3qxPDfRkHkcyEOSA4+BYqYus/RNFXZRv1lQWBjQxFtVPKPZsy/HRAcFJDnAVWlAwBG0+V5f0ql3fL4Cmd1wvgyo8XrF6bzqdEwwbcB7hvyEiMiA7kUIqPfU9n5yDFoqGwfvt2vruxZ6tDwbOvLdIhsxt9KFRJWmHDK4S+L6T99PDXkL4/ETG50zqAiTO+DwvAtyYoa35lM3300zU2QxCDCBMM6EF0J+P7JTpqNZJmC8PtzHA17ehG5chb4ecnI5bYPD+m7mXZtZyf9PGFmfYTVgmy1sJ4bePckqjCdpqZ0ypHc0R+ko/TclvA7dKbxawJpfSxytUDbA3VS3gYtP0v+m+TusEuTYPxJ1xUdJlJAi1Fc2t7RhI9q4acN+WnxFqW7BwGGWvRXpv0RNREUknNCVe+ph3b3rGEwlgTZ5zvgx+BoW6Bmy6QLsXJ2sj2S7yWuX/ekDBR4rh1cDhYSNOjw=
+        username: AgBLXaCE4hhIuC+2yCylLQshhdOAxSu8wZkq1zs0cWJQpTx7Oh5wU9rz6hsTVmA5/UU04Nt4ktVBCVBMceWKICJLF40sPGrrvp0wzCyweM60pnqriPHFne6CCGHgYdVjWwLqT8fWrwmK9QMAjNwlyC7hSc8QF7rc+YBcG8MeLKe3hMJCjm986yVlBnwUuEHsvDM4tcGkbzrvCe3MmCLdH5qRUNH9+yfGxHEH70ZxYXBymorxfpHMqZZKVnIGHmUpxKWagvO5jGJUlcYwGanW5xWNhwagkxx+R48AH8cHUdzUfgOnKSL2n8ANUDtfw8ubNI+A2pSDdcPYetUxuIWLUn7SD36n1SnPuqrHckNn/1ej8QJZpPGv+L6SBzOAgrHEkWmcxrzWhJClZ+taFeCVJ4k/jYYv/VfyRgYo6RJUb36++kyuyqqJ+LRrRuuK9cxhKGQB72gatRzVJZl6oSRpF92j6foWbofcVaSsDa1+Pn71rl4si+qj0xo1FCYT/3GAhY2xKVVBQN7eCZ6Wcug3MwznnevmKcEhTdygNQXpoLK1galHsFr+XbH+bqpla6LCbJJuRJqmSRDjgfLIc0rsmoje2L9IV98alIAoG287Kolqcw0tipBoRScuFQFvXWahAsZdCq3AtxAf2pyVMIBNEuPT9e28fZnp81AoPaSgojX/jr+rmAUDSvjJll64W6Y68/e+4hC/9qo3BW4=	
+
+    integration_db_online:
+        name: integration-db-online
+        password: AgAJa8RAvpRoDRJDJArs6v5xugl2SqINbTb+juoI7iORcfPnV0HRWsFfrvKziTcmVixJxrUubyOnjvSJaG6qydab3fb8iFXByGODpLpKQ+sWv6tgEgCYTQ4OO5JZ8t1qeDeyqZUEv4S3VBZtMG7gXxgTkVcsLP284hWKb/qSKwNfwOleF38TNikTD/AEk8us3HupOpzo9G8OKouUgzJIeHE7rKlniahWpmjliwiopAmWyrETdhgCAP5hev1UMyhnOB/g4c2tCtZDQAaQgkqsjgr2iiRWvDHBjWy8m59Tov4tQTPf2CmSkNn+8SRUcG8YaTAI+eMLjGiYqOi3Ykl4wpoaI0iAz68U3dHQNxWhWm9mr0NBjar1e9BLPY/OWqtzXolyO3CtzWS609xtZ7+wLa+eXmvlhk3/gzXUxM2XXJ4XbroPnuA3uZCsn3FjK79dYrM1bK6sj/wAj/DqGl/0wCADcI+5P72JWr5nZ6BkjJJnfm7C9R0FpJTySvvOcQEYPgTI4IUnEecquKfqsRbvHFvgM+hBuaFjbtVbl6f97uRQ9hZX0k0s44sb9T6xzsq5xjQh/P1V5F+QmFUpOkDkcuzdXIErkVcYvHcu9Jl4V5ZXuxJT8vWs0qiasqIrPeRdbvb7l0EPyH5dvJ3r7+PCLr/tNSTyGBB6A7AAp3CuyF+H46eprueRYDsTsas4QCrrfPkhZPtt1FC4OZqmtg==
+        username: AgA6JJ3+SZ25OG5TYq0AcDh0eCAZHKRUI9ftCkuee/YTkPizlLl4yc+egILtC78eCWC1cCl2j1YJJULvJ8VopVFlkyYyaJhvV742agnDoOVYX0sVrn4cZeqy5anCEt6a2waxbOCuEfHRBguFAVle6WIARLUlzHLv6OgLOrJhPMmzKhIifRrfqhib0/yTqSN2rPmxoU4FOqmU+0gsqyxPX6t6IFYlwWayQcTWuU9DQgoIixDy4Wcfb3jjIrkIcx8Hqmilb2PB7eWjkr0oQbN5AjqaKfGJMm/ZLJ+Ax87C5VUbdg4jfxQbYQ8YuSMldiOHfnlY3RpaQcMyosmysNcfCg38RL+3eB+eKqW/XVu6MYtKWcXaNMpKihTf47K3xxu2sF3CKuRsAG4otwFh/tYIjWcVVHQ6SAr4ZCRludRc41BCcJqnGhrWnKoGaS8jGqaKsB5UBJM+HZlfl+gUonvlf6jI244QnRbZgAqCXVvfXeDNOsAhcCJ49FZ72O427eufzxtG9eZ1Pin7vvuMajijsM3774AsdP15qei5gwlu9Xn6Rq4rbCgKybwZsBBLdd5J6C4bWj3ztG4Fzok1TT6W4SLCHChcAbsE+fLVEV3HxKruWuKtkJd97YrOH+Xh2EIIx+q5pVJU89ekAm6wK5YcTTfuOu3rQwrijVJ3ZAdEJTSpIM+JaOOQBopGaVXgVQNk4MSAn8aBjw2NR2HiwQ==
+
+    integration_db_offline:
+        name: integration-db-offline
+        password: AgCw+Gz468ACJFK10AVbrKK8oRbyk1laA2tB0PZSfyJyPd72LEGfK2hFfPCFzxK3ecL/MDbHRV0IKVfaPflqTmRNxOPUK4M6NBgvlFknPOopHmZRHJpdc76Tb/ZwnjuURIumEAV45MrTzDdCldmkwdzrHLwV9oBOww4p0MCv+KRLoCGy5H1tfPXLqTClQP5ZATCU/PAsfC2gBMcZ+ENQe/GjPbCAuiJzMZMcr+7a7Rq6n5hFc4pjb/JXAgH8yqMPsgFAxVC5NxfffoJ+VpG3x19HDbVusVhOOFG3HTus89lP9aBm6Fdgwv+uO5EG4ToW93zNRMlesITXNTa3XFuAINMkMqmXsDwrVJHDvYo6XTczeWHoG4HyBy+sLqNGDpcTvEy3LGZOdNOJ1zXG1hx+ywVYH+jsgSaD++Vq6+aKO393/1/zIhUqA6qs1BWfHtsigggUnF20agqQpl+CtpyWvDVrGwXfuc90Ok9hTDxnIEmRAYE3IiiFhui6Bu6nw4u/XGwg4GqQyL7v+wxLlPh34ApB8MuE1fl6q+R7MiH+N3Z4N/8aDQ2eEVk/B2rzjt6OSK6FmLAF2+pODIVj3xew3GUliDUshQ6hvlbB4+4QsVCUCAqiKGJRqcqrLaIDOdE8vFG782t64KJVgx4j3S12R7ELmKSltDxgAcz/pmK5BwGdFF1YF3dhCxd35kYPHELY+Xqo1K7M4QaeBb8hkVk=
+        username: AgBEAz01ACP7w33lo9wvYc8f0Fx7pwXYVUI4FpnAgq3hfwTIVAGWIxTgideC8hbNpq+29oPo+hACRW1Lv+k0qHM+te+LrVx7ygg2Nh4BM4ZgUk+ZRQEUWBgB76FRh74c1sJo29XwaSvLB3ImW2p2ajaHxLAVjrmfiYwidoU6+u0s1CEfOjC90QR8tMGra4mq1y6XoGlqZlTecVj2fRjPXi0m5Is45xrO6pFz3pjSYsIe35MbUMuYvBp84xdztSJ1Bscv1qTs7Y36swP3kMctpE9kxkoE5CZsQ9Ln2B6cYGvHfl9tZhS8DXQkWII6N1bKuvXfaH8VDR/8Z5zD11/k0zwni8Y2k935Xuo29q+STsokh6aFTypjK1yVgtdXFmjIkT7W9mrsd+U04zuo/2PJ8H0SoIO30qyHdIB/PpKDYeuYAWJlbiHMe0BRhBdO1qq5cJWdJ8ZjYSqBZEpiHoFTnIIeAc75nuowxKf1mIouGuOzOhZvj+Xa1TnuTvs2H+RQNuenf9yuk7iDIC0WpZVIFaLsdPDKj7HLw09TouS/qa8UQnefN+tU0q52NhfqOSdxyXhcVam0cMKtzf2dB+LRR6kK1o1bSI1/SB7bQb403uFQABU/K8HG0k0I9FY4q6rKotF7d8RRnsYsR+TwJtlcfd6FgJy6p3Ninql4LwYNgjTmF5SZKiDCKtnHYILdIGnFGnEDwaEsFELrkif0lGQ=
+
+    integration_db_re:
+        name: integration-db-re
+        password: AgCPERbBMkr2Cx/Crn5G6epPw4duAaGVfyGdbPTJtF6pjYBWjW8Oo6u2eYFgKQNxFGIMIy/dXUlvXvjT6Nknghzl1BG3apXcDmfDzqaAJozGd94NsQArzpL74WfA7jT0jjxCsiCdYnuTELVACaCl9rcq9Xr7Gxk3+CDAl4pDecKJit5kmkS5YTezhsyBveaPOIoP0djJORs2PjnOUxhxMe30dDBvpMsUSGaL+DPineambIywK1KYcWf8jWIKzgcbFeU4+nVLjEqfYjdxjg4OKbjN1nlyMfHBVm7WxO0qxdVFl9Qxnx0HjPadXYeQPM7CPaJgj2ZIXW/V9lEuiRgL7uEiuiZ3hr++p9txj7MGWZSXc/7Tsnoukhb6ime060GBQNXv7jGIPZt4P9hD4XWRnfCMp+qrLP+Cj0PnWhwj5az3wM4TzYqfP26xZ/1r0yX069IL3RXypFkkPttFC4VDFltunnCnjy/sxglmxV5pfFjQxB9SenEgJa6ceZcDdBMpU9XHYm7LqioHFJniAo9G3GY2AY/byukDuwB4gKMbDsrFOMq5bHNfJVN174eT2JTrk6Ih9kiAvCCX5OPGkOpok+/+yEscQQ8tVSqf4pJBzbI93pw1Q1CoF1LUXA4RIyOfnCP9KSBHClSIUCldWwoVz8RaQtZCgcLls4DDQ81QZwGp7u7PQqVpfidIe7hMCZGno1DeRli8oq+9
+        username: AgCTcp8ejs5R1Cu031VYSR2KgiSV5D+GwDyeOHgOJ2xinkQMv03wcdQRP8CRy5Z63+41R9AY9X8cpfWtwaqje6X6bC2HMeq4AA9yUNvOedlKBYYpRZF20aNjw756WfTzjeR+Feyk7VGz1+GYT8RXQ5BUPEMPaNXSdarglX1xA2m4L1cw6D/U03BKT3Ipx2i7Z5WEl79M9xZBayyLjS4fCslJX2cCLy577MEPyLwHeL5hZMgOMy9fV6gZ2C2c18N/rcziLp6ObdGvF2uJOHj58KFIB8UonsYA1X2uoHwcFF/og4dcrrfVn2RUlVBNEab1hKLWEORZc6SugfbLNN67Uu8qoBjLiAweMzCIIwShAQA/SZb/0wRhJTcPoBghfRhSQFQytA0vo1uhg1rBMfh9sKD81/mtY/S143o4VaaYjOIX3nCZ9Q6vCSiX9GAr91J0hu3Ca0s6YsgAYpSbW9mULaxCtebbtJuo75+km+ihV+cLWrGYDiJiiuZrQICeTW+VIopwZDBB4sTsGKa+moWj8bj/GIYeYt8B9XpNyMYsRDjz2jOVpG+abPDN3hDdtPYhJZHsbWnzDOhfORCRHnWQIZ8o3jEi2BAjDrZ1NxCNvmHLCQloDkrS5dLlm0pRylZtW0SPK/zHbqRTVvOO8eKo0mZ6epwmELdco7a13yR0gMezms1bHXIyiTweTIfG0swyPJkGIw==
+
+    integration_db_wfesp:
+        name: integration-db-wfesp
+        password: AgBooVpDQh2AhGFBY4jhEkUK+S7YIM5xu427ZciG+2FaQp9kOpiBttgCEzMS+X9GanyF3hMnAqu0Atl++o3UwSA5ccN1L64e7BRpODBqR3fLRuo34Hg1H3GG57cU9QAQzevoz3C+OWq/wlPVwjnK0Uf4yPiFMcDHsMFTnVEMO/2pgrsIT3NljggwN5OU5QrWfDsCCg2x3vvgWncTNUQn7NVMXPBU/Aafb2m3r7u54ZUMoxQGPzDmcLOfxTYOn5klyDoikUtrmSbQaxn7ic6H231FrxMWGKA1T0eK4dSpwHF2Y96nzuIwszwk6Wt5wvU4aIsv7V16fwdvMPsb1wl32no1m0VcGUTZEI/51CcpsoL+EemZT+Atsi/oaWamFYYpenx1bye6DanuQ/jWakbGsKDITVJs0rN/gCHsqT1XMFpyxVslX5BYC1zMXDVMKDjRVedNzq4y8ZOCqtimcsWCxYWl/5P4x0i1D6F6pOPKG/QFVeYGMkJ5KdL4olp4hRKdjCcRjCsLtOdmcDhCra+Vh7qvHAnimYMxEtuxwxxJS68ayrEEBh/vk6q+aqeT4U4RHF2H86rPQr/7LNsIUc5fVwNDSTJ72GiO7vdMYFjdHwInTuq+l7AKd6dnYoNzWgfMnDiQNgykVZOFrAU3rdbg27Yv2vQWq0uUh8aaDKYIUOv6os02WMA8974ts/o0Gn7eaSRDv8dsjg==
+        username: AgAKR/qZn7WUG8SvgN7fqu+/9iMQZFNpgEmEw1FJXwkOeyJkEpFvPp4yiOYnZoaAbplee54bWQ/zAmDTdNiknmxAkCoA8btwIRGpGGAHPEzJhZbcxaTfb+lvkHZYwTrEw7WLnsox1MIa4nCEX0BJmgzn6IMJPsQalKT2U8hFATO23v1wImPeFSvjcaSe8vBpenA7afREPm4+1dE1SrMb8cbXpnTDDWAEoSMYxoSabMLyDivrs6aqLild3fx/0X8LFY2nNu5EkEdF3oSnI2668wLMpVLlCHxtNod5mlJMJOm5Luer15v0Pb9lj4K5dJ+Y5XKS3iI0a1/EewuTuMuLqJD7Rntu9ErjBxt7l7SANjk7ebK37t4YGnH+pce8usrPVu9iOCFl8Fx7Czd/SpmYW/alQI4A+/vQ2J9wvL+Enh6BWEa5typ2EtF9bwntfhH8uTCKV5xxZVwKMTayBpMwYEXIUmDDhBbimFjo98UZgMheFdGiyQ+nZc76C8SPGGhcd0WUsbyWFsPAM69QBIRh459y19xSf1Tar9EaalzxXtPAJhBXb2K9ii+XtQy0nz+VQINC8d163gE8ezP/nRExL5HovDOqz5dtVum7mIGxgWIIY5gH62gvBtBcXSBhTt6JDELFA5I5nLfnIp3DbCx9AWPRTc3+wSWnDMJRNqo7rIPmMzWm/B/adPT6+3Q8jX1LN3EZpRx3qg==
+
+network:
+    services:
+        integration_test:
+            name: integration-test
+            ports:
+            - name: integration-test
+              port: 8081
+              protocol: TCP
+              targetPort: 8081
+            selector: "{{ .Values.deployments.integration_test.name }}"
+
+    routes:
+        integration_test:
+            name: integration-test
+            host: "nodo-p-sit-int-test.tst-npc.sia.eu"
+            service: "{{ .Values.network.services.integration_test.name }}"
+            port: 8081
+            path: /
+
+deployments:
+    integration_test:
+        name: integration-test
+        replicas: 1
+        registry_url: toolbox.sia.eu/docker-pagopa
+        image_name: integration-test
+        image_version: latest
+        imagePullPolicy: Always
+        image_pull_secret: 
+          - name: regcred
+
+        restartPolicy: Always
+        resources:
+          limits:
+            cpu: 800m
+            memory: 1Gi
+          requests:
+            cpu: 500m
+            memory: 500Mi
+        
+        # volumeMounts:
+        # - mountPath: /allure
+        #   name: "{{ .Values.pvc.allure.name }}"
+        
+        # volumes:
+        # - name: "{{ .Values.pvc.allure.name }}"
+        #   persistentVolumeClaim:
+        #     claimName: "{{ .Values.pvc.allure.name }}"
+        
+        nodeSelector:
+          envnodopa: sit-uat
+
+        tolerations:
+        - key: "envnodopa"
+          operator: "Equal"
+          value: "sit-uat"
+          effect: "NoExecute"
+
+        ports:
+        - containerPort: 8081
+          name: allure    
+        
+        hostAliases:
+        - ip: "10.230.8.5"
+          hostnames:
+            - "api.dev.platform.pagopa.it"
+        - ip: "10.222.214.176"
+          hostnames:
+            - "sestruldbpodb01"
+        
+        environment:
+          - name: file_config
+            value: src/integ-test/bdd-test/resources/config_sit.json
+          - name: NODO_URL
+            value: https://api.dev.platform.pagopa.it/nodo
+          - name: db_cfg_host_sit
+            value: "{{ .Values.database.host }}"
+          - name: db_cfg_service_name_sit
+            value: "{{ .Values.database.database_name_spc }}"
+          - name: db_cfg_username_sit
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: "{{ .Values.secrets.integration_db_config.name }}"
+          - name: db_cfg_password_sit
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: "{{ .Values.secrets.integration_db_config.name }}"
+          - name: db_cfg_port_sit
+            value: "{{ .Values.database.port_spc }}"
+          - name: db_online_host_sit
+            value: "{{ .Values.database.host }}"
+          - name: db_online_service_name_sit
+            value: "{{ .Values.database.database_name_spc }}"
+          - name: db_online_username_sit
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: "{{ .Values.secrets.integration_db_online.name }}"
+          - name: db_online_password_sit
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: "{{ .Values.secrets.integration_db_online.name }}"
+          - name: db_online_port_sit
+            value: "{{ .Values.database.port_spc }}"
+          - name: db_offline_host_sit
+            value: "{{ .Values.database.host }}"
+          - name: db_offline_service_name_sit
+            value: "{{ .Values.database.database_name_spc }}"
+          - name: db_offline_username_sit
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: "{{ .Values.secrets.integration_db_offline.name }}"
+          - name: db_offline_password_sit
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: "{{ .Values.secrets.integration_db_offline.name }}"  
+          - name: db_offline_port_sit
+            value: "{{ .Values.database.port_spc }}"
+          - name: db_re_host_sit
+            value: "{{ .Values.database.host }}"
+          - name: db_re_service_name_sit
+            value: "{{ .Values.database.database_name_re }}"
+          - name: db_re_username_sit
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: "{{ .Values.secrets.integration_db_re.name }}"
+          - name: db_re_password_sit
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: "{{ .Values.secrets.integration_db_re.name }}"  
+          - name: db_re_port_sit
+            value: "{{ .Values.database.port_re }}"
+          - name: db_wfesp_host_sit
+            value: "{{ .Values.database.host }}"
+          - name: db_wfesp_service_name_sit
+            value: "{{ .Values.database.database_name_spc }}"
+          - name: db_wfesp_username_sit
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: "{{ .Values.secrets.integration_db_wfesp.name }}"
+          - name: db_wfesp_password_sit
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: "{{ .Values.secrets.integration_db_wfesp.name }}"     
+          - name: db_wfesp_port_sit
+            value: "{{ .Values.database.port_spc }}"
+          - name: HTTPS_PROXY
+            value: https://10.79.20.33:80
