@@ -146,7 +146,7 @@ Feature: syntax checks for closePaymentV2 - BPAY
                 }
             }
             """
-    @NM1 @ALL@pippoalf
+    @NM1 @ALL @pippoalf
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
@@ -458,7 +458,7 @@ Feature: syntax checks for closePaymentV2 - BPAY
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @NM1 @ALL
+    @NM1 @ALL @pippoalf
     Scenario: check closePaymentV2 PAG-2555 OK
         Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And the closePaymentV2 PAG-2555 scenario executed successfully
@@ -468,7 +468,7 @@ Feature: syntax checks for closePaymentV2 - BPAY
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-    @NM1 @ALL@pippoalf
+    @NM1 @ALL @pippoalf
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds

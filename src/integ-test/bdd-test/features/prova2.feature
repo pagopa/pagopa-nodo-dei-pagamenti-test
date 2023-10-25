@@ -114,7 +114,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
 
-    @test
+    @test @pippoalf
     Scenario: closePaymentV2 PAG-2555
         Given the activatePaymentNoticeV2 scenario executed successfully
         And initial JSON v2/closepayment
