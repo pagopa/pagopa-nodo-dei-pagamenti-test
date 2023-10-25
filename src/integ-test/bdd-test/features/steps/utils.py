@@ -205,7 +205,7 @@ def save_soap_action(mock, primitive, soap_action, override=False):
     headers = {'Content-Type': 'application/xml'}
     print(f'{mock}/response/{primitive}?override={override}')
     response = requests.post(
-        f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False)
+        f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False, proxies = getattr(context,'proxies'))
     print(response.content, response.status_code)
     return response.status_code
 
@@ -345,7 +345,7 @@ def single_thread(context, soap_primitive, type):
             headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
         url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
         print(url_nodo)
-        soap_response = requests.get(url_nodo, headers=headers, verify=False)
+        soap_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
     elif type == 'POST':
         body = getattr(context, primitive)
         print(body)
@@ -362,7 +362,7 @@ def single_thread(context, soap_primitive, type):
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')            
             url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
         soap_response = requests.post(
-            url_nodo, body, headers=headers, verify=False)
+            url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
 
     print("nodo soap_response: ", soap_response.content)
     print(soap_primitive.split("_")[1] + "Response")

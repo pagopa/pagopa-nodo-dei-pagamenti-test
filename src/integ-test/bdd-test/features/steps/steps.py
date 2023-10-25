@@ -40,7 +40,7 @@ def step_impl(context):
         url = row.get("url") + row.get("healthcheck")
         print(f"calling -> {url}")
         headers = {'Host': 'api.dev.platform.pagopa.it:443'}
-        resp = requests.get(url, headers=headers, verify=False)
+        resp = requests.get(url, headers=headers, verify=False, proxies = getattr(context,'proxies'))
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
 
@@ -810,7 +810,7 @@ def step_impl(context, sender, soap_primitive, receiver):
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
     soap_response = requests.post(url_nodo, getattr(
-        context, soap_primitive), headers=headers, verify=False)
+        context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     print(soap_response.content.decode('utf-8'))
     print(soap_response.status_code)
     setattr(context, soap_primitive + RESPONSE, soap_response)
@@ -833,7 +833,7 @@ def step_impl(context, sender, soap_primitive, receiver):
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
     soap_response = requests.post(url_nodo, getattr(
-        context, soap_primitive), headers=headers, verify=False)
+        context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     print(soap_response.content)
     print(soap_response.status_code)
     setattr(context, soap_primitive + RESPONSE, soap_response)
@@ -849,10 +849,10 @@ def step_impl(context, job_name, seconds):
     user_profile = os.environ.get("USERPROFILE")
     
     if user_profile != None:
-        nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
+        nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False, proxies = getattr(context,'proxies'))
         print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
     else:
-        nodo_response = requests.get(f"{url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
+        nodo_response = requests.get(f"{url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False, proxies = getattr(context,'proxies'))
         print(f">>>>>>>>>>>>>>>>>> {url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}")
     
     setattr(context, job_name + RESPONSE, nodo_response)

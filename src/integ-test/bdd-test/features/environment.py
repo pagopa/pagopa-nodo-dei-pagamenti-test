@@ -13,8 +13,16 @@ def before_all(context):
     myconfigfile = context.config.userdata["conffile"]
     configfile = context.config.userdata.get("configfile", myconfigfile)
     more_userdata = json.load(open(configfile))
-
-
+	proxyEnabled = context.config.userdata.get("global_configuration").get("proxyEnabled");
+	proxies = {
+	  		'http': 'http://10.79.20.33:80',
+	  		'https': 'http://10.79.20.33:433',
+		}
+	
+	if !proxyEnabled:
+		proxies = null
+	setattr(context, 'proxies', proxies)
+	print('Proxy enabled: ' , proxyEnabled)
   #  more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
     context.config.update_userdata(more_userdata)
     db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
@@ -71,7 +79,7 @@ def after_all(context):
     
     db.closeConnection(conn)
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}  
-    requests.get(utils.get_refresh_config_url(context),verify=False,headers=headers)
+    requests.get(utils.get_refresh_config_url(context),verify=False,headers=headers, proxies = getattr(context,'proxies'))
 
 
 def config_ec(context):
