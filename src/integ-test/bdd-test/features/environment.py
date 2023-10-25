@@ -13,18 +13,19 @@ def before_all(context):
     myconfigfile = context.config.userdata["conffile"]
     configfile = context.config.userdata.get("configfile", myconfigfile)
     more_userdata = json.load(open(configfile))
-	proxyEnabled = context.config.userdata.get("global_configuration").get("proxyEnabled");
-	proxies = {
-	  		'http': 'http://10.79.20.33:80',
-	  		'https': 'http://10.79.20.33:433',
-		}
-	
-	if !proxyEnabled:
-		proxies = null
-	setattr(context, 'proxies', proxies)
-	print('Proxy enabled: ' , proxyEnabled)
+
   #  more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
     context.config.update_userdata(more_userdata)
+    proxyEnabled = context.config.userdata.get("global_configuration").get("proxyEnabled")
+    proxies = {
+            'http': 'http://10.79.20.33:80',
+            'https': 'http://10.79.20.33:433',
+        }
+	
+    if proxyEnabled == False:
+        proxies = None
+    setattr(context, 'proxies', proxies)
+    print('Proxy enabled: ' , proxyEnabled)
     db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
     selected_query = utils.query_json(context, 'select_config', 'configurations')
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
