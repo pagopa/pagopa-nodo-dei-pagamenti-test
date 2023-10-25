@@ -1,0 +1,16 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pfn="http://pagopa-api.pagopa.gov.it/psp/pspForNode.xsd">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<pfn:pspNotifyPaymentV2Res>
+			<outcome>KO</outcome>
+			<!--Optional:-->
+			<fault>
+				<faultCode>CANALE_SEMANTICA</faultCode>
+				<faultString>Errore semantico dal psp</faultString>
+				<id>1</id>
+				<!--Optional:-->
+				<description>Errore dal psp</description>
+			</fault>
+		</pfn:pspNotifyPaymentV2Res>
+	</soapenv:Body>
+</soapenv:Envelope>
