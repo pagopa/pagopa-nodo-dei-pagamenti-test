@@ -25,7 +25,7 @@ Feature: failure scenario SPO without second paymentToken
         Given the first activatePaymentNoticeV2 request scenario executed successfully
         And from body activatePaymentNoticeV2Body initial XML activatePaymentNoticeV2
         And for xml replace noticeNumber with 310$iuv1 in activatePaymentNoticeV2
-        And from body paGetPaymentV2_1transferBody initial XML paGetPayment
+        And from body paGetPaymentV2_1transferBody initial XML paGetPaymentV2
         And for xml replace creditorReferenceId with 10$iuv1 in paGetPaymentV2
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -57,7 +57,7 @@ Feature: failure scenario SPO without second paymentToken
     @failureSPO1 @NM1 @ALL
     Scenario: sendPaymentOutcomeV2 OK
         Given the sendPaymentOutcomeV2 without 1 paymentToken scenario executed successfully
-        And from body sendPaymentOutcomeV2Body initial XML sendPaymentOutcomeV2
+        And from body sendPaymentOutcomeV2Body_2payToken initial XML sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait until the update to the new state for the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
