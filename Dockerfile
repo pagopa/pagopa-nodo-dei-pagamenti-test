@@ -1,5 +1,5 @@
 FROM toolbox.sia.eu/docker-pagopa/integration-test-base-image:1.0.0
-FROM python:3.9.0
+
 ENV http_proxy=http://csproxy:8080
 ENV https_proxy=http://csproxy:8080
 ENV no_proxy=toolbox.sia.eu
