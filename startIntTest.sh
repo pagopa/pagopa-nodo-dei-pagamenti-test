@@ -84,5 +84,9 @@ echo "replace config file END"
 echo "executing command: behave -f allure_behave.formatter:AllureFormatter -o ./allure $folder --tags=$tags --no-capture --no-capture-stderrhelpcls -D conffile=$file_config"
 behave -f allure_behave.formatter:AllureFormatter -o ./allure $folder --tags=$tags --no-capture --no-capture-stderr -D conffile=$file_config
 
+echo "---------------------------------------------------"
+ps -aef
+echo "---------------------------------------------------"
+
 echo "Starting Allure server"
 allure serve ./allure -p 8081
