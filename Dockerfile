@@ -1,5 +1,5 @@
 FROM toolbox.sia.eu/docker-pagopa/integration-test-base-image:1.0.0
- 
+FROM python:3.9.0
 ENV http_proxy=http://csproxy:8080
 ENV https_proxy=http://csproxy:8080
 ENV no_proxy=toolbox.sia.eu
@@ -8,6 +8,8 @@ ENV no_proxy=toolbox.sia.eu
 ADD src/integ-test test/src/integ-test
 ADD startIntTest.sh test/startIntTest.sh
 ADD requirements.txt test/requirements.txt
+ADD manualtrigger.py test/manualtrigger.py
+Add entrypoint.sh test/entrypoint.sh
 
 #install requirements
 RUN pip3 install -U -r test/requirements.txt
@@ -25,6 +27,7 @@ ENV PATH=$PATH:$JAVA_HOME/bin:/allure-2.24.1/bin/
 WORKDIR /test
 
 RUN chmod +x startIntTest.sh
+RUN chmod +x entrypoint.sh
 RUN chmod -R 777 src/integ-test
 RUN mkdir /test/allure
 RUN chmod 777 /test/allure
@@ -32,4 +35,6 @@ RUN chmod 777 /test/allure
 RUN echo $tags
 RUN echo $folder
 
-ENTRYPOINT ["./startIntTest.sh"]
+EXPOSE 8082
+
+ENTRYPOINT ["./entrypoint.sh"]
