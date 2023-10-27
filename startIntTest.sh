@@ -96,10 +96,8 @@ behave -f allure_behave.formatter:AllureFormatter -o /test/allure $folder --tags
 ls -lash /test/allure
 
 export PORT=8081
-export allure.resultsDir=/test/allure
-export allure.reports.dir=/test/allure
 
-java -jar allure-server.jar
+java -jar -Dallure.resultsDir=/test/allure -Dallure.reports.dir=/test/allure allure-server.jar
 
 # if [ "$fromAPI" = true ]; then
 #     echo "Allure already started"
