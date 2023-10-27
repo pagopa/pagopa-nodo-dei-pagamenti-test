@@ -5,24 +5,8 @@ import subprocess
 app = Flask(__name__)
 
 def run_script(tags, folder):
-	# set environment variables
-    os.environ["tags"] = tags
-    os.environ["folder"] = folder
-
-    # Pass environment to child process
-    env = os.environ.copy()
-    print('setting tags '+ tags)
-    print('setting folder '+ folder)
-    
-    print('----------------------------------------------------')
-    
-    for key, value in env.items():
-        print(f"{key}: {value}")
-
-    print('----------------------------------------------------')
-    
     # execute script
-    subprocess.Popen(["sh", "./startIntTest.sh"], stdin=subprocess.PIPE, env=env)
+    subprocess.Popen(["sh", "./startIntTest.sh", "true", tags, folder], stdin=subprocess.PIPE)
 	
 @app.route('/starttest', methods=['POST'])
 def start_test():
