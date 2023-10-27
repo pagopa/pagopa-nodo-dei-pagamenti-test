@@ -9,7 +9,7 @@ ADD src/integ-test test/src/integ-test
 ADD startIntTest.sh test/startIntTest.sh
 ADD requirements.txt test/requirements.txt
 ADD manualtrigger.py test/manualtrigger.py
-Add entrypoint.sh test/entrypoint.sh
+ADD entrypoint.sh test/entrypoint.sh
 
 #install requirements
 RUN pip3 install -U -r test/requirements.txt
