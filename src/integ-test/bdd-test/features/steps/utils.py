@@ -299,7 +299,11 @@ def replace_context_variables(body, context):
     pattern = re.compile('\\$\\w+')
     match = pattern.findall(body)
     for field in match:
-        saved_elem = getattr(context, field.replace('$', ''))
+        try:
+            saved_elem = getattr(context, field.replace('$', ''))
+        except Exception as e:
+            saved_elem = "#iuv#"
+            print(e)
         value = str(saved_elem)
         body = body.replace(field, value)
     return body
