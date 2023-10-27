@@ -10,10 +10,10 @@ ADD startIntTest.sh test/startIntTest.sh
 ADD requirements.txt test/requirements.txt
 ADD manualtrigger.py test/manualtrigger.py
 ADD entrypoint.sh test/entrypoint.sh
-ADD allure-server.jar test/allure-server.jar
 
 #install requirements
 RUN pip3 install -U -r test/requirements.txt
+RUN apt-get install -y procps
 
 #setting env varialbes
 ARG ARG_TAGS
@@ -32,8 +32,6 @@ RUN chmod +x entrypoint.sh
 RUN chmod -R 777 src/integ-test
 RUN mkdir /test/allure
 RUN chmod 777 /test/allure
-RUN mkdir /test/allure-report
-RUN chmod 777 /test/allure-report
 
 RUN echo $tags
 RUN echo $folder
