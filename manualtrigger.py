@@ -10,9 +10,9 @@ def run_script(tags, folder):
     os.environ["folder"] = folder
 
     # Pass environment to child process
+    print("Env Var Tags: " + os.environ["tags"])
+    print("Env Var Folder: " + os.environ["folder"])
     env = os.environ.copy()
-    print('setting tags '+ tags)
-    print('setting folder '+ folder)
     
     print('----------------------------------------------------')
     
