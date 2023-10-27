@@ -95,6 +95,7 @@ behave -f allure_behave.formatter:AllureFormatter -o ./allure $folder --tags=$ta
 
 if [ "$fromAPI" = true ]; then
     echo "Allure already started"
+    allure generate
 else
     echo "Starting Allure server"
 	allure serve ./allure -p 8081
