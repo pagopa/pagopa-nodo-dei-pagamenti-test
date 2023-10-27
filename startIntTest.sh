@@ -95,12 +95,5 @@ behave -f allure_behave.formatter:AllureFormatter -o /test/allure $folder --tags
 
 ls -lash /test/allure
 
-ps -aux
-
-if [ "$fromAPI" = true ]; then
-    echo "Restarting allure..."
-    pkill -9 -f java
-fi
-
-allure serve /test/allure -p 8081
+allure open /test/allure -p 8081
 
