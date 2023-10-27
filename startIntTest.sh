@@ -86,8 +86,8 @@ echo "replace config file END"
 
 if [ "$fromAPI" = true ]; then
     echo "Setting tags and folder from args..."
-    folder=$argFolder
-    tags=$argTags
+    $folder=$argFolder
+    $tags=$argTags
 fi
 
 echo "executing command: behave -f allure_behave.formatter:AllureFormatter -o ./allure $folder --tags=$tags --no-capture --no-capture-stderrhelpcls -D conffile=$file_config"
