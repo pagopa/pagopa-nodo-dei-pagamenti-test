@@ -85,5 +85,4 @@ echo "executing command: behave -f allure_behave.formatter:AllureFormatter -o ./
 behave -f allure_behave.formatter:AllureFormatter -o ./allure $folder --tags=$tags --no-capture --no-capture-stderr -D conffile=$file_config
 
 echo "Starting Allure server"
-ps -aux
 allure serve ./allure -p 8081
