@@ -1515,6 +1515,7 @@ def step_impl(context, sender, method, service, receiver):
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
     print(service.split('?')[0] + RESPONSE)
     print(nodo_response.content)
+    print(f'rest response: {nodo_response.headers}')
 
 
 @then('verify the HTTP status code of {action} response is {value}')
