@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 def run_script(tags, folder):
     # execute script
-    subprocess.Popen(["sh", "./startIntTest.sh", "true", tags, folder], stdin=subprocess.PIPE)
+    subprocess.Popen(["bash", "./startIntTest.sh", "true", tags, folder], stdin=subprocess.PIPE)
 	
 @app.route('/starttest', methods=['POST'])
 def start_test():
