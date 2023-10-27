@@ -95,7 +95,7 @@ behave -f allure_behave.formatter:AllureFormatter -o /test/allure $folder --tags
 
 ls -lash /test/allure
 
-allure generate /test/allure -o /test/allure-result
+allure generate /test/allure --clean -o /test/allure-result
 
 if [ "$fromAPI" = false ]; then
     allure open /test/allure-result -p 8081
