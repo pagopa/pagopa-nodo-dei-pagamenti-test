@@ -97,5 +97,7 @@ ls -lash /test/allure
 
 allure generate /test/allure -o /test/allure-result
 
-allure open /test/allure-result -p 8081
+if [ "$fromAPI" = false ]; then
+    allure open /test/allure-result -p 8081
+fi
 

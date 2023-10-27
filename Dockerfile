@@ -13,7 +13,6 @@ ADD entrypoint.sh test/entrypoint.sh
 
 #install requirements
 RUN pip3 install -U -r test/requirements.txt
-RUN apt-get install -y procps
 
 #setting env varialbes
 ARG ARG_TAGS
