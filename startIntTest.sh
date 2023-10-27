@@ -101,6 +101,9 @@ if [ "$fromAPI" = true ]; then
     echo "Restarting allure..."
     echo $(ps aux | grep '[j]ava' | awk '{print $2}')
     kill -9 $(ps aux | grep '[j]ava' | awk '{print $2}')
+
+    echo $(ps aux | grep '[s]tartIntTest.sh false' | awk '{print $2}')
+    kill -9 $(ps aux | grep '[s]tartIntTest.sh false' | awk '{print $2}')
 fi
 
 allure serve /test/allure -p 8081
