@@ -99,7 +99,7 @@ ps -aux
 
 if [ "$fromAPI" = true ]; then
     echo "Restarting allure..."
-    pkill -9 allure
+    kill $(ps aux | grep '[j]ava' | awk '{print $2}')
 fi
 
 allure serve /test/allure -p 8081
