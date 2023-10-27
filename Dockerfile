@@ -10,6 +10,7 @@ ADD startIntTest.sh test/startIntTest.sh
 ADD requirements.txt test/requirements.txt
 ADD manualtrigger.py test/manualtrigger.py
 ADD entrypoint.sh test/entrypoint.sh
+ADD allure-server.jar test/allure-server.jar
 
 #install requirements
 RUN pip3 install -U -r test/requirements.txt
@@ -37,6 +38,5 @@ RUN chmod 777 /test/allure-report
 RUN echo $tags
 RUN echo $folder
 
-EXPOSE 8082
 
 ENTRYPOINT ["./entrypoint.sh"]
