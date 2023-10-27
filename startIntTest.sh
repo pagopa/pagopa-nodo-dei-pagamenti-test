@@ -102,8 +102,8 @@ if [ "$fromAPI" = true ]; then
     echo $(ps aux | grep '[j]ava' | awk '{print $2}')
     kill -9 $(ps aux | grep '[j]ava' | awk '{print $2}')
 
-    allure serve /test/allure -p 8081
+    allure serve /test/allure -p 8081 &
 fi
 
-allure serve /test/allure -p 8081
+allure serve /test/allure -p 8081 &
 
