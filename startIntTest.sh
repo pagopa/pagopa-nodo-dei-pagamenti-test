@@ -90,8 +90,8 @@ if [ "$fromAPI" = true ]; then
     tags=$argTags
 fi
 
-echo "executing command: behave -f allure_behave.formatter:AllureFormatter -o ./allure $folder --tags=$tags --no-capture --no-capture-stderrhelpcls -D conffile=$file_config"
-behave -f allure_behave.formatter:AllureFormatter -o ./allure $folder --tags=$tags --no-capture --no-capture-stderr -D conffile=$file_config
+echo "executing command: behave -f allure_behave.formatter:AllureFormatter -o /test/allure $folder --tags=$tags --no-capture --no-capture-stderrhelpcls -D conffile=$file_config"
+behave -f allure_behave.formatter:AllureFormatter -o /test/allure $folder --tags=$tags --no-capture --no-capture-stderr -D conffile=$file_config
 
 if [ "$fromAPI" = true ]; then
     echo "Allure already started"
