@@ -32,6 +32,8 @@ RUN chmod +x entrypoint.sh
 RUN chmod -R 777 src/integ-test
 RUN mkdir /test/allure
 RUN chmod 777 /test/allure
+RUN mkdir /test/allure-result
+RUN chmod 777 /test/allure-result
 
 RUN echo $tags
 RUN echo $folder

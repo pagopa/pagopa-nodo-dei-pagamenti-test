@@ -95,5 +95,7 @@ behave -f allure_behave.formatter:AllureFormatter -o /test/allure $folder --tags
 
 ls -lash /test/allure
 
-allure open /test/allure -p 8081
+allure generate /test/allure -o /test/allure-result
+
+allure open /test/allure-result -p 8081
 
