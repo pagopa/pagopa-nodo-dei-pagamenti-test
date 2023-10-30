@@ -1090,6 +1090,7 @@ def step_impl(context, sender, soap_primitive, receiver):
         context, soap_primitive), headers=headers, verify=False)
     print(soap_response.content.decode('utf-8'))
     print(soap_response.status_code)
+    print(f'soap response: {soap_response.headers}')
     setattr(context, soap_primitive + RESPONSE, soap_response)
 
     assert (soap_response.status_code ==
@@ -1142,7 +1143,7 @@ def step_impl(context, tag, value, primitive):
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
     value = utils.replace_global_variables(value, context)
-    print('soap_response: ', soap_response.headers)
+    
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
@@ -1172,7 +1173,7 @@ def step_impl(context, path_tag, value, primitive):
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
     value = utils.replace_global_variables(value, context)
-    print('soap_response: ', soap_response.headers)
+    
     if 'xml' in soap_response.headers['content-type']:
         my_document_xml = soap_response.content
         list_tag_value = []
@@ -1199,7 +1200,7 @@ def step_impl(context, tag, value, primitive):
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
     value = utils.replace_global_variables(value, context)
-    print('soap_response: ', soap_response.headers)
+    
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
