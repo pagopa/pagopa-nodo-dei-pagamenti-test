@@ -449,56 +449,6 @@ def step_impl(context, primitive, filebody):
 
     setattr(context, primitive, payload)
 
-
-
-@given('initial JSON {primitive}')
-def step_impl(context, primitive):
-    payload = context.text or ""
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
-    setattr(context, f"{primitive}JSON", payload)
-
-    jsonDict = json.loads(payload)
-    payload = utils.json2xml(jsonDict)
-    payload = '<root>' + payload + '</root>'
-    if "#iuv#" in payload:
-        iuv = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv#', iuv)
-        setattr(context, "iuv", iuv)
-    if "#iuv1#" in payload:
-        iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv1#', iuv1)
-        setattr(context, "iuv1", iuv1)	
-    if "#iuv2#" in payload:
-        iuv2 = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv2#', iuv2)
-        setattr(context, "iuv2", iuv2)
-    if "#iuv3#" in payload:
-        iuv3 = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv3#', iuv3)
-        setattr(context, "iuv3", iuv3)
-    if "#iuv4#" in payload:
-        iuv4 = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv4#', iuv4)
-        setattr(context, "iuv4", iuv4)			   
-    if '#transaction_id#' in payload:
-        transaction_id = str(random.randint(10000000, 99999999))
-        payload = payload.replace('#transaction_id#', transaction_id)
-        setattr(context, 'transaction_id', transaction_id)
-    if '#psp_transaction_id#' in payload:
-        psp_transaction_id = str(random.randint(10000000, 99999999))
-        payload = payload.replace('#psp_transaction_id#', psp_transaction_id)
-        setattr(context, 'psp_transaction_id', psp_transaction_id)
-    if '$iuv' in payload:
-        payload = payload.replace('$iuv', getattr(context, 'iuv'))
-    if '$transaction_id' in payload:
-        payload = payload.replace('$transaction_id', getattr(context, 'transaction_id'))
-    if '$psp_transaction_id' in payload:
-        payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
-    setattr(context, primitive, payload)
-
-
 @given('from body {filebody} initial JSON {primitive}')
 def step_impl(context, primitive, filebody):
     
@@ -549,6 +499,57 @@ def step_impl(context, primitive, filebody):
     if '$psp_transaction_id' in payload:
         payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
     setattr(context, primitive, payload)
+    
+
+@given('initial JSON {primitive}')
+def step_impl(context, primitive):
+    payload = context.text or ""
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
+    setattr(context, f"{primitive}JSON", payload)
+
+    jsonDict = json.loads(payload)
+    payload = utils.json2xml(jsonDict)
+    payload = '<root>' + payload + '</root>'
+    if "#iuv#" in payload:
+        iuv = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv#', iuv)
+        setattr(context, "iuv", iuv)
+    if "#iuv1#" in payload:
+        iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv1#', iuv1)
+        setattr(context, "iuv1", iuv1)	
+    if "#iuv2#" in payload:
+        iuv2 = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv2#', iuv2)
+        setattr(context, "iuv2", iuv2)
+    if "#iuv3#" in payload:
+        iuv3 = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv3#', iuv3)
+        setattr(context, "iuv3", iuv3)
+    if "#iuv4#" in payload:
+        iuv4 = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv4#', iuv4)
+        setattr(context, "iuv4", iuv4)			   
+    if '#transaction_id#' in payload:
+        transaction_id = str(random.randint(10000000, 99999999))
+        payload = payload.replace('#transaction_id#', transaction_id)
+        setattr(context, 'transaction_id', transaction_id)
+    if '#psp_transaction_id#' in payload:
+        psp_transaction_id = str(random.randint(10000000, 99999999))
+        payload = payload.replace('#psp_transaction_id#', psp_transaction_id)
+        setattr(context, 'psp_transaction_id', psp_transaction_id)
+    if '$iuv' in payload:
+        payload = payload.replace('$iuv', getattr(context, 'iuv'))
+    if '$transaction_id' in payload:
+        payload = payload.replace('$transaction_id', getattr(context, 'transaction_id'))
+    if '$psp_transaction_id' in payload:
+        payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
+    setattr(context, primitive, payload)
+
+
+
 
 @step('RPT generation')
 def step_impl(context):
@@ -1025,19 +1026,19 @@ def step_impl(context):
     setattr(context, 'rendAttachment', payload)
 
 
-# @given('for {type} replace {tag} with {value} in {primitive}')
-# def step_impl(context, type, tag, value, primitive):
-#     if tag != "-":
-#         value = utils.replace_local_variables(value, context)
-#         value = utils.replace_context_variables(value, context)
-#         value = utils.replace_global_variables(value, context)
-#         type_string = type.upper() 
-#         if type_string == "XML":
-#             xml = utils.manipulate_soap_action(getattr(context, primitive), tag, value)
-#             setattr(context, primitive, xml)
-#         elif type_string == "JSON":
-#             json = utils.manipulate_json(getattr(context, primitive), tag, value)
-#             setattr(context, primitive, json)
+@given('for {type} replace {tag} with {value} in {primitive}')
+def step_impl(context, type, tag, value, primitive):
+    if tag != "-":
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
+        value = utils.replace_global_variables(value, context)
+        type_string = type.upper() 
+        if type_string == "XML":
+            xml = utils.manipulate_soap_action(getattr(context, primitive), tag, value)
+            setattr(context, primitive, xml)
+        elif type_string == "JSON":
+            json = utils.manipulate_json(getattr(context, primitive), tag, value)
+            setattr(context, primitive, json)
 
 
 @given('{elem} with {value} in {action}')
