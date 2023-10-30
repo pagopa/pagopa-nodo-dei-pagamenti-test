@@ -1025,19 +1025,19 @@ def step_impl(context):
     setattr(context, 'rendAttachment', payload)
 
 
-@given('for {type} replace {tag} with {value} in {primitive}')
-def step_impl(context, type, tag, value, primitive):
-    if tag != "-":
-        value = utils.replace_local_variables(value, context)
-        value = utils.replace_context_variables(value, context)
-        value = utils.replace_global_variables(value, context)
-        type_string = type.upper() 
-        if type_string == "XML":
-            xml = utils.manipulate_soap_action(getattr(context, primitive), tag, value)
-            setattr(context, primitive, xml)
-        elif type_string == "JSON":
-            json = utils.manipulate_json(getattr(context, primitive), tag, value)
-            setattr(context, primitive, json)
+# @given('for {type} replace {tag} with {value} in {primitive}')
+# def step_impl(context, type, tag, value, primitive):
+#     if tag != "-":
+#         value = utils.replace_local_variables(value, context)
+#         value = utils.replace_context_variables(value, context)
+#         value = utils.replace_global_variables(value, context)
+#         type_string = type.upper() 
+#         if type_string == "XML":
+#             xml = utils.manipulate_soap_action(getattr(context, primitive), tag, value)
+#             setattr(context, primitive, xml)
+#         elif type_string == "JSON":
+#             json = utils.manipulate_json(getattr(context, primitive), tag, value)
+#             setattr(context, primitive, json)
 
 
 @given('{elem} with {value} in {action}')
