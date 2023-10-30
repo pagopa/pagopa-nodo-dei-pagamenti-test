@@ -1511,8 +1511,8 @@ def step_impl(context, sender, method, service, receiver):
         else:
            nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False) 
     else:
-        nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=body, verify=False)
-    setattr(context, service.split('?')[0], body)
+        nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False)
+    setattr(context, service.split('?')[0], json_body)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
     print(service.split('?')[0] + RESPONSE)
     print(nodo_response.content)
