@@ -79,18 +79,18 @@ def after_feature(context, feature):
 
 def after_all(context):
     pass
-    # db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
-    # conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'),db_selected.get('port'))
+    db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'),db_selected.get('port'))
 
-    # config_dict = getattr(context, 'configurations')
-    # for key, value in config_dict.items():
-    #     #print(key, value)
-    #     selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
-    #     db.executeQuery(conn, selected_query)  
+    config_dict = getattr(context, 'configurations')
+    for key, value in config_dict.items():
+        #print(key, value)
+        selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
+        db.executeQuery(conn, selected_query)  
     
-    # db.closeConnection(conn)
-    # headers = {'Host': 'api.dev.platform.pagopa.it:443'}  
-    # requests.get(utils.get_refresh_config_url(context),verify=False,headers=headers)
+    db.closeConnection(conn)
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}  
+    requests.get(utils.get_refresh_config_url(context),verify=False,headers=headers)
 
 
 def config_ec(context):
