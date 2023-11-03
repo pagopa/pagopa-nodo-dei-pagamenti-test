@@ -13,21 +13,33 @@ ENV no_proxy=toolbox.sia.eu
 #RUN	tar xzf k6-v0.47.0-linux-amd64.tar.gz
 #RUN	mv k6-v0.47.0-linux-amd64/k6 /usr/local/bin
 #RUN	rm -rf k6-v0.47.0-linux-amd64*
+#RUN apk add python3
+#RUN apk add py3-pip
+
 
 #add arguments
 ARG debugEnabled
 ARG rampa
 ARG blacklist
+ENV debugEn=$debugEnabled
+ENV ram=$rampa
+ENV bl=$blacklist
 
-# add k6 script 
-ADD src/perf-test test/src/perf-test
+# add k6 script and other sh
+ADD entrypointPRF.sh test/entrypointPRF.sh
 ADD startPerfTest.sh test/startPerfTest.sh
+ADD manualtriggerPRF.py test/manualtriggerPRF.py
+ADD src/perf-test test/src/perf-test
+ADD requirementsPRF.txt test/requirementsPRF.txt
+
+RUN pip3 install -U -r test/requirementsPRF.txt
 
 #set working directory
 WORKDIR /test
 
+RUN chmod +x entrypointPRF.sh
 RUN chmod +x startPerfTest.sh
 
-ENTRYPOINT ["./startPerfTest.sh", debugEnabled, rampa, blacklist]
+ENTRYPOINT ["./entrypointPRF.sh"]
 
-#CMD ["/bin/bash"]
+#CMD ["/bin/sh"]
