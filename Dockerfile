@@ -4,9 +4,22 @@ ENV http_proxy=http://csproxy:8080
 ENV https_proxy=http://csproxy:8080
 ENV no_proxy=toolbox.sia.eu
 
-#copy test script
-ADD src/integ-test test/src/integ-test
+#FROM python:3.9
+#
+##install jq and openjdk-17                                          
+#RUN apt-get update && \                                             
+#	apt-get install -y jq && \                                     
+#	apt-get install openjdk-17-jdk -y && \                             
+#	apt-get install libpq-dev python3-dev build-essential wget unzip -y
+##install allure
+#RUN wget https://github.com/allure-framework/allure2/releases/download/2.24.1/allure-2.24.1.zip && \
+#	unzip allure-2.24.1.zip && \
+#	rm allure-2.24.1.zip
+
+#copy test script	
+ADD src/integ-test test/src/integ-test	
 ADD startIntTest.sh test/startIntTest.sh
+ADD stopIntTest.sh test/stopIntTest.sh
 ADD requirements.txt test/requirements.txt
 ADD manualtrigger.py test/manualtrigger.py
 ADD entrypoint.sh test/entrypoint.sh
@@ -27,6 +40,7 @@ ENV PATH=$PATH:$JAVA_HOME/bin:/allure-2.24.1/bin/
 WORKDIR /test
 
 RUN chmod +x startIntTest.sh
+RUN chmod +x stopIntTest.sh
 RUN chmod +x entrypoint.sh
 RUN chmod -R 777 src/integ-test
 RUN mkdir /test/allure

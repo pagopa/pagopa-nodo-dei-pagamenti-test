@@ -7,6 +7,10 @@ app = Flask(__name__)
 def run_script(debugEnabled, rampa, blacklist):
     # execute script
     subprocess.Popen(["bash", "./startPerfTest.sh", debugEnabled, rampa, blacklist], stdin=subprocess.PIPE)
+
+def run_stop_script():
+    # execute script
+    subprocess.Popen(["bash", "./stopPerfTest.sh"], stdin=subprocess.PIPE)
 	
 @app.route('/starttest', methods=['POST'])
 def start_test():
@@ -27,5 +31,11 @@ def start_test():
 	else :
 		return jsonify({"error": "missing required keys"}), 400
 
+@app.route('/stoptest', methods=['GET'])
+def stop_test():
+	script_thread = threading.Thread(target=run_stop_script)
+	script_thread.start()
+	return jsonify({"message": "test stopped"})
+	
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8082)

@@ -31,6 +31,7 @@ ADD startPerfTest.sh test/startPerfTest.sh
 ADD manualtriggerPRF.py test/manualtriggerPRF.py
 ADD src/perf-test test/src/perf-test
 ADD requirementsPRF.txt test/requirementsPRF.txt
+ADD stopPerfTest.sh test/stopPerfTest.sh
 
 RUN pip3 install -U -r test/requirementsPRF.txt
 
@@ -39,6 +40,7 @@ WORKDIR /test
 
 RUN chmod +x entrypointPRF.sh
 RUN chmod +x startPerfTest.sh
+RUN chmod +x stopPerfTest.sh
 
 ENTRYPOINT ["./entrypointPRF.sh"]
 

@@ -1,3 +1,3 @@
 #!/bin/bash
-python manualtrigger.py & \
-./startIntTest.sh false
+./startIntTest.sh false & \
+python manualtrigger.py
