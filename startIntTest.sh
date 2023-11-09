@@ -93,11 +93,13 @@ fi
 echo "executing command: behave -f allure_behave.formatter:AllureFormatter -o /test/allure $folder --tags=$tags --no-capture --no-capture-stderrhelpcls -D conffile=$file_config"
 behave -f allure_behave.formatter:AllureFormatter -o /test/allure $folder --tags=$tags --no-capture --no-capture-stderr -D conffile=$file_config
 
+mkdir -p ./allure/allure-result/history/ || echo "history folder already in place...continuing :)" && cp ./allure/allure-report/history/* ./allure/allure-result/history && echo "Allure trends updated!"
+
 ls -lash /test/allure
 
-allure generate /test/allure --clean -o /test/allure/allure-result
+allure generate /test/allure --clean -o /test/allure/allure-report
 
 if [ "$fromAPI" = false ]; then
-    allure open /test/allure/allure-result -p 8081
+    allure open /test/allure/allure-report -p 8081
 fi
 
