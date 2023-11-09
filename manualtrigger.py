@@ -10,7 +10,7 @@ def run_script(tags, folder):
 
 def run_stop_script():
     # execute script
-    subprocess.Popen(["bash", "./stopIntfTest.sh"], stdin=subprocess.PIPE)
+    subprocess.Popen(["bash", "./stopIntTest.sh"], stdin=subprocess.PIPE)
 	
 @app.route('/starttest', methods=['POST'])
 def start_test():
