@@ -91,13 +91,13 @@ if [ "$fromAPI" = true ]; then
 fi
 
 echo "executing command: behave -f allure_behave.formatter:AllureFormatter -o /test/allure-result $folder --tags=$tags --no-capture --no-capture-stderrhelpcls -D conffile=$file_config"
-behave -f allure_behave.formatter:AllureFormatter -o /test/allure-result $folder --tags=$tags --no-capture --no-capture-stderr -D conffile=$file_config
+behave -f allure_behave.formatter:AllureFormatter -o /test/allure/allure-result $folder --tags=$tags --no-capture --no-capture-stderr -D conffile=$file_config
 
 mkdir -p /test/allure/allure-result/history || echo "history folder already in place...continuing :)" && cp /test/allure/allure-report/history/* /test/allure/allure-result/history && echo "Allure trends updated!"
 
-ls -lash /test/allure-result
+ls -lash /test/allure/allure-result
 
-allure generate /test/allure-result --clean -o /test/allure/allure-report
+allure generate /test/allure/allure-result --clean -o /test/allure/allure-report
 
 if [ "$fromAPI" = false ]; then
     allure open /test/allure/allure-report -p 8081
