@@ -30,7 +30,7 @@ RUN pip3 install -U -r test/requirements.txt
 
 #install ps 
 RUN apt-get update && \
-	apt-get install procps
+	apt-get install -y procps
 	
 #setting env varialbes
 ARG ARG_TAGS
