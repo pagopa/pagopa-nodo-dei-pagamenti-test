@@ -4,6 +4,7 @@ ENV http_proxy=http://csproxy:8080
 ENV https_proxy=http://csproxy:8080
 ENV no_proxy=toolbox.sia.eu
 
+
 #FROM python:3.9
 #
 ##install jq and openjdk-17                                          
@@ -27,6 +28,10 @@ ADD entrypoint.sh test/entrypoint.sh
 #install requirements
 RUN pip3 install -U -r test/requirements.txt
 
+#install ps 
+RUN apt-get update && \
+	apt-get install procps
+	
 #setting env varialbes
 ARG ARG_TAGS
 ARG ARG_FOLDER
