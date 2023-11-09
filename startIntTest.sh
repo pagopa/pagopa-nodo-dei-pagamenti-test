@@ -90,6 +90,9 @@ if [ "$fromAPI" = true ]; then
     tags=$argTags
 fi
 
+echo "Clearing allure-result folder"
+rm -rf /test/allure/allure-result/*
+
 echo "executing command: behave -f allure_behave.formatter:AllureFormatter -o /test/allure-result $folder --tags=$tags --no-capture --no-capture-stderrhelpcls -D conffile=$file_config"
 behave -f allure_behave.formatter:AllureFormatter -o /test/allure/allure-result $folder --tags=$tags --no-capture --no-capture-stderr -D conffile=$file_config
 
