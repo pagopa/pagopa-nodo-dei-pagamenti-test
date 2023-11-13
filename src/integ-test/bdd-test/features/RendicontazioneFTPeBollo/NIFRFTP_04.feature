@@ -86,7 +86,7 @@ Feature: NIFRFTP
         And verify 0 record for the table RENDICONTAZIONE_SFTP_SEND_QUEUE retrived by the query send_queue on db nodo_offline under macro RendicontazioneFTPeBollo 
 
 
-@runnable
+@pagoPA
     Scenario: Execute nodoChiediFlussoRendicontazione primitive
         Given the Execute nodoInviaFlussoRendicontazione request scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione
