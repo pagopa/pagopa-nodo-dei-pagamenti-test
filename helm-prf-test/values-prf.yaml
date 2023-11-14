@@ -37,10 +37,10 @@ deployments:
     
         resources:
           limits:
-            cpu: 3000m
+            cpu: 8000m
             memory: 3Gi
           requests:
-            cpu: 8000m
+            cpu: 3000m
             memory: 2Gi
 
         securityContext:
