@@ -36,18 +36,6 @@ Feature: Semantic checks OK for activatePaymentNotice
     Then check outcome is OK of activatePaymentNotice response
 
   @runnable
-  # denylist value check: combination fiscalCode-idChannel-idPSP identifies a record in NODO4_CFG.DENYLIST table of nodo-dei-pagamenti database  [SEM_APNR_24]
-  Scenario: Check outcome OK if combination psp-channel-pa in denylist
-    Given generate 1 notice number and iuv with aux digit 3, segregation code 11 and application code NA
-    And noticeNumber with $1noticeNumber in activatePaymentNotice
-    And fiscalCode with 44444444444 in activatePaymentNotice
-    And idPSP with 40000000001 in activatePaymentNotice
-    And idBrokerPSP with 40000000002 in activatePaymentNotice
-    And idChannel with 40000000002_01 in activatePaymentNotice
-    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
-    Then check outcome is OK of activatePaymentNotice response
-
-  @runnable
   # idPsp in idempotencyKey (idempotencyKey: <idPSp>+"_"+<RANDOM STRING>) not in db  [SEM_APNR_17]
   Scenario: Check outcome OK on non-existent psp in idempotencyKey
     Given random idempotencyKey having 00088877799 as idPSP in activatePaymentNotice

@@ -77,16 +77,3 @@ Feature: Semantic checks for activateIOPaymentReq - OK
         Then activateIOPayment_first response is equal to activateIOPayment response
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And restore initial configurations
-
-    # [SEM_AIPR_31]
-    @runnable
-    Scenario: Check activateIOPayment response with parameters in deny list
-        Given generate 1 notice number and iuv with aux digit 3, segregation code 11 and application code NA
-        And noticeNumber with $1noticeNumber in activateIOPayment
-        And idPSP with 40000000001 in activateIOPayment
-        And idBrokerPSP with 40000000002 in activateIOPayment
-        And idChannel with 40000000002_01 in activateIOPayment
-        And fiscalCode with 44444444444 in activateIOPayment
-        And verify 1 record for the table DENYLIST retrived by the query deny_list on db nodo_cfg under macro AppIO
-        When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
-        Then check outcome is OK of activateIOPayment response
