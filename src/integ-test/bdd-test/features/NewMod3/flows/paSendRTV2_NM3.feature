@@ -2138,7 +2138,7 @@ Feature: flow tests for paSendRTV2
         When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
-    @test @company
+    @test @company @pippoalf
     Scenario: PSRTV2_ACTV1_29 (part 4)
         Given the PSRTV2_ACTV1_29 (part 3) scenario executed successfully
         And wait 12 seconds for expiration

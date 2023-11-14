@@ -128,7 +128,9 @@ Feature: hotfix stazione vp 1 2
 
     Scenario: activatePaymentNoticeV2 vp2
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1201' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1689962' under macro update_query on db nodo_cfg
         When refresh job ALL triggered after 10 seconds
         Given initial XML activatePaymentNoticeV2
             """
@@ -257,7 +259,7 @@ Feature: hotfix stazione vp 1 2
                 "idPSP": "#psp#",
                 "paymentMethod": "TPAY",
                 "idBrokerPSP": "#id_broker_psp#",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "idChannel": "#canale_versione_primitive_2#",
                 "transactionId": "#transaction_id#",
                 "totalAmount": 12,
                 "fee": 2,
@@ -342,6 +344,8 @@ Feature: hotfix stazione vp 1 2
         Given the activatePaymentNoticeV2 vp2 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '1201' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg        
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '1689962' under macro update_query on db nodo_cfg
         When refresh job ALL triggered after 10 seconds
