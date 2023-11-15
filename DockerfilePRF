@@ -41,7 +41,7 @@ WORKDIR /test
 RUN chmod +x entrypointPRF.sh
 RUN chmod +x startPerfTest.sh
 RUN chmod +x stopPerfTest.sh
-
+RUN chmod -R 777 src/perf-test
 ENTRYPOINT ["./entrypointPRF.sh"]
 
 #CMD ["/bin/sh"]
