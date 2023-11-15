@@ -7,7 +7,7 @@ executeScript()
 {
 	active_scenario=$1
 	active_test=$2
-	test_step=${rampingSel}
+	test_step=$3
 	
 	envTest="pagoPA_PERF_apim"
 	
@@ -29,9 +29,9 @@ executeScript()
 	fi
 	echo "debugParam is [${debugParam}]"
 	
-	echo "k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://k6nodo:siametricssiametricssiametrics@10.101.132.118:8086/k6nodo $debugParam"
+	echo "k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$active_scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://k6nodo:siametricssiametricssiametrics@10.101.132.118:8086/k6nodo $debugParam"
 	
-	k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://k6nodo:siametricssiametricssiametrics@10.101.132.118:8086/k6nodo $debugParam
+	k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$active_scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://k6nodo:siametricssiametricssiametrics@10.101.132.118:8086/k6nodo $debugParam
 
 }
 
@@ -60,7 +60,7 @@ for d in src/perf-test/k6/scenarios/CT/test/*.js; do
 	else
 			echo "else block"
 	        #call function to execute the script
-	        executeScript CT ${active_test}
+	        executeScript CT ${active_test} ${rampingSel}
 	fi
     
 done
