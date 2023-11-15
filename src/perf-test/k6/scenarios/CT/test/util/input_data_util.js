@@ -1,4 +1,4 @@
-import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
+import papaparse from './papaparse.js';
 import { SharedArray } from 'k6/data';
 
 const csvAnagPsp = new SharedArray('PSP_data', function () {

@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import papaparse from 'https://jslib.k6.io/papaparse/5.1.1/index.js';
+import papaparse from './papaparse.js';
 import { SharedArray } from 'k6/data';
 
 export function getBasePath(baseUrl, primitive) {
