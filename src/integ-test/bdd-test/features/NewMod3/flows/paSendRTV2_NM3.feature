@@ -1817,7 +1817,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcome request scenario executed successfully
         When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-    @test @company
+    @test @company @pippoalf
     Scenario: PSRTV2_ACTV1_24 (part 3)
         Given the PSRTV2_ACTV1_24 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1879,7 +1879,7 @@ Feature: flow tests for paSendRTV2
         And the sendPaymentOutcome request scenario executed successfully
         When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-    @test @company
+    @test @company @pippoalf
     Scenario: PSRTV2_ACTV1_25 (part 3)
         Given the PSRTV2_ACTV1_25 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -2138,7 +2138,7 @@ Feature: flow tests for paSendRTV2
         When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
-    @test @company @pippoalf
+    @test @company
     Scenario: PSRTV2_ACTV1_29 (part 4)
         Given the PSRTV2_ACTV1_29 (part 3) scenario executed successfully
         And wait 12 seconds for expiration
