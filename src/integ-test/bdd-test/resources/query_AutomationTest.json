@@ -363,7 +363,7 @@
         "update_obj_id": "UPDATE table_name SET param = 'value' WHERE OBJ_ID = $fk_canali_nodo",
         "sessiontoken": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$sessionToken'",
         "ccp": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$ccp'",
-        "retry_spr": "SELECT columns FROM table_name s where s.PAYMENT_TOKEN= '$activatePaymentNoticeV2.paymentToken'",
+        "retry_spr": "SELECT columns FROM table_name s where s.PAYMENT_TOKEN= '$activatePaymentNoticeV2Response.paymentToken'",
         "sprv2_req_activatev2": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2_1Response.paymentToken' AND TIPO_EVENTO = 'sendPaymentResult-v2' AND SOTTO_TIPO_EVENTO = 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE)",
         "sprv2_req_activateio": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken' AND TIPO_EVENTO = 'sendPaymentResult-v2' AND SOTTO_TIPO_EVENTO = 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE)",
         "sprv2_req_ccp": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$ccp' AND TIPO_EVENTO = 'sendPaymentResult-v2' AND SOTTO_TIPO_EVENTO = 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE)",
