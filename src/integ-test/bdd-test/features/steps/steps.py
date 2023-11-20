@@ -1091,7 +1091,7 @@ def step_impl(context, mock, primitive):
 
     s = requests.Session()
     responseJson = utils.requests_retry_session(session=s).get(
-        f"{rest_mock}/history/{notice_number}/{primitive}")
+        f"{rest_mock}/history/{notice_number}/{primitive}", proxies = getattr(context,'proxies'))
     json = responseJson.json()
     assert "request" in json and len(json.get("request").keys()) > 0
 
@@ -1229,11 +1229,11 @@ def step_impl(context, sender, method, service, receiver):
     if run_local:
         if '_json' in url_nodo:
             url_nodo = url_nodo.split('_')[0]
-            nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
+            nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
         else:
-           nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False) 
+           nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies')) 
     else:
-        nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False)
+        nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
     setattr(context, service.split('?')[0], json_body)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
     print(service.split('?')[0] + RESPONSE)
@@ -1266,20 +1266,20 @@ def step_impl(context, mock, destination, primitive):
     print(pa_verify_payment_notice_res)
     if mock == 'EC':
         print(utils.get_soap_mock_ec(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec(context), primitive,
+        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_ec(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
     elif mock == 'EC2':
         print(utils.get_soap_mock_ec2(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec2(context), primitive,
+        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_ec2(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
     elif mock == 'PSP':
         print(utils.get_soap_mock_psp(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_psp(context), primitive,
+        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_psp(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
 
     elif mock == 'PSP2':
         print(utils.get_soap_mock_psp2(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_psp2(context), primitive,
+        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_psp2(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
     else:
         assert False, "Invalid mock"
@@ -1320,9 +1320,9 @@ def step_impl(context):
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
 
     paGetPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers)
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers, proxies = getattr(context,'proxies'))
     pspNotifyPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment", headers=headers)
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment", headers=headers, proxies = getattr(context,'proxies'))
 
     paGetPayment = paGetPaymentJson.json()
     print(">>>>>>>>>>>>>>>>", paGetPayment)
@@ -1462,9 +1462,9 @@ def step_impl(context):
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
 
     paGetPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers)
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers, proxies = getattr(context,'proxies'))
     pspNotifyPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment", headers=headers)
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment", headers=headers, proxies = getattr(context,'proxies'))
 
     paGetPayment = paGetPaymentJson.json()
     pspNotifyPayment = pspNotifyPaymentJson.json()
@@ -1581,7 +1581,7 @@ def step_impl(context, param, value):
     db.closeConnection(conn)
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
     refresh_response = requests.get(utils.get_refresh_config_url(
-        context), headers=headers, verify=False)
+        context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     time.sleep(5)
     print('refresh_response: ', refresh_response)
     assert refresh_response.status_code == 200
@@ -1599,7 +1599,7 @@ def step_impl(context, job_name):
     # pipeline
     # nodo_response = requests.get(f"{url_nodo}/monitoring/v1/config/refresh/{job_name}", headers=headers, verify=False)
     
-    refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+    refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     setattr(context, job_name + RESPONSE, refresh_response)
     time.sleep(10)
     assert refresh_response.status_code == 200
@@ -1663,7 +1663,7 @@ def step_impl(context):
     db.closeConnection(conn)
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
     refresh_response = requests.get(utils.get_refresh_config_url(
-        context), headers=headers, verify=False)
+        context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     time.sleep(10)
     assert refresh_response.status_code == 200
 
