@@ -1104,14 +1104,12 @@ def step_impl(context, mock, primitive, status, notice_number):
         notice_number = utils.replace_local_variables(notice_number, context)
 
     if status == "properly":
-        json, status_code = utils.get_history(
-            rest_mock, notice_number, primitive)
+        json, status_code = utils.get_history(context, rest_mock, notice_number, primitive)
         setattr(context, primitive, json)
         assert "request" in json and len(json.get("request").keys()) > 0
     else:
         try:
-            json, status_code = utils.get_history(
-                rest_mock, notice_number, primitive)
+            json, status_code = utils.get_history(context, rest_mock, notice_number, primitive)
             assert status_code != 200
         except RetryError:
             assert True

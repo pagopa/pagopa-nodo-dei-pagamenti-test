@@ -301,10 +301,10 @@ def replace_global_variables(payload, context):
     return payload
 
 
-def get_history(rest_mock, notice_number, primitive):
+def get_history(context, rest_mock, notice_number, primitive):
     s = requests.Session()
     response = requests_retry_session(session=s).get(
-        f"{rest_mock}/history/{notice_number}/{primitive}")
+        f"{rest_mock}/history/{notice_number}/{primitive}", proxies = getattr(context,'proxies'))
     return response.json(), response.status_code
 
 
