@@ -262,7 +262,11 @@ def manipulate_soap_action(soap_action, elem, value):
 
 
 def replace_context_variables(body, context):
-    pattern = re.compile('\\$\\w+')
+    pattern1 = re.compile('\'\\$\\w+')
+    pattern2 = re.compile('\>\\$\\w+')
+
+    pattern = re.compile(pattern1.pattern + '|' + pattern2.pattern)
+    
     match = pattern.findall(body)
     for field in match:
         saved_elem = getattr(context, field.replace('$', ''))
