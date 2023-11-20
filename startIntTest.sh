@@ -22,10 +22,10 @@ echo "replace config file $file START"
 # replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/config/refresh/ALL"
 
 replace $file ".services.\"nodo-dei-pagamenti\".url"           "$NODO_URL"
-replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitoring/v1/monitor/health"
+replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"
 replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  ""
 replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  ""
-replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "-monitoring/monitoring/v1/config/refresh/ALL"
+replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/config/refresh/ALL"
 
 replace $file ".services.\"mock-ec\".url"           "https://api.dev.platform.pagopa.it/mock-ec/api/v1"
 replace $file ".services.\"mock-ec\".healthcheck"   "/info"
