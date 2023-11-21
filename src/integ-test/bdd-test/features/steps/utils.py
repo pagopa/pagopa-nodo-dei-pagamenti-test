@@ -11,6 +11,8 @@ from threading import Thread
 import requests
 from requests.adapters import HTTPAdapter
 
+from urllib.parse import urlparse
+
 # Decommentare per test in pipeline
 #from requests.packages.urllib3.util.retry import Retry 
 
@@ -341,15 +343,14 @@ def single_thread(context, soap_primitive, type):
     primitive = replace_local_variables(primitive, context)
     primitive = replace_context_variables(primitive, context)
     primitive = replace_global_variables(primitive, context)
-
-    header_host = getattr(context, 'header_host')
     
     if type == 'GET':
-        
+        url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+        header_host = estrapola_header_host(url_nodo)
         headers = {'X-Forwarded-For': '10.82.39.148', 'Host': header_host}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
-        url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+        
         print(url_nodo)
         soap_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
     elif type == 'POST':
@@ -357,18 +358,20 @@ def single_thread(context, soap_primitive, type):
         print(body)
         if 'xml' in getattr(context, primitive):
             # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+            url_nodo = get_soap_url_nodo(context, primitive)
+            header_host = estrapola_header_host(url_nodo)
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
-            url_nodo = get_soap_url_nodo(context, primitive)
         else:
             # headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+            url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+            header_host = estrapola_header_host(url_nodo)
             headers = {'Content-Type': 'application/json', 'Host': header_host}
             if 'SUBSCRIPTION_KEY' in os.environ:
-                headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')            
-            url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
-        soap_response = requests.post(
-            url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+                headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
+                       
+        soap_response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
 
     print("nodo soap_response: ", soap_response.content)
     print(soap_primitive.split("_")[1] + "Response")
@@ -483,3 +486,16 @@ def searchValueTagRecursive(tag_padre, tag, single_tag):
       list_tag = searchValueTagRecursive(next_tag.tag, tag, next_tag)
       if list_tag: break
   return list_tag    
+
+
+
+
+def estrapola_header_host(url):
+    parsed_url = urlparse(url)
+    port = parsed_url.port
+    dominio = parsed_url.netloc
+    if "localhost" in dominio:
+        host = dominio
+    else:
+        host = dominio + ":" + port
+    return host
