@@ -370,7 +370,7 @@ def single_thread(context, soap_primitive, type):
             headers = {'Content-Type': 'application/json', 'Host': header_host}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
-                       
+
         soap_response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
 
     print("nodo soap_response: ", soap_response.content)
@@ -497,5 +497,5 @@ def estrapola_header_host(url):
     if "localhost" in dominio:
         host = dominio
     else:
-        host = dominio + ":" + port
+        host = f"{dominio}:{port}"
     return host
