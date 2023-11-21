@@ -341,10 +341,12 @@ def single_thread(context, soap_primitive, type):
     primitive = replace_local_variables(primitive, context)
     primitive = replace_context_variables(primitive, context)
     primitive = replace_global_variables(primitive, context)
+
+    header_host = getattr(context, 'header_host')
     
     if type == 'GET':
         
-        headers = {'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+        headers = {'X-Forwarded-For': '10.82.39.148', 'Host': header_host}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
         url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
@@ -355,13 +357,13 @@ def single_thread(context, soap_primitive, type):
         print(body)
         if 'xml' in getattr(context, primitive):
             # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': 'api.dev.platform.pagopa.it:443'}
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
             url_nodo = get_soap_url_nodo(context, primitive)
         else:
             # headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-            headers = {'Content-Type': 'application/json', 'Host': 'api.dev.platform.pagopa.it:443'}
+            headers = {'Content-Type': 'application/json', 'Host': header_host}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')            
             url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"

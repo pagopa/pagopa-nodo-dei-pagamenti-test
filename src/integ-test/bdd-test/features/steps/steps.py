@@ -35,11 +35,13 @@ def step_impl(context):
     """
     responses = True
 
+    header_host = getattr(context, 'header_host')
+
     for row in context.table:
         print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
         print(f"calling -> {url}")
-        headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+        headers = {'Host': header_host}
         resp = requests.get(url, headers=headers, verify=False, proxies = getattr(context,'proxies'))
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
@@ -798,12 +800,13 @@ def step_impl(context, attribute, value, elem, primitive):
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     #primitive = soap_primitive.split("_")[0]
+    header_host = getattr(context, 'header_host')
     if 'NODOPGDB' in os.environ:
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
     else:
-        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
+        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': header_host}  # set what your server accepts
     url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
     #url_nodo = "http://localhost:81/nodo-sit/webservices/input"
     print("url_nodo: ", url_nodo)
@@ -822,12 +825,13 @@ def step_impl(context, sender, soap_primitive, receiver):
 @step('send, by sender {sender}, soap action {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
     #primitive = soap_primitive.split("_")[0]
+    header_host = getattr(context, 'header_host')
     if 'NODOPGDB' in os.environ:
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')        
     else:
-        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts        
+        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': header_host}  # set what your server accepts        
     url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
@@ -841,10 +845,11 @@ def step_impl(context, sender, soap_primitive, receiver):
 
 @when('job {job_name} triggered after {seconds} seconds')
 def step_impl(context, job_name, seconds):
+    header_host = getattr(context, 'header_host')
     seconds = utils.replace_local_variables(seconds, context)
     time.sleep(int(seconds))
     url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
-    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    headers = {'Host': header_host}
 
     user_profile = os.environ.get("USERPROFILE")
     
@@ -1170,9 +1175,10 @@ def step_impl(context, name, n):
 @when(u'{sender} sends rest {method} {service} to {receiver}')
 def step_impl(context, sender, method, service, receiver):
     # TODO get url according to receiver
+    header_host = getattr(context, 'header_host')
     url_nodo = utils.get_rest_url_nodo(context, service)
     headers = {'Content-Type': 'application/json',
-               'Host': 'api.dev.platform.pagopa.it:443'}
+               'Host': header_host}
     if 'SUBSCRIPTION_KEY' in os.environ:
         headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
 
@@ -1303,6 +1309,7 @@ def step_impl(context, field, field_value, elem, value, primitive):
 @then('activateIOPayment response and pspNotifyPayment request are consistent')
 def step_impl(context):
     # retrieve info from soap request of background step
+    header_host = getattr(context, 'header_host')
     soap_request = getattr(context, "activateIOPayment")
     my_document = parseString(soap_request)
     notice_number = my_document.getElementsByTagName('noticeNumber')[
@@ -1315,7 +1322,7 @@ def step_impl(context):
     activateIOPaymentResponseXml = parseString(
         activateIOPaymentResponse.content)
 
-    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    headers = {'Host': header_host}
 
     paGetPaymentJson = requests.get(
         f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers, proxies = getattr(context,'proxies'))
@@ -1445,6 +1452,7 @@ def step_impl(context, response, response_1):
 @then('activateIOPayment response and pspNotifyPayment request are consistent with paypal')
 def step_impl(context):
     # retrieve info from soap request of background step
+    header_host = getattr(context, 'header_host')
     soap_request = getattr(context, "activateIOPayment")
     my_document = parseString(soap_request)
     notice_number = my_document.getElementsByTagName('noticeNumber')[
@@ -1457,7 +1465,7 @@ def step_impl(context):
     activateIOPaymentResponseXml = parseString(
         activateIOPaymentResponse.content)
 
-    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    headers = {'Host': header_host}
 
     paGetPaymentJson = requests.get(
         f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers, proxies = getattr(context,'proxies'))
@@ -1577,7 +1585,8 @@ def step_impl(context, param, value):
         print(f'executed query: {exec_query}')
 
     db.closeConnection(conn)
-    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    header_host = getattr(context, 'header_host')
+    headers = {'Host': header_host}
     refresh_response = requests.get(utils.get_refresh_config_url(
         context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     time.sleep(5)
@@ -1587,9 +1596,10 @@ def step_impl(context, param, value):
 
 @step("refresh job {job_name} triggered after 10 seconds")
 def step_impl(context, job_name):
+    header_host = getattr(context, 'header_host')
     url_nodo = context.config.userdata.get(
         "services").get("nodo-dei-pagamenti").get("url")
-    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    headers = {'Host': header_host}
 
     # DA UTILIZZARE IN LOCALE (DECOMMENTARE LE 2 RIGHE DI SEGUITO E COMMENTARE LE 2 RIGHE SOTTO pipeline)
     # nodo_response = requests.get("https://api.dev.platform.pagopa.it/nodo/monitoring/v1/config/refresh/ALL", headers=headers, verify=False)
@@ -1659,7 +1669,8 @@ def step_impl(context):
         db.executeQuery(conn, selected_query)
 
     db.closeConnection(conn)
-    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    header_host = getattr(context, 'header_host')
+    headers = {'Host': header_host}
     refresh_response = requests.get(utils.get_refresh_config_url(
         context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     time.sleep(10)
