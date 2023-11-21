@@ -215,18 +215,24 @@ Feature: semantic checks for checkPosition outcome OK
         And checking value $XML_RE is containing value <description>PAYING</description>
         And checking value $XML_RE is containing value <description>PAID</description>
         And checking value $XML_RE is containing value <description>NOTIFIED</description>
-    @test
-    Scenario Outline: Wrong configuration 1
+
+    @test @pippoalf
+    Scenario: checkPosition with station version 1 [PG-37]
         Given the checkPosition scenario executed successfully
-        And <elem> with <value> in checkPosition
+        And noticeNumber with 002$iuv in checkPosition
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
+
+    @test
+    Scenario: Wrong configuration 1
+        Given the checkPosition scenario executed successfully
+        And fiscalCode with 12345678902 in checkPosition
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 400
         And check outcome is KO of checkPosition response
         And check description is Wrong configuration of checkPosition response
-        Examples:
-            | elem         | value       | SoapUI test |
-            | fiscalCode   | 12345678902 | SEM_CPO_04  |
-            | noticeNumber | 002$iuv     | SEM_CPO_05  |
+
     @test
     # SEM_CPO_06
     Scenario: Wrong configuration 2
