@@ -492,7 +492,7 @@ def searchValueTagRecursive(tag_padre, tag, single_tag):
 
 def estrapola_header_host(url):
     parsed_url = urlparse(url)
-    port = parsed_url.port
+    port = 443
     dominio = parsed_url.netloc
     if "localhost" in dominio:
         host = dominio
