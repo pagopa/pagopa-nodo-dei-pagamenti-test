@@ -26,16 +26,6 @@ def before_all(context):
         proxies = None
     setattr(context, 'proxies', proxies)
     print('Proxy enabled: ' , proxyEnabled)
-    
-    header_host = ""
-    header_apim = context.config.userdata.get("global_configuration").get("header_apim")
-    
-    if header_apim == True:
-        header_host = 'api.dev.platform.pagopa.it:443'
-    else:
-        header_host = 'nodo-p-sit.tst-npc.sia.eu:443'
-
-    setattr(context, 'header_host', header_host)
 
     db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
     selected_query = utils.query_json(context, 'select_config', 'configurations')
@@ -80,8 +70,7 @@ def after_feature(context, feature):
     #         context.apiconfig.delete_creditor_institution(global_configuration.get("creditor_institution_code"))
 
 def after_all(context):
-	#pass
-    header_host = getattr(context, 'header_host')
+    header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
     db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'),db_selected.get('port'))
     
