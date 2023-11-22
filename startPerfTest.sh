@@ -27,8 +27,8 @@ executeScript()
 	filename=$(date +%m_%d_%y)$active_test.csv
 	echo "debugEnabled: [${debugEnabled}]"
 	debugParam=""
-	if echo "${debugEnabled}" | grep -q "True"; then
-	  echo "debugParam is True" 
+	if echo "${debugEnabled}" | grep -q "true"; then
+	  echo "debugParam is true" 
 	  debugParam="-v"
 	fi
 	echo "debugParam is [${debugParam}]"
