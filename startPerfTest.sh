@@ -3,6 +3,10 @@ debugEnabled=$1
 rampingSel=$2
 blacklistCT=$3
 echo "params: ${debugEnabled} ${rampingSel} ${blacklistCT}"
+
+export https_proxy=http://10.79.20.33:80
+export http_proxy=http://10.79.20.33:80
+
 executeScript()
 {
 	active_scenario=$1
