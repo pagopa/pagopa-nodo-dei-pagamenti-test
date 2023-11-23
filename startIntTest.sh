@@ -25,26 +25,31 @@ replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/confi
 #replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/monitoring/v1/config/refresh/ALL"
 
 replace $file ".services.\"mock-ec\".url"           "https://api.dev.platform.pagopa.it/mock-ec/api/v1"
+#replace $file ".services.\"mock-ec\".url"           "https://mock-ec-primary-sit.tst-npc.sia.eu/servizi/PagamentiTelematiciRPT"
 replace $file ".services.\"mock-ec\".healthcheck"   "/info"
 replace $file ".services.\"mock-ec\".soap_service"  ""
 replace $file ".services.\"mock-ec\".rest_service"  ""
 
 replace $file ".services.\"secondary-mock-ec\".url"           "https://api.dev.platform.pagopa.it/secondary-mock-ec/api/v1"
+#replace $file ".services.\"secondary-mock-ec\".url"           "https://mock-ec-secondary-sit.tst-npc.sia.eu/servizi/PagamentiTelematiciRPT"
 replace $file ".services.\"secondary-mock-ec\".healthcheck"   "/info"
 replace $file ".services.\"secondary-mock-ec\".soap_service"  ""
 replace $file ".services.\"secondary-mock-ec\".rest_service"  ""
 
 replace $file ".services.\"mock-psp\".url"           "https://api.dev.platform.pagopa.it/mock-psp-service/api/v1"
+#replace $file ".services.\"mock-psp\".url"           "https://mock-psp-primary-sit.tst-npc.sia.eu/servizi/PagamentiTelematiciRPT"
 replace $file ".services.\"mock-psp\".healthcheck"   "/info"
 replace $file ".services.\"mock-psp\".soap_service"  ""
 replace $file ".services.\"mock-psp\".rest_service"  ""
 
 replace $file ".services.\"secondary-mock-psp\".url"           "https://api.dev.platform.pagopa.it/secondary-mock-psp-service/api/v1"
+#replace $file ".services.\"secondary-mock-psp\".url"           "https://mock-psp-secondary-sit.tst-npc.sia.eu/servizi/PagamentiTelematiciRPT"
 replace $file ".services.\"secondary-mock-psp\".healthcheck"   "/info"
 replace $file ".services.\"secondary-mock-psp\".soap_service"  ""
 replace $file ".services.\"secondary-mock-psp\".rest_service"  ""
 
 replace $file ".services.\"mock-pm\".url"           "https://api.dev.platform.pagopa.it/mock-pm-sit/api/v1"
+#replace $file ".services.\"mock-pm\".url"           "https://mock-pm-sit.tst-npc.sia.eu/servizi/PagamentiTelematiciRPT"
 replace $file ".services.\"mock-pm\".healthcheck"   "/info"
 replace $file ".services.\"mock-pm\".soap_service"  ""
 replace $file ".services.\"mock-pm\".rest_service"  ""
