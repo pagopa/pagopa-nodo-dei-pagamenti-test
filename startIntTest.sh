@@ -49,8 +49,8 @@ replace $file ".services.\"secondary-mock-psp\".soap_service"  ""
 replace $file ".services.\"secondary-mock-psp\".rest_service"  ""
 
 #replace $file ".services.\"mock-pm\".url"           "https://api.dev.platform.pagopa.it/mock-pm-sit/api/v1"
-replace $file ".services.\"mock-pm\".url"           "https://mock-pm-sit.tst-npc.sia.eu/PerfPMMock/RestAPI"
-replace $file ".services.\"mock-pm\".healthcheck"   "/info"
+replace $file ".services.\"mock-pm\".url"           "https://mock-pm-sit.tst-npc.sia.eu/PerfPMMock"
+replace $file ".services.\"mock-pm\".healthcheck"   "/actuator/health"
 replace $file ".services.\"mock-pm\".soap_service"  ""
 replace $file ".services.\"mock-pm\".rest_service"  ""
 
