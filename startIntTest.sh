@@ -100,7 +100,7 @@ echo "executing command: behave -f allure_behave.formatter:AllureFormatter -o /t
 behave -f allure_behave.formatter:AllureFormatter -o /test/allure/allure-result $folder --tags=$tags --no-capture --no-capture-stderr -D conffile=$file_config
 
 mkdir -p /test/allure/allure-result/history || echo "history folder already in place...continuing :)" 														   
-find /test/allure/allure-report/history/* -type f -exec sh -c 'mkdir -p "/test/allure/allure-result/history "{}"" && cp "{}" "/test/allure/allure-result/history "{}"/"' \;
+find /test/allure/allure-report/history/* -type f -exec sh -c 'cp "{}" "/test/allure/allure-result/history"{}"/"' \;
 echo "Allure trends updated!"
 
 ls -lash /test/allure/allure-result
