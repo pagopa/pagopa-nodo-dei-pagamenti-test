@@ -271,6 +271,7 @@ def replace_context_variables(body, context):
     
     match = pattern.findall(body)
     for field in match:
+        field = field[1:]
         saved_elem = getattr(context, field.replace('$', ''))
         value = str(saved_elem)
         body = body.replace(field, value)
