@@ -88,12 +88,12 @@ if [ "$fromAPI" = true ]; then
 fi
 
 echo "Clearing allure-result folder"
-rm -rf /test/allure/allure-result/*
+find /test/allure/allure-result/ -type f -delete
 
 echo "executing command: behave -f allure_behave.formatter:AllureFormatter -o /test/allure-result $folder --tags=$tags --no-capture --no-capture-stderrhelpcls -D conffile=$file_config"
 behave -f allure_behave.formatter:AllureFormatter -o /test/allure/allure-result $folder --tags=$tags --no-capture --no-capture-stderr -D conffile=$file_config
 
-mkdir -p /test/allure/allure-result/history || echo "history folder already in place...continuing :)" && cp /test/allure/allure-report/history/* /test/allure/allure-result/history && echo "Allure trends updated!"
+mkdir -p /test/allure/allure-result/history || echo "history folder already in place...continuing :)" && find ./test/allure/allure-report/history/* -type f -name "*.*" -exec cp {} ./test/allure/allure-result/history \; && echo "Allure trends updated!"
 
 ls -lash /test/allure/allure-result
 
