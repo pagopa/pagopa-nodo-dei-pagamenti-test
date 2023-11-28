@@ -2331,6 +2331,24 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     print(f"check expected element: {value}, obtained: {elem}")
     assert elem == value
 
+
+@step("insert through the query {query_name} into the table {table_name} the fields {row_keys_fields} with {row_values_fields} under macro {macro} on db {db_name}")
+def step_impl(context, query_name, table_name, row_keys_fields, row_values_fields, macro, db_name):											 
+											 
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('row_keys_fields', row_keys_fields).replace('row_values_fields', row_values_fields)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
+    row_values_fields = utils.replace_global_variables(row_values_fields, context)
+    row_values_fields = utils.replace_local_variables(row_values_fields, context)
+    row_values_fields = utils.replace_context_variables(row_values_fields, context)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    exec_query = db.executeQuery(conn, selected_query)
+    db.closeConnection(conn)
+
+
+
 @step("updates through the query {query_name} of the table {table_name} the parameter {param} with {value} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, macro, db_name):
 												 
@@ -2346,6 +2364,20 @@ def step_impl(context, query_name, table_name, param, value, macro, db_name):
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
+
+
+@step("delete by the query {query_name} the table {table_name} with the where {where_condition} under macro {macro} on db {db_name}")
+def step_impl(context, query_name, table_name, where_condition, macro, db_name):
+												 
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('where_condition', where_condition)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    exec_query = db.executeQuery(conn, selected_query)
+    db.closeConnection(conn)
+
 
 @step(u"checks the value {value} is contained in the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, value, column, query_name, table_name, db_name, name_macro):
