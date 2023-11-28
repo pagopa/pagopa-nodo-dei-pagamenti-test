@@ -3,7 +3,7 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
   Background:
     Given systems up
 
-  @runnable
+  @runnable @PG34
   Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
     Given initial XML activatePaymentNotice
       """

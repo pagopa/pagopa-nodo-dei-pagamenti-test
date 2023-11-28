@@ -18,7 +18,7 @@
          </soapenv:Body>
       </soapenv:Envelope>
       """
- @runnable     
+ @runnable @PG34
  # attribute value check
  Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
     Given <attribute> set <value> for <elem> in verificaBollettino
