@@ -5,7 +5,13 @@ import steps.utils as utils
 import time
 import steps.db_operation_pg as db
 import psycopg2
-from psycopg2 import OperationalError    
+from psycopg2 import OperationalError
+
+import allure
+import sys
+from io import StringIO
+
+
 
 def before_all(context):
     print('Global settings...')
@@ -60,6 +66,29 @@ def before_feature(context, feature):
     #         config_ec(context)
 
 
+def before_scenario(context, scenario):
+    context.stdout_capture = StringIO()
+    context.original_stdout = sys.stdout
+    sys.stdout = context.stdout_capture
+
+def after_scenario(context, scenario):
+    try:
+        #sys.stdout = sys.__stdout__
+        sys.stdout = context.original_stdout
+        
+        context.stdout_capture.seek(0)
+        captured_stdout = context.stdout_capture.read()
+        
+        allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+        context.stdout_capture.close()
+
+        print("\nCaptured stdout:\n", captured_stdout)  # Stampa l'output nel terminale
+
+    except Exception as e:
+        print("Eccezione " + e)
+
+
+
 def after_feature(context, feature):
     global_configuration = context.config.userdata.get("global_configuration")
 
@@ -70,20 +99,19 @@ def after_feature(context, feature):
     #         context.apiconfig.delete_creditor_institution(global_configuration.get("creditor_institution_code"))
 
 def after_all(context):
-    pass
-    # header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
-    # db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
-    # conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'),db_selected.get('port'))
+    header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
+    db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'),db_selected.get('port'))
     
-    # config_dict = getattr(context, 'configurations')
-    # for key, value in config_dict.items():
-    #     #print(key, value)
-    #     selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
-    #     db.executeQuery(conn, selected_query)  
+    config_dict = getattr(context, 'configurations')
+    for key, value in config_dict.items():
+        #print(key, value)
+        selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
+        db.executeQuery(conn, selected_query)  
     
-    # db.closeConnection(conn)
-    # headers = {'Host': header_host}  
-    # requests.get(utils.get_refresh_config_url(context),verify=False,headers=headers, proxies = getattr(context,'proxies'))
+    db.closeConnection(conn)
+    headers = {'Host': header_host}  
+    requests.get(utils.get_refresh_config_url(context),verify=False,headers=headers, proxies = getattr(context,'proxies'))
 
 
 def config_ec(context):
