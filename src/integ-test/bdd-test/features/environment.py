@@ -11,6 +11,10 @@ else:
     import steps.db_operation as db
     import os, cx_Oracle, requests
 
+import allure
+import sys
+from io import StringIO
+
 
 def before_all(context):
     print('Global settings...')
@@ -66,6 +70,28 @@ def before_feature(context, feature):
     # for tag in feature.tags:
     #     if tag == 'config-ec':
     #         config_ec(context)
+
+def before_scenario(context, scenario):
+    context.stdout_capture = StringIO()
+    context.original_stdout = sys.stdout
+    sys.stdout = context.stdout_capture
+
+def after_scenario(context, scenario):
+    try:
+        #sys.stdout = sys.__stdout__
+        sys.stdout = context.original_stdout
+        
+        context.stdout_capture.seek(0)
+        captured_stdout = context.stdout_capture.read()
+        
+        allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+        context.stdout_capture.close()
+
+        print("\nCaptured stdout:\n", captured_stdout)  # Stampa l'output nel terminale
+
+    except Exception as e:
+        print("Eccezione " + e)
+
 
 
 def after_feature(context, feature):
