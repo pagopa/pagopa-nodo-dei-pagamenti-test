@@ -11,7 +11,7 @@ else:
     import steps.db_operation as db
     import os, cx_Oracle, requests
 
-import allure
+
 import sys
 from io import StringIO
 
@@ -88,6 +88,7 @@ def before_scenario(context, scenario):
 def after_scenario(context, scenario):
     user_profile = getattr(context, f'user_profile')
     if user_profile != None:
+        import allure
         try:
             #sys.stdout = sys.__stdout__
             sys.stdout = context.original_stdout
