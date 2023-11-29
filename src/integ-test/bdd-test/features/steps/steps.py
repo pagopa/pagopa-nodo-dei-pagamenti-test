@@ -856,12 +856,8 @@ def step_impl(context, job_name, seconds):
 
     user_profile = os.environ.get("USERPROFILE")
     
-    if user_profile != None:
-        nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False, proxies = getattr(context,'proxies'))
-        print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
-    else:
-        nodo_response = requests.get(f"{url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False, proxies = getattr(context,'proxies'))
-        print(f">>>>>>>>>>>>>>>>>> {url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}")
+    nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False, proxies = getattr(context,'proxies'))
+    print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
     
     setattr(context, job_name + RESPONSE, nodo_response)
 
