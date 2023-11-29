@@ -39,6 +39,9 @@ def before_all(context):
 
   #  more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
     context.config.update_userdata(more_userdata)
+
+    setattr(context, f'user_profile', user_profile)
+
     db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
     selected_query = utils.query_json(context, 'select_config', 'configurations')
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
@@ -72,25 +75,35 @@ def before_feature(context, feature):
     #         config_ec(context)
 
 def before_scenario(context, scenario):
-    context.stdout_capture = StringIO()
-    context.original_stdout = sys.stdout
-    sys.stdout = context.stdout_capture
+    user_profile = getattr(context, f'user_profile')
+    ### se lancio i test in locale vale allure, altrimenti skip
+    if user_profile != None:
+        context.stdout_capture = StringIO()
+        context.original_stdout = sys.stdout
+        sys.stdout = context.stdout_capture
+    else:
+        pass
+    
 
 def after_scenario(context, scenario):
-    try:
-        #sys.stdout = sys.__stdout__
-        sys.stdout = context.original_stdout
-        
-        context.stdout_capture.seek(0)
-        captured_stdout = context.stdout_capture.read()
-        
-        allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
-        context.stdout_capture.close()
+    user_profile = getattr(context, f'user_profile')
+    if user_profile != None:
+        try:
+            #sys.stdout = sys.__stdout__
+            sys.stdout = context.original_stdout
+            
+            context.stdout_capture.seek(0)
+            captured_stdout = context.stdout_capture.read()
+            
+            allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+            context.stdout_capture.close()
 
-        print("\nCaptured stdout:\n", captured_stdout)  # Stampa l'output nel terminale
+            print("\nCaptured stdout:\n", captured_stdout)  # Stampa l'output nel terminale
 
-    except Exception as e:
-        print("Eccezione " + e)
+        except Exception as e:
+            print("Eccezione " + e)
+    else:
+        pass
 
 
 
