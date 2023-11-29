@@ -3,6 +3,11 @@ Feature: happy flow with Stand In on and PSP no POSTE
     Background:
         Given systems up
 
+    # Lo scopo di questo test è verificare, a seguito di un flusso passante per stazione di standin,
+    # che sia presente il parametro opzionale standin=true nelle response verso il psp, dato che il canale è flaggato a Y su FLAG_STANDIN.
+    # Inoltre, dato che anche la stazione sarà flaggata a Y su FLAG_STANDIN, ci aspettiamo di ritrovarci il campo opzionale standin=true, dentro la receipt inviata all'EC
+    # dalla paSendRT.
+    
     Scenario: Execute verifyPaymentNotice request
         Given insert through the query insert_query into the table STAND_IN_STATIONS the fields STATION_CODE with '66666666666_10' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter invioReceiptStandin set to Y
@@ -59,7 +64,7 @@ Feature: happy flow with Stand In on and PSP no POSTE
         And EC replies to nodo-dei-pagamenti with the paVerifyPaymentNotice
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
-        #And check standin is true of verifyPaymentNotice response
+        And check standin is true of verifyPaymentNotice response
         
 
     # Define primitive paGetPayment
@@ -250,7 +255,7 @@ Feature: happy flow with Stand In on and PSP no POSTE
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
     
-    @PG32
+    @insertStandin
     Scenario: job paSendRt
         Given the Define sendPaymentOutcome scenario executed successfully
         When job paSendRt triggered after 6 seconds

@@ -2531,6 +2531,17 @@ def step_impl(context, value1, condition, value2):
     else:
         assert False
 
+@then('check payload tag {tag} field not exists in {payload}')
+def step_impl(context, tag, payload):
+    payload = getattr(context, payload)
+    if 'xml' in payload.headers['content-type']:
+        my_document = parseString(payload.content)
+        assert len(my_document.getElementsByTagName(tag)) == 0
+    else:
+        payload_json = getattr(context, payload)
+        json = payload_json.json()
+        find = jo.search_tag(json, tag)
+        assert not find
 
 @step("calling primitive {primitive1} {restType1} and {primitive2} {restType2} in parallel")
 def step_impl(context, primitive1, primitive2, restType1, restType2):

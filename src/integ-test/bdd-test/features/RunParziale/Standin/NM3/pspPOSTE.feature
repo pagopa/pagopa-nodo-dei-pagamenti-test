@@ -3,9 +3,33 @@ Feature: Stand in with psp POSTE
     Background:
         Given systems up
 
-    # Define primitive paGetPayment
+    @standin
     Scenario: activatePaymentNotice request
-        Given initial XML paGetPayment
+        Given initial XML activatePaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:activatePaymentNoticeReq>
+            <idPSP>#pspPoste#</idPSP>
+            <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
+            <idChannel>#channelPoste#</idChannel>
+            <password>pwdpwdpwd</password>
+            <idempotencyKey>#idempotency_key#</idempotencyKey>
+            <qrCode>
+            <fiscalCode>#creditor_institution_code#</fiscalCode>
+            <noticeNumber>346#iuv#</noticeNumber>
+            </qrCode>
+            <expirationTime>120000</expirationTime>
+            <amount>10.00</amount>
+            <dueDate>2021-12-31</dueDate>
+            <paymentNote>causale</paymentNote>
+            </nod:activatePaymentNoticeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And initial XML paGetPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
             xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -14,7 +38,7 @@ Feature: Stand in with psp POSTE
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>02$iuv</creditorReferenceId>
+            <creditorReferenceId>46$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -73,30 +97,6 @@ Feature: Stand in with psp POSTE
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-        And initial XML activatePaymentNotice
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:activatePaymentNoticeReq>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>pwdpwdpwd</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-            <fiscalCode>$verifyPaymentNotice.fiscalCode</fiscalCode>
-            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
-            </qrCode>
-            <expirationTime>120000</expirationTime>
-            <amount>10.00</amount>
-            <dueDate>2021-12-31</dueDate>
-            <paymentNote>causale</paymentNote>
-            </nod:activatePaymentNoticeReq>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
         And check faultCode is PPT_STANZIONE_INT_PA_IRRAGGIUNGIBILE of activatePaymentNotice response
