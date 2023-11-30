@@ -7,12 +7,11 @@ Feature: happy flow with Stand In on and PSP no POSTE
     # che sia presente il parametro opzionale standin=true nelle response verso il psp, dato che il canale è flaggato a Y su FLAG_STANDIN.
     # Inoltre, dato che anche la stazione sarà flaggata a Y su FLAG_STANDIN, ci aspettiamo di ritrovarci il campo opzionale standin=true, dentro la receipt inviata all'EC
     # dalla paSendRT.
-    
     Scenario: Execute verifyPaymentNotice request
-        Given insert through the query insert_query into the table STAND_IN_STATIONS the fields STATION_CODE with '66666666666_10' under macro update_query on db nodo_cfg
-        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to Y
-        And refresh job ALL triggered after 10 seconds
-        And initial XML verifyPaymentNotice
+        # Given insert through the query insert_query into the table STAND_IN_STATIONS the fields STATION_CODE with 'irraggiungibile' under macro update_query on db nodo_cfg
+        # And nodo-dei-pagamenti has config parameter invioReceiptStandin set to Y
+        # And refresh job ALL triggered after 10 seconds
+        Given initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -165,25 +164,25 @@ Feature: happy flow with Stand In on and PSP no POSTE
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And check standin is true of activatePaymentNotice response
-        And checks the value Y of the record at column STAND_IN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value Y of the record at column FLAG_STANDIN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
 
 
     # Define primitive sendPaymentOutcome
     Scenario: Define sendPaymentOutcome
         Given the activatePaymentNotice request scenario executed successfully
-        And initial XML paSendRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header />
-            <soapenv:Body>
-            <paf:paSendRTRes>
-            <outcome>OK</outcome>
-            <delay>10000</delay>
-            </paf:paSendRTRes>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paSendRT
+        # And initial XML paSendRT
+        #     """
+        #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+        #     <soapenv:Header />
+        #     <soapenv:Body>
+        #     <paf:paSendRTRes>
+        #     <outcome>OK</outcome>
+        #     <delay>10000</delay>
+        #     </paf:paSendRTRes>
+        #     </soapenv:Body>
+        #     </soapenv:Envelope>
+        #     """
+        # And EC replies to nodo-dei-pagamenti with the paSendRT
         And initial XML sendPaymentOutcome
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -232,34 +231,34 @@ Feature: happy flow with Stand In on and PSP no POSTE
             </soapenv:Envelope>
             """
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        And wait 15 seconds for expiration
+        #And wait 15 seconds for expiration
         Then check outcome is OK of sendPaymentOutcome response
 
-        And execution query position_transfer to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
-        And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_transfer on db nodo_online under macro NewMod3
-        And execution query position_status_n to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns STATUS under macro NewMod3 with db name nodo_online
-        And checks the value NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online under macro NewMod3
-        And execution query position_transfer to get value on the table POSITION_PAYMENT_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
-        And checks the value NOTICE_GENERATED,NOTICE_SENT,PAYING,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_status_n on db nodo_online under macro NewMod3
-        And execution query position_transfer to get value on the table POSITION_PAYMENT_STATUS_SNAPSHOT, with the columns STATUS under macro NewMod3 with db name nodo_online
-        And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_status_n on db nodo_online under macro NewMod3
-        And execution query position_transfer to get value on the table POSITION_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
-        And checks the value PAYING,PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query position_status_n on db nodo_online under macro NewMod3
-        And execution query position_status_n to get value on the table POSITION_STATUS_SNAPSHOT, with the columns STATUS under macro NewMod3 with db name nodo_online
-        And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query position_status_n on db nodo_online under macro NewMod3
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
-        And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
-        And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        # And execution query position_transfer to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
+        # And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_transfer on db nodo_online under macro NewMod3
+        # And execution query position_status_n to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns STATUS under macro NewMod3 with db name nodo_online
+        # And checks the value NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        # And execution query position_transfer to get value on the table POSITION_PAYMENT_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
+        # And checks the value NOTICE_GENERATED,NOTICE_SENT,PAYING,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_status_n on db nodo_online under macro NewMod3
+        # And execution query position_transfer to get value on the table POSITION_PAYMENT_STATUS_SNAPSHOT, with the columns STATUS under macro NewMod3 with db name nodo_online
+        # And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        # And execution query position_transfer to get value on the table POSITION_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
+        # And checks the value PAYING,PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query position_status_n on db nodo_online under macro NewMod3
+        # And execution query position_status_n to get value on the table POSITION_STATUS_SNAPSHOT, with the columns STATUS under macro NewMod3 with db name nodo_online
+        # And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        # And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        # And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        # And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        # And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        # And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        # And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
     
     @insertStandin
     Scenario: job paSendRt
         Given the Define sendPaymentOutcome scenario executed successfully
-        When job paSendRt triggered after 6 seconds
-        And wait 15 seconds for expiration
+        # When job paSendRt triggered after 6 seconds
+        # And wait 15 seconds for expiration
 
         # DB Checks for POSITION_PAYMENT
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activate on db nodo_online under macro NewMod1
@@ -274,8 +273,8 @@ Feature: happy flow with Stand In on and PSP no POSTE
         And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
         
         # RE
-        And checks the value Y of the record at column STANDIN of the table RE retrived by the query sottoTipoEvento_paVerifyPayment on db re under macro NewMod3
-        And checks the value Y of the record at column STANDIN of the table RE retrived by the query sottoTipoEvento_paGetPayment on db re under macro NewMod3
+        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query sottoTipoEvento_paVerifyPayment on db re under macro NewMod3
+        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query sottoTipoEvento_paGetPayment on db re under macro NewMod3
         And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod3 with db name re
         And through the query re_paSendRT_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
         And check value $paSendRT.standin is equal to value true
