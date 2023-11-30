@@ -27,7 +27,8 @@ replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/confi
 #replace $file ".services.\"mock-ec\".url"           "https://api.dev.platform.pagopa.it/mock-ec/api/v1"
 replace $file ".services.\"mock-ec\".url"           "https://mock-ec-primary-sit.tst-npc.sia.eu/servizi/PagamentiTelematiciRPT"
 replace $file ".services.\"mock-ec\".healthcheck"   "/info"
-replace $file ".services.\"mock-ec\".soap_service"  "/mock-ec"
+#replace $file ".services.\"mock-ec\".soap_service"  "/mock-ec"
+replace $file ".services.\"mock-ec\".soap_service"  ""
 replace $file ".services.\"mock-ec\".rest_service"  ""
 
 #replace $file ".services.\"secondary-mock-ec\".url"           "https://api.dev.platform.pagopa.it/secondary-mock-ec/api/v1"
