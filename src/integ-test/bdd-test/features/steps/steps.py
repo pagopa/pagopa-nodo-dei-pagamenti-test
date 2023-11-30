@@ -1569,10 +1569,8 @@ def step_impl(context, primitive):
 
 @step("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
-    db_selected = context.config.userdata.get(
-        "db_configuration").get('nodo_cfg')
-    selected_query = utils.query_json(context, 'update_config', 'configurations').replace(
-        'value', value).replace('key', param)
+    db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
+    selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', param)
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
