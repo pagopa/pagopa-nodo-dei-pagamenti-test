@@ -9,8 +9,11 @@ Feature: happy flow with Stand In on and PSP no POSTE
     # dalla paSendRT.
     Scenario: Execute verifyPaymentNotice request
         Given insert through the query insert_query into the table STAND_IN_STATIONS the fields STATION_CODE with 'irraggiungibile' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter invioReceiptStandin set to true
-        And refresh job ALL triggered after 10 seconds
+        # And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
+        And wait 50 seconds for expiration
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -166,23 +169,10 @@ Feature: happy flow with Stand In on and PSP no POSTE
         And check standin is true of activatePaymentNotice response
         And checks the value Y of the record at column FLAG_STANDIN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
 
-
+    @standin
     # Define primitive sendPaymentOutcome
     Scenario: Define sendPaymentOutcome
         Given the activatePaymentNotice request scenario executed successfully
-        And initial XML paSendRT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header />
-            <soapenv:Body>
-            <paf:paSendRTRes>
-            <outcome>OK</outcome>
-            <delay>10000</delay>
-            </paf:paSendRTRes>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paSendRT
         And initial XML sendPaymentOutcome
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -254,12 +244,6 @@ Feature: happy flow with Stand In on and PSP no POSTE
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
     
-    @insertStandin
-    Scenario: job paSendRt
-        Given the Define sendPaymentOutcome scenario executed successfully
-        When job paSendRt triggered after 5 seconds
-        And wait 5 seconds for expiration
-
         # DB Checks for POSITION_PAYMENT
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activate on db nodo_online under macro NewMod1
         
@@ -280,6 +264,8 @@ Feature: happy flow with Stand In on and PSP no POSTE
         And check value $paSendRT.standIn is equal to value true
         And check value $paSendRT.idStation is equal to value irraggiungibile
         And verify 2 record for the table RE retrived by the query sottoTipoEvento on db re under macro NewMod3
-        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to false
+        # And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
         And delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value 'irraggiungibile' under macro update_query on db nodo_cfg
-        And refresh job ALL triggered after 10 seconds
+        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to false

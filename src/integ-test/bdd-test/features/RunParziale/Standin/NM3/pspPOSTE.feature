@@ -5,7 +5,10 @@ Feature: Stand in with psp POSTE
 
     @standin
     Scenario: activatePaymentNotice request
-        Given initial XML activatePaymentNotice
+        Given insert through the query insert_query into the table STAND_IN_STATIONS the fields STATION_CODE with 'irraggiungibile' under macro update_query on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And wait 50 seconds for expiration
+        And initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
             xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -16,7 +19,7 @@ Feature: Stand in with psp POSTE
             <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
             <idChannel>#channelPoste#</idChannel>
             <password>pwdpwdpwd</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
+            <idempotencyKey>#idempotency_key_POSTE#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>346#iuv#</noticeNumber>
@@ -99,4 +102,6 @@ Feature: Stand in with psp POSTE
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
-        And check faultCode is PPT_STANZIONE_INT_PA_IRRAGGIUNGIBILE of activatePaymentNotice response
+        And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of activatePaymentNotice response
+        And delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value 'irraggiungibile' under macro update_query on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds

@@ -86,7 +86,8 @@
         "by_context_payment_token": "SELECT columns FROM table_name WHERE IUV = '$iuv' AND CCP= '$paymentToken' AND ID_DOMINIO= '$activatePaymentNotice.fiscalCode'",
         "by_context_num_avv": "SELECT columns FROM table_name WHERE NOTICE_ID = '$iuv'",
         "re_paSendRT": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken' AND TIPO_EVENTO = 'paSendRT' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
-        "re_paSendRT_REQ_xml": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken' AND TIPO_EVENTO = 'paSendRT' AND SOTTO_TIPO_EVENTO = 'REQ' AND ESITO = 'INVIATA' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
+        "re_paSendRT_trunc": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken' AND TIPO_EVENTO = 'paSendRT' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
+        "re_paSendRT_REQ_xml": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken' AND TIPO_EVENTO = 'paSendRT' AND SOTTO_TIPO_EVENTO = 'REQ' AND ESITO = 'INVIATA_KO' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
         "sottoTipoEvento": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND TIPO_EVENTO IN ('paGetPayment', 'paGetPaymentV2', 'paVerifyPaymentNotice') AND SOTTO_TIPO_EVENTO= 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE) ORDER BY DATA_ORA_EVENTO",
         "sottoTipoEvento_paVerifyPayment": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken' AND TIPO_EVENTO= 'paGetPayment' AND SOTTO_TIPO_EVENTO= 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
         "sottoTipoEvento_paGetPayment": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken' AND TIPO_EVENTO= 'paGetPayment' AND SOTTO_TIPO_EVENTO= 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
@@ -274,7 +275,7 @@
         "param_update_generic_where_condition": "UPDATE table_name SET param WHERE where_condition",
         "inserted_timestamp": "UPDATE POSITION_PAYMENT_PLAN SET INSERTED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD') WHERE NOTICE_ID = $1noticeNumber AND PA_FISCAL_CODE = $pa",
         "updated_timestamp": "UPDATE POSITION_PAYMENT_PLAN SET UPDATED_TIMESTAMP = TO_DATE('date', 'YYYY-MM-DD') WHERE NOTICE_ID = $1noticeNumber AND PA_FISCAL_CODE = $pa",
-        "delete_query": "DELETE FROM table_name WHERE where_condition = 'valore'",
+        "delete_query": "DELETE FROM table_name WHERE where_condition = valore",
         "insert_query": "INSERT INTO table_name (row_keys_fields) VALUES (row_values_fields)"
     },
     "RendicontazioneFTPeBollo": {

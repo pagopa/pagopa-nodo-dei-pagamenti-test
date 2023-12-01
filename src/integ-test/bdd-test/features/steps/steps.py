@@ -71,6 +71,8 @@ def step_impl(context, primitive):
                 0].firstChild.data
 				
         payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+
+        payload = payload.replace('#idempotency_key_POSTE#', f"{str(random.randint(10000000000, 99999999999))}_{str(random.randint(1000000000, 9999999999))}")
 								  
         payload = payload.replace('#idempotency_key_IOname#', "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
 
@@ -2533,15 +2535,16 @@ def step_impl(context, value1, condition, value2):
 
 @then('check payload tag {tag} field not exists in {payload}')
 def step_impl(context, tag, payload):
-    payload = getattr(context, payload)
-    if 'xml' in payload.headers['content-type']:
-        my_document = parseString(payload.content)
-        assert len(my_document.getElementsByTagName(tag)) == 0
-    else:
-        payload_json = getattr(context, payload)
-        json = payload_json.json()
-        find = jo.search_tag(json, tag)
-        assert not find
+    from xml.etree.ElementTree import fromstring
+    #payload = getattr(context, payload)
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
+    root = fromstring(payload)
+    assert root.find(".//{}".format(tag)) is None
+    # my_document = parseString(root.content)
+    # assert len(my_document.getElementsByTagName(tag)) == 0
+
 
 @step("calling primitive {primitive1} {restType1} and {primitive2} {restType2} in parallel")
 def step_impl(context, primitive1, primitive2, restType1, restType2):

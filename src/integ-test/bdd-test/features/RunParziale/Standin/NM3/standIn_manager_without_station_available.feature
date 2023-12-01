@@ -3,10 +3,11 @@ Feature: stand in manager without station available for stand in
     Background:
         Given systems up
 
-    @noStandin
+    @standin
     Scenario: activatePaymentNotice request
-        Given delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value '66666666666_10' under macro update_query on db nodo_cfg
+        Given delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value 'irraggiungibile' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
+        And wait 50 seconds for expiration
         And initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
@@ -101,4 +102,4 @@ Feature: stand in manager without station available for stand in
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
-        And check faultCode is PPT_STANZIONE_INT_PA_IRRAGGIUNGIBILE of activatePaymentNotice response
+        And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of activatePaymentNotice response

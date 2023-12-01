@@ -7,7 +7,11 @@ Feature: happy flow with Stand In on and channel no Stand In
     # ma che vengano inviate le receipt dalla paSendRT, dato che il flag invioReceiptStandin sulla config keys è a Y, non contenenti però il parametro opzionale standin=true. 
 
     Scenario: Execute verifyPaymentNotice request
-        Given nodo-dei-pagamenti has config parameter invioReceiptStandin set to Y
+        Given insert through the query insert_query into the table STAND_IN_STATIONS the fields STATION_CODE with 'irraggiungibile' under macro update_query on db nodo_cfg 
+        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to true
+        And wait 50 seconds for expiration
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -161,7 +165,7 @@ Feature: happy flow with Stand In on and channel no Stand In
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And check standin field not exists in activatePaymentNotice response
-        And checks the value Y of the record at column STAND_IN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
+        And checks the value Y of the record at column FLAG_STANDIN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
 
 
     @standin
@@ -175,7 +179,7 @@ Feature: happy flow with Stand In on and channel no Stand In
             <nod:sendPaymentOutcomeReq>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <idChannel>#canale#</idChannel>
             <password>pwdpwdpwd</password>
             <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
             <outcome>OK</outcome>
@@ -216,11 +220,12 @@ Feature: happy flow with Stand In on and channel no Stand In
             """
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamentin
         Then check outcome is OK of sendPaymentOutcome response
+        And wait 5 seconds for expiration
 
         And execution query position_transfer to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
-        And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_transfer on db nodo_online under macro NewMod3
+        And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_transfer on db nodo_online under macro NewMod3
         And execution query position_status_n to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns STATUS under macro NewMod3 with db name nodo_online
-        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online under macro NewMod3
+        And checks the value NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And execution query position_transfer to get value on the table POSITION_PAYMENT_STATUS, with the columns STATUS under macro NewMod3 with db name nodo_online
         And checks the value NOTICE_GENERATED,NOTICE_SENT,PAYING,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query position_status_n on db nodo_online under macro NewMod3
         And execution query position_transfer to get value on the table POSITION_PAYMENT_STATUS_SNAPSHOT, with the columns STATUS under macro NewMod3 with db name nodo_online
@@ -243,10 +248,13 @@ Feature: happy flow with Stand In on and channel no Stand In
         And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activate on db nodo_online under macro NewMod1
         
         # RE
-        And checks the value Y of the record at column STANDIN of the table RE retrived by the query sottoTipoEvento_paVerifyPayment on db re under macro NewMod3
-        And checks the value Y of the record at column STANDIN of the table RE retrived by the query sottoTipoEvento_paGetPayment on db re under macro NewMod3
+        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query sottoTipoEvento_paVerifyPayment on db re under macro NewMod3
+        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query sottoTipoEvento_paGetPayment on db re under macro NewMod3
         And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod3 with db name re
         And through the query re_paSendRT_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
         And check payload tag standIn field not exists in $paSendRT
-        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to N
+        And check value $paSendRT.idStation is equal to value irraggiungibile
+        And verify 2 record for the table RE retrived by the query sottoTipoEvento on db re under macro NewMod3
+        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to false
+        And delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value 'irraggiungibile' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
