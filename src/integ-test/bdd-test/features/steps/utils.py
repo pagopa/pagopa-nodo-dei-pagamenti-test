@@ -264,7 +264,7 @@ def manipulate_soap_action(soap_action, elem, value):
 
 
 def replace_context_variables_for_query(body, context):
-    pattern = re.compile('\\$\\w+')
+    pattern = re.compile('\\s\\$\\w+')
     match = pattern.findall(body)
     
     for field in match:
