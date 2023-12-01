@@ -266,11 +266,20 @@ def manipulate_soap_action(soap_action, elem, value):
 def replace_context_variables_for_query(body, context):
     pattern = re.compile('\\$\\w+')
     match = pattern.findall(body)
-    #setattr(context, 'transaction_id', '29678765')
+    
     for field in match:
         saved_elem = getattr(context, field.replace('$', ''))
         value = str(saved_elem)
-        body = body.replace(field, f'$${value}$$')
+        
+        ###CHECK SE VALUE HA CARATTERI PRIMA DEL DOLLARO
+        index_first_dol = body.index('$')
+        index_my_interest = index_first_dol-1
+
+        if body[index_my_interest] == " ":
+            body = body.replace(field, f'$${value}$$')
+        else:
+            body = body.replace(field, value)
+
     return body
 
 
