@@ -327,7 +327,7 @@
         "update_PAYMENT_TOKEN_2": "UPDATE table_name SET param = 'value' WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2_2Response.paymentToken'",
         "notice_number": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber'",
         "update_noticeidrandom": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='311011451292109621'",
-        "transactionid": "SELECT columns FROM table_name WHERE TRANSACTION_ID = '$transaction_id'",
+        "transactionid": "SELECT columns FROM table_name WHERE TRANSACTION_ID = $transaction_id",
         "temptransactionid": "SELECT columns FROM table_name WHERE TRANSACTION_ID = '$temp_transaction_id'",
         "update_noticeid_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='302$iuv' and PA_FISCAL_CODE='#creditor_institution_code#'",
         "update_noticeid1_pa": "UPDATE table_name SET param = 'value' WHERE NOTICE_ID ='302$iuv1' and PA_FISCAL_CODE='#creditor_institution_code#'",

@@ -263,16 +263,21 @@ def manipulate_soap_action(soap_action, elem, value):
     return my_document.toxml()
 
 
-def replace_context_variables(body, context):
-    pattern1 = re.compile('\'\\$\\w+')
-    pattern2 = re.compile('\>\\$\\w+')
-    pattern3 = re.compile('\\$\\w+\\r')
+def replace_context_variables_for_query(body, context):
+    pattern = re.compile('\\$\\w+')
+    match = pattern.findall(body)
+    #setattr(context, 'transaction_id', '29678765')
+    for field in match:
+        saved_elem = getattr(context, field.replace('$', ''))
+        value = str(saved_elem)
+        body = body.replace(field, f'$${value}$$')
+    return body
 
-    pattern = re.compile(pattern1.pattern + '|' + pattern2.pattern+ '|' + pattern3.pattern )
-    
+
+def replace_context_variables(body, context):
+    pattern = re.compile('\\$\\w+')
     match = pattern.findall(body)
     for field in match:
-        field = field[1:]
         saved_elem = getattr(context, field.replace('$', ''))
         value = str(saved_elem)
         body = body.replace(field, value)
@@ -322,7 +327,7 @@ def query_json(context, name_query, name_macro):
     selected_query = query.get(name_macro).get(name_query)
     if '$' in selected_query:
         selected_query = replace_local_variables(selected_query, context)
-        selected_query = replace_context_variables(selected_query, context)
+        selected_query = replace_context_variables_for_query(selected_query, context)
         selected_query = replace_global_variables(selected_query, context)
     return selected_query
 
