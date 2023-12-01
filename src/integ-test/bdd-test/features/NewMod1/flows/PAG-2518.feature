@@ -400,7 +400,7 @@ Feature: PAG-2518
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @pippoalf
+    
     Scenario: Test 2 (part 2)
         Given the Test 2 (part 1) scenario executed successfully
         And the pspNotifyPayment malformata response scenario executed successfully

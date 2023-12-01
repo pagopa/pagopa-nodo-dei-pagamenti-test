@@ -284,6 +284,26 @@ def replace_context_variables(body, context):
     return body
 
 
+
+def replace_local_variables_for_query(body, context):
+    pattern = re.compile('\\$\\w+\\.\\w+')
+    match = pattern.findall(body)
+    for field in match:
+        saved_elem = getattr(context, field.replace('$', '').split('.')[0])
+        value = saved_elem
+        if len(field.replace('$', '').split('.')) > 1:
+            tag = field.replace('$', '').split('.')[1]
+            if isinstance(saved_elem, str):
+                document = parseString(saved_elem)
+            else:
+                document = parseString(saved_elem.content)
+                print(tag)
+            value = document.getElementsByTagNameNS(
+                '*', tag)[0].firstChild.data
+        body = body.replace(field, f'$${value}$$')
+    return body
+
+
 def replace_local_variables(body, context):
     pattern = re.compile('\\$\\w+\\.\\w+')
     match = pattern.findall(body)
@@ -326,7 +346,7 @@ def query_json(context, name_query, name_macro):
         context.config.base_dir + "/../resources/query_AutomationTest.json")))
     selected_query = query.get(name_macro).get(name_query)
     if '$' in selected_query:
-        selected_query = replace_local_variables(selected_query, context)
+        selected_query = replace_local_variables_for_query(selected_query, context)
         selected_query = replace_context_variables_for_query(selected_query, context)
         selected_query = replace_global_variables(selected_query, context)
     return selected_query
