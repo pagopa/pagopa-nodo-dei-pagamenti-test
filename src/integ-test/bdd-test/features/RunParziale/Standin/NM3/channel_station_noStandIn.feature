@@ -247,6 +247,6 @@ Feature: happy flow with Stand In on and channel no Stand In
         And checks the value Y of the record at column STANDIN of the table RE retrived by the query sottoTipoEvento_paGetPayment on db re under macro NewMod3
         And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod3 with db name re
         And through the query re_paSendRT_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
-        And check payload tag standin field not exists in $paSendRT
+        And check payload tag standIn field not exists in $paSendRT
         And nodo-dei-pagamenti has config parameter invioReceiptStandin set to N
         And refresh job ALL triggered after 10 seconds
