@@ -11,7 +11,7 @@ else:
     import steps.db_operation as db
     import os, cx_Oracle, requests
 
-import allure
+#import allure
 import sys
 from io import StringIO
 
