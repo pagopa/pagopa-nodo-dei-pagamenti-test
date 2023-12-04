@@ -68,6 +68,30 @@ Feature: happy flow with Stand In on and PSP no POSTE
     # Define primitive paGetPayment
     Scenario: activatePaymentNotice request
         Given the Execute verifyPaymentNotice request scenario executed successfully
+        And initial XML activatePaymentNotice
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:activatePaymentNoticeReq>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>pwdpwdpwd</password>
+            <idempotencyKey>#idempotency_key#</idempotencyKey>
+            <qrCode>
+            <fiscalCode>$verifyPaymentNotice.fiscalCode</fiscalCode>
+            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
+            </qrCode>
+            <expirationTime>120000</expirationTime>
+            <amount>10.00</amount>
+            <dueDate>2021-12-31</dueDate>
+            <paymentNote>causale</paymentNote>
+            </nod:activatePaymentNoticeReq>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
         And initial XML paGetPaymentV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
@@ -113,7 +137,7 @@ Feature: happy flow with Stand In on and PSP no POSTE
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
+            <fiscalCodePA>$verifyPaymentNotice.fiscalCode</fiscalCodePA>
             <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
@@ -142,30 +166,6 @@ Feature: happy flow with Stand In on and PSP no POSTE
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        And initial XML activatePaymentNotice
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:activatePaymentNoticeReq>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>pwdpwdpwd</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-            <fiscalCode>$verifyPaymentNotice.fiscalCode</fiscalCode>
-            <noticeNumber>$verifyPaymentNotice.noticeNumber</noticeNumber>
-            </qrCode>
-            <expirationTime>120000</expirationTime>
-            <amount>10.00</amount>
-            <dueDate>2021-12-31</dueDate>
-            <paymentNote>causale</paymentNote>
-            </nod:activatePaymentNoticeReq>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter IP = 'CIAO', with where condition OBJ_ID = '1160001' under macro update_query on db nodo_cfg
@@ -225,6 +225,8 @@ Feature: happy flow with Stand In on and PSP no POSTE
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter IP = '10.70.66.200', with where condition OBJ_ID = '1160001' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
         # And wait 5 seconds for expiration
 
