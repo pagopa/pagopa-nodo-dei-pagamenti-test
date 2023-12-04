@@ -1717,9 +1717,9 @@ def step_impl(context, query_name, param, position, row_number, key):
 def step_impl(context, query_name, xml, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
-    selected_element = result_query[0][position]
-    selected_element = selected_element.read()
-    selected_element = selected_element.decode("utf-8")
+    selected_element = result_query[0][position].tobytes().decode('utf-8')
+    # selected_element = selected_element.read()
+    # selected_element = selected_element.decode("utf-8")
     print(f'{xml}: {selected_element}')
     setattr(context, key, selected_element)
 
