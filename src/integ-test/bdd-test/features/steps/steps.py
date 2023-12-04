@@ -1728,8 +1728,7 @@ def step_impl(context, query_name, xml, position, key):
 def step_impl(context, query_name, xml, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
-    selected_element = result_query[0][position]
-    selected_element = selected_element.read()
+    selected_element = result_query[0][position].tobytes()
     print(f'{xml}: {selected_element}')
     setattr(context, key, selected_element)
 
@@ -2289,9 +2288,7 @@ def step_impl(context, primitive1, primitive2):
 def step_impl(context, query_name, json_elem, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
-    selected_element = result_query[0][position]
-    selected_element = selected_element.read()
-    selected_element = selected_element.decode("utf-8")
+    selected_element = result_query[0][position].tobytes().decode('utf-8')
     
     jsonDict = json.loads(selected_element)
     selected_element = utils.json2xml(jsonDict)
