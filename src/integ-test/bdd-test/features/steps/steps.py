@@ -1870,7 +1870,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 @step("update through the query {query_name} of the table {table_name} the parameter {param} with {value}, with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, where_condition, valore, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$').replace('where_condition', where_condition).replace('valore', f'$${valore}$$')
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$').replace('where_condition', where_condition).replace('valore', valore)
     #selected_query = utils.replace_local_variables(selected_query, context)
     #selected_query = utils.replace_context_variables(selected_query, context)
     conn = db.getConnection(db_selected.get('host'), db_selected.get(

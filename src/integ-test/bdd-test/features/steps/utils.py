@@ -268,7 +268,7 @@ def replace_context_variables_for_query(body, context):
     match = pattern.findall(body)
     
     for field in match:
-        saved_elem = getattr(context, field.replace('$', ''))
+        saved_elem = getattr(context, field.replace('$', '').strip())
         value = str(saved_elem)
         
         ###CHECK SE VALUE HA CARATTERI PRIMA DEL DOLLARO
