@@ -23,7 +23,7 @@ def create_connection(db_name, db_user, db_password, db_host, db_port):
 
 
 def create_connection_pool(db_name, db_user, db_password, db_host, db_port):
-    conn_pool = None
+    global conn_pool
     try:
         # Initialize the connection pool
         conn_pool = pool.SimpleConnectionPool(
