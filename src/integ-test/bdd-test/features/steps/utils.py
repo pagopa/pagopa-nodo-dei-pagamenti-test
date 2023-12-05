@@ -279,23 +279,18 @@ def replace_context_variables_for_query(body, context):
                 new_indexes = []
                 ###RICALCULATE INDEX VALUE AFTER REPLAE $$
                 indexes = [i for i, x in enumerate(body) if x == "$"]
-                print(f"RICALCOLO INDEXES: {indexes} volta {j}")
-                for n in indexes:
-                    if n >= initial_indexes[j]:
-                        new_indexes.append(n)
-                print(f"NEW INDEXES: {new_indexes} volta {j}")
+                new_indexes = indexes[(4*j):]
+
             dict_values.update({field.replace('$', '').strip() : new_indexes[0]})
             saved_elem = getattr(context, field.replace('$', '').strip())
             value = str(saved_elem)
             
             index_my_interest = dict_values[field.replace('$', '').strip()]-1
-            print(f"index di interesse è: {index_my_interest}")
+            
             if body[index_my_interest] == " ":
                 body = body.replace(field, f'$${value}$$')
-                print("entro nel if")
             else:
                 body = body.replace(field, value)
-                print("entro nell else")
             j+=1
             print(f'Query in costruzione: step {j} per la query{body}')
     return body
