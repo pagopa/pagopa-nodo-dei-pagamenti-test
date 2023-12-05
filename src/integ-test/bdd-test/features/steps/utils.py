@@ -266,7 +266,7 @@ def manipulate_soap_action(soap_action, elem, value):
 def replace_context_variables_for_query(body, context):
     pattern = re.compile('\\s\\$\\w+(?![.\\w])')
     match = pattern.findall(body)
-    
+
     if len(match) > 0:
         ###CALCULATE THE INITIAL INDEX VALUE FROM MY QUERY
         initial_indexes = [i for i, x in enumerate(body) if x == "$"]
@@ -279,10 +279,11 @@ def replace_context_variables_for_query(body, context):
                 new_indexes = []
                 ###RICALCULATE INDEX VALUE AFTER REPLAE $$
                 indexes = [i for i, x in enumerate(body) if x == "$"]
+                print(f"RICALCOLO INDEXES: {indexes} volta {j}")
                 for n in indexes:
                     if n >= initial_indexes[j]:
                         new_indexes.append(n)
-
+                print(f"NEW INDEXES: {new_indexes volta {j}}")
             dict_values.update({field.replace('$', '').strip() : new_indexes[0]})
             saved_elem = getattr(context, field.replace('$', '').strip())
             value = str(saved_elem)
