@@ -283,7 +283,7 @@ def replace_context_variables_for_query(body, context):
                 for n in indexes:
                     if n >= initial_indexes[j]:
                         new_indexes.append(n)
-                print(f"NEW INDEXES: {new_indexes volta {j}}")
+                print(f"NEW INDEXES: {new_indexes} volta {j}")
             dict_values.update({field.replace('$', '').strip() : new_indexes[0]})
             saved_elem = getattr(context, field.replace('$', '').strip())
             value = str(saved_elem)
