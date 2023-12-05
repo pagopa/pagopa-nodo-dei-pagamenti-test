@@ -288,11 +288,13 @@ def replace_context_variables_for_query(body, context):
             value = str(saved_elem)
             
             index_my_interest = dict_values[field.replace('$', '').strip()]-1
-
+            print(f"index di interesse è: {index_my_interest}")
             if body[index_my_interest] == " ":
                 body = body.replace(field, f'$${value}$$')
+                print("entro nel if")
             else:
                 body = body.replace(field, value)
+                print("entro nell else")
             j+=1
             print(f'Query in costruzione: step {j} per la query{body}')
     return body
