@@ -264,22 +264,35 @@ def manipulate_soap_action(soap_action, elem, value):
 
 
 def replace_context_variables_for_query(body, context):
-    pattern = re.compile('\\s\\$\\w+')
+    pattern = re.compile('\\s\\$\\w+(?![.\\w])')
     match = pattern.findall(body)
     
-    for field in match:
-        saved_elem = getattr(context, field.replace('$', '').strip())
-        value = str(saved_elem)
-        
-        ###CHECK SE VALUE HA CARATTERI PRIMA DEL DOLLARO
-        index_first_dol = body.index('$')
-        index_my_interest = index_first_dol-1
+    if len(match) > 0:
+        ###CALCULATE THE INITIAL INDEX VALUE FROM MY QUERY
+        initial_indexes = [i for i, x in enumerate(body) if x == "$"]
+        j = 0
+        dict_values = {}
+        new_indexes = initial_indexes
 
-        if body[index_my_interest] == " ":
-            body = body.replace(field, f'$${value}$$')
-        else:
-            body = body.replace(field, value)
+        for field in match:
+            if j > 0:
+                new_indexes = []
+                ###RICALCULATE INDEX VALUE AFTER REPLAE $$
+                indices = [i for i, x in enumerate(body) if x == "$"]
+                for n in indices:
+                    if n >= initial_indexes[j]:
+                        new_indexes.append(n)
 
+            dict_values.update({field.replace('$', '').strip() : new_indexes[0]})
+            saved_elem = getattr(context, field.replace('$', '').strip())
+            value = str(saved_elem)
+            
+            index_my_interest = dict_values[field.replace('$', '').strip()]-1
+
+            if body[index_my_interest] == " ":
+                body = body.replace(field, f'$${value}$$')
+            else:
+                body = body.replace(field, value)
     return body
 
 
