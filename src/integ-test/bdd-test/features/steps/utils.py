@@ -293,6 +293,7 @@ def replace_context_variables_for_query(body, context):
                 body = body.replace(field, f'$${value}$$')
             else:
                 body = body.replace(field, value)
+            j+=1
     return body
 
 
