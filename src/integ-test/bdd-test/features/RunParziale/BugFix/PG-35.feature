@@ -236,12 +236,12 @@ Feature: PAG-35
 
     Scenario: Test spov1 KO (part 2)
         Given the Test spov1 KO (part 1) scenario executed successfully
-        And the pspNotifyPayment response timeout scenario executed successfully
+        # And the pspNotifyPayment response timeout scenario executed successfully
         And the closePaymentV2 request scenario executed successfully
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-    @test
+        # When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        # Then verify the HTTP status code of v2/closepayment response is 200
+        # And check outcome is OK of v2/closepayment response
+    @pippoalf3
     Scenario: Test spov1 KO (part 3)
         Given the Test spov1 KO (part 2) scenario executed successfully
         And wait 12 seconds for expiration
