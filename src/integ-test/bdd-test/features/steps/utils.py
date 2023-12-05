@@ -278,8 +278,8 @@ def replace_context_variables_for_query(body, context):
             if j > 0:
                 new_indexes = []
                 ###RICALCULATE INDEX VALUE AFTER REPLAE $$
-                indices = [i for i, x in enumerate(body) if x == "$"]
-                for n in indices:
+                indexes = [i for i, x in enumerate(body) if x == "$"]
+                for n in indexes:
                     if n >= initial_indexes[j]:
                         new_indexes.append(n)
 
@@ -294,6 +294,7 @@ def replace_context_variables_for_query(body, context):
             else:
                 body = body.replace(field, value)
             j+=1
+            print(f'Query in costruzione: step {j} per la query{body}')
     return body
 
 
