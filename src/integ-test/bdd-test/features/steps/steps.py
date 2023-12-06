@@ -1832,6 +1832,9 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     print(selected_query)
     exec_query = db.executeQuery(conn, selected_query)
 
@@ -1931,6 +1934,9 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
             getattr(context, 'default_token_duration_validity_millis')) / 60000
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -1942,6 +1948,9 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
         print(">>>>>>>>>>>>>>>>>>>", value)
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -1953,6 +1962,9 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
 														   												 
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -1961,6 +1973,9 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     elif number == 'Today':
         value = (datetime.datetime.today()).strftime('%Y-%m-%d')
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -1970,6 +1985,9 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         min = int(number.split(':')[1]) / 60000
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=min)).strftime('%Y-%m-%d %H:%M')
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -1978,6 +1996,9 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         number = int(number)
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(days=number)).strftime('%Y-%m-%d')
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -2001,6 +2022,9 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
                  datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -2016,6 +2040,9 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         print(">>>>>>>>>>>>>>>>>>>", value)
 
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -2024,6 +2051,9 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     elif number == 'Today':
         value = (datetime.datetime.today()).strftime('%Y-%m-%d')
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -2034,6 +2064,9 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
                  datetime.timedelta(minutes=min)).strftime('%Y-%m-%d %H:%M')
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -2043,6 +2076,9 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
                  datetime.timedelta(days=number)).strftime('%Y-%m-%d')
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -2079,6 +2115,9 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     print(selected_query)
     exec_query = db.executeQuery(conn, selected_query)
 
@@ -2108,6 +2147,9 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
              datetime.timedelta(minutes=number)).strftime('%Y-%m-%d %H:%M')
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     exec_query = db.executeQuery(conn, selected_query)
     query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)
@@ -2127,7 +2169,9 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", '*').replace("table_name", table_name)
-
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     exec_query = db.executeQuery(conn, selected_query)
     print("record query: ", exec_query)
     assert len(exec_query) == number, f"{len(exec_query)}"
@@ -2141,7 +2185,9 @@ def step_impl(context, query_name, table_name, db_name, name_macro):
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", '*').replace("table_name", table_name)
-
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     exec_query = db.executeQuery(conn, selected_query)
     print("record query: ", exec_query)
     assert len(exec_query) > 0, f"{len(exec_query)}"
@@ -3044,8 +3090,10 @@ def step_impl(context, name_macro, db_name, query_name, value, column, table_nam
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
         
-    selected_query = utils.query_json(context, query_name, name_macro).replace(
-        "columns", column).replace("table_name", table_name)
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     print(selected_query)
     exec_query = db.executeQuery(conn, selected_query)
     query_result = [t[0] for t in exec_query]
