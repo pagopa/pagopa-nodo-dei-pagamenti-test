@@ -297,7 +297,8 @@ def replace_context_variables_for_query(body, context):
 
 
 def replace_context_variables(body, context):
-    pattern = re.compile('\\$\\w+')
+    pattern = re.compile('\\$(?<!\\$\\$)\\b(\\w+)')
+    #pattern = re.compile('\\$\\w+')
     match = pattern.findall(body)
     for field in match:
         saved_elem = getattr(context, field.replace('$', ''))

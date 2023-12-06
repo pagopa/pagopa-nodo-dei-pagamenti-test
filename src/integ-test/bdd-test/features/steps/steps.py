@@ -1677,6 +1677,8 @@ def step_impl(context, query_name, macro, db_name, table_name, columns):
     db_selected = db_config.get(db_name)
 
     selected_query = utils.query_json(context, query_name, macro).replace("columns", columns).replace("table_name", table_name)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     selected_query = utils.replace_global_variables(selected_query, context)
 
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
@@ -1877,8 +1879,8 @@ def step_impl(context, query_name, table_name, param, value, where_condition, va
     where_condition = utils.replace_context_variables(where_condition, context)
 
     selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$').replace('where_condition', where_condition).replace('valore', valore)
-    # selected_query = utils.replace_local_variables(selected_query, context)
-    # selected_query = utils.replace_context_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     selected_query = utils.replace_global_variables(selected_query, context)
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
@@ -1889,8 +1891,8 @@ def step_impl(context, query_name, table_name, param, value, where_condition, va
 def step_impl(context, query_name, table_name, where_condition, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
     selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('where_condition', where_condition)
-    # selected_query = utils.replace_local_variables(selected_query, context)
-    # selected_query = utils.replace_context_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     selected_query = utils.replace_global_variables(selected_query, context)
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
@@ -1908,8 +1910,8 @@ def step_impl(context, query_name, table_name, param, where_condition, macro, db
     where_condition = utils.replace_context_variables(where_condition, context)
 
     selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('where_condition', where_condition)
-    # selected_query = utils.replace_local_variables(selected_query, context)
-    # selected_query = utils.replace_context_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     selected_query = utils.replace_global_variables(selected_query, context)
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
@@ -2061,8 +2063,8 @@ def step_impl(context, query_name, table_name, param, value, macro, db_name):
     
     selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$')
     selected_query = utils.replace_global_variables(selected_query, context)
-    # selected_query = utils.replace_local_variables(selected_query, context)
-    # selected_query = utils.replace_context_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
 
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     exec_query = db.executeQuery(conn, selected_query)
@@ -3073,8 +3075,8 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
     
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
     selected_query = utils.replace_global_variables(selected_query, context)
-    # selected_query = utils.replace_local_variables(selected_query, context)
-    # selected_query = utils.replace_context_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     print(selected_query)
     exec_query = db.executeQuery(conn, selected_query)
 
