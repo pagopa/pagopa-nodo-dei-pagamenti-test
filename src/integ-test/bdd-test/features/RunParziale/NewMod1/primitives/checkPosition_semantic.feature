@@ -150,9 +150,18 @@ Feature: semantic checks for checkPosition outcome OK
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
 
-    @NM1 @ALL
+    @NM1 @ALL 
     # SEM_CPO_01
     Scenario: Code 200 OK 1
+        Given the checkPosition scenario executed successfully
+        And noticeNumber with 002$iuv in checkPosition
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
+
+    @NM1 @ALL
+    # SEM_CPO_01
+    Scenario: Code 200 OK 2
         Given the checkPosition scenario executed successfully
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
@@ -215,18 +224,16 @@ Feature: semantic checks for checkPosition outcome OK
         And checking value $XML_RE is containing value <description>PAYING</description>
         And checking value $XML_RE is containing value <description>PAID</description>
         And checking value $XML_RE is containing value <description>NOTIFIED</description>
-    @NM1 @ALL
+
+    @NM1 @ALL 
     Scenario Outline: Wrong configuration 1
         Given the checkPosition scenario executed successfully
-        And <elem> with <value> in checkPosition
+        And fiscalCode with 12345678902 in checkPosition
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 400
         And check outcome is KO of checkPosition response
         And check description is Wrong configuration of checkPosition response
-        Examples:
-            | elem         | value       | SoapUI test |
-            | fiscalCode   | 12345678902 | SEM_CPO_04  |
-            | noticeNumber | 002$iuv     | SEM_CPO_05  |
+
     @NM1 @ALL
     # SEM_CPO_06
     Scenario: Wrong configuration 2
