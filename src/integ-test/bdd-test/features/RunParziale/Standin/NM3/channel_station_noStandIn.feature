@@ -11,6 +11,7 @@ Feature: happy flow with Stand In on and channel no Stand In
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter invioReceiptStandin set to true
+        And nodo-dei-pagamenti has config parameter station.stand-in set to 66666666666_01
         And wait 50 seconds for expiration
         And initial XML verifyPaymentNotice
             """
@@ -255,6 +256,5 @@ Feature: happy flow with Stand In on and channel no Stand In
         And check payload tag standIn field not exists in $paSendRT
         And check value $paSendRT.idStation is equal to value irraggiungibile
         And verify 2 record for the table RE retrived by the query sottoTipoEvento on db re under macro NewMod3
-        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to false
         And delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value 'irraggiungibile' under macro update_query on db nodo_cfg
-        And refresh job ALL triggered after 10 seconds
+        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to false

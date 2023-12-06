@@ -395,7 +395,8 @@
         "sottoTipoEvento": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND TIPO_EVENTO IN ('paGetPayment', 'paGetPaymentV2', 'paVerifyPaymentNotice') AND SOTTO_TIPO_EVENTO= 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE) ORDER BY DATA_ORA_EVENTO",
         "sottoTipoEvento_paVerifyPayment": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2Response.paymentToken' AND TIPO_EVENTO= 'paGetPaymentV2' AND SOTTO_TIPO_EVENTO= 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
         "sottoTipoEvento_paGetPayment": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2Response.paymentToken' AND TIPO_EVENTO= 'paGetPaymentV2' AND SOTTO_TIPO_EVENTO= 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
-        "re_paSendRT_REQ_xml": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2Response.paymentToken' AND TIPO_EVENTO = 'paSendRTV2' AND SOTTO_TIPO_EVENTO = 'REQ' AND ESITO = 'INVIATA_KO' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO"
+        "re_paSendRT_REQ_xml": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2Response.paymentToken' AND TIPO_EVENTO = 'paSendRTV2' AND SOTTO_TIPO_EVENTO = 'REQ' AND ESITO = 'INVIATA_KO' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
+        "re_paSendRTV2_trunc": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2Response.paymentToken' AND TIPO_EVENTO = 'paSendRTV2' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO"
     },
     "sendPaymentResultV2": {
         "select_sprV2_old": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$ccp' AND TIPO_EVENTO = 'sendPaymentResult-v2' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE) ORDER BY ID ASC",

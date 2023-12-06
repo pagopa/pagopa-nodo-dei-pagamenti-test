@@ -171,7 +171,7 @@ Feature: happy flow with Stand In on and PSP no POSTE
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter IP = 'CIAO', with where condition OBJ_ID = '1160001' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
 
-    @standin
+    @prova
     # Define primitive sendPaymentOutcome
     Scenario: Define sendPaymentOutcome
         Given the activatePaymentNotice request scenario executed successfully

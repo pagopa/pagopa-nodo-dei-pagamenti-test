@@ -12,6 +12,7 @@ Feature: happy flow with Stand In on and PSP no POSTE
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter invioReceiptStandin set to true
+        And nodo-dei-pagamenti has config parameter station.stand-in set to 66666666666_01
         # And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
         And wait 50 seconds for expiration
         And initial XML verifyPaymentNotice
