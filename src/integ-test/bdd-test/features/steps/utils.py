@@ -300,10 +300,16 @@ def replace_context_variables(body, context):
     pattern = re.compile('\\$(?<!\\$\\$)\\b(\\w+)')
     #pattern = re.compile('\\$\\w+')
     match = pattern.findall(body)
-    for field in match:
-        saved_elem = getattr(context, field.replace('$', ''))
-        value = str(saved_elem)
-        body = body.replace(field, value)
+
+    if len(match) > 0:
+        # aggiunge ai valori della lista match il simbolo $ all'inizio
+        for i in range(len(match)):
+            match[i] = f"${match[i]}"
+
+        for field in match:
+            saved_elem = getattr(context, field.replace('$', ''))
+            value = str(saved_elem)
+            body = body.replace(field, value)
     return body
 
 
