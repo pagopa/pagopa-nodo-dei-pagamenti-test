@@ -88,7 +88,7 @@
         "re_paSendRT": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken' AND TIPO_EVENTO = 'paSendRT' AND INSERTED_TIMESTAMP > ROUND(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
         "re_paSendRT_trunc": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken' AND TIPO_EVENTO = 'paSendRT' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
         "re_paSendRT_REQ_xml": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken' AND TIPO_EVENTO = 'paSendRT' AND SOTTO_TIPO_EVENTO = 'REQ' AND ESITO = 'INVIATA_KO' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
-        "sottoTipoEvento": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND TIPO_EVENTO IN ('paGetPayment', 'paGetPaymentV2', 'paVerifyPaymentNotice') AND SOTTO_TIPO_EVENTO= 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE) ORDER BY DATA_ORA_EVENTO",
+        "sottoTipoEvento": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNotice.noticeNumber' AND TIPO_EVENTO IN ('paGetPayment', 'paGetPaymentV2', 'paVerifyPaymentNotice') AND SOTTO_TIPO_EVENTO= 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
         "sottoTipoEvento_paVerifyPayment": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken' AND TIPO_EVENTO= 'paGetPayment' AND SOTTO_TIPO_EVENTO= 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
         "sottoTipoEvento_paGetPayment": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken' AND TIPO_EVENTO= 'paGetPayment' AND SOTTO_TIPO_EVENTO= 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
         "by_context_payment_token_2": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' AND PAYMENT_TOKEN ='$paymentToken'",
@@ -117,6 +117,7 @@
         "payment_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode'",
         "payment_status_order_by": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='$activateIOPayment.noticeNumber' AND s.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode' ORDER BY INSERTED_TIMESTAMP ASC",
         "payment_status_old": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID ='002$iuv' AND s.PA_FISCAL_CODE = '$nodoInviaRPT.identificativoDominio'",
+        "position_transfer": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activateIOPayment.noticeNumber' AND PA_FISCAL_CODE = '$activateIOPayment.fiscalCode' ORDER BY ID ASC",
         "position_subject": "SELECT columns FROM POSITION_SERVICE ps RIGHT JOIN table_name ps2 ON ps.DEBTOR_ID = ps2.ID WHERE ps.PA_FISCAL_CODE = '$activateIOPayment.fiscalCode' AND  ps.NOTICE_ID = '$activateIOPayment.noticeNumber'",
         "position_subject2": "SELECT s.columns FROM table_name s WHERE s.FULL_NAME = 'SPOname_$activateIOPaymentResponse.paymentToken'",
         "deny_list": "SELECT d.columns FROM DENYLIST d, PSP p, CANALI c, PA p2 WHERE d.FK_PSP = p.OBJ_ID AND d.FK_CANALE = c.OBJ_ID AND d.FK_PA = p2.OBJ_ID AND p.ID_PSP = '$activateIOPayment.idPSP' AND c.ID_CANALE = '$activateIOPayment.idChannel' AND p2.ID_DOMINIO = '$activateIOPayment.fiscalCode'",
@@ -138,7 +139,11 @@
         "select_sprV1_old": "SELECT columns FROM table_name WHERE CODICE_CONTESTO_PAGAMENTO = '$ccp' AND TIPO_EVENTO = 'sendPaymentResult-v1' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE) ORDER BY DATA_ORA_EVENTO ASC",
         "retry_spr": "SELECT columns FROM table_name s where s.PAYMENT_TOKEN= '$activateIOPaymentResponse.paymentToken'",
         "retry_spr_old": "SELECT columns FROM table_name s where s.PAYMENT_TOKEN= '$ccp'",
-        "getPspCarte_poste2": "SELECT columns FROM table_name WHERE FK_SNAPSHOT_VERSION = $version AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1) AND CARRELLO_CARTE='Y' AND IMPORTO_MINIMO < $importoTot AND IMPORTO_MASSIMO >= $importoTot AND CODICE_CONVENZIONE is null AND FLAG_IO = 'Y' AND CANALE_MOD_PAG != '2'"
+        "getPspCarte_poste2": "SELECT columns FROM table_name WHERE FK_SNAPSHOT_VERSION = $version AND CANALE_APP = 'N' AND TIPO_VERS_COD in ('CP') AND CANALE_MOD_PAG in (0,1) AND CARRELLO_CARTE='Y' AND IMPORTO_MINIMO < $importoTot AND IMPORTO_MASSIMO >= $importoTot AND CODICE_CONVENZIONE is null AND FLAG_IO = 'Y' AND CANALE_MOD_PAG != '2'",
+        "sottoTipoEvento_paVerifyPayment": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken' AND TIPO_EVENTO= 'paGetPayment' AND SOTTO_TIPO_EVENTO= 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
+        "sottoTipoEvento_paGetPayment": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken' AND TIPO_EVENTO= 'paGetPayment' AND SOTTO_TIPO_EVENTO= 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
+        "re_paSendRT_REQ_xml": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activateIOPaymentResponse.paymentToken' AND TIPO_EVENTO = 'paSendRT' AND SOTTO_TIPO_EVENTO = 'REQ' AND ESITO = 'INVIATA_KO' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
+        "sottoTipoEvento": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activateIOPayment.noticeNumber' AND TIPO_EVENTO IN ('paGetPayment', 'paGetPaymentV2', 'paVerifyPaymentNotice') AND SOTTO_TIPO_EVENTO= 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO"
     },
     "AppIOold": {
         "cd_info_pagamento": "SELECT s.columns FROM table_name s WHERE s.IUV = '$nodoInviaRPT.identificativoUnivocoVersamento' AND s.IDENT_DOMINIO = '#creditor_institution_code#'"

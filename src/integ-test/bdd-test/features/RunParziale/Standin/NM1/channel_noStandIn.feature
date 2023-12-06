@@ -242,6 +242,6 @@ Feature: happy flow with Stand In on and channel no Stand In for NMU
         # RE
         And verify 0 record for the table RE retrived by the query re_paSendRTV2_trunc on db re under macro NewMod1
 
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
         And delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value 'irraggiungibile' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
