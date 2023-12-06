@@ -288,9 +288,9 @@ def replace_context_variables_for_query(body, context):
             index_my_interest = dict_values[field.replace('$', '').strip()]-1
             
             if body[index_my_interest] == " ":
-                body = body.replace(field, f'$${value}$$')
+                body = replace_specific_string(body, field, f'$${value}$$')
             else:
-                body = body.replace(field, value)
+                body = replace_specific_string(body, field, value)
             j+=1
             print(f'Query in costruzione: step {j} per la query{body}')
     return body
@@ -548,3 +548,23 @@ def estrapola_header_host(url):
     else:
         host = f"{dominio}:{port}"
     return host
+
+
+def replace_specific_string(original_string, target_string, replacement):
+# Verifica se la stringa di destinazione è presente nella stringa originale
+    if target_string in original_string:
+        # Verifica se la stringa di destinazione è una corrispondenza esatta
+        start_index = original_string.find(target_string)
+        end_index = start_index + len(target_string)
+        
+        # Verifica che la sottostringa prima e dopo la target_string sia uno spazio o che sia alla fine della stringa
+        if (original_string[start_index] == ' ') and (original_string.endswith('') or original_string[end_index] == ' '):
+            # Effettua il replace solo se la condizione è soddisfatta
+            updated_string = original_string[:start_index] + replacement + original_string[end_index:]
+            return updated_string
+        else:
+            # Se la condizione non è soddisfatta, restituisci la stringa originale senza modifiche
+            return original_string
+    else:
+        # Se la stringa di destinazione non è presente, restituisci la stringa originale senza modifiche
+        return original_string
