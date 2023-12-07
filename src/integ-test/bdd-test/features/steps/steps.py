@@ -1861,8 +1861,7 @@ def step_impl(context, param, value):
     db.closeConnection(conn)
     header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
     headers = {'Host': header_host}
-    refresh_response = requests.get(utils.get_refresh_config_url(
-        context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+    refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     time.sleep(5)
     print('refresh_response: ', refresh_response)
     assert refresh_response.status_code == 200
