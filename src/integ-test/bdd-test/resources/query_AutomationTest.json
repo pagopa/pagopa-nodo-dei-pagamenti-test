@@ -111,7 +111,7 @@
         "re_paSendRT_REQ_xml": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = $activatePaymentNoticeResponse.paymentToken AND TIPO_EVENTO = 'paSendRT' AND SOTTO_TIPO_EVENTO = 'REQ' AND ESITO = 'INVIATA_KO' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
         "sottoTipoEvento": "SELECT columns FROM table_name WHERE NOTICE_ID = $activatePaymentNotice.noticeNumber AND TIPO_EVENTO IN ('paGetPayment', 'paGetPaymentV2', 'paVerifyPaymentNotice') AND SOTTO_TIPO_EVENTO = 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
         "sottoTipoEvento_paVerifyPayment": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = $activatePaymentNoticeResponse.paymentToken AND TIPO_EVENTO = 'paGetPayment' AND SOTTO_TIPO_EVENTO = 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
-        "sottoTipoEvento_paGetPayment": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken' AND TIPO_EVENTO = 'paGetPayment' AND SOTTO_TIPO_EVENTO = 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO",
+        "sottoTipoEvento_paGetPayment": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeResponse.paymentToken' AND TIPO_EVENTO = 'paGetPayment' AND SOTTO_TIPO_EVENTO = 'REQ' AND INSERTED_TIMESTAMP > TRUNC(SYSDATE-1) ORDER BY DATA_ORA_EVENTO"
     } ,
     "AppIO": {
         "payment_status": "SELECT s.columns FROM table_name s WHERE s.NOTICE_ID = $activateIOPayment.noticeNumber AND s.PA_FISCAL_CODE = $activateIOPayment.fiscalCode",
