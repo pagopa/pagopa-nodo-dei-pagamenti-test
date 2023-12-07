@@ -427,28 +427,31 @@ Feature: T153_InviaCarrelloRPT_2PA
 
     Scenario: Execution Esito Mod1
         Given the Execute nodoChiediListaPSP - carte scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
+        And initial XML pspInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-            <ws:pspInviaCarrelloRPTCarteResponse>
+            <ws:pspInviaCarrelloRPTResponse>
             <pspInviaCarrelloRPTResponse>
             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
             </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTCarteResponse>
+            </ws:pspInviaCarrelloRPTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         #non toccare i valori
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
                 "idPagamento": "$sessionToken",
-                "identificativoPsp": "40000000001",
+                "identificativoPsp": "#psp#",
                 "tipoVersamento": "BP",
-                "identificativoIntermediario": "40000000001",
-                "identificativoCanale": "40000000001_03",
+                "identificativoIntermediario": "#psp#",
+                "identificativoCanale": "#canale#",
                 "tipoOperazione":"mobile",
                 "mobileToken":"123ABC456"
             }

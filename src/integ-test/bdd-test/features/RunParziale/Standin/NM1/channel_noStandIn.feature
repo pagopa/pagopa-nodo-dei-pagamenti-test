@@ -1,111 +1,39 @@
-Feature: hotfix stazione vp 1 2
+Feature: happy flow with Stand In on and channel no Stand In for NMU
 
     Background:
         Given systems up
 
-    Scenario: activatePaymentNoticeV2 vp1
-        Given initial XML activatePaymentNoticeV2
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <nod:activatePaymentNoticeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <qrCode>
-            <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>302#iuv#</noticeNumber>
-            </qrCode>
-            <expirationTime>60000</expirationTime>
-            <amount>10.00</amount>
-            <paymentNote>responseFull</paymentNote>
-            </nod:activatePaymentNoticeV2Request>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And initial XML paGetPayment
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
-            <soapenv:Header />
-            <soapenv:Body>
-            <paf:paGetPaymentRes>
-            <outcome>OK</outcome>
-            <data>
-            <creditorReferenceId>02$iuv</creditorReferenceId>
-            <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-31</dueDate>
-            <!--Optional:-->
-            <retentionDate>2021-12-31T12:12:12</retentionDate>
-            <!--Optional:-->
-            <lastPayment>1</lastPayment>
-            <description>description</description>
-            <!--Optional:-->
-            <companyName>company</companyName>
-            <!--Optional:-->
-            <officeName>office</officeName>
-            <debtor>
-            <uniqueIdentifier>
-            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
-            </uniqueIdentifier>
-            <fullName>paGetPaymentName</fullName>
-            <!--Optional:-->
-            <streetName>paGetPaymentStreet</streetName>
-            <!--Optional:-->
-            <civicNumber>paGetPayment99</civicNumber>
-            <!--Optional:-->
-            <postalCode>20155</postalCode>
-            <!--Optional:-->
-            <city>paGetPaymentCity</city>
-            <!--Optional:-->
-            <stateProvinceRegion>paGetPaymentState</stateProvinceRegion>
-            <!--Optional:-->
-            <country>IT</country>
-            <!--Optional:-->
-            <e-mail>paGetPayment@test.it</e-mail>
-            </debtor>
-            <!--Optional:-->
-            <transferList>
-            <!--1 to 5 repetitions:-->
-            <transfer>
-            <idTransfer>1</idTransfer>
-            <transferAmount>5.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>testPaGetPayment</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>2</idTransfer>
-            <transferAmount>5.00</transferAmount>
-            <fiscalCodePA>90000000001</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>testPaGetPayment</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            </transfer>
-            </transferList>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </data>
-            </paf:paGetPaymentRes>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
+    # Lo scopo di questo test è verificare che il parametro opzionale standin=true non sia presente nelle response verso il psp e che non vengano inviate le receipt dalla 
+    # paSendRT, dato che il flag invioReceiptStandin sulla config keys è a N. 
 
-    Scenario: activatePaymentNoticeV2 vp2
-        Given initial XML activatePaymentNoticeV2
+    Scenario: checkPosition request
+        Given insert through the query insert_query into the table STAND_IN_STATIONS the fields STATION_CODE with 'irraggiungibile' under macro update_query on db nodo_cfg 
+        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
+        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to false
+        And nodo-dei-pagamenti has config parameter station.stand-in set to 66666666666_08
+        And wait 50 seconds for expiration
+        And initial json checkPosition
+            """
+            {
+                "positionslist": [
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "346#iuv#"
+                    }
+                ]
+            }
+            """
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
+        
+
+    Scenario: activatePaymentNoticeV2 request
+        Given the checkPosition request scenario executed successfully
+        And initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -118,7 +46,7 @@ Feature: hotfix stazione vp 1 2
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310#iuv#</noticeNumber>
+            <noticeNumber>346$iuv</noticeNumber>
             </qrCode>
             <expirationTime>60000</expirationTime>
             <amount>10.00</amount>
@@ -135,7 +63,7 @@ Feature: hotfix stazione vp 1 2
             <paf:paGetPaymentV2Response>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
+            <creditorReferenceId>46$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-12</dueDate>
             <!--Optional:-->
@@ -171,26 +99,9 @@ Feature: hotfix stazione vp 1 2
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>5.00</transferAmount>
+            <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
             <companyName>companySec</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            <transfer>
-            <idTransfer>2</idTransfer>
-            <transferAmount>5.00</transferAmount>
-            <fiscalCodePA>90000000001</fiscalCodePA>
-            <companyName>companyTer</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -218,11 +129,15 @@ Feature: hotfix stazione vp 1 2
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
+        When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
+        And check standin field not exists in activatePaymentNoticeV2 response
+        And checks the value Y of the record at column FLAG_STANDIN of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+ 
 
-    Scenario: closePaymentV2
-        Given initial json v2/closepayment
+    Scenario: closePaymentV2 request
+        Given the activatePaymentNoticeV2 request scenario executed successfully
+        And initial json v2/closepayment
             """
             {
                 "paymentTokens": [
@@ -232,7 +147,7 @@ Feature: hotfix stazione vp 1 2
                 "idPSP": "#psp#",
                 "paymentMethod": "TPAY",
                 "idBrokerPSP": "#id_broker_psp#",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "idChannel": "#canale_versione_primitive_2#",
                 "transactionId": "#transaction_id#",
                 "totalAmount": 12,
                 "fee": 2,
@@ -245,10 +160,12 @@ Feature: hotfix stazione vp 1 2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        And wait 5 seconds for expiration
 
-    Scenario: sendPaymentOutcomeV2
-        Given initial XML sendPaymentOutcomeV2
+    @standin
+    # Define primitive sendPaymentOutcome
+    Scenario: sendPaymentOutcomeV2 request
+        Given the closePaymentV2 request scenario executed successfully
+        And initial XML sendPaymentOutcomeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -256,7 +173,7 @@ Feature: hotfix stazione vp 1 2
             <nod:sendPaymentOutcomeV2Request>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <idChannel>#canale#</idChannel>
             <password>#password#</password>
             <paymentTokens>
             <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
@@ -299,15 +216,32 @@ Feature: hotfix stazione vp 1 2
             """
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
 
-    # @test
-    # Scenario: Test 1
-    #     Given the activatePaymentNoticeV2 vp1 scenario executed successfully
-    #     And the closePaymentV2 scenario executed successfully
-    #     And the sendPaymentOutcomeV2 scenario executed successfully
+        And execution query position_transfer to get value on the table POSITION_PAYMENT_STATUS, with the columns STATUS under macro NewMod1 with db name nodo_online
+        And checks the value NOTICE_GENERATED,PAYING,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And execution query position_transfer to get value on the table POSITION_PAYMENT_STATUS_SNAPSHOT, with the columns STATUS under macro NewMod1 with db name nodo_online
+        And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And execution query position_transfer to get value on the table POSITION_STATUS, with the columns STATUS under macro NewMod1 with db name nodo_online
+        And checks the value PAYING,PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And execution query select_activatev2 to get value on the table POSITION_STATUS_SNAPSHOT, with the columns STATUS under macro NewMod1 with db name nodo_online
+        And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @test 
-    Scenario: Test 2
-        Given the activatePaymentNoticeV2 vp2 scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
-        And the sendPaymentOutcomeV2 scenario executed successfully
+        # DB Checks for POSITION_PAYMENT
+        And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        
+        # DB Checks for POSITION_RECEIPT
+        And verify 1 record for the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        
+        # DB Checks for POSITION_RECEIPT_XML
+        And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        
+        # DB Checks for POSITION_RECEIPT_RECIPIENT
+        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        
+        # RE
+        And verify 0 record for the table RE retrived by the query re_paSendRTV2_trunc on db re under macro NewMod1
+
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        And delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value 'irraggiungibile' under macro update_query on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds

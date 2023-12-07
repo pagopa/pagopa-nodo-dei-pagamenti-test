@@ -2,7 +2,10 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
 
   Background:
     Given systems up
-    And initial XML activatePaymentNotice
+
+  @runnable @PG34
+  Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
+    Given initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
       xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -26,11 +29,7 @@ Feature: Syntax checks KO for activatePaymentNoticeReq
       </soapenv:Body>
       </soapenv:Envelope>
       """
-
-  @runnable
-  # element value check
-  Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
-    Given <elem> with <value> in activatePaymentNotice
+    And <elem> with <value> in activatePaymentNotice
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_SINTASSI_EXTRAXSD of activatePaymentNotice response

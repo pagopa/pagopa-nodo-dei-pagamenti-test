@@ -26,7 +26,7 @@ Feature: Syntax checks for paGetPaymentRes - OK
 			"""
 		And EC new version
 
-	@runnable
+	@ALL
 	Scenario Outline: Check paGetPayment response with missing optional fields
 		Given initial XML paGetPayment
 			"""

@@ -296,6 +296,36 @@ def replace_context_variables_for_query(body, context):
     return body
 
 
+def manipulate_json(data, key, value):
+    json_temp = ""
+    if value == "None":
+        if key in data:
+            del data[key]
+    elif value == "Empty":
+        json_temp = json.loads(data)
+        if key in data and isinstance(json_temp.get(key), list):
+            json_temp[key] = []
+        elif key in data and isinstance(json_temp.get(key), dict):
+            json_temp[key] = {}
+        elif key in data:
+            data[key] = ""
+    elif value == 'RemoveParent':
+        parent_key = key.rsplit('.', 1)[0]
+        if parent_key in data and isinstance(data[parent_key], dict):
+            if key in data[parent_key]:
+                data[parent_key][key] = data[key]
+            del data[key]
+    elif value.startswith("Occurrences"):
+        occurrences = int(value.split(",")[1])
+        if key in data and isinstance(data[key], list):
+            data[key] = data[key] * occurrences
+    else:
+        if key in data:
+            json_temp = json.loads(data)
+            json_temp[key] = value
+    return json.dumps(json_temp)
+
+
 def replace_context_variables(body, context):
     pattern = re.compile('\\$(?<!\\$\\$)\\b(\\w+)')
     #pattern = re.compile('\\$\\w+')

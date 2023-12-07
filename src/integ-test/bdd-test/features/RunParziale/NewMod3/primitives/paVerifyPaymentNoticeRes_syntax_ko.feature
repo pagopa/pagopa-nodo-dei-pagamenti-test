@@ -22,7 +22,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
          """
       And EC new version
 
-   @runnable
+   @ALL
    # element value check
    Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
       Given initial XML paVerifyPaymentNotice
@@ -60,7 +60,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - KO
          | outcome                      | PP           | SIN_PVPNR_09 |
          | outcome                      | KO           | SIN_PVPNR_10 |
 
-   @runnable
+   @ALL
    Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
       Given initial XML paVerifyPaymentNotice
          """

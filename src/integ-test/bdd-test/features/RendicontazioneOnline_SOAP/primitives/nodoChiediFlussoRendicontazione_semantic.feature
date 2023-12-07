@@ -144,9 +144,6 @@ Feature: Semantic checks for nodoChiediFlussoRendicontazione
     # [CFRSEM11]
     @flusso
     Scenario: Aggiornamento DB_3
-        Given the Executed nodoInviaFlussoRendicontazione scenario executed successfully
-        And update through the query param_update of the table RENDICONTAZIONE the parameter DOMINIO with 90000000001, with where condition ID_FLUSSO and where value $identificativoFlusso under macro update_query on db nodo_offline
-        And initial XML nodoChiediFlussoRendicontazione
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>

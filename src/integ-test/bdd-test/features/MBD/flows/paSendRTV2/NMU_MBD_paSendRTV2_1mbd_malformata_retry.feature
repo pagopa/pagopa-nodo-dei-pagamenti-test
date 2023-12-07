@@ -210,12 +210,12 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
     # sendPaymentOutcome phase
     Scenario: Execute sendPaymentOutcomeV2
         Given the Define MBD scenario executed successfully
-        And the paSendRTV2 scenario executed successfully
         And MB generation
             """
             $MB
             """
         And the Execute a closePayment-v2 request scenario executed successfully
+        And the paSendRTV2 scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
         And initial XML sendPaymentOutcomeV2
             """
@@ -328,7 +328,7 @@ Feature: flow tests for paSendRTV2 - Marca da bollo
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
-        When job paSendRt triggered after 0 seconds
+        When job paSendRt triggered after 1 seconds
         And wait 15 seconds for expiration
         Then verify the HTTP status code of paSendRt response is 200
 

@@ -1,0 +1,18 @@
+{
+    "paymentTokens": [
+        "$activatePaymentNoticeV2_1Response.paymentToken",
+        "$activatePaymentNoticeV2_2Response.paymentToken"
+    ],
+    "outcome": "OK",
+    "idPSP": "#psp#",
+    "paymentMethod": "TPAY",
+    "idBrokerPSP": "#id_broker_psp#",
+    "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+    "transactionId": "#transaction_id#",
+    "totalAmount": 22,
+    "fee": 2,
+    "timestampOperation": "2012-04-23T18:25:43Z",
+    "additionalPaymentInformations": {
+        "key": "12345678"
+    }
+}

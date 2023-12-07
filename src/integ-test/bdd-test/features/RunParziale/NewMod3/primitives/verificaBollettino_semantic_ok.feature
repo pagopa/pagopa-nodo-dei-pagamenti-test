@@ -19,12 +19,12 @@ Feature: Semantic checks for verificaBollettino - OK
       </soapenv:Envelope>
       """
 
-  @runnable
+  @ALL
   Scenario: Check valid URL in WSDL namespace
     When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
     Then check outcome is OK of verificaBollettino response
 
-  @runnable
+  @ALL
   #[SEM_VB_13] pt.1
   Scenario Outline: Execute verificaBollettino request
     Given <elem> with <value> in verificaBollettino
@@ -35,7 +35,7 @@ Feature: Semantic checks for verificaBollettino - OK
       | elem  | value                                | soapUI test |
       | idPSP | 123456789012345678901234567890123456 | SEM_VB_13   |
 
-  @runnable
+  @ALL
   #[SEM_VB_13] pt.2
   Scenario: Excecute verificaBollettino2 request
     Given ccPost with 666666666666 in verificaBollettino

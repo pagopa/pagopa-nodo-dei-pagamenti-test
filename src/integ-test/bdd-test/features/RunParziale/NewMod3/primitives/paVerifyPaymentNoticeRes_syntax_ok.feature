@@ -22,7 +22,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK
       """
     And EC new version
 
-  @runnable
+  @ALL
   Scenario Outline: Check paVerifyPaymentRes response with missing optional fields
     Given initial XML paVerifyPaymentNotice
     """

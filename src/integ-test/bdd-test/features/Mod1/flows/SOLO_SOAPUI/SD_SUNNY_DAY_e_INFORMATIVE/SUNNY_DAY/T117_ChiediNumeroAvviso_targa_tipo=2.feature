@@ -22,30 +22,6 @@ Feature: T117_ChiediNumeroAvviso_targa_tipo=2
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML paaChiediNumeroAvviso
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/ciao/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaChiediNumeroAvvisoRisposta>
-            <paaChiediNumeroAvvisoRisposta>
-            <esito>OK</esito>
-            <numeroAvviso>
-            <auxDigit>0</auxDigit>
-            <applicationCode>00</applicationCode>
-            <IUV>#iuv#</IUV>
-            </numeroAvviso>
-            <datiPagamentoPA>
-            <importoSingoloVersamento>10.00</importoSingoloVersamento>
-            <ibanAccredito>IT96R0123454321000000012345</ibanAccredito>
-            <causaleVersamento>prova</causaleVersamento>
-            </datiPagamentoPA>
-            </paaChiediNumeroAvvisoRisposta>
-            </ws:paaChiediNumeroAvvisoRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paaChiediNumeroAvviso
         When PSP sends SOAP nodoChiediNumeroAvviso to nodo-dei-pagamenti
         Then check esito is OK of nodoChiediNumeroAvviso response
         And check numeroAvviso field exists in nodoChiediNumeroAvviso response

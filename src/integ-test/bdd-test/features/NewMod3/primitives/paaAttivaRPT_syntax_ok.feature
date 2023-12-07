@@ -2,6 +2,9 @@ Feature: check syntax OK for paaAttivaRPT
 
     Background:
         Given systems up
+
+@runnable
+    Scenario Outline:
         Given initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
@@ -25,11 +28,7 @@ Feature: check syntax OK for paaAttivaRPT
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
-
-@runnable
-    Scenario Outline:
-        Given initial XML paaAttivaRPT
+        And initial XML paaAttivaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
             <soapenv:Header/>
