@@ -499,7 +499,7 @@ Feature: PAG-2518
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
-    @test @company
+    @test @company @pippoalf
     Scenario: Test 3 (part 3)
         Given the Test 3 (part 2) scenario executed successfully
         When job mod3CancelV2 triggered after 5 seconds
