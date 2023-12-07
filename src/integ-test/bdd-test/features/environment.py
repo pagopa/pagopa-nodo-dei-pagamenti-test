@@ -11,7 +11,7 @@ else:
     import steps.db_operation as db
     import os, cx_Oracle, requests
 
-
+import allure
 import sys
 from io import StringIO
 
@@ -74,26 +74,26 @@ def before_feature(context, feature):
     #     if tag == 'config-ec':
     #         config_ec(context)
 
-# def before_scenario(context, scenario):
-#     context.stdout_capture = StringIO()
-#     context.original_stdout = sys.stdout
-#     sys.stdout = context.stdout_capture
+def before_scenario(context, scenario):
+    context.stdout_capture = StringIO()
+    context.original_stdout = sys.stdout
+    sys.stdout = context.stdout_capture
 
-# def after_scenario(context, scenario):
-#     try:
-#         #sys.stdout = sys.__stdout__
-#         sys.stdout = context.original_stdout
+def after_scenario(context, scenario):
+    try:
+        #sys.stdout = sys.__stdout__
+        sys.stdout = context.original_stdout
         
-#         context.stdout_capture.seek(0)
-#         captured_stdout = context.stdout_capture.read()
+        context.stdout_capture.seek(0)
+        captured_stdout = context.stdout_capture.read()
         
-#         allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
-#         context.stdout_capture.close()
+        allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+        context.stdout_capture.close()
 
-#         print("\nCaptured stdout:\n", captured_stdout)  # Stampa l'output nel terminale
+        print("\nCaptured stdout:\n", captured_stdout)  # Stampa l'output nel terminale
 
-#     except Exception as e:
-#         print("Eccezione " + e)
+    except Exception as e:
+        print("Eccezione " + e)
 
 
 
@@ -107,19 +107,18 @@ def after_feature(context, feature):
     #         context.apiconfig.delete_creditor_institution(global_configuration.get("creditor_institution_code"))
 
 def after_all(context):
-    pass
-    # db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
-    # conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'),db_selected.get('port'))
+    db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'),db_selected.get('port'))
 
-    # config_dict = getattr(context, 'configurations')
-    # for key, value in config_dict.items():
-    #     #print(key, value)
-    #     selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
-    #     db.executeQuery(conn, selected_query)  
+    config_dict = getattr(context, 'configurations')
+    for key, value in config_dict.items():
+        #print(key, value)
+        selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
+        db.executeQuery(conn, selected_query)  
     
-    # db.closeConnection(conn)
-    # headers = {'Host': 'api.dev.platform.pagopa.it:443'}  
-    # requests.get(utils.get_refresh_config_url(context),verify=False,headers=headers)
+    db.closeConnection(conn)
+    headers = {'Host': 'api.dev.platform.pagopa.it:443'}  
+    requests.get(utils.get_refresh_config_url(context),verify=False,headers=headers)
 
 
 def config_ec(context):

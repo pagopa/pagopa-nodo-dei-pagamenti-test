@@ -71,6 +71,8 @@ def step_impl(context, primitive):
                 0].firstChild.data
 				
         payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+
+        payload = payload.replace('#idempotency_key_POSTE#', f"{str(random.randint(10000000000, 99999999999))}_{str(random.randint(1000000000, 9999999999))}")
 								  
         payload = payload.replace('#idempotency_key_IOname#', "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
 
@@ -2347,6 +2349,16 @@ def step_impl(context, query_name, table_name, row_keys_fields, row_values_field
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
 
+@step("delete through the query {query_name} into the table {table_name} with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
+def step_impl(context, query_name, table_name, where_condition, valore, macro, db_name):
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('where_condition', where_condition).replace('valore', valore)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    exec_query = db.executeQuery(conn, selected_query)
+    db.closeConnection(conn)
+
 
 
 @step("updates through the query {query_name} of the table {table_name} the parameter {param} with {value} under macro {macro} on db {db_name}")
@@ -2520,6 +2532,18 @@ def step_impl(context, value1, condition, value2):
         assert value2 in value1, f"{value1} contains {value2}"
     else:
         assert False
+
+@then('check payload tag {tag} field not exists in {payload}')
+def step_impl(context, tag, payload):
+    from xml.etree.ElementTree import fromstring
+    #payload = getattr(context, payload)
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
+    root = fromstring(payload)
+    assert root.find(".//{}".format(tag)) is None
+    # my_document = parseString(root.content)
+    # assert len(my_document.getElementsByTagName(tag)) == 0
 
 
 @step("calling primitive {primitive1} {restType1} and {primitive2} {restType2} in parallel")
