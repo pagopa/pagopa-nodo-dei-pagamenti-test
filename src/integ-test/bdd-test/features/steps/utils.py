@@ -361,7 +361,10 @@ def replace_local_variables_for_query(body, context):
             else:
                 document = parseString(saved_elem.content)
                 print(tag)
-            value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
+            if '-' in tag:
+                value = document.getElementsByTagNameNS('*', tag.split('-')[0])[0].firstChild.data
+            else:
+                value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
         if len(tag_finale) > 1:
             body = body.replace(field, f'$${value}-{tag_finale}$$')
         else:
