@@ -354,14 +354,13 @@ def replace_local_variables_for_query(body, context):
         tag_finale = ''
         if len(field.replace('$', '').split('.')) > 1:
             tag = field.replace('$', '').split('.')[1]
-            if '-' in tag:
-                tag_finale = tag.split('-')[1]
             if isinstance(saved_elem, str):
                 document = parseString(saved_elem)
             else:
                 document = parseString(saved_elem.content)
                 print(tag)
             if '-' in tag:
+                tag_finale = tag.split('-')[1]
                 value = document.getElementsByTagNameNS('*', tag.split('-')[0])[0].firstChild.data
             else:
                 value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
