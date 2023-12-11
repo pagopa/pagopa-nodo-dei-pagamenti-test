@@ -347,19 +347,25 @@ def replace_context_variables(body, context):
 def replace_local_variables_for_query(body, context):
     pattern = re.compile('\\$\\w+\\.\\w+(?:-\\w+)?')
     match = pattern.findall(body)
+
     for field in match:
         saved_elem = getattr(context, field.replace('$', '').split('.')[0])
         value = saved_elem
+        tag_finale = ''
         if len(field.replace('$', '').split('.')) > 1:
             tag = field.replace('$', '').split('.')[1]
+            if '-' in tag:
+                tag_finale = tag.split('-')[1]
             if isinstance(saved_elem, str):
                 document = parseString(saved_elem)
             else:
                 document = parseString(saved_elem.content)
                 print(tag)
-            value = document.getElementsByTagNameNS(
-                '*', tag)[0].firstChild.data
-        body = body.replace(field, f'$${value}$$')
+            value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
+        if len(tag_finale) > 1:
+            body = body.replace(field, f'$${value}-{tag_finale}$$')
+        else:
+            body = body.replace(field, f'$${value}$$')
     return body
 
 
