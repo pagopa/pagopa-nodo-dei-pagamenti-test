@@ -345,7 +345,7 @@ def replace_context_variables(body, context):
 
 
 def replace_local_variables_for_query(body, context):
-    pattern = re.compile('\\$\\w+\\.\\w+')
+    pattern = re.compile('\\$\\w+\\.\\w+(?:-\\w+)?')
     match = pattern.findall(body)
     for field in match:
         saved_elem = getattr(context, field.replace('$', '').split('.')[0])
