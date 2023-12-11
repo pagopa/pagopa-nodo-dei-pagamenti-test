@@ -89,11 +89,11 @@ def after_scenario(context, scenario):
 def after_feature(context, feature):
     global_configuration = context.config.userdata.get("global_configuration")
 
-    DISABLE see @config-ec too 
-    for tag in feature.tags:
-        if tag == 'config-ec':
-            # reset apiconfig
-            context.apiconfig.delete_creditor_institution(global_configuration.get("creditor_institution_code"))
+    # DISABLE see @config-ec too 
+    # for tag in feature.tags:
+    #     if tag == 'config-ec':
+    #         # reset apiconfig
+    #         context.apiconfig.delete_creditor_institution(global_configuration.get("creditor_institution_code"))
 
 def after_all(context):
     header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
