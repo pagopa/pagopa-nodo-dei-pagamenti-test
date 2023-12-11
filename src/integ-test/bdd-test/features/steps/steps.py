@@ -35,18 +35,18 @@ def step_impl(context):
     """
     responses = True
 
-    # for row in context.table:
-    #     print(f"calling: {row.get('name')} -> {row.get('url')}")
-    #     url = row.get("url") + row.get("healthcheck")
-    #     print(f"calling -> {url}")
-    #     header_host = utils.estrapola_header_host(row.get("url"))
-    #     print(f"header_host -> {header_host}")
-    #     headers = {'Host': header_host}
-    #     resp = requests.get(url, headers=headers, verify=False, proxies = getattr(context,'proxies'))
-    #     print(f"response: {resp.status_code}")
-    #     responses &= (resp.status_code == 200)
+    for row in context.table:
+        print(f"calling: {row.get('name')} -> {row.get('url')}")
+        url = row.get("url") + row.get("healthcheck")
+        print(f"calling -> {url}")
+        header_host = utils.estrapola_header_host(row.get("url"))
+        print(f"header_host -> {header_host}")
+        headers = {'Host': header_host}
+        resp = requests.get(url, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        print(f"response: {resp.status_code}")
+        responses &= (resp.status_code == 200)
 
-    # assert responses
+    assert responses
 
 
 @given(u'EC {version} version')
@@ -2104,8 +2104,8 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
 
-    # conn = db.getConnection(db_selected.get('host'), db_selected.get(
-    #     'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
     selected_query = utils.replace_global_variables(selected_query, context)
