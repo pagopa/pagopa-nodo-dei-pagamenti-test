@@ -6,8 +6,8 @@ import threading
 import subprocess
 app = Flask(__name__)
 
-logs_directory = 'test/allure/allure-result'
-zip_file_path = 'test/allure/allure-result.zip'
+logs_directory = '/test/allure/allure-result'
+zip_file_path = '/test/allure/allure-result.zip'
 
 def run_script(tags, folder):
     # execute script
