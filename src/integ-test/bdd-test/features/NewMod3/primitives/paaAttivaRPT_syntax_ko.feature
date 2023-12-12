@@ -2,6 +2,9 @@ Feature: check syntax KO for paaAttivaRPT
 
     Background:
         Given systems up
+
+@runnable
+    Scenario Outline:
         Given initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
@@ -25,11 +28,7 @@ Feature: check syntax KO for paaAttivaRPT
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
-
-@runnable
-    Scenario Outline:
-        Given initial XML paaAttivaRPT
+        And initial XML paaAttivaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
             <soapenv:Header/>
@@ -38,18 +37,18 @@ Feature: check syntax KO for paaAttivaRPT
             <paaAttivaRPTRisposta>
             <esito>OK</esito>
             <datiPagamentoPA>
-            <importoSingoloVersamento>2.00</importoSingoloVersamento>
-            <ibanAccredito>${iban}</ibanAccredito>
+            <importoSingoloVersamento>$activatePaymentNotice.amount</importoSingoloVersamento>
+            <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
             <bicAccredito>BSCTCH22</bicAccredito>
             <enteBeneficiario>
             <pag:identificativoUnivocoBeneficiario>
             <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
-            <pag:codiceIdentificativoUnivoco>${stz}</pag:codiceIdentificativoUnivoco>
+            <pag:codiceIdentificativoUnivoco>#id_station_old#</pag:codiceIdentificativoUnivoco>
             </pag:identificativoUnivocoBeneficiario>
-            <pag:denominazioneBeneficiario>${intermPsp}</pag:denominazioneBeneficiario>
-            <pag:codiceUnitOperBeneficiario>${can}</pag:codiceUnitOperBeneficiario>
+            <pag:denominazioneBeneficiario>#broker_AGID#</pag:denominazioneBeneficiario>
+            <pag:codiceUnitOperBeneficiario>#canale_AGID_02#</pag:codiceUnitOperBeneficiario>
             <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>
-            <pag:indirizzoBeneficiario>y</pag:indirizzoBeneficiario>
+            <pag:indirizzoBeneficiario>"paaAttivaRPT"</pag:indirizzoBeneficiario>
             <pag:civicoBeneficiario>j</pag:civicoBeneficiario>
             <pag:capBeneficiario>gt</pag:capBeneficiario>
             <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>
@@ -57,7 +56,7 @@ Feature: check syntax KO for paaAttivaRPT
             <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>
             </enteBeneficiario>
             <credenzialiPagatore>i</credenzialiPagatore>
-            <causaleVersamento>${causale}</causaleVersamento>
+            <causaleVersamento>prova/RFDB/018431538193400/TXT/causale $iuv</causaleVersamento>
             </datiPagamentoPA>
             </paaAttivaRPTRisposta>
             </ws:paaAttivaRPTRisposta>

@@ -21,12 +21,12 @@ Feature: Semantic checks for verifyPaymentReq - OK
       </soapenv:Envelope>
       """
   
-  @runnable
+  @ALL
   Scenario: Check valid URL in WSDL namespace
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
-  @runnable
+  @ALL
   # denylist value check: combination fiscalCode-idChannel-idPSP identifies a record in NODO4_CFG.DENYLIST table of nodo-dei-pagamenti database [SEM_VPNR_16]
   Scenario: Check outcome OK if combination psp-channel-pa in denylist
     Given generate 1 notice number and iuv with aux digit 3, segregation code 11 and application code NA

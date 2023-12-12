@@ -52,7 +52,7 @@ Feature: Syntax checks for activateIOPaymentReq - KO
             </soapenv:Envelope>
             """
 
-    @runnable
+    @runnable @PG34
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
         Given <elem> with <value> in activateIOPayment
         When psp sends SOAP activateIOPayment to nodo-dei-pagamenti

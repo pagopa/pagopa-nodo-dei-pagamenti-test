@@ -27,12 +27,12 @@ Feature: Syntax checks OK for activatePaymentNoticeReq
       </soapenv:Envelope>
       """
   
-  @runnable
+  @ALL
   Scenario: Check valid URL in WSDL namespace
     When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @runnable
+  @ALL
   Scenario Outline: Check OK response on missing optional fields idempotencyKey - SIN_APNR_18
     Given <elem> with <value> in activatePaymentNotice
     When psp sends soap activatePaymentNotice to nodo-dei-pagamenti

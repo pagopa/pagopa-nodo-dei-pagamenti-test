@@ -292,7 +292,8 @@ Feature: Execute nodoInviaRPT - MOD2 [T0XX]
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         And job pspChiediListaAndChiediRt triggered after 5 seconds
         And job paInviaRt triggered after 10 seconds
-        And wait 130 seconds for expiration
+        And wait until the update to the new state for the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
+        #And wait 130 seconds for expiration
         Then check esito is OK of nodoInviaRPT response
         #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
         #And refresh job ALL triggered after 10 seconds

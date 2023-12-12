@@ -4,7 +4,7 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
     Background:
         Given systems up
 
-@runnable
+    @flusso
     #[CEFRSIN0]
     Scenario: Check PPT_SINTASSI_EXTRAXSD error on invalid wsdl namespace
         Given initial XML nodoChiediElencoFlussiRendicontazione
@@ -27,7 +27,7 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
         And check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediElencoFlussiRendicontazione response
         And check description is Errore validazione XML [Envelope] - cvc-elt.1.a: impossibile trovare la dichiarazione dell'elemento "soapenv:Envelope". of nodoChiediElencoFlussiRendicontazione response
 
-@runnable
+    @flusso
     #[CEFRSIN1]
     Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediElencoFlussiRendicontazione primitive
         Given initial XML nodoChiediElencoFlussiRendicontazione
@@ -49,7 +49,7 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
         Then check faultString is Errore di sintassi extra XSD. of nodoChiediElencoFlussiRendicontazione response
         And check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediElencoFlussiRendicontazione response
 
-@runnable
+    @flusso
     #[CEFRSIN3]
     Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediElencoFlussiRendicontazione primitive
         Given initial XML nodoChiediElencoFlussiRendicontazione
@@ -62,7 +62,8 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
         Then check faultString is Errore di sintassi extra XSD. of nodoChiediElencoFlussiRendicontazione response
         And check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediElencoFlussiRendicontazione response
 
-@runnable
+    
+    @flusso
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediElencoFlussiRendicontazione primitive
         Given initial XML nodoChiediElencoFlussiRendicontazione
             """
@@ -96,7 +97,7 @@ Feature: Syntax checks for nodoChiediElencoFlussiRendicontazione - KO
             | password                                 | Xlve3Jc                              | CEFRSIN14   |
             | password                                 | xxkV8x4phzRKyiuE                     | CEFRSIN15   |
 
-@runnable
+    @flusso
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediElencoFlussiRendicontazione primitive
         Given initial XML nodoChiediElencoFlussiRendicontazione
             """

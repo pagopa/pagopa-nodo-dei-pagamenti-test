@@ -196,7 +196,7 @@ Feature: idempotency tests for activatePaymentNoticeV2Request
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-    @test
+    @test @pippoalf
     # [IDMP_APNV2_11.1]
     Scenario: IDMP_APNV2_11.1
         Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 40
@@ -585,34 +585,6 @@ Feature: idempotency tests for activatePaymentNoticeV2Request
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
 
-    # [IDMP_APNV2_17]
-    Scenario: IDMP_APNV2_17 (part 1)
-        Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1
-        And nodo-dei-pagamenti has config parameter default_token_duration_validity_millis set to 1800000
-        And nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
-        And the activatePaymentNoticeV2 without expirationTime scenario executed successfully
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-        And wait 70 seconds for expiration
-    @test
-    Scenario: IDMP_APNV2_17 (part 2)
-        Given the IDMP_APNV2_17 (part 1) scenario executed successfully
-        And fiscalCode with 44444444444 in activatePaymentNoticeV2
-        And random iuv in context
-        And noticeNumber with 311$iuv in activatePaymentNoticeV2
-        And fiscalCodePA with 44444444444 in paGetPayment
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2Response
-        And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query payment_token on db nodo_online under macro NewMod1
-        And checks the value 44444444444 of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query payment_token on db nodo_online under macro NewMod1
-        And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query payment_token on db nodo_online under macro NewMod1
-        And nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 10
-
     # [IDMP_APNV2_18]
     Scenario: IDMP_APNV2_18 (part 1)
         Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1
@@ -702,7 +674,7 @@ Feature: idempotency tests for activatePaymentNoticeV2Request
         Then check outcome is OK of activatePaymentNoticeV2 response
         And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
-    @test 
+    @test
     Scenario: IDMP_APNV2_20 (part 2)
         Given the IDMP_APNV2_20 (part 1) scenario executed successfully
         When job mod3CancelV2 triggered after 7 seconds

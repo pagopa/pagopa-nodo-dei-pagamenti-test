@@ -159,7 +159,7 @@ Feature: process tests for T213_rptUniversale_1RPT_2versamenti_noPoste_poste
         And check totalRows is $sizeConto of listaPSP response
         And compare list between data in listaPSP response and $listaConto
 
-    @runnable
+    @sync
     Scenario: execution nodoChiediListaPSP - altro
         Given the execution nodoChiediListaPSP - conto scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti

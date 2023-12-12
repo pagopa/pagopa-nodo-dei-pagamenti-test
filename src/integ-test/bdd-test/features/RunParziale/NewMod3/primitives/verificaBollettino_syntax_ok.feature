@@ -19,7 +19,7 @@
       </soapenv:Envelope>
       """
  
- @runnable    
+ @ALL    
  Scenario: SIN_VB_00
     When psp sends SOAP verificaBollettino to nodo-dei-pagamenti
     Then check outcome is OK of verificaBollettino response

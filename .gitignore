@@ -135,3 +135,4 @@ reports
 /src/perf-test/k6/scenarios/*/test/output
 src/integ-test/bdd-test/features/steps/jupyter_notebook.ipynb
 get-pip.py
+src/integ-test/bdd-test/features/steps/jupyter_notebook.ipynb

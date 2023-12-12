@@ -161,10 +161,10 @@ Feature: NCAP
             {
                 "idPagamento": "$sessionToken",
                 "RRN": 10638081,
-                "identificativoPsp": "40000000001",
+                "identificativoPsp": "#psp#",
                 "tipoVersamento": "BBT",
-                "identificativoIntermediario": "40000000001",
-                "identificativoCanale": "40000000001_03",
+                "identificativoIntermediario": "#psp#",
+                "identificativoCanale": "#canale#",
                 "importoTotalePagato": 12.31,
                 "timestampOperazione": "2018-02-08T17:06:03.100+01:00",
                 "codiceAutorizzativo": "123456",
@@ -172,6 +172,7 @@ Feature: NCAP
             }
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
+        And check esito is OK of inoltroEsito/carta response
         And checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_PARCHEGGIATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         # check POSITION_PAYMENT

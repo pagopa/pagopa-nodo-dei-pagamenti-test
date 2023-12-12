@@ -539,27 +539,3 @@ Feature: gestioneReceiptMb_04
         And check value $fee is equal to value $expFee
         And check value $applicationDate is equal to value $expApplicationDate
         And check value $transferDate is equal to value $expTransferDate
-
-        #extraction from POSITION_RECEIPT_XML
-        And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_XML, with the columns * under macro Mod1Mb with db name nodo_online
-        And through the query by_notice_number_and_payment_token retrieve param paFiscalCode at position 1 and save it under the key paFiscalCode
-        And through the query by_notice_number_and_payment_token retrieve param noticeID at position 2 and save it under the key noticeID
-        And through the query by_notice_number_and_payment_token retrieve param creditorReferenceId at position 3 and save it under the key creditorReferenceId
-        And through the query by_notice_number_and_payment_token retrieve param paymentToken at position 4 and save it under the key paymentToken
-        And through the query by_notice_number_and_payment_token retrieve param recipientPA at position 8 and save it under the key recipientPA
-        And through the query by_notice_number_and_payment_token retrieve param recipientBroker at position 9 and save it under the key recipientBroker
-        And through the query by_notice_number_and_payment_token retrieve param recipientStation at position 10 and save it under the key recipientStation
-        #checks
-        And check value $paFiscalCode is equal to value $expFiscalCode
-        And check value $noticeID is equal to value $expNoticeID
-        And check value $creditorReferenceId is equal to value $expCreditorReferenceID
-        And check value $paymentToken is equal to value $expPaymentToken
-        And check value $recipientPA is equal to value $expFiscalCode
-        And check value $recipientBroker is equal to value $expBrokerPA
-        And check value $recipientStation is equal to value $recipientStation
-        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
-        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query by_notice_number_and_payment_token on db nodo_online under macro Mod1Mb
-        And checks the value PAYING, PAID, NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value PAYING, PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb

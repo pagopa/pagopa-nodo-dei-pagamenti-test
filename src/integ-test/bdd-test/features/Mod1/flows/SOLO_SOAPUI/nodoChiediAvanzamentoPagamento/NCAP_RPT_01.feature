@@ -184,10 +184,10 @@ Feature: NCAP
          {  
             "idPagamento":"$sessionToken",
             "RRN":10638081,
-            "identificativoPsp":"40000000001",
+            "identificativoPsp":"#psp#",
             "tipoVersamento":"BBT",
-            "identificativoIntermediario":"40000000001",
-            "identificativoCanale":"40000000001_03",
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#canale#",
             "importoTotalePagato":12.31,
             "timestampOperazione":"2018-02-08T17:06:03.100+01:00",
             "codiceAutorizzativo":"123456",

@@ -2,6 +2,7 @@
 fromAPI=$1
 argTags=$2
 argFolder=$3
+history=false
 
 function replace {
 	file=$1
@@ -27,6 +28,7 @@ replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/confi
 #replace $file ".services.\"mock-ec\".url"           "https://api.dev.platform.pagopa.it/mock-ec/api/v1"
 replace $file ".services.\"mock-ec\".url"           "https://mock-ec-primary-sit.tst-npc.sia.eu/servizi/PagamentiTelematiciRPT"
 replace $file ".services.\"mock-ec\".healthcheck"   "/info"
+#replace $file ".services.\"mock-ec\".soap_service"  "/mock-ec"
 replace $file ".services.\"mock-ec\".soap_service"  ""
 replace $file ".services.\"mock-ec\".rest_service"  ""
 
@@ -99,9 +101,15 @@ find /test/allure/allure-result/ -type f -delete
 echo "executing command: behave -f allure_behave.formatter:AllureFormatter -o /test/allure-result $folder --tags=$tags --no-capture --no-capture-stderrhelpcls -D conffile=$file_config"
 behave -f allure_behave.formatter:AllureFormatter -o /test/allure/allure-result $folder --tags=$tags --no-capture --no-capture-stderr -D conffile=$file_config
 
-mkdir -p /test/allure/allure-result/history || echo "history folder already in place...continuing :)" 														   
-find /test/allure/allure-report/history/* -type f -exec sh -c 'cp "{}" "/test/allure/allure-result/history""/"' \;
-echo "Allure trends updated!"
+if [ "$history" = false ]; then
+    echo "Removing history folders..."
+    rm -rf /test/allure/allure-result/history*
+    rm -rf /test/allure/allure-report/history
+else
+    mkdir -p /test/allure/allure-result/history || echo "history folder already in place...continuing :)" 														   
+    find /test/allure/allure-report/history/* -type f -exec sh -c 'cp "{}" "/test/allure/allure-result/history""/"' \;
+    echo "Allure trends updated!"
+fi
 
 ls -lash /test/allure/allure-result
 

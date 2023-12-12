@@ -263,18 +263,111 @@ def manipulate_soap_action(soap_action, elem, value):
     return my_document.toxml()
 
 
-def replace_context_variables(body, context):
-    pattern1 = re.compile('\'\\$\\w+')
-    pattern2 = re.compile('\>\\$\\w+')
-
-    pattern = re.compile(pattern1.pattern + '|' + pattern2.pattern)
-    
+def replace_context_variables_for_query(body, context):
+    pattern = re.compile('\\s\\$\\w+(?![.\\w])')
     match = pattern.findall(body)
+
+    if len(match) > 0:
+        ###CALCULATE THE INITIAL INDEX VALUE FROM MY QUERY
+        initial_indexes = [i for i, x in enumerate(body) if x == "$"]
+        j = 0
+        dict_values = {}
+        new_indexes = initial_indexes
+
+        for field in match:
+            if j > 0:
+                new_indexes = []
+                ###RICALCULATE INDEX VALUE AFTER REPLAE $$
+                indexes = [i for i, x in enumerate(body) if x == "$"]
+                new_indexes = indexes[(4*j):]
+
+            dict_values.update({field.replace('$', '').strip() : new_indexes[0]})
+            saved_elem = getattr(context, field.replace('$', '').strip())
+            value = str(saved_elem)
+            
+            index_my_interest = dict_values[field.replace('$', '').strip()]-1
+            
+            if body[index_my_interest] == " ":
+                body = replace_specific_string(body, field, f'$${value}$$')
+            else:
+                body = replace_specific_string(body, field, value)
+            j+=1
+            print(f'Query in costruzione: step {j} per la query{body}')
+    return body
+
+
+def manipulate_json(data, key, value):
+    json_temp = ""
+    if value == "None":
+        if key in data:
+            del data[key]
+    elif value == "Empty":
+        json_temp = json.loads(data)
+        if key in data and isinstance(json_temp.get(key), list):
+            json_temp[key] = []
+        elif key in data and isinstance(json_temp.get(key), dict):
+            json_temp[key] = {}
+        elif key in data:
+            data[key] = ""
+    elif value == 'RemoveParent':
+        parent_key = key.rsplit('.', 1)[0]
+        if parent_key in data and isinstance(data[parent_key], dict):
+            if key in data[parent_key]:
+                data[parent_key][key] = data[key]
+            del data[key]
+    elif value.startswith("Occurrences"):
+        occurrences = int(value.split(",")[1])
+        if key in data and isinstance(data[key], list):
+            data[key] = data[key] * occurrences
+    else:
+        if key in data:
+            json_temp = json.loads(data)
+            json_temp[key] = value
+    return json.dumps(json_temp)
+
+
+def replace_context_variables(body, context):
+    pattern = re.compile('\\$(?<!\\$\\$)\\b(\\w+)')
+    #pattern = re.compile('\\$\\w+')
+    match = pattern.findall(body)
+
+    if len(match) > 0:
+        # aggiunge ai valori della lista match il simbolo $ all'inizio
+        for i in range(len(match)):
+            match[i] = f"${match[i]}"
+
+        for field in match:
+            saved_elem = getattr(context, field.replace('$', ''))
+            value = str(saved_elem)
+            body = body.replace(field, value)
+    return body
+
+
+
+def replace_local_variables_for_query(body, context):
+    pattern = re.compile('\\$\\w+\\.\\w+(?:-\\w+)?')
+    match = pattern.findall(body)
+
     for field in match:
-        field = field[1:]
-        saved_elem = getattr(context, field.replace('$', ''))
-        value = str(saved_elem)
-        body = body.replace(field, value)
+        saved_elem = getattr(context, field.replace('$', '').split('.')[0])
+        value = saved_elem
+        tag_finale = ''
+        if len(field.replace('$', '').split('.')) > 1:
+            tag = field.replace('$', '').split('.')[1]
+            if isinstance(saved_elem, str):
+                document = parseString(saved_elem)
+            else:
+                document = parseString(saved_elem.content)
+                print(tag)
+            if '-' in tag:
+                tag_finale = tag.split('-')[1]
+                value = document.getElementsByTagNameNS('*', tag.split('-')[0])[0].firstChild.data
+            else:
+                value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
+        if len(tag_finale) > 1:
+            body = body.replace(field, f'$${value}-{tag_finale}$$')
+        else:
+            body = body.replace(field, f'$${value}$$')
     return body
 
 
@@ -320,8 +413,8 @@ def query_json(context, name_query, name_macro):
         context.config.base_dir + "/../resources/query_AutomationTest.json")))
     selected_query = query.get(name_macro).get(name_query)
     if '$' in selected_query:
-        selected_query = replace_local_variables(selected_query, context)
-        selected_query = replace_context_variables(selected_query, context)
+        selected_query = replace_local_variables_for_query(selected_query, context)
+        selected_query = replace_context_variables_for_query(selected_query, context)
         selected_query = replace_global_variables(selected_query, context)
     return selected_query
 
@@ -500,3 +593,23 @@ def estrapola_header_host(url):
     else:
         host = f"{dominio}:{port}"
     return host
+
+
+def replace_specific_string(original_string, target_string, replacement):
+# Verifica se la stringa di destinazione è presente nella stringa originale
+    if target_string in original_string:
+        # Verifica se la stringa di destinazione è una corrispondenza esatta
+        start_index = original_string.find(target_string)
+        end_index = start_index + len(target_string)
+        
+        # Verifica che la sottostringa prima e dopo la target_string sia uno spazio o che sia alla fine della stringa
+        if (original_string[start_index] == ' ') and (original_string.endswith('') or original_string[end_index] == ' '):
+            # Effettua il replace solo se la condizione è soddisfatta
+            updated_string = original_string[:start_index] + replacement + original_string[end_index:]
+            return updated_string
+        else:
+            # Se la condizione non è soddisfatta, restituisci la stringa originale senza modifiche
+            return original_string
+    else:
+        # Se la stringa di destinazione non è presente, restituisci la stringa originale senza modifiche
+        return original_string
