@@ -439,7 +439,7 @@ def single_thread(context, soap_primitive, type):
     primitive = replace_global_variables(primitive, context)
     
     if type == 'GET':
-        url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+        url_nodo = f"{get_rest_url_nodo(context, primitive)}"
         header_host = estrapola_header_host(url_nodo)
         headers = {'X-Forwarded-For': '10.82.39.148', 'Host': header_host}
         if 'SUBSCRIPTION_KEY' in os.environ:
@@ -453,13 +453,15 @@ def single_thread(context, soap_primitive, type):
         if 'xml' in getattr(context, primitive):
             # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
             url_nodo = get_soap_url_nodo(context, primitive)
+            print(url_nodo)
             header_host = estrapola_header_host(url_nodo)
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
         else:
             # headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-            url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+            url_nodo = f"{get_rest_url_nodo(context, primitive)}"
+            print(url_nodo)
             header_host = estrapola_header_host(url_nodo)
             headers = {'Content-Type': 'application/json', 'Host': header_host}
             if 'SUBSCRIPTION_KEY' in os.environ:
@@ -490,8 +492,7 @@ def threading_delayed(context, primitive_list, list_of_delays, list_of_type):
     i = 0
     threads = list()
     while i < len(primitive_list):
-        t = Thread(target=single_thread, args=(
-            context, primitive_list[i], list_of_type[i]))
+        t = Thread(target=single_thread, args=(context, primitive_list[i], list_of_type[i]))
         threads.append(t)
         time.sleep(list_of_delays[i]/1000)
         t.start()
