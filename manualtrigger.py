@@ -51,9 +51,8 @@ def create_zip_file():
                 
 @app.route('/log', methods=['GET'])
 def get_logs():
-	if not os.path.exists(zip_file_path):
-		create_zip_file()
-	return send_file(zip_file_path, as_attachment=True)
+	create_zip_file()
+	return send_file(zip_file_path, as_attachment=True, download_name='logs.zip', etag=False)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8082)
