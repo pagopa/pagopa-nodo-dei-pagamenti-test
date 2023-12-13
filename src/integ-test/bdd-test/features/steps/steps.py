@@ -1497,7 +1497,7 @@ def step_impl(context, sender, method, service, receiver):
         url_nodo = utils.replace_local_variables(url_nodo, context)
         url_nodo = utils.replace_context_variables(url_nodo, context)
         run_local = True
-        
+        print(f"{url_nodo}")
     else:
         service = utils.replace_local_variables(service, context)
         service = utils.replace_context_variables(service, context)
@@ -1518,6 +1518,7 @@ def step_impl(context, sender, method, service, receiver):
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
     print(service.split('?')[0] + RESPONSE)
     print(nodo_response.content)
+    print(f'URL: {nodo_response.url}')
     print(f'rest response: {nodo_response.headers}')
 
 
