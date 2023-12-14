@@ -4051,23 +4051,7 @@ Feature: flow tests for closePaymentV2
 
     Scenario: FLUSSO_CP_18 (part 3)
         Given the FLUSSO_CP_18 (part 2) scenario executed successfully
-        And execution query transactionid to get value on the table PM_METADATA, with the columns * under macro NewMod1 with db name nodo_online
-        And through the query transactionid retrieve param TRANSACTION_ID at position 1 in the row 0 and save it under the key temp_transaction_id
-        And through the query transactionid retrieve param VALUE at position 3 in the row 2 and save it under the key temp_psp_transaction_id
-        And the closePaymentV2 request scenario executed successfully
-        And outcome with KO in v2/closepayment
-        And transactionId with $temp_transaction_id in v2/closepayment
-        And key with $temp_psp_transaction_id in v2/closepayment
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 422
-        And check outcome is KO of v2/closepayment response
-        And check description is Outcome already acquired of v2/closepayment response
-
-
-    @test @prova
-    Scenario: FLUSSO_CP_18 (part 4)
-        Given the FLUSSO_CP_18 (part 3) scenario executed successfully
-        And wait 5 seconds for expiration
+        And wait 2 seconds for expiration
 
         # POSITION_PAYMENT_STATUS
         And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -4318,6 +4302,20 @@ Feature: flow tests for closePaymentV2
         And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
+    @test @prova
+    Scenario: FLUSSO_CP_18 (part 4)
+        Given the FLUSSO_CP_18 (part 3) scenario executed successfully
+        And execution query transactionid to get value on the table PM_METADATA, with the columns * under macro NewMod1 with db name nodo_online
+        And through the query transactionid retrieve param TRANSACTION_ID at position 1 in the row 0 and save it under the key temp_transaction_id
+        And through the query transactionid retrieve param VALUE at position 3 in the row 2 and save it under the key temp_psp_transaction_id
+        And the closePaymentV2 request scenario executed successfully
+        And outcome with KO in v2/closepayment
+        And transactionId with $temp_transaction_id in v2/closepayment
+        And key with $temp_psp_transaction_id in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 422
+        And check outcome is KO of v2/closepayment response
+        And check description is Outcome already acquired of v2/closepayment response
 
     # FLUSSO_CP_19
 
