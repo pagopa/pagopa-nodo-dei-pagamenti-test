@@ -4302,7 +4302,7 @@ Feature: flow tests for closePaymentV2
         And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
-    @test 
+    @test @prova
     Scenario: FLUSSO_CP_18 (part 4)
         Given the FLUSSO_CP_18 (part 3) scenario executed successfully
         And execution query transactionid to get value on the table PM_METADATA, with the columns * under macro NewMod1 with db name nodo_online
