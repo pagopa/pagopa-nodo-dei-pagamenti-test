@@ -112,7 +112,7 @@ else
 fi
 
 ls -lash /test/allure/allure-result
-
+[ -e allure-result.zip ] && rm -f allure-result.zip
 allure generate /test/allure/allure-result --clean -o /test/allure/allure-report
 
 if [ "$fromAPI" = false ]; then
