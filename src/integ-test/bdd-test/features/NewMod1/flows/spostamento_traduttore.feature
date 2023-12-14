@@ -236,7 +236,7 @@ Feature: spostamento traduttore
             <identificativoPSP>#psp_AGID#</identificativoPSP>
             <identificativoIntermediarioPSP>#broker_AGID#</identificativoIntermediarioPSP>
             <identificativoCanale>#canale_AGID_BBT#</identificativoCanale>
-            <tipoFirma></tipoFirma>
+        
             <rpt>$rptAttachment</rpt>
             </ws:nodoInviaRPT>
             </soapenv:Body>
@@ -2473,7 +2473,7 @@ Feature: spostamento traduttore
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @test 
+    @test @pippoalf
     Scenario: Test 9.1 (part 4)
         Given the Test 9.1 (part 3) scenario executed successfully
         When job paInviaRt triggered after 0 seconds
