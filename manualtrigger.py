@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, send_file
 from zipfile import ZipFile
-
+import tempfile
 import os
 import threading
 import subprocess
@@ -51,7 +51,15 @@ def create_zip_file():
                 
 @app.route('/log', methods=['GET'])
 def get_logs():
-	create_zip_file()
+	create_zip = request.args.get('create')
+	print(f'queryparam: {create_zip}')
+	if create_zip is None or create_zip == True:
+		print('creating zip...')
+		create_zip_file()
+	if not os.path.exists(zip_file_path):
+		print('zip does not exists')
+		return jsonify({"message": "file not created"})
+	print('log in attachment')
 	return send_file(zip_file_path, as_attachment=True, download_name='logs.zip', etag=False)
 
 if __name__ == '__main__':
