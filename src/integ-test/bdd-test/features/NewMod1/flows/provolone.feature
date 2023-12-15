@@ -1,4 +1,6 @@
-Feature: activatePaymentNoticeV2Request with psp no eCommerce
+#Il test verifica che il nodo accetti un'activatePAymentNoticeV2 con marca da bollo digitale
+
+Feature: activatePaymentNoticeV2Request with MBD flow OK
 
     Background:
         Given systems up
@@ -20,7 +22,7 @@ Feature: activatePaymentNoticeV2Request with psp no eCommerce
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-    @test
+
     # activateV2 phase
     Scenario: activatePaymentNoticeV2
         Given the Execute checkPosition request scenario executed successfully
@@ -30,9 +32,9 @@ Feature: activatePaymentNoticeV2Request with psp no eCommerce
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activatePaymentNoticeV2Request>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <idPSP>#pspEcommerce#</idPSP>
+            <idBrokerPSP>#brokerEcommerce#</idBrokerPSP>
+            <idChannel>#canaleEcommerce#</idChannel>
             <password>#password#</password>
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
@@ -41,7 +43,7 @@ Feature: activatePaymentNoticeV2Request with psp no eCommerce
             </qrCode>
             <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
-            <paymentNote></paymentNote>
+            <paymentNote>responseFull</paymentNote>
             </nod:activatePaymentNoticeV2Request>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -83,7 +85,7 @@ Feature: activatePaymentNoticeV2Request with psp no eCommerce
             <!--Optional:-->
             <country>DE</country>
             <!--Optional:-->
-            <e-mail>paGetPaymentV2@test.it</e-mail>
+            <e-mail></e-mail>
             </debtor>
             <!--Optional:-->
             <transferList>
@@ -125,7 +127,27 @@ Feature: activatePaymentNoticeV2Request with psp no eCommerce
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is KO of activatePaymentNoticeV2 response
-        And check faultCode is PPT_SEMANTICA of activatePaymentNoticeV2 response
-        And check faultString is Errore semantico. of activatePaymentNoticeV2 response
-        And check description is Pagamento non attivabile of activatePaymentNoticeV2 response
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And check idTransfer is 1 of activatePaymentNoticeV2 response
+        And check hashDocumento is ciao of activatePaymentNoticeV2 response
+        And check tipoBollo is 01 of activatePaymentNoticeV2 response
+        And check provinciaResidenza is MI of activatePaymentNoticeV2 response
+
+    @test 
+    #DB check
+    Scenario: DB check
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        And wait 5 seconds for expiration
+        # POSITION_TRANSFER
+        Then verify 1 record for the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
+        And checks the value $paGetPaymentV2.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
+        And checks the value None of the record at column IBAN of the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
+        And checks the value 10 of the record at column AMOUNT of the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
+        And checks the value /RFB/00202200000217527/5.00/TXT/ of the record at column REMITTANCE_INFORMATION  of the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
+        And checks the value 01 of the record at column REQ_TIPO_BOLLO of the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
+        And checks the value ciao of the record at column REQ_HASH_DOCUMENTO of the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
+        And checks the value MI of the record at column REQ_PROVINCIA_RESIDENZA of the table POSITION_TRANSFER retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
+        # POSITION_TRANSFER_MBD
+        And verify 0 record for the table POSITION_TRANSFER_MBD retrived by the query position_transfer_mbd on db nodo_online under macro sendPaymentResultV2
+        # POSITION_PAYMENT
+        And checks the value Y of the record at column MBD of the table POSITION_PAYMENT retrived by the query position_transfer_nmu_asc on db nodo_online under macro sendPaymentResultV2
