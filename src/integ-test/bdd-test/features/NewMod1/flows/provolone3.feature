@@ -44,7 +44,6 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
             <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
             <paymentNote>responseFull</paymentNote>
-            <touchPoint>ATM</touchPoint>
             </nod:activatePaymentNoticeV2Request>
             </soapenv:Body>
             </soapenv:Envelope>
