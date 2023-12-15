@@ -116,6 +116,7 @@ ls -lash /test/allure/allure-result
 allure generate /test/allure/allure-result --clean -o /test/allure/allure-report
 
 if [ "$fromAPI" = false ]; then
+	echo "starting allure..."
     allure open /test/allure/allure-report -p 8081
 fi
 
