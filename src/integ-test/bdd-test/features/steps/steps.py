@@ -3298,16 +3298,13 @@ def step_impl(context, causaleVers):
     db_config = context.config.userdata.get(
         "db_configuration").get("nodo_online")
 
-    conn = db.getConnection(db_config.get('host'), db_config.get(
-        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
+    conn = db.getConnection(db_config.get('host'), db_config.get('database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
 
     # select clob
     xml_content_query = "SELECT XML_CONTENT as clob FROM RT_XML WHERE IDENT_DOMINIO='$activatePaymentNotice.fiscalCode' AND IUV='$iuv'"
 
-    xml_content_query = utils.replace_local_variables(
-        xml_content_query, context)
-    xml_content_query = utils.replace_context_variables(
-        xml_content_query, context)
+    xml_content_query = utils.replace_local_variables(xml_content_query, context)
+    xml_content_query = utils.replace_context_variables(xml_content_query, context)
     xml_content_row = db.executeQuery(conn, xml_content_query)
 
     xml_rt = parseString(xml_content_row[0][0])
@@ -3316,7 +3313,7 @@ def step_impl(context, causaleVers):
     xml_rt_string = xml_rt.toxml()
     print(xml_rt_string)
 
-    query_update = f"UPDATE RT_XML SET XML_CONTENT = TO_CLOB('{xml_rt_string}')WHERE IDENT_DOMINIO='$activatePaymentNotice.fiscalCode' AND IUV='$iuv'"
+    query_update = f"UPDATE RT_XML SET XML_CONTENT = TEXT('{xml_rt_string}')WHERE IDENT_DOMINIO='$activatePaymentNotice.fiscalCode' AND IUV='$iuv'"
     print(query_update)
     query_update = utils.replace_local_variables(query_update, context)
     query_update = utils.replace_context_variables(query_update, context)
