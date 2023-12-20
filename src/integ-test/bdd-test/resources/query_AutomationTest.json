@@ -280,7 +280,7 @@
         "param_update_generic_where_condition": "UPDATE table_name SET param WHERE where_condition",
         "inserted_timestamp": "UPDATE POSITION_PAYMENT_PLAN SET INSERTED_TIMESTAMP = TO_DATE('date' , 'YYYY-MM-DD') WHERE NOTICE_ID = $1noticeNumber AND PA_FISCAL_CODE = $pa",
         "updated_timestamp": "UPDATE POSITION_PAYMENT_PLAN SET UPDATED_TIMESTAMP = TO_DATE('date' , 'YYYY-MM-DD') WHERE NOTICE_ID = $1noticeNumber AND PA_FISCAL_CODE = $pa",
-        "delete_query": "DELETE FROM table_name WHERE where_condition",
+        "delete_query": "DELETE FROM table_name WHERE where_condition = valore",
         "insert_query": "INSERT INTO table_name (row_keys_fields) VALUES (row_values_fields)"
     } ,
     "RendicontazioneFTPeBollo": {
