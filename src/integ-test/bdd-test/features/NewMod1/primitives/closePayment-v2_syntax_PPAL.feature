@@ -144,7 +144,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
                 }
             }
             """
-    @test @pippoalf
+    @test 
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
@@ -510,7 +510,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-    @test @pippoalf
+    @test 
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds

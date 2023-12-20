@@ -216,7 +216,7 @@ Feature: semantic checks for checkPosition outcome OK
         And checking value $XML_RE is containing value <description>PAID</description>
         And checking value $XML_RE is containing value <description>NOTIFIED</description>
 
-    @test @pippoalf
+    @test 
     Scenario: checkPosition with station version 1 [PG-37]
         Given the checkPosition scenario executed successfully
         And noticeNumber with 002$iuv in checkPosition

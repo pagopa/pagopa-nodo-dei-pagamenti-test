@@ -104,7 +104,7 @@ Feature: PAG-35
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @pippoalf1
+    
     Scenario: closePaymentV2 request
         Given the activatePaymentNoticeV2 request scenario executed successfully
         And initial JSON v2/closepayment
@@ -144,7 +144,7 @@ Feature: PAG-35
         And check outcome is OK of v2/closepayment response
     #    And checks the value PAYMENT_UNKNOWN of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @pippoalf2
+    
     Scenario: sendPaymentOutcome request
     Given the closePaymentV2 request scenario executed successfully
         Given initial XML sendPaymentOutcome
@@ -241,7 +241,7 @@ Feature: PAG-35
         # When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         # Then verify the HTTP status code of v2/closepayment response is 200
         # And check outcome is OK of v2/closepayment response
-    @pippoalf3
+    
     Scenario: Test spov1 KO (part 3)
         Given the Test spov1 KO (part 2) scenario executed successfully
         And wait 12 seconds for expiration

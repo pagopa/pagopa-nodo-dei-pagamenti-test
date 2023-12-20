@@ -196,7 +196,7 @@ Feature: idempotency tests for activatePaymentNoticeV2Request
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-    @test @pippoalf
+    @test 
     # [IDMP_APNV2_11.1]
     Scenario: IDMP_APNV2_11.1
         Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 40

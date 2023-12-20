@@ -913,7 +913,7 @@ Feature: flow checks for closePayment - PA new
       When job mod3CancelV2 triggered after 3 seconds
       Then verify the HTTP status code of mod3CancelV2 response is 200
       And wait 5 seconds for expiration
-   @test @pippoalf
+   @test 
    Scenario: FLUSSO_CP_08 (part 4)
       Given the FLUSSO_CP_08 (part 3) scenario executed successfully
       And the closePayment scenario executed successfully
