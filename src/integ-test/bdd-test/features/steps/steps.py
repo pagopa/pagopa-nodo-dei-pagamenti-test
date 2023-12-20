@@ -3310,7 +3310,7 @@ def step_impl(context, causaleVers):
         xml_content_query, context)
     xml_content_row = db.executeQuery(conn, xml_content_query)
 
-    xml_rt = parseString(xml_content_row[0][0].read())
+    xml_rt = parseString(xml_content_row[0][0])
     node = xml_rt.getElementsByTagName('causaleVersamento')[0]
     node.firstChild.replaceWholeText(f'{causaleVers}')
     xml_rt_string = xml_rt.toxml()
