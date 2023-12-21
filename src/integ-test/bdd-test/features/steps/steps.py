@@ -2401,8 +2401,13 @@ def step_impl(context, query_name, table_name, param, value, macro, db_name):
     value = utils.replace_global_variables(value, context)
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
-    
-    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$')
+
+    selected_query = ''
+    if value == 'null':
+        selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
+    else:
+        selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$')
+        
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)

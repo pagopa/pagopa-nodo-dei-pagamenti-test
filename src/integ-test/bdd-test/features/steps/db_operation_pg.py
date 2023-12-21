@@ -60,7 +60,7 @@ def execute_read_query(connection, query):
     try:
         cursor.execute(query)
       
-        if 'SELECT' in query:    
+        if 'SELECT' in query and 'UPDATE' not in query:    
             result = cursor.fetchall()
             print(f' Query executed successfully - [{len(result)}] row/s found')            
             return result
