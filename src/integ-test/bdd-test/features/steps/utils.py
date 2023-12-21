@@ -10,6 +10,7 @@ import time
 from threading import Thread
 import requests
 from requests.adapters import HTTPAdapter
+import xmltodict
 
 # Decommentare per test in pipeline
 #from requests.packages.urllib3.util.retry import Retry 
@@ -365,43 +366,67 @@ def isDate(string: str):
         return False
 
 
-def single_thread(context, soap_primitive, type):
+def single_thread(context, soap_primitive, tipo):
     print("single_thread")
     primitive = soap_primitive.split("_")[0]
     primitive = replace_local_variables(primitive, context)
     primitive = replace_context_variables(primitive, context)
     primitive = replace_global_variables(primitive, context)
     
-    if type == 'GET':
+    if tipo == 'GET':
         
         headers = {'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
-        url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+        url_nodo = f"{get_rest_url_nodo(context, primitive)}"
         print(url_nodo)
         soap_response = requests.get(url_nodo, headers=headers, verify=False)
-    elif type == 'POST':
+    elif tipo == 'POST':
         body = getattr(context, primitive)
         print(body)
+        response = ''
         if 'xml' in getattr(context, primitive):
             # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': 'api.dev.platform.pagopa.it:443'}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
             url_nodo = get_soap_url_nodo(context, primitive)
+            response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
             # headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+            if '<' in body: 
+                body = xmltodict.parse(body)
+                body = body["root"]
+                if body != None:
+                    if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
+                        body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+                        if type(body["paymentTokens"]) != list:
+                            l = list()
+                            l.append(body["paymentTokens"])
+                            body["paymentTokens"] = l
+                    if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
+                        body["totalAmount"] = float(body["totalAmount"])
+                    if ('fee' in body.keys()) and (body["fee"] != None):
+                        body["fee"] = float(body["fee"])
+                    if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
+                        body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
+                    if ('positionslist' in body.keys()) and (body["positionslist"] != None):
+                        body["positionslist"] = body["positionslist"]["position"]
+                        if type(body["positionslist"]) != list:
+                            l = list()
+                            l.append(body["positionslist"])
+                            body["positionslist"] = l
+                    body = json.dumps(body, indent=4)
+                body = json.loads(body)
             headers = {'Content-Type': 'application/json', 'Host': 'api.dev.platform.pagopa.it:443'}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')            
-            url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
-        soap_response = requests.post(
-            url_nodo, body, headers=headers, verify=False)
+            url_nodo = f"{get_rest_url_nodo(context, primitive)}"
+            response = requests.request(tipo, f"{url_nodo}", headers=headers, json=body, verify=False)
 
-    print("nodo soap_response: ", soap_response.content)
-    print(soap_primitive.split("_")[1] + "Response")
-    setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
-
+        print("response: ", response.content)
+        print(soap_primitive.split("_")[1] + "Response")
+        setattr(context, soap_primitive.split("_")[1] + "Response", response)
 
 def threading(context, primitive_list, list_of_type):
     i = 0
