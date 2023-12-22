@@ -175,7 +175,7 @@ Feature: Block revision for sendPaymentOutcome
     @zendesk
     Scenario: parallel calls and test scenario
         Given the sendPaymentOutcome request scenario executed successfully
-        And calling primitive v2/closepayment_v2/closepayment POST and sendPaymentOutcome_sendPaymentOutcome POST in parallel
+        And calling primitive v2/closepayment_v2/closepayment POST and sendPaymentOutcome_sendPaymentOutcome POST with 50 ms delay
         Then check outcome is KO of sendPaymentOutcome response
         And check outcome is OK of v2/closepayment response
         And verify the HTTP status code of sendPaymentOutcome response is 200
