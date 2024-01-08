@@ -76,35 +76,39 @@ def allure_restart():
 def filter_allure_results():
     print("generatig filtered report...") 
     output_dir = '/test/allure/allure-result-filtered'
-    desired_status = request.args.get('status')
+    status = request.args.get('status')
       
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    for filename in os.listdir(logs_directory):
-        if filename.endswith(".json"):
-            input_path = os.path.join(logs_directory, filename)
+    list_status = status.split(",")
 
-            with open(input_path, "r", encoding="utf-8") as file:
-                data = json.load(file)
-                print("data file loaded...")
+    for desired_status in list_status:
+        for filename in os.listdir(logs_directory):
+            if filename.endswith(".json"):
+                input_path = os.path.join(logs_directory, filename)
 
-            # Verifica lo stato del test nel file JSON
-            test_status = data.get("status")
+                with open(input_path, "r", encoding="utf-8") as file:
+                    data = json.load(file)
+                    print("data file loaded...")
 
-            if test_status.lower() == desired_status.lower():
-                output_path = os.path.join(output_dir, filename)
-                shutil.copyfile(input_path, output_path)
+                # Verifica lo stato del test nel file JSON
+                test_status = data.get("status")
 
-                # Copia gli allegati nella stessa cartella dei file JSON
-                if "attachments" in data:
-                    for attachment in data["attachments"]:
-                        attachment_file = attachment.get("source")
-                        if attachment_file:
-                            attachment_path = os.path.join(output_dir, attachment_file)
-                            os.makedirs(os.path.dirname(attachment_path), exist_ok=True)
-                            shutil.copyfile(os.path.join(logs_directory, attachment_file), attachment_path)		
-                            create_zip_file(output_dir)
-                            return send_file(zip_file_path, as_attachment=True, download_name='logs.zip', etag=False)             
+                if test_status.lower() == desired_status.lower():
+                    output_path = os.path.join(output_dir, filename)
+                    shutil.copyfile(input_path, output_path)
+
+                    # Copia gli allegati nella stessa cartella dei file JSON
+                    if "attachments" in data:
+                        for attachment in data["attachments"]:
+                            attachment_file = attachment.get("source")
+                            if attachment_file:
+                                attachment_path = os.path.join(output_dir, attachment_file)
+                                os.makedirs(os.path.dirname(attachment_path), exist_ok=True)
+                                shutil.copyfile(os.path.join(logs_directory, attachment_file), attachment_path)		
+    create_zip_file(output_dir)
+    return send_file(zip_file_path, as_attachment=True, download_name='logs.zip', etag=False)
+          
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8082)
