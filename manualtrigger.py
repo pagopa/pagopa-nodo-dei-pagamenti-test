@@ -4,6 +4,8 @@ import tempfile
 import os
 import threading
 import subprocess
+import json
+import shutil
 app = Flask(__name__)
 
 logs_directory = '/test/allure/allure-result'
@@ -72,9 +74,10 @@ def allure_restart():
 
 @app.route('/allure/report', methods=['GET'])
 def filter_allure_results():
-	print("generatig filtered report...") 
-	output_dir = '/test/allure/allure-result-filtered'
-	desired_status = request.args.get('status')
+    print("generatig filtered report...") 
+    output_dir = '/test/allure/allure-result-filtered'
+    desired_status = request.args.get('status')
+      
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
@@ -102,6 +105,6 @@ def filter_allure_results():
                             os.makedirs(os.path.dirname(attachment_path), exist_ok=True)
                             shutil.copyfile(os.path.join(logs_directory, attachment_file), attachment_path)		
                             create_zip_file(output_dir)
-                            return send_file(zip_file_path, as_attachment=True, download_name='logs.zip', etag=False)
+                            return send_file(zip_file_path, as_attachment=True, download_name='logs.zip', etag=False)             
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8082)
