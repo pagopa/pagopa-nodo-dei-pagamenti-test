@@ -3,7 +3,7 @@ Feature: T216_RPT_checkPPP 636
     Background:
         Given systems up
 
-@runnable @pippoalf
+@runnable 
     Scenario: RPT generation
         Given RPT1 generation
             """

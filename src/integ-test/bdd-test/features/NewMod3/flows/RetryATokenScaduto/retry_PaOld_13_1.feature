@@ -233,7 +233,7 @@ Feature: process tests for retryAtokenScaduto 1174
     And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
     And generic update through the query param_update_generic_where_condition of the table POSITION_ACTIVATE the parameter AMOUNT = '4', with where condition PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' AND NOTICE_ID='$activatePaymentNotice.noticeNumber' AND PAYMENT_TOKEN='$activatePaymentNoticeResponse.paymentToken-v2' under macro update_query on db nodo_online
 
-  @runnable @pippoalf
+  @runnable 
   Scenario: Execute paInviaRT [retry_PaOld_13_1]
     Given the check position_payment_status scenario executed successfully
     When job paInviaRt triggered after 5 seconds

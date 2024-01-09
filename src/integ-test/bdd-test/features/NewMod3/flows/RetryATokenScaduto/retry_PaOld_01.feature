@@ -227,7 +227,7 @@ Feature: process tests for retryAtokenScaduto 1160
         Then check outcome is KO of sendPaymentOutcome response
         And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
-    @runnable @pippoalf
+    @runnable 
     Scenario: check position_payment_status
         Given the Execute sendPaymentOutcome request scenario executed successfully
         Then checks the value PAYING,PAYING_RPT,CANCELLED of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3

@@ -178,7 +178,7 @@ Feature: process tests for retryAtokenScaduto 1163
     And wait 5 seconds for expiration
     Then checks the value RT_INVIATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
-  @runnable @pippoalf
+  @runnable 
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request [retry_PaOld_04]
     Given the DB check scenario executed successfully

@@ -129,7 +129,7 @@ Feature: T133B_InoltraPagamentoMod1_RPT_JIF_web 736
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     And retrieve session token from $nodoInviaRPTResponse.url
 
-  @runnable @pippoalf
+  @runnable 
   Scenario: Execute nodoInoltraEsitoMod1 request
     Given the Execute nodoInviaRPT request scenario executed successfully
     When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
