@@ -1,4 +1,4 @@
-Feature: Syntax check OK for nodoVerificaRPT
+Feature: Syntax check OK for nodoVerificaRPT 1412
     Background:
         Given systems up
         And initial XML nodoVerificaRPT

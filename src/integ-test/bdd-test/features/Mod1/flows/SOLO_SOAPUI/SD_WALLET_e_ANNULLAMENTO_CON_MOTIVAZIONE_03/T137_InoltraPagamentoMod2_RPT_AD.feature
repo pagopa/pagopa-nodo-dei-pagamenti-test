@@ -1,4 +1,4 @@
-Feature: T137_InoltraPagamentoMod2_RPT_AD
+Feature: T137_InoltraPagamentoMod2_RPT_AD 764
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#

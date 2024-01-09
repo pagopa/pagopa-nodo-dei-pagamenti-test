@@ -1,4 +1,4 @@
-Feature: process checks for VerifyPaymentNoticeReq - EC old
+Feature: process checks for VerifyPaymentNoticeReq - EC old 1356
 
   Background:
    Given systems up

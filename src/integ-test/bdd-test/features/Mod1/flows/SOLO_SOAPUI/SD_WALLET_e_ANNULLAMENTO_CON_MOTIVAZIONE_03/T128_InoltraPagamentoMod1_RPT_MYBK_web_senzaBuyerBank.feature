@@ -1,4 +1,4 @@
-Feature: T128_InoltraPagamentoMod1_RPT_MYBK_web_senzaBuyerBank
+Feature: T128_InoltraPagamentoMod1_RPT_MYBK_web_senzaBuyerBank 705
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#

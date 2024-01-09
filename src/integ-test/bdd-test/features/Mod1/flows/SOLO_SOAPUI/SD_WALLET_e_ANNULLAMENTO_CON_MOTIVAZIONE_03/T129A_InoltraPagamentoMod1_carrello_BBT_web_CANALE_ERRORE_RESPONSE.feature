@@ -1,4 +1,4 @@
-Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_CANALE_ERRORE_RESPONSE
+Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_CANALE_ERRORE_RESPONSE 707
 
     Background:
         Given systems up

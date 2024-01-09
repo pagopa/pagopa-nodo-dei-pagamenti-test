@@ -1,4 +1,4 @@
-Feature: T075_CarrelloRPT_autSogg=NA
+Feature: T075_CarrelloRPT_autSogg=NA 599
     Background:
         Given systems up
        

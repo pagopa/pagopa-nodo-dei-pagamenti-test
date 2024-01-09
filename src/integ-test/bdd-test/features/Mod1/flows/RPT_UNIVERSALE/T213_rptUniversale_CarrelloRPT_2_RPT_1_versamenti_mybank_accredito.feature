@@ -1,4 +1,4 @@
-Feature: flow tests for T213_rptUniversale_CarrelloRPT - 2 RPT 1 versamenti_mybank_accredito
+Feature: flow tests for T213_rptUniversale_CarrelloRPT - 2 RPT 1 versamenti_mybank_accredito 367
 
     Background:
         Given systems up

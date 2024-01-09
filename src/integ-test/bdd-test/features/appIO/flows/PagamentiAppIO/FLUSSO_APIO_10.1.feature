@@ -1,4 +1,4 @@
-Feature: FLUSSO_APIO_10.1
+Feature: FLUSSO_APIO_10.1 75
 
 Background:
  Given systems up

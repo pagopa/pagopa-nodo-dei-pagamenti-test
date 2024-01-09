@@ -1,4 +1,4 @@
-Feature: T123_ChiediListePSP_noPoste_IbanSlovenia
+Feature: T123_ChiediListePSP_noPoste_IbanSlovenia 664
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#

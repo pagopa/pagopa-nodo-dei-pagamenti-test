@@ -1,4 +1,4 @@
-Feature: T095_L_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_OK+entrambiFault_mod1
+Feature: T095_L_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_OK+entrambiFault_mod1 432
 
     
     Background:

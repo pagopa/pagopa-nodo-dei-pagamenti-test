@@ -1,4 +1,4 @@
-Feature: PAG-1163_Paypal_NA_timeout
+Feature: PAG-1163_Paypal_NA_timeout 1003
 
     Background:
         Given systems up

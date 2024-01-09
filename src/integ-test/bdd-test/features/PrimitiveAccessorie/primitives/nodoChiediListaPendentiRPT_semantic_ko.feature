@@ -1,4 +1,4 @@
-Feature: Semantic checks for nodoChiediListaPendentiRPT - KO
+Feature: Semantic checks for nodoChiediListaPendentiRPT - KO 1427
 
     Background:
         Given systems up

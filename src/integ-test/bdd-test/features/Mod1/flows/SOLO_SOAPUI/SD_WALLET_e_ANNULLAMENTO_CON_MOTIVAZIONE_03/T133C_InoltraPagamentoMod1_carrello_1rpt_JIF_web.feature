@@ -1,4 +1,4 @@
-Feature: T133C_InoltraPagamentoMod1_carrello_1rpt_JIF_web
+Feature: T133C_InoltraPagamentoMod1_carrello_1rpt_JIF_web 737
   Background:
     Given systems up      
       And initial XML RPT_XML

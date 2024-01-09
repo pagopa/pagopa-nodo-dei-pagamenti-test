@@ -1,4 +1,4 @@
-Feature: Semantic checks for sendPaymentOutcome - KO - SEM_SPO_26
+Feature: Semantic checks for sendPaymentOutcome - KO - SEM_SPO_26 1543
 
   Background:
     Given systems up

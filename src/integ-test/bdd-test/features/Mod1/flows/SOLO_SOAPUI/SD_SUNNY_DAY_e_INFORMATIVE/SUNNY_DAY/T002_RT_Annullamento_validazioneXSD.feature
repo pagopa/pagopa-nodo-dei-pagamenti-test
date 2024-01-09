@@ -1,4 +1,4 @@
-Feature: T002_RT_Annullamento_validazioneXSD
+Feature: T002_RT_Annullamento_validazioneXSD 510
 
 
     Background:

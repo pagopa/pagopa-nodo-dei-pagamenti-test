@@ -1,4 +1,4 @@
-Feature: semantic checks for sendPaymentOutcomeReq - PPT_TOKEN_SCADUTO [SEM_SPO_12]
+Feature: semantic checks for sendPaymentOutcomeReq - PPT_TOKEN_SCADUTO [SEM_SPO_12] 1291
 
   Background:
     Given systems up

@@ -1,4 +1,4 @@
-Feature: Pag-1163_Paypal_NCAP_OK
+Feature: Pag-1163_Paypal_NCAP_OK 1006
 
     Background:
         Given systems up

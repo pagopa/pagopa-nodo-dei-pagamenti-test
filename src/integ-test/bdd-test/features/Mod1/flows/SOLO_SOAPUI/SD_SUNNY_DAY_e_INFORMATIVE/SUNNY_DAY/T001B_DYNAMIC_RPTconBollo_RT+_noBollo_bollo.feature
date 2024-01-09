@@ -1,4 +1,4 @@
-Feature: T001B_DYNAMIC_RPTconBollo_RT+_noBollo_bollo
+Feature: T001B_DYNAMIC_RPTconBollo_RT+_noBollo_bollo 496
     Background:
         Given systems up
 

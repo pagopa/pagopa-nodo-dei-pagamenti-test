@@ -1,4 +1,4 @@
-Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_noPoste
+Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_noPoste 368
 
     Background:
         Given systems up

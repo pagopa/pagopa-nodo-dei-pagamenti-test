@@ -1,4 +1,4 @@
-Feature: process tests for paSendRT [PSRT_21]
+Feature: process tests for paSendRT [PSRT_21] 1106
 
     Background:
         Given systems up

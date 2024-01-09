@@ -1,4 +1,4 @@
-Feature: process tests for T095_N_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_timeout
+Feature: process tests for T095_N_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP_RPT_timeout 302
 
     Background:
         Given systems up

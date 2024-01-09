@@ -1,4 +1,4 @@
-Feature: Syntax checks for nodoChiediCopiaRT - KO
+Feature: Syntax checks for nodoChiediCopiaRT - KO 1426
 
     Background:
         Given systems up

@@ -1,4 +1,4 @@
-Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3Cancel poller) [Verify_blocco_05]
+Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3Cancel poller) [Verify_blocco_05] 1360
 
    Background:
       Given systems up

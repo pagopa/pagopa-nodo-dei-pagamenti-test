@@ -1,4 +1,4 @@
- Feature: Syntax checks for verificaBollettino - KO
+ Feature: Syntax checks for verificaBollettino - KO 1551
  
  Background:
     Given systems up

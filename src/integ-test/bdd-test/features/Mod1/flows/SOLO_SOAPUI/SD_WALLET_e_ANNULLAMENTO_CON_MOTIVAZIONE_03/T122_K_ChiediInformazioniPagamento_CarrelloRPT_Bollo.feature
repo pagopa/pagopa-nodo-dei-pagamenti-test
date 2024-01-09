@@ -1,4 +1,4 @@
-Feature: T122_K_ChiediInformazioniPagamento_CarrelloRPT_Bollo
+Feature: T122_K_ChiediInformazioniPagamento_CarrelloRPT_Bollo 653
   Background:
     Given systems up
 

@@ -1,4 +1,4 @@
-Feature: check syntax KO for paaVerificaRPTRes
+Feature: check syntax KO for paaVerificaRPTRes 1380
 
     Background:
         Given systems up

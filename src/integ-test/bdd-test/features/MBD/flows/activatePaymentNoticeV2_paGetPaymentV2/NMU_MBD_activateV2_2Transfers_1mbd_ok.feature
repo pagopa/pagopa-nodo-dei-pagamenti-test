@@ -1,4 +1,4 @@
-#Il test verifica che il nodo accetti un'activatePAymentNoticeV2 con 2 transfers: 1 con marca da bollo digitale e 1 senza
+#Il test verifica che il nodo accetti un'activatePAymentNoticeV2 con 2 transfers: 1 con marca da bollo digitale e 1 senza 274
 
 Feature: activatePaymentNoticeV2Request with MBD flow OK
 

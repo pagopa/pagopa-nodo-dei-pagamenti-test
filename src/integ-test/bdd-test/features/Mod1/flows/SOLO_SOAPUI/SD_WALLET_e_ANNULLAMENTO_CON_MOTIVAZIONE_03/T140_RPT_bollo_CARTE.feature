@@ -1,4 +1,4 @@
-Feature: T140_RPT_bollo_CARTE
+Feature: T140_RPT_bollo_CARTE 768
 
     Background:
         Given systems up

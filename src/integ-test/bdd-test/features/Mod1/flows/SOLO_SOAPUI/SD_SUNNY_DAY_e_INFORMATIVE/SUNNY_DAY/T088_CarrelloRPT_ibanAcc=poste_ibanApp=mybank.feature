@@ -1,4 +1,4 @@
-Feature: T088_CarrelloRPT_ibanAcc=poste_ibanApp=mybank
+Feature: T088_CarrelloRPT_ibanAcc=poste_ibanApp=mybank 608
     Background:
         Given systems up
        

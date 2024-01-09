@@ -1,4 +1,4 @@
-Feature: T069_A_CarrelloRPT_AD_noPPI
+Feature: T069_A_CarrelloRPT_AD_noPPI 590
 
     Background:
         Given systems up

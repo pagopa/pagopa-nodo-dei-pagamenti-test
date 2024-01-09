@@ -1,4 +1,4 @@
-Feature: T016_D_nodoInviaRPT_Mod1_BBT_ProxyError502
+Feature: T016_D_nodoInviaRPT_Mod1_BBT_ProxyError502 531
 
     Background:
         Given systems up

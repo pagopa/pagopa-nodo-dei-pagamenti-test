@@ -1,4 +1,4 @@
-Feature: T103_E_chiediStato_RT_ERRORE_INVIO_A_PA_Carrello_annullamento
+Feature: T103_E_chiediStato_RT_ERRORE_INVIO_A_PA_Carrello_annullamento 473
     
     Background:
         Given systems up

@@ -1,4 +1,4 @@
-Feature: T010_nodoInviaRT_istAttestante=B
+Feature: T010_nodoInviaRT_istAttestante=B 525
     Background:
         Given systems up
 

@@ -1,4 +1,4 @@
-# Il test verifica che la paSendRTV2 sia inviata correttamente in caso di 5 transfers con 5 marche da bollo
+# Il test verifica che la paSendRTV2 sia inviata correttamente in caso di 5 transfers con 5 marche da bollo 288
 
 Feature: flow tests for paSendRTV2 - Marca da bollo
     # Reference document:

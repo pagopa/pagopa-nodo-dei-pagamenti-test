@@ -1,4 +1,4 @@
-Feature: T127_InEsitoPagCarta_carrello_convenzioni_cartDiversoInoltro_Red
+Feature: T127_InEsitoPagCarta_carrello_convenzioni_cartDiversoInoltro_Red 692
   Background:
     Given systems up
       And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#

@@ -1,4 +1,4 @@
-Feature: check syntax OK for nodoCarrelloMultibeneficiarioRPT
+Feature: check syntax OK for nodoCarrelloMultibeneficiarioRPT 922
 
 
     Background:

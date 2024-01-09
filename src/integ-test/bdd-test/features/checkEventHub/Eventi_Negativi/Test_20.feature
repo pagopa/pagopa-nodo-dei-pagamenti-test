@@ -1,4 +1,4 @@
-Feature: Block revision for sendPaymentOutcome
+Feature: Block revision for sendPaymentOutcome 180
 
     Background:
         Given systems up

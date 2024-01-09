@@ -1,4 +1,4 @@
-Feature: T117_ChiediNumeroAvviso_targa_tipo=2
+Feature: T117_ChiediNumeroAvviso_targa_tipo=2 617
 
     Background:
         Given systems up

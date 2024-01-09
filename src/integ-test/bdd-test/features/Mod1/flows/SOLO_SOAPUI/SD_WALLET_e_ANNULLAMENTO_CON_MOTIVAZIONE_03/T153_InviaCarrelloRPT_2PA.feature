@@ -1,4 +1,4 @@
-Feature: T153_InviaCarrelloRPT_2PA
+Feature: T153_InviaCarrelloRPT_2PA 775
     #non toccare i valori
     Background:
         Given systems up

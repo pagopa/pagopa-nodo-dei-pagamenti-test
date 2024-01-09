@@ -1,4 +1,4 @@
-Feature: T126_InoltraEsitoPagamentoCarta_codAuth_4
+Feature: T126_InoltraEsitoPagamentoCarta_codAuth_4 676
 
   Background:
     Given systems up

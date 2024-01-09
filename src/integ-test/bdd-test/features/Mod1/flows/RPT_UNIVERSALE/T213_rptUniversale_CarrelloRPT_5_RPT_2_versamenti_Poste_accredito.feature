@@ -1,4 +1,4 @@
-Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_Poste_accredito
+Feature: flows tests for T213_rptUniversale_CarrelloRPT - 5 RPT 2 versamenti_Poste_accredito 369
 
     Background:
         Given systems up

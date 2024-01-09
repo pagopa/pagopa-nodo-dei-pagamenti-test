@@ -1,4 +1,4 @@
-Feature: T005_nodoInviaRT_esito=2
+Feature: T005_nodoInviaRT_esito=2 520
     Background:
         Given systems up
 

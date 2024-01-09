@@ -1,4 +1,4 @@
-Feature: check semantic paaVerifyRPT - KO
+Feature: check semantic paaVerifyRPT - KO 1379
 
     Background:
         Given systems up

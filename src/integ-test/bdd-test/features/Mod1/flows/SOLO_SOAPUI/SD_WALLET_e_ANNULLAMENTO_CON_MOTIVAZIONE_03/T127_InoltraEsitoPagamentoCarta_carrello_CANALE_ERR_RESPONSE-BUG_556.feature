@@ -1,4 +1,4 @@
-Feature: T127_InoltraEsitoPagamentoCarta_carrello_CANALE_ERR_RESPONSE - BUG_556
+Feature: T127_InoltraEsitoPagamentoCarta_carrello_CANALE_ERR_RESPONSE - BUG_556 695
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#

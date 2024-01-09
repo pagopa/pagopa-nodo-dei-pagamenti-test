@@ -1,4 +1,4 @@
-Feature: Semantic checks for chiediListaPSP primitive
+Feature: Semantic checks for chiediListaPSP primitive 120
 
     Background:
         Given systems up

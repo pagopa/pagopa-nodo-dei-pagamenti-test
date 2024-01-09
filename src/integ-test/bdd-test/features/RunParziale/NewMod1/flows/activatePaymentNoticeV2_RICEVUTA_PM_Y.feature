@@ -1,4 +1,4 @@
-Feature: verification of the record present in RECEVUTA_PM in the POSITION_PAYMENT table after an activatePaymentNoticeV2
+Feature: verification of the record present in RECEVUTA_PM in the POSITION_PAYMENT table after an activatePaymentNoticeV2 1503
 
     Background:
         Given systems up

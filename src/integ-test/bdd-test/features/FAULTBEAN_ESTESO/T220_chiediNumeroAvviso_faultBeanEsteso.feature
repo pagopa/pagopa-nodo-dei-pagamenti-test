@@ -1,4 +1,4 @@
-Feature: T220_chiediNumeroAvviso_faultBeanEsteso
+Feature: T220_chiediNumeroAvviso_faultBeanEsteso 210
 
     Background:
         Given systems up

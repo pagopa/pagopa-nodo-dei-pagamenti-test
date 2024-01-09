@@ -1,4 +1,4 @@
-Feature: T129_G_InoltraPagamentoMod1_carrello_BBT_web_soloOK
+Feature: T129_G_InoltraPagamentoMod1_carrello_BBT_web_soloOK 722
 
     Background:
         Given systems up

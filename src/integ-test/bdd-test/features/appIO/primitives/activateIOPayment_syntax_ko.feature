@@ -1,4 +1,4 @@
-Feature: Syntax checks for activateIOPaymentReq - KO
+Feature: Syntax checks for activateIOPaymentReq - KO 118
 
     Background:
         Given systems up

@@ -1,4 +1,4 @@
-Feature: Execute nodoInviaRPT - RT_RIFIUTATA_NODO (pspChiediRT_ KO_TAG_RT_errato) [T004]
+Feature: Execute nodoInviaRPT - RT_RIFIUTATA_NODO (pspChiediRT_ KO_TAG_RT_errato) [T004] 1467
 
     Background:
         Given systems up

@@ -1,4 +1,4 @@
-Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP
+Feature: process tests for T095_A_ChiediStato_RPT_ESITO_SCONOSCIUTO_PSP 300
 
     Background:
         Given systems up

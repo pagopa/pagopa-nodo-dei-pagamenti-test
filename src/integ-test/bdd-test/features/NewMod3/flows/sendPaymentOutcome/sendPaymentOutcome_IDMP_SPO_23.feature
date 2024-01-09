@@ -1,4 +1,4 @@
-Feature: sendPaymentOutcome_IDMP_SPO_23
+Feature: sendPaymentOutcome_IDMP_SPO_23 1279
 
 Background:
     Given systems up

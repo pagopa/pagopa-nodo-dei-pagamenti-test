@@ -1,4 +1,4 @@
-Feature: T003_nodoInviaRT_esito=0
+Feature: T003_nodoInviaRT_esito=0 511
 
     Background:
         Given systems up

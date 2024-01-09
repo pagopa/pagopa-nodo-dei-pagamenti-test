@@ -1,4 +1,4 @@
-Feature: syntax checks for closePaymentV2 - PAYPAL
+Feature: syntax checks for closePaymentV2 - PAYPAL 966
 
     Background:
         Given systems up

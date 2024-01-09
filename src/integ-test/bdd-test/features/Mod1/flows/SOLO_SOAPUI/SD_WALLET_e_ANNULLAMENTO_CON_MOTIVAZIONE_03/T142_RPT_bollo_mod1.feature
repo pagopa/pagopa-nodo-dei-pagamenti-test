@@ -1,4 +1,4 @@
-Feature: T142_RPT_bollo_mod1
+Feature: T142_RPT_bollo_mod1 770
 
     
     Background:

@@ -1,4 +1,4 @@
-Feature: T218_RT_forzaControlloSegno_esito=1
+Feature: T218_RT_forzaControlloSegno_esito=1 1490
 
     Background:
         Given systems up

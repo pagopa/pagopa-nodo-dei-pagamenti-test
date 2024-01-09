@@ -1,4 +1,4 @@
-Feature: T016_C_nodoInviaRPT_Mod1_BBT_soloOK
+Feature: T016_C_nodoInviaRPT_Mod1_BBT_soloOK 530
     Background:
         Given systems up
 

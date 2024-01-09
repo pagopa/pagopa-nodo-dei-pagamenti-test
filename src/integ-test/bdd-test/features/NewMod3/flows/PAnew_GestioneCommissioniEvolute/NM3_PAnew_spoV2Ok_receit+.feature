@@ -1,4 +1,4 @@
-Feature: process test for NM3 with spoV2 OK and generation of receipt
+Feature: process test for NM3 with spoV2 OK and generation of receipt 1104
 
     Background:
         Given systems up

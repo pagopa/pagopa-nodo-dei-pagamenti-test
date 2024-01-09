@@ -1,4 +1,4 @@
-Feature: T127_InoltraEsitoPagamentoCarta_carrello_ProxyError502
+Feature: T127_InoltraEsitoPagamentoCarta_carrello_ProxyError502 699
   
   Background:
     Given systems up

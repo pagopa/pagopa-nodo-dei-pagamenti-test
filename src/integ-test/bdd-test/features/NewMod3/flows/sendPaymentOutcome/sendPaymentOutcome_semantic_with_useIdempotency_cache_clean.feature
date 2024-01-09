@@ -1,4 +1,4 @@
-Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use idempotency and cache clean
+Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use idempotency and cache clean 1298
 
   Background:
     Given systems up

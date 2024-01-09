@@ -1,4 +1,4 @@
-Feature: semantic check for sendPaymentOutcomeReq regarding idempotency [IDMP_SPO_25]
+Feature: semantic check for sendPaymentOutcomeReq regarding idempotency [IDMP_SPO_25] 1281
 
   Background:
     Given systems up

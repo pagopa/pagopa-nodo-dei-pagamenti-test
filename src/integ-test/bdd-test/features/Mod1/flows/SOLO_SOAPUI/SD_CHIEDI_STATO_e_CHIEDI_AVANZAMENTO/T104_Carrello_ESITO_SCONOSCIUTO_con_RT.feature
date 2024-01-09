@@ -1,4 +1,4 @@
-Feature: T104_Carrello_ESITO_SCONOSCIUTO_con_RT
+Feature: T104_Carrello_ESITO_SCONOSCIUTO_con_RT 477
    Background:
       Given systems up
 

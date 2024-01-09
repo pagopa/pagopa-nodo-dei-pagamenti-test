@@ -1,4 +1,4 @@
-# Il test verifica che il nodo accetti una MBD se il psp non è abilitato e il canale si
+# Il test verifica che il nodo accetti una MBD se il psp non è abilitato e il canale si 276
 
 Feature: activatePaymentNoticeV2Request with psp NO MBD and canale MBD
 

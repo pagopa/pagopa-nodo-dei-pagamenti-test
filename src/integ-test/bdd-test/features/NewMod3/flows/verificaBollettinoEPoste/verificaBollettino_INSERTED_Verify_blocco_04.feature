@@ -1,4 +1,4 @@
-Feature:  block checks for verificaBollettino - position status in INSERTED [VerificaBollettino_blocco_04]
+Feature:  block checks for verificaBollettino - position status in INSERTED [VerificaBollettino_blocco_04] 1340
 
   Background:
     Given systems up

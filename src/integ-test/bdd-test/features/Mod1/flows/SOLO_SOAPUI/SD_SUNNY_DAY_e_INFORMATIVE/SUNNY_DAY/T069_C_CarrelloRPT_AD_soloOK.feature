@@ -1,4 +1,4 @@
-Feature: T069_C_CarrelloRPT_AD_soloOK
+Feature: T069_C_CarrelloRPT_AD_soloOK 593
 
     Background:
         Given systems up

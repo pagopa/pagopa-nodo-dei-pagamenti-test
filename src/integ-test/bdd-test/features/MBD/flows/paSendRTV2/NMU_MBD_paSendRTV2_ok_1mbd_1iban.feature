@@ -1,4 +1,4 @@
-# Il test verifica che la paSendRTV2 sia inviata correttamente in caso di 2 transfers: 1MBD e 1IBAN
+# Il test verifica che la paSendRTV2 sia inviata correttamente in caso di 2 transfers: 1MBD e 1IBAN 286
 
 Feature: flow tests for paSendRTV2 - Marca da bollo e IBAN
     # Reference document:

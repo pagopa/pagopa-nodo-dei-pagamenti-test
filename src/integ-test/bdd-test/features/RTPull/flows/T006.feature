@@ -1,4 +1,4 @@
-Feature: Execute nodoInviaRPT - RT_ESITO_SCONOSCIUTO_PA [T006]
+Feature: Execute nodoInviaRPT - RT_ESITO_SCONOSCIUTO_PA [T006] 1468
 
     Background:
         Given systems up

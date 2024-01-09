@@ -1,4 +1,4 @@
-Feature: T067_F_CarrelloRPT_Mod1_BBT_wpl02_noPpp
+Feature: T067_F_CarrelloRPT_Mod1_BBT_wpl02_noPpp 589
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#

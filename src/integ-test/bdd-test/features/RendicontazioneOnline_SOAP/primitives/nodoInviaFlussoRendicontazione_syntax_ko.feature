@@ -1,4 +1,4 @@
-Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
+Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO 1445
 
     Background:
         Given systems up

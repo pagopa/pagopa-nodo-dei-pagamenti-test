@@ -1,4 +1,4 @@
-Feature:  block checks for verificaBollettino - position status in PAYING [VerificaBollettino_blocco_01]
+Feature:  block checks for verificaBollettino - position status in PAYING [VerificaBollettino_blocco_01] 1347
 
 
    Background:

@@ -1,4 +1,4 @@
-Feature: Semantic checks for sendPaymentOutcome - different outcome [SEM_SPO_25]
+Feature: Semantic checks for sendPaymentOutcome - different outcome [SEM_SPO_25] 1282
 
   Background:
     Given systems up

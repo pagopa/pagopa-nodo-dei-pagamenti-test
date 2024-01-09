@@ -1,4 +1,4 @@
-Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB]
+Feature: Execute nodoInviaCarrelloRPT - [T0XX_CARRELLO_MB] 1473
 
     Background:
         Given systems up

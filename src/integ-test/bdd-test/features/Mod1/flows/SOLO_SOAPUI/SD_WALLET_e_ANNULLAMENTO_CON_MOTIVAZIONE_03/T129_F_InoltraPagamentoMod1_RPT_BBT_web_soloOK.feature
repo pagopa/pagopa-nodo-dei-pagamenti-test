@@ -1,4 +1,4 @@
-Feature: T129_F_InoltraPagamentoMod1_RPT_BBT_web_soloOK
+Feature: T129_F_InoltraPagamentoMod1_RPT_BBT_web_soloOK 721
 
     Background:
         Given systems up

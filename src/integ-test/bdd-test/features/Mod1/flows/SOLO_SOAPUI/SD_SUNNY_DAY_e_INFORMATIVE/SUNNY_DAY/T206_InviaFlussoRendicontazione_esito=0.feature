@@ -1,4 +1,4 @@
-Feature: T206_InviaFlussoRendicontazione_esito=0
+Feature: T206_InviaFlussoRendicontazione_esito=0 626
 
     Background:
         Given systems up

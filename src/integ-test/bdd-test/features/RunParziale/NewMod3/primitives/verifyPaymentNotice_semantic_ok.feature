@@ -1,4 +1,4 @@
-Feature: Semantic checks for verifyPaymentReq - OK
+Feature: Semantic checks for verifyPaymentReq - OK 1554
 
   Background:
     Given systems up

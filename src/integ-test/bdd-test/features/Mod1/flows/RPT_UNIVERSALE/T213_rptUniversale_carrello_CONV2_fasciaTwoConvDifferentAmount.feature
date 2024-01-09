@@ -1,4 +1,4 @@
-Feature: flow tests for T213_rptUniversale_carrello_CONV2_fasciaTwoConvDifferentAmount
+Feature: flow tests for T213_rptUniversale_carrello_CONV2_fasciaTwoConvDifferentAmount 378
     Background:
         Given systems up
 

@@ -1,4 +1,4 @@
-Feature: Execute nodoInviaRPT - RT_RIFIUTATA_NODO (pspChiediRT_KO_RT_errata) [T003]
+Feature: Execute nodoInviaRPT - RT_RIFIUTATA_NODO (pspChiediRT_KO_RT_errata) [T003] 1466
 
     Background:
         Given systems up

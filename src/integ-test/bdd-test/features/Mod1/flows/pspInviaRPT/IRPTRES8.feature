@@ -1,4 +1,4 @@
-Feature: process tests for pspInviaRT[IRPTRES8]
+Feature: process tests for pspInviaRT[IRPTRES8] 351
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02

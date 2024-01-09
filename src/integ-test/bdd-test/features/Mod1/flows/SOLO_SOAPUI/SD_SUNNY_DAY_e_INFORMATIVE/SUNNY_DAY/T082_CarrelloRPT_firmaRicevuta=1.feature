@@ -1,4 +1,4 @@
-Feature: T082_CarrelloRPT_firmaRicevuta=1
+Feature: T082_CarrelloRPT_firmaRicevuta=1 602
     Background:
         Given systems up
        

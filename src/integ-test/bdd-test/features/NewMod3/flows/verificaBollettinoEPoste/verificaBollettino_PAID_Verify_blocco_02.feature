@@ -1,4 +1,4 @@
-Feature:  block checks for verificaBollettino - position status in PAID [VerificaBollettino_blocco_02]
+Feature:  block checks for verificaBollettino - position status in PAID [VerificaBollettino_blocco_02] 1343
 
   Background:
     Given systems up

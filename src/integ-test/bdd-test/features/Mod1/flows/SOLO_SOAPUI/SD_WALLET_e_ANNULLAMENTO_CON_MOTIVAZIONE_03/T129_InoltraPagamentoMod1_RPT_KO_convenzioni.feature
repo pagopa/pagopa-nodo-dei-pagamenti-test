@@ -1,4 +1,4 @@
-Feature: T129_InoltraPagamentoMod1_RPT_KO_convenzioni
+Feature: T129_InoltraPagamentoMod1_RPT_KO_convenzioni 728
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#

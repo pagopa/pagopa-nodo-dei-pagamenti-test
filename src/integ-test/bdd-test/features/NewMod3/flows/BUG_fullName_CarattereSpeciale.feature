@@ -1,4 +1,4 @@
-Feature: BUG_fullName_CarattereSpeciale
+Feature: BUG_fullName_CarattereSpeciale 1087
 
     Background:
         Given systems up

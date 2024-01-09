@@ -1,4 +1,4 @@
-Feature: process tests for pspInviaCarrelloRPT[CRPTRES2]
+Feature: process tests for pspInviaCarrelloRPT[CRPTRES2] 341
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02

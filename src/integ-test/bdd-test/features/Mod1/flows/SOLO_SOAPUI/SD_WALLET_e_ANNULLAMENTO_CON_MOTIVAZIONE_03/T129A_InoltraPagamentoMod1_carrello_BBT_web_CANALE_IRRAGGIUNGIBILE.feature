@@ -1,4 +1,4 @@
-Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_CANALE_IRRAGGIUNGIBILE
+Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_CANALE_IRRAGGIUNGIBILE 708
 
     Background:
         Given systems up

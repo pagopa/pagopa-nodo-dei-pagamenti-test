@@ -1,4 +1,4 @@
-Feature: PRO_CLPSP_05
+Feature: PRO_CLPSP_05 52
 
 Background:
  Given systems up

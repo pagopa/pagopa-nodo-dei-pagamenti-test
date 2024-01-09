@@ -1,4 +1,4 @@
-Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT
+Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_TIMEOUT 711
 
     Background:
         Given systems up

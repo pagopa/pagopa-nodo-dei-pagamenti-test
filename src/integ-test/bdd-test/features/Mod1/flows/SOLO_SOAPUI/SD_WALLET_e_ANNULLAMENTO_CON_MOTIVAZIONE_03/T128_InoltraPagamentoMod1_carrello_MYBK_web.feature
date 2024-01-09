@@ -1,4 +1,4 @@
-Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web
+Feature: T128_InoltraPagamentoMod1_carrello_MYBK_web 703
   Background:
     Given systems up
      Given generate 1 notice number and iuv with aux digit 3, segregation code 12 and application code -

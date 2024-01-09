@@ -1,4 +1,4 @@
-Feature: T067_C_CarrelloRPT_BBT_soloOK
+Feature: T067_C_CarrelloRPT_BBT_soloOK 587
 
     Background:
         Given systems up

@@ -1,4 +1,4 @@
-Feature: T103_G_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento_timeout
+Feature: T103_G_chiediStato_RT_ESITO_SCONOSCIUTO_PA_Carrello_annullamento_timeout 476
     
     Background:
         Given systems up

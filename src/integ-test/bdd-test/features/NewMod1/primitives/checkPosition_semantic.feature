@@ -1,4 +1,4 @@
-Feature: semantic checks for checkPosition outcome OK
+Feature: semantic checks for checkPosition outcome OK 960
 
     Background:
         Given systems up

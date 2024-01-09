@@ -1,4 +1,4 @@
-Feature: Semantic checks for activateIOPayment - KO
+Feature: Semantic checks for activateIOPayment - KO 116
 
   Background:
     Given systems up

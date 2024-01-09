@@ -1,4 +1,4 @@
-Feature: process tests for generazioneRicevute [PAG-1245_PaNew_SPO]
+Feature: process tests for generazioneRicevute [PAG-1245_PaNew_SPO] 1332
 
     Background:
         Given systems up

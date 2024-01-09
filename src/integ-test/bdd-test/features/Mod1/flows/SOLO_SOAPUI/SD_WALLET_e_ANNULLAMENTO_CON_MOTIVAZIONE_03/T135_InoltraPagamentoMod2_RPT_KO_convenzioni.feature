@@ -1,4 +1,4 @@
-Feature: T135_InoltraPagamentoMod2_RPT_KO_convenzioni
+Feature: T135_InoltraPagamentoMod2_RPT_KO_convenzioni 747
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#

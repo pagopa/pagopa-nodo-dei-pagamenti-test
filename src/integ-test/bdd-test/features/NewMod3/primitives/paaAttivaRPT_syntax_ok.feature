@@ -1,4 +1,4 @@
-Feature: check syntax OK for paaAttivaRPT
+Feature: check syntax OK for paaAttivaRPT 1378
 
     Background:
         Given systems up

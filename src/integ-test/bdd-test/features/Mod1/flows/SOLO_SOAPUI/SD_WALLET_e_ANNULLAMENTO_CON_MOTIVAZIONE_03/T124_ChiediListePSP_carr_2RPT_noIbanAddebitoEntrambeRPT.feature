@@ -1,4 +1,4 @@
-Feature: T124_ChiediListePSP_carr_2RPT_noIbanAddebitoEntrambeRPT
+Feature: T124_ChiediListePSP_carr_2RPT_noIbanAddebitoEntrambeRPT 665
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#

@@ -1,4 +1,4 @@
-Feature: T052_verifica_attiva_AIM_aux=2_timeout
+Feature: T052_verifica_attiva_AIM_aux=2_timeout 578
 
     Background:
         Given systems up

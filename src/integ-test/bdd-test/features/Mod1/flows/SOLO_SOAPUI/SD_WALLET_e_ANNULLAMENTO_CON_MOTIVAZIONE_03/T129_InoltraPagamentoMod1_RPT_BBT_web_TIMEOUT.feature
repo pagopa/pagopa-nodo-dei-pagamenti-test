@@ -1,4 +1,4 @@
-Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_TIMEOUT
+Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_TIMEOUT 726
 
     Background:
         Given systems up

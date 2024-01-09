@@ -1,4 +1,4 @@
-Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PAA_emessoDaPA
+Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PAA_emessoDaPA 558
 
     Background:
         Given systems up

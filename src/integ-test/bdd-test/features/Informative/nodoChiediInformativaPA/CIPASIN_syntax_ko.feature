@@ -1,4 +1,4 @@
-Feature: Syntax checks for nodoChiediInformativaPA - KO
+Feature: Syntax checks for nodoChiediInformativaPA - KO 255
     Background:
         Given systems up
 

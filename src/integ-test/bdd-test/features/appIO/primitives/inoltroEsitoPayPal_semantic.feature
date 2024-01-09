@@ -1,4 +1,4 @@
-Feature: Semantic checks oon inoltroEsitoPaypal primitive for new EC
+Feature: Semantic checks oon inoltroEsitoPaypal primitive for new EC 121
 
     Background:
         Given systems up

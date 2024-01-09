@@ -1,4 +1,4 @@
-Feature: process check for activatePaymentNotice - KO
+Feature: process check for activatePaymentNotice - KO 1077
 
   Background:
     Given systems up

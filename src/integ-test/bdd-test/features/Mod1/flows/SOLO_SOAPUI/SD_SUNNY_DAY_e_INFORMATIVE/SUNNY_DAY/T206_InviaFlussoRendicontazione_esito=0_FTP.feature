@@ -1,4 +1,4 @@
-Feature: T206_InviaFlussoRendicontazione_esito=0_FTP
+Feature: T206_InviaFlussoRendicontazione_esito=0_FTP 627
 
     Background:
         Given systems up

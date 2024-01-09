@@ -1,4 +1,4 @@
-# i seguenti test sono out of scope dopo lo spostamento del traduttore
+# i seguenti test sono out of scope dopo lo spostamento del traduttore 163
 
 # Feature: flow checks for closePayment - PA old
 

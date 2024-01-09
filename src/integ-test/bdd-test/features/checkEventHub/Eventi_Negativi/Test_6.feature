@@ -1,4 +1,4 @@
-Feature: flow checks for closePayment - PA new
+Feature: flow checks for closePayment - PA new 188
 
    Background:
       Given systems up

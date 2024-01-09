@@ -1,4 +1,4 @@
-Feature: T066_CarrelloRPT_soloObbligatori
+Feature: T066_CarrelloRPT_soloObbligatori 581
 
     Background:
         Given systems up

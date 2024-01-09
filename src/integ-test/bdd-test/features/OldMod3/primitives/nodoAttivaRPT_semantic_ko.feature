@@ -1,4 +1,4 @@
-Feature: Semantic checks KO for nodoAttivaRPT
+Feature: Semantic checks KO for nodoAttivaRPT 1407
     Background:
         Given systems up
         And initial XML nodoAttivaRPT

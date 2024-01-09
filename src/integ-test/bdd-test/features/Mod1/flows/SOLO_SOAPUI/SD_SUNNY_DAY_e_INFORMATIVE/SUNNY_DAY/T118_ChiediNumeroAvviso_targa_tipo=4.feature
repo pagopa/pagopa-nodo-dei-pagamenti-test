@@ -1,4 +1,4 @@
-Feature: T118_ChiediNumeroAvviso_targa_tipo=4
+Feature: T118_ChiediNumeroAvviso_targa_tipo=4 618
 
     Background:
         Given systems up

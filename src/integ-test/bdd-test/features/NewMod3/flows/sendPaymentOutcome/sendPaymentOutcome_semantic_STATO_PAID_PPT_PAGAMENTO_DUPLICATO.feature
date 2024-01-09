@@ -1,4 +1,4 @@
-Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_DUPLICATO [SEM_SPO_13]
+Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_DUPLICATO [SEM_SPO_13] 1295
 
   Background:
     Given systems up

@@ -1,4 +1,4 @@
-Feature: T122_N_ChiediInformazioniPagamento_CarrelloRPT_Bollo_NO_IBAN
+Feature: T122_N_ChiediInformazioniPagamento_CarrelloRPT_Bollo_NO_IBAN 655
   Background:
     Given systems up
 

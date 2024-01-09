@@ -1,4 +1,4 @@
-Feature: syntax checks for paVerifyPaymentNoticeRes - KO
+Feature: syntax checks for paVerifyPaymentNoticeRes - KO 1540
 
    Background:
       Given systems up

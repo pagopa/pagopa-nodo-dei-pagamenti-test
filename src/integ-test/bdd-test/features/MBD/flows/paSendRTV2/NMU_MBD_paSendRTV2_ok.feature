@@ -1,4 +1,4 @@
-# Il test verifica che la paSendRTV2 sia inviata correttamente in caso di MBD
+# Il test verifica che la paSendRTV2 sia inviata correttamente in caso di MBD 285
 
 Feature: flow tests for paSendRTV2 - Marca da bollo
     # Reference document:

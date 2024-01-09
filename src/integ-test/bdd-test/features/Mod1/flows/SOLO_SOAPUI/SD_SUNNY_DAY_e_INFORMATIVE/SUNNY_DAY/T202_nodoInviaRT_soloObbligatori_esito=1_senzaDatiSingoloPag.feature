@@ -1,4 +1,4 @@
-Feature: T202_nodoInviaRT_soloObbligatori_esito=1_senzaDatiSingoloPag
+Feature: T202_nodoInviaRT_soloObbligatori_esito=1_senzaDatiSingoloPag 622
 
     Background:
         Given systems up

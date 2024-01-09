@@ -1,4 +1,4 @@
-Feature: T106_ChiediInformativaPA_senzaInformativa
+Feature: T106_ChiediInformativaPA_senzaInformativa 483
 
     Background:
         Given systems up

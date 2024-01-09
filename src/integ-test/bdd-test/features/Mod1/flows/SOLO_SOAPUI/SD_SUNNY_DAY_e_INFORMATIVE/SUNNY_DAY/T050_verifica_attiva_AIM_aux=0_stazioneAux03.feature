@@ -1,4 +1,4 @@
-Feature: T050_verifica_attiva_AIM_aux=0
+Feature: T050_verifica_attiva_AIM_aux=0 575
 
     Background:
         Given systems up

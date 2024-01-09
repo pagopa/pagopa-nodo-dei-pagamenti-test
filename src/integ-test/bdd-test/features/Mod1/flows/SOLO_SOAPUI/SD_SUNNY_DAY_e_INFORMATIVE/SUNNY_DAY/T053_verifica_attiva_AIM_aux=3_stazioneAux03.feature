@@ -1,4 +1,4 @@
-Feature: T053_verifica_attiva_AIM_aux=3_stazioneAux03
+Feature: T053_verifica_attiva_AIM_aux=3_stazioneAux03 580
 
     Background:
         Given systems up

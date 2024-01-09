@@ -1,4 +1,4 @@
-Feature: syntax checks for closePaymentV2 outcome KO
+Feature: syntax checks for closePaymentV2 outcome KO 1518
 
     Background:
         Given systems up

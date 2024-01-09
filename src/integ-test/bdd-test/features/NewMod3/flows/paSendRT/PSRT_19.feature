@@ -1,4 +1,4 @@
-Feature: process tests for paSendRT
+Feature: process tests for paSendRT 1105
 
   Background:
     Given systems up

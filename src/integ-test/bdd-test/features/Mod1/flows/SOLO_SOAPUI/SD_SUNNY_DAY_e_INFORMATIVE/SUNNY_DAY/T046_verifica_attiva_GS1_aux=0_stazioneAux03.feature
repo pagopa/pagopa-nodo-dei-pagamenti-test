@@ -1,4 +1,4 @@
-Feature: T046_verifica_attiva_GS1_aux=0_stazioneAux03
+Feature: T046_verifica_attiva_GS1_aux=0_stazioneAux03 569
 
     Background:
         Given systems up

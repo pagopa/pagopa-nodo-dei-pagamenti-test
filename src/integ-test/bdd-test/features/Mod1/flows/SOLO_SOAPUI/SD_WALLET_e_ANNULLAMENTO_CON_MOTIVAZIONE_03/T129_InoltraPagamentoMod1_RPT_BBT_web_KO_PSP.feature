@@ -1,4 +1,4 @@
-Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_KO_PSP
+Feature: T129_InoltraPagamentoMod1_RPT_BBT_web_KO_PSP 725
 
     Background:
         Given systems up

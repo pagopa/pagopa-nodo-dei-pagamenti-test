@@ -1,4 +1,4 @@
-Feature: semantic checks for sendPaymentOutcomeReq - same outcome - ok [SEM_SPO_23]
+Feature: semantic checks for sendPaymentOutcomeReq - same outcome - ok [SEM_SPO_23] 1294
 
   Background:
     Given systems up

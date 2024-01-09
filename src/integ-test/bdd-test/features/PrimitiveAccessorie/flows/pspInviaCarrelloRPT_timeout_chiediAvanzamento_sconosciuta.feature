@@ -1,4 +1,4 @@
-Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta
+Feature: pspInviaCarrelloRPT_timeout_chiediAvanzamento_sconosciuta 1420
 
     Background:
         Given systems up

@@ -1,4 +1,4 @@
-Feature: flow tests for T213_rptUniversale_2RPT_2versamenti_poste_poste_poste_poste
+Feature: flow tests for T213_rptUniversale_2RPT_2versamenti_poste_poste_poste_poste 366
 
     Background:
         Given systems up

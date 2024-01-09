@@ -1,4 +1,4 @@
-Feature: T033_ nodoInviaRPT_firmaRicevuta=3
+Feature: T033_ nodoInviaRPT_firmaRicevuta=3 551
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02

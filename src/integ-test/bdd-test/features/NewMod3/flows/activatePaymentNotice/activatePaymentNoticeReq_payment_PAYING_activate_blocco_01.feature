@@ -1,4 +1,4 @@
-Feature:  block check for activatePaymentNoticeReq - position status in PAYING [Activate_blocco_01]
+Feature:  block check for activatePaymentNoticeReq - position status in PAYING [Activate_blocco_01] 1028
 
   Background:
     Given systems up

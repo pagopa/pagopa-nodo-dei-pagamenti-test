@@ -1,4 +1,4 @@
-# Il test verifica che la paSendRTV2 sia inviata correttamente in caso di 3 transfers con 3 marche da bollo a tutti i recipient in caso di broadcast = true
+# Il test verifica che la paSendRTV2 sia inviata correttamente in caso di 3 transfers con 3 marche da bollo a tutti i recipient in caso di broadcast = true 287
 
 Feature: flow tests for paSendRTV2 - Marca da bollo
     # Reference document:

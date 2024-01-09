@@ -1,4 +1,4 @@
-Feature: stand in manager without station available for stand in for NMU
+Feature: stand in manager without station available for stand in for NMU 1564
 
     Background:
         Given systems up

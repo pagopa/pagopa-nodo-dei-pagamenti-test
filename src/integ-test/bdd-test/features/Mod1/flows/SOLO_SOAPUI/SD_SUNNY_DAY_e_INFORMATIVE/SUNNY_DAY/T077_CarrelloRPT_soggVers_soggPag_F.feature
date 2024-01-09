@@ -1,4 +1,4 @@
-Feature: T077_CarrelloRPT_soggVers_soggPag_F
+Feature: T077_CarrelloRPT_soggVers_soggPag_F 600
     Background:
         Given systems up
        

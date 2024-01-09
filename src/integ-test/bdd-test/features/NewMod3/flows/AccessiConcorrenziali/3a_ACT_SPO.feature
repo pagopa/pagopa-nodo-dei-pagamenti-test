@@ -1,4 +1,4 @@
-Feature: process tests for accessiConCorrenziali [3a_ACT_SPO]
+Feature: process tests for accessiConCorrenziali [3a_ACT_SPO] 970
 
     Background:
         Given systems up

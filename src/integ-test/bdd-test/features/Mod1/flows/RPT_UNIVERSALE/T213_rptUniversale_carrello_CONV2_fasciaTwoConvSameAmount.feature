@@ -1,4 +1,4 @@
-Feature: process tests for T213_rptUniversale_carrello_CONV2_fasciaTwoConvSameAmount
+Feature: process tests for T213_rptUniversale_carrello_CONV2_fasciaTwoConvSameAmount 379
 
     Background:
         Given systems up

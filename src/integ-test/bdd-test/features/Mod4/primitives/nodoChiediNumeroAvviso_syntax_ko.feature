@@ -1,4 +1,4 @@
-Feature: syntax checks for nodoChiediNumeroAvviso - KO
+Feature: syntax checks for nodoChiediNumeroAvviso - KO 928
 
     Background:
         Given systems up

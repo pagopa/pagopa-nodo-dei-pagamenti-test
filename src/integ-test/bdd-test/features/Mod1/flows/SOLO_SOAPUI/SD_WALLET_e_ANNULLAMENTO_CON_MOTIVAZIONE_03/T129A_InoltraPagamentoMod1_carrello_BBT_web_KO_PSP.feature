@@ -1,4 +1,4 @@
-Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
+Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP 710
 
     Background:
         Given systems up

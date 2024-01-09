@@ -1,4 +1,4 @@
-Feature: process tests for T213_rptUniversale_2RPT_2versamenti_poste_poste_poste_noPoste
+Feature: process tests for T213_rptUniversale_2RPT_2versamenti_poste_poste_poste_noPoste 365
 
     Background:
         Given systems up

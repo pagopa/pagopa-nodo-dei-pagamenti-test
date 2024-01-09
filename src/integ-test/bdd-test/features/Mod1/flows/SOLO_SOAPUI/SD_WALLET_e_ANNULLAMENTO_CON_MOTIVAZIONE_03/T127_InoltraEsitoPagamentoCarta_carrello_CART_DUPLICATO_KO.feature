@@ -1,4 +1,4 @@
-Feature: T127_InoltraEsitoPagamentoCarta_carrello_CART_DUPLICATO_KO
+Feature: T127_InoltraEsitoPagamentoCarta_carrello_CART_DUPLICATO_KO 696
 
   Background:
     Given systems up

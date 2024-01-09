@@ -1,4 +1,4 @@
-Feature: T136A_InoltraPagamentoMod2_carrello_BP_checkPPP
+Feature: T136A_InoltraPagamentoMod2_carrello_BP_checkPPP 750
 
     Background:
         Given systems up

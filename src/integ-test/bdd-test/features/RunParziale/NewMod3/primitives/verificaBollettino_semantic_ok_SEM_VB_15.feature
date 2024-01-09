@@ -1,4 +1,4 @@
-Feature: Semantic checks for verificaBollettino - OK [SEM_VB_15]
+Feature: Semantic checks for verificaBollettino - OK [SEM_VB_15] 1550
 
   Background:
     Given systems up

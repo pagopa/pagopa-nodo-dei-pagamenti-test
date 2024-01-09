@@ -1,4 +1,4 @@
-Feature: T001B_DYNAMIC_RPTconBollo_RT+_digestValuestrano
+Feature: T001B_DYNAMIC_RPTconBollo_RT+_digestValuestrano 495
 
     Background:
         Given systems up

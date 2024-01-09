@@ -1,4 +1,4 @@
-Feature: DB checks for activateIOPayment primitive
+Feature: DB checks for activateIOPayment primitive 1
 
     Background:
         Given systems up

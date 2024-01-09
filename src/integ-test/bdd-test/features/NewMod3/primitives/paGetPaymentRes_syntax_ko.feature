@@ -1,4 +1,4 @@
-Feature: Syntax checks for paGetPaymentRes - KO
+Feature: Syntax checks for paGetPaymentRes - KO 1384
 
    Background:
       Given systems up

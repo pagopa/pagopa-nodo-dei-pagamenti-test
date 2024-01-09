@@ -1,4 +1,4 @@
-Feature: flow with closePayment + and PPT_TOKEN_SCADUTO
+Feature: flow with closePayment + and PPT_TOKEN_SCADUTO 1504
 
     Background:
         Given systems up

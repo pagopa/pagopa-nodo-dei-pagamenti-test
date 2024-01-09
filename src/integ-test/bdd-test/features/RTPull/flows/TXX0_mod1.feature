@@ -1,4 +1,4 @@
-Feature: TXX0_RT-PULL_CARRELLO 1 RPT EsitoSconosciutoPSP MOD1
+Feature: TXX0_RT-PULL_CARRELLO 1 RPT EsitoSconosciutoPSP MOD1 1476
 
     Background:
         Given systems up

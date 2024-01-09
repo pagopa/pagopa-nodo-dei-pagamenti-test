@@ -1,4 +1,4 @@
-Feature: T132A_InoltraPagamentoMod1_carrello_BP_mobile
+Feature: T132A_InoltraPagamentoMod1_carrello_BP_mobile 734
 
     Background:
         Given systems up

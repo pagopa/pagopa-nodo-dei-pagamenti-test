@@ -1,4 +1,4 @@
-Feature: T003_nodoInviaRT_esito=0_carrello_senzaNamespace
+Feature: T003_nodoInviaRT_esito=0_carrello_senzaNamespace 512
 
     Background:
         Given systems up

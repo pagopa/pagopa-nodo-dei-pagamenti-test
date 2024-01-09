@@ -1,4 +1,4 @@
-Feature: T130A_InoltraPagamentoMod1_carrello_BBT_mobile
+Feature: T130A_InoltraPagamentoMod1_carrello_BBT_mobile 730
 
     Background:
         Given systems up

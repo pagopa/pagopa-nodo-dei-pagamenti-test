@@ -1,4 +1,4 @@
-Feature: happy flow with Stand In on and PSP no POSTE
+Feature: happy flow with Stand In on and PSP no POSTE 1567
 
     Background:
         Given systems up

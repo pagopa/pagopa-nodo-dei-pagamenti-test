@@ -1,4 +1,4 @@
-Feature: T078_CarrelloRPT_soggVers_soggPag_G
+Feature: T078_CarrelloRPT_soggVers_soggPag_G 601
     Background:
         Given systems up
        

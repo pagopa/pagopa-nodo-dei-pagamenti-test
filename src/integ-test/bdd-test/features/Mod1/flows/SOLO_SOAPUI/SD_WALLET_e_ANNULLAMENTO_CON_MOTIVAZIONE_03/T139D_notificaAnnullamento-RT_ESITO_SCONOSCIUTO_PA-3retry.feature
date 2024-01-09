@@ -1,4 +1,4 @@
-Feature: T139C_notificaAnnullamento - RT_RIFIUTATA_PA -> noRetry
+Feature: T139C_notificaAnnullamento - RT_RIFIUTATA_PA -> noRetry 767
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#

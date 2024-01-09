@@ -1,4 +1,4 @@
-Feature: flow tests for T213_rptUniversale_RPT - 1 versamenti_noMybank
+Feature: flow tests for T213_rptUniversale_RPT - 1 versamenti_noMybank 384
 
     Background:
         Given systems up

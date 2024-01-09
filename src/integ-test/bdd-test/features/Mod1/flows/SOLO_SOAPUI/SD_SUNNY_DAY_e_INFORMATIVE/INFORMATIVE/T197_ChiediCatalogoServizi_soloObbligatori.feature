@@ -1,4 +1,4 @@
-Feature: T197_ChiediCatalogoServizi_soloObbligatori
+Feature: T197_ChiediCatalogoServizi_soloObbligatori 487
 
     Background:
         Given systems up

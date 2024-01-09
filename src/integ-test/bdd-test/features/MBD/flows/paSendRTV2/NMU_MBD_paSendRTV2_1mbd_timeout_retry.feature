@@ -1,4 +1,4 @@
-# Il test verifica che la in caso di timeout per la paSendRTV2 sia inserito un record nella tabella POSITION_RETRY_PA_SEND_RT
+# Il test verifica che la in caso di timeout per la paSendRTV2 sia inserito un record nella tabella POSITION_RETRY_PA_SEND_RT 284
 
 Feature: flow tests for paSendRTV2 - Marca da bollo
     # Reference document:

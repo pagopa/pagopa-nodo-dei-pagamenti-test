@@ -1,4 +1,4 @@
-Feature: T027_ nodoInviaRPT_soggVers_soggPag_G
+Feature: T027_ nodoInviaRPT_soggVers_soggPag_G 549
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02

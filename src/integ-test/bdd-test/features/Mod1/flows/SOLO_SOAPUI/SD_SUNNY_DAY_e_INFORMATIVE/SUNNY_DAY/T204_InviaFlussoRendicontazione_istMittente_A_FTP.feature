@@ -1,4 +1,4 @@
-Feature: T204_InviaFlussoRendicontazione_istMittente_A_FTP
+Feature: T204_InviaFlussoRendicontazione_istMittente_A_FTP 624
 
     Background:
         Given systems up

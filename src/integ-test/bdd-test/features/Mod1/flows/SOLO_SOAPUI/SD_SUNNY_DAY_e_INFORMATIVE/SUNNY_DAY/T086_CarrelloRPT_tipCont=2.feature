@@ -1,4 +1,4 @@
-Feature: T086_CarrelloRPT_tipCont=2
+Feature: T086_CarrelloRPT_tipCont=2 606
     Background:
         Given systems up
        
