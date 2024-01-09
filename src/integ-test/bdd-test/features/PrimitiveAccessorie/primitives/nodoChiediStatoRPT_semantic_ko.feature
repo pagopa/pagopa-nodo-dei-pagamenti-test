@@ -31,7 +31,7 @@ Feature: Semantic checks for nodoChiediStatoRPT - KO 1431
             | identificativoStazioneIntermediarioPA | unknownStation          | PPT_STAZIONE_INT_PA_SCONOSCIUTA   | CSRPTSEM3   |
             | identificativoStazioneIntermediarioPA | #id_station_disabled#   | PPT_STAZIONE_INT_PA_DISABILITATA  | CSRPTSEM4   |
             | password                              | wrongPassword           | PPT_AUTENTICAZIONE                | CSRPTSEM5   |
-            | identificativoDominio                 | 12345678902             | PPT_DOMINIO_SCONOSCIUTO           | CSRPTSEM6   |
+            | identificativoDominio                 | 12345678905             | PPT_DOMINIO_SCONOSCIUTO           | CSRPTSEM6   |
             | identificativoDominio                 | NOT_ENABLED             | PPT_DOMINIO_DISABILITATO          | CSRPTSEM7   |
             | identificativoUnivocoVersamento       | wrongIUV                | PPT_RPT_SCONOSCIUTA               | CSRPTSEM8   |
             | codiceContestoPagamento               | wrongPaymentContextCode | PPT_RPT_SCONOSCIUTA               | CSRPTSEM9   |
