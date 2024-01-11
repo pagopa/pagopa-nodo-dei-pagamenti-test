@@ -79,10 +79,13 @@ def filter_allure_results():
     status = request.args.get('status')
       
     if not os.path.exists(output_dir):
+        print("output dir creating")
         os.makedirs(output_dir)
     else:
-        print("output dir already exists, empty dir")
+        print("output dir already exists, delete dir")
         shutil.rmtree(output_dir)
+        os.makedirs(output_dir)
+        print("output dir already exists, create dir")
 
     list_status = status.split(",")
 
