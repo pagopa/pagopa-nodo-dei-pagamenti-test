@@ -81,8 +81,8 @@ def filter_allure_results():
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     else:
-    	print("output dir already exists, empty dir")
-    	shutil.rmtree(output_dir)
+        print("output dir already exists, empty dir")
+        shutil.rmtree(output_dir)
 
     list_status = status.split(",")
 
