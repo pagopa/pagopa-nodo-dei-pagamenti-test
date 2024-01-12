@@ -103,6 +103,15 @@ Feature: Semantic checks KO for activatePaymentNoticeReq
     And check faultCode is PPT_AUTENTICAZIONE of activatePaymentNotice response
 
   @runnable @PG34
+  # password value check: wrong password for an idChannel 
+  Scenario: Check PPT_AUTENTICAZIONE error on password not associated to psp channel
+    Given idChannel with #canale_ATTIVATO_PRESSO_PSP# in activatePaymentNotice
+    And password with pwdpwdpw in activatePaymentNotice
+    When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is KO of activatePaymentNotice response
+    And check faultCode is PPT_AUTENTICAZIONE of activatePaymentNotice response
+
+  @runnable @PG34
   # fiscalCode value check: ID_DOMINIO not present in NODO4_CFG.PA table of nodo-dei-pagamenti db [SEM_APNR_09]
   Scenario: Check PPT_DOMINIO_SCONOSCIUTO error on non-existent pa
     Given fiscalCode with 10000000000 in activatePaymentNotice

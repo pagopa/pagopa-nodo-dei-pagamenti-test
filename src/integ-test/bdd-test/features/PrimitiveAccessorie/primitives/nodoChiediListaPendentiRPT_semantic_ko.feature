@@ -31,7 +31,7 @@ Feature: Semantic checks for nodoChiediListaPendentiRPT - KO
             | identificativoStazioneIntermediarioPA | unknownStation       | PPT_STAZIONE_INT_PA_SCONOSCIUTA   | CLPRPTSEM3  |
             | identificativoStazioneIntermediarioPA | STAZIONE_NOT_ENABLED | PPT_STAZIONE_INT_PA_DISABILITATA  | CLPRPTSEM4  |
             | password                              | wrongPassword        | PPT_AUTENTICAZIONE                | CLPRPTSEM5  |
-            | identificativoDominio                 | 12345678902          | PPT_DOMINIO_SCONOSCIUTO           | CLPRPTSEM6  |
+            | identificativoDominio                 | 12345678922          | PPT_DOMINIO_SCONOSCIUTO           | CLPRPTSEM6  |
             | identificativoDominio                 | NOT_ENABLED          | PPT_DOMINIO_DISABILITATO          | CLPRPTSEM7  |
             | identificativoIntermediarioPA         | 77777777777          | PPT_AUTORIZZAZIONE                | CLPRPTSEM13 |
 @runnable

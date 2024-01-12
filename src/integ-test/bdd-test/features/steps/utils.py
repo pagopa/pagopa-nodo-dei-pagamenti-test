@@ -373,8 +373,7 @@ def single_thread(context, soap_primitive, tipo):
     primitive = replace_context_variables(primitive, context)
     primitive = replace_global_variables(primitive, context)
     
-    if tipo == 'GET':
-        
+    if tipo == 'GET':       
         headers = {'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
