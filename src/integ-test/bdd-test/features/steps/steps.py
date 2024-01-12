@@ -3483,6 +3483,67 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
     db.closeConnection(conn)
 
 
+
+@step(u"polling for the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, table_name, value):
+    # Legge i dati dalla tabella specificata utilizzando la connessione fornita
+    # e continua a controllare periodicamente per gli aggiornamenti fino a quando non trova i record attesi
+    list_value = value.split(",")
+    num_state = len(list_value)
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
+    print(selected_query)
+
+    i = 0
+    while i <= 50:
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        #nuova_modifica = exec_query [0][0]
+        num_record = len(query_result)
+
+        if num_record == num_state:
+            print("Tutti i record trovati!")
+            break
+        else:
+            print("Mancano record, attendo...")
+            time.sleep(3)  # attende 3 secondi prima del prossimo controllo
+            i += 1
+
+    if value == 'None':
+        print('None')
+        assert query_result[0] == None
+    elif value == 'NotNone':
+        print('NotNone')
+        assert query_result[0] != None
+    else:
+        value = utils.replace_global_variables(value, context)
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
+        split_value = [status.strip() for status in value.split(',')]
+        for i, elem in enumerate(query_result):
+            if isinstance(elem, str) and elem.isdigit():
+                query_result[i] = float(elem)
+            elif isinstance(elem, datetime.date):
+                query_result[i] = elem.strftime('%Y-%m-%d')
+
+        for i, elem in enumerate(split_value):
+            if utils.isFloat(elem) or elem.isdigit():
+                split_value[i] = float(elem)
+
+        print("value: ", split_value)
+        for elem in split_value:
+            assert elem in query_result, f"check expected element: {value}, obtained: {query_result}"
+
+    db.closeConnection(conn)
+
+
 # step per salvare nel context una variabile key recuperata dal db tramite query query_name
 @step("through the query {query_name} retrieve valid noticeID from POSITION_PAYMENT_PLAN on db {db_name}")
 def step_impl(context, query_name, db_name):
