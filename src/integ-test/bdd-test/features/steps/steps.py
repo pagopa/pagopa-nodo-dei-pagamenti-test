@@ -3499,16 +3499,17 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
     print(selected_query)
-
+    ###Polling se il numero di record della query sono maggiori uguali al numero atteso 
+    ###(metto il maggiore in modo che se ci sono più stati dopo li visualizzo tutti)
     i = 0
-    while i <= 50:
+    while i <= 10:
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         #nuova_modifica = exec_query [0][0]
         num_record = len(query_result)
 
-        if num_record == num_state:
+        if num_record >= num_state:
             print("Tutti i record trovati!")
             break
         else:
