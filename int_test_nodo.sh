@@ -3,7 +3,8 @@
 pip install -U -r ./requirements.txt
 
 <<USAGE_EX
-NODOPGDB=true SUBSCRIPTION_KEY=9b211c9e90a74fcc8115b64a924219df sh int_test_nodo.sh https://api.dev.platform.pagopa.it/nodo-replica-ndp \
+NODOPGDB=true SUBSCRIPTION_KEY=9b211c9e90a74fcc8115b64a924219df sh int_test_nodo.sh \
+https://api.dev.platform.pagopa.it/nodo-replica-ndp \
 https://api.dev.platform.pagopa.it/nodo-replica-ndp/monitoring/v1/config/refresh/CONFIG \
 https://api.dev.platform.pagopa.it/mock-ec-replica-ndp/service/v1/mock \
 https://api.dev.platform.pagopa.it/mock-ec-replica-secondary-ndp/service/v1/mock \
@@ -26,7 +27,8 @@ URL_MOCK_PSP2=$6
 URL_MOCK_PM=$7
 DB_PWD=$8
 #FEATURES_PATH=/PrimitiveAccessorie/primitives
-FEATURES_PATH=/Mod1/flows/nodoInviaRT
+#FEATURES_PATH=/Mod1/flows/nodoInviaRT
+FEATURES_PATH=/NewMod3/primitives/verifyPaymentNotice_syntax_ok.feature
 
 if [ "$#" -lt 9 ] && [ "$#" -gt 0 ]; then
     echo "Yeaaah 🚀"
