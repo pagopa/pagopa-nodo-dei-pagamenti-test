@@ -197,7 +197,7 @@ Feature: process tests for retry on a NOTICE_STORED transaction with different t
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
-    @runnable
+    @runnable @dependentread
     #activate phase2
     Scenario: Execute activatePaymentNotice2 request
         Given the Execute sendPaymentOutcome request scenario executed successfully

@@ -2,7 +2,7 @@ Feature: Semantic checks KO for nodoVerificaRPT
     Background:
         Given systems up
 
-@runnable
+@runnable @independent
      Scenario: Check faultCode error PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE [VRPTSEM14]
         Given initial XML nodoVerificaRPT
         """

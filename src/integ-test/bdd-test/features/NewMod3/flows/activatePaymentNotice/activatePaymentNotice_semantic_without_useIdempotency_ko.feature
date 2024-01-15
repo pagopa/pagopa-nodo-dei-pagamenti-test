@@ -33,7 +33,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     Then check outcome is OK of activatePaymentNotice response
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_19.1]
-  @runnable
+  @runnable @lazy @dependentwrite 
   Scenario: Execute again the same activatePaymentNotice request
     Given the Execute activatePaymentNotice request scenario executed successfully
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
@@ -42,7 +42,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     And restore initial configurations
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_20.1]
-  @runnable
+  @runnable @lazy @dependentwrite 
   Scenario Outline: Execute again activatePaymentNotice request with same idempotencyKey
     Given the Execute activatePaymentNotice request scenario executed successfully
     And <elem> with <value> in activatePaymentNotice
@@ -60,7 +60,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
       | paymentNote    | None         | paymentNote assente    |
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_21.2]
-  @runnable
+  @runnable @dependentread @lazy @dependentwrite 
   Scenario: Execute again activatePaymentNotice request right after expirationTime has passed (before the execution of mod3Cancel poller)
     Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 10
     And nodo-dei-pagamenti has config parameter default_token_duration_validity_millis set to 1800000
@@ -72,7 +72,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     And restore initial configurations
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO SEM_APNR_21.3]
-  @runnable
+  @runnable @dependentread @lazy @dependentwrite 
   Scenario: Execute again activatePaymentNotice request right after expirationTime has passed
     Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 10
     And the Execute activatePaymentNotice request scenario executed successfully
@@ -84,7 +84,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     And restore initial configurations
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_22.1]
-  @runnable
+  @runnable @dependentread @lazy @dependentwrite 
   Scenario: Execute again activatePaymentNotice request right after default_idempotency_key_validity_minutes has passed
     Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1
     And the Execute activatePaymentNotice request scenario executed successfully

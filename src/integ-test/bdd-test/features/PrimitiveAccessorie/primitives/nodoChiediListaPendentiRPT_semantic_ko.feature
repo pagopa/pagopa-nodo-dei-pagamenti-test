@@ -19,7 +19,7 @@ Feature: Semantic checks for nodoChiediListaPendentiRPT - KO
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-@runnable
+@runnable @independent
     Scenario Outline: Check semantic errors for nodoChiediListaPendentiRPT primitive
         Given <tag> with <tag_value> in nodoChiediListaPendentiRPT
         When EC sends SOAP nodoChiediListaPendentiRPT to nodo-dei-pagamenti
@@ -34,7 +34,7 @@ Feature: Semantic checks for nodoChiediListaPendentiRPT - KO
             | identificativoDominio                 | 12345678902          | PPT_DOMINIO_SCONOSCIUTO           | CLPRPTSEM6  |
             | identificativoDominio                 | NOT_ENABLED          | PPT_DOMINIO_DISABILITATO          | CLPRPTSEM7  |
             | identificativoIntermediarioPA         | 77777777777          | PPT_AUTORIZZAZIONE                | CLPRPTSEM13 |
-@runnable
+@runnable @independent
     # [CLPRPTSEM8]
     Scenario: Check semantic errors for nodoChiediListaPendentiRPT primitive
         Given rangeDa with 2005-01-01T12:00:00 in nodoChiediListaPendentiRPT

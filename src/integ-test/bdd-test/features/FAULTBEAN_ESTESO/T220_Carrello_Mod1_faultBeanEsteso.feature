@@ -296,7 +296,7 @@ Feature: T220_Carrello_Mod1_faultBeanEsteso
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
-@runnable 
+@runnable @dependentread 
     Scenario: Execute nodoChiediStatoRPT (Phase 5)
         Given the Execute nodoInviaCarrelloRPT (Phase 4) scenario executed successfully
         And identificativoUnivocoVersamento with $2iuv in nodoChiediStatoRPT

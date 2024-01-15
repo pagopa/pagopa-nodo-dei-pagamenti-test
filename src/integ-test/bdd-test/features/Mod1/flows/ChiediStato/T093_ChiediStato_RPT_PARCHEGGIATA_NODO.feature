@@ -176,7 +176,7 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO
 	    Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
 
 
- @runnable      
+ @runnable @dependentread      
     Scenario: Execute nodoChiediStatoRPT Duplicato
         Given the Execute nodoInviaRPT Duplicato scenario executed successfully
         And initial XML nodoChiediStatoRPT

@@ -177,7 +177,7 @@ Feature: flow tests for activatePaymentNoticeV2Request
         Given the activatePaymentNoticeV2 scenario executed successfully
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test
+    @test @dependentread
     Scenario: Activate_blocco_01 (parte 2)
         Given the Activate_blocco_01 (parte 1) scenario executed successfully
         And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
@@ -225,7 +225,7 @@ Feature: flow tests for activatePaymentNoticeV2Request
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
         And verify 3 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    @test
+    @test @dependentread @lazy
     Scenario: Activate_blocco_02 (part 4)
         Given the Activate_blocco_02 (part 3) scenario executed successfully
         And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
@@ -270,7 +270,7 @@ Feature: flow tests for activatePaymentNoticeV2Request
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
         And verify 3 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    @test
+    @test @dependentread @lazy
     Scenario: Activate_blocco_03 (part 4)
         Given the Activate_blocco_03 (part 3) scenario executed successfully
         And random idempotencyKey having $activatePaymentNoticeV2.idPSP as idPSP in activatePaymentNoticeV2
@@ -297,7 +297,7 @@ Feature: flow tests for activatePaymentNoticeV2Request
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    @test
+    @test @dependentread
     Scenario: Activate_blocco_05 (parte 2)
         Given the Activate_blocco_05 (parte 1) scenario executed successfully
         And random iuv in context
@@ -337,7 +337,7 @@ Feature: flow tests for activatePaymentNoticeV2Request
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query PAYMENT_TOKEN on db nodo_online under macro NewMod1
         And verify 2 record for the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    @test
+    @test @dependentread @lazy
     Scenario: Activate_blocco_06 (parte 3)
         Given the Activate_blocco_06 (parte 2) scenario executed successfully
         And expirationTime with None in activatePaymentNoticeV2

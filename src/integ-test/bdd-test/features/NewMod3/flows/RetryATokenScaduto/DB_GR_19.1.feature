@@ -234,7 +234,7 @@ Feature: process tests for DB_GR_19.1
   #And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3
   #And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
 
-  @runnable
+  @runnable @lazy @dependentread @dependentwrite
   Scenario: job refresh pa (2)
     Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition FK_PA and where value ('16629') under macro update_query on db nodo_cfg
     Then refresh job ALL triggered after 10 seconds

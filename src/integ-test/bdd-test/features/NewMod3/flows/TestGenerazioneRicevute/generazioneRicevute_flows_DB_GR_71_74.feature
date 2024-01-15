@@ -162,7 +162,7 @@ Feature: generazioneRicevute_flows_DB_GR_71_74
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-@runnable
+@runnable @dependentwrite @lazy
     Scenario: Execute sendPaymentOutcome - OK (Phase 4) [DB_GR_71-72]
         Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
         And initial XML sendPaymentOutcome
@@ -225,7 +225,7 @@ Feature: generazioneRicevute_flows_DB_GR_71_74
         And checks the value $nodoInviaRPT.identificativoUnivocoVersamento of the record at column IUV of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
 
-@runnable     
+@runnable @dependentwrite
     Scenario: Execute sendPaymentOutcome - KO (Phase 3) [DB_GR_73]
         Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
         And initial XML sendPaymentOutcome
@@ -285,7 +285,7 @@ Feature: generazioneRicevute_flows_DB_GR_71_74
         And checks the value $nodoInviaRPT.identificativoUnivocoVersamento of the record at column IUV of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column XML_CONTENT of the table RT_XML retrived by the query rt_xml on db nodo_online under macro NewMod3
 
-@runnable
+@runnable @dependentwrite @lazy
     Scenario: Execute TriggerPollerAnnulli (Phase 4)
         Given the Execute nodoInviaRPT (Phase 3) scenario executed successfully
         And wait 7 seconds for expiration

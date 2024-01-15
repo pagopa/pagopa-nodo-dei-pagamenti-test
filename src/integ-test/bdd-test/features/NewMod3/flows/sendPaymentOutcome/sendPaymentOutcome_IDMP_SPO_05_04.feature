@@ -122,7 +122,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of sendPaymentOutcome response
 
-@runnable
+@runnable @dependentread @dependentwrite
   Scenario: DB check
     Given the Execute sendPaymentOutcome request 1 scenario executed successfully
     Then verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod3

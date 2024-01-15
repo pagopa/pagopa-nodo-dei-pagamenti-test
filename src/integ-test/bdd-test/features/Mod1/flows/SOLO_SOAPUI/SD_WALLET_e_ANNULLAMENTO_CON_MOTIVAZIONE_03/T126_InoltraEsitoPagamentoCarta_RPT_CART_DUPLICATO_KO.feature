@@ -270,7 +270,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_CART_DUPLICATO_KO
     And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
     And check url field not exists in nodoChiediStatoRPT response
   
-@runnable 
+@runnable @independent 
   Scenario: Execute nodoInviaRT request
     Given the Execute nodoChiediStatoRPT request scenario executed successfully
     And initial XML nodoInviaRT

@@ -138,7 +138,7 @@ Feature: process tests for T097_ChiediStato_RPT_ACCETTATA_PSP - BUG_480
         And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query stati_RPT on db nodo_online under macro Mod1
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
 
-    @runnable
+    @runnable @dependentread
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute nodoInviaRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT

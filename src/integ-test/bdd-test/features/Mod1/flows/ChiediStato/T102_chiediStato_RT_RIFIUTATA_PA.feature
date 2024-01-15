@@ -310,7 +310,7 @@ Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
         And check faultCode is PPT_RT_DUPLICATA of nodoInviaRT response
-@runnable
+@runnable @independent
     Scenario: Execute nodoChiediStatoRPT request
         Given the Execute second nodoInviaRT request scenario executed successfully
         And initial XML nodoChiediStatoRPT

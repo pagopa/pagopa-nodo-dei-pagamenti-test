@@ -222,7 +222,6 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
       And verify 1 record for the table POSITION_SERVICE retrived by the query payment_status on db nodo_online under macro NewMod3
 
 
-
    Scenario: Execute activatePaymentNotice1 request
       Given the Execute nodoInviaRPT request scenario executed successfully
       And initial XML activatePaymentNotice
@@ -383,7 +382,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_08]
          </pay_i:RPT>
          """
 
-   @runnable
+   @runnable @dependentread
    Scenario: Execute nodoInviaRPT2
       Given the Define RPT1 scenario executed successfully
       And initial XML nodoInviaRPT

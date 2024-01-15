@@ -209,7 +209,7 @@ Feature: NICM_DB_11
         And verify if the records for the table POSITION_TRANSFER retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb are not null
         And verify 1 record for the table POSITION_PAYMENT_PLAN retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
 
-@runnable 
+@runnable @dependentread @dependentwrite 
     Scenario: Execute nodoInviaCarrelloRPT (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         # And generate 2 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA

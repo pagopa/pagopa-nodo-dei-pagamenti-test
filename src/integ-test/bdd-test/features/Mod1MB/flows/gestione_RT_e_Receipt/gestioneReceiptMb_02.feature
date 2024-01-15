@@ -410,7 +410,7 @@ Feature: gestioneReceiptMb_02
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
 
-@runnable
+@runnable @dependentread
     Scenario: Execute nodoInviaRT2 (Phase 4)
         Given the Execute nodoInoltroEsitoMod1 (Phase 3) scenario executed successfully
         And initial XML nodoInviaRT

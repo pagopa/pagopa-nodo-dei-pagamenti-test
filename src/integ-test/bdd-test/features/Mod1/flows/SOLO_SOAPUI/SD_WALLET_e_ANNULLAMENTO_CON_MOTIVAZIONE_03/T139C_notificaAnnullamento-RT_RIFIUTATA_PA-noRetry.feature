@@ -119,7 +119,7 @@ Feature: T139C_notificaAnnullamento - RT_RIFIUTATA_PA -> noRetry
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And check esito is OK of notificaAnnullamento response
 
-  @runnable
+  @runnable @independent @lazy
    Scenario: Execute paInviaRT job
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         And initial XML paaInviaRT
@@ -142,4 +142,3 @@ Feature: T139C_notificaAnnullamento - RT_RIFIUTATA_PA -> noRetry
         """
         And EC replies to nodo-dei-pagamenti with the paaInviaRT
         When job paInviaRt triggered after 20 seconds
-        Then wait 30 seconds for expiration

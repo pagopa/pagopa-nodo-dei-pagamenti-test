@@ -35,7 +35,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     And save activatePaymentNotice response in activatePaymentNotice1
     And saving activatePaymentNotice request in activatePaymentNotice1
 
-@runnable
+@runnable @dependentread @lazy @dependentwrite 
   Scenario: Execute activatePaymentNotice1 request
     Given the Execute activatePaymentNotice request scenario executed successfully
     And wait 70 seconds for expiration

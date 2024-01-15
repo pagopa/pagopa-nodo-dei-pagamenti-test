@@ -332,7 +332,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO]
         Then check esito is OK of nodoInviaRPT response
         And check redirect is 0 of nodoInviaRPT response
 
-@runnable
+@runnable @dependentwrite @lazy @dependentwrite
     Scenario: Execute sendPaymentOutcome
         Given the Execute second nodoInviaRPT request scenario executed successfully
         And initial XML sendPaymentOutcome

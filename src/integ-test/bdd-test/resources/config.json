@@ -102,10 +102,10 @@
       },
       "nodo_online": {
          "host": "localhost",
-         "database": "ORCLCDB.localdomain",
+         "database": "NDPSPCT_NODO_ONLINE",
          "user": "NODO_ONLINE",
          "password": "NODO_ONLINE",
-         "port": "1521"
+         "port": "1522"
       },
       "nodo_offline": {
          "host": "localhost",

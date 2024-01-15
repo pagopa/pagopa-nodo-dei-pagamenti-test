@@ -550,7 +550,7 @@ Feature: process tests for T099_C_chiediStato_RT_RIFIUTATA_NODO_Carrello_sblocco
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check faultCode contains PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
-@runnable
+@runnable @independent
     Scenario: Execute third nodoInviaRT request
         Given the Execute second nodoInviaCarrelloRPT scenario executed successfully
         And initial XML nodoInviaRT

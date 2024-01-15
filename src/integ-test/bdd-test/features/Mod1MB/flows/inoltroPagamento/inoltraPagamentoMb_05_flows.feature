@@ -265,7 +265,7 @@ Feature: process tests for inoltropagamentoMb_05
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
 
-@runnable
+@runnable @dependentread @lazy
     Scenario: Trigger paInviaRT
         Given the Execute nodoInoltraPagamentoMod1 scenario executed successfully
         When job paInviaRt triggered after 5 seconds

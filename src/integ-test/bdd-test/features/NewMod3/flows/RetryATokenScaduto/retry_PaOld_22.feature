@@ -334,7 +334,7 @@ Feature: process tests for retry a token scaduto
     Then check esito is KO of nodoInviaRPT response
     And check faultCode is PPT_SEMANTICA of nodoInviaRPT response
 
-  @runnable
+  @runnable @lazy @dependentread @dependentwrite
   Scenario: DB check [retry_PaOld_22]
     Given the Execute nodoInviaRPT2 request scenario executed successfully
     And wait 5 seconds for expiration

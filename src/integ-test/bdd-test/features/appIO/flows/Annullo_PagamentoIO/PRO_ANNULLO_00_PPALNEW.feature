@@ -123,7 +123,7 @@ Feature: PRO_ANNULLO_00_PPALNEW
         And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
     
-    @runnable  
+    @runnable @dependentread @dependentwrite @lazy  
     Scenario: Execute activateIOPayment (Phase 5)
         Given the Execute nodoInoltroEsitoPayPal (Phase 4) scenario executed successfully
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti

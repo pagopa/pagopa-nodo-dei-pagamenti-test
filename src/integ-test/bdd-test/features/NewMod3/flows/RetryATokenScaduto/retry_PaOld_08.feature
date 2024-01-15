@@ -174,7 +174,7 @@ Feature: process tests for retryAtokenScaduto
     And replace iuv content with $1iuv content
     And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
-@runnable
+@runnable @lazy @dependentread @dependentwrite
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request [retry_PaOld_08]
     Given the Execute poller Annulli scenario executed successfully

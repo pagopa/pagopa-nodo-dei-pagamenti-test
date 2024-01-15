@@ -31,7 +31,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     Then check outcome is OK of activatePaymentNotice response
     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_act on db nodo_online under macro NewMod3
 
-@runnable
+@runnable @dependentread @lazy @dependentwrite 
   Scenario: Poller annulli
     Given the Execute activatePaymentNotice request scenario executed successfully
     When job mod3CancelV1 triggered after 7 seconds

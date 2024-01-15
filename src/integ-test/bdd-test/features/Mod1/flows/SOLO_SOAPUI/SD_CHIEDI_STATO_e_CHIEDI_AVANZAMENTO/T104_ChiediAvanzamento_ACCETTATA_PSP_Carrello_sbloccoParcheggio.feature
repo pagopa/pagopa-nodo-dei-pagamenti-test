@@ -436,7 +436,7 @@ Feature: T104_ChiediAvanzamento_ACCETTATA_PSP_Carrello_sbloccoParcheggio
         And wait 5 seconds for expiration
         Then checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
 
-@runnable
+@runnable @dependentread @lazy
 Scenario: Execution Esito Carta1
         Given the Execute pspChiediAvanzamentoRPT scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte

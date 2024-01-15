@@ -134,7 +134,7 @@ Feature: process tests for Retry_DB_GR_08
     Then verify the HTTP status code of mod3CancelV2 response is 200
     And wait 10 seconds for expiration
 
-  @runnable
+  @runnable @lazy @dependentread
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
     Given the Poller Annulli Scenario executed successfully

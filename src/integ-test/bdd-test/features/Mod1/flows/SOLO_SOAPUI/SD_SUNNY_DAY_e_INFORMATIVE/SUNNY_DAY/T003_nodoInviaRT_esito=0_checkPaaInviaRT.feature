@@ -216,7 +216,7 @@ Feature: T003_nodoInviaRT_esito=0_checkPaaInviaRT
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-    @runnable
+    @runnable @dependentread
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaRPT scenario executed successfully
         And initial XML nodoInviaRT

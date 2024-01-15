@@ -505,7 +505,7 @@ Feature: process tests for InoltroEsitoCartaCarrello
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-@runnable
+@runnable @independent
     Scenario: Execute nodoInviaRT2 request
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoInviaRT

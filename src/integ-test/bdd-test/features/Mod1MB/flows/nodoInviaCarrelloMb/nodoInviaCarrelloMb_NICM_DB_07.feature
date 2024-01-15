@@ -400,7 +400,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_07]
             </pay_i:RPT>
             """
 
-@runnable
+@runnable @dependentread @dependentwrite
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the Generation of two more RPT scenario executed successfully
         And initial XML paaInviaRT

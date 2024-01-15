@@ -34,7 +34,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     Then check outcome is OK of activatePaymentNotice response
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_19.1]
-  @runnable
+  @runnable @independent
   Scenario: Execute again the same activatePaymentNotice request without idempotencyKey
     Given the Execute activatePaymentNotice request scenario executed successfully
     And idempotencyKey with None in activatePaymentNotice
@@ -52,7 +52,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of activatePaymentNotice response
 
   # Activate Phase 2 - PPT_ERRORE_IDEMPOTENZA [SEM_APNR_20]
-  @runnable
+  @runnable @lazy
   Scenario Outline: Execute again the activatePaymentNotice request with same idempotencyKey before it expires
     Given the Execute activatePaymentNotice request scenario executed successfully
     And wait 2 seconds for expiration
@@ -73,7 +73,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
       | expirationTime | None         | expirationTime assente |
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO SEM_APNR_21]
-  @runnable
+  @runnable @lazy @dependentwrite 
   Scenario: Execute again activatePaymentNotice request right after expirationTime has passed (before the execution of mod3Cancel poller)
     Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 10
     And nodo-dei-pagamenti has config parameter default_token_duration_validity_millis set to 1800000
@@ -85,7 +85,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And restore initial configurations
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO SEM_APNR_21.1]
-  @runnable
+  @runnable @lazy @dependentwrite 
   Scenario: Execute again activatePaymentNotice request right after expirationTime has passed
     Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 10
     And the Execute activatePaymentNotice request scenario executed successfully
@@ -97,7 +97,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And restore initial configurations
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_22]
-  @runnable
+  @runnable @lazy @dependentwrite 
   Scenario: Execute again activatePaymentNotice request right after default_idempotency_key_validity_minutes has passed
     Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1
     And the Execute activatePaymentNotice request scenario executed successfully
@@ -109,7 +109,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And restore initial configurations
 
   # Activate Phase 2 - PPT_PAGAMENTO_IN_CORSO [SEM_APNR_23.1]
-  @runnable
+  @runnable @independent
   Scenario: Execute agin activatePaymentNotice request except for missing idempotencyKey
     Given the Execute activatePaymentNotice request scenario executed successfully
     And idempotencyKey with None in activatePaymentNotice
@@ -126,7 +126,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And check faultCode is PPT_SINTASSI_EXTRAXSD of activatePaymentNotice response
 
   # Activate Phase 2 - after a syntax error regarding no value of idPSP [IDMP_ACT_15.1]
-  @runnable
+  @runnable @independent
   Scenario: Execute formally correct activatePaymentNotice request with same idempotencyKey before it expires
     Given the Execute activatePaymentNotice request with an empty idPSP scenario executed successfully
     And idPSP with #psp# in activatePaymentNotice
@@ -142,7 +142,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And check faultCode is PPT_AUTENTICAZIONE of activatePaymentNotice response
 
   # Activate Phase 2 - after a semantic error regarding wrong password [IDMP_ACT_15.2]
-  @runnable
+  @runnable @independent
   Scenario: Execute formally correct activatePaymentNotice request with same idempotencyKey before it expires
     Given the Execute activatePaymentNotice request with wrong password scenario executed successfully
     And password with pwdpwdpwd in activatePaymentNotice
@@ -152,7 +152,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And restore initial configurations
 
   # Activate Phase 2 - different PSP in second activate [IDMP_ACT_16.1]
-  @runnable
+  @runnable @independent
   Scenario: Execute activatePaymentNotice request with different idPSP-idBrokerPSP-idChannel before idempotencyKey expires
     Given the Execute activatePaymentNotice request scenario executed successfully
     And idPSP with 40000000001 in activatePaymentNotice
@@ -164,7 +164,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And restore initial configurations
 
   # Activate Phase 2 - different position in second activate [IDMP_ACT_17]
-  @runnable
+  @runnable @lazy @dependentwrite 
   Scenario Outline: Execute activatePaymentNotice request with different fiscalCode, right after default_idempotency_key_validity_minutes has passed
     Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1
     Given the Execute activatePaymentNotice request scenario executed successfully
@@ -184,7 +184,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     Then verify the HTTP status code of mod3CancelV2 response is 200
 
   # Activate Phase 2 - different amount - [IDMP_ACT_20]
-  @runnable
+  @runnable @lazy
   Scenario: Execute activatePaymentNotice request with different amount
     Given the Execute mod3Cancel poller scenario executed successfully
     And amount with 8.00 in activatePaymentNotice
@@ -201,7 +201,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     Then verify the HTTP status code of idempotencyCacheClean response is 200
 
   # Activate Phase 2 - different amount [IDMP_ACT_23]
-  @runnable
+  @runnable @lazy @dependentwrite 
   Scenario: Execute activatePaymentNotice request with different amount
     Given the Execute idempotencyCacheClean poller scenario executed successfully
     And amount with 8.00 in activatePaymentNotice
@@ -211,7 +211,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     And restore initial configurations
 
   # Activate Phase 2 - different amount - Not idempotency cache clean [IDMP_ACT_24]
-  @runnable
+  @runnable @lazy @dependentwrite 
   Scenario: Execute activatePaymentNotice request with different amount, after waiting 130 seconds
     Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
     And nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 1

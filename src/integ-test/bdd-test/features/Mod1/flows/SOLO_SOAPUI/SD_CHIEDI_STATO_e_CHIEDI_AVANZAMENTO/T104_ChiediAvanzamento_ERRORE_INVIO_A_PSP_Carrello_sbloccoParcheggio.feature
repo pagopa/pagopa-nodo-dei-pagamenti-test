@@ -457,7 +457,7 @@ Feature: T104_ChiediAvanzamento_ERRORE_INVIO_A_PSP_Carrello_sbloccoParcheggio
         And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati_pa on db nodo_online under macro Mod1
         And checks the value CART_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
 
-@runnable
+@runnable @dependentread @lazy
 Scenario: Execution Esito Carta1
         Given the Execute job pspChiediAvanzamentoRPT scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte

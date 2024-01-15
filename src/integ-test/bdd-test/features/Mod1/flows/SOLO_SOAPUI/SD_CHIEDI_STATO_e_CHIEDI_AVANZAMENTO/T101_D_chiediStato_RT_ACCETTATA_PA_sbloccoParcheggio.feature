@@ -322,7 +322,7 @@ Feature: T101_D_chiediStato_RT_ACCETTATA_PA_sbloccoParcheggio
         Then verify the HTTP status code of notificaAnnullamento response is 404
         And check error is Il Pagamento indicato non esiste of notificaAnnullamento response
 
-@runnable
+@runnable @lazy @independent
     Scenario: Execute nodoChiediStatoRPT
         Given the Execute nodoNotificaAnnullamento scenario executed successfully
         And initial XML nodoChiediStatoRPT

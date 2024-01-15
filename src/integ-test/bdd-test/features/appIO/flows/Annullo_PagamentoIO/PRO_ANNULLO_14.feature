@@ -85,7 +85,7 @@ Feature: PRO_ANNULLO_14
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
  
-    @runnable
+    @runnable @dependentread @dependentwrite @lazy
     Scenario: Execute nodoInoltroEsitoPagamentoCarta (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti

@@ -3,7 +3,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
    Background:
       Given systems up
 
-@runnable
+@runnable @independent
    # [CFRSIN0]
    Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediFlussoRendicontazione primitive
       Given initial XML nodoChiediFlussoRendicontazione
@@ -27,7 +27,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
       When  EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
       Then  check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediFlussoRendicontazione response
 
-@runnable
+@runnable @independent
    #[CFRSIN1]
    Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediFlussoRendicontazione primitive
       Given initial XML nodoChiediFlussoRendicontazione
@@ -51,7 +51,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
       When  EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
       Then  check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediFlussoRendicontazione response
 
-@runnable
+@runnable @independent
    Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediFlussoRendicontazione primitive
       Given initial XML nodoChiediFlussoRendicontazione
          """
@@ -78,7 +78,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          | ws:nodoChiediFlussoRendicontazione | Empty | CFRSIN4     |
          | soapenv:Body                       | None  | CFRSIN3     |
 
-@runnable
+@runnable @independent
    Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediFlussoRendicontazione primitive
       Given initial XML nodoChiediFlussoRendicontazione
          """
@@ -117,7 +117,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
          | identificativoPSP                     | k91JETYVnE7grIIKbzWE6Di7XKM3ymJeawhf | CFRSIN21    |
          | identificativoFlusso                  | None                                 | CFRSIN22    |
 
-@runnable
+@runnable @independent
    Scenario Outline: Check for nodoChiediFlussoRendicontazione response
       Given initial XML nodoChiediFlussoRendicontazione
          """
@@ -142,7 +142,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
       | identificativoDominio | None  | CFRSIN16    |
       | identificativoPSP     | None  | CFRSIN19    |
 
- @runnable  
+ @runnable @independent  
    # [CFRSIN17]
    Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediFlussoRendicontazione primitive
       Given initial XML nodoChiediFlussoRendicontazione
@@ -164,7 +164,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
       When  EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
       Then  check faultCode is PPT_SINTASSI_EXTRAXSD of nodoChiediFlussoRendicontazione response
 
- @runnable  
+ @runnable @independent  
    # [CFRSIN23]
    Scenario: Check PPT_ID_FLUSSO_SCONOSCIUTO error for nodoChiediFlussoRendicontazione primitive
       Given initial XML nodoChiediFlussoRendicontazione
@@ -186,7 +186,7 @@ Feature: Syntax checks for nodoChiediFlussoRendicontazione
       When  EC sends SOAP nodoChiediFlussoRendicontazione to nodo-dei-pagamenti
       Then  check faultCode is PPT_ID_FLUSSO_SCONOSCIUTO of nodoChiediFlussoRendicontazione response
 
-@runnable  
+@runnable @independent  
    # [CFRSIN24]
    Scenario: Check PPT_SINTASSI_EXTRAXSD error for nodoChiediFlussoRendicontazione primitive
       Given initial XML nodoChiediFlussoRendicontazione

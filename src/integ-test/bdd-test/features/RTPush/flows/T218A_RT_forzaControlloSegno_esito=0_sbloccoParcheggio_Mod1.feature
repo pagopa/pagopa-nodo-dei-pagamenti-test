@@ -226,7 +226,7 @@ Feature: T218_RT_forzaControlloSegno_esito=0_sbloccoParcheggio_Mod1
             """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
         And check esito is OK of inoltroEsito/mod1 response
-@runnable
+@runnable @independent
     Scenario Outline: Execute nodoInviaRT (Phase 3)
         Given the Execute nodoInoltroEsitoMod1 (Phase 2) scenario executed successfully
         And initial XML nodoInviaRT

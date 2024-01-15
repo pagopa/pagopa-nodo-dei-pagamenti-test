@@ -75,14 +75,14 @@ Feature: Semantic checks OK for nodoAttivaRPT
             </soapenv:Body>
             </soapenv:Envelope>
             """
-@runnable
+@runnable @independent
   # importoSingoloVersamento OK value check
   Scenario: Check response of nodo-dei-pagamenti for value importoSingoloVersamento [ARPTSEM16]
     Given importoSingoloVersamento with 0.00 in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoAttivaRPT response    
 
-@runnable
+@runnable @independent
   Scenario Outline: Check response OK of nodo-dei-pagamenti
     Given <elem> with <value> in nodoAttivaRPT
     When psp sends SOAP nodoAttivaRPT to nodo-dei-pagamenti

@@ -83,7 +83,7 @@ Feature: flow checks for verificaBollettino - EC new
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @runnable
+  @runnable @independent
   # Payment Outcome Phase outcome OK - TF_VB_04
   Scenario: Execute sendPaymentOutcome request
     Given the Execute activatePaymentNotice request scenario executed successfully

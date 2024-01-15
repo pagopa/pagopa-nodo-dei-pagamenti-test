@@ -188,7 +188,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_RPT_TIMEOUT-BUG_593
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And checks esito contains ACK_UNKNOWN of avanzamentoPagamento response
         
-@runnable
+@runnable @independent
     Scenario: Execution second rest Esito Carta
         Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
         And initial XML pspInviaRPT 

@@ -81,7 +81,7 @@ Feature: process tests for nodoInviaRT_ibanAccr_ibanAdd
             </pay_i:RPT>
             """
     
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT

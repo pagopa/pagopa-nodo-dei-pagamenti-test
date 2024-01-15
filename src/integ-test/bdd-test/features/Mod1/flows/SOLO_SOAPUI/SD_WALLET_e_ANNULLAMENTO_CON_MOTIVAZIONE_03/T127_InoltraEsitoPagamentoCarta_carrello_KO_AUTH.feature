@@ -490,7 +490,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH
     When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
     Then check esito is KO of nodoInviaRT response
 
-@runnable  
+@runnable @independent  
   Scenario: Execute nodoInviaRT2 request
     Given the Execute nodoInviaRT1 request scenario executed successfully
     And initial XML nodoInviaRT

@@ -33,7 +33,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - use
     Then check outcome is OK of activatePaymentNotice response
 
   # Activate Phase 2 [SEM_APNR_19]
-  @runnable
+  @runnable @lazy @dependentwrite 
   Scenario: Execute again activatePaymentNotice request before idempotencyKey expires
     Given the Execute activatePaymentNotice request scenario executed successfully
     And call the paymentToken of activatePaymentNotice response as target

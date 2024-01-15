@@ -40,7 +40,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@runnable
+@runnable @independent
     Scenario Outline: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -76,7 +76,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             | identificativoDominio          | sconosciuto        | PPT_DOMINIO_SCONOSCIUTO            | SEM_NIFR_08 |
             | identificativoDominio          | NOT_ENABLED        | PPT_DOMINIO_DISABILITATO           | SEM_NIFR_09 |
 
-@runnable
+@runnable @independent
     # [SEM_NIFR_10]
     Scenario: Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
@@ -101,7 +101,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check faultCode is PPT_SEMANTICA of nodoInviaFlussoRendicontazione response
 
-@runnable
+@runnable @independent
     # [SEM_NIFR_11]
     Scenario: Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
@@ -126,7 +126,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check faultCode is PPT_SEMANTICA of nodoInviaFlussoRendicontazione response
 
-@runnable
+@runnable @independent
     # [SEM_NIFR_14]
     Scenario: Check PPT_AUTORIZZAZIONE error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
@@ -200,7 +200,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         Then check esito is KO of nodoInviaFlussoRendicontazione response
         And check faultCode is PPT_SEMANTICA of nodoInviaFlussoRendicontazione response
 
-@runnable
+@runnable @independent
     # [SEM_NIFR_15]
     Scenario: Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione_dataOraFlussoMinore primitive
         Given the Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione_dataOraFlussoUguale primitive scenario executed successfully
@@ -289,7 +289,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
  
- @runnable
+ @runnable @independent
     # [SEM_NIFR_17]
     Scenario: Send nodoInviaFlussoRendicontazione_dataOraMaggiore primitive
         Given the Create a new REND scenario executed successfully
@@ -402,7 +402,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         Then check esito is KO of nodoInviaFlussoRendicontazione response
         And check faultCode is PPT_SEMANTICA of nodoInviaFlussoRendicontazione response
 
-@runnable
+@runnable @independent
     #[SEM_NIFR_19]
     Scenario: Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione_dataOraFlussoMinore primitive
         Given the Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione_dataOraFlussoUguale primitive scenario executed successfully
@@ -428,7 +428,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         Then check esito is KO of nodoInviaFlussoRendicontazione response
         And check faultCode is PPT_SEMANTICA of nodoInviaFlussoRendicontazione response
 
-@runnable
+@runnable @independent
     # [SEM_NIFR_20]
     Scenario: Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
@@ -454,7 +454,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
         Then check esito is KO of nodoInviaFlussoRendicontazione response
         And check faultCode is PPT_SEMANTICA of nodoInviaFlussoRendicontazione response
 
-@runnable
+@runnable @independent
     # [SEM_NIFR_21]
     Scenario: Check PPT_SEMANTICA error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully

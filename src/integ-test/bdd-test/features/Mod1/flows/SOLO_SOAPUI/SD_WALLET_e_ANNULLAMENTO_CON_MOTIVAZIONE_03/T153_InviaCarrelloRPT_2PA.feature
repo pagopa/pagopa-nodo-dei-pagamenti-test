@@ -481,7 +481,7 @@ Feature: T153_InviaCarrelloRPT_2PA
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRT1 request
         Given the Execute nodoInviaRT request scenario executed successfully
         And initial XML nodoInviaRT

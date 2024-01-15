@@ -62,7 +62,7 @@ Feature: Process tests for retry a token scaduto
     Given the Execute activatePaymentNotice request scenario executed successfully
     And PSP waits expirationTime of activatePaymentNotice expires
     
-  @runnable
+  @runnable @lazy @dependentread
 # Payment Outcome Phase outcome OK 
   Scenario: Execute sendPaymentOutcome request
     Given the Execute sleep phase1 scenario executed successfully

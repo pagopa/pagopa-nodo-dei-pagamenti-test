@@ -2,7 +2,7 @@ Feature: Semantic checks KO for nodoChiediInformativaPA
     Background:
         Given systems up
     
-    @runnable
+    @runnable @independent
     Scenario: Check CIPASEM2 
     Given initial XML nodoChiediInformativaPA
         """

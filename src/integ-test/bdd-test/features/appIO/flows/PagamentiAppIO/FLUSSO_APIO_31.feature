@@ -124,7 +124,7 @@ Scenario: Execute nodoNotificaAnnullamento (Phase 4)
     # check correctness IDEMPOTENCY_CACHE table
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
 
-@runnable
+@runnable @dependentread
 Scenario: Check activateIOPayment1 response with different idempotencyKey in the request after nodoNotificaAnnullamento
     Given the Execute nodoNotificaAnnullamento (Phase 4) scenario executed successfully
     And random idempotencyKey having #psp# as idPSP in activateIOPayment

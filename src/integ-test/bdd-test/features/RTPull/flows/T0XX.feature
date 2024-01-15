@@ -3,7 +3,7 @@ Feature: Execute nodoInviaRPT - MOD2 [T0XX]
     Background:
         Given systems up
 
-@runnable
+@runnable @dependentread @lazy
     Scenario: Execute nodoInviaRPT - MOD2 [T0XX]
         #Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canale_DIFFERITO_MOD2#' under macro update_query on db nodo_cfg
         #And refresh job ALL triggered after 10 seconds

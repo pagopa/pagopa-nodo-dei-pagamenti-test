@@ -164,7 +164,7 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_NM3_OK]
         And check idDominio is $verifyPaymentNotice.fiscalCode of informazioniPagamento response
         And check enteBeneficiario field exists in informazioniPagamento response
 
-    @runnable
+    @runnable @independent
     Scenario: initial primitive request
         Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
         And initial XML sendPaymentOutcome

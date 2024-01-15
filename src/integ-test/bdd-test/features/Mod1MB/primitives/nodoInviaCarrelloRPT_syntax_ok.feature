@@ -87,7 +87,7 @@ Feature: check syntax OK for nodoCarrelloMultibeneficiarioRPT
          </pay_i:RPT>
          """
 
-   @runnable
+   @runnable @independent
     Scenario: Check OK response on missing optional fields multiBeneficiario
         Given the Define RPT scenario executed successfully
         And initial XML nodoInviaCarrelloRPT

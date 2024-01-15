@@ -3054,8 +3054,10 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
-    print(selected_query)
+    print('>>>>>>>>>>>>', selected_query)
+
     exec_query = db.executeQuery(conn, selected_query)
+    print('#############', exec_query)
 
     query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)

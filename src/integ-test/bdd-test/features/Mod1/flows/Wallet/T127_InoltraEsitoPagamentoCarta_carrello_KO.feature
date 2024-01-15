@@ -538,7 +538,7 @@ Feature: process tests for InoltroEsitoCartaCarrello_KO
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
-@runnable
+@runnable @independent
     Scenario: Execution second rest Esito Carta
         Given the Execute nodoInviaRT2 request scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte 

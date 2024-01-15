@@ -323,7 +323,7 @@ Feature: process tests for ChiediAvanzamento_RIFIUTATA_PSP_Carrello_sbloccoParch
         And check esito is KO of inoltroEsito/carta response
         And check url field not exists in inoltroEsito/carta response
 
-@runnable
+@runnable @dependentread @lazy
     Scenario: Execute third check DB-RPT
         Given the Execution retry Esito Carta scenario executed successfully
         And replace pa content with #creditor_institution_code_old# content

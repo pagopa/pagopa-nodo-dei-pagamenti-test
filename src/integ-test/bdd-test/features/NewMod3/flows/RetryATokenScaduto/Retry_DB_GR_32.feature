@@ -193,7 +193,7 @@ Feature: process tests for Retry_DB_GR_32
     #Given the Execute sendPaymentOutcome request scenario executed successfully
     #When job paSendRt triggered after 5 seconds
     #Then verify the HTTP status code of paSendRt response is 200
-  @runnable
+  @runnable @lazy @dependentread @dependentwrite
   Scenario: DB check + db update
     Given the Execute sendPaymentOutcome request scenario executed successfully 
     And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query position_receipt_recipient_status on db nodo_online under macro NewMod3

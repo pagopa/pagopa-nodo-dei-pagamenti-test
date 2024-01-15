@@ -34,7 +34,7 @@ Feature:  block check for activatePaymentNoticeReq - position status in PAYING [
     And save activatePaymentNotice response in activatePaymentNotice1
 
   # Activate Phase 2
-  @runnable
+  @runnable @dependentread
   Scenario: Execute activatePaymentNotice request with same request as Activate Phase 1 except for idempotencyKey
     Given the Execute activatePaymentNotice request scenario executed successfully
     And initial XML activatePaymentNotice

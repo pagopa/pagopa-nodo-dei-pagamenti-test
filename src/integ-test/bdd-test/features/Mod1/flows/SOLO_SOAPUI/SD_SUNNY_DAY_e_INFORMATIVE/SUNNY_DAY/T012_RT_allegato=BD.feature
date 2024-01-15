@@ -259,7 +259,7 @@ Feature: T012_RT_allegato=BD
         Then check esito is OK of nodoInviaRPT response
         And check redirect is 1 of nodoInviaRPT response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaRPT request scenario executed successfully
         And initial XML nodoInviaRT

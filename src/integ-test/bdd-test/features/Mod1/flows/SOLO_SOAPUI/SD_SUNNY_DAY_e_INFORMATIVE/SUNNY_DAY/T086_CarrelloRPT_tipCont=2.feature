@@ -2,7 +2,7 @@ Feature: T086_CarrelloRPT_tipCont=2
     Background:
         Given systems up
        
-@runnable
+@runnable @independent
    Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
         And generate 1 cart with PA #creditor_institution_code# and notice number $1noticeNumber

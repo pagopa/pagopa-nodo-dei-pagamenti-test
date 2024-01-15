@@ -167,7 +167,7 @@ Feature: Syntax checks for RT with MB - KO
 
   
 
-  @runnable
+  @runnable @independent
   Scenario Outline: Check faultCode PPT_SINTASSI_XSD error on invalid RT tag
     Given the Execute nodoInviaRPT scenario executed successfully
     And initial xml RT

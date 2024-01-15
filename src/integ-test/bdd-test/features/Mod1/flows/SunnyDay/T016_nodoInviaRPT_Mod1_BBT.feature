@@ -81,7 +81,7 @@ Feature: process tests for nodoInviaRT_Mod1_BBT
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+@runnable @independent
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT

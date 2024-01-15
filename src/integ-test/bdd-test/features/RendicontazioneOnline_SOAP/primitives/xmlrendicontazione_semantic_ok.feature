@@ -41,7 +41,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@runnable
+@runnable @independent
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -103,7 +103,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@runnable
+@runnable @independent
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND2 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -165,7 +165,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@runnable
+@runnable @independent
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND3 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -227,7 +227,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@runnable
+@runnable @independent
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND4 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -289,7 +289,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@runnable
+@runnable @independent
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND5 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -351,7 +351,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@runnable
+@runnable @independent
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND6 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -413,7 +413,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@runnable
+@runnable @independent
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND7 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -475,7 +475,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@runnable
+@runnable @independent
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND8 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -545,7 +545,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@runnable
+@runnable @independent
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND08 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -615,7 +615,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@runnable
+@runnable @independent
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND9 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -677,7 +677,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@runnable
+@runnable @independent
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND10 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -747,7 +747,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@runnable
+@runnable @independent
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND11 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -809,7 +809,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@runnable
+@runnable @independent
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND12 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -933,7 +933,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@runnable
+@runnable @independent
     Scenario: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND13 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione

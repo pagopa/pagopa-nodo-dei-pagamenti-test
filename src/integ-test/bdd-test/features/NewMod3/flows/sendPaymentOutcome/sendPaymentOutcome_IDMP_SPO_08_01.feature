@@ -65,7 +65,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
     And save activatePaymentNotice response in activatePaymentNotice2
     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_psp_2 on db nodo_online under macro NewMod3
 
-@runnable
+@runnable @dependentread @dependentwrite
   # Send payment outcome Phase
   Scenario: Execute sendPaymentOutcome request
     Given the Execute activatePaymentNotice2 request scenario executed successfully

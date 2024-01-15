@@ -138,7 +138,7 @@ Feature:  block checks for verificaBollettino - position status in PAID [Verific
     And check faultCode is PPT_PAGAMENTO_DUPLICATO of verificaBollettino response
 
 
-  @runnable
+  @runnable @independent
   Scenario: Execute verificaBollettino request with the same request as Verify Phase 1, few seconds after the Payment Outcome Phase (e.g. 30s)
     Given EC replies to nodo-dei-pagamenti with the paSendRT
       """

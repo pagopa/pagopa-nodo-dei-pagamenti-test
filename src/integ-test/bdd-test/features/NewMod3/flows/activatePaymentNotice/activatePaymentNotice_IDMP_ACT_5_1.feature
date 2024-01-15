@@ -31,7 +31,7 @@ Feature: semantic check for activatePaymentNotice regarding idempotency
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_SINTASSI_EXTRAXSD of activatePaymentNotice response
 
-  @runnable
+  @runnable @dependentread @lazy @dependentwrite 
   Scenario: Execute activatePaymentNotice1 request
     Given the Execute activatePaymentNotice request scenario executed successfully
     And initial XML activatePaymentNotice

@@ -470,7 +470,7 @@ Feature: ChiediAvanzamento_RTdellaSeconda
         And checks the value CART_ACCETTATO_PSP of the record at column STATO of the table STATI_CARRELLO_SNAPSHOT retrived by the query motivo_annullamento on db nodo_online under macro Mod1
         And verify 0 record for the table RETRY_RPT retrived by the query retry_rpt_original on db nodo_online under macro Mod1
     
-    @runnable
+    @runnable @dependentread @lazy
      Scenario: clean pspChiediAvanzamentoRPT queue
         Given the execution nodoInviaRT2 scenario executed successfully
         When job pspChiediAvanzamentoRpt triggered after 5 seconds

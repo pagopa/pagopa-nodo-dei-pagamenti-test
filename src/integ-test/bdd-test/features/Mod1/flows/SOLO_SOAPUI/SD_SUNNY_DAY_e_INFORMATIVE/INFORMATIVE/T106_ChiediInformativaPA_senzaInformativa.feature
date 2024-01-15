@@ -2,7 +2,7 @@ Feature: T106_ChiediInformativaPA_senzaInformativa
 
     Background:
         Given systems up
-@runnable
+@runnable @independent
     Scenario: Send nodoChiediInformativaPA
         Given initial XML nodoChiediInformativaPA
             """

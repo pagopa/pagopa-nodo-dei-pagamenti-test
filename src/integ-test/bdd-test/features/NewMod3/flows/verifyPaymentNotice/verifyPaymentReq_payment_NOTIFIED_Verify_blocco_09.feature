@@ -113,7 +113,7 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
 
 
   # Verify Phase 2
-  @runnable
+  @runnable @lazy
   Scenario: Execute verifyPaymentNotice with the same request as Verify Phase 1, few seconds after the Payment Outcome Phase (e.g. 30s)
     Given the Execute sendPaymentOutcome request scenario executed successfully
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti

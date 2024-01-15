@@ -93,7 +93,7 @@ Feature: Pag-1163_Paypal_NM3_timeout
         And check CCP is $activateIOPaymentResponse.paymentToken of informazioniPagamento response
         And check enteBeneficiario field exists in informazioniPagamento response
 
-    @runnable
+    @runnable @independent
     Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and sendPaymentOutcome OK
         Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully
         And initial XML sendPaymentOutcome

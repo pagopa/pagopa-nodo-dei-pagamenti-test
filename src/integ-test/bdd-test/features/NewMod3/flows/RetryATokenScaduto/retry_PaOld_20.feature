@@ -224,7 +224,7 @@ Feature: process tests for retry a token scaduto
     Then check faultCode is PPT_SEMANTICA of nodoInviaRPT response
     And check description is RPT non attivata of nodoInviaRPT response
 
-  @runnable
+  @runnable @lazy @dependentread
   # test execution
   Scenario: Execution test rety_PaOld_20
     Given the Execute sendPaymentOutcome request scenario executed successfully

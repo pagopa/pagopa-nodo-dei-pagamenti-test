@@ -123,7 +123,7 @@ Feature: process tests for generazioneRicevute
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-@runnable
+@runnable @dependentwrite @lazy
   Scenario: Execution test DB_GR_03/09
     Given the Execute activatePaymentNotice request scenario executed successfully
     When job mod3CancelV2 triggered after 3 seconds

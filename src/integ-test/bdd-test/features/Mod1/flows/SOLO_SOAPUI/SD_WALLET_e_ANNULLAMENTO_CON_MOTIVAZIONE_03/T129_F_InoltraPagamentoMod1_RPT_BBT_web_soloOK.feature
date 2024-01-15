@@ -255,7 +255,7 @@ Feature: T129_F_InoltraPagamentoMod1_RPT_BBT_web_soloOK
 
    
 
-@runnable
+@runnable @independent
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoInviaRT

@@ -477,7 +477,7 @@ Feature: T136A_InoltraPagamentoMod2_carrello_ProxyError502
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRT2
         Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
         And initial XML nodoInviaRT

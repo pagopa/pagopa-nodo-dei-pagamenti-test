@@ -204,7 +204,7 @@ Feature: process tests for nodoInviaCarrelloMb[NICM_DB_18_multibeneficiario=fals
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+@runnable @dependentread
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT

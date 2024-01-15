@@ -266,7 +266,7 @@ Feature: T101_F_chiediStato_RT_ACCETTATA_PA_Annullamento_bollo
       Then verify the HTTP status code of notificaAnnullamento response is 200
       And check esito is OK of notificaAnnullamento response
       
-    @runnable
+    @runnable @dependentread @lazy
    Scenario: Execute nodoChiediStatoRPT
       Given the Execute nodoNotificaAnnullamento scenario executed successfully
       And wait 10 seconds for expiration

@@ -294,7 +294,7 @@ Feature: PAG-2346 rt push
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
 
-    @test
+    @test @dependentread @lazy
     Scenario: Test part 2
         Given the Test part 1 scenario executed successfully
         And initial XML nodoInviaRT

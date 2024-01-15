@@ -581,7 +581,7 @@ Feature: T103_A_chiediStato_RT_ERRORE_INVIO_A_PA_Carrello
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_RPT_DUPLICATA of nodoInviaCarrelloRPT response
 
-      @runnable
+      @runnable @dependentread @lazy
       Scenario: execution nodoInviaRT2
         Given the nodoInviaCarrelloRPT duplicato scenario executed successfully
         And initial XML nodoInviaRT

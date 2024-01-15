@@ -3,7 +3,7 @@ Feature: T016_F_nodoInviaRPT_Mod1_BBT_wpl02_noPpp
     Background:
         Given systems up
     
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRPT (Phase 1)
         Given replace canaleUsato content with WFESP_02_ila content
         And checks the value wpl02 of the record at column ID_SERV_PLUGIN of the table CANALI retrived by the query chekPlugin on db nodo_cfg under macro Mod1

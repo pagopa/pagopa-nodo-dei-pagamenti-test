@@ -163,7 +163,7 @@ Feature: Semantic checks for nodoInviaCarrelloRPT
          </pay_i:RPT>
          """
 
-@runnable
+@runnable @independent
    Scenario Outline: Check PPT_MULTI_BENEFICIARIO error for nodoInviaCarrelloRPT_nessunTrattino primitive
       Given the RPT2 generation scenario executed successfully
       And initial XML nodoInviaCarrelloRPT

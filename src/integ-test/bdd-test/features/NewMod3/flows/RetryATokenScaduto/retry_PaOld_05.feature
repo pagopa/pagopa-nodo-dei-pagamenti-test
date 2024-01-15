@@ -280,7 +280,7 @@ Feature: process tests for retryAtokenScaduto
       </pay_i:RPT>
       """
       
-  @runnable
+  @runnable @lazy @dependentread @dependentwrite
   Scenario: Excecute nodoInviaRPT3
     Given the Define RPT3 scenario executed successfully
     And initial XML nodoInviaRPT

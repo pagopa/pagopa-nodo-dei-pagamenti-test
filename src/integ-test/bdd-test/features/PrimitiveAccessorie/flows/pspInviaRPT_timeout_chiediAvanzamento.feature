@@ -137,7 +137,7 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
 
-@runnable
+@runnable @dependentread @lazy
     # [pspChiediAvanzamentoRPT -> OK]
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute nodoInviaRPT request scenario executed successfully
@@ -160,7 +160,7 @@ Feature: pspInviaRPT_timeout_chiediAvanzamento
         Then checks the value RPT_ESITO_SCONOSCIUTO_PSP,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt on db nodo_online under macro Primitive_accessorie
 
-@runnable
+@runnable @dependentread @lazy
     # [pspChiediAvanzamentoRPT -> timeout]
     Scenario: Execute job pspChiediAvanzamentoRPT
         Given the Execute nodoInviaRPT request scenario executed successfully

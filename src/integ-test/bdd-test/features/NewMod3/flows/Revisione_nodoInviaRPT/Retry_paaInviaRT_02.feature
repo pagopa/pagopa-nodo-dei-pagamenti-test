@@ -477,7 +477,7 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_02]
         And check value $xml_rt.causaleVersamento is equal to value $xml_rpt.causaleVersamento
         And check value $xml_rt.datiSpecificiRiscossione is equal to value $xml_rpt.datiSpecificiRiscossione
 
-    @runnable
+    @runnable @lazy @dependentread @dependentwrite
     Scenario: retry paainviart [Retry_paaInviaRT_02]
         Given the DB check scenario executed successfully
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to true

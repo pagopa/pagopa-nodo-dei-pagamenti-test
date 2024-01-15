@@ -332,7 +332,7 @@ Feature: process tests for retryAtokenScaduto
     Then check esito is KO of nodoInviaRPT response
     Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
 
-  @runnable
+  @runnable @lazy @dependentread
   Scenario: DB check
     Given the Execute nodoInviaRPT2 request scenario executed successfully
     And wait 5 seconds for expiration

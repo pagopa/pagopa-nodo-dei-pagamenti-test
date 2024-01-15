@@ -3,7 +3,7 @@ Feature: T067_A_CarrelloRPT_BBT_noPPI
     Background:
         Given systems up
 
-@runnable
+@runnable @independent
     Scenario: RPT generation
         Given RPT1 generation
             """

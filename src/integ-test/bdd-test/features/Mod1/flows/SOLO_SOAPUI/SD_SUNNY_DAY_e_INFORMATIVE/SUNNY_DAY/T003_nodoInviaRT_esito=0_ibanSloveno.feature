@@ -223,7 +223,7 @@ Feature: T003_nodoInviaRT_esito=0_ibanSloveno
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And initial XML nodoInviaRT

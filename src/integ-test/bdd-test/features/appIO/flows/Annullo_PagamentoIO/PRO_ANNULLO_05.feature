@@ -28,7 +28,7 @@ Feature: PRO_ANNULLO_05
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
-    @runnable
+    @runnable @dependentread @dependentwrite @lazy
     Scenario: Execute activateIOPayment (Phase 2)
         Given the Execute verifyPaymentNotice (Phase 1) scenario executed successfully
         And initial XML paGetPayment

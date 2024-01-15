@@ -106,7 +106,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - KO
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
 
-  @runnable
+  @runnable @independent
   # nodoInoltraEsitoPagamentoCarte phase
   Scenario Outline: Execute nodoInoltraEsitoPagamentoCarte request
     Given the Execute nodoChiediInformazioniPagamento request scenario executed successfully

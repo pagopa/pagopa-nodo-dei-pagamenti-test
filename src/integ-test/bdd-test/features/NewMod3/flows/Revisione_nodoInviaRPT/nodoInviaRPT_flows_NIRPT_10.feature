@@ -263,7 +263,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_10]
         #DB CHECK-POSITION_RECEIPT_XML
         And verify 0 record for the table POSITION_RECEIPT_XML retrived by the query payment_status on db nodo_online under macro NewMod3
 
-    @runnable
+    @runnable @lazy @dependentread
     Scenario: Execute activatePaymentNotice1 request
         Given the Excecute nodoInviaRPT scenario executed successfully
         And initial XML activatePaymentNotice

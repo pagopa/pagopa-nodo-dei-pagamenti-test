@@ -129,7 +129,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
     And retrieve session token from $nodoInviaCarrelloRPTResponse.url
     And check substring acardste in url content of nodoInviaCarrelloRPT response
 
-  @runnable
+  @runnable @lazy
   Scenario: Carrello_EsitoMod1_irraggiungibile+notificaAnnullamento_OK (part 2)
     Given the Carrello_EsitoMod1_irraggiungibile+notificaAnnullamento_OK (part 1) scenario executed successfully
     When PM sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti

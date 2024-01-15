@@ -28,7 +28,7 @@ Feature: process check for activatePaymentNotice - KO
     And EC old version
 
   # KO from PA [PRO_APNR_05]
-  @runnable
+  @runnable @independent
   Scenario: Check PPT_ERRORE_EMESSO_DA_PAA error when paGetPaymentRes contains KO outcome
     Given EC replies to nodo-dei-pagamenti with the paGetPayment
       """

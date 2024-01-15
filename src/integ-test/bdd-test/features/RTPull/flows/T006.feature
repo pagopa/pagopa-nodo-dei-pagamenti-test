@@ -3,7 +3,7 @@ Feature: Execute nodoInviaRPT - RT_ESITO_SCONOSCIUTO_PA [T006]
     Background:
         Given systems up
 
-    @runnable
+    @runnable @dependentwrite @dependentread @lazy
     Scenario: Execute nodoInviaRPT - RT_ESITO_SCONOSCIUTO_PA [T006]
         Given nodo-dei-pagamenti has config parameter scheduler.jobName_paRetryPaInviaRtNegative.enabled set to false
         #Given generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTP', with where condition ID_CANALE like '6000%' AND ID_CANALE <> '#canaleRtPull#' under macro update_query on db nodo_cfg

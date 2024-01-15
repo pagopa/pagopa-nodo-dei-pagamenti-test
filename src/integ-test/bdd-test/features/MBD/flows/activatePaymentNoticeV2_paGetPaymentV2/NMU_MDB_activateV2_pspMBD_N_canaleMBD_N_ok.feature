@@ -32,8 +32,8 @@ Feature: activatePaymentNoticeV2Request with psp MBD and canale NO MBD
     #refresh psp e canali
     Scenario: Execute refresh psp e canali
         Given the Execute canale update scenario executed successfully
-        Then refresh job ALL triggered after 10 seconds
-    @test 
+        Then refresh job PSP triggered after 10 seconds
+    @test @dependentwrite @lazy 
     # activateV2 phase
     Scenario: activatePaymentNoticeV2
         Given the Execute refresh psp e canali scenario executed successfully

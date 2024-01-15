@@ -38,6 +38,7 @@ Feature:  block check for activatePaymentNoticeReq - position status in INSERTED
     When job mod3CancelV2 triggered after 3 seconds
     Then verify the HTTP status code of mod3CancelV2 response is 200
 
+  @runnable @lazy
   # Activate Phase 2
   Scenario: Execute activatePaymentNotice request with same request as Activate Phase 1 except for idempotencyKey
     Given the Execute mod3CancelV2 poller scenario executed successfully

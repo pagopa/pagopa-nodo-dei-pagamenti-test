@@ -57,7 +57,7 @@ Feature: process tests Retry_REV_DB_GR_02
         And wait 3 seconds for expiration
 
     # Payment Outcome Phase outcome KO
-    @runnable
+    @runnable @lazy @dependentread
     Scenario: Execute sendPaymentOutcome request
         Given the Execute activatePaymentNotice request scenario executed successfully
         And initial XML sendPaymentOutcome

@@ -35,7 +35,7 @@ Feature: process tests for retry a token scaduto
         And saving activatePaymentNotice request in activatePaymentNotice1
 
 
-    @runnable
+    @runnable @dependentread
     Scenario: Execute activatePaymentNotice2 request
         Given the Execute activatePaymentNotice1 request scenario executed successfully
         And initial XML activatePaymentNotice

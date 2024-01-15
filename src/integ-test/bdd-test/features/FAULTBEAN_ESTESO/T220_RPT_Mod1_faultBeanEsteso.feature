@@ -186,7 +186,7 @@ Feature: T220_RPT_Mod1_faultBeanEsteso
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
 
-@runnable
+@runnable @dependentread
     Scenario: Execute nodoChiediStatoRPT2 (Phase 5)
         Given the Execute nodoInviaRPT1 (Phase 4) scenario executed successfully
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti

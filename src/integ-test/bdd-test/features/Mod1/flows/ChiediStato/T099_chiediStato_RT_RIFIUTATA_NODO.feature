@@ -317,7 +317,7 @@ Feature: process tests for T099_chiediStato_RT_RIFIUTATA_NODO
             """
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
-@runnable
+@runnable @independent
    Scenario: Execute third nodoInviaRT request
         Given the Execute second nodoInviaRPT request scenario executed successfully
         And initial XML nodoInviaRT

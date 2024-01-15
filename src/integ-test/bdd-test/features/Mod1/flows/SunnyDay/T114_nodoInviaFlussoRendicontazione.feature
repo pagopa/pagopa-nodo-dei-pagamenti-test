@@ -39,7 +39,7 @@ Feature: process test for nodoInviaFlussoRendicontazione
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-@runnable
+@runnable @independent
     Scenario: Send nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione

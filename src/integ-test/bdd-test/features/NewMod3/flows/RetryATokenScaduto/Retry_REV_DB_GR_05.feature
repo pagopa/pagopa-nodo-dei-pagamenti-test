@@ -102,7 +102,7 @@ Feature: process tests for Retry_REV_DB_GR_5
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>4.00</transferAmount>
-            <fiscalCodePA>77777777777</fiscalCodePA>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -110,7 +110,7 @@ Feature: process tests for Retry_REV_DB_GR_5
             <transfer>
             <idTransfer>2</idTransfer>
             <transferAmount>3.00</transferAmount>
-            <fiscalCodePA>77777777777</fiscalCodePA>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -118,7 +118,7 @@ Feature: process tests for Retry_REV_DB_GR_5
             <transfer>
             <idTransfer>3</idTransfer>
             <transferAmount>3.00</transferAmount>
-            <fiscalCodePA>77777777777</fiscalCodePA>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -146,6 +146,7 @@ Feature: process tests for Retry_REV_DB_GR_5
         Given the Execute activatePaymentNotice request scenario executed successfully
         Then PSP waits 3 seconds for expiration
 
+    @runnable @lazy @dependentread
     # Payment Outcome Phase outcome OK
     Scenario: Execute sendPaymentOutcome request
         Given the Execute sleep phase scenario executed successfully

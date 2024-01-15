@@ -129,7 +129,7 @@ Feature: process tests for chiediInformazioniPagamento
         And check idDominio is #creditor_institution_code_old# of informazioniPagamento response
         And check enteBeneficiario is AZIENDA XXX of informazioniPagamento response
 
-@runnable
+@runnable @independent
     Scenario: Execute nodoChiediAvanzamentoPagamento
         Given the Execution idPagamento scenario executed successfully
         When WISP sends rest GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti

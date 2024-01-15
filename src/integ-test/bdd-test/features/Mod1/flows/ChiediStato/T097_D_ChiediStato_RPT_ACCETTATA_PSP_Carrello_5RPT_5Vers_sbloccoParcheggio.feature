@@ -903,7 +903,7 @@ Feature: process tests for 5 RPT 5 Versamenti
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
 	    Then check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
-@runnable
+@runnable @dependentread
     Scenario: Execute second nodoChiediStatoRPT request
         Given the Execute second nodoInviaCarrelloRPT scenario executed successfully
         And initial XML nodoChiediStatoRPT

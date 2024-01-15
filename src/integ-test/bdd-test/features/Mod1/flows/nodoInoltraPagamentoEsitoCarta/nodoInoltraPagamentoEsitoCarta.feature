@@ -112,7 +112,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC1
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -133,7 +133,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 404
         And check error is Il Pagamento indicato non esiste of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC2
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -153,7 +153,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 400
         And check error is Richiesta non valida of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC3
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -174,7 +174,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 404
         And check error is Il Pagamento indicato non esiste of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC4
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -195,7 +195,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 422
         And check error is RRN invalido of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC5
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -215,7 +215,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 422
         And check error is RRN invalido of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC6
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -236,7 +236,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 404
         And check error is Il PSP indicato non esiste of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC7
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -257,7 +257,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 404
         And check error is Il PSP indicato non esiste of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC8
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -277,7 +277,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 400
         And check error is Richiesta non valida of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC9
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -298,7 +298,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 404
         And check error is Il PSP indicato non esiste of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC10
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -319,7 +319,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 400
         And check error is Richiesta non valida of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC11
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -340,7 +340,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 422
         And check error is Tipo Versamento invalido of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC12
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -361,7 +361,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 400
         And check error is Richiesta non valida of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC13
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -381,7 +381,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 400
         And check error is Richiesta non valida of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC14
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -401,7 +401,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 400
         And check error is Richiesta non valida of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC15
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -422,7 +422,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 404
         And check error is L'Intermediario indicato non esiste of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC16
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -443,7 +443,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 404
         And check error is L'Intermediario indicato non esiste of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC17
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -464,7 +464,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 404
         And check error is L'Intermediario indicato non esiste of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC18
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -485,7 +485,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 404
         And check error is Il Canale indicato non esiste of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC19
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -506,7 +506,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 404
         And check error is Il Canale indicato non esiste of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC20
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -526,7 +526,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 400
         And check error is Richiesta non valida of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC21
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -547,7 +547,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 404
         And check error is Il Canale indicato non esiste of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC22
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -567,7 +567,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 422
         And check error is Importo Totale Pagato invalido of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC23
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -588,7 +588,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 422
         And check error is Importo Totale Pagato invalido of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC24
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -608,7 +608,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 500
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC25
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -629,7 +629,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 422
         And check error is Importo Totale Pagato invalido of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC26
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -669,7 +669,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC27 -Phase 2
         Given the execution nodoInoltraPagamentoEsitoCarta - PM_IEPC27 -Phase 1 scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -689,7 +689,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC28
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -709,7 +709,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC29
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -729,7 +729,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
             """
         Then verify the HTTP status code of inoltroEsito/carta response is 200
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC30
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -750,7 +750,7 @@ Feature: process tests for nodoInoltraPagamentoEsitoCarta
         Then verify the HTTP status code of inoltroEsito/carta response is 422
         And check error is Codice autorizzativo invalido of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     Scenario: execution nodoInoltraPagamentoEsitoCarta - PM_IEPC31
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest POST inoltroEsito/carta to nodo-dei-pagamenti

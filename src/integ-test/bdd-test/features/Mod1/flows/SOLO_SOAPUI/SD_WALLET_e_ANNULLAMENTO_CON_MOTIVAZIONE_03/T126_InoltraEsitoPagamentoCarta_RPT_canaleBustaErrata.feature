@@ -300,7 +300,7 @@ Feature: T126_InoltraEsitoPagamentoCarta_RPT_canaleBustaErrata
     When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
     Then check esito is KO of nodoInviaRT response
 
-@runnable
+@runnable @independent
   Scenario: Execute nodoInoltraEsitoPagamentoCarta2 request
     Given the Execute nodoInviaRT request scenario executed successfully
     And initial XML pspInviaCarrelloRPTCarte

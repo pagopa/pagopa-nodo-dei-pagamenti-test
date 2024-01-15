@@ -103,7 +103,7 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
          </soapenv:Body>
          </soapenv:Envelope>
          """
-   @test
+   @test @independent
    # PPT_SINTASSI_XSD error on sendPaymentOutcomeV2 for wrong syntax in MBD
    Scenario Outline: Check PPT_SINTASSI_XSD error
       Given the Define MBD test scenario executed successfully
@@ -170,7 +170,7 @@ Feature: MBD syntax checks in sendPaymentOutcomeV2
          | X509Certificate        | s                             | Test 49 |
          | X509CRL                | s                             | Test 50 |
 
-   @test
+   @test @independent
    # sendPaymentOutcomeV2 OK
    Scenario Outline: Check sendPaymentOutcomeV2 OK
       Given the Define MBD test scenario executed successfully

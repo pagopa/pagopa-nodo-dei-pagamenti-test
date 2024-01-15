@@ -54,7 +54,7 @@ Feature:  block checks for verificaBollettino - position status in PAID after re
       Then check outcome is OK of activatePaymentNotice response
 
    # Verify Phase 2
-   @runnable 
+   @runnable @dependentwrite @lazy
    Scenario: Execute verificaBollettino request with the same request as Verify Phase 1
       Given the Execute activatePaymentNotice request scenario executed successfully
       When psp sends SOAP verificaBollettino to nodo-dei-pagamenti

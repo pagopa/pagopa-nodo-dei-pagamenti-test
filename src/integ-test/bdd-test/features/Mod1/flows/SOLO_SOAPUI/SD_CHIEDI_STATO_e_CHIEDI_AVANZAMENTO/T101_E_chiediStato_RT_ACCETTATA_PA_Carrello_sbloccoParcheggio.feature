@@ -594,7 +594,7 @@ Feature: T101_E_chiediStato_RT_ACCETTATA_PA_Carrello_sbloccoParcheggio
         And check redirect is 0 of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
 
-    @runnable
+    @runnable @lazy @independent
     Scenario: execution nodoInviaRT2
         Given the Execute nodoChiediStatoRPT3 scenario executed successfully
         And initial XML nodoInviaRT

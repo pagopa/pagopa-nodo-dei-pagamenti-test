@@ -556,7 +556,7 @@ Feature: gestioneReceiptMb_09_PULL
         And check value $recipientBroker1 is equal to value $pa1
         And check value $recipientStation1 is equal to value #id_station_secondary#
     
-@runnable 
+@runnable @dependentread @dependentwrite @lazy
     Scenario: Check POSITION_RETRY_PA_SEND_RT table
         Given the job pspChiediRT (Phase 4) scenario executed successfully
         And wait 60 seconds for expiration

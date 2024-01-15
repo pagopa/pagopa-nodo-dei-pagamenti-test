@@ -397,7 +397,7 @@ Feature: T131A_InoltraPagamentoMod1_carrello_BP_web
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-@runnable
+@runnable @independent
     Scenario: Execute inoltroEsito/mod1 (Phase 2)
         Given the Execute nodoInviaCarrelloRPT (Phase 1) scenario executed successfully
         And initial XML pspInviaCarrelloRPTCarte

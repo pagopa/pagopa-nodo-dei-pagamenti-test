@@ -56,7 +56,7 @@ Feature: T220_verifica_attiva_faultBeanEsteso
         And replace wrongFaultCode content with PAA_SOAPACTION content
         And check value $nodoVerificaRPTResponse.originalFaultCode is not equal to value $wrongFaultCode
         
-@runnable
+@runnable @dependentwrite @lazy
     Scenario: Execute nodoAttivaRPT (Phase 2)
         Given the Execute nodoVerificaRPT (Phase 1) scenario executed successfully
         And initial XML nodoAttivaRPT

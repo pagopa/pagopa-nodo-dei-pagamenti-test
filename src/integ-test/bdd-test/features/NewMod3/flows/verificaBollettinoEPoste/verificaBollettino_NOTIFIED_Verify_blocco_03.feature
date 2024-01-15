@@ -131,7 +131,7 @@ Feature:  block checks for verificaBollettino - position status in NOTIFIED [Ver
 
 
    # Verify Phase 2
-   @runnable
+   @runnable @dependentwrite @lazy
    Scenario: Execute verificaBollettino request with the same request as Verify Phase 1, few seconds after the Payment Outcome Phase (e.g. 30s)
       Given the Execute sendPaymentOutcome request scenario executed successfully
       When psp sends SOAP verificaBollettino to nodo-dei-pagamenti

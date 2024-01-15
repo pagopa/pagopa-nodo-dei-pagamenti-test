@@ -168,7 +168,7 @@ Feature: Pag-1163_Paypal_NCAP_OK
         And check enteBeneficiario is $ragione_sociale of informazioniPagamento response
         And check ragioneSociale is $ragione_sociale of informazioniPagamento response
 
-    @runnable
+    @runnable @dependentread
     Scenario: Node handling of nodoInoltraEsitoPagamentoPaypal and avanzamentoPagamento error on PA
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         And initial JSON inoltroEsito/paypal

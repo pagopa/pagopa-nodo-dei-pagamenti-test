@@ -109,7 +109,7 @@ Feature: process tests for Gestione Accessi Concorrenziali
     Then check esito is OK of nodoInviaRPT response
     And retrieve session token from $nodoInviaRPTResponse.url
 
-  @runnable
+  @runnable @lazy
   Scenario: EsitoMod1_KO+notificaAnnullamento_OK (part 2)
     Given the EsitoMod1_KO+notificaAnnullamento_OK (part 1) scenario executed successfully
     And initial XML pspInviaRPT

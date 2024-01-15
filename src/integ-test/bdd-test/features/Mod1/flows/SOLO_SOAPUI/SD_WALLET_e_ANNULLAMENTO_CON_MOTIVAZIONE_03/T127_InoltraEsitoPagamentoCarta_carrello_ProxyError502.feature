@@ -528,7 +528,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_ProxyError502
     And check url field not exists in inoltroEsito/carta response
     And check redirect field not exists in inoltroEsito/carta response
 
-@runnable
+@runnable @independent
   Scenario: Execute nodoChiediAvanzamentoPagamento2
     Given the Execute nodoInoltraEsitoPagamentoCarta2 request scenario executed successfully
     When WISP sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti

@@ -82,7 +82,7 @@ Feature: T025_ nodoInviaRPT_autSogg=NA
             </pay_i:RPT>
             """
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT

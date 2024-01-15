@@ -125,7 +125,7 @@ Feature: flow checks for verificaBollettino
 
 
     # verificaBollettino phase 2 - EC old [TF_VB_06]
-    @runnable
+    @runnable @dependentwrite @lazy
     Scenario: Execute verificaBollettino request OLD (Phase 2)
         Given the Execute verificaBollettino request OLD (Phase 1) scenario executed successfully
         When wait 10 seconds for expiration

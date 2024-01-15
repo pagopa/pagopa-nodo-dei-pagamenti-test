@@ -266,7 +266,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_senza_pay_i
     And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
     And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
 
-@runnable
+@runnable @independent
   Scenario: Execute nodoInoltraEsitoPagamentoCarta2 request
     Given the Execute nodoChiediStatoRPT request scenario executed successfully
     And initial XML pspInviaCarrelloRPTCarte

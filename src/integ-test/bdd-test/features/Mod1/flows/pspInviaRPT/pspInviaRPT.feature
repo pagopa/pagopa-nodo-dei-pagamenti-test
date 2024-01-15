@@ -131,7 +131,7 @@ Feature: process tests for pspInviaRT
             """
             And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
 
-        @runnable
+        @runnable @independent
         Scenario Outline: Check faultCode error on non-existent or invalid field
             Given <field> with <value> in pspInviaRPT
             When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti

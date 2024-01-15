@@ -306,7 +306,7 @@ Feature: hotfix stazione vp 1 2
     #     And the closePaymentV2 scenario executed successfully
     #     And the sendPaymentOutcomeV2 scenario executed successfully
 
-    @test 
+    @test @independent 
     Scenario: Test 2
         Given the activatePaymentNoticeV2 vp2 scenario executed successfully
         And the closePaymentV2 scenario executed successfully

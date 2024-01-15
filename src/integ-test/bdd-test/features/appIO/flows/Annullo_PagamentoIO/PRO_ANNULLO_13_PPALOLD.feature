@@ -232,7 +232,7 @@ Feature: PRO_ANNULLO_13_PPALOLD
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-    @runnable
+    @runnable @dependentread @dependentwrite @lazy
     Scenario: Execute nodoInoltroEsitoPayPal (Phase 5) - Response malformata
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspNotifyPayment

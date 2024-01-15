@@ -213,7 +213,7 @@ Feature: PAG-2258
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test 
+    @test @dependentread @lazy 
     Scenario: PAYMENT_ACCEPTED (part 3)
         Given the PAYMENT_ACCEPTED (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -250,7 +250,7 @@ Feature: PAG-2258
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test 
+    @test @dependentread @lazy 
     Scenario: PAYMENT_UNKNOWN response malformata (part 3)
         Given the PAYMENT_UNKNOWN response malformata (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -287,7 +287,7 @@ Feature: PAG-2258
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test 
+    @test @dependentread @lazy 
     Scenario: PAYMENT_UNKNOWN response timeout (part 3)
         Given the PAYMENT_UNKNOWN response timeout (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -326,7 +326,7 @@ Feature: PAG-2258
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test  
+    @test @dependentread @lazy  
     Scenario: PAYMENT_ACCEPTED eCommerce (part 3)
         Given the PAYMENT_ACCEPTED eCommerce (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -366,7 +366,7 @@ Feature: PAG-2258
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test 
+    @test @dependentread @lazy  
     Scenario: PAYMENT_UNKNOWN eCommerce response malformata (part 3)
         Given the PAYMENT_UNKNOWN eCommerce response malformata (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -406,7 +406,7 @@ Feature: PAG-2258
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test  
+    @test @dependentread @lazy  
     Scenario: PAYMENT_UNKNOWN eCommerce response timeout (part 3)
         Given the PAYMENT_UNKNOWN eCommerce response timeout (part 2) scenario executed successfully
         And wait 12 seconds for expiration

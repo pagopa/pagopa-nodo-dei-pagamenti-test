@@ -203,7 +203,7 @@ Feature: T097_B_ChiediStato_RPT_ACCETTATA_PSP_sbloccoParcheggio
         Then check esito is KO of nodoInviaRPT response
         And check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
 
-    @runnable
+    @runnable @dependentread
     Scenario: Execute nodoNotificaAnnullamento
         Given the execution nodoInviaRPT duplicato scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

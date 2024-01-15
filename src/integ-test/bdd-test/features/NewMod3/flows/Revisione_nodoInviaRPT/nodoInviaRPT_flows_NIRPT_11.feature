@@ -264,7 +264,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_11]
         #DB CHECK-POSITION_STATUS_SNAPSHOT
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro NewMod3
 
-    @runnable
+    @runnable @lazy @dependentread
     Scenario: Execute activatePaymentNotice1 request
         Given the Trigger mod3Cancel scenario executed successfully
         And initial XML activatePaymentNotice

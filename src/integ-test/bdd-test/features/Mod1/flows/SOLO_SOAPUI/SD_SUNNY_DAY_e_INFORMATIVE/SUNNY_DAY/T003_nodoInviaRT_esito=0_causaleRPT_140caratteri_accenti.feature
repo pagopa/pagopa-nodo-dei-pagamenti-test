@@ -215,7 +215,7 @@ Feature: T003_nodoInviaRT_esito=0_causaleRPT_140caratteri_accenti
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRT 
         Given the Execute nodoInviaRPT request scenario executed successfully
         And initial XML nodoInviaRT

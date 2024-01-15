@@ -160,7 +160,7 @@ Feature: response tests for paDemandPaymentNotice
             </soapenv:Body>
             </soapenv:Envelope>
             """
-    @test 
+    @test @independent 
     Scenario Outline: Check paDemandPaymentNotice response with missing optional fields
         Given the demandPaymentNotice scenario executed successfully
         And the paDemandPaymentNotice scenario executed successfully
@@ -176,14 +176,14 @@ Feature: response tests for paDemandPaymentNotice
             | officeName        | None  | TRES_PDPN_58 |
 
     # TRES_PDPN_02
-    @test 
+    @test @independent 
     Scenario: TRES_PDPN_02
         Given the demandPaymentNotice scenario executed successfully
         And the paDemandPaymentNotice scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paDemandPaymentNotice
         When PSP sends SOAP demandPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of demandPaymentNotice response
-    @test 
+    @test @independent 
     Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value
         Given the demandPaymentNotice scenario executed successfully
         And the paDemandPaymentNotice scenario executed successfully
@@ -252,7 +252,7 @@ Feature: response tests for paDemandPaymentNotice
             | officeName                        | test di prova per una lunghezza superiore a 141 caratteri alfanumerici, per verificare che il nodo risponda PPT_STAZIONE_INT_PA_ERRORE_RESPONSE | TRES_PDPN_60 |
 
     # TRES_PDPN_11
-    @test 
+    @test @independent 
     Scenario: TRES_PDPN_11
         Given the demandPaymentNotice scenario executed successfully
         And the paDemandPaymentNotice scenario executed successfully
@@ -266,7 +266,7 @@ Feature: response tests for paDemandPaymentNotice
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
 
     # TRES_PDPN_26
-    @test 
+    @test @independent 
     Scenario: TRES_PDPN_26
         Given the demandPaymentNotice scenario executed successfully
         And the paDemandPaymentNotice with 2 paymentList scenario executed successfully
@@ -276,7 +276,7 @@ Feature: response tests for paDemandPaymentNotice
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of demandPaymentNotice response
 
     # TRES_PDPN_29
-    @test 
+    @test @independent 
     Scenario: TRES_PDPN_29
         Given the demandPaymentNotice scenario executed successfully
         And the paDemandPaymentNotice with 2 paymentOptionDescription scenario executed successfully
@@ -299,7 +299,7 @@ Feature: response tests for paDemandPaymentNotice
         And check originalFaultCode field exists in demandPaymentNotice response
         And check originalFaultString field exists in demandPaymentNotice response
         And check originalDescription field exists in demandPaymentNotice response
-    @test 
+    @test @dependentwrite @lazy 
     Scenario: TRES_PDPN_61 (part 2)
         Given the TRES_PDPN_61 (part 1) scenario executed successfully
         And updates through the query update_id_intermediario_psp of the table INTERMEDIARI_PSP the parameter FAULT_BEAN_ESTESO with N under macro Mod4 on db nodo_cfg

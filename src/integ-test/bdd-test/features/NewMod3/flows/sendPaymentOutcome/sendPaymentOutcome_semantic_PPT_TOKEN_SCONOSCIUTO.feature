@@ -30,7 +30,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - PPT_TOKEN_SCONOSCIUTO [SEM_
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-@runnable    
+@runnable @independent
   # sendPaymentOutcomeReq phase
   Scenario: Execute a sendPaymentOutcome request
     Given the Execute activatePaymentNotice request scenario executed successfully

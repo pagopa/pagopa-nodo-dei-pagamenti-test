@@ -34,7 +34,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     And wait 1 seconds for expiration
 
   # Activate Phase 2 [SEM_APNR_19.1]
-  @runnable
+  @runnable @lazy @dependentwrite 
   Scenario: Execute again activatePaymentNotice request with same idempotencyKey
     Given the Execute activatePaymentNotice request scenario executed successfully
     And random noticeNumber in activatePaymentNotice
@@ -43,7 +43,7 @@ Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not
     And restore initial configurations
 
   # [SEM_APNR_20.1]
-  @runnable
+  @runnable @dependentread @lazy @dependentwrite 
   Scenario: Execute again activatePaymentNotice request with different fiscalCode
     Given the Execute activatePaymentNotice request scenario executed successfully
     And fiscalCode with #creditor_institution_code_secondary# in activatePaymentNotice

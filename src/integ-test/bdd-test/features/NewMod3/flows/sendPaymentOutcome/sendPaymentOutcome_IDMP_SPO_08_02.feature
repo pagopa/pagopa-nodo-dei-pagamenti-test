@@ -78,7 +78,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
     Then check outcome is OK of sendPaymentOutcome response
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache_psp_1 on db nodo_online under macro NewMod3
 
-  @runnable
+  @runnable @dependentread @dependentwrite
   Scenario: Execute activatePaymentNotice2 request
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And initial XML activatePaymentNotice

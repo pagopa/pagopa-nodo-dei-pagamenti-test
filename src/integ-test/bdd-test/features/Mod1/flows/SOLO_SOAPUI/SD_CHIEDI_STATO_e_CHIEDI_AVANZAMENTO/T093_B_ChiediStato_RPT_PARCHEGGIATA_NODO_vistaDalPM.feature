@@ -140,7 +140,7 @@ Feature: T092_ChiediStato_RPT_RIFIUTATA_NODO
         When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
 
-    @runnable
+    @runnable @dependentread
     Scenario: Execute nodoChiediStatoRPT
         Given the Execute nodoChiediInformazioniPagamento scenario executed successfully
         And initial XML nodoChiediStatoRPT

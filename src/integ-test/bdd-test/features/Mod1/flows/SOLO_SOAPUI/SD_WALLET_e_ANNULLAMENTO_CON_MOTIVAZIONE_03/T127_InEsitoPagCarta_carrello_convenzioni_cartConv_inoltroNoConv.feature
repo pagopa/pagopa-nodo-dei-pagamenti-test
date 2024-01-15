@@ -498,7 +498,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartConv_inoltroNo
     And check url field not exists in inoltroEsito/carta response
     And check redirect field not exists in inoltroEsito/carta response
 
-@runnable
+@runnable @independent
   Scenario: Execute nodoInviaRT1 request
     Given the Execute nodoInoltraEsitoPagamentoCarta1 request scenario executed successfully
     And initial XML nodoInviaRT

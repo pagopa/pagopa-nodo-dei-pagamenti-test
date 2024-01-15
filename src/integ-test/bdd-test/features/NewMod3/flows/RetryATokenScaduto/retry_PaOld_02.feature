@@ -203,7 +203,7 @@ Feature: process tests for retryAtokenScaduto
     And wait 130 seconds for expiration
     And checks the value RT_RIFIUTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
-@runnable
+@runnable @lazy @dependentread @dependentwrite
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
     Given the Execute paInviaRT scenario executed successfully

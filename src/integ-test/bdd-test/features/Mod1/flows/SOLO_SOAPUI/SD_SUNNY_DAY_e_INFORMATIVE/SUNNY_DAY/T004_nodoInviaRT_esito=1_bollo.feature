@@ -258,7 +258,7 @@ Feature: T004_nodoInviaRT_esito=1_bollo
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
 
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRT
         Given the Execute nodoInviaRPT request scenario executed successfully
         And initial XML nodoInviaRT

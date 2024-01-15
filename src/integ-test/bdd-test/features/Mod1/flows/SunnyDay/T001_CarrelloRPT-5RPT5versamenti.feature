@@ -621,7 +621,7 @@ Feature: process tests for 5 RPT 5 Versamenti
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-@runnable
+@runnable @independent
     Scenario: Execute nodoInviaCarrelloRPT request
         Given the RPT5 generation scenario executed successfully
         And initial XML nodoInviaCarrelloRPT

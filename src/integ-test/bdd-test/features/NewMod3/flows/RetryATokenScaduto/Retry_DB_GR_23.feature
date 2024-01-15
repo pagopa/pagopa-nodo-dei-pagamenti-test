@@ -196,7 +196,7 @@ Feature: process tests for Retry_DB_GR_23
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
 
-  @runnable
+  @runnable @lazy @dependentread @dependentwrite
   Scenario: DB check
     Given the Execute sendPaymentOutcome request scenario executed successfully
     And wait 5 seconds for expiration 

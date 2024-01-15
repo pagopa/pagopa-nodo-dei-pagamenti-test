@@ -265,7 +265,7 @@ Feature: process tests for chiediInformazioniPagamento CANALE ERRORE RESPONSE
         Then verify the HTTP status code of avanzamentoPagamento response is 200
         And checks esito contains ACK_UNKNOWN of avanzamentoPagamento response
 
-@runnable
+@runnable @independent
     Scenario: Execute nodoInviaRT request
         Given the Execute nodoChiediAvanzamentoPagamento scenario executed successfully
         And initial XML nodoInviaRT

@@ -164,7 +164,7 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01]
         Then check esito is OK of nodoInviaRPT response
 
     # Payment Outcome Phase outcome OK
-    @runnable
+    @runnable @lazy @dependentread @dependentwrite
     Scenario: Execute sendPaymentOutcome request [Retry_paaInviaRT_01]
         Given the Excecute nodoInviaRPT Scenario executed successfully
         And initial XML sendPaymentOutcome

@@ -352,7 +352,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_errore_response_B]
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-    @runnable
+    @runnable @lazy @dependentread
     Scenario: Execute sendPaymentOutcome request
         Given the activatePaymentNotice1 request scenario executed successfully
         And initial XML sendPaymentOutcome

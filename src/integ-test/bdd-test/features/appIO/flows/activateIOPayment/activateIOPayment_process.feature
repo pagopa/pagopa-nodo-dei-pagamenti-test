@@ -98,7 +98,7 @@ Feature: Process checks for activateIOPayment request
             """
         And EC new version
     
-    @runnable
+    @runnable @independent
     Scenario: Check PPT_ERRORE_EMESSO_DA_PAA error [PRO_AIPR_01]
         Given initial XML paGetPayment
             """
@@ -122,7 +122,7 @@ Feature: Process checks for activateIOPayment request
         Then check outcome is KO of activateIOPayment response
         And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of activateIOPayment response
     
-    @runnable
+    @runnable @independent
     Scenario: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error [PRO_AIPR_03]
         Given initial XML paGetPayment
             """
@@ -195,7 +195,7 @@ Feature: Process checks for activateIOPayment request
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is KO of activateIOPayment response
         And check faultCode is PPT_STAZIONE_INT_PA_ERRORE_RESPONSE of activateIOPayment response
-    @runnable
+    @runnable @independent
     Scenario: Execute syntax activateIOPayment1 (Phase 1) [PRO_AIPR_04]
         Given saving activateIOPayment request in activateIOPayment1
         And idempotencyKey with Empty in activateIOPayment
@@ -203,14 +203,14 @@ Feature: Process checks for activateIOPayment request
         Then check outcome is KO of activateIOPayment response
         And check faultCode is PPT_SINTASSI_EXTRAXSD of activateIOPayment response
     
-    @runnable
+    @runnable @independent
     Scenario: Execute synatx activateIOPayment (Phase 2) [PRO_AIPR_04]
         Given the Execute syntax activateIOPayment1 (Phase 1) [PRO_AIPR_04] scenario executed successfully
         And saving activateIOPayment1 request in activateIOPayment
         When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
     
-    @runnable
+    @runnable @independent
     Scenario: Execute semantic activateIOPayment1 (Phase 1) [PRO_AIPR_05]
         Given saving activateIOPayment request in activateIOPayment1
         And idPSP with pspUnknown in activateIOPayment
@@ -218,7 +218,7 @@ Feature: Process checks for activateIOPayment request
         Then check outcome is KO of activateIOPayment response
         And check faultCode is PPT_PSP_SCONOSCIUTO of activateIOPayment response
     
-    @runnable
+    @runnable @independent
     Scenario: Execute semantic activateIOPayment (Phase 2) [PRO_AIPR_05]
         Given the Execute semantic activateIOPayment1 (Phase 1) [PRO_AIPR_05] scenario executed successfully
         And saving activateIOPayment1 request in activateIOPayment

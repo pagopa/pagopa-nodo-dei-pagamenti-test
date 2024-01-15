@@ -297,7 +297,7 @@ Feature: NODO4-1137
         Then check esito is OK of nodoInviaRT response
         And wait 14 seconds for expiration
 
-   @runnable
+   @runnable @dependentread @lazy
     Scenario: Execute nodoChiediStatoRPT
         Given the execution nodoInviaRT scenario executed successfully
         And initial XML nodoChiediStatoRPT

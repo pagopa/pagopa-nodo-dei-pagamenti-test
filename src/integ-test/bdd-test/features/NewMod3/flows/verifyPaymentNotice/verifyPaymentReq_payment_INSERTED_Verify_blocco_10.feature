@@ -103,7 +103,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (payme
 
 
   # Verify Phase 2
-  @runnable
+  @runnable @independent
   Scenario: Execute verifyPaymentNotice request with the same request as Verify Phase 1
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response

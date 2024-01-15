@@ -216,7 +216,7 @@ Feature: process tests for generazioneRicevute
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-@runnable
+@runnable @dependentwrite @lazy
   # test execution
   Scenario: Execution test DB_GR_22
     Given the Execute sendPaymentOutcome request scenario executed successfully

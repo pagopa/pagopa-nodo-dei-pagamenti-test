@@ -113,7 +113,7 @@ Feature: process tests for chiediInformazioniPagamento
         And check url contains acardste of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-@runnable
+@runnable @independent
     Scenario: Execution Esito Carta
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti

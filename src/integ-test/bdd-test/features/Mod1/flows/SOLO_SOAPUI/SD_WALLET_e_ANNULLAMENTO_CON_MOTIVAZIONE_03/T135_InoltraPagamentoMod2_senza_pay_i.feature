@@ -115,7 +115,7 @@ Feature: T135_InoltraPagamentoMod2_senza_pay_i
     When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     And retrieve session token from $nodoInviaRPTResponse.url
 
-@runnable
+@runnable @independent
   Scenario: Execute nodoInoltraEsitoPagamentoMod2 request
     Given the Execute nodoInviaRPT request scenario executed successfully
     And initial XML pspInviaRPT 

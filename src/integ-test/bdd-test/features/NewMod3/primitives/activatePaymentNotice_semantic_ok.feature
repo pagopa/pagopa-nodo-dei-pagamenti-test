@@ -30,12 +30,12 @@ Feature: Semantic checks OK for activatePaymentNotice
       </soapenv:Envelope>
       """
 
-  @runnable
+  @test @independent
   Scenario: Check valid URL in WSDL namespace
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @runnable
+  @test @independent
   # denylist value check: combination fiscalCode-idChannel-idPSP identifies a record in NODO4_CFG.DENYLIST table of nodo-dei-pagamenti database  [SEM_APNR_24]
   Scenario: Check outcome OK if combination psp-channel-pa in denylist
     Given generate 1 notice number and iuv with aux digit 3, segregation code 11 and application code NA
@@ -47,14 +47,14 @@ Feature: Semantic checks OK for activatePaymentNotice
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @runnable
+  @test @independent
   # idPsp in idempotencyKey (idempotencyKey: <idPSp>+"_"+<RANDOM STRING>) not in db  [SEM_APNR_17]
   Scenario: Check outcome OK on non-existent psp in idempotencyKey
     Given random idempotencyKey having 00088877799 as idPSP in activatePaymentNotice
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
-  @runnable
+  @test @independent
   # idPsp in idempotencyKey (idempotencyKey: <idPsp>+"_"+<RANDOM STRING>) with field ENABLED = N  [SEM_APNR_18]
   Scenario: Check outcome OK on disabled psp in idempotencyKey
     Given random idempotencyKey having 80000000001 as idPSP in activatePaymentNotice

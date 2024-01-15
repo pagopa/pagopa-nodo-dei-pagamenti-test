@@ -263,7 +263,7 @@ Scenario: Execute activateIOPayment1 (Phase 4)
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
 
-@runnable
+@runnable @lazy @dependentread @dependentwrite
 Scenario: Check PSP list
     Given the Execute activateIOPayment1 (Phase 4) scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=CARTE to nodo-dei-pagamenti

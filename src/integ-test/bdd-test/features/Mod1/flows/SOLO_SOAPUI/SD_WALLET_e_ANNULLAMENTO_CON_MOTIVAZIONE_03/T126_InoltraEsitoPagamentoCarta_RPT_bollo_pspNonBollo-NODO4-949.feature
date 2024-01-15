@@ -222,7 +222,7 @@ Scenario: Execute nodoInoltraEsitoPagamentoCarta2 request
     And check url field not exists in inoltroEsito/carta response
     And check redirect field not exists in inoltroEsito/carta response
 
-@runnable
+@runnable @independent
   Scenario: Execution nodoInoltraPagamentoMod2 request
     Given the Execute nodoInoltraEsitoPagamentoCarta2 request scenario executed successfully
     When WISP sends rest POST inoltroEsito/mod1 to nodo-dei-pagamenti

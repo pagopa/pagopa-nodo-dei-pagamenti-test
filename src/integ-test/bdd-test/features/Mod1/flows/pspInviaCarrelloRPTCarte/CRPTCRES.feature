@@ -135,7 +135,7 @@ Feature: process tests for pspInviaCarrelloRPTCarte
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-    @runnable
+    @runnable @independent
     Scenario Outline: Execution Esito Carta
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And initial XML pspInviaCarrelloRPTCarte
@@ -190,7 +190,7 @@ Feature: process tests for pspInviaCarrelloRPTCarte
             | esitoComplessivoOperazione          | CIAO  | 408    | error       | Operazione in timeout        | CRPTCRES15  |
 
 
-    @runnable
+    @runnable @independent
     # [CRPTCRES1]
     Scenario: Execution second rest Esito Carta
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
@@ -244,7 +244,7 @@ Feature: process tests for pspInviaCarrelloRPTCarte
         Then verify the HTTP status code of inoltroEsito/carta response is 408
         And check error is Operazione in timeout of inoltroEsito/carta response
 
-    @runnable
+    @runnable @independent
     # [CRPTCRES2]
     Scenario: Execution third rest Esito Carta
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
@@ -301,7 +301,7 @@ Feature: process tests for pspInviaCarrelloRPTCarte
         And check error is Operazione in timeout of inoltroEsito/carta response
 
 
-    @runnable
+    @runnable @independent
     # [CRPTCRES7]
     Scenario: Execution fourth rest Esito Carta
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
@@ -354,7 +354,7 @@ Feature: process tests for pspInviaCarrelloRPTCarte
         And check error is Operazione in timeout of inoltroEsito/carta response
 
 
-    @runnable
+    @runnable @independent
     # [CRPTCRES14]
     Scenario: Execution fifth rest Esito Carta
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully

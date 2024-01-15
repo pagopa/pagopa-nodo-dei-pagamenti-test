@@ -3,7 +3,7 @@ Feature: Semantic checks for verificaBollettino - OK
     Background:
         Given systems up
         And EC old version
-    @runnable
+    @runnable @independent
     Scenario: Execute verificaBollttino [SEM_VB_10]
         Given initial XML verificaBollettino
             """

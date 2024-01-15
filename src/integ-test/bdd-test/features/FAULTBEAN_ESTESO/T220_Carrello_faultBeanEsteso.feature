@@ -260,7 +260,7 @@ Feature: T220_Carrello_faultBeanEsteso
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_ID_CARRELLO_DUPLICATO of nodoInviaCarrelloRPT response
 
-@runnable
+@runnable @independent
     Scenario: Execute nodoChiediStatoRPT2_2 (Phase 5)
         Given the Execute nodoInviaCarrelloRPT2 (Phase 4) scenario executed successfully
         When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti

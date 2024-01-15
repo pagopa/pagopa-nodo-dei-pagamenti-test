@@ -248,7 +248,7 @@ Feature: T096_D_ChiediStato_RPT_ERRORE_INVIO_PSP_carrello_mancatoCertificato_htt
         And checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_ERRORE_INVIO_A_PSP of nodoChiediStatoRPT response
 
-    @runnable
+    @runnable @independent
     Scenario: nodoInviaCarrelloRPT duplicato
         Given the Execute nodoChiediStatoRPT2 scenario executed successfully
        And initial XML nodoInviaCarrelloRPT

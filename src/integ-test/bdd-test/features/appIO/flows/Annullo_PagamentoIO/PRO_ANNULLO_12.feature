@@ -100,7 +100,7 @@ Feature: PRO_ANNULLO_12
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
 
-    @runnable
+    @runnable @dependentread @dependentwrite @lazy
     Scenario: Execute sendPaymentOutcome (Phase 4)
         Given the Execute nodoInoltroEsitoPagamentoCarta (Phase 3) scenario executed successfully
         And initial XML sendPaymentOutcome

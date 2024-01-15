@@ -169,7 +169,7 @@ Feature: T003_nodoInviaRT_esito=0_senzaUTF8_senzaNamespace
             </datiPagamento>
             </RT>
             """
-    @runnable
+    @runnable @independent
     Scenario: Execute nodoInviaRPT request
         Given the RPT generation scenario executed successfully
         And initial XML nodoInviaRPT
