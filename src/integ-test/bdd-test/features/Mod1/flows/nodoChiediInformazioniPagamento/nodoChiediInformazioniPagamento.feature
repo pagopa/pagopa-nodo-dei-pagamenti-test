@@ -129,7 +129,7 @@ Feature: process tests for nodoChiediInformazioniPagamento 321
     Scenario: execution nodoChiediInformazioniPagamento - PM_CIP3
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=stringa-Alfanumerica-Di-36-Caratteri to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 400
+        Then verify the HTTP status code of informazioniPagamento response is 404
         And check error is Il pagamento non esiste of informazioniPagamento response
 
     @runnable
