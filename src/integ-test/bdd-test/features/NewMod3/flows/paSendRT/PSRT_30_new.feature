@@ -1382,10 +1382,9 @@ Feature: process tests for paSendRT [PSRT_30] 1113
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And wait 10 seconds for expiration
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         #And job paSendRt triggered after 6 seconds
-        
+        And wait 10 seconds for expiration
         Then check outcome is OK of sendPaymentOutcome response
         # DB Check
         And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_transfer on db nodo_online under macro NewMod3
@@ -1401,7 +1400,7 @@ Feature: process tests for paSendRT [PSRT_30] 1113
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-    @runnable 
+    @runnable @pippoalf
     Scenario: 27 job paSendRt
         Given the 27 Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT
