@@ -1826,6 +1826,7 @@ Feature: flow tests for paSendRTV2 944
         And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
+        And wait 5 seconds for expiration
         And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTICE_PENDING,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 8 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
