@@ -1164,7 +1164,7 @@ Feature: flow tests for paSendRTV2 944
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test @company @pippoalf3
+    @test @company
     Scenario: PSRTV2_ACTV1_07 (part 2)
         Given the PSRTV2_ACTV1_07 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -1242,7 +1242,7 @@ Feature: flow tests for paSendRTV2 944
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test @company @pippoalf4
+    @test @company
     Scenario: PSRTV2_ACTV1_09 (part 2)
         Given the PSRTV2_ACTV1_09 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -1750,7 +1750,7 @@ Feature: flow tests for paSendRTV2 944
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test @company @pippoalf2
+
     Scenario: PSRTV2_ACTV1_24 (part 3)
         Given the PSRTV2_ACTV1_24 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1814,7 +1814,7 @@ Feature: flow tests for paSendRTV2 944
         And the sendPaymentOutcomeV2 request scenario executed successfully
         When psp sends soap sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test @company @pippoalf1
+
     Scenario: PSRTV2_ACTV1_25 (part 3)
         Given the PSRTV2_ACTV1_25 (part 2) scenario executed successfully
         And wait 12 seconds for expiration
@@ -1826,7 +1826,6 @@ Feature: flow tests for paSendRTV2 944
         And refresh job ALL triggered after 10 seconds
 
         # POSITION_RECEIPT_RECIPIENT_STATUS
-        And wait 5 seconds for expiration
         And checks the value NOTICE_GENERATED,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED,NOTICE_SENT,NOTICE_PENDING,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And verify 8 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
