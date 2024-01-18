@@ -63,7 +63,7 @@ Feature: T206_InviaFlussoRendicontazione_esito=0_FTP 627
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-@runnable
+
      Scenario: nodoChiediFlussoRendicontazione
         Given the Send nodoInviaFlussoRendicontazione primitive scenario executed successfully
         And initial XML nodoChiediFlussoRendicontazione

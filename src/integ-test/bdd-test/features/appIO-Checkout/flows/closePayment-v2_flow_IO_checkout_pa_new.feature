@@ -2022,7 +2022,7 @@ Feature: flow tests for closePaymentV2 143
     # FLUSSO_CP_09
 
     Scenario: FLUSSO_CP_09 (part 1)
-        Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 20000
+        Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 2000
         And current date generation
         And the verifyPaymentNotice scenario executed successfully
         And the activateIOPayment scenario executed successfully
@@ -2040,7 +2040,7 @@ Feature: flow tests for closePaymentV2 143
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test 
+    @test @pippoalf
     Scenario: FLUSSO_CP_09 (part 3)
         Given the FLUSSO_CP_09 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
