@@ -1,15 +1,14 @@
 import json
 from behave.model import Table
-import os, requests
+import os
 import steps.utils as utils
-import time
+
 if 'NODOPGDB' in os.environ:
     import steps.db_operation_pg as db
-    import psycopg2
-    from psycopg2 import OperationalError    
 else:
     import steps.db_operation as db
-    import os, cx_Oracle, requests
+    import cx_Oracle
+    import requests
 
 if 'APICFG' in os.environ:
     import steps.db_operation_apicfg_testing_support as db

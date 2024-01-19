@@ -36,7 +36,7 @@ def executeQuery(conn, query:str) -> list:
         print('executing_sql_query ...')
         headers = {}
         if 'APICFG_SUBSCRIPTION_KEY' in os.environ:
-            headers["Ocp-Apim-Subscription-Key"] = ""
+            headers["Ocp-Apim-Subscription-Key"] = os.getenv("APICFG_SUBSCRIPTION_KEY", default="")
 
         url = apicfg_testing_support.get("base_path") + apicfg_testing_support.get("service")
         response = requests.post(url, data=query, headers=headers)
