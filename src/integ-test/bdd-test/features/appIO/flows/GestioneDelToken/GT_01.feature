@@ -87,7 +87,7 @@ Feature: GT_01
         And checks the value $activateIOPaymentResponse.paymentToken of the record at column TOKEN of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column VALID_TO of the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value NotNone of the record at column TOKEN_VALID_FROM of the table POSITION_ACTIVATE retrived by the query payment_status on db nodo_online under macro AppIO
-@runnable @lazy @dependentread @dependentwrite
+@runnable @lazy @dependentread @dependentwrite @shorttrack
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
