@@ -5,7 +5,8 @@ Feature: T216_RPT_checkPPI_sbloccoParcheggio 637
 
 
     Scenario: RPT generation
-        Given RPT1 generation
+        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        And RPT1 generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -116,8 +117,8 @@ Feature: T216_RPT_checkPPI_sbloccoParcheggio 637
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
             </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>
             </soapenv:Body>
