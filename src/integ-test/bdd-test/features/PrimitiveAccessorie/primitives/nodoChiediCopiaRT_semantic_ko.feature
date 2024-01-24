@@ -31,7 +31,7 @@ Feature: Semantic checks for nodoChiediCopiaRT - KO
             | identificativoStazioneIntermediarioPA | unknownStation          | PPT_STAZIONE_INT_PA_SCONOSCIUTA   | CCRTSEM3    |
             | identificativoStazioneIntermediarioPA | #id_station_disabled#   | PPT_STAZIONE_INT_PA_DISABILITATA  | CCRTSEM4    |
             | password                              | wrongPassword           | PPT_AUTENTICAZIONE                | CCRTSEM5    |
-            | identificativoDominio                 | 12345678902             | PPT_DOMINIO_SCONOSCIUTO           | CCRTSEM6    |
+            | identificativoDominio                 | 12345678922             | PPT_DOMINIO_SCONOSCIUTO           | CCRTSEM6    |
             | identificativoDominio                 | NOT_ENABLED             | PPT_DOMINIO_DISABILITATO          | CCRTSEM7    |
             | identificativoUnivocoVersamento       | wrongIUV                | PPT_RT_SCONOSCIUTA                | CCRTSEM8    |
             | codiceContestoPagamento               | wrongPaymentContextCode | PPT_RT_SCONOSCIUTA                | CCRTSEM9    |

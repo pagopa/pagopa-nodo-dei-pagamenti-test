@@ -2,6 +2,11 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
 
   Background:
     Given systems up
+
+  # Activate Phase
+  Scenario: Execute activatePaymentNotice request
+    Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
+    And nodo-dei-pagamenti has config parameter useIdempotency set to true
     And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -17,7 +22,6 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
       <fiscalCode>#creditor_institution_code_old#</fiscalCode>
       <noticeNumber>#notice_number_old#</noticeNumber>
       </qrCode>
-      <expirationTime>15000</expirationTime>
       <amount>10.00</amount>
       <dueDate>2021-12-31</dueDate>
       <paymentNote>causale</paymentNote>
@@ -25,11 +29,6 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    #And nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
-    And nodo-dei-pagamenti has config parameter useIdempotency set to true
-
-  # Activate Phase
-  Scenario: Execute activatePaymentNotice request
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
@@ -89,8 +88,8 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
 
   Scenario: update column valid_to idempotency_cache
     Given the Execute sendPaymentOutcome request scenario executed successfully
-    Then update through the query idempotency_update with date Today under macro update_query on db nodo_cfg
-    And wait 7 seconds for expiration
+    Then update through the query idempotency_update with date 1minuteLater under macro update_query on db nodo_online
+    And wait 62 seconds for expiration
 
   #Send payment outcome Phase 1
   Scenario: Execute sendPaymentOutcome request 1
@@ -135,11 +134,12 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_ERRORE_IDEMPOTENZA of sendPaymentOutcome response
+    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
 
 @runnable
   Scenario: DB check
     Given the Execute sendPaymentOutcome request 1 scenario executed successfully
+    And nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod3
     And checks the value sendPaymentOutcome of the record at column PRIMITIVA of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod3
     And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod3
