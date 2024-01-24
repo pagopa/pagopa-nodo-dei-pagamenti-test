@@ -124,7 +124,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency 1264
   Scenario: update column valid_to idempotency_cache
     Given the Execute sendPaymentOutcome request scenario executed successfully
     Then update through the query idempotency_update with date Today under macro update_query on db nodo_online
-    And wait 7 seconds for expiration
+#    And wait 7 seconds for expiration
 
   #Send payment outcome Phase 1
   Scenario: Execute sendPaymentOutcome request 1
