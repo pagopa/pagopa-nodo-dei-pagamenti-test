@@ -2,6 +2,9 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency 1264
 
   Background:
     Given systems up
+
+  Scenario: Execute activatePaymentNotice request
+    Given nodo-dei-pagamenti has config parameter useIdempotency set to true
     And initial XML activatePaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -25,11 +28,42 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency 1264
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    #And nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
-    And nodo-dei-pagamenti has config parameter useIdempotency set to true
-
-  # Activate Phase
-  Scenario: Execute activatePaymentNotice request
+    And initial XML paaAttivaRPT
+      """
+      <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+      <soapenv:Header/>
+      <soapenv:Body>
+      <ws:paaAttivaRPTRisposta>
+      <paaAttivaRPTRisposta>
+      <esito>OK</esito>
+      <datiPagamentoPA>
+      <importoSingoloVersamento>10.00</importoSingoloVersamento>
+      <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
+      <bicAccredito>BSCTCH22</bicAccredito>
+      <enteBeneficiario>
+      <pag:identificativoUnivocoBeneficiario>
+      <pag:tipoIdentificativoUnivoco>G</pag:tipoIdentificativoUnivoco>
+      <pag:codiceIdentificativoUnivoco>66666666666_05</pag:codiceIdentificativoUnivoco>
+      </pag:identificativoUnivocoBeneficiario>
+      <pag:denominazioneBeneficiario>97735020584</pag:denominazioneBeneficiario>
+      <pag:codiceUnitOperBeneficiario>#canale_AGID_02#</pag:codiceUnitOperBeneficiario>
+      <pag:denomUnitOperBeneficiario>uj</pag:denomUnitOperBeneficiario>
+      <pag:indirizzoBeneficiario>"paaAttivaRPT"</pag:indirizzoBeneficiario>
+      <pag:civicoBeneficiario>j</pag:civicoBeneficiario>
+      <pag:capBeneficiario>gt</pag:capBeneficiario>
+      <pag:localitaBeneficiario>gw</pag:localitaBeneficiario>
+      <pag:provinciaBeneficiario>ds</pag:provinciaBeneficiario>
+      <pag:nazioneBeneficiario>UK</pag:nazioneBeneficiario>
+      </enteBeneficiario>
+      <credenzialiPagatore>i</credenzialiPagatore>
+      <causaleVersamento>prova/RFDB/018431538193400/TXT/causale $iuv</causaleVersamento>
+      </datiPagamentoPA>
+      </paaAttivaRPTRisposta>
+      </ws:paaAttivaRPTRisposta>
+      </soapenv:Body>
+      </soapenv:Envelope>
+      """
+    And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
 
@@ -137,7 +171,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency 1264
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ERRORE_IDEMPOTENZA of sendPaymentOutcome response
 
-@runnable
+  @runnable
   Scenario: DB check
     Given the Execute sendPaymentOutcome request 1 scenario executed successfully
     And checks the value NotNone of the record at column ID of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod3

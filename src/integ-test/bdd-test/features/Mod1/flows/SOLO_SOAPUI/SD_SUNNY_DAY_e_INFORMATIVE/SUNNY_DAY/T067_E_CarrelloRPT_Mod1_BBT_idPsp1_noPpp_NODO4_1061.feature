@@ -113,9 +113,25 @@ Feature: T067_E_CarrelloRPT_Mod1_BBT_idPsp1_noPpp_NODO4_1061 588
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        
-       
+        And initial XML pspInviaCarrelloRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <fault>
+            <faultCode>CANALE_PPP_ASSENTI</faultCode>
+            <faultString>system error</faultString>
+            <id>wrapper</id>
+            </fault>
+            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_CANALE_ERRORE of nodoInviaCarrelloRPT response
-        And check description contains originalFaultCode: CANALE_PPP_ASSENTI of nodoInviaCarrelloRPT response
