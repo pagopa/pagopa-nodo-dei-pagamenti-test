@@ -169,7 +169,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency 1264
       """
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
-    And check faultCode is PPT_ERRORE_IDEMPOTENZA of sendPaymentOutcome response
+    And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
 
   @runnable
   Scenario: DB check
