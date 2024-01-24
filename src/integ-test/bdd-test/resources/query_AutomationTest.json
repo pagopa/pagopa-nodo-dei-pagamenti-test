@@ -62,6 +62,7 @@
         "rt_stati": "SELECT columns FROM table_name  where IUV = $iuv and IDENT_DOMINIO = $activatePaymentNotice.fiscalCode",
         "rt_stati_ordbyDesc": "SELECT columns FROM table_name  where IUV = $iuv and IDENT_DOMINIO = $activatePaymentNotice.fiscalCode ORDER BY ID DESC",
         "idempotency_cache": "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = $sendPaymentOutcome.idempotencyKey",
+        "idempotency_cache_second": "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = $sendPaymentOutcome.idempotencyKey ORDER BY ID DESC",
         "idempotency_act": "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = $activatePaymentNotice.idempotencyKey",
         "idempotency_cache_act": "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = $activatePaymentNotice.idempotencyKey AND PSP_ID = $activatePaymentNotice.idPSP",
         "idempotency_cache_act_orderby": "SELECT columns FROM table_name WHERE IDEMPOTENCY_KEY = $activatePaymentNotice.idempotencyKey AND PSP_ID = $activatePaymentNotice.idPSP ORDER BY ID ASC",
