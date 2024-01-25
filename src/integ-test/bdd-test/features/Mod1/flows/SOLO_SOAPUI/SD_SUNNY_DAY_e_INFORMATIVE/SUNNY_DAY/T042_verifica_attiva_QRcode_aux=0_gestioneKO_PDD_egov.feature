@@ -38,7 +38,7 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_egov 559
             <fault>
             <faultCode>PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO</faultCode>
             <faultString>Servizio Sconosciuto</faultString>
-            <id>#creditor_institution_code_old#</id>
+            <id>90000000001</id>
             </fault>
             <esito>KO</esito>
             </paaVerificaRPTRisposta>
