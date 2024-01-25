@@ -2,13 +2,13 @@ import json
 from behave.model import Table
 import os
 import steps.utils as utils
+import requests
 
 if 'NODOPGDB' in os.environ:
     import steps.db_operation_pg as db
 else:
     import steps.db_operation as db
     import cx_Oracle
-    import requests
 
 if 'APICFG' in os.environ:
     import steps.db_operation_apicfg_testing_support as db
