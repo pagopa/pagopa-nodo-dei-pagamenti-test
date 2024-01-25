@@ -6,44 +6,51 @@
       "healthcheck": "",
       "soap_service": " ",
       "rest_service": " ",
+      "subscription_key_name": "",
       "refresh_config_service": "https://api.dev.platform.pagopa.it/nodo-replica-ndp/monitoring/v1/config/refresh/CONFIG"
     },
     "mock-ec": {
       "url": "https://api.dev.platform.pagopa.it/mock-ec-replica-ndp/service/v1/mock",
       "healthcheck": "/info",
       "soap_service": "",
-      "rest_service": ""
+      "rest_service": "",
+      "subscription_key_name": ""
     },
     "mock-psp": {
       "url": "https://api.dev.platform.pagopa.it/mock-psp-replica-ndp/service/v1/mock",
       "healthcheck": "/info",
       "soap_service": "",
-      "rest_service": ""
+      "rest_service": "",
+      "subscription_key_name": ""
     },
     "mock-pm": {
       "url": "https://api.dev.platform.pagopa.it/mock-pm-replica-ndp/service/v1",
       "healthcheck": "/",
       "soap_service": "",
-      "rest_service": ""
+      "rest_service": "",
+      "subscription_key_name": ""
     },
     "secondary-mock-ec": {
       "url": "https://api.dev.platform.pagopa.it/mock-ec-replica-secondary-ndp/service/v1/mock",
       "healthcheck": "/info",
       "soap_service": "",
-      "rest_service": ""
+      "rest_service": "",
+      "subscription_key_name": ""
     },
     "secondary-mock-psp": {
       "url": "https://api.dev.platform.pagopa.it/mock-psp-secondary-replica-ndp/service/v1/mock",
       "healthcheck": "/info",
       "soap_service": "",
-      "rest_service": ""
+      "rest_service": "",
+      "subscription_key_name": ""
     },
     "apicfg-testing-support": {
       "url": "https://api.dev.platform.pagopa.it/apiconfig-testing-support/api/v1",
       "healthcheck": "/info",
       "soap_service": " ",
       "rest_service": " ",
-      "refresh_config_service": ""
+      "refresh_config_service": "",
+      "subscription_key_name": "APICFG_SUBSCRIPTION_KEY"
     }
   },
   "global_configuration": {

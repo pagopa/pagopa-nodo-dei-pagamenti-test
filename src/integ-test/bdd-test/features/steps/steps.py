@@ -31,6 +31,7 @@ from requests.exceptions import RetryError
 # Constants
 RESPONSE = "Response"
 REQUEST = "Request"
+SUBKEY = "Ocp-Apim-Subscription-Key"
 
 
 # Steps definitions
@@ -48,7 +49,14 @@ def step_impl(context):
         print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
         print(f"calling -> {url}")
-        headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+        headers = {
+            'Host': 'api.dev.platform.pagopa.it:443'
+        }
+
+        if row.get("subscription_key_name") != "":
+            if row.get("subscription_key_name") in os.environ:
+                headers[SUBKEY] = os.getenv(row.get("subscription_key_name"))
+
         resp = requests.get(url, headers=headers, verify=False)
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)

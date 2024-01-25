@@ -40,6 +40,7 @@ def executeQuery(conn, query:str) -> list:
 
         url = apicfg_testing_support.get("base_path") + apicfg_testing_support.get("service")
         response = requests.post(url, data=query, headers=headers)
+
         return response.json()
     except Exception as e:
         print(f"The error '{e}' occurred")

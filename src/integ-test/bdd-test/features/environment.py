@@ -46,14 +46,15 @@ def before_all(context):
 def before_feature(context, feature):
     services = context.config.userdata.get("services")
     # add heading
-    feature.background.steps[0].table = Table(headings=("name", "url", "healthcheck", "soap_service", "rest_service"))
+    feature.background.steps[0].table = Table(headings=("name", "url", "healthcheck", "soap_service", "rest_service", "subscription_key_name"))
     # add data in the tables
     for system_name in services.keys():
         row = (system_name,
                services.get(system_name).get("url", ""),
                services.get(system_name).get("healthcheck", ""),
                services.get(system_name).get("soap_service", ""),
-               services.get(system_name).get("rest_service", ""))
+               services.get(system_name).get("rest_service", ""),
+               services.get(system_name).get("subscription_key_name", ""))
         feature.background.steps[0].table.add_row(row)
 
     # DISABLE see @config-ec too 
