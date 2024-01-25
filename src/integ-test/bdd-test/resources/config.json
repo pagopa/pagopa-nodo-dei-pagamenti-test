@@ -39,7 +39,7 @@
       "rest_service": ""
     },
     "apicfg-testing-support": {
-      "url": "http://localhost:8080",
+      "url": "https://api.dev.platform.pagopa.it/apiconfig-testing-support/api/v1",
       "healthcheck": "/info",
       "soap_service": " ",
       "rest_service": " ",
