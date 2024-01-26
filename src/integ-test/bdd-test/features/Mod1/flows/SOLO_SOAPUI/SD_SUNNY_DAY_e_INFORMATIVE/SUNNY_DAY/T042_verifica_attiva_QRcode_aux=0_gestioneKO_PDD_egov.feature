@@ -28,25 +28,25 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_egov 559
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML paaVerificaRPT
-            """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <ws:paaVerificaRPTRisposta>
-            <paaVerificaRPTRisposta>
-            <fault>
-            <faultCode>PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO</faultCode>
-            <faultString>Servizio Sconosciuto</faultString>
-            <id>90000000001</id>
-            </fault>
-            <esito>KO</esito>
-            </paaVerificaRPTRisposta>
-            </ws:paaVerificaRPTRisposta>
-            </soapenv:Body>
-            </soapenv:Envelope>
-            """
-        And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
+        # And initial XML paaVerificaRPT
+        #     """
+        #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
+        #     <soapenv:Header/>
+        #     <soapenv:Body>
+        #     <ws:paaVerificaRPTRisposta>
+        #     <paaVerificaRPTRisposta>
+        #     <fault>
+        #     <faultCode>PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO</faultCode>
+        #     <faultString>Servizio Sconosciuto</faultString>
+        #     <id>90000000001</id>
+        #     </fault>
+        #     <esito>KO</esito>
+        #     </paaVerificaRPTRisposta>
+        #     </ws:paaVerificaRPTRisposta>
+        #     </soapenv:Body>
+        #     </soapenv:Envelope>
+        #     """
+        # And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When EC sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoVerificaRPT response
         And check faultCode is PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO of nodoVerificaRPT response
