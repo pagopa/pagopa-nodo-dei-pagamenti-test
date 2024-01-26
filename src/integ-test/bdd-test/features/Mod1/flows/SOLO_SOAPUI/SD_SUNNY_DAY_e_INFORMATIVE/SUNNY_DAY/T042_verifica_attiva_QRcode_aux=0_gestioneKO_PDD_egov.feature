@@ -28,25 +28,30 @@ Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_egov 559
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        # And initial XML paaVerificaRPT
-        #     """
-        #     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/"   xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/">
-        #     <soapenv:Header/>
-        #     <soapenv:Body>
-        #     <ws:paaVerificaRPTRisposta>
-        #     <paaVerificaRPTRisposta>
-        #     <fault>
-        #     <faultCode>PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO</faultCode>
-        #     <faultString>Servizio Sconosciuto</faultString>
-        #     <id>90000000001</id>
-        #     </fault>
-        #     <esito>KO</esito>
-        #     </paaVerificaRPTRisposta>
-        #     </ws:paaVerificaRPTRisposta>
-        #     </soapenv:Body>
-        #     </soapenv:Envelope>
-        #     """
-        # And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
+        And initial XML paaVerificaRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+            <soapenv:Body>
+            <soapenv:Fault>
+            <faultcode>soapenv:EGOV_IT_105</faultcode>
+            <faultstring>SPC/PortaEquivalenteEngPayTest ha rilevato le seguenti eccezioni:Servizio</faultstring>
+            <faultactor>OpenSPCoop</faultactor>
+            <detail>
+            <eGov_IT_Ecc:MessaggioDiErroreApplicativo xmlns:eGov_IT_Ecc="http://www.cnipa.it/schemas/2003/eGovIT/Exception1_0/">
+            <eGov_IT_Ecc:OraRegistrazione>2019-06-17T11:49:22.641</eGov_IT_Ecc:OraRegistrazione>
+            <eGov_IT_Ecc:IdentificativoPorta>PortaEquivalenteTestSPCoopIT</eGov_IT_Ecc:IdentificativoPorta>
+            <eGov_IT_Ecc:IdentificativoFunzione>SbustamentoRisposte</eGov_IT_Ecc:IdentificativoFunzione>
+            <eGov_IT_Ecc:Eccezione>
+            <eGov_IT_Ecc:EccezioneBusta codiceEccezione="EGOV_IT_105"
+            descrizioneEccezione="SPC/PortaEquivalenteEngPayTest ha rilevato le seguenti eccezioni:&#xa;Servizio"/>
+            </eGov_IT_Ecc:Eccezione>
+            </eGov_IT_Ecc:MessaggioDiErroreApplicativo>
+            </detail>
+            </soapenv:Fault>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And EC replies to nodo-dei-pagamenti with the paaVerificaRPT
         When EC sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is KO of nodoVerificaRPT response
         And check faultCode is PPT_STAZIONE_INT_PA_SERVIZIO_NONATTIVO of nodoVerificaRPT response
