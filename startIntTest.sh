@@ -16,7 +16,8 @@ file=$file_config
  
 echo "replace config file $file START"
 
-replace $file ".services.\"nodo-dei-pagamenti\".url"           "$NODO_URL"
+replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://api.dev.platform.pagopa.it"
+#replace $file ".services.\"nodo-dei-pagamenti\".url"           "$NODO_URL"
 #replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"
 replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitoring/v1/monitor/health"
 replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  ""
