@@ -1,4 +1,4 @@
-Feature: PAG-1008/1198
+Feature: check tags companyName in activateV2 paGetPaymentV2 pspNotifyPaymentV2 paSendRTV2
 
     Background:
         Given systems up
@@ -25,6 +25,8 @@ Feature: PAG-1008/1198
             <amount>10.00</amount>
             <dueDate>2021-12-12</dueDate>
             <paymentNote>causale</paymentNote>
+            <paymentMethod>PO</paymentMethod>
+            <touchPoint>ATM</touchPoint>
             </nod:activatePaymentNoticeV2Request>
             </soapenv:Body>
             </soapenv:Envelope>

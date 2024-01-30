@@ -5,7 +5,8 @@ Feature: T216_RPT_checkPPP
 
 @runnable
     Scenario: RPT generation
-        Given RPT1 generation
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
+        And RPT1 generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
             <pay_i:RPT xmlns:pay_i="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.digitpa.gov.it/schemas/2011/Pagamenti/ PagInf_RPT_RT_6_0_1.xsd ">
@@ -83,7 +84,6 @@ Feature: T216_RPT_checkPPP
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -117,7 +117,7 @@ Feature: T216_RPT_checkPPP
             <pspInviaRPTResponse>
             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
             <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
-            <parametriPagamentoImmediato>idBruciatura=$nodoInviaRPT.identificativoUnivocoVersamento</parametriPagamentoImmediato>
+            <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
             </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>
             </soapenv:Body>
