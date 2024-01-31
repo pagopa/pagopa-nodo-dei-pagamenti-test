@@ -4,7 +4,6 @@ Feature: check tags companyName in activateV2 paGetPaymentV2 pspNotifyPaymentV2 
         Given systems up
 
 
-    @test @dependentread
     Scenario: activatePaymentNoticeV2 eCommerce and paGetPaymentV2 with IBAN
         Given initial XML activatePaymentNoticeV2
             """
@@ -185,3 +184,11 @@ Feature: check tags companyName in activateV2 paGetPaymentV2 pspNotifyPaymentV2 
             """
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
+
+        And execution query re_pspNotifyPaymentV2_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query re_pspNotifyPaymentV2_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentV2
+        And from pspNotifyPaymentV2 check the companySec in pspNotifyPaymentV2.transferList.transfer.companyName
+
+        And execution query re_paSendRTV2_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query re_paSendRTV2_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2
+        And from paSendRTV2 check the companySec in paSendRTV2.transferList.transfer.companyName
