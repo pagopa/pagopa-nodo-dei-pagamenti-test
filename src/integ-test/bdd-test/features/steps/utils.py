@@ -380,6 +380,9 @@ def single_thread(context, soap_primitive, tipo):
         url_nodo = f"{get_rest_url_nodo(context, primitive)}"
         print(url_nodo)
         soap_response = requests.get(url_nodo, headers=headers, verify=False)
+        print("soap_response: ", soap_response.content)
+        print(soap_primitive.split("_")[1] + "Response")
+        setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
     elif tipo == 'POST':
         body = getattr(context, primitive)
         print(body)
@@ -521,7 +524,8 @@ def searchValueTag(xml_string, path_tag, flag_all_value_tag):
     list_value_tag = searchValueTagRecursive(tag_padre, tag, single_tag)
     full_list_tag.append(list_value_tag)
     if flag_all_value_tag == False:
-      if list_value_tag: break
+      if list_value_tag: 
+          break
   return full_list_tag
 
 
