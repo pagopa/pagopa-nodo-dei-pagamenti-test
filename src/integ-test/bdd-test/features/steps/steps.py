@@ -13,8 +13,14 @@ from xml.dom.minidom import parseString
 import xmltodict
 if 'NODOPGDB' in os.environ:
     import db_operation_pg as db
+    import db_operation_pg as db_online
+    import db_operation_pg as db_offline
 else:
     import db_operation as db
+    import db_operation as db_online
+    import db_operation as db_offline
+if 'APICFG' in os.environ:
+    import db_operation_apicfg_testing_support as db
 import json_operations as jo
 import pytz
 import requests
@@ -25,6 +31,7 @@ from requests.exceptions import RetryError
 # Constants
 RESPONSE = "Response"
 REQUEST = "Request"
+SUBKEY = "Ocp-Apim-Subscription-Key"
 
 
 # Steps definitions
@@ -42,7 +49,13 @@ def step_impl(context):
         print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
         print(f"calling -> {url}")
-        headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+        headers = {
+            'Host': 'api.dev.platform.pagopa.it:443'
+        }
+
+        if row.get("subscription_key_name") != "":
+            if row.get("subscription_key_name") in os.environ:
+                headers[SUBKEY] = os.getenv(row.get("subscription_key_name"))
         resp = requests.get(url, headers=headers, verify=False)
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
@@ -1862,12 +1875,12 @@ def step_impl(context, primitive):
 
 @step("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
+    db_name = "nodo_cfg"
     db_selected = context.config.userdata.get(
-        "db_configuration").get('nodo_cfg')
+        "db_configuration").get(db_name)
     selected_query = utils.query_json(context, 'update_config', 'configurations').replace(
         'value', value).replace('key', param)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
 
     setattr(context, param, value)
     print(">>>>>>>>>>>>>>>", getattr(context, param))
@@ -1938,8 +1951,7 @@ def step_impl(context, query_name, date, macro, db_name):
 
     selected_query = utils.query_json(
         context, query_name, macro).replace('date', date)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
 
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
@@ -1947,10 +1959,10 @@ def step_impl(context, query_name, date, macro, db_name):
 
 @then("restore initial configurations")
 def step_impl(context):
+    db_name = "nodo_cfg"
     db_selected = context.config.userdata.get(
-        "db_configuration").get('nodo_cfg')
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+        "db_configuration").get(db_name)
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
 
     config_dict = getattr(context, 'configurations')
     for key, value in config_dict.items():
@@ -1976,8 +1988,7 @@ def step_impl(context, query_name, macro, db_name, table_name, columns):
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_global_variables(selected_query, context)
 
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
 
     exec_query = db.executeQuery(conn, selected_query)
     if exec_query is not None:
@@ -2124,8 +2135,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
 
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
 
     selected_query = utils.query_json(context, query_name, name_macro).replace(
         "columns", column).replace("table_name", table_name)
@@ -2170,8 +2180,7 @@ def step_impl(context, query_name, table_name, param, value, where_condition, va
         'param', param).replace('value', value).replace('where_condition', where_condition).replace('valore', valore)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
 
@@ -2181,8 +2190,8 @@ def step_impl(context, query_name, table_name, where_condition, macro, db_name):
     selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('where_condition', where_condition)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
+
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
 
@@ -2196,8 +2205,7 @@ def step_impl(context, query_name, table_name, param, where_condition, macro, db
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
     selected_query = utils.replace_global_variables(selected_query, context)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
 
@@ -2206,8 +2214,7 @@ def step_impl(context, query_name, table_name, param, where_condition, macro, db
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
 
     if number == 'default_token_duration_validity_millis':
         default = int(
@@ -2234,12 +2241,8 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
 
     elif number == 'default_durata_estensione_token_IO':
         default = int(
-            getattr(context, 'default_durata_estensione_token_IO')) / 60000
-
-														   
-        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
-														   
-															 
+            getattr(context, 'default_durata_estensione_token_IO')) / 60000											   
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')														   										 
         selected_query = utils.query_json(context, query_name, name_macro).replace(
             "columns", column).replace("table_name", table_name)
         exec_query = db.executeQuery(conn, selected_query)
@@ -2284,8 +2287,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number, row):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
 
     if number == 'default_token_duration_validity_millis':
         default = int(
@@ -2390,7 +2392,7 @@ def step_impl(context, query_name, table_name, param, value, macro, db_name):
     value = utils.replace_global_variables(value, context)
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
 
@@ -2403,7 +2405,7 @@ def step_impl(context, query_name, table_name, where_condition, macro, db_name):
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
 
@@ -2413,8 +2415,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
 
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
 
     selected_query = utils.query_json(context, query_name, name_macro).replace(
         "columns", column).replace("table_name", table_name)
@@ -2440,8 +2441,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
 
     number = int(number) / 60000
     value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
@@ -2463,8 +2463,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
 def step_impl(context, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
 
     selected_query = utils.query_json(context, query_name, name_macro).replace(
         "columns", '*').replace("table_name", table_name)
@@ -2478,8 +2477,7 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
 def step_impl(context, query_name, table_name, db_name, name_macro):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
 
     selected_query = utils.query_json(context, query_name, name_macro).replace(
         "columns", '*').replace("table_name", table_name)
@@ -2491,10 +2489,9 @@ def step_impl(context, query_name, table_name, db_name, name_macro):
 
 @step('check token_valid_to is {condition} token_valid_from plus {param}')
 def step_impl(context, condition, param):
-    nodo_online_db = context.config.userdata.get(
-        "db_configuration").get('nodo_online')
-    nodo_online_conn = db.getConnection(nodo_online_db.get('host'), nodo_online_db.get(
-        'database'), nodo_online_db.get('user'), nodo_online_db.get('password'), nodo_online_db.get('port'))
+    db_name = "nodo_online"
+    nodo_online_db = context.config.userdata.get("db_configuration").get(db_online)
+    nodo_online_conn = utils.get_db_connection(db_name, db, db_online, db_offline, nodo_online_db)
 
     token_validity_query = utils.query_json(context, 'token_validity', 'AppIO').replace(
         'columns', 'TOKEN_VALID_FROM, TOKEN_VALID_TO').replace('table_name', 'POSITION_ACTIVATE')
@@ -2726,10 +2723,10 @@ def step_impl(context):
     query4 = f"SELECT * FROM RPT_VERSAMENTI v JOIN RPT r ON v.FK_RPT = r.ID WHERE r.IUV = '{iuv}' AND r.IDENT_DOMINIO = '$activatePaymentNotice1.fiscalCode'"
 
     db_config = context.config.userdata.get("db_configuration")
-    db_selected = db_config.get("nodo_online")
+    db_name = "nodo_online"
+    db_selected = db_config.get(db_name)
 
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
 
     query_payment_replaced = utils.replace_local_variables(
         query_payment, context)
@@ -2960,11 +2957,11 @@ def step_impl(context):
     query3 = f"SELECT s.* FROM PSP s where s.ID_PSP = '{psp}'"
     query4 = f"SELECT s.METADATA FROM POSITION_PAYMENT_PLAN s where s.NOTICE_ID = '{noticeNumber}' and s.PA_FISCAL_CODE= '{pa}'"
 
+    db_name = "nodo_online"
     db_config = context.config.userdata.get(
-        "db_configuration").get("nodo_online")
+        "db_configuration").get(db_name)
 
-    conn = db.getConnection(db_config.get('host'), db_config.get(
-        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_config)
 
     rows = db.executeQuery(conn, query)
     rows1 = db.executeQuery(conn, query1)
@@ -2973,10 +2970,10 @@ def step_impl(context):
 
     db.closeConnection(conn)
 
-    db_config = context.config.userdata.get("db_configuration").get("nodo_cfg")
+    db_name="nodo_cfg"
+    db_config = context.config.userdata.get("db_configuration").get(db_name)
 
-    conn = db.getConnection(db_config.get('host'), db_config.get(
-        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_config)
 
     rows3 = db.executeQuery(conn, query3)
 
@@ -3021,11 +3018,9 @@ def step_impl(context):
     query3 = "SELECT su.ENTITY_UNIQUE_IDENTIFIER_TYPE, su.ENTITY_UNIQUE_IDENTIFIER_VALUE, su.FULL_NAME, su.STREET_NAME, su.CIVIC_NUMBER, su.POSTAL_CODE, su.CITY, su.STATE_PROVINCE_REGION, su.COUNTRY, su.EMAIL  FROM POSITION_SUBJECT su JOIN POSITION_RECEIPT sr ON su.ID = sr.PAYER_ID WHERE sr.PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and sr.NOTICE_ID='$activatePaymentNotice.noticeNumber' and su.SUBJECT_TYPE='PAYER'"
     query4 = "SELECT TRANSFER_IDENTIFIER, AMOUNT, PA_FISCAL_CODE_SECONDARY, IBAN, REMITTANCE_INFORMATION, TRANSFER_CATEGORY  FROM POSITION_TRANSFER WHERE PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and NOTICE_ID='$activatePaymentNotice.noticeNumber'"
 
-    db_config = context.config.userdata.get(
-        "db_configuration").get("nodo_online")
+    db_config = context.config.userdata.get("db_configuration").get("nodo_online")
 
-    conn = db.getConnection(db_config.get('host'), db_config.get(
-        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
+    conn = db_online.getConnection(db_config.get('host'), db_config.get('database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
 
     XML = utils.replace_local_variables(XML, context)
     xml_rows = db.executeQuery(conn, XML)
@@ -3076,9 +3071,9 @@ def step_impl(context):
     db.closeConnection(conn)
 
     query5 = "SELECT CODICE_FISCALE, RAGIONE_SOCIALE  FROM PSP WHERE ID_PSP='$activatePaymentNotice.idPSP'"
-    db_config = context.config.userdata.get("db_configuration").get("nodo_cfg")
-    conn = db.getConnection(db_config.get('host'), db_config.get(
-        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
+    db_name = "nodo_cfg"
+    db_config = context.config.userdata.get("db_configuration").get(db_name)
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_config)
 
     query5 = utils.replace_local_variables(query5, context)
     rows5 = db.executeQuery(conn, query5)
@@ -3277,7 +3272,7 @@ def step_impl(context, causaleVers):
     db_config = context.config.userdata.get(
         "db_configuration").get("nodo_online")
 
-    conn = db.getConnection(db_config.get('host'), db_config.get(
+    conn = db_online.getConnection(db_config.get('host'), db_config.get(
         'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
 
     # select clob
@@ -3397,13 +3392,13 @@ def step_impl(context, name_macro, db_name, query_name, value, column, table_nam
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
 
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
         
     selected_query = utils.query_json(context, query_name, name_macro).replace(
         "columns", column).replace("table_name", table_name)
-    print(selected_query)
+    print('>>>>>>>>>>>>', selected_query)
     exec_query = db.executeQuery(conn, selected_query)
+    print('#############', exec_query)
     query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)
 
