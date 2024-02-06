@@ -5013,3 +5013,15 @@ Feature: flow tests for closePaymentV2
 
         # POSITION_RECEIPT
         And verify 0 record for the table POSITION_RECEIPT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+
+    @pippo
+    Scenario: FLUSSO_OLD_CP_22
+        Given the activatePaymentNoticeV2 scenario executed successfully
+        And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1
+        And the nodoInviaRPT scenario executed successfully
+        And the closePaymentV2 request scenario executed successfully
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        And wait 5 seconds for expiration
+        And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query notice_number_from_iuv on db nodo_online under macro NewMod1

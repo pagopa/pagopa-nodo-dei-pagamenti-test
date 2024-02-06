@@ -10,7 +10,13 @@ import time
 from threading import Thread
 import requests
 from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
+import xmltodict
+
+# Decommentare per test in pipeline
+#from requests.packages.urllib3.util.retry import Retry 
+
+# Commentare per test in pipeline
+from urllib3.util.retry import Retry
 
 import xml.etree.ElementTree as ET
 
@@ -93,8 +99,7 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoChiediQuadraturaPA": "/nodo-per-pa/v1"
         #"nodoChiediSceltaWISP":"//v1"
     }
-   
-    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") == " ":
+    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") == "":
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
     else:
         return  context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
@@ -116,8 +121,8 @@ def get_rest_url_nodo(context, primitive):
         "v1/closepayment": "/nodo-per-pm",
         "v2/closepayment": "/nodo-per-pm",
         "v1/parkedList": "/nodo-per-pm"
-    }
-    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == " ":
+    }     
+    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
         if "avanzamentoPagamento" in primitive:
             primitive = "avanzamentoPagamento"
         elif "informazioniPagamento" in primitive:
@@ -130,11 +135,11 @@ def get_rest_url_nodo(context, primitive):
             primitive = "v1/parkedList"
         elif "_json" in primitive:
             primitive = primitive.split('_')[0]
-            if "v2/closepayment" in primitive:
-                primitive = "v2/closepayment"
+        if "v2/closepayment" in primitive:
+            primitive = "v2/closepayment"
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
     else:
-        return ""
+        return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + "/" + primitive
 
 
 def get_soap_mock_ec(context):
@@ -237,8 +242,7 @@ def manipulate_soap_action(soap_action, elem, value):
             original_node = cloned_node
             cloned_node = original_node.cloneNode(2)
     else:
-        node = my_document.getElementsByTagName(
-            elem)[0] if my_document.getElementsByTagName(elem) else None
+        node = my_document.getElementsByTagName(elem)[0] if my_document.getElementsByTagName(elem) else None
 
         if node is None:
             # create
@@ -256,6 +260,40 @@ def manipulate_soap_action(soap_action, elem, value):
             node.appendChild(element)
 
     return my_document.toxml()
+
+
+
+
+
+def manipulate_json(data, key, value):
+    json_temp = ""
+    if value == "None":
+        if key in data:
+            del data[key]
+    elif value == "Empty":
+        json_temp = json.loads(data)
+        if key in data and isinstance(json_temp.get(key), list):
+            json_temp[key] = []
+        elif key in data and isinstance(json_temp.get(key), dict):
+            json_temp[key] = {}
+        elif key in data:
+            data[key] = ""
+    elif value == 'RemoveParent':
+        parent_key = key.rsplit('.', 1)[0]
+        if parent_key in data and isinstance(data[parent_key], dict):
+            if key in data[parent_key]:
+                data[parent_key][key] = data[key]
+            del data[key]
+    elif value.startswith("Occurrences"):
+        occurrences = int(value.split(",")[1])
+        if key in data and isinstance(data[key], list):
+            data[key] = data[key] * occurrences
+    else:
+        if key in data:
+            json_temp = json.loads(data)
+            json_temp[key] = value
+    return json.dumps(json_temp)
+
 
 
 def replace_context_variables(body, context):
@@ -328,43 +366,69 @@ def isDate(string: str):
         return False
 
 
-def single_thread(context, soap_primitive, type):
+def single_thread(context, soap_primitive, tipo):
     print("single_thread")
     primitive = soap_primitive.split("_")[0]
     primitive = replace_local_variables(primitive, context)
     primitive = replace_context_variables(primitive, context)
     primitive = replace_global_variables(primitive, context)
     
-    if type == 'GET':
-        
+    if tipo == 'GET':       
         headers = {'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
-        url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+        url_nodo = f"{get_rest_url_nodo(context, primitive)}"
         print(url_nodo)
         soap_response = requests.get(url_nodo, headers=headers, verify=False)
-    elif type == 'POST':
+        print("soap_response: ", soap_response.content)
+        print(soap_primitive.split("_")[1] + "Response")
+        setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
+    elif tipo == 'POST':
         body = getattr(context, primitive)
         print(body)
+        response = ''
         if 'xml' in getattr(context, primitive):
             # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': 'api.dev.platform.pagopa.it:443'}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
             url_nodo = get_soap_url_nodo(context, primitive)
+            response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
             # headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+            if '<' in body: 
+                body = xmltodict.parse(body)
+                body = body["root"]
+                if body != None:
+                    if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
+                        body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+                        if type(body["paymentTokens"]) != list:
+                            l = list()
+                            l.append(body["paymentTokens"])
+                            body["paymentTokens"] = l
+                    if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
+                        body["totalAmount"] = float(body["totalAmount"])
+                    if ('fee' in body.keys()) and (body["fee"] != None):
+                        body["fee"] = float(body["fee"])
+                    if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
+                        body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
+                    if ('positionslist' in body.keys()) and (body["positionslist"] != None):
+                        body["positionslist"] = body["positionslist"]["position"]
+                        if type(body["positionslist"]) != list:
+                            l = list()
+                            l.append(body["positionslist"])
+                            body["positionslist"] = l
+                    body = json.dumps(body, indent=4)
+                body = json.loads(body)
             headers = {'Content-Type': 'application/json', 'Host': 'api.dev.platform.pagopa.it:443'}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')            
-            url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
-        soap_response = requests.post(
-            url_nodo, body, headers=headers, verify=False)
+            url_nodo = f"{get_rest_url_nodo(context, primitive)}"
+            response = requests.request(tipo, f"{url_nodo}", headers=headers, json=body, verify=False)
 
-    print("nodo soap_response: ", soap_response.content)
-    print(soap_primitive.split("_")[1] + "Response")
-    setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
-
+        print("response: ", response.content)
+        print(soap_primitive.split("_")[1] + "Response")
+        setattr(context, soap_primitive.split("_")[1] + "Response", response)
 
 def threading(context, primitive_list, list_of_type):
     i = 0
@@ -460,7 +524,8 @@ def searchValueTag(xml_string, path_tag, flag_all_value_tag):
     list_value_tag = searchValueTagRecursive(tag_padre, tag, single_tag)
     full_list_tag.append(list_value_tag)
     if flag_all_value_tag == False:
-      if list_value_tag: break
+      if list_value_tag: 
+          break
   return full_list_tag
 
 

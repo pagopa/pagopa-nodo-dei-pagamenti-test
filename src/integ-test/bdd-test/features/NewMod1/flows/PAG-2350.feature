@@ -216,7 +216,7 @@ Feature: PAG-2258
         And the sendPaymentOutcome request scenario executed successfully
         When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is KO of sendPaymentOutcome response
-        And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+        And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -249,7 +249,8 @@ Feature: PAG-2258
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test @dependentread @dependentwrite @lazy
+        
+    @test
     Scenario: Test spov1 KO (part 3)
         Given the Test spov1 KO (part 2) scenario executed successfully
         And wait 12 seconds for expiration

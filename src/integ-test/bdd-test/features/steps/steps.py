@@ -85,6 +85,8 @@ def step_impl(context, primitive):
                 0].firstChild.data
 				
         payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+
+        payload = payload.replace('#idempotency_key_POSTE#', f"{str(random.randint(10000000000, 99999999999))}_{str(random.randint(1000000000, 9999999999))}")
 								  
         payload = payload.replace('#idempotency_key_IOname#', "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
 
@@ -261,6 +263,260 @@ def step_impl(context, primitive):
     setattr(context, primitive, payload)
 
 
+@step('from body {filebody} initial XML {primitive}')
+def step_impl(context, primitive, filebody):
+
+    # Specifica il percorso del tuo file XML
+    file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+
+    # Leggi il contenuto del file XML come stringa
+    with open(file_path, 'r') as file:
+        payload = file.read()
+
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
+
+    if len(payload) > 0:
+        my_document = parseString(payload)
+        idBrokerPSP = "70000000001"
+        if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
+            idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[
+                0].firstChild.data
+				
+        payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+								  
+        payload = payload.replace('#idempotency_key_IOname#', "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
+
+    if "#timedate#" in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+        payload = payload.replace('#timedate#', timedate)
+        setattr(context, 'timedate', timedate)
+
+    if '#date#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        payload = payload.replace('#date#', date)
+        setattr(context, 'date', date)
+
+    if '#yesterday_date#' in payload:
+        yesterday_date = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
+        payload = payload.replace('#yesterday_date#', yesterday_date)
+        setattr(context, 'yesterday_date', yesterday_date)
+
+    if '#tomorrow_date#' in payload:
+        tomorrow_date = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
+        payload = payload.replace('#tomorrow_date#', tomorrow_date)
+        setattr(context, 'tomorrow_date', tomorrow_date)
+
+    if '#identificativoFlusso#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
+								  
+        payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
+        setattr(context, 'identificativoFlusso', identificativoFlusso)
+
+    if '#iubd#' in payload:
+        iubd = '' + str(random.randint(10000000, 20000000)) + \
+            str(random.randint(10000000, 20000000))
+        payload = payload.replace('#iubd#', iubd)
+        setattr(context, 'iubd', iubd)
+
+    if "#ccp#" in payload:
+        ccp = str(random.randint(100000000000000, 999999999999999))
+        payload = payload.replace('#ccp#', ccp)
+        setattr(context, "ccp", ccp)
+
+    if "#ccpms#" in payload:
+        ccpms = str(utils.current_milli_time())
+        payload = payload.replace('#ccpms#', ccpms)
+        setattr(context, "ccpms", ccpms)
+    
+    if "#ccpms2#" in payload:
+        ccpms2 = str(utils.current_milli_time()) + '1'
+        payload = payload.replace('#ccpms2#', ccpms2)
+        setattr(context, "ccpms2", ccpms2)
+
+    if "#iuv#" in payload:
+        iuv = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv#', iuv)
+        setattr(context, "iuv", iuv)
+
+    if "#iuv1#" in payload:
+        iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv1#', iuv1)
+        setattr(context, "iuv1", iuv1)
+
+    if '#IUV#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + \
+            datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
+        payload = payload.replace('#IUV#', IUV)
+        setattr(context, 'IUV', IUV)
+
+    if '#IUV2#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        IUV2 = str(date + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + '-' + str(random.randint(0, 100000))) 
+        payload = payload.replace('#IUV2#', IUV2)
+        setattr(context, 'IUV2', IUV2)					  
+
+    if '#notice_number#' in payload:
+        notice_number = f"30211{str(random.randint(1000000000000, 9999999999999))}"
+        payload = payload.replace('#notice_number#', notice_number)
+        setattr(context, "iuv", notice_number[1:])
+
+    if '#notice_number_old#' in payload:
+        notice_number = f"31211{str(random.randint(1000000000000, 9999999999999))}"
+        payload = payload.replace('#notice_number_old#', notice_number)
+        setattr(context, "iuv", notice_number[1:])
+
+    if '#carrello#' in payload:
+        carrello = "77777777777" + "302" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#carrello#', carrello)
+        setattr(context, 'carrello', carrello)
+
+    if '#carrello1#' in payload:
+        carrello1 = "77777777777" + "302" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+        payload = payload.replace('#carrello1#', carrello1)
+        setattr(context, 'carrello1', carrello1)
+
+    if '#secCarrello#' in payload:
+        secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#secCarrello#', secCarrello)
+        setattr(context, 'secCarrello', secCarrello)
+
+    if '#carrNOTENABLED#' in payload:
+        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
+        setattr(context, 'carrNOTENABLED', carrNOTENABLED)
+
+    if '#thrCarrello#' in payload:
+        thrCarrello = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#thrCarrello#', thrCarrello)
+        setattr(context, 'thrCarrello', thrCarrello)
+
+    if '#CARRELLO#' in payload:
+        CARRELLO = "CARRELLO" + "-" + \
+            str(getattr(context, 'date') +
+                datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+        payload = payload.replace('#CARRELLO#', CARRELLO)
+        setattr(context, 'CARRELLO', CARRELLO)
+
+    if '#CARRELLO1#' in payload:
+        CARRELLO1 = "CARRELLO" + str(random.randint(0, 100000))
+        payload = payload.replace('#CARRELLO1#', CARRELLO1)
+        setattr(context, 'CARRELLO1', CARRELLO1)
+
+    if '#CARRELLO2#' in payload:
+        CARRELLO2 = "CARRELLO" + str(random.randint(0, 10000))
+        payload = payload.replace('#CARRELLO2#', CARRELLO2)
+        setattr(context, 'CARRELLO2', CARRELLO2)
+
+    if '#carrelloMills#' in payload:
+        carrello = str(utils.current_milli_time())
+        payload = payload.replace('#carrelloMills#', carrello)
+        setattr(context, 'carrelloMills', carrello)
+
+    if '#ccp3#' in payload:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        timedate = date + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
+        ccp3 = str(random.randint(0, 10000)) + timedate
+        payload = payload.replace('#ccp3#', ccp3)
+        setattr(context, 'ccp3', ccp3)					   
+    if '$iuv' in payload:
+        payload = payload.replace('$iuv', getattr(context, 'iuv'))
+
+    if '$intermediarioPA' in payload:
+        payload = payload.replace(
+            '$intermediarioPA', getattr(context, 'intermediarioPA'))
+
+    if '$identificativoFlusso' in payload:
+        payload = payload.replace('$identificativoFlusso', getattr(
+            context, 'identificativoFlusso'))
+
+    if '$1ccp' in payload:
+        payload = payload.replace('$1ccp', getattr(context, 'ccp1'))
+
+    if '$2ccp' in payload:
+        payload = payload.replace('$2ccp', getattr(context, 'ccp2'))
+
+    if '$rendAttachment' in payload:
+        rendAttachment = getattr(context, 'rendAttachment')
+        rendAttachment_b = bytes(rendAttachment, 'UTF-8')
+        rendAttachment_uni = b64.b64encode(rendAttachment_b)
+        rendAttachment_uni = f"{rendAttachment_uni}".split("'")[1]
+        payload = payload.replace('$rendAttachment', rendAttachment_uni)
+
+    if '#carrello#' in payload:
+        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+        payload = payload.replace('#carrello#', carrello)
+        setattr(context, 'carrello', carrello)
+
+    if "#cityspo#" in payload:
+        cityspo = str("city" + utils.random_s())
+        payload = payload.replace('#cityspo#', cityspo)
+        setattr(context, "cityspo", cityspo)
+
+    setattr(context, primitive, payload)
+
+@given('from body {filebody} initial JSON {primitive}')
+def step_impl(context, primitive, filebody):
+    
+    file_json = open(f"src/integ-test/bdd-test/resources/json/{filebody}.json")
+    data_json = json.load(file_json)
+
+    payload = json.dumps(data_json)
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
+    setattr(context, f"{primitive}JSON", payload)
+
+   # jsonDict = json.loads(payload)
+  #  payload = utils.json2xml(jsonDict)
+  #  payload = '<root>' + payload + '</root>'
+    if "#iuv#" in payload:
+        iuv = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv#', iuv)
+        setattr(context, "iuv", iuv)
+    if "#iuv1#" in payload:
+        iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv1#', iuv1)
+        setattr(context, "iuv1", iuv1)	
+    if "#iuv2#" in payload:
+        iuv2 = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv2#', iuv2)
+        setattr(context, "iuv2", iuv2)
+    if "#iuv3#" in payload:
+        iuv3 = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv3#', iuv3)
+        setattr(context, "iuv3", iuv3)
+    if "#iuv4#" in payload:
+        iuv4 = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv4#', iuv4)
+        setattr(context, "iuv4", iuv4)			   
+    if '#transaction_id#' in payload:
+        transaction_id = str(random.randint(10000000, 99999999))
+        payload = payload.replace('#transaction_id#', transaction_id)
+        setattr(context, 'transaction_id', transaction_id)
+    if '#psp_transaction_id#' in payload:
+        psp_transaction_id = str(random.randint(10000000, 99999999))
+        payload = payload.replace('#psp_transaction_id#', psp_transaction_id)
+        setattr(context, 'psp_transaction_id', psp_transaction_id)
+    if '$iuv' in payload:
+        payload = payload.replace('$iuv', getattr(context, 'iuv'))
+    if '$transaction_id' in payload:
+        payload = payload.replace('$transaction_id', getattr(context, 'transaction_id'))
+    if '$psp_transaction_id' in payload:
+        payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
+    setattr(context, primitive, payload)
+    
+
 @given('initial JSON {primitive}')
 def step_impl(context, primitive):
     payload = context.text or ""
@@ -279,7 +535,19 @@ def step_impl(context, primitive):
     if "#iuv1#" in payload:
         iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
         payload = payload.replace('#iuv1#', iuv1)
-        setattr(context, "iuv1", iuv1)				   
+        setattr(context, "iuv1", iuv1)	
+    if "#iuv2#" in payload:
+        iuv2 = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv2#', iuv2)
+        setattr(context, "iuv2", iuv2)
+    if "#iuv3#" in payload:
+        iuv3 = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv3#', iuv3)
+        setattr(context, "iuv3", iuv3)
+    if "#iuv4#" in payload:
+        iuv4 = '11' + str(random.randint(1000000000000, 9999999999999))
+        payload = payload.replace('#iuv4#', iuv4)
+        setattr(context, "iuv4", iuv4)			   
     if '#transaction_id#' in payload:
         transaction_id = str(random.randint(10000000, 99999999))
         payload = payload.replace('#transaction_id#', transaction_id)
@@ -295,6 +563,8 @@ def step_impl(context, primitive):
     if '$psp_transaction_id' in payload:
         payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
     setattr(context, primitive, payload)
+
+
 
 
 @step('RPT generation')
@@ -772,6 +1042,21 @@ def step_impl(context):
     setattr(context, 'rendAttachment', payload)
 
 
+@given('for {type} replace {tag} with {value} in {primitive}')
+def step_impl(context, type, tag, value, primitive):
+    if tag != "-":
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
+        value = utils.replace_global_variables(value, context)
+        type_string = type.upper() 
+        if type_string == "XML":
+            xml = utils.manipulate_soap_action(getattr(context, primitive), tag, value)
+            setattr(context, primitive, xml)
+        elif type_string == "JSON":
+            json = utils.manipulate_json(getattr(context, primitive), tag, value)
+            setattr(context, primitive, json)
+
+
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
     # use - to skip
@@ -779,9 +1064,11 @@ def step_impl(context, elem, value, action):
         value = utils.replace_local_variables(value, context)
         value = utils.replace_context_variables(value, context)
         value = utils.replace_global_variables(value, context)
-        xml = utils.manipulate_soap_action(
-            getattr(context, action), elem, value)
+        xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
         setattr(context, action, xml)
+
+
+        
 
 
 @given('replace {old_tag} tag in {action} with {new_tag}')
@@ -811,6 +1098,7 @@ def step_impl(context, sender, soap_primitive, receiver):
     else:
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
     url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
+    #url_nodo = "http://localhost:81/nodo-sit/webservices/input"
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
@@ -818,6 +1106,7 @@ def step_impl(context, sender, soap_primitive, receiver):
         context, soap_primitive), headers=headers, verify=False)
     print(soap_response.content.decode('utf-8'))
     print(soap_response.status_code)
+    print(f'soap response: {soap_response.headers}')
     setattr(context, soap_primitive + RESPONSE, soap_response)
 
     assert (soap_response.status_code ==
@@ -848,16 +1137,18 @@ def step_impl(context, sender, soap_primitive, receiver):
 def step_impl(context, job_name, seconds):
     seconds = utils.replace_local_variables(seconds, context)
     time.sleep(int(seconds))
-    url_nodo = context.config.userdata.get(
-        "services").get("nodo-dei-pagamenti").get("url")
-    print(f">>>>>>>>>>>>>>>>>> {url_nodo}/monitoring/v1/jobs/trigger/{job_name}")
+    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
-    # DA UTILIZZARE IN LOCALE (DECOMMENTARE LE 2 RIGHE DI SEGUITO E COMMENTARE LE 2 RIGHE SOTTO pipeline)
-    #nodo_response = requests.get(
-    #f"{url_nodo}nodo-dev/jobs/trigger/{job_name}", headers=headers, verify=False)
-    # pipeline
-    nodo_response = requests.get(
-        f"{url_nodo}/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
+
+    user_profile = os.environ.get("USERPROFILE")
+    
+    if user_profile != None:
+        nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
+        print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
+    else:
+        nodo_response = requests.get(f"{url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
+        print(f">>>>>>>>>>>>>>>>>> {url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}")
+    
     setattr(context, job_name + RESPONSE, nodo_response)
 
 
@@ -868,7 +1159,7 @@ def step_impl(context, tag, value, primitive):
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
     value = utils.replace_global_variables(value, context)
-    print('soap_response: ', soap_response.headers)
+    
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
@@ -898,7 +1189,7 @@ def step_impl(context, path_tag, value, primitive):
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
     value = utils.replace_global_variables(value, context)
-    print('soap_response: ', soap_response.headers)
+    
     if 'xml' in soap_response.headers['content-type']:
         my_document_xml = soap_response.content
         list_tag_value = []
@@ -906,6 +1197,22 @@ def step_impl(context, path_tag, value, primitive):
         data = list_tag_value[0]
         print(f'check path tag "{path_tag}" - expected: {value}, obtained: {data}')
         assert value == data
+        
+@then('from {key} check the {value} in {path_tag}')
+def step_impl(context, path_tag, value, key):
+    query_body = getattr(context, key)
+    value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
+    value = utils.replace_global_variables(value, context)
+    
+    if 'xml' in query_body:
+        list_tag_value = []
+        list_tag_value = utils.searchValueTag(query_body, path_tag, False)
+        data = list_tag_value[0]
+        print(f'check path tag "{path_tag}" - expected: {value}, obtained: {data}')
+        assert value == data
+    else: 
+        assert False
 
 @then('compare list between {tag} in {primitive} response and {value}')
 def step_impl(context, tag, value, primitive):
@@ -925,7 +1232,7 @@ def step_impl(context, tag, value, primitive):
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
     value = utils.replace_global_variables(value, context)
-    print('soap_response: ', soap_response.headers)
+    
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
@@ -1176,6 +1483,7 @@ def step_impl(context, name, n):
 def step_impl(context, sender, method, service, receiver):
     # TODO get url according to receiver
     url_nodo = utils.get_rest_url_nodo(context, service)
+    print(url_nodo)
     headers = {'Content-Type': 'application/json',
                'Host': 'api.dev.platform.pagopa.it:443'}
     if 'SUBSCRIPTION_KEY' in os.environ:
@@ -1215,25 +1523,39 @@ def step_impl(context, sender, method, service, receiver):
     body = utils.replace_context_variables(body, context)
     body = utils.replace_global_variables(body, context)
     print(body)
-    service = utils.replace_local_variables(service, context)
-    service = utils.replace_context_variables(service, context)
-    print(f"{url_nodo}/{service}")
+    run_local = False
+    if service in url_nodo:
+        url_nodo = utils.replace_local_variables(url_nodo, context)
+        url_nodo = utils.replace_context_variables(url_nodo, context)
+        run_local = True
+        
+    else:
+        service = utils.replace_local_variables(service, context)
+        service = utils.replace_context_variables(service, context)
+        print(f"{url_nodo}/{service}")
     if len(body) > 1:
         json_body = json.loads(body)
     else:
         json_body = None
-    nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers,
-                                     json=json_body, verify=False)
+    if run_local:
+        if '_json' in url_nodo:
+            url_nodo = url_nodo.split('_')[0]
+            print(f"{url_nodo}")
+            nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
+        else:
+           nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False) 
+    else:
+        nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False)
     setattr(context, service.split('?')[0], json_body)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
     print(service.split('?')[0] + RESPONSE)
     print(nodo_response.content)
+    print(f'rest response: {nodo_response.headers}')
 
 
 @then('verify the HTTP status code of {action} response is {value}')
 def step_impl(context, action, value):
-    print(
-        f'HTTP status expected: {value} - obtained:{getattr(context, action + RESPONSE).status_code}')
+    print(f'HTTP status expected: {value} - obtained:{getattr(context, action + RESPONSE).status_code}')
     assert int(value) == getattr(context, action + RESPONSE).status_code
 
 
@@ -1582,16 +1904,16 @@ def step_impl(context, job_name):
     url_nodo = context.config.userdata.get(
         "services").get("nodo-dei-pagamenti").get("url")
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+
     # DA UTILIZZARE IN LOCALE (DECOMMENTARE LE 2 RIGHE DI SEGUITO E COMMENTARE LE 2 RIGHE SOTTO pipeline)
-    #nodo_response = requests.get(
-    #f"{url_nodo}nodo-dev/config/refresh/{job_name}", headers=headers, verify=False)
+    # nodo_response = requests.get("https://api.dev.platform.pagopa.it/nodo/monitoring/v1/config/refresh/ALL", headers=headers, verify=False)
+
     # pipeline
+    # nodo_response = requests.get(f"{url_nodo}/monitoring/v1/config/refresh/{job_name}", headers=headers, verify=False)
+    
+    refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+    setattr(context, job_name + RESPONSE, refresh_response)
     time.sleep(10)
-    nodo_response = requests.get(
-        f"{url_nodo}/monitoring/v1/config/refresh/{job_name}", headers=headers, verify=False)
-    setattr(context, job_name + RESPONSE, nodo_response)
-    refresh_response = requests.get(utils.get_refresh_config_url(
-        context), headers=headers, verify=False)
     assert refresh_response.status_code == 200
 
 
@@ -2026,6 +2348,34 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     print(f"check expected element: {value}, obtained: {elem}")
     assert elem == value
 
+
+@step("insert through the query {query_name} into the table {table_name} the fields {row_keys_fields} with {row_values_fields} under macro {macro} on db {db_name}")
+def step_impl(context, query_name, table_name, row_keys_fields, row_values_fields, macro, db_name):											 
+											 
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('row_keys_fields', row_keys_fields).replace('row_values_fields', row_values_fields)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
+    row_values_fields = utils.replace_global_variables(row_values_fields, context)
+    row_values_fields = utils.replace_local_variables(row_values_fields, context)
+    row_values_fields = utils.replace_context_variables(row_values_fields, context)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    exec_query = db.executeQuery(conn, selected_query)
+    db.closeConnection(conn)
+
+@step("delete through the query {query_name} into the table {table_name} with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
+def step_impl(context, query_name, table_name, where_condition, valore, macro, db_name):
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('where_condition', where_condition).replace('valore', valore)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    exec_query = db.executeQuery(conn, selected_query)
+    db.closeConnection(conn)
+
+
+
 @step("updates through the query {query_name} of the table {table_name} the parameter {param} with {value} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, macro, db_name):
 												 
@@ -2041,6 +2391,20 @@ def step_impl(context, query_name, table_name, param, value, macro, db_name):
     conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_selected)
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
+
+
+@step("delete by the query {query_name} the table {table_name} with the where {where_condition} under macro {macro} on db {db_name}")
+def step_impl(context, query_name, table_name, where_condition, macro, db_name):
+												 
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('where_condition', where_condition)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    exec_query = db.executeQuery(conn, selected_query)
+    db.closeConnection(conn)
+
 
 @step(u"checks the value {value} is contained in the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, value, column, query_name, table_name, db_name, name_macro):
@@ -2177,6 +2541,18 @@ def step_impl(context, value1, condition, value2):
         assert value2 in value1, f"{value1} contains {value2}"
     else:
         assert False
+
+@then('check payload tag {tag} field not exists in {payload}')
+def step_impl(context, tag, payload):
+    from xml.etree.ElementTree import fromstring
+    #payload = getattr(context, payload)
+    payload = utils.replace_local_variables(payload, context)
+    payload = utils.replace_context_variables(payload, context)
+    payload = utils.replace_global_variables(payload, context)
+    root = fromstring(payload)
+    assert root.find(".//{}".format(tag)) is None
+    # my_document = parseString(root.content)
+    # assert len(my_document.getElementsByTagName(tag)) == 0
 
 
 @step("calling primitive {primitive1} {restType1} and {primitive2} {restType2} in parallel")
@@ -3072,3 +3448,52 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
     db.closeConnection(conn)
 
     
+
+
+
+
+
+
+# step per salvare nel context una variabile key recuperata dal db tramite query query_name
+@step("through the query {query_name} retrieve valid noticeID from POSITION_PAYMENT_PLAN on db {db_name}")
+def step_impl(context, query_name, db_name):
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+    result_query = getattr(context, query_name)
+    print(f'{query_name}: {result_query}')
+
+    rowExpected = "empty"
+
+    for row in result_query:
+        notice_temp = row[0]
+        print(row)
+
+        query = f"SELECT * FROM POSITION_PAYMENT_PLAN ppp WHERE NOTICE_ID = {notice_temp}"
+
+        conn = db.getConnection(db_selected.get('host'), db_selected.get(
+        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+
+        exec_query = db.executeQuery(conn, query)
+
+        if len(exec_query) == 1:
+            rowExpected = row
+            break
+
+    assert rowExpected != "empty", f"row is empty !"
+    setattr(context, query_name, rowExpected)
+
+
+@step(u"retrieve param {param} at position {position:d} and save it under the key {key} through the query {query_name}")
+def step_impl(context, param, position, key, query_name):
+    rowExpected = getattr(context, query_name)
+    if position == -1:  # il -1 recupera tutti i record
+        selected_element = [t[0] for t in rowExpected]
+    else:
+        selected_element = rowExpected[position]
+        if key == "dueDate":
+            selected_element = f"{selected_element.year}-{selected_element.month}-{selected_element.day}"
+        if key == "amount":
+            selected_element = f"{format(float(selected_element), '.2f')}"
+
+    print(f'{param}: {selected_element}')
+    setattr(context, key, selected_element)

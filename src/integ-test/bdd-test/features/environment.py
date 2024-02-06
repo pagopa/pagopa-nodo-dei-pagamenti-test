@@ -13,20 +13,40 @@ else:
 if 'APICFG' in os.environ:
     import steps.db_operation_apicfg_testing_support as db
 
+import allure
+import sys
+from io import StringIO
+
 
 def before_all(context):
     print('Global settings...')
 
-    if 'NODOPGDB' not in os.environ:
-        lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
-        cx_Oracle.init_oracle_client(lib_dir = lib_dir)
+    lib_dir = ""
+    if 'NODOPGDB' not in os.environ :
+        user_profile = os.environ.get("USERPROFILE")
+        
+        if user_profile != None:
+            lib_dir = r"\Program Files\Oracle\instantclient_19_9"
+            print("#####################lib_dir", lib_dir) 
+        else:
+            lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
+            print("#####################lib_dir", lib_dir) 
+     
+    cx_Oracle.init_oracle_client(lib_dir = lib_dir)
 
-    more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
+    myconfigfile = context.config.userdata["conffile"]
+    configfile = context.config.userdata.get("configfile", myconfigfile)
+    more_userdata = json.load(open(configfile))
+
+  #  more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
     context.config.update_userdata(more_userdata)
+
 
     if 'APICFG' in os.environ:
         apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
         db.set_address(apicfg_testing_support_service)
+
+    setattr(context, f'user_profile', user_profile)
 
     db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
     selected_query = utils.query_json(context, 'select_config', 'configurations')
@@ -61,6 +81,28 @@ def before_feature(context, feature):
     # for tag in feature.tags:
     #     if tag == 'config-ec':
     #         config_ec(context)
+
+def before_scenario(context, scenario):
+    context.stdout_capture = StringIO()
+    context.original_stdout = sys.stdout
+    sys.stdout = context.stdout_capture
+
+def after_scenario(context, scenario):
+    try:
+        #sys.stdout = sys.__stdout__
+        sys.stdout = context.original_stdout
+        
+        context.stdout_capture.seek(0)
+        captured_stdout = context.stdout_capture.read()
+        
+        allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+        context.stdout_capture.close()
+
+        print("\nCaptured stdout:\n", captured_stdout)  # Stampa l'output nel terminale
+
+    except Exception as e:
+        print("Eccezione " + e)
+
 
 
 def after_feature(context, feature):

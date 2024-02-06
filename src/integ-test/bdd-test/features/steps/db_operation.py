@@ -27,8 +27,7 @@ def closeConnection(conn) -> None:
 
 def executeQuery(conn, query:str) -> list:
     print(f' Executing query [{query}] on OracleDB instance...')
-    try:
-        
+    try:        
         cur = conn.cursor()
         cur.execute(query)
 
@@ -39,10 +38,12 @@ def executeQuery(conn, query:str) -> list:
         elif 'UPDATE' in query:
             conn.commit()
             print("Update executed successfully")
-
+        elif 'INSERT' in query:
+            conn.commit()
+            print("Insert executed successfully")
+        elif 'DELETE' in query:
+            conn.commit()
+            print("Delete executed successfully")
     except:
         print('Error executed query')
-        traceback.print_exc() 
-
-
-
+        traceback.print_exc()

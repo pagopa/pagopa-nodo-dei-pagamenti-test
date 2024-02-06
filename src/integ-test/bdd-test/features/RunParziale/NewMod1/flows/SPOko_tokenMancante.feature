@@ -1,12 +1,34 @@
-Feature: hotfix stazione vp 1 2
+Feature: failure scenario SPO without second paymentToken
 
     Background:
         Given systems up
 
-    Scenario: activatePaymentNoticeV2 vp1
-        Given initial XML activatePaymentNoticeV2
+    Scenario: checkPosition
+        Given initial json checkPosition
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            {
+                "positionslist": [
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "302#iuv#"
+                    },
+                    {
+                        "fiscalCode": "#creditor_institution_code#",
+                        "noticeNumber": "310#iuv1#"
+                    }
+                ]
+            }
+            """
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
+
+    Scenario: first activatePaymentNoticeV2 request
+        Given the checkPosition scenario executed successfully
+        And initial XML activatePaymentNoticeV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activatePaymentNoticeV2Request>
@@ -17,11 +39,12 @@ Feature: hotfix stazione vp 1 2
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>302#iuv#</noticeNumber>
+            <noticeNumber>302$iuv</noticeNumber>
             </qrCode>
-            <expirationTime>60000</expirationTime>
+            <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
-            <paymentNote>responseFull</paymentNote>
+            <dueDate>2021-12-31</dueDate>
+            <paymentNote>causale</paymentNote>
             </nod:activatePaymentNoticeV2Request>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -72,16 +95,8 @@ Feature: hotfix stazione vp 1 2
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>5.00</transferAmount>
+            <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>testPaGetPayment</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            </transfer>
-            <transfer>
-            <idTransfer>2</idTransfer>
-            <transferAmount>5.00</transferAmount>
-            <fiscalCodePA>90000000001</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
@@ -101,13 +116,19 @@ Feature: hotfix stazione vp 1 2
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1Request
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
+        And saving paGetPayment request in paGetPayment_1Request
 
-    Scenario: activatePaymentNoticeV2 vp2
-        Given initial XML activatePaymentNoticeV2
+    
+    Scenario: second activatePaymentNoticeV2 request
+        Given the first activatePaymentNoticeV2 request scenario executed successfully
+        And initial XML activatePaymentNoticeV2
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
             <nod:activatePaymentNoticeV2Request>
@@ -118,11 +139,12 @@ Feature: hotfix stazione vp 1 2
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>310#iuv#</noticeNumber>
+            <noticeNumber>310$iuv1</noticeNumber>
             </qrCode>
-            <expirationTime>60000</expirationTime>
+            <expirationTime>6000</expirationTime>
             <amount>10.00</amount>
-            <paymentNote>responseFull</paymentNote>
+            <dueDate>2021-12-31</dueDate>
+            <paymentNote>causale</paymentNote>
             </nod:activatePaymentNoticeV2Request>
             </soapenv:Body>
             </soapenv:Envelope>
@@ -135,7 +157,7 @@ Feature: hotfix stazione vp 1 2
             <paf:paGetPaymentV2Response>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>10$iuv</creditorReferenceId>
+            <creditorReferenceId>10$iuv1</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-12</dueDate>
             <!--Optional:-->
@@ -171,37 +193,12 @@ Feature: hotfix stazione vp 1 2
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
-            <transferAmount>5.00</transferAmount>
+            <transferAmount>10.00</transferAmount>
             <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
             <companyName>companySec</companyName>
             <IBAN>IT45R0760103200000000001016</IBAN>
             <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
-            </transfer>
-            <transfer>
-            <idTransfer>2</idTransfer>
-            <transferAmount>5.00</transferAmount>
-            <fiscalCodePA>90000000001</fiscalCodePA>
-            <companyName>companyTer</companyName>
-            <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
-            <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
             </transfer>
             </transferList>
             <!--Optional:-->
@@ -218,25 +215,32 @@ Feature: hotfix stazione vp 1 2
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
-        When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_2Request
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
+        And saving paGetPaymentV2 request in paGetPaymentV2_2Request
 
-    Scenario: closePaymentV2
-        Given initial json v2/closepayment
+
+
+    Scenario: closePaymentV2 with 2 paymentToken
+        Given the second activatePaymentNoticeV2 request scenario executed successfully
+        And initial json v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "$activatePaymentNoticeV2Response.paymentToken"
+                    "$activatePaymentNoticeV2_1Response.paymentToken",
+                    "$activatePaymentNoticeV2_2Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
                 "paymentMethod": "TPAY",
                 "idBrokerPSP": "#id_broker_psp#",
-                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "idChannel": "#canale_versione_primitive_2#",
                 "transactionId": "#transaction_id#",
-                "totalAmount": 12,
+                "totalAmount": 22,
                 "fee": 2,
-                "timestampOperation": "2033-04-23T18:25:43Z",
+                "timestampOperation": "2012-04-23T18:25:43Z",
                 "additionalPaymentInformations": {
                     "key": "12345678"
                 }
@@ -247,8 +251,10 @@ Feature: hotfix stazione vp 1 2
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
 
-    Scenario: sendPaymentOutcomeV2
-        Given initial XML sendPaymentOutcomeV2
+
+    Scenario: sendPaymentOutcomeV2 without 1 paymentToken
+        Given the closePaymentV2 with 2 paymentToken scenario executed successfully
+        And initial XML sendPaymentOutcomeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -259,7 +265,64 @@ Feature: hotfix stazione vp 1 2
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
             <paymentTokens>
-            <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
+            <paymentToken>$activatePaymentNoticeV2_1Response.paymentToken</paymentToken>
+            </paymentTokens>
+            <outcome>OK</outcome>
+            <!--Optional:-->
+            <details>
+            <paymentMethod>creditCard</paymentMethod>
+            <!--Optional:-->
+            <paymentChannel>app</paymentChannel>
+            <fee>2.00</fee>
+            <!--Optional:-->
+            <payer>
+            <uniqueIdentifier>
+            <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+            <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+            </uniqueIdentifier>
+            <fullName>name</fullName>
+            <!--Optional:-->
+            <streetName>street</streetName>
+            <!--Optional:-->
+            <civicNumber>civic</civicNumber>
+            <!--Optional:-->
+            <postalCode>postal</postalCode>
+            <!--Optional:-->
+            <city>city</city>
+            <!--Optional:-->
+            <stateProvinceRegion>state</stateProvinceRegion>
+            <!--Optional:-->
+            <country>IT</country>
+            <!--Optional:-->
+            <e-mail>prova@test.it</e-mail>
+            </payer>
+            <applicationDate>2021-12-12</applicationDate>
+            <transferDate>2021-12-11</transferDate>
+            </details>
+            </nod:sendPaymentOutcomeV2Request>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_TOKEN_SCONOSCIUTO of sendPaymentOutcomeV2 response
+
+    @failureSPO1 @NM1 @ALL
+    Scenario: sendPaymentOutcomeV2 OK
+        Given the sendPaymentOutcomeV2 without 1 paymentToken scenario executed successfully
+        And initial XML sendPaymentOutcomeV2
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <nod:sendPaymentOutcomeV2Request>
+            <idPSP>#psp#</idPSP>
+            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
+            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+            <password>#password#</password>
+            <paymentTokens>
+            <paymentToken>$activatePaymentNoticeV2_1Response.paymentToken</paymentToken>
+            <paymentToken>$activatePaymentNoticeV2_2Response.paymentToken</paymentToken>
             </paymentTokens>
             <outcome>OK</outcome>
             <!--Optional:-->
@@ -299,15 +362,8 @@ Feature: hotfix stazione vp 1 2
             """
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-
-    # @test
-    # Scenario: Test 1
-    #     Given the activatePaymentNoticeV2 vp1 scenario executed successfully
-    #     And the closePaymentV2 scenario executed successfully
-    #     And the sendPaymentOutcomeV2 scenario executed successfully
-
-    @test @independent 
-    Scenario: Test 2
-        Given the activatePaymentNoticeV2 vp2 scenario executed successfully
-        And the closePaymentV2 scenario executed successfully
-        And the sendPaymentOutcomeV2 scenario executed successfully
+        And wait until the update to the new state for the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value PAYING,PAID,NOTIFIED of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1

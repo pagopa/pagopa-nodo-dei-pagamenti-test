@@ -257,10 +257,10 @@ Feature: T142_RPT_bollo_mod1
             """
             {
             "idPagamento": "$sessionToken",
-            "identificativoPsp": "40000000001",
+            "identificativoPsp": "#psp#",
             "tipoVersamento": "BBT",
-            "identificativoIntermediario": "40000000001",
-            "identificativoCanale": "40000000001_03",
+            "identificativoIntermediario": "#psp#",
+            "identificativoCanale": "#canale#",
             "tipoOperazione":"mobile",
             "mobileToken":"123ABC456"
             }

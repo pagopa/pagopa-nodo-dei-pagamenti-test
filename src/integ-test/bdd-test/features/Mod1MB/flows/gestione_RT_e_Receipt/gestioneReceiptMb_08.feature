@@ -438,10 +438,10 @@ Feature: gestioneReceiptMb_08
             """
             {
                 "idPagamento": "$sessionToken",
-                "identificativoPsp": "40000000001",
+                "identificativoPsp": "#psp#",
                 "tipoVersamento": "BP",
-                "identificativoIntermediario": "40000000001",
-                "identificativoCanale": "40000000001_03",
+                "identificativoIntermediario": "#psp#",
+                "identificativoCanale": "#canale#",
                 "tipoOperazione": "web"
             }
             """
@@ -497,7 +497,7 @@ Feature: gestioneReceiptMb_08
 
         And replace noticeNumber content with $1noticeNumber content
         And replace pa content with #creditor_institution_code# content
-        And replace psp content with 40000000001 content
+        And replace psp content with #psp# content
         #extraction from POSITION_RECEIPT table
         And execution query by_notice_number_and_pa to get value on the table POSITION_RECEIPT, with the columns * under macro Mod1Mb with db name nodo_online
         And through the query by_notice_number_and_pa retrieve param receptID at position 1 and save it under the key receptID
@@ -566,7 +566,7 @@ Feature: gestioneReceiptMb_08
         And check value $company is equal to value $expCompanyName
         And check value $officeName is equal to value $expOfficeName
         And check value $debtorID is equal to value $expDebtorID
-        And check value $pspID is equal to value 40000000001
+        And check value $pspID is equal to value #psp#
         #And check value $pspCompany is equal to value $ragioneSociale
         And check value $pspFiscalCode is equal to value $codiceFiscale
         And check value $pspVatNumber is equal to value $vatNumber
