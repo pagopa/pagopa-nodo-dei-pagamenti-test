@@ -97,21 +97,31 @@ stages:
               replace $file ".services.\"mock-ec\".healthcheck"   "/info"
               replace $file ".services.\"mock-ec\".soap_service"  ""
               replace $file ".services.\"mock-ec\".rest_service"  ""
+              replace $file ".services.\"mock-ec\".subscription_key_name"  ""
 
               replace $file ".services.\"secondary-mock-ec\".url"           "https://api.dev.platform.pagopa.it/secondary-mock-ec/api/v1"
               replace $file ".services.\"secondary-mock-ec\".healthcheck"   "/info"
               replace $file ".services.\"secondary-mock-ec\".soap_service"  ""
               replace $file ".services.\"secondary-mock-ec\".rest_service"  ""
+              replace $file ".services.\"secondary-mock-ec\".subscription_key_name"  ""
 
               replace $file ".services.\"mock-psp\".url"           "https://api.dev.platform.pagopa.it/mock-psp-service/api/v1"
               replace $file ".services.\"mock-psp\".healthcheck"   "/info"
               replace $file ".services.\"mock-psp\".soap_service"  ""
               replace $file ".services.\"mock-psp\".rest_service"  ""
+              replace $file ".services.\"mock-psp\".subscription_key_name"  ""
 
               replace $file ".services.\"secondary-mock-psp\".url"           "https://api.dev.platform.pagopa.it/secondary-mock-psp-service/api/v1"
               replace $file ".services.\"secondary-mock-psp\".healthcheck"   "/info"
               replace $file ".services.\"secondary-mock-psp\".soap_service"  ""
               replace $file ".services.\"secondary-mock-psp\".rest_service"  ""
+              replace $file ".services.\"secondary-mock-psp\".subscription_key_name"  ""
+
+              replace $file ".services.\"apicfg-testing-support\".url"           "https://api.dev.platform.pagopa.it/apiconfig-testing-support/api/v1"
+              replace $file ".services.\"apicfg-testing-support\".healthcheck"   "/info"
+              replace $file ".services.\"apicfg-testing-support\".soap_service"  ""
+              replace $file ".services.\"apicfg-testing-support\".rest_service"  ""
+              replace $file ".services.\"apicfg-testing-support\".subscription_key_name"  "APICFG_SUBSCRIPTION_KEY"
 
               replace $file ".services.\"mock-pm\".url"           "https://api.dev.platform.pagopa.it/mock-pm-sit/api/v1"
               replace $file ".services.\"mock-pm\".healthcheck"   "/info"
