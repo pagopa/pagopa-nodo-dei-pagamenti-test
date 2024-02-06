@@ -1,4 +1,4 @@
-Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_mod1
+Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_mod1 303
 
     Background:
         Given systems up

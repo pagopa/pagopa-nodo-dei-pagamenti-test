@@ -1,4 +1,4 @@
-Feature: T220_RPT_Mod1_faultBeanEsteso
+Feature: T220_RPT_Mod1_faultBeanEsteso 212
 
     Background:
         Given systems up

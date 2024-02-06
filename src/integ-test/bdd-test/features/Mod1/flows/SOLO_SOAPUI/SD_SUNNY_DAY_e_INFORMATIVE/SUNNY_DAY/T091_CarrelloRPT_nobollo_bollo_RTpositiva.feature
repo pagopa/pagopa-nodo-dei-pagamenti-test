@@ -1,4 +1,4 @@
-Feature: T091_CarrelloRPT_nobollo_bollo_RTpositiva
+Feature: T091_CarrelloRPT_nobollo_bollo_RTpositiva 610
 
    Background:
       Given systems up

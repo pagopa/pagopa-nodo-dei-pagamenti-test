@@ -1,4 +1,4 @@
-Feature: T135_G_InoltraPagamentoMod2_carrello_BBT_soloOK
+Feature: T135_G_InoltraPagamentoMod2_carrello_BBT_soloOK 745
 
     Background:
         Given systems up

@@ -1,5 +1,5 @@
-import { jUnit, textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
-import { randomIntBetween, randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
+import { jUnit, textSummary } from './CT/test/util/k6summary.js';
+import { randomIntBetween, randomString } from './CT/test/util/k6utils.js';
 
 export function handleSummary(data, path,test) {
   console.debug('Preparing the end-of-test summary...');

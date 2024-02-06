@@ -1,4 +1,4 @@
-Feature: T073_CarrelloRPT_autSogg=USR
+Feature: T073_CarrelloRPT_autSogg=USR 597
     Background:
         Given systems up
        

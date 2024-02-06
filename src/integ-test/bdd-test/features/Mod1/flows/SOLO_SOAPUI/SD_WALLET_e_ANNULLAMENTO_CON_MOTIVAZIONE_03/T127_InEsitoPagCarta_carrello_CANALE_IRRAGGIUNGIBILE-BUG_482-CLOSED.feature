@@ -1,4 +1,4 @@
-Feature: T127_InoltraEsitoPagamentoCarta_carrello_CANALE_IRRAGGIUNGIBILE - BUG_482 - CLOSED
+Feature: T127_InoltraEsitoPagamentoCarta_carrello_CANALE_IRRAGGIUNGIBILE - BUG_482 - CLOSED 690
 
   Background:
     Given systems up

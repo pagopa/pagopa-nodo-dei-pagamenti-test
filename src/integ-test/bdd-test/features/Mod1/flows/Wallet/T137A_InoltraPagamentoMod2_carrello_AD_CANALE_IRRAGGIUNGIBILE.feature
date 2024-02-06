@@ -1,4 +1,4 @@
-Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2
+Feature: process tests for InoltroEsitoCartaCarrello_CANALE_IRRAGGIUNGIBILE Mod2 820
 
     Background:
         Given systems up

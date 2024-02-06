@@ -1,4 +1,4 @@
-Feature:  block checks for verificaBollettino - position status in PAID after retry with expired token [VerificaBollettino_blocco_06]
+Feature:  block checks for verificaBollettino - position status in PAID after retry with expired token [VerificaBollettino_blocco_06] 1344
 
   Background:
     Given systems up

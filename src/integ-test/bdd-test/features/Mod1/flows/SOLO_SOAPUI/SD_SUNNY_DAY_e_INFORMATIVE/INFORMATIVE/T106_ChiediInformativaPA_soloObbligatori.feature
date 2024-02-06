@@ -1,4 +1,4 @@
-Feature: T106_ChiediInformativaPA_soloObbligatori
+Feature: T106_ChiediInformativaPA_soloObbligatori 484
 
     Background:
         Given systems up

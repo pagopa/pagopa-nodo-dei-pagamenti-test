@@ -1,4 +1,4 @@
-Feature: check syntax KO for paaAttivaRPT
+Feature: check syntax KO for paaAttivaRPT 1530
 
     Background:
         Given systems up

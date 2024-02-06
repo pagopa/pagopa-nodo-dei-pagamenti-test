@@ -1,4 +1,4 @@
-Feature: Copy of T042_verifica_attiva_QRcode_aux=0
+Feature: Copy of T042_verifica_attiva_QRcode_aux=0 489
 
     Background:
         Given systems up

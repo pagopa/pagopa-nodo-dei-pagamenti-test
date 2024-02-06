@@ -1,4 +1,4 @@
-Feature: T137A_InoltraPagamentoMod2_carrello_AD_TIMEOUT
+Feature: T137A_InoltraPagamentoMod2_carrello_AD_TIMEOUT 763
     Background:
         Given systems up
        

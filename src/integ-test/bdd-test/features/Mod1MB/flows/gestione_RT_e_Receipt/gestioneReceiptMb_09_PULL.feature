@@ -1,4 +1,4 @@
-Feature: gestioneReceiptMb_09_PULL
+Feature: gestioneReceiptMb_09_PULL 850
 
     Background:
         Given systems up

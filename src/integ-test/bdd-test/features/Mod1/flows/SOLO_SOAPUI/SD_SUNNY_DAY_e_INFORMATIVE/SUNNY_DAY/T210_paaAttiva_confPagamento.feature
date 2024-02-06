@@ -1,4 +1,4 @@
-Feature: T210_paaAttiva_confPagamento
+Feature: T210_paaAttiva_confPagamento 630
 
     Background:
         Given systems up

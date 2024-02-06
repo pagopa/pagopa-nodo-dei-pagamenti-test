@@ -1,4 +1,4 @@
-Feature: T001_CarrelloRPT_3RPT
+Feature: T001_CarrelloRPT_3RPT 506
 
 
     Background:

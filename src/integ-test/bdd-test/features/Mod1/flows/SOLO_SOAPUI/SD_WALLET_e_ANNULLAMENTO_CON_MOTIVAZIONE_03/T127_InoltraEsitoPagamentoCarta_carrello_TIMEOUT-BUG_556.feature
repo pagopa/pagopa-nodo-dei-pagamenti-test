@@ -1,4 +1,4 @@
-Feature: T127_InoltraEsitoPagamentoCarta_carrello_TIMEOUT - BUG_556
+Feature: T127_InoltraEsitoPagamentoCarta_carrello_TIMEOUT - BUG_556 701
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
@@ -493,7 +493,7 @@ Feature: T127_InoltraEsitoPagamentoCarta_carrello_TIMEOUT - BUG_556
     When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRT response
 
-@runnable  
+@sync  
   Scenario: Execute nodoInviaRT2 request
     Given the Execute nodoInviaRT1 request scenario executed successfully
     And initial XML nodoInviaRT

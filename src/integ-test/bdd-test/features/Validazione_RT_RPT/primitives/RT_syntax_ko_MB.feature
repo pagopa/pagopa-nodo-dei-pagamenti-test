@@ -1,4 +1,4 @@
-Feature: Syntax checks for RT with MB - KO
+Feature: Syntax checks for RT with MB - KO 1585
 
   Background:
     Given systems up

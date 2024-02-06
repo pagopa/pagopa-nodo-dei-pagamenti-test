@@ -1,4 +1,4 @@
-Feature:  block checks for verificaBollettino - position status in INSERTED (mod3Cancel poller) [VerificaBollettino_blocco_05]
+Feature:  block checks for verificaBollettino - position status in INSERTED (mod3Cancel poller) [VerificaBollettino_blocco_05] 1341
 
   Background:
     Given systems up

@@ -34,6 +34,7 @@
       }
    },
    "global_configuration": {
+   	"proxyEnabled": "true",
       "creditor_institution_code": "66666666666",
       "creditor_institution_code_old": "66666666666",
       "creditor_institution_code_secondary": "88888888888",

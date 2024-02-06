@@ -1,4 +1,4 @@
-Feature: T204_InviaFlussoRendicontazione_istMittente_A_FTP
+Feature: T204_InviaFlussoRendicontazione_istMittente_A_FTP 624
 
     Background:
         Given systems up
@@ -39,7 +39,7 @@ Feature: T204_InviaFlussoRendicontazione_istMittente_A_FTP
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-@runnable
+
     Scenario: Send nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione

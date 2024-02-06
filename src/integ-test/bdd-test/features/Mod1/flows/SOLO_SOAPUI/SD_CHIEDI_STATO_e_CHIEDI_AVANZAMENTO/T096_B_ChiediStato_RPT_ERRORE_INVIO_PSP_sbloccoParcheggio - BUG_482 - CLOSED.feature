@@ -1,4 +1,4 @@
-Feature: T096_B_ChiediStato_RPT_ERRORE_INVIO_PSP_sbloccoParcheggio - BUG_482 - CLOSED
+Feature: T096_B_ChiediStato_RPT_ERRORE_INVIO_PSP_sbloccoParcheggio - BUG_482 - CLOSED 439
 
     
     Background:

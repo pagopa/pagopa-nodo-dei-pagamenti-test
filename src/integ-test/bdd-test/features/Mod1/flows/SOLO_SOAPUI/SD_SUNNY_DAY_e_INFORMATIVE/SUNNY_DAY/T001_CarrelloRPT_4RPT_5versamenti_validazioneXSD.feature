@@ -1,4 +1,4 @@
-Feature: T001_CarrelloRPT_4RPT_5versamenti_validazioneXSD
+Feature: T001_CarrelloRPT_4RPT_5versamenti_validazioneXSD 508
 
 
     Background:

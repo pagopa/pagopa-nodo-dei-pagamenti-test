@@ -1,4 +1,4 @@
-Feature: T129_E_InoltraPagamentoMod1_carrello_BBT_web_noIdCart
+Feature: T129_E_InoltraPagamentoMod1_carrello_BBT_web_noIdCart 720
 
     Background:
         Given systems up
@@ -455,7 +455,7 @@ Feature: T129_E_InoltraPagamentoMod1_carrello_BBT_web_noIdCart
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-    @runnable
+    @sync
     Scenario: Execute nodoInviaRT 1 (Phase 5)
         Given the Execute nodoInviaRT (Phase 4) scenario executed successfully
         And identificativoUnivocoVersamento with noIdCart in nodoInviaRT

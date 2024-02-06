@@ -1,4 +1,4 @@
-# Il test verifica che il nodo restituisca PPT_SEMANTICA - Pagamento non attivabile se il psp non è eCommerce
+# Il test verifica che il nodo restituisca PPT_SEMANTICA - Pagamento non attivabile se il psp non è eCommerce 279
 
 Feature: activatePaymentNoticeV2Request with psp no eCommerce
 

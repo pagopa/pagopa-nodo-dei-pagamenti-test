@@ -1,4 +1,4 @@
-Feature: T001_CarrelloRPT_2RPT_versante_pagatore
+Feature: T001_CarrelloRPT_2RPT_versante_pagatore 505
 
 
     Background:

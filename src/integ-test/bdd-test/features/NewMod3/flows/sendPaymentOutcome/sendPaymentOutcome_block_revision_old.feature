@@ -1,4 +1,4 @@
-Feature: Block revision for sendPaymentOutcome - PA old
+Feature: Block revision for sendPaymentOutcome - PA old 1251
 
     Background:
         Given systems up

@@ -1,4 +1,4 @@
-Feature: T012_RT_allegato=BD
+Feature: T012_RT_allegato=BD 526
     Background:
         Given systems up
 

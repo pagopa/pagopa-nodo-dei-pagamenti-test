@@ -1,9 +1,9 @@
-Feature: Semantic checks for nodoChiediElencoFlussiRendicontazione - KO
+Feature: Semantic checks for nodoChiediElencoFlussiRendicontazione - KO 1438
 
     Background:
         Given systems up
     
-    @pagoPA
+    @flusso
     Scenario Outline: Check semantic errors for nodoChiediElencoFlussiRendicontazione primitive
         Given initial XML nodoChiediElencoFlussiRendicontazione
             """

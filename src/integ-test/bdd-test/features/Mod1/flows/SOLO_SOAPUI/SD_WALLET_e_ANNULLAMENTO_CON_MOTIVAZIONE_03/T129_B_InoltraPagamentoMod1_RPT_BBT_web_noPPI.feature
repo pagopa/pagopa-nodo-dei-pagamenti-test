@@ -1,4 +1,4 @@
-Feature: T129_B_InoltraPagamentoMod1_RPT_BBT_web_noPPI
+Feature: T129_B_InoltraPagamentoMod1_RPT_BBT_web_noPPI 717
 
     Background:
         Given systems up

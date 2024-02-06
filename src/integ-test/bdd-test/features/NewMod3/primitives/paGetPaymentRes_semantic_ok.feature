@@ -1,4 +1,4 @@
-Feature: Semantic checks for paGetPaymentRes - OK
+Feature: Semantic checks for paGetPaymentRes - OK 1383
 
   Background:
     Given systems up

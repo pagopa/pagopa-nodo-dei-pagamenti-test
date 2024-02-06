@@ -1,9 +1,9 @@
-Feature: Syntax checks OK for nodoChiediElencoFlussiRendicontazione
+Feature: Syntax checks OK for nodoChiediElencoFlussiRendicontazione 1440
 
     Background:
         Given systems up
 
-@pagoPA   
+    @flusso   
     Scenario Outline: Syntax checks OK for nodoChiediElencoFlussiRendicontazione
         Given initial XML nodoChiediElencoFlussiRendicontazione
             """

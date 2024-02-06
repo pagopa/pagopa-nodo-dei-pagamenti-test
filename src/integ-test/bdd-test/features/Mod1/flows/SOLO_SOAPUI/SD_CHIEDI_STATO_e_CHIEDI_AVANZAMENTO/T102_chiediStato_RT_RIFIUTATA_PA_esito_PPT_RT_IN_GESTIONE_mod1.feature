@@ -1,4 +1,4 @@
-Feature: T102_chiediStato_RT_RIFIUTATA_PA_esito_PPT_RT_IN_GESTIONE_mod1
+Feature: T102_chiediStato_RT_RIFIUTATA_PA_esito_PPT_RT_IN_GESTIONE_mod1 460
 
     
     Background:

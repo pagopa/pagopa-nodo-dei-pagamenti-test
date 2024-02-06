@@ -1,4 +1,4 @@
-Feature: T019_nodoInviaRPT_Mod1_CP
+Feature: T019_nodoInviaRPT_Mod1_CP 540
 
     Background:
         Given systems up

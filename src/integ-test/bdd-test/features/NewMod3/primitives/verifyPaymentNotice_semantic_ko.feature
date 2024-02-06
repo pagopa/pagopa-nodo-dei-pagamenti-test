@@ -1,4 +1,4 @@
-Feature: Semantic checks for verifyPaymentReq - KO
+Feature: Semantic checks for verifyPaymentReq - KO 1400
 
   Background:
     Given systems up
@@ -144,7 +144,7 @@ Feature: Semantic checks for verifyPaymentReq - KO
     And psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of verifyPaymentNotice response
-    And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter IP = '10.70.66.200', with where condition OBJ_ID = '16631' under macro update_query on db nodo_cfg
+    And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter IP = 'mock-ec-primary-sit.tst-npc.sia.eu', with where condition OBJ_ID = '16631' under macro update_query on db nodo_cfg
     And refresh job ALL triggered after 10 seconds
 
   @runnable @PG34 

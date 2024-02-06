@@ -1,4 +1,4 @@
-Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_convenzioni
+Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_convenzioni 680
   Background:
     Given systems up
 

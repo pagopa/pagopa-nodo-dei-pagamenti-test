@@ -1,4 +1,4 @@
-Feature: T001_CarrelloRPT_2RPT_3versamenti
+Feature: T001_CarrelloRPT_2RPT_3versamenti 503
 
 
     Background:

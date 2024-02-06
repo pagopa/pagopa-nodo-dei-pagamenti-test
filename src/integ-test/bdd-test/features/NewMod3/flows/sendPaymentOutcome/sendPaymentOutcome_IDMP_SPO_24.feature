@@ -1,4 +1,4 @@
-Feature: sendPaymentOutcome_IDMP_24
+Feature: sendPaymentOutcome_IDMP_24 1280
 
     Background:
         Given systems up

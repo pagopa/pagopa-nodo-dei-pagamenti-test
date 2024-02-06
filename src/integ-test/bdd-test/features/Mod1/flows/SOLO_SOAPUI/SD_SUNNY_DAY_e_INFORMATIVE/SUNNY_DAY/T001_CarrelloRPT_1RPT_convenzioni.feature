@@ -1,4 +1,4 @@
-Feature: T001_CarrelloRPT_1RPT_convenzioni
+Feature: T001_CarrelloRPT_1RPT_convenzioni 501
 
     
     Background:

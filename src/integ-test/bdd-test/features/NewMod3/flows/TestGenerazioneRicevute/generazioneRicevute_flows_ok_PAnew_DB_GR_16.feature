@@ -1,4 +1,4 @@
-Feature: process tests for generazioneRicevute [DB_GR_16]
+Feature: process tests for generazioneRicevute [DB_GR_16] 1318
 
   Background:
     Given systems up

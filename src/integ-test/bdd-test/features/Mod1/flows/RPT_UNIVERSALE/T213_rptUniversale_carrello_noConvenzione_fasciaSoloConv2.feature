@@ -1,4 +1,4 @@
-Feature: flow tests for T213_rptUniversale_carrello_noConvenzione_fasciaSoloConv2
+Feature: flow tests for T213_rptUniversale_carrello_noConvenzione_fasciaSoloConv2 381
 
     Background:
         Given systems up
@@ -155,7 +155,7 @@ Feature: flow tests for T213_rptUniversale_carrello_noConvenzione_fasciaSoloConv
         And check totalRows is $sizeCarte of listaPSP response
         And compare list between data in listaPSP response and $listaCarte
 
-    @runnable
+    @sync
     Scenario: execution nodoChiediListaPSP - conto
         Given the execution nodoChiediListaPSP - carte scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC&lingua=$lingua to nodo-dei-pagamenti

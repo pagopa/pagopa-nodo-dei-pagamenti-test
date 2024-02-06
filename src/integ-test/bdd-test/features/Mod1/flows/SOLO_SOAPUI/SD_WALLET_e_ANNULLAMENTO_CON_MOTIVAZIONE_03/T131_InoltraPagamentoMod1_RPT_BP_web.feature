@@ -1,4 +1,4 @@
-Feature: T131_InoltraPagamentoMod1_RPT_BP_web
+Feature: T131_InoltraPagamentoMod1_RPT_BP_web 733
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#

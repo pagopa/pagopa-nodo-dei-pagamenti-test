@@ -1,4 +1,4 @@
-Feature: T045_verifica_attiva_QRcode_aux=3
+Feature: T045_verifica_attiva_QRcode_aux=3 566
 
     Background:
         Given systems up

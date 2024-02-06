@@ -1,4 +1,4 @@
-Feature: process tests for RPT-RT bollo
+Feature: process tests for RPT-RT bollo 793
 
    Background:
       Given systems up
@@ -580,7 +580,7 @@ Feature: process tests for RPT-RT bollo
             """
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
-@runnable
+@sync
     Scenario: Execute second nodoInviaRT
         Given the Execute nodoInviaRT scenario executed successfully
         And initial XML nodoInviaRT

@@ -1,4 +1,4 @@
-Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_nessunFault+KO
+Feature: T126_InoltraEsitoPagamentoCarta_RPT_KO_nessunFault+KO 687
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#

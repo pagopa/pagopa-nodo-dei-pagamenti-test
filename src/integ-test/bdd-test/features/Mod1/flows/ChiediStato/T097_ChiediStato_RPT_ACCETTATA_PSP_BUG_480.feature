@@ -1,4 +1,4 @@
-Feature: process tests for T097_ChiediStato_RPT_ACCETTATA_PSP - BUG_480
+Feature: process tests for T097_ChiediStato_RPT_ACCETTATA_PSP - BUG_480 305
 
     Background:
         Given systems up

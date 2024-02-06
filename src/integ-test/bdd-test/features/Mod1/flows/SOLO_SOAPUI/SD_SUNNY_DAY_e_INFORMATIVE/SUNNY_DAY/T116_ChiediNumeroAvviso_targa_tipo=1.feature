@@ -1,4 +1,4 @@
-Feature: T116_ChiediNumeroAvviso_targa_tipo=1
+Feature: T116_ChiediNumeroAvviso_targa_tipo=1 616
 
     Background:
         Given systems up

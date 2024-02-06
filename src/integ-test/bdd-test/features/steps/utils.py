@@ -12,6 +12,8 @@ import requests
 from requests.adapters import HTTPAdapter
 import xmltodict
 
+from urllib.parse import urlparse
+
 # Decommentare per test in pipeline
 #from requests.packages.urllib3.util.retry import Retry 
 
@@ -201,12 +203,12 @@ def get_rest_mock_psp(context):
         return ""
 
 
-def save_soap_action(mock, primitive, soap_action, override=False):
+def save_soap_action(context, mock, primitive, soap_action, override=False):
     # set what your server accepts
     headers = {'Content-Type': 'application/xml'}
     print(f'{mock}/response/{primitive}?override={override}')
     response = requests.post(
-        f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False)
+        f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False, proxies = getattr(context,'proxies'))
     print(response.content, response.status_code)
     return response.status_code
 
@@ -262,7 +264,37 @@ def manipulate_soap_action(soap_action, elem, value):
     return my_document.toxml()
 
 
+def replace_context_variables_for_query(body, context):
+    pattern = re.compile('\\s\\$\\w+(?![.\\w])')
+    match = pattern.findall(body)
 
+    if len(match) > 0:
+        ###CALCULATE THE INITIAL INDEX VALUE FROM MY QUERY
+        initial_indexes = [i for i, x in enumerate(body) if x == "$"]
+        j = 0
+        dict_values = {}
+        new_indexes = initial_indexes
+
+        for field in match:
+            if j > 0:
+                new_indexes = []
+                ###RICALCULATE INDEX VALUE AFTER REPLAE $$
+                indexes = [i for i, x in enumerate(body) if x == "$"]
+                new_indexes = indexes[(4*j):]
+
+            dict_values.update({field.replace('$', '').strip() : new_indexes[0]})
+            saved_elem = getattr(context, field.replace('$', '').strip())
+            value = str(saved_elem)
+            
+            index_my_interest = dict_values[field.replace('$', '').strip()]-1
+            
+            if body[index_my_interest] == " ":
+                body = replace_specific_string(body, field, f'$${value}$$')
+            else:
+                body = replace_specific_string(body, field, value)
+            j+=1
+            print(f'Query in costruzione: step {j} per la query{body}')
+    return body
 
 
 def manipulate_json(data, key, value):
@@ -295,14 +327,48 @@ def manipulate_json(data, key, value):
     return json.dumps(json_temp)
 
 
-
 def replace_context_variables(body, context):
-    pattern = re.compile('\\$\\w+')
+    pattern = re.compile('\\$(?<!\\$\\$)\\b(\\w+)')
+    #pattern = re.compile('\\$\\w+')
     match = pattern.findall(body)
+
+    if len(match) > 0:
+        # aggiunge ai valori della lista match il simbolo $ all'inizio
+        for i in range(len(match)):
+            match[i] = f"${match[i]}"
+
+        for field in match:
+            saved_elem = getattr(context, field.replace('$', ''))
+            value = str(saved_elem)
+            body = body.replace(field, value)
+    return body
+
+
+
+def replace_local_variables_for_query(body, context):
+    pattern = re.compile('\\$\\w+\\.\\w+(?:-\\w+)?')
+    match = pattern.findall(body)
+
     for field in match:
-        saved_elem = getattr(context, field.replace('$', ''))
-        value = str(saved_elem)
-        body = body.replace(field, value)
+        saved_elem = getattr(context, field.replace('$', '').split('.')[0])
+        value = saved_elem
+        tag_finale = ''
+        if len(field.replace('$', '').split('.')) > 1:
+            tag = field.replace('$', '').split('.')[1]
+            if isinstance(saved_elem, str):
+                document = parseString(saved_elem)
+            else:
+                document = parseString(saved_elem.content)
+                print(tag)
+            if '-' in tag:
+                tag_finale = tag.split('-')[1]
+                value = document.getElementsByTagNameNS('*', tag.split('-')[0])[0].firstChild.data
+            else:
+                value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
+        if len(tag_finale) > 1:
+            body = body.replace(field, f'$${value}-{tag_finale}$$')
+        else:
+            body = body.replace(field, f'$${value}$$')
     return body
 
 
@@ -336,10 +402,10 @@ def replace_global_variables(payload, context):
     return payload
 
 
-def get_history(rest_mock, notice_number, primitive):
+def get_history(context, rest_mock, notice_number, primitive):
     s = requests.Session()
     response = requests_retry_session(session=s).get(
-        f"{rest_mock}/history/{notice_number}/{primitive}")
+        f"{rest_mock}/history/{notice_number}/{primitive}", proxies = getattr(context,'proxies'))
     return response.json(), response.status_code
 
 
@@ -348,8 +414,8 @@ def query_json(context, name_query, name_macro):
         context.config.base_dir + "/../resources/query_AutomationTest.json")))
     selected_query = query.get(name_macro).get(name_query)
     if '$' in selected_query:
-        selected_query = replace_local_variables(selected_query, context)
-        selected_query = replace_context_variables(selected_query, context)
+        selected_query = replace_local_variables_for_query(selected_query, context)
+        selected_query = replace_context_variables_for_query(selected_query, context)
         selected_query = replace_global_variables(selected_query, context)
     return selected_query
 
@@ -373,58 +439,41 @@ def single_thread(context, soap_primitive, tipo):
     primitive = replace_context_variables(primitive, context)
     primitive = replace_global_variables(primitive, context)
     
-    if tipo == 'GET':       
-        headers = {'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
+    if type == 'GET':
+        url_nodo = f"{get_rest_url_nodo(context, primitive)}"
+        header_host = estrapola_header_host(url_nodo)
+        headers = {'X-Forwarded-For': '10.82.39.148', 'Host': header_host}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
-        url_nodo = f"{get_rest_url_nodo(context, primitive)}"
         print(url_nodo)
-        soap_response = requests.get(url_nodo, headers=headers, verify=False)
-        print("soap_response: ", soap_response.content)
-        print(soap_primitive.split("_")[1] + "Response")
-        setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
-    elif tipo == 'POST':
+        soap_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        
+    elif type == 'POST':
         body = getattr(context, primitive)
         print(body)
         response = ''
         if 'xml' in getattr(context, primitive):
             # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': 'api.dev.platform.pagopa.it:443'}
+            url_nodo = get_soap_url_nodo(context, primitive)
+            print(url_nodo)
+            header_host = estrapola_header_host(url_nodo)
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
-            url_nodo = get_soap_url_nodo(context, primitive)
-            response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
             # headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-            if '<' in body: 
-                body = xmltodict.parse(body)
-                body = body["root"]
-                if body != None:
-                    if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
-                        body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
-                        if type(body["paymentTokens"]) != list:
-                            l = list()
-                            l.append(body["paymentTokens"])
-                            body["paymentTokens"] = l
-                    if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
-                        body["totalAmount"] = float(body["totalAmount"])
-                    if ('fee' in body.keys()) and (body["fee"] != None):
-                        body["fee"] = float(body["fee"])
-                    if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
-                        body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
-                    if ('positionslist' in body.keys()) and (body["positionslist"] != None):
-                        body["positionslist"] = body["positionslist"]["position"]
-                        if type(body["positionslist"]) != list:
-                            l = list()
-                            l.append(body["positionslist"])
-                            body["positionslist"] = l
-                    body = json.dumps(body, indent=4)
-                body = json.loads(body)
-            headers = {'Content-Type': 'application/json', 'Host': 'api.dev.platform.pagopa.it:443'}
-            if 'SUBSCRIPTION_KEY' in os.environ:
-                headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')            
             url_nodo = f"{get_rest_url_nodo(context, primitive)}"
-            response = requests.request(tipo, f"{url_nodo}", headers=headers, json=body, verify=False)
+            print(url_nodo)
+            header_host = estrapola_header_host(url_nodo)
+            headers = {'Content-Type': 'application/json', 'Host': header_host}
+            if 'SUBSCRIPTION_KEY' in os.environ:
+                headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
+
+        soap_response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+
+    print("nodo soap_response: ", soap_response.content)
+    print(soap_primitive.split("_")[1] + "Response")
+    setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
 
         print("response: ", response.content)
         print(soap_primitive.split("_")[1] + "Response")
@@ -448,8 +497,7 @@ def threading_delayed(context, primitive_list, list_of_delays, list_of_type):
     i = 0
     threads = list()
     while i < len(primitive_list):
-        t = Thread(target=single_thread, args=(
-            context, primitive_list[i], list_of_type[i]))
+        t = Thread(target=single_thread, args=(context, primitive_list[i], list_of_type[i]))
         threads.append(t)
         time.sleep(list_of_delays[i]/1000)
         t.start()
@@ -539,3 +587,36 @@ def searchValueTagRecursive(tag_padre, tag, single_tag):
       list_tag = searchValueTagRecursive(next_tag.tag, tag, next_tag)
       if list_tag: break
   return list_tag    
+
+
+
+
+def estrapola_header_host(url):
+    parsed_url = urlparse(url)
+    port = 443
+    dominio = parsed_url.netloc
+    if "localhost" in dominio:
+        host = dominio
+    else:
+        host = f"{dominio}:{port}"
+    return host
+
+
+def replace_specific_string(original_string, target_string, replacement):
+# Verifica se la stringa di destinazione è presente nella stringa originale
+    if target_string in original_string:
+        # Verifica se la stringa di destinazione è una corrispondenza esatta
+        start_index = original_string.find(target_string)
+        end_index = start_index + len(target_string)
+        
+        # Verifica che la sottostringa prima e dopo la target_string sia uno spazio o che sia alla fine della stringa
+        if (original_string[start_index] == ' ') and (original_string.endswith('') or original_string[end_index] == ' '):
+            # Effettua il replace solo se la condizione è soddisfatta
+            updated_string = original_string[:start_index] + replacement + original_string[end_index:]
+            return updated_string
+        else:
+            # Se la condizione non è soddisfatta, restituisci la stringa originale senza modifiche
+            return original_string
+    else:
+        # Se la stringa di destinazione non è presente, restituisci la stringa originale senza modifiche
+        return original_string

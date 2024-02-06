@@ -1,4 +1,4 @@
-Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamento_mod1
+Feature: process tests for T096_ChiediStato_RPT_ERRORE_INVIO_PSP_chiediAvanzamento_mod1 440
 
     Background:
         Given systems up

@@ -1,4 +1,4 @@
-Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_faultServer
+Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_faultServer 560
 
     Background:
         Given systems up

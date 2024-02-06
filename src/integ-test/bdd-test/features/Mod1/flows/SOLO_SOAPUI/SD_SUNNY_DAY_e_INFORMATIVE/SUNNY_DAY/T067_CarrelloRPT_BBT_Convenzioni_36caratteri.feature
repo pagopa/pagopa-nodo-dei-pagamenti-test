@@ -1,4 +1,4 @@
-Feature: T067_CarrelloRPT_BBT_Convenzioni_36caratteri
+Feature: T067_CarrelloRPT_BBT_Convenzioni_36caratteri 586
 
     Background:
         Given systems up

@@ -1,4 +1,4 @@
-Feature: appio new
+Feature: appio new 166
 
     Background:
         Given systems up
@@ -109,7 +109,7 @@ Feature: appio new
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
 
-    @eventhub
+    @eventhub @sync
     Scenario: sendPaymentOutcome
         Given the nodoInoltroEsitoCarta scenario executed successfully
         And initial XML sendPaymentOutcome

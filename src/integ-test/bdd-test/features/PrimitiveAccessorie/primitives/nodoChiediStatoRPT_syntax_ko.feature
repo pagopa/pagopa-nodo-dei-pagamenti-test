@@ -1,4 +1,4 @@
-Feature: Syntax checks for nodoChiediStatoRPT - KO
+Feature: Syntax checks for nodoChiediStatoRPT - KO 1432
 
     Background:
         Given systems up

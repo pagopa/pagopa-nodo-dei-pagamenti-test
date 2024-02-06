@@ -1,4 +1,4 @@
-Feature: T072_CarrelloRPT_autSogg=CNS
+Feature: T072_CarrelloRPT_autSogg=CNS 596
     Background:
         Given systems up
        

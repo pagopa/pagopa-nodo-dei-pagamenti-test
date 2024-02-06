@@ -1,4 +1,4 @@
-Feature: flow with pspNptifyPaymentKO
+Feature: flow with pspNptifyPaymentKO 1508
 
     Background:
         Given systems up

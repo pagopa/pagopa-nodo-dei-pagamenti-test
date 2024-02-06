@@ -1,4 +1,4 @@
-Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use idempotency
+Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use idempotency 1299
 
   Background:
     Given systems up

@@ -1,6 +1,6 @@
 # Il test verifica che la paSendRTV2 sia inviata correttamente in caso di 2 transfers: 1MBD e 1IBAN
 
-Feature: flow tests for paSendRTV2 - Marca da bollo e IBAN
+Feature: flow tests for paSendRTV2 - Marca da bollo e IBAN 286
     # Reference document:
     # https://pagopa.atlassian.net/wiki/spaces/PAG/pages/527138945/Analisi+paSendRTV2
     # https://pagopa.atlassian.net/wiki/spaces/PAG/pages/558204362/WIP+A.T.+Gestione+della+marca+da+bollo+digitale+nel+NMU#paSendRTV2

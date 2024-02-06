@@ -1,4 +1,4 @@
-Feature:  semantic checks for paVerifyPaymentNoticeRes faultCode
+Feature:  semantic checks for paVerifyPaymentNoticeRes faultCode 1357
 
    Background:
       Given systems up

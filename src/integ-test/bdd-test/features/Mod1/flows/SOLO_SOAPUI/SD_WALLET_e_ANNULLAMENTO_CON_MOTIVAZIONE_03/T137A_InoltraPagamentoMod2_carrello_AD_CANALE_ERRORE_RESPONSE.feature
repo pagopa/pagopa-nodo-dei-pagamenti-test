@@ -1,4 +1,4 @@
-Feature: T137A_InoltraPagamentoMod2_carrello_AD_CANALE_ERRORE_RESPONSE
+Feature: T137A_InoltraPagamentoMod2_carrello_AD_CANALE_ERRORE_RESPONSE 760
     Background:
         Given systems up
        

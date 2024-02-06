@@ -1,4 +1,4 @@
-Feature: T140_RPT_bollo_CARTE
+Feature: T140_RPT_bollo_CARTE 768
 
     Background:
         Given systems up
@@ -234,7 +234,7 @@ Feature: T140_RPT_bollo_CARTE
         And check totalRows field exists in listaPSP response
         And check data field exists in listaPSP response
     
-    @runnable
+    @sync
      Scenario: Execution Esito Carta
         Given the Execute nodoChiediListaPSP - carte scenario executed successfully
         And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte

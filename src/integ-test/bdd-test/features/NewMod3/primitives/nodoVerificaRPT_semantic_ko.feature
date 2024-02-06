@@ -1,4 +1,4 @@
-Feature: Checks for EC new and nodoVerificaRPT
+Feature: Checks for EC new and nodoVerificaRPT 1375
 
   Background:
     Given systems up

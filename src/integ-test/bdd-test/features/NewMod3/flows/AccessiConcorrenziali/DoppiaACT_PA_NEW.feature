@@ -1,4 +1,4 @@
-Feature: process PAG-590_01
+Feature: process PAG-590_01 980
 
     Background:
         Given systems up

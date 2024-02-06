@@ -1,4 +1,4 @@
-Feature: T083_CarrelloRPT_firmaRicevuta=3
+Feature: T083_CarrelloRPT_firmaRicevuta=3 603
     Background:
         Given systems up
        

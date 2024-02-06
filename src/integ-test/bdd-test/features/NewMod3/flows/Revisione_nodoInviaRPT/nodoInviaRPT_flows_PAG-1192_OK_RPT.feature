@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT]
+Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT] 1236
 
     Background:
         Given systems up

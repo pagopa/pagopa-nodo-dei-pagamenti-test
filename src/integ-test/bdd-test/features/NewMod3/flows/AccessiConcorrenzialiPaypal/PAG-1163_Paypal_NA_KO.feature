@@ -1,4 +1,4 @@
-Feature: PAG-1163_Paypal_NA_KO
+Feature: PAG-1163_Paypal_NA_KO 1000
 
     Background:
         Given systems up

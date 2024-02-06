@@ -1,4 +1,4 @@
-Feature: T020_nodoInviaRPT_Mod3_PO_ccp=n_a
+Feature: T020_nodoInviaRPT_Mod3_PO_ccp=n_a 541
 
     Background:
         Given systems up

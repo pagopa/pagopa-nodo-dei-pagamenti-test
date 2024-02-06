@@ -1,4 +1,4 @@
-Feature: T090_CarrelloRPT_bollo_bollo_RTpositiva
+Feature: T090_CarrelloRPT_bollo_bollo_RTpositiva 609
 
    Background:
       Given systems up
@@ -627,7 +627,7 @@ Feature: T090_CarrelloRPT_bollo_bollo_RTpositiva
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-@runnable
+    @sync
     Scenario: Execute second nodoInviaRT
         Given the Execute nodoInviaRT scenario executed successfully
         And initial XML nodoInviaRT

@@ -1,4 +1,4 @@
-Feature: PAG-1879
+Feature: PAG-1879 1447
 
     Background:
         Given systems up
@@ -58,7 +58,7 @@ Feature: PAG-1879
             </soapenv:Envelope>
             """
 
-    @pagoPA
+    @flusso
     Scenario Outline: Test syntax error
         Given pay_i:denominazioneRicevente with <value> in REND
         And REND generation
@@ -74,7 +74,7 @@ Feature: PAG-1879
             | Empty                                                                                                                                         |
             | aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa |
 
-    @pagoPA
+    @flusso
     Scenario Outline: Test OK
         Given pay_i:denominazioneRicevente with <value> in REND
         And REND generation

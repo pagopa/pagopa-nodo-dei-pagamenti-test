@@ -1,4 +1,4 @@
-Feature:  block checks for verifyPaymentReq - position status in INSERTED (payment outcome KO) [Verify_blocco_04]
+Feature:  block checks for verifyPaymentReq - position status in INSERTED (payment outcome KO) [Verify_blocco_04] 1359
 
    Background:
       Given systems up

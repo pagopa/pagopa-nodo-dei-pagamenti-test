@@ -1,4 +1,4 @@
-Feature: Semantic checks for nodoInviaRT - KO
+Feature: Semantic checks for nodoInviaRT - KO 1582
 
     Background:
         Given systems up

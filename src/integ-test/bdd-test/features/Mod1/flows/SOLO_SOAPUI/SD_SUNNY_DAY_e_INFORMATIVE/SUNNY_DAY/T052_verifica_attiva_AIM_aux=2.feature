@@ -1,4 +1,4 @@
-Feature: T052_verifica_attiva_AIM_aux=2
+Feature: T052_verifica_attiva_AIM_aux=2 577
 
     Background:
         Given systems up

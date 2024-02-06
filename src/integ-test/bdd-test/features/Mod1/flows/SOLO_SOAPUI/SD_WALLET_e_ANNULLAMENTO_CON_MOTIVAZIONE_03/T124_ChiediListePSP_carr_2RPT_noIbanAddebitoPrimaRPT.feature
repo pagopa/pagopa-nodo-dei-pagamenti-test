@@ -1,4 +1,4 @@
-Feature: T124_ChiediListePSP_carr_2RPT_noIbanAddebitoPrimaRPT
+Feature: T124_ChiediListePSP_carr_2RPT_noIbanAddebitoPrimaRPT 666
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
@@ -236,7 +236,7 @@ Feature: T124_ChiediListePSP_carr_2RPT_noIbanAddebitoPrimaRPT
     And check totalRows is $sizeConto of listaPSP response
     And check data is $listaConto of listaPSP response
 
-  @runnable
+  @sync
   Scenario: Execute nodoChiediListaPSP - altro
     Given the Execute nodoChiediListaPSP - conto scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti

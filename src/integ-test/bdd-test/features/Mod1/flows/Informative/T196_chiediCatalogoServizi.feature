@@ -1,8 +1,8 @@
-Feature: process tests for nodoChiediCatalogoServizi
+Feature: process tests for nodoChiediCatalogoServizi 318
 
     Background:
         Given systems up
-@runnable 
+
     Scenario: Send nodoChiediCatalogoServizi
         Given initial XML nodoChiediCatalogoServizi
             """

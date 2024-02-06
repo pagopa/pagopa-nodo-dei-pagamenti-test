@@ -1,4 +1,4 @@
-Feature: PRO_ANNULLO_15
+Feature: PRO_ANNULLO_15 45
 
     Background:
         Given systems up

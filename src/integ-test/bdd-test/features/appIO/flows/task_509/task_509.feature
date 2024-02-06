@@ -1,4 +1,4 @@
-Feature: task_509
+Feature: task_509 115
 
     Background:
         Given systems up
@@ -82,7 +82,7 @@ Feature: task_509
         And execution query token_validity to get value on the table POSITION_ACTIVATE, with the columns TOKEN_VALID_FROM under macro AppIO with db name nodo_online
         And through the query token_validity retrieve param token_valid_from_activate at position 0 and save it under the key token_valid_from_activate
 
-    @runnable  
+    @sync  
     # [TASK_509_01]
     Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
         Given the Execute activateIOPayment (Phase 2) scenario executed successfully
@@ -132,14 +132,14 @@ Feature: task_509
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
     
-    @runnable
+    @sync
     # [TASK_509_03]
     Scenario: Execute nodoChiediListaPSP (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
     
-    @runnable
+    @sync
     # [TASK_509_04]
     Scenario: Execute nodoNotificaAnnullamento (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
@@ -147,7 +147,7 @@ Feature: task_509
         Then verify the HTTP status code of notificaAnnullamento response is 200
         And check esito is OK of notificaAnnullamento response
     
-    @runnable   
+    @sync   
     # [TASK_509_05]
     Scenario: Execute nodoChiediAvanzamentoPagamento (Phase 4)
         Given the Execute nodoInoltroEsitoCarta (Phase 3) scenario executed successfully

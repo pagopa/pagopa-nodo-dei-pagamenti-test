@@ -1,4 +1,4 @@
-Feature: T200_nodoInviaRT_soloObbligatori_esito=0
+Feature: T200_nodoInviaRT_soloObbligatori_esito=0 620
 
     Background:
         Given systems up

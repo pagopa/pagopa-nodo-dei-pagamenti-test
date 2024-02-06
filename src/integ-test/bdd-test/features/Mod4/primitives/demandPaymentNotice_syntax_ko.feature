@@ -1,4 +1,4 @@
-Feature: syntax checks for demandPaymentNotice - KO
+Feature: syntax checks for demandPaymentNotice - KO 926
 
     Background:
         Given systems up

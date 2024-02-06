@@ -1,4 +1,4 @@
-Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_blocco_01]
+Feature:  block checks for verifyPaymentReq - position status in PAYING [Verify_blocco_01] 1369
 
    Background:
       Given systems up

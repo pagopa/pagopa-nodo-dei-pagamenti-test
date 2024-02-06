@@ -1,4 +1,4 @@
-Feature: flow tests for T213_rptUniversale_CarrelloRPT - 2 RPT 1 versamenti_mybank_accredito
+Feature: flow tests for T213_rptUniversale_CarrelloRPT - 2 RPT 1 versamenti_mybank_accredito 367
 
     Background:
         Given systems up
@@ -232,7 +232,7 @@ Feature: flow tests for T213_rptUniversale_CarrelloRPT - 2 RPT 1 versamenti_myba
         And check totalRows is $sizeConto of listaPSP response
         And compare list between data in listaPSP response and $listaConto
 
-    @runnable
+    @sync
     Scenario: execution nodoChiediListaPSP - altro
         Given the execution nodoChiediListaPSP - conto scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti

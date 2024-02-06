@@ -1,4 +1,4 @@
-Feature: T018_A_nodoInviaRPT_Mod2_AD_noPPI
+Feature: T018_A_nodoInviaRPT_Mod2_AD_noPPI 536
 
     Background:
         Given systems up

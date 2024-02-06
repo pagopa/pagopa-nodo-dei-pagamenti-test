@@ -1,4 +1,4 @@
-Feature: T042_verifica_attiva_QRcode_aux=0_stazioneAux03
+Feature: T042_verifica_attiva_QRcode_aux=0_stazioneAux03 557
 
     Background:
         Given systems up

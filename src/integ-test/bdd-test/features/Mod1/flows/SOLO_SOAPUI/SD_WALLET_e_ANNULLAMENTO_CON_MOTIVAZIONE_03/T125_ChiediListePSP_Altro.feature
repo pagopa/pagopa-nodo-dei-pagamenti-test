@@ -1,4 +1,4 @@
-Feature: T125_ChiediListePSP_Altro
+Feature: T125_ChiediListePSP_Altro 670
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#
@@ -124,7 +124,7 @@ Feature: T125_ChiediListePSP_Altro
     And execution query getPspAltro_2 to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
     And through the query getPspAltro_2 retrieve param listaAltro at position -1 and save it under the key listaAltro
 
-@runnable
+@sync
   Scenario: Execute nodoChiediListaPSP - Altro
     Given the Execute nodoChiediInfoPag request scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE&lingua=$lingua to nodo-dei-pagamenti

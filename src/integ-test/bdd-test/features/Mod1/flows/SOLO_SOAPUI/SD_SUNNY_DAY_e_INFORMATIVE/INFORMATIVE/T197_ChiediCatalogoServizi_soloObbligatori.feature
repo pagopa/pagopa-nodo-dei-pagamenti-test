@@ -1,8 +1,8 @@
-Feature: T197_ChiediCatalogoServizi_soloObbligatori
+Feature: T197_ChiediCatalogoServizi_soloObbligatori 487
 
     Background:
         Given systems up
-@runnable 
+@sync 
     Scenario: Send nodoChiediCatalogoServizi
         Given initial XML nodoChiediCatalogoServizi
             """

@@ -1,4 +1,4 @@
-Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not useIdempotency
+Feature: semantic check for activatePaymentNoticeReq regarding idempotency - not useIdempotency 1080
 
   Background:
     Given systems up

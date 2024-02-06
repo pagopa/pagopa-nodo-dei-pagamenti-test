@@ -1,4 +1,4 @@
-Feature: process tests for retry a token scaduto (retry_PaOld_24.1)
+Feature: process tests for retry a token scaduto (retry_PaOld_24.1) 1200
 
   Background:
     Given systems up

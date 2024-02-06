@@ -1,4 +1,4 @@
-Feature: T001A_DYNAMIC_RPT_RT_Bollo_hash72char
+Feature: T001A_DYNAMIC_RPT_RT_Bollo_hash72char 494
     Background:
         Given systems up
 

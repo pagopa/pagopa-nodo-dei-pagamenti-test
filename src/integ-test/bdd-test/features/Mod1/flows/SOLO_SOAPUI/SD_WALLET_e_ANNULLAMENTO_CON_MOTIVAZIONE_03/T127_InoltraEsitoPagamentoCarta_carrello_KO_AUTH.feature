@@ -1,4 +1,4 @@
-Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH
+Feature: T127_InoltraEsitoPagamentoCarta_carrello_KO_AUTH 698
 
   Background:
     Given systems up

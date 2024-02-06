@@ -1,4 +1,4 @@
-Feature: Syntax checks for RT - OK
+Feature: Syntax checks for RT - OK 1586
 
   Background:
     Given systems up

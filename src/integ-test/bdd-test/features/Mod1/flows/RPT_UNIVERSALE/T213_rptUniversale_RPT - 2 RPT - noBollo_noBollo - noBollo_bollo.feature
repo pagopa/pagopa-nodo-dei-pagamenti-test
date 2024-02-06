@@ -1,4 +1,4 @@
-Feature: flow tests for T213_rptUniversale_RPT - 2 RPT - noBollo_noBollo - noBollo_bollo
+Feature: flow tests for T213_rptUniversale_RPT - 2 RPT - noBollo_noBollo - noBollo_bollo 383
 
     Background:
         Given systems up
@@ -538,7 +538,7 @@ Feature: flow tests for T213_rptUniversale_RPT - 2 RPT - noBollo_noBollo - noBol
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=ALTRO&lingua=$lingua to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
 
-    @runnable
+    @sync
     Scenario: execution nodoChiediListaPSP - carte
         Given the execution nodoChiediListaPSP - altro scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE to nodo-dei-pagamenti

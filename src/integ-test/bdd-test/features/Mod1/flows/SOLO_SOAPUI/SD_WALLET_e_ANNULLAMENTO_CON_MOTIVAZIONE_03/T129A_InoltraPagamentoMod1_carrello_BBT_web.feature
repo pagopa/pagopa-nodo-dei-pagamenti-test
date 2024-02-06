@@ -1,4 +1,4 @@
-Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web
+Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web 706
 
     Background:
         Given systems up

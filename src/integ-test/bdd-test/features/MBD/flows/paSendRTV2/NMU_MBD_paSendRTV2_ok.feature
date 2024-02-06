@@ -1,6 +1,6 @@
-# Il test verifica che la paSendRTV2 sia inviata correttamente in caso di MBD
+# Il test verifica che la paSendRTV2 sia inviata correttamente in caso di MBD 
 
-Feature: flow tests for paSendRTV2 - Marca da bollo
+Feature: flow tests for paSendRTV2 - Marca da bollo 285
     # Reference document:
     # https://pagopa.atlassian.net/wiki/spaces/PAG/pages/527138945/Analisi+paSendRTV2
     # https://pagopa.atlassian.net/wiki/spaces/PAG/pages/558204362/WIP+A.T.+Gestione+della+marca+da+bollo+digitale+nel+NMU#paSendRTV2

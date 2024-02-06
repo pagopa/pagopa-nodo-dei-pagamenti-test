@@ -1,4 +1,4 @@
-Feature: semantic check for activatePaymentNotice regarding idempotency [IDMP_ACT_04]
+Feature: semantic check for activatePaymentNotice regarding idempotency [IDMP_ACT_04] 1064
 
   Background:
     Given systems up

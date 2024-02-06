@@ -1,4 +1,4 @@
-Feature: T208_InviaFlussoRendicontazione_esito=9
+Feature: T208_InviaFlussoRendicontazione_esito=9 629
 
     Background:
         Given systems up
@@ -39,7 +39,7 @@ Feature: T208_InviaFlussoRendicontazione_esito=9
             </pay_i:datiSingoliPagamenti>
             </pay_i:FlussoRiversamento>
             """
-@runnable
+
     Scenario: Send nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione

@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaRT
+Feature: process tests for nodoInviaRT 800
     Background:
         Given systems up
 

@@ -1,4 +1,4 @@
-Feature: process tests for retryAtokenScaduto
+Feature: process tests for retryAtokenScaduto 1163
 
   Background:
     Given systems up
@@ -178,7 +178,7 @@ Feature: process tests for retryAtokenScaduto
     And wait 5 seconds for expiration
     Then checks the value RT_INVIATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
-  @runnable
+  @runnable 
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request [retry_PaOld_04]
     Given the DB check scenario executed successfully
@@ -222,6 +222,6 @@ Feature: process tests for retryAtokenScaduto
     When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
-    And checks the value PAYING,PAYING_RPT,CANCELLED,PAID_NORPT of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
+    And polling for the value PAYING,PAYING_RPT,CANCELLED,PAID_NORPT of the record at column status of the table POSITION_PAYMENT_STATUS retrived by the query payment_status on db nodo_online under macro NewMod3
     And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query stati_rpt on db nodo_online under macro NewMod3
     And restore initial configurations

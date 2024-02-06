@@ -1,4 +1,4 @@
-Feature: classic happy flow test for NM1 
+Feature: classic happy flow test for NM1  1506
 
     Background:
         Given systems up

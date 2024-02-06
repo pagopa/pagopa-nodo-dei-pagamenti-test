@@ -1,4 +1,4 @@
-Feature:  block check for activatePaymentNoticeReq - position status in PAID [Activate_blocco_02]
+Feature:  block check for activatePaymentNoticeReq - position status in PAID [Activate_blocco_02] 1024
 
    Background:
       Given systems up

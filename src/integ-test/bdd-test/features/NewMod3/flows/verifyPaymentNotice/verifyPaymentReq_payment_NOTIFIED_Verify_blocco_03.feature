@@ -1,4 +1,4 @@
-Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verify_blocco_03]
+Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verify_blocco_03] 1363
 
    Background:
       Given systems up

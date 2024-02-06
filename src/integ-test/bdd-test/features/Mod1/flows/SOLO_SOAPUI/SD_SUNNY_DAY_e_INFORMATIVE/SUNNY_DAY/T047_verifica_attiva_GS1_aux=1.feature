@@ -1,4 +1,4 @@
-Feature: T047_verifica_attiva_GS1_aux=1
+Feature: T047_verifica_attiva_GS1_aux=1 570
 
     Background:
         Given systems up

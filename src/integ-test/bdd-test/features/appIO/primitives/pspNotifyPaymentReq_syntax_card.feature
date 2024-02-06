@@ -1,4 +1,4 @@
-Feature: syntax checks for pspNotifyPaymentReq - CreditCard [T_01]
+Feature: syntax checks for pspNotifyPaymentReq - CreditCard [T_01] 125
 
   Background:
     Given systems up

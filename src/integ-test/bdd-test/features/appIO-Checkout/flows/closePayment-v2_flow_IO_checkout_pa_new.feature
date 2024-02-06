@@ -1,4 +1,4 @@
-Feature: flow tests for closePaymentV2
+Feature: flow tests for closePaymentV2 143
 
     Background:
         Given systems up
@@ -2040,7 +2040,7 @@ Feature: flow tests for closePaymentV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test 
+    @test @pippoalf
     Scenario: FLUSSO_CP_09 (part 3)
         Given the FLUSSO_CP_09 (part 2) scenario executed successfully
         And wait 5 seconds for expiration
@@ -4051,7 +4051,7 @@ Feature: flow tests for closePaymentV2
 
     Scenario: FLUSSO_CP_18 (part 3)
         Given the FLUSSO_CP_18 (part 2) scenario executed successfully
-        And wait 5 seconds for expiration
+        And wait 2 seconds for expiration
 
         # POSITION_PAYMENT_STATUS
         And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_STATUS retrived by the query select_activateio on db nodo_online under macro NewMod1
@@ -4302,7 +4302,7 @@ Feature: flow tests for closePaymentV2
         And check value $XML_DB.transferDate is equal to value $sendPaymentOutcome.transferDate
         And check value $XML_DB.key is equal to value $paGetPayment.key
         And check value $XML_DB.value is equal to value $paGetPayment.value
-    @test 
+    @test @prova
     Scenario: FLUSSO_CP_18 (part 4)
         Given the FLUSSO_CP_18 (part 3) scenario executed successfully
         And execution query transactionid to get value on the table PM_METADATA, with the columns * under macro NewMod1 with db name nodo_online

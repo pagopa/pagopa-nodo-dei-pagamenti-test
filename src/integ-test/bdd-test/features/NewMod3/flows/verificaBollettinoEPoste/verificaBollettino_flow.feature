@@ -1,4 +1,4 @@
-Feature: flow checks for verificaBollettino - EC new
+Feature: flow checks for verificaBollettino - EC new 1339
 
   Background:
     Given systems up

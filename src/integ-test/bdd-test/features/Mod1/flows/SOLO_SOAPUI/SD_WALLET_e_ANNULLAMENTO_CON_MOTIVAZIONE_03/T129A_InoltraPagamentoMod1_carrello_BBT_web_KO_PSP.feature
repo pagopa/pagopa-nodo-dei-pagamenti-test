@@ -1,4 +1,4 @@
-Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
+Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP 710
 
     Background:
         Given systems up
@@ -482,7 +482,7 @@ Feature: T129A_InoltraPagamentoMod1_carrello_BBT_web_KO_PSP
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
 
-    @runnable
+    @sync
     Scenario: Execute nodoInviaRT 1 (Phase 7)
         Given the Execute nodoInviaRT (Phase 6) scenario executed successfully
         And identificativoUnivocoVersamento with $2iuv in nodoInviaRT

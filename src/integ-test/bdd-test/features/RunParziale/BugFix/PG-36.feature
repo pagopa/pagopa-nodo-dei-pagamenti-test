@@ -1,4 +1,4 @@
-Feature: hotfix stazione vp 1 2
+Feature: hotfix stazione vp 1 2 1494
 
     Background:
         Given systems up
@@ -380,7 +380,7 @@ Feature: hotfix stazione vp 1 2
         When PSP sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
-    @pippoalf1 @bugFix
+     @bugFix
     Scenario: Test 1
         Given the activatePaymentNoticeV2 vp1 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -392,7 +392,7 @@ Feature: hotfix stazione vp 1 2
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
         When refresh job ALL triggered after 10 seconds
 
-    @pippoalf2 @bugFix
+     @bugFix
     Scenario: Test 2
         Given the activatePaymentNoticeV2 vp2 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -404,7 +404,7 @@ Feature: hotfix stazione vp 1 2
         When refresh job ALL triggered after 10 seconds
 
 
-    @pippoalf3 @bugFix
+     @bugFix
     Scenario: Test 3
         Given the activatePaymentNoticeV2 vp1 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -416,7 +416,7 @@ Feature: hotfix stazione vp 1 2
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
         When refresh job ALL triggered after 10 seconds
 
-    @pippoalf4 @bugFix
+     @bugFix
     Scenario: Test 4
         Given the activatePaymentNoticeV2 vp2 scenario executed successfully
         And the closePaymentV2 scenario executed successfully
@@ -555,7 +555,7 @@ Feature: hotfix stazione vp 1 2
 
 
     # Send payment outcome Phase
-    @pippoalfNM3 @bugFix
+     @bugFix
     Scenario: Execute sendPaymentOutcome request
         Given the activatePaymentNotice request for NM3 scenario executed successfully
         And initial XML sendPaymentOutcome
@@ -728,7 +728,7 @@ Feature: hotfix stazione vp 1 2
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-    @pippoalfNM3v2 @bugFix
+     @bugFix
     Scenario: sendPaymentOutcome request
         Given the activatePaymentNotice NM3 vp2 scenario executed successfully
         And initial XML sendPaymentOutcome

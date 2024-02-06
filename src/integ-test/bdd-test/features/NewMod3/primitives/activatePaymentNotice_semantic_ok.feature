@@ -1,4 +1,4 @@
-Feature: Semantic checks OK for activatePaymentNotice
+Feature: Semantic checks OK for activatePaymentNotice 1372
 
   Background:
     Given systems up

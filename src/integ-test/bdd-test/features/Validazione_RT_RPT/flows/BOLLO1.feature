@@ -1,4 +1,4 @@
-Feature: flows checks for Bollo
+Feature: flows checks for Bollo 1570
 
     Background:
         Given systems up

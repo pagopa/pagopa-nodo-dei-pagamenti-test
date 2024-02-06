@@ -1,4 +1,4 @@
-Feature: process tests for nodoNotificaAnnullamento
+Feature: process tests for nodoNotificaAnnullamento 331
 
     Background:
         Given systems up
@@ -116,7 +116,7 @@ Feature: process tests for nodoNotificaAnnullamento
     Scenario: execution nodoNotificaAnnullamento - PM_NA1
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento? to nodo-dei-pagamenti
-        Then verify the HTTP status code of notificaAnnullamento response is 404
+        Then verify the HTTP status code of notificaAnnullamento response is 400
 
     @runnable
     Scenario: execution nodoNotificaAnnullamento - PM_NA2
@@ -140,4 +140,4 @@ Feature: process tests for nodoNotificaAnnullamento
     Scenario: execution nodoNotificaAnnullamento - PM_NA5
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagmento=$sessionToken to nodo-dei-pagamenti
-        Then verify the HTTP status code of notificaAnnullamento response is 404
+        Then verify the HTTP status code of notificaAnnullamento response is 400

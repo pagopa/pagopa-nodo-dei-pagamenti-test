@@ -1,4 +1,4 @@
-Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
+Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO 1448
 
     Background:
         Given systems up
@@ -40,7 +40,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@pagoPA
+    @flusso
     Scenario Outline: Check error for nodoInviaFlussoRendicontazione primitive
         Given the Create REND scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -107,7 +107,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - KO
             </pay_i:FlussoRiversamento>
             """
 
-@pagoPA
+    @flusso
     Scenario: Send nodoInviaFlussoRendicontazione3 primitive
         Given the Create REND2 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione

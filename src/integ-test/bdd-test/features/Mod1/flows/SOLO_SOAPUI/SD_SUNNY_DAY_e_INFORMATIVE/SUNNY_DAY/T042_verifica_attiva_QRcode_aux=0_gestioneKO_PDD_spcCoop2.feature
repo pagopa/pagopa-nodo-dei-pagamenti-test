@@ -1,4 +1,4 @@
-Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_spcCoop2
+Feature: T042_verifica_attiva_QRcode_aux=0_gestioneKO_PDD_spcCoop2 562
 
     Background:
         Given systems up

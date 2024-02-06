@@ -1,4 +1,4 @@
-Feature: T025_ nodoInviaRPT_autSogg=NA
+Feature: T025_ nodoInviaRPT_autSogg=NA 547
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02

@@ -1,4 +1,4 @@
-Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartConv_inoltroNoConv
+Feature: T127_InoltraEsitoPagamentoCarta_carrello_convenzioni_cartConv_inoltroNoConv 691
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#

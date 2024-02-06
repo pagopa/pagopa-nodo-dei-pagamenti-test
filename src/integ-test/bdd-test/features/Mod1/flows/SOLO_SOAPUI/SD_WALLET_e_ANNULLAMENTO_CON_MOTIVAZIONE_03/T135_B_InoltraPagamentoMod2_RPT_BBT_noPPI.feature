@@ -1,4 +1,4 @@
-Feature: T135_B_InoltraPagamentoMod2_RPT_BBT_noPPI
+Feature: T135_B_InoltraPagamentoMod2_RPT_BBT_noPPI 740
 
     Background:
         Given systems up

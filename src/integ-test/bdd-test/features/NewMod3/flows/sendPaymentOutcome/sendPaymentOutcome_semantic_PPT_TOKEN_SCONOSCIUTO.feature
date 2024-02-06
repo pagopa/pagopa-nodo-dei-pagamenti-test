@@ -1,4 +1,4 @@
-Feature: semantic checks for sendPaymentOutcomeReq - PPT_TOKEN_SCONOSCIUTO [SEM_SPO_10]
+Feature: semantic checks for sendPaymentOutcomeReq - PPT_TOKEN_SCONOSCIUTO [SEM_SPO_10] 1292
 
   Background:
     Given systems up 

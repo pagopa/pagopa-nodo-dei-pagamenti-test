@@ -1,4 +1,4 @@
-Feature: T067_CarrelloRPT_BBT_Convenzioni_35caratteriStrani
+Feature: T067_CarrelloRPT_BBT_Convenzioni_35caratteriStrani 585
 
     Background:
         Given systems up

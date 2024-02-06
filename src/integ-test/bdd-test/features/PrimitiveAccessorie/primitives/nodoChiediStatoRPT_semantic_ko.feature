@@ -1,4 +1,4 @@
-Feature: Semantic checks for nodoChiediStatoRPT - KO
+Feature: Semantic checks for nodoChiediStatoRPT - KO 1431
 
     Background:
         Given systems up
@@ -30,7 +30,7 @@ Feature: Semantic checks for nodoChiediStatoRPT - KO
             | identificativoIntermediarioPA         | INT_NOT_ENABLED         | PPT_INTERMEDIARIO_PA_DISABILITATO | CSRPTSEM2   |
             | identificativoStazioneIntermediarioPA | unknownStation          | PPT_STAZIONE_INT_PA_SCONOSCIUTA   | CSRPTSEM3   |
             | identificativoStazioneIntermediarioPA | #id_station_disabled#   | PPT_STAZIONE_INT_PA_DISABILITATA  | CSRPTSEM4   |
-            | password                              | wrongPassword           | PPT_AUTENTICAZIONE                | CSRPTSEM5   |
+            | password                              | wrongPassword           | PPT_AUTENTICAZIONE                | CSRPTSEM5   
             | identificativoDominio                 | 12345678922             | PPT_DOMINIO_SCONOSCIUTO           | CSRPTSEM6   |
             | identificativoDominio                 | NOT_ENABLED             | PPT_DOMINIO_DISABILITATO          | CSRPTSEM7   |
             | identificativoUnivocoVersamento       | wrongIUV                | PPT_RPT_SCONOSCIUTA               | CSRPTSEM8   |

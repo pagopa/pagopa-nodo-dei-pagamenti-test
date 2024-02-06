@@ -1,4 +1,4 @@
-Feature: Check semantic payment status
+Feature: Check semantic payment status 1286
 
     Background:
         Given systems up

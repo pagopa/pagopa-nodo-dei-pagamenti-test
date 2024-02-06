@@ -1,4 +1,4 @@
-Feature: Semantic checks for sendPaymentOutcomeReq - OK [SEM_SPO_07]
+Feature: Semantic checks for sendPaymentOutcomeReq - OK [SEM_SPO_07] 1544
 
   Background:
     Given systems up

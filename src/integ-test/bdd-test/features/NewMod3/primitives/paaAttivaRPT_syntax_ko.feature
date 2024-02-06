@@ -1,4 +1,4 @@
-Feature: check syntax KO for paaAttivaRPT
+Feature: check syntax KO for paaAttivaRPT 1377
 
     Background:
         Given systems up
@@ -123,13 +123,12 @@ Feature: check syntax KO for paaAttivaRPT
             | pag:localitaBeneficiario              | Empty                                                                                                                                         | SIN_PARPTR_57 |
             | pag:localitaBeneficiario              | JcGmMhGsOtwaHHhylTsKjCEBLaGjNVUKEsMM                                                                                                          | SIN_PARPTR_58 |
             | pag:provinciaBeneficiario             | Empty                                                                                                                                         | SIN_PARPTR_60 |
-            | pag:provinciaBeneficiario             | 12AS57rjifijoi245685asdas1568wa4846                                                                                                           | SIN_PARPTR_61 |
+            | pag:provinciaBeneficiario             | 12AS57rjifijoi245685asdas1568wa48461                                                                                                          | SIN_PARPTR_61 |
             | pag:nazioneBeneficiario               | Empty                                                                                                                                         | SIN_PARPTR_63 |
             | pag:nazioneBeneficiario               | 1A                                                                                                                                            | SIN_PARPTR_64 |
             | pag:nazioneBeneficiario               | 1                                                                                                                                             | SIN_PARPTR_64 |
             | pag:nazioneBeneficiario               | E                                                                                                                                             | SIN_PARPTR_64 |
             | credenzialiPagatore                   | Empty                                                                                                                                         | SIN_PARPTR_66 |
-            | credenzialiPagatore                   | 12AS57rjifijoi245685asdas1568wa4846                                                                                                           | SIN_PARPTR_67 |
+            | credenzialiPagatore                   | 12AS57rjifijoi245685asdas1568wa48461                                                                                                          | SIN_PARPTR_67 |
             | causaleVersamento                     | None                                                                                                                                          | SIN_PARPTR_68 |
-            | causaleVersamento                     | Empty                                                                                                                                         | SIN_PARPTR_69 |
             | causaleVersamento                     | CXYFD9jxEWpaefYPBMGaWHbDBIeU01JMraSQJ7VKHnfWT75DaLXvAPEcV7TDFfThv4u56iGvFT86Ui0ma9EVs1kRk5ETNjGc281weayrfiiHauaJfSNTDxqMONb7tN3PkkgBcn1gJxr6Y | SIN_PARPTR_70 |

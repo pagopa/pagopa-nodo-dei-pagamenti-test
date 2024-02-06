@@ -1,4 +1,4 @@
-Feature: T096_D_ChiediStato_RPT_ERRORE_INVIO_PSP_Carrello_sbloccoParcheggio_mancatoCertificato_https
+Feature: T096_D_ChiediStato_RPT_ERRORE_INVIO_PSP_Carrello_sbloccoParcheggio_mancatoCertificato_https 444
     
     Background:
         Given systems up
@@ -440,7 +440,7 @@ Feature: T096_D_ChiediStato_RPT_ERRORE_INVIO_PSP_Carrello_sbloccoParcheggio_manc
         Then check esitoComplessivoOperazione is KO of nodoInviaCarrelloRPT response
         And check faultCode is PPT_RPT_DUPLICATA of nodoInviaCarrelloRPT response
 
-    @runnable
+
     Scenario: Execute nodoChiediStatoRPT3
         Given the nodoInviaCarrelloRPT duplicato1 scenario executed successfully
         And initial XML nodoChiediStatoRPT

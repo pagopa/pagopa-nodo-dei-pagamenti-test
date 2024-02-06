@@ -1,4 +1,4 @@
-Feature: happy flow with Stand In on and channel no Stand In for NMU
+Feature: happy flow with Stand In on and channel no Stand In for NMU 1560
 
     Background:
         Given systems up

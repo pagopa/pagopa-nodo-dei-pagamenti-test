@@ -1,4 +1,4 @@
-Feature:  block check for activatePaymentNoticeReq - position status in INSERTED (mod3CancelV2) [Activate_blocco_06]
+Feature:  block check for activatePaymentNoticeReq - position status in INSERTED (mod3CancelV2) [Activate_blocco_06] 1020
 
   Background:
     Given systems up

@@ -1,4 +1,4 @@
-Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
+Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK 1446
 
     Background:
         Given systems up
@@ -40,7 +40,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             </pay_i:FlussoRiversamento>
             """
             
-@pagoPA
+    @flusso
     # [SIN_NIFR_02]
     Scenario: Check valid response for nodoInviaFlussoRendicontazione primitive
         Given the Generazione rendicontazione scenario executed successfully
@@ -65,7 +65,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-@pagoPA
+    @flusso
     # [SIN_NIFR_06]
     Scenario: Check valid response for nodoInviaFlussoRendicontazione primitive
         Given the Generazione rendicontazione scenario executed successfully
@@ -90,7 +90,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-@pagoPA
+    @flusso
     Scenario Outline: Check valid response for nodoInviaFlussoRendicontazione primitive
         Given initial xml REND
             """

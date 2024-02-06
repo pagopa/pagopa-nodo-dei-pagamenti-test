@@ -1,4 +1,4 @@
-Feature: T023_ nodoInviaRPT_autSogg=USR
+Feature: T023_ nodoInviaRPT_autSogg=USR 545
     Background:
         Given systems up
         And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02

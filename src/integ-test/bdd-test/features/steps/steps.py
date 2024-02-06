@@ -11,10 +11,7 @@ from sre_constants import ASSERT
 from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
 import xmltodict
-if 'NODOPGDB' in os.environ:
-    import db_operation_pg as db
-else:
-    import db_operation as db
+import db_operation_pg as db
 import json_operations as jo
 import pytz
 import requests
@@ -42,8 +39,10 @@ def step_impl(context):
         print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
         print(f"calling -> {url}")
-        headers = {'Host': 'api.dev.platform.pagopa.it:443'}
-        resp = requests.get(url, headers=headers, verify=False)
+        header_host = utils.estrapola_header_host(row.get("url"))
+        print(f"header_host -> {header_host}")
+        headers = {'Host': header_host}
+        resp = requests.get(url, headers=headers, verify=False, proxies = getattr(context,'proxies'))
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
 
@@ -1076,20 +1075,23 @@ def step_impl(context, attribute, value, elem, primitive):
 
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
-    #primitive = soap_primitive.split("_")[0]
+
+    url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
+    header_host = utils.estrapola_header_host(url_nodo)
+
     if 'NODOPGDB' in os.environ:
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
     else:
-        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts
-    url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
+        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': header_host}  # set what your server accepts
+    
     #url_nodo = "http://localhost:81/nodo-sit/webservices/input"
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
     soap_response = requests.post(url_nodo, getattr(
-        context, soap_primitive), headers=headers, verify=False)
+        context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     print(soap_response.content.decode('utf-8'))
     print(soap_response.status_code)
     print(f'soap response: {soap_response.headers}')
@@ -1101,19 +1103,21 @@ def step_impl(context, sender, soap_primitive, receiver):
 
 @step('send, by sender {sender}, soap action {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
-    #primitive = soap_primitive.split("_")[0]
+
+    url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
+    header_host = utils.estrapola_header_host(url_nodo)
+
     if 'NODOPGDB' in os.environ:
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')        
     else:
-        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}  # set what your server accepts        
-    url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
+        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': header_host}  # set what your server accepts        
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
     soap_response = requests.post(url_nodo, getattr(
-        context, soap_primitive), headers=headers, verify=False)
+        context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     print(soap_response.content)
     print(soap_response.status_code)
     setattr(context, soap_primitive + RESPONSE, soap_response)
@@ -1124,16 +1128,13 @@ def step_impl(context, job_name, seconds):
     seconds = utils.replace_local_variables(seconds, context)
     time.sleep(int(seconds))
     url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
-    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    header_host = utils.estrapola_header_host(url_nodo)
+    headers = {'Host': header_host}
 
     user_profile = os.environ.get("USERPROFILE")
     
-    if user_profile != None:
-        nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
-        print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
-    else:
-        nodo_response = requests.get(f"{url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
-        print(f">>>>>>>>>>>>>>>>>> {url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}")
+    nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False, proxies = getattr(context,'proxies'))
+    print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
     
     setattr(context, job_name + RESPONSE, nodo_response)
 
@@ -1387,7 +1388,7 @@ def step_impl(context, mock, primitive):
 
     s = requests.Session()
     responseJson = utils.requests_retry_session(session=s).get(
-        f"{rest_mock}/history/{notice_number}/{primitive}")
+        f"{rest_mock}/history/{notice_number}/{primitive}", proxies = getattr(context,'proxies'))
     json = responseJson.json()
     assert "request" in json and len(json.get("request").keys()) > 0
 
@@ -1400,14 +1401,12 @@ def step_impl(context, mock, primitive, status, notice_number):
         notice_number = utils.replace_local_variables(notice_number, context)
 
     if status == "properly":
-        json, status_code = utils.get_history(
-            rest_mock, notice_number, primitive)
+        json, status_code = utils.get_history(context, rest_mock, notice_number, primitive)
         setattr(context, primitive, json)
         assert "request" in json and len(json.get("request").keys()) > 0
     else:
         try:
-            json, status_code = utils.get_history(
-                rest_mock, notice_number, primitive)
+            json, status_code = utils.get_history(context, rest_mock, notice_number, primitive)
             assert status_code != 200
         except RetryError:
             assert True
@@ -1471,7 +1470,7 @@ def step_impl(context, sender, method, service, receiver):
     url_nodo = utils.get_rest_url_nodo(context, service)
     print(url_nodo)
     headers = {'Content-Type': 'application/json',
-               'Host': 'api.dev.platform.pagopa.it:443'}
+               'Host': header_host}
     if 'SUBSCRIPTION_KEY' in os.environ:
         headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
 
@@ -1514,7 +1513,7 @@ def step_impl(context, sender, method, service, receiver):
         url_nodo = utils.replace_local_variables(url_nodo, context)
         url_nodo = utils.replace_context_variables(url_nodo, context)
         run_local = True
-        
+        print(f"{url_nodo}")
     else:
         service = utils.replace_local_variables(service, context)
         service = utils.replace_context_variables(service, context)
@@ -1526,16 +1525,16 @@ def step_impl(context, sender, method, service, receiver):
     if run_local:
         if '_json' in url_nodo:
             url_nodo = url_nodo.split('_')[0]
-            print(f"{url_nodo}")
-            nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
+            nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
         else:
-           nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False) 
+           nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies')) 
     else:
-        nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False)
+        nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
     setattr(context, service.split('?')[0], json_body)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
     print(service.split('?')[0] + RESPONSE)
     print(nodo_response.content)
+    print(f'URL: {nodo_response.url}')
     print(f'rest response: {nodo_response.headers}')
 
 
@@ -1564,20 +1563,20 @@ def step_impl(context, mock, destination, primitive):
     print(pa_verify_payment_notice_res)
     if mock == 'EC':
         print(utils.get_soap_mock_ec(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec(context), primitive,
+        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_ec(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
     elif mock == 'EC2':
         print(utils.get_soap_mock_ec2(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec2(context), primitive,
+        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_ec2(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
     elif mock == 'PSP':
         print(utils.get_soap_mock_psp(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_psp(context), primitive,
+        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_psp(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
 
     elif mock == 'PSP2':
         print(utils.get_soap_mock_psp2(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_psp2(context), primitive,
+        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_psp2(context), primitive,
                                                       pa_verify_payment_notice_res, override=True)
     else:
         assert False, "Invalid mock"
@@ -1615,12 +1614,13 @@ def step_impl(context):
     activateIOPaymentResponseXml = parseString(
         activateIOPaymentResponse.content)
 
-    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    header_host = utils.estrapola_header_host(f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment")
+    headers = {'Host': header_host}
 
     paGetPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers)
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers, proxies = getattr(context,'proxies'))
     pspNotifyPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment", headers=headers)
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment", headers=headers, proxies = getattr(context,'proxies'))
 
     paGetPayment = paGetPaymentJson.json()
     print(">>>>>>>>>>>>>>>>", paGetPayment)
@@ -1757,12 +1757,13 @@ def step_impl(context):
     activateIOPaymentResponseXml = parseString(
         activateIOPaymentResponse.content)
 
-    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    header_host = utils.estrapola_header_host(f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment")
+    headers = {'Host': header_host}
 
     paGetPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers)
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers, proxies = getattr(context,'proxies'))
     pspNotifyPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment", headers=headers)
+        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment", headers=headers, proxies = getattr(context,'proxies'))
 
     paGetPayment = paGetPaymentJson.json()
     pspNotifyPayment = pspNotifyPaymentJson.json()
@@ -1862,10 +1863,8 @@ def step_impl(context, primitive):
 
 @step("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
-    db_selected = context.config.userdata.get(
-        "db_configuration").get('nodo_cfg')
-    selected_query = utils.query_json(context, 'update_config', 'configurations').replace(
-        'value', value).replace('key', param)
+    db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
+    selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', f'$${value}$$').replace('key', param)
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
@@ -1877,9 +1876,9 @@ def step_impl(context, param, value):
         print(f'executed query: {exec_query}')
 
     db.closeConnection(conn)
-    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
-    refresh_response = requests.get(utils.get_refresh_config_url(
-        context), headers=headers, verify=False)
+    header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
+    headers = {'Host': header_host}
+    refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     time.sleep(5)
     print('refresh_response: ', refresh_response)
     assert refresh_response.status_code == 200
@@ -1889,7 +1888,8 @@ def step_impl(context, param, value):
 def step_impl(context, job_name):
     url_nodo = context.config.userdata.get(
         "services").get("nodo-dei-pagamenti").get("url")
-    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    header_host = utils.estrapola_header_host(url_nodo)
+    headers = {'Host': header_host}
 
     # DA UTILIZZARE IN LOCALE (DECOMMENTARE LE 2 RIGHE DI SEGUITO E COMMENTARE LE 2 RIGHE SOTTO pipeline)
     # nodo_response = requests.get("https://api.dev.platform.pagopa.it/nodo/monitoring/v1/config/refresh/ALL", headers=headers, verify=False)
@@ -1897,7 +1897,7 @@ def step_impl(context, job_name):
     # pipeline
     # nodo_response = requests.get(f"{url_nodo}/monitoring/v1/config/refresh/{job_name}", headers=headers, verify=False)
     
-    refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+    refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     setattr(context, job_name + RESPONSE, refresh_response)
     time.sleep(10)
     assert refresh_response.status_code == 200
@@ -1936,10 +1936,8 @@ def step_impl(context, query_name, date, macro, db_name):
     if date == '1minuteLater':
         date = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(minutes=1)).strftime("%Y-%m-%d %H:%M:%S")
 
-    selected_query = utils.query_json(
-        context, query_name, macro).replace('date', date)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    selected_query = utils.query_json(context, query_name, macro).replace('date', date)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
@@ -1954,14 +1952,14 @@ def step_impl(context):
 
     config_dict = getattr(context, 'configurations')
     for key, value in config_dict.items():
-        selected_query = utils.query_json(context, 'update_config', 'configurations').replace(
-            'value', value).replace('key', key)
+        selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', f'$${value}$$').replace('key', key)
         db.executeQuery(conn, selected_query)
 
     db.closeConnection(conn)
-    headers = {'Host': 'api.dev.platform.pagopa.it:443'}
+    header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
+    headers = {'Host': header_host}
     refresh_response = requests.get(utils.get_refresh_config_url(
-        context), headers=headers, verify=False)
+        context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     time.sleep(10)
     assert refresh_response.status_code == 200
 
@@ -1971,9 +1969,9 @@ def step_impl(context, query_name, macro, db_name, table_name, columns):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
 
-    selected_query = utils.query_json(context, query_name, macro).replace(
-        "columns", columns).replace("table_name", table_name)
+    selected_query = utils.query_json(context, query_name, macro).replace("columns", columns).replace("table_name", table_name)
     selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     selected_query = utils.replace_global_variables(selected_query, context)
 
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
@@ -2012,9 +2010,9 @@ def step_impl(context, query_name, param, position, row_number, key):
 def step_impl(context, query_name, xml, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
-    selected_element = result_query[0][position]
-    selected_element = selected_element.read()
-    selected_element = selected_element.decode("utf-8")
+    selected_element = result_query[0][position].tobytes().decode('utf-8')
+    # selected_element = selected_element.read()
+    # selected_element = selected_element.decode("utf-8")
     print(f'{xml}: {selected_element}')
     setattr(context, key, selected_element)
 
@@ -2024,7 +2022,6 @@ def step_impl(context, query_name, xml, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
     selected_element = result_query[0][position]
-    selected_element = selected_element.read()
     print(f'{xml}: {selected_element}')
     setattr(context, key, selected_element)
 
@@ -2127,8 +2124,10 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
-    selected_query = utils.query_json(context, query_name, name_macro).replace(
-        "columns", column).replace("table_name", table_name)
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     print(selected_query)
     exec_query = db.executeQuery(conn, selected_query)
 
@@ -2166,10 +2165,19 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 @step("update through the query {query_name} of the table {table_name} the parameter {param} with {value}, with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, where_condition, valore, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace(
-        'param', param).replace('value', value).replace('where_condition', where_condition).replace('valore', valore)
+
+    value = utils.replace_global_variables(value, context)
+    value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
+
+    where_condition = utils.replace_global_variables(where_condition, context)
+    where_condition = utils.replace_local_variables(where_condition, context)
+    where_condition = utils.replace_context_variables(where_condition, context)
+
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$').replace('where_condition', where_condition).replace('valore', valore)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
+    selected_query = utils.replace_global_variables(selected_query, context)
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     exec_query = db.executeQuery(conn, selected_query)
@@ -2181,6 +2189,7 @@ def step_impl(context, query_name, table_name, where_condition, macro, db_name):
     selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('where_condition', where_condition)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
+    selected_query = utils.replace_global_variables(selected_query, context)
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     exec_query = db.executeQuery(conn, selected_query)
@@ -2191,8 +2200,12 @@ def step_impl(context, query_name, table_name, where_condition, macro, db_name):
 @step("generic update through the query {query_name} of the table {table_name} the parameter {param}, with where condition {where_condition} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, where_condition, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    selected_query = utils.query_json(context, query_name, macro).replace(
-        'table_name', table_name).replace('param', param).replace('where_condition', where_condition)
+
+    where_condition = utils.replace_global_variables(where_condition, context)
+    where_condition = utils.replace_local_variables(where_condition, context)
+    where_condition = utils.replace_context_variables(where_condition, context)
+
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('where_condition', where_condition)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
     selected_query = utils.replace_global_variables(selected_query, context)
@@ -2213,8 +2226,10 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         default = int(
             getattr(context, 'default_token_duration_validity_millis')) / 60000
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
-        selected_query = utils.query_json(context, query_name, name_macro).replace(
-            "columns", column).replace("table_name", table_name)
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -2225,23 +2240,24 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         print("###################", default)
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
         print(">>>>>>>>>>>>>>>>>>>", value)
-        selected_query = utils.query_json(context, query_name, name_macro).replace(
-            "columns", column).replace("table_name", table_name)
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d %H:%M')
 
     elif number == 'default_durata_estensione_token_IO':
-        default = int(
-            getattr(context, 'default_durata_estensione_token_IO')) / 60000
-
+        default = int(getattr(context, 'default_durata_estensione_token_IO')) / 60000
 														   
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
-														   
-															 
-        selected_query = utils.query_json(context, query_name, name_macro).replace(
-            "columns", column).replace("table_name", table_name)
+														   												 
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -2249,8 +2265,10 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
 														
     elif number == 'Today':
         value = (datetime.datetime.today()).strftime('%Y-%m-%d')
-        selected_query = utils.query_json(context, query_name, name_macro).replace(
-            "columns", column).replace("table_name", table_name)
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -2259,8 +2277,10 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     elif 'minutes:' in number:
         min = int(number.split(':')[1]) / 60000
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=min)).strftime('%Y-%m-%d %H:%M')
-        selected_query = utils.query_json(context, query_name, name_macro).replace(
-            "columns", column).replace("table_name", table_name)
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -2268,8 +2288,10 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     else:
         number = int(number)
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(days=number)).strftime('%Y-%m-%d')
-        selected_query = utils.query_json(context, query_name, name_macro).replace(
-            "columns", column).replace("table_name", table_name)
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -2292,8 +2314,10 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
             getattr(context, 'default_token_duration_validity_millis')) / 60000
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
                  datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
-        selected_query = utils.query_json(context, query_name, name_macro).replace(
-            "columns", column).replace("table_name", table_name)
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -2308,8 +2332,10 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
                  datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
         print(">>>>>>>>>>>>>>>>>>>", value)
 
-        selected_query = utils.query_json(context, query_name, name_macro).replace(
-            "columns", column).replace("table_name", table_name)
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -2317,8 +2343,10 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
 
     elif number == 'Today':
         value = (datetime.datetime.today()).strftime('%Y-%m-%d')
-        selected_query = utils.query_json(context, query_name, name_macro).replace(
-            "columns", column).replace("table_name", table_name)
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -2328,8 +2356,10 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         min = int(number.split(':')[1]) / 60000
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
                  datetime.timedelta(minutes=min)).strftime('%Y-%m-%d %H:%M')
-        selected_query = utils.query_json(context, query_name, name_macro).replace(
-            "columns", column).replace("table_name", table_name)
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -2338,8 +2368,10 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         number = int(number)
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
                  datetime.timedelta(days=number)).strftime('%Y-%m-%d')
-        selected_query = utils.query_json(context, query_name, name_macro).replace(
-            "columns", column).replace("table_name", table_name)
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
         exec_query = db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
@@ -2380,16 +2412,22 @@ def step_impl(context, query_name, table_name, where_condition, valore, macro, d
 
 @step("updates through the query {query_name} of the table {table_name} the parameter {param} with {value} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, macro, db_name):
-												 
-											 
+												 								                                                                 
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
-    selected_query = utils.replace_global_variables(selected_query, context)
-    selected_query = utils.replace_local_variables(selected_query, context)
-    selected_query = utils.replace_context_variables(selected_query, context)
     value = utils.replace_global_variables(value, context)
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
+
+    selected_query = ''
+    if value == 'null':
+        selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
+    else:
+        selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$')
+        
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
+
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     exec_query = db.executeQuery(conn, selected_query)
     db.closeConnection(conn)
@@ -2416,8 +2454,10 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
-    selected_query = utils.query_json(context, query_name, name_macro).replace(
-        "columns", column).replace("table_name", table_name)
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     print(selected_query)
     exec_query = db.executeQuery(conn, selected_query)
 
@@ -2446,8 +2486,10 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     number = int(number) / 60000
     value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
              datetime.timedelta(minutes=number)).strftime('%Y-%m-%d %H:%M')
-    selected_query = utils.query_json(context, query_name, name_macro).replace(
-        "columns", column).replace("table_name", table_name)
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     exec_query = db.executeQuery(conn, selected_query)
     query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)
@@ -2466,9 +2508,10 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
-    selected_query = utils.query_json(context, query_name, name_macro).replace(
-        "columns", '*').replace("table_name", table_name)
-
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", '*').replace("table_name", table_name)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     exec_query = db.executeQuery(conn, selected_query)
     print("record query: ", exec_query)
     assert len(exec_query) == number, f"{len(exec_query)}"
@@ -2481,9 +2524,10 @@ def step_impl(context, query_name, table_name, db_name, name_macro):
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
 
-    selected_query = utils.query_json(context, query_name, name_macro).replace(
-        "columns", '*').replace("table_name", table_name)
-
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", '*').replace("table_name", table_name)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     exec_query = db.executeQuery(conn, selected_query)
     print("record query: ", exec_query)
     assert len(exec_query) > 0, f"{len(exec_query)}"
@@ -2660,9 +2704,7 @@ def step_impl(context, primitive1, primitive2):
 def step_impl(context, query_name, json_elem, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
-    selected_element = result_query[0][position]
-    selected_element = selected_element.read()
-    selected_element = selected_element.decode("utf-8")
+    selected_element = result_query[0][position].tobytes().decode('utf-8')
     
     jsonDict = json.loads(selected_element)
     selected_element = utils.json2xml(jsonDict)
@@ -3040,7 +3082,7 @@ def step_impl(context):
     query4 = utils.replace_local_variables(query4, context)
     rows4 = db.executeQuery(conn, query4)
 
-    xml_rpt = parseString(xml_rows[0][0].read())
+    xml_rpt = parseString(xml_rows[0][0])
 
     brokerPaId = rows[0][0]
     stationId = rows[0][1]
@@ -3277,25 +3319,22 @@ def step_impl(context, causaleVers):
     db_config = context.config.userdata.get(
         "db_configuration").get("nodo_online")
 
-    conn = db.getConnection(db_config.get('host'), db_config.get(
-        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
+    conn = db.getConnection(db_config.get('host'), db_config.get('database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
 
     # select clob
     xml_content_query = "SELECT XML_CONTENT as clob FROM RT_XML WHERE IDENT_DOMINIO='$activatePaymentNotice.fiscalCode' AND IUV='$iuv'"
 
-    xml_content_query = utils.replace_local_variables(
-        xml_content_query, context)
-    xml_content_query = utils.replace_context_variables(
-        xml_content_query, context)
+    xml_content_query = utils.replace_local_variables(xml_content_query, context)
+    xml_content_query = utils.replace_context_variables(xml_content_query, context)
     xml_content_row = db.executeQuery(conn, xml_content_query)
 
-    xml_rt = parseString(xml_content_row[0][0].read())
+    xml_rt = parseString(xml_content_row[0][0])
     node = xml_rt.getElementsByTagName('causaleVersamento')[0]
     node.firstChild.replaceWholeText(f'{causaleVers}')
     xml_rt_string = xml_rt.toxml()
     print(xml_rt_string)
 
-    query_update = f"UPDATE RT_XML SET XML_CONTENT = TO_CLOB('{xml_rt_string}')WHERE IDENT_DOMINIO='$activatePaymentNotice.fiscalCode' AND IUV='$iuv'"
+    query_update = f"UPDATE RT_XML SET XML_CONTENT = TEXT('{xml_rt_string}')WHERE IDENT_DOMINIO='$activatePaymentNotice.fiscalCode' AND IUV='$iuv'"
     print(query_update)
     query_update = utils.replace_local_variables(query_update, context)
     query_update = utils.replace_context_variables(query_update, context)
@@ -3400,8 +3439,10 @@ def step_impl(context, name_macro, db_name, query_name, value, column, table_nam
     conn = db.getConnection(db_selected.get('host'), db_selected.get(
         'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
         
-    selected_query = utils.query_json(context, query_name, name_macro).replace(
-        "columns", column).replace("table_name", table_name)
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     print(selected_query)
     exec_query = db.executeQuery(conn, selected_query)
     query_result = [t[0] for t in exec_query]
@@ -3430,6 +3471,9 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
     print(selected_query)
     exec_query = db.executeQuery(conn, selected_query)
 
@@ -3440,7 +3484,6 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
 
     i = 0
     while i <= 50:
-
         exec_query = db.executeQuery(conn, selected_query)
         nuova_modifica = exec_query [0][0]
 
@@ -3455,11 +3498,67 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
 
     db.closeConnection(conn)
 
+
+
+@step(u"polling for the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, table_name, value):
+    # Legge i dati dalla tabella specificata utilizzando la connessione fornita
+    # e continua a controllare periodicamente per gli aggiornamenti fino a quando non trova i record attesi
+    list_value = value.split(",")
+    num_state = len(list_value)
+    db_config = context.config.userdata.get("db_configuration")
+    db_selected = db_config.get(db_name)
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+    selected_query = utils.replace_global_variables(selected_query, context)
+    selected_query = utils.replace_local_variables(selected_query, context)
+    selected_query = utils.replace_context_variables(selected_query, context)
+    print(selected_query)
+    ###Polling se il numero di record della query sono maggiori uguali al numero atteso 
+    ###(metto il maggiore in modo che se ci sono più stati dopo li visualizzo tutti)
+    i = 0
+    while i <= 10:
+        exec_query = db.executeQuery(conn, selected_query)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+        #nuova_modifica = exec_query [0][0]
+        num_record = len(query_result)
 
+        if num_record >= num_state:
+            print("Tutti i record trovati!")
+            break
+        else:
+            print("Mancano record, attendo...")
+            time.sleep(3)  # attende 3 secondi prima del prossimo controllo
+            i += 1
 
+    if value == 'None':
+        print('None')
+        assert query_result[0] == None
+    elif value == 'NotNone':
+        print('NotNone')
+        assert query_result[0] != None
+    else:
+        value = utils.replace_global_variables(value, context)
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
+        split_value = [status.strip() for status in value.split(',')]
+        for i, elem in enumerate(query_result):
+            if isinstance(elem, str) and elem.isdigit():
+                query_result[i] = float(elem)
+            elif isinstance(elem, datetime.date):
+                query_result[i] = elem.strftime('%Y-%m-%d')
 
+        for i, elem in enumerate(split_value):
+            if utils.isFloat(elem) or elem.isdigit():
+                split_value[i] = float(elem)
 
+        print("value: ", split_value)
+        for elem in split_value:
+            assert elem in query_result, f"check expected element: {value}, obtained: {query_result}"
+
+    db.closeConnection(conn)
 
 
 # step per salvare nel context una variabile key recuperata dal db tramite query query_name

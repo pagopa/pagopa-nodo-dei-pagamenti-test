@@ -1,4 +1,4 @@
-Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
+Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK 1444
 
     Background:
         Given systems up
@@ -102,7 +102,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             </pay_i:FlussoRiversamento>
             """
 
-    @pagoPA
+    @flusso
     Scenario: Send nodoInviaFlussoRendicontazione_dataOraMaggiore primitive
         Given the Create REND2 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -164,7 +164,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             </pay_i:FlussoRiversamento>
             """
 
-    @pagoPA
+    @flusso
     Scenario: Send nodoInviaFlussoRendicontazione3 primitive
         Given the Create REND3 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -225,7 +225,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             </pay_i:FlussoRiversamento>
             """
 
-    @pagoPA
+    @flusso
     Scenario: Send nodoInviaFlussoRendicontazione4 primitive
         Given the Create REND4 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -287,7 +287,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             </pay_i:FlussoRiversamento>
             """
 
-    @pagoPA
+    @flusso
     Scenario: Send nodoInviaFlussoRendicontazione5 primitive
         Given the Create REND5 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -349,7 +349,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             </pay_i:FlussoRiversamento>
             """
 
-    @pagoPA
+    @flusso
     Scenario: Send nodoInviaFlussoRendicontazione6 primitive
         Given the Create REND6 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -373,7 +373,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-    @pagoPA
+    @flusso
     # [SEM_NIFR_24]
     Scenario: Send nodoInviaFlussoRendicontazione7 primitive
         Given the Create REND scenario executed successfully
@@ -436,7 +436,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             </pay_i:FlussoRiversamento>
             """
 
-    @pagoPA
+    @flusso
     Scenario: Send nodoInviaFlussoRendicontazione8 primitive
         Given the Create REND7 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -498,7 +498,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
             </pay_i:FlussoRiversamento>
             """
 
-    @pagoPA
+    @flusso
     Scenario: Send nodoInviaFlussoRendicontazione9 primitive
         Given the Create REND8 scenario executed successfully
         And initial XML nodoInviaFlussoRendicontazione
@@ -522,7 +522,7 @@ Feature: Syntax checks for nodoInviaFlussoRendicontazione - OK
         When EC sends SOAP nodoInviaFlussoRendicontazione to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaFlussoRendicontazione response
 
-    @pagoPA
+    @flusso
     #[SEM_NIFR_22]
     Scenario: Send nodoInviaFlussoRendicontazione10 primitive
         Given the Create REND scenario executed successfully

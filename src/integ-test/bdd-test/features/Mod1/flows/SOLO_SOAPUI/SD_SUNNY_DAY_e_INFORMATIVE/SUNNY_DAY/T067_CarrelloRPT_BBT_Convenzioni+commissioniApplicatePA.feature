@@ -1,4 +1,4 @@
-Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA
+Feature: T067_CarrelloRPT_BBT_Convenzioni+commissioniApplicatePA 584
 
     Background:
         Given systems up

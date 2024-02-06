@@ -1,4 +1,4 @@
-Feature: T136_InoltraPagamentoMod2_RPT_BP_CANALE_IRRAGGIUNGIBILE - BUG_482 - CLOSED
+Feature: T136_InoltraPagamentoMod2_RPT_BP_CANALE_IRRAGGIUNGIBILE - BUG_482 - CLOSED 754
 
   Background:
     Given systems up

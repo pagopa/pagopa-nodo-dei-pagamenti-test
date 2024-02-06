@@ -1,4 +1,4 @@
-Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA
+Feature: process tests for T102_chiediStato_RT_RIFIUTATA_PA 312
 
     Background:
         Given systems up

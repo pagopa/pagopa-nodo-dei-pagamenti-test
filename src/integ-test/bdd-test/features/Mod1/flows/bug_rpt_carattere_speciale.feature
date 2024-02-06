@@ -1,4 +1,4 @@
-Feature: bug rpt carattere speciale
+Feature: bug rpt carattere speciale 294
 
     Background:
         Given systems up

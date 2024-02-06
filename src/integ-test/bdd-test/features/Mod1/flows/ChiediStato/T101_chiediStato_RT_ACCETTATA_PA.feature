@@ -1,4 +1,4 @@
-Feature: process tests for T101_chiediStato_RT_ACCETTATA_PA
+Feature: process tests for T101_chiediStato_RT_ACCETTATA_PA 310
 
     Background:
         Given systems up

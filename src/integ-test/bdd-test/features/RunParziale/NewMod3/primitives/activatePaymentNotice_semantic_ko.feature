@@ -1,4 +1,4 @@
-Feature: Semantic checks KO for activatePaymentNoticeReq
+Feature: Semantic checks KO for activatePaymentNoticeReq 1524
 
   Background:
     Given systems up

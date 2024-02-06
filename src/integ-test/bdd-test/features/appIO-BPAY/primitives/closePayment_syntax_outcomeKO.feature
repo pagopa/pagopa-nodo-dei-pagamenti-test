@@ -1,4 +1,4 @@
-Feature: syntax checks for closePayment outcome KO
+Feature: syntax checks for closePayment outcome KO 141
 
   Background:
     Given systems up

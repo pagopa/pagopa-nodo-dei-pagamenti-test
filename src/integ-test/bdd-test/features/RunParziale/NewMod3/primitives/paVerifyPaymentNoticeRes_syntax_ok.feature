@@ -1,4 +1,4 @@
-Feature: syntax checks for paVerifyPaymentNoticeRes - OK
+Feature: syntax checks for paVerifyPaymentNoticeRes - OK 1541
 
   Background:
     Given systems up

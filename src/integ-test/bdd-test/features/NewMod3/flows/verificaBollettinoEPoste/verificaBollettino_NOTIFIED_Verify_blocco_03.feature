@@ -1,4 +1,4 @@
-Feature:  block checks for verificaBollettino - position status in NOTIFIED [Verify_blocco_03]
+Feature:  block checks for verificaBollettino - position status in NOTIFIED [Verify_blocco_03] 1342
 
   Background:
     Given systems up

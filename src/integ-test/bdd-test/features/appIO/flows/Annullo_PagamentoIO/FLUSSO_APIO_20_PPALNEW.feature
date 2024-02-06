@@ -1,4 +1,4 @@
-Feature: FLUSSO_APIO_20_PPALNEW
+Feature: FLUSSO_APIO_20_PPALNEW 10
 
     Background:
         Given systems up

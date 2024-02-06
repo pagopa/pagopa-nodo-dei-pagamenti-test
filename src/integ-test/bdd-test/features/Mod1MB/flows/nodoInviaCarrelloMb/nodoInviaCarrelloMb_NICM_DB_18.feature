@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaCarrelloMb[NICM_DB_18_multibeneficiario=false]
+Feature: process tests for nodoInviaCarrelloMb[NICM_DB_18_multibeneficiario=false] 906
 
     Background:
         Given systems up

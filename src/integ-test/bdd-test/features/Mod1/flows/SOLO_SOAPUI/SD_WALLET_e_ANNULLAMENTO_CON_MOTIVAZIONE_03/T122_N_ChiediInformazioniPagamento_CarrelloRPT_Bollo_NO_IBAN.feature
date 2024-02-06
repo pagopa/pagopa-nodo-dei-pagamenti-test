@@ -1,4 +1,4 @@
-Feature: T122_N_ChiediInformazioniPagamento_CarrelloRPT_Bollo_NO_IBAN
+Feature: T122_N_ChiediInformazioniPagamento_CarrelloRPT_Bollo_NO_IBAN 655
   Background:
     Given systems up
 
@@ -631,7 +631,7 @@ Feature: T122_N_ChiediInformazioniPagamento_CarrelloRPT_Bollo_NO_IBAN
         When PSP sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
 
-@runnable
+    @sync
     Scenario: Execute nodoInviaRT2
         Given the Execute nodoInviaRT1 scenario executed successfully
         And initial XML paaInviaRT

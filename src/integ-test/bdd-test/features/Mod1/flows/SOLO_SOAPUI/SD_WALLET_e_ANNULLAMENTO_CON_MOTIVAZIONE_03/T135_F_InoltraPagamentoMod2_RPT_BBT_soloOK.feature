@@ -1,4 +1,4 @@
-Feature: T135_F_InoltraPagamentoMod2_RPT_BBT_soloOK
+Feature: T135_F_InoltraPagamentoMod2_RPT_BBT_soloOK 744
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#

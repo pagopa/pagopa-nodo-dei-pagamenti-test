@@ -1,6 +1,6 @@
 # Il test verifica che la in caso di timeout per la paSendRTV2 sia inserito un record nella tabella POSITION_RETRY_PA_SEND_RT
 
-Feature: flow tests for paSendRTV2 - Marca da bollo
+Feature: flow tests for paSendRTV2 - Marca da bollo 284
     # Reference document:
     # https://pagopa.atlassian.net/wiki/spaces/PAG/pages/527138945/Analisi+paSendRTV2
     # https://pagopa.atlassian.net/wiki/spaces/PAG/pages/558204362/WIP+A.T.+Gestione+della+marca+da+bollo+digitale+nel+NMU#paSendRTV2

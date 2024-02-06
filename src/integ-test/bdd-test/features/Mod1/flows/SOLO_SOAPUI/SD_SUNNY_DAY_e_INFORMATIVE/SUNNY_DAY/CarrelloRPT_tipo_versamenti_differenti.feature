@@ -1,4 +1,4 @@
-Feature: CarrelloRPT_tipo_versamenti_differenti
+Feature: CarrelloRPT_tipo_versamenti_differenti 488
 
     Background:
         Given systems up

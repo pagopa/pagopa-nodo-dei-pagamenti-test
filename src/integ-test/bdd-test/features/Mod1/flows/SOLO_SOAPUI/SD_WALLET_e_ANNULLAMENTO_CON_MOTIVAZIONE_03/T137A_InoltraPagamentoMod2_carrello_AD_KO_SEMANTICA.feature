@@ -1,4 +1,4 @@
-Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
+Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA 762
     Background:
         Given systems up
        
@@ -486,7 +486,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
 
-@runnable
+@sync
     Scenario: Execute nodoInviaRT2 (Phase 6)
         Given the Execute nodoInviaRT (Phase 5) scenario executed successfully
         And initial XML nodoInviaRT
@@ -582,7 +582,7 @@ Feature: T137A_InoltraPagamentoMod2_carrello_AD_KO_SEMANTICA
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is KO of nodoInviaRT response
 
-@runnable
+@sync
     Scenario: Execute nodoInviaRT2 (Phase 10)
         Given the Execute nodoInviaRT (Phase 9) scenario executed successfully
         And initial XML nodoInviaRT

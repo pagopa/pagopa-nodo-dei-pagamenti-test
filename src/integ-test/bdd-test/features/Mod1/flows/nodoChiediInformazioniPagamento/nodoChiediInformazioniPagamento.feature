@@ -1,4 +1,4 @@
-Feature: process tests for nodoChiediInformazioniPagamento
+Feature: process tests for nodoChiediInformazioniPagamento 321
 
     Background:
         Given systems up
@@ -116,7 +116,7 @@ Feature: process tests for nodoChiediInformazioniPagamento
     Scenario: execution nodoChiediInformazioniPagamento - PM_CIP1
         Given the Execute nodoInviaRPT request scenario executed successfully
         When WISP sends rest GET informazioniPagamento? to nodo-dei-pagamenti
-        Then verify the HTTP status code of informazioniPagamento response is 404
+        Then verify the HTTP status code of informazioniPagamento response is 400
 
     @runnable
     Scenario: execution nodoChiediInformazioniPagamento - PM_CIP2

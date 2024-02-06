@@ -1,4 +1,4 @@
-Feature: Semantic checks KO for nodoChiediCatalogoServizi
+Feature: Semantic checks KO for nodoChiediCatalogoServizi 242
     Background:
         Given systems up
 

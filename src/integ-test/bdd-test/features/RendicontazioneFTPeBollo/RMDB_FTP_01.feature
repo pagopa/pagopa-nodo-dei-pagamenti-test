@@ -1,4 +1,4 @@
-Feature: RPT-RT bollo
+Feature: RPT-RT bollo 1437
 
    Background:
       Given systems up
@@ -253,7 +253,7 @@ Feature: RPT-RT bollo
       Then check esito is OK of nodoInviaRPT response
       And check redirect is 1 of nodoInviaRPT response
 
-@pagoPA
+   @flusso
    Scenario: Execute nodoInviaRT
       Given the MB generation scenario executed successfully
       And initial XML nodoInviaRT

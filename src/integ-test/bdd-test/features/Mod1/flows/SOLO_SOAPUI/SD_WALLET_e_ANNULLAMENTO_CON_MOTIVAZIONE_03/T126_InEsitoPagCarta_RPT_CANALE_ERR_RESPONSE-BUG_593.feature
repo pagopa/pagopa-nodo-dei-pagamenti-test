@@ -1,4 +1,4 @@
-Feature: T126_InoltraEsitoPagamentoCarta_RPT_CANALE_ERR_RESPONSE - BUG_593
+Feature: T126_InoltraEsitoPagamentoCarta_RPT_CANALE_ERR_RESPONSE - BUG_593 671
   Background:
     Given systems up
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr_old#

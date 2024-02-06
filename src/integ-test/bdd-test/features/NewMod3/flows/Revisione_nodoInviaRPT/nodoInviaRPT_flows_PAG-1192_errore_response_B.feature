@@ -1,4 +1,4 @@
-Feature: process tests for nodoInviaRPT [PAG-1192_RPT_errore_response_B]
+Feature: process tests for nodoInviaRPT [PAG-1192_RPT_errore_response_B] 1232
 
     Background:
         Given systems up

@@ -1,4 +1,4 @@
-Feature: flow checks for sendPaymentResult with PA old
+Feature: flow checks for sendPaymentResult with PA old 139
 
    Background:
       Given systems up

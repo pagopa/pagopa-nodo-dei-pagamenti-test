@@ -1,4 +1,4 @@
-Feature: T106_ChiediInformativaPA_mybankSenzaNegozio
+Feature: T106_ChiediInformativaPA_mybankSenzaNegozio 482
 
     Background:
         Given systems up

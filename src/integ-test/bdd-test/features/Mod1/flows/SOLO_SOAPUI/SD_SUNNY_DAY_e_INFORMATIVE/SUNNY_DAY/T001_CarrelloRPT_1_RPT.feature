@@ -1,4 +1,4 @@
-Feature: T001_CarrelloRPT_1 RPT
+Feature: T001_CarrelloRPT_1 RPT 502
 
     
     Background:

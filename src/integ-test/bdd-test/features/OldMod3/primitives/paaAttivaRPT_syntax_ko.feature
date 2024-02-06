@@ -1,4 +1,4 @@
-Feature: Syntax checks KO for nodoAttivaRPT
+Feature: Syntax checks KO for nodoAttivaRPT 1413
     Background:
         Given systems up
         #And generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA

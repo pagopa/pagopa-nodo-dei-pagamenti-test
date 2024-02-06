@@ -1,4 +1,4 @@
-Feature: Syntax checks for pspNotifyPaymentResponse - KO
+Feature: Syntax checks for pspNotifyPaymentResponse - KO 128
 
     Background:
         Given systems up

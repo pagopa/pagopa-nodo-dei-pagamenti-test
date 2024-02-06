@@ -1,4 +1,4 @@
-Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello
+Feature: T092_B_ChiediStato_RPT_RIFIUTATA_NODO_sintassi_Carrello 410
 
     Background:
         Given systems up

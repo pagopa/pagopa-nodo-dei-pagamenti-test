@@ -1,4 +1,4 @@
-Feature: Syntax checks KO for nodoAttivaRPT
+Feature: Syntax checks KO for nodoAttivaRPT 1414
     Background:
         Given systems up
         And initial XML nodoVerificaRPT

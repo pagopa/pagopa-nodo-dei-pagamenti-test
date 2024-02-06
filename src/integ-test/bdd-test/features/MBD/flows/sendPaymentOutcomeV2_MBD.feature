@@ -1,4 +1,4 @@
-Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo
+Feature: flow tests for sendPaymentOutcomeV2 - Marca da bollo 289
    # Reference document:
    # https://pagopa.atlassian.net/wiki/spaces/PAG/pages/558204362/WIP+A.T.+Gestione+della+marca+da+bollo+digitale+nel+NMU
    # https://pagopa.atlassian.net/wiki/spaces/PAG/pages/534609989/Analisi+sendPaymentOutcomeV2+PSP+-+Nodo

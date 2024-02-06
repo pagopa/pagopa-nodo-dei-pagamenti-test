@@ -1,4 +1,4 @@
-Feature: T105_ChiediListaPendentiRPT_soloObbligatori
+Feature: T105_ChiediListaPendentiRPT_soloObbligatori 612
    Background:
         Given systems up
 

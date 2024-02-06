@@ -1,4 +1,4 @@
-Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
+Feature: semantic check for sendPaymentOutcomeReq regarding idempotency 1264
 
   Background:
     Given systems up
@@ -136,7 +136,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
     Then check outcome is KO of sendPaymentOutcome response
     And check faultCode is PPT_ESITO_GIA_ACQUISITO of sendPaymentOutcome response
 
-@runnable
+  @runnable
   Scenario: DB check
     Given the Execute sendPaymentOutcome request 1 scenario executed successfully
     And nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
@@ -150,9 +150,3 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency
     And checks the value NotNone of the record at column HASH_REQUEST of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column RESPONSE of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod3
     And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod3
-
-
-
-
-
-

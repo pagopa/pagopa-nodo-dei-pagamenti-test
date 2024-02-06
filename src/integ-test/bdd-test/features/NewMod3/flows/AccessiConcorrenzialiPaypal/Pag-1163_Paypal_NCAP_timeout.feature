@@ -1,4 +1,4 @@
-Feature: Pag-1163_Paypal_NCAP_timeout
+Feature: Pag-1163_Paypal_NCAP_timeout 1008
 
     Background:
         Given systems up

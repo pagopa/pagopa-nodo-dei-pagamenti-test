@@ -1,4 +1,4 @@
-Feature: Semantic checks for nodoChiediListaPendentiRPT - KO
+Feature: Semantic checks for nodoChiediListaPendentiRPT - KO 1427
 
     Background:
         Given systems up
@@ -19,7 +19,7 @@ Feature: Semantic checks for nodoChiediListaPendentiRPT - KO
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-@runnable
+@runnable 
     Scenario Outline: Check semantic errors for nodoChiediListaPendentiRPT primitive
         Given <tag> with <tag_value> in nodoChiediListaPendentiRPT
         When EC sends SOAP nodoChiediListaPendentiRPT to nodo-dei-pagamenti

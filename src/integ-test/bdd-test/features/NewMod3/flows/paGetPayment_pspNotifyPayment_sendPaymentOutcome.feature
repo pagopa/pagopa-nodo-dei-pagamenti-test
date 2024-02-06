@@ -1,4 +1,4 @@
-Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome
+Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome 1102
 
   Background:
     Given systems up

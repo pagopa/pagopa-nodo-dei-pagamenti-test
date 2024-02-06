@@ -1,4 +1,4 @@
-Feature: T001E_RPT_Rtpartial
+Feature: T001E_RPT_Rtpartial 500
 
    Background:
       Given systems up

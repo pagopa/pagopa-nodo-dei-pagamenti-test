@@ -1,0 +1,60 @@
+name: nodo-perf-test
+namespace: nodo-p-prf-perf-test
+
+network:
+    services:
+        performance_test:
+            name: performance-test
+            ports:
+            - name: apiservice
+              port: 8082
+              protocol: TCP
+            selector: "{{ .Values.name }}"
+
+    routes:
+        performance_test:
+            name: nodo-dei-pagamenti-performance-test
+            host: "nodo-p-prf-perf-test.tst-npc.sia.eu"
+            service: "{{ .Values.network.services.performance_test.name }}"
+            port: 8082
+            path: /
+
+deployments:            
+    performance_test:
+        name: nodo-dei-pagamenti-perf-test
+        replicas: 1
+                  
+        registry_url: toolbox.sia.eu/docker-pagopa
+        image_name: nodo-perf-test
+        image_version: 1.0.0
+        imagePullPolicy: Always
+        image_pull_secret: 
+          - name: regcred
+
+        restartPolicy: Always
+
+        terminationGracePeriodSeconds: 140
+    
+        resources:
+          limits:
+            cpu: 4000m
+            memory: 3Gi
+          requests:
+            cpu: 2000m
+            memory: 2Gi
+
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - all
+          readOnlyRootFilesystem: true
+
+        nodeSelector:
+          envnodopa: prf
+        
+        tolerations:
+        - key: "envnodopa"
+          operator: "Equal"
+          value: prf
+          effect: "NoExecute"

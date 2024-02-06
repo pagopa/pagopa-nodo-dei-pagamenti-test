@@ -1,4 +1,4 @@
-Feature: Pag-1163_Carta_OLD_OK
+Feature: Pag-1163_Carta_OLD_OK 996
 
     Background:
         Given systems up

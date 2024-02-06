@@ -1,4 +1,4 @@
-# i seguenti test sono out of scope dopo lo spostamento del traduttore
+# i seguenti test sono out of scope dopo lo spostamento del traduttore 150
 
 # Feature: revision checks for sendPaymentOutcomeV2
 

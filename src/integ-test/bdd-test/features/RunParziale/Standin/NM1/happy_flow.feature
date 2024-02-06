@@ -1,4 +1,4 @@
-Feature: happy flow with Stand In on and PSP no POSTE for NMU
+Feature: happy flow with Stand In on and PSP no POSTE for NMU 1562
 
     Background:
         Given systems up

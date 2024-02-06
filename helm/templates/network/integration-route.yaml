@@ -1,0 +1,23 @@
+{{- $namespace := .Values.namespace }}
+{{- $name := .Values.name }}
+{{- range .Values.network.routes }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: "{{ $name }}"
+  name: "{{ .name }}" 
+  namespace: "{{ $namespace }}"
+spec:
+  host: "{{ .host }}"
+  port:
+    targetPort: "{{ .port }}"
+  path: "{{ .path }}"
+  to:
+    kind: Service
+    name: "{{ tpl (.service) $ }}"
+    weight: 100
+  wildcardPolicy: None
+
+---
+{{- end }}

@@ -1,4 +1,4 @@
-Feature: PRO_CLPSP_01
+Feature: PRO_CLPSP_01 48
 
 Background:
  Given systems up
@@ -168,7 +168,7 @@ Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
 
-@runnable
+@sync
 Scenario: Check correct PSP list
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     When WISP sends rest GET listaPSP?idPagamento=$activateIOPaymentResponse.paymentToken&percorsoPagamento=CARTE to nodo-dei-pagamenti

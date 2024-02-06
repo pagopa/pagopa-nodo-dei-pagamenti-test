@@ -1,4 +1,4 @@
-Feature:  semantic checks for paGetPaymentRes - KO
+Feature:  semantic checks for paGetPaymentRes - KO 1535
 
 	Background:
 		Given systems up

@@ -1,4 +1,4 @@
-Feature: T069_D_CarrelloRPT_AD_ProxyError502
+Feature: T069_D_CarrelloRPT_AD_ProxyError502 594
 
     Background:
         Given systems up

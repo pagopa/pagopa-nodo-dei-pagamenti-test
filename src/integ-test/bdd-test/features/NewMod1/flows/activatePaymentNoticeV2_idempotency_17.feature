@@ -1,4 +1,4 @@
-    Feature: idempotency tests for activatePaymentNoticeV2Request
+    Feature: idempotency tests for activatePaymentNoticeV2Request 933
 
     Background:
         Given systems up
@@ -104,7 +104,7 @@
         And verify 1 record for the table IDEMPOTENCY_CACHE retrived by the query idempotency_cache on db nodo_online under macro NewMod1
         And wait 70 seconds for expiration
 
-    @test @pippoalf2
+    @test 
     Scenario: second activateV2 with another PA
         Given the activatePaymentNoticeV2 without expirationTime scenario executed successfully
         And initial XML activatePaymentNoticeV2

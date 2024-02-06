@@ -1,4 +1,4 @@
-Feature:  semantic checks for sendPaymentOutcomeV2
+Feature:  semantic checks for sendPaymentOutcomeV2 968
 
     Background:
         Given systems up

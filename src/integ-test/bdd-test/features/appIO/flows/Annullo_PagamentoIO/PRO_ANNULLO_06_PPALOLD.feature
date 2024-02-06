@@ -1,4 +1,4 @@
-Feature: PRO_ANNULLO_06_PPALOLD
+Feature: PRO_ANNULLO_06_PPALOLD 25
 
     Background:
         Given systems up

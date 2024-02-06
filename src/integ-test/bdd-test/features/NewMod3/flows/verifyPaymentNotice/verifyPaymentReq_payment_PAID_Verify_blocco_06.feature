@@ -1,4 +1,4 @@
-Feature:  block checks for verifyPaymentReq - position status in PAID after retry with expired token [Verify_blocco_06]
+Feature:  block checks for verifyPaymentReq - position status in PAID after retry with expired token [Verify_blocco_06] 1366
 
    Background:
       Given systems up

@@ -1,4 +1,4 @@
-Feature: process tests for T213_rptUniversale_RPT_noConvenzione
+Feature: process tests for T213_rptUniversale_RPT_noConvenzione 386
 
     Background:
         Given systems up
@@ -150,7 +150,7 @@ Feature: process tests for T213_rptUniversale_RPT_noConvenzione
         And check totalRows is $sizeCarte of listaPSP response
         And compare list between data in listaPSP response and $listaCarte
 
-    @runnable
+    @sync
     Scenario: execution nodoChiediListaPSP - conto
         Given the execution nodoChiediListaPSP - carte scenario executed successfully
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CC&lingua=$lingua to nodo-dei-pagamenti

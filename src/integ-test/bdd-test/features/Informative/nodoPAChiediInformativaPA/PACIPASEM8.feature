@@ -1,4 +1,4 @@
-Feature: Semantic checks KO for nodoPAChiediInformativaPA
+Feature: Semantic checks KO for nodoPAChiediInformativaPA 272
     Background:
         Given systems up
     

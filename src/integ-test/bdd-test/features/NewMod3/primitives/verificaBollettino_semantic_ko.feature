@@ -1,4 +1,4 @@
-Feature: Semantic checks for verificaBollettino - KO
+Feature: Semantic checks for verificaBollettino - KO 1394
 
   Background:
     Given systems up

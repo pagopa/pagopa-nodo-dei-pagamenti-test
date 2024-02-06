@@ -1,4 +1,4 @@
-Feature: T074_CarrelloRPT_autSogg=OTH
+Feature: T074_CarrelloRPT_autSogg=OTH 598
     Background:
         Given systems up
        

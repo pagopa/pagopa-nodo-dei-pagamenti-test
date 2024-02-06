@@ -1,9 +1,9 @@
-Feature: T216_RPT_checkPPP
+Feature: T216_RPT_checkPPP 636
 
     Background:
         Given systems up
 
-@runnable
+@runnable 
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And RPT1 generation
