@@ -532,12 +532,75 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
                 }
             }
             """
+
+    Scenario: closePaymentV2 PAG-2555 with timeZone Z
+        Given initial JSON v2/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "idBrokerPSP": "#psp#",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "paymentMethod": "CP",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "primaryCiIncurredFee": 1,
+                "idBundle": "0bf0c282-3054-11ed-af20-acde48001122",
+                "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
+                "timestampOperation": "2023-12-05T09:20:32Z",
+                "additionalPaymentInformations": {
+                    "rrn": "11223344",
+                    "outcomePaymentGateway": "00",
+                    "totalAmount": "12",
+                    "fee": "2",
+                    "timestampOperation": "2023-12-05T09:20:32Z",
+                    "authorizationCode": "123456",
+                    "paymentGateway": "00"
+                }
+            }
+            """
+
+    Scenario: closePaymentV2 PAG-2555 with timeZone +
+        Given initial JSON v2/closepayment
+            """
+            {
+                "paymentTokens": [
+                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                ],
+                "outcome": "OK",
+                "idPSP": "#psp#",
+                "idBrokerPSP": "#psp#",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
+                "paymentMethod": "CP",
+                "transactionId": "#transaction_id#",
+                "totalAmount": 12,
+                "fee": 2,
+                "primaryCiIncurredFee": 1,
+                "idBundle": "0bf0c282-3054-11ed-af20-acde48001122",
+                "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
+                "timestampOperation": "2023-11-30T12:46:46.554+01:00",
+                "additionalPaymentInformations": {
+                    "rrn": "11223344",
+                    "outcomePaymentGateway": "00",
+                    "totalAmount": "12",
+                    "fee": "2",
+                    "timestampOperation": "2023-11-30T12:46:46.554+01:00",
+                    "authorizationCode": "123456",
+                    "paymentGateway": "00"
+                }
+            }
+            """
+
     @test 
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
 
-    @test @pippolorenzo
+    @test 
     Scenario Outline: check closePaymentV2 PAG-2555 KO outline
         Given the closePaymentV2 PAG-2555 scenario executed successfully
         And <elem> with <value> in v2/closepayment
@@ -765,10 +828,30 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test
+    @prova
     Scenario: check closePaymentV2 PAG-2555 OK
         Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And the closePaymentV2 PAG-2555 scenario executed successfully
+        And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
+        And paymentGateway with None in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    @prova 
+    Scenario: check closePaymentV2 PAG-2555 OK with timezone Z
+        Given the check activatePaymentNoticeV2 OK scenario executed successfully
+        And the closePaymentV2 PAG-2555 with timeZone Z scenario executed successfully
+        And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
+        And paymentGateway with None in v2/closepayment
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+
+    @test 
+    Scenario: check closePaymentV2 PAG-2555 OK with timezone +
+        Given the check activatePaymentNoticeV2 OK scenario executed successfully
+        And the closePaymentV2 PAG-2555 with timeZone + scenario executed successfully
         And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
         And paymentGateway with None in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti

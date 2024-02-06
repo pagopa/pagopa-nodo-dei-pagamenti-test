@@ -10,6 +10,7 @@ import time
 from threading import Thread
 import requests
 from requests.adapters import HTTPAdapter
+import xmltodict
 
 from urllib.parse import urlparse
 
@@ -431,7 +432,7 @@ def isDate(string: str):
         return False
 
 
-def single_thread(context, soap_primitive, type):
+def single_thread(context, soap_primitive, tipo):
     print("single_thread")
     primitive = soap_primitive.split("_")[0]
     primitive = replace_local_variables(primitive, context)
@@ -444,12 +445,13 @@ def single_thread(context, soap_primitive, type):
         headers = {'X-Forwarded-For': '10.82.39.148', 'Host': header_host}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
-        
         print(url_nodo)
         soap_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        
     elif type == 'POST':
         body = getattr(context, primitive)
         print(body)
+        response = ''
         if 'xml' in getattr(context, primitive):
             # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
             url_nodo = get_soap_url_nodo(context, primitive)
@@ -473,6 +475,9 @@ def single_thread(context, soap_primitive, type):
     print(soap_primitive.split("_")[1] + "Response")
     setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
 
+        print("response: ", response.content)
+        print(soap_primitive.split("_")[1] + "Response")
+        setattr(context, soap_primitive.split("_")[1] + "Response", response)
 
 def threading(context, primitive_list, list_of_type):
     i = 0
@@ -567,7 +572,8 @@ def searchValueTag(xml_string, path_tag, flag_all_value_tag):
     list_value_tag = searchValueTagRecursive(tag_padre, tag, single_tag)
     full_list_tag.append(list_value_tag)
     if flag_all_value_tag == False:
-      if list_value_tag: break
+      if list_value_tag: 
+          break
   return full_list_tag
 
 

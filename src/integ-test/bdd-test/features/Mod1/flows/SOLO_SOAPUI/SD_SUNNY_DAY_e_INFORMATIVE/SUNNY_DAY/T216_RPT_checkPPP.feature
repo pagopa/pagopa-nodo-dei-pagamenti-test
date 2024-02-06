@@ -5,7 +5,7 @@ Feature: T216_RPT_checkPPP 636
 
 @runnable 
     Scenario: RPT generation
-        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And RPT1 generation
             """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -84,7 +84,6 @@ Feature: T216_RPT_checkPPP 636
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-
         And initial XML nodoInviaRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
@@ -117,7 +116,7 @@ Feature: T216_RPT_checkPPP 636
             <ws:pspInviaRPTResponse>
             <pspInviaRPTResponse>
             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
-            <identificativoCarrello>$1iuv</identificativoCarrello>
+            <identificativoCarrello>$nodoInviaRPT.identificativoUnivocoVersamento</identificativoCarrello>
             <parametriPagamentoImmediato>idBruciatura=$1iuv</parametriPagamentoImmediato>
             </pspInviaRPTResponse>
             </ws:pspInviaRPTResponse>

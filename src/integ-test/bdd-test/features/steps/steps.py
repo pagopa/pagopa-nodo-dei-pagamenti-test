@@ -1184,6 +1184,22 @@ def step_impl(context, path_tag, value, primitive):
         data = list_tag_value[0]
         print(f'check path tag "{path_tag}" - expected: {value}, obtained: {data}')
         assert value == data
+        
+@then('from {key} check the {value} in {path_tag}')
+def step_impl(context, path_tag, value, key):
+    query_body = getattr(context, key)
+    value = utils.replace_local_variables(value, context)
+    value = utils.replace_context_variables(value, context)
+    value = utils.replace_global_variables(value, context)
+    
+    if 'xml' in query_body:
+        list_tag_value = []
+        list_tag_value = utils.searchValueTag(query_body, path_tag, False)
+        data = list_tag_value[0]
+        print(f'check path tag "{path_tag}" - expected: {value}, obtained: {data}')
+        assert value == data
+    else: 
+        assert False
 
 @then('compare list between {tag} in {primitive} response and {value}')
 def step_impl(context, tag, value, primitive):
@@ -1452,7 +1468,7 @@ def step_impl(context, name, n):
 def step_impl(context, sender, method, service, receiver):
     # TODO get url according to receiver
     url_nodo = utils.get_rest_url_nodo(context, service)
-    header_host = utils.estrapola_header_host(url_nodo)
+    print(url_nodo)
     headers = {'Content-Type': 'application/json',
                'Host': header_host}
     if 'SUBSCRIPTION_KEY' in os.environ:

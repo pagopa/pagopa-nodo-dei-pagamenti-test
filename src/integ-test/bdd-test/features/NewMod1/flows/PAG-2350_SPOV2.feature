@@ -1,4 +1,4 @@
-Feature: PAG-2258 940
+Feature: PAG-2258
 
     Background:
         Given systems up
@@ -125,25 +125,27 @@ Feature: PAG-2258 940
             }
             """
 
-    Scenario: sendPaymentOutcome request
-        Given initial XML sendPaymentOutcome
+    Scenario: sendPaymentOutcomeV2 request
+        Given initial XML sendPaymentOutcomeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <nod:sendPaymentOutcomeReq>
+            <nod:sendPaymentOutcomeV2Request>
             <idPSP>#psp#</idPSP>
             <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
             <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
             <password>#password#</password>
+            <paymentTokens>
             <paymentToken>$activatePaymentNoticeV2Response.paymentToken</paymentToken>
+            </paymentTokens>
             <outcome>OK</outcome>
             <!--Optional:-->
             <details>
             <paymentMethod>creditCard</paymentMethod>
             <!--Optional:-->
             <paymentChannel>app</paymentChannel>
-            <fee>5.00</fee>
+            <fee>2.00</fee>
             <!--Optional:-->
             <payer>
             <uniqueIdentifier>
@@ -169,7 +171,7 @@ Feature: PAG-2258 940
             <applicationDate>2021-12-12</applicationDate>
             <transferDate>2021-12-11</transferDate>
             </details>
-            </nod:sendPaymentOutcomeReq>
+            </nod:sendPaymentOutcomeV2Request>
             </soapenv:Body>
             </soapenv:Envelope>
             """
@@ -213,10 +215,10 @@ Feature: PAG-2258 940
         And wait 12 seconds for expiration
         And the mod3CancelV2 scenario executed successfully
         And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
-        And the sendPaymentOutcome request scenario executed successfully
-        When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcome response
-        And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
+        And the sendPaymentOutcomeV2 request scenario executed successfully
+        When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcomeV2 response
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
@@ -255,11 +257,11 @@ Feature: PAG-2258 940
         And wait 12 seconds for expiration
         And the mod3CancelV2 scenario executed successfully
         And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
-        And the sendPaymentOutcome request scenario executed successfully
-        And outcome with KO in sendPaymentOutcome
-        When psp sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcome response
-        And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
+        And the sendPaymentOutcomeV2 request scenario executed successfully
+        And outcome with KO in sendPaymentOutcomeV2
+        When psp sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
 
         # POSITION_PAYMENT_STATUS
         And checks the value PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1

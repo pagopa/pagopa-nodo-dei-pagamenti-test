@@ -5,7 +5,7 @@ Feature: T216_RPT_checkPPI_sbloccoParcheggio 637
 
 
     Scenario: RPT generation
-        Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
         And RPT1 generation
             """
             <?xml version="1.0" encoding="UTF-8"?>

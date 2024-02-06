@@ -181,7 +181,7 @@ Feature: DB checks for nodoChiediEsitoPagamento 984
                 "esitoTransazioneCarta": "00"
             }
             """
-        And saving inoltroEsito/cartaJSON request in inoltroEsito/carta
+        And saving inoltroEsito/carta request in inoltroEsito/carta
         When calling primitive inoltroEsito/carta_inoltroEsito/carta POST and notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken&motivoAnnullamento=RIFPSP_notificaAnnullamento GET with 4000 ms delay
         Then verify the HTTP status code of inoltroEsito/carta response is 200
         And check esito is OK of inoltroEsito/carta response
