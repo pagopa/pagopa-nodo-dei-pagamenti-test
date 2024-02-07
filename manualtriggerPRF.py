@@ -28,18 +28,18 @@ def start_test():
 	    # execute tests
 		script_thread = threading.Thread(target=run_script, args=(debugEnabled, rampa, blacklist))
 		script_thread.start()
-		print('start test END')
+        print('start test END')
 		return jsonify({"message": "test started"})
 	else :
-		print('start test error START')
+        print('start test error START')
 		return jsonify({"error": "missing required keys"}), 400
 
 @app.route('/stoptest', methods=['GET'])
 def stop_test():
-	print('stop test START')
+    print('stop test START')
 	script_thread = threading.Thread(target=run_stop_script)
 	script_thread.start()
-	print('stop test END')
+    print('stop test END')
 	return jsonify({"message": "test stopped"})
 	
 if __name__ == '__main__':
