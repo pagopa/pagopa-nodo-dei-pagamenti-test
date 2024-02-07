@@ -17,8 +17,8 @@ def run_stop_script():
 @app.route('/starttest', methods=['POST'])
 def start_test():
     print('start test START')
-	#read body
-	data = request.get_json()
+    #read body
+    data = request.get_json()
 
 	if 'debugEnabled' in data and 'rampa' in data and 'blacklist' in data:
 		debugEnabled = data['debugEnabled']
