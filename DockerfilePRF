@@ -1,7 +1,7 @@
 FROM toolbox.sia.eu/docker-pagopa/performance-test-base-image:1.0.0
 
-ENV http_proxy=http://csproxy:8080
-ENV https_proxy=http://csproxy:8080
+ENV http_proxy=http://10.79.20.33:80
+ENV https_proxy=http://10.79.20.33:80
 ENV no_proxy=toolbox.sia.eu
 
 #FROM alpine:latest
