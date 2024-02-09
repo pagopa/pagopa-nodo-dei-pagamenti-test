@@ -136,18 +136,24 @@ export function total() {
         }
     }
 
-    //let rndAnagPsp = inputDataUtil.getAnagPsp();
+    let rndAnagPsp = inputDataUtil.getAnagPsp();
     let rndAnagPaNew = inputDataUtil.getAnagPaNew();
 
     let noticeNmbr = genNoticeNumber();
-    //let idempotencyKey = genIdempotencyKey();
+    let idempotencyKey = genIdempotencyKey();
 
 
 
-    let res = checkPosition(baseSoapUrl, rndAnagPaNew, noticeNmbr);
+    res = checkPosition(baseSoapUrl, rndAnagPaNew, noticeNmbr);
+
+    let res = activatePaymentNoticeV2(baseSoapUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
+    let paymentToken = res.paymentToken;
+
+    let outcome = 'OK';
+    res =  closePayment(baseRestUrl,rndAnagPsp,paymentToken,outcome,"09910087308786","09910087308786", res.importoTotale);
 
 
-    // res = sendPaymentOutput(baseSoapUrl,rndAnagPsp,paymentToken);
+    res = sendPaymentOutcomeV2(baseSoapUrl,rndAnagPsp,paymentToken);
 
 }
 

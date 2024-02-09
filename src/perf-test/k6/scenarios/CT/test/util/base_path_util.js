@@ -7,7 +7,9 @@ export function getBasePath(baseUrl, primitive) {
 		"verificaBollettino": "/webservices/input",
 		"verifyPaymentNotice": "/webservices/input",
 		"activatePaymentNotice": "/webservices/input",
+		"activatePaymentNoticeV2": "/webservices/input",
 		"sendPaymentOutcome": "/webservices/input",
+		"sendPaymentOutcomeV2": "/webservices/input",
 		"activateIOPayment": "/webservices/input",
 		"nodoVerificaRPT": "/webservices/input",
 		"nodoAttivaRPT": "/webservices/input",
@@ -27,6 +29,7 @@ export function getBasePath(baseUrl, primitive) {
 		"nodoInviaRPT": "/webservices/input",
 		"nodoInviaRT": "/webservices/input",
 		"nodoPAChiediInformativaPA": "/webservices/input",
+		"checkPosition": "/checkPosition",
 
 		"nodoPerPMv1": "/webservices/input",
 		"nodoPerPMv2": "/webservices/input"

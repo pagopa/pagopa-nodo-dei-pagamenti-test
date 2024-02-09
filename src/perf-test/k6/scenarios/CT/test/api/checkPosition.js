@@ -74,12 +74,10 @@ export function checkPosition(baseUrl, rndAnagPa, noticeNmbr) {
         { checkPosition: 'over_sla1000', ALL: 'over_sla1000' }
     );
 
-    let outcome = '';
-    try {
-        const doc = parseHTML(res.body);
-        const script = doc.find('outcome');
-        outcome = script.text();
-    } catch (error) { }
+    let outcome='';
+    try{
+    outcome= JSON.parse(res.body)["outcome"];
+    }catch(error){}
 
     check(
         res,
