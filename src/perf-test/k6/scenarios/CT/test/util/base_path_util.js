@@ -30,6 +30,7 @@ export function getBasePath(baseUrl, primitive) {
 		"nodoInviaRT": "/webservices/input",
 		"nodoPAChiediInformativaPA": "/webservices/input",
 		"checkPosition": "/checkPosition",
+		"closePaymentV2": "/v2/closepayment",
 
 		"nodoPerPMv1": "/webservices/input",
 		"nodoPerPMv2": "/webservices/input"

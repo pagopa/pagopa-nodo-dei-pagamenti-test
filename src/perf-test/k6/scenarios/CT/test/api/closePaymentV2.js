@@ -3,11 +3,11 @@ import { check, fail } from 'k6';
 import { Trend } from 'k6/metrics';
 import {getBasePath, getHeaders} from "../util/base_path_util.js";
 
-export const closePayment_Trend = new Trend('closePayment');
+export const closePayment_Trend = new Trend('closePaymentV2');
 export const All_Trend = new Trend('ALL');
 
 
-export function closePaymentReqBody(psp, intpsp, chpsp_c, paymentToken, outcome, transactionId, additionalTransactionId){
+export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, outcome, transactionId, additionalTransactionId){
 
 var dt = new Date();
 let ms = dt.getMilliseconds();
@@ -39,7 +39,7 @@ dt = dt.getFullYear() + "-" + ("0" + (dt.getMonth() + 1)).slice(-2) + "-" +  ("0
 return `
 {
   "paymentTokens": [
-    "${paymentToken}"
+      "${paymentToken}"
   ],
   "outcome": "outcome",
   "identificativoPsp": "${psp}",
@@ -51,14 +51,14 @@ return `
   "fee": 1.0,
   "timestampOperation": "${dt}",
   "additionalPaymentInformations": {
-  "transactionId": "${additionalTransactionId}", //09910087308786 o 99910087308786
-  "spoMock": "true"
+      "transactionId": "${additionalTransactionId}", //09910087308786 o 99910087308786
+      "spoMock": "true"
   }
 }
 `
 };
 
-export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transactionId, additionalTransactionId, totalAmount) {
+export function closePaymentV2(baseUrl,rndAnagPsp,paymentToken, outcome, transactionId, additionalTransactionId, totalAmount) {
 
  var dt = new Date();
  let ms = dt.getMilliseconds();
@@ -111,15 +111,15 @@ let body = `{\"paymentTokens\":[\"${paymentToken}\"],\"outcome\":\"${outcome}\",
               
 
  const res = http.post(
-		 getBasePath(baseUrl, "nodoPerPMv2")+'/closepayment',
-    //JSON.stringify(closePaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId)),
+		 getBasePath(baseUrl, "nodoPerPMv2")+'/closePaymentV2',
+    //JSON.stringify(closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId)),
     body,
     { headers: getHeaders({ 'Content-Type': 'application/json' }) ,
-	tags: { closePayment: 'http_req_duration', ALL: 'http_req_duration', primitiva: "closepayment"}
+	tags: { closePaymentV2: 'http_req_duration', ALL: 'http_req_duration', primitiva: "closePaymentV2"}
 	}
   );
   
-  console.debug("closePaymentReqBody RES");
+  console.debug("closePaymentV2ReqBody RES");
   console.debug(JSON.stringify(res));
 
 
@@ -128,39 +128,39 @@ let body = `{\"paymentTokens\":[\"${paymentToken}\"],\"outcome\":\"${outcome}\",
 
 
    check(res, {
- 	'closePayment:over_sla300': (r) => r.timings.duration >300,
+ 	'closePaymentV2:over_sla300': (r) => r.timings.duration >300,
    },
-   { closePayment: 'over_sla300', ALL:'over_sla300' }
+   { closePaymentV2: 'over_sla300', ALL:'over_sla300' }
    );
    
    check(res, {
- 	'closePayment:over_sla400': (r) => r.timings.duration >400,
+ 	'closePaymentV2:over_sla400': (r) => r.timings.duration >400,
    },
-   { closePayment: 'over_sla400', ALL:'over_sla400' }
+   { closePaymentV2: 'over_sla400', ALL:'over_sla400' }
    );
    
    check(res, {
- 	'closePayment:over_sla500 ': (r) => r.timings.duration >500,
+ 	'closePaymentV2:over_sla500 ': (r) => r.timings.duration >500,
    },
-   { closePayment: 'over_sla500', ALL:'over_sla500' }
+   { closePaymentV2: 'over_sla500', ALL:'over_sla500' }
    );
    
    check(res, {
- 	'closePayment:over_sla600': (r) => r.timings.duration >600,
+ 	'closePaymentV2:over_sla600': (r) => r.timings.duration >600,
    },
-   { closePayment: 'over_sla600', ALL:'over_sla600' }
+   { closePaymentV2: 'over_sla600', ALL:'over_sla600' }
    );
    
    check(res, {
- 	'closePayment:over_sla800': (r) => r.timings.duration >800,
+ 	'closePaymentV2:over_sla800': (r) => r.timings.duration >800,
    },
-   { closePayment: 'over_sla800', ALL:'over_sla800' }
+   { closePaymentV2: 'over_sla800', ALL:'over_sla800' }
    );
    
    check(res, {
- 	'closePayment:over_sla1000': (r) => r.timings.duration >1000,
+ 	'closePaymentV2:over_sla1000': (r) => r.timings.duration >1000,
    },
-   { closePayment: 'over_sla1000', ALL:'over_sla1000' }
+   { closePaymentV2: 'over_sla1000', ALL:'over_sla1000' }
    );
 
 
@@ -174,18 +174,18 @@ let body = `{\"paymentTokens\":[\"${paymentToken}\"],\"outcome\":\"${outcome}\",
     res,
     {
     
-	 'closePayment:ok_rate': (r) => esito == 'OK',
+	 'closePaymentV2:ok_rate': (r) => esito == 'OK',
     },
-    { closePayment: 'ok_rate' , ALL:'ok_rate'}
+    { closePaymentV2: 'ok_rate' , ALL:'ok_rate'}
 	);
  
   if(check(
     res,
     {
      
-	  'closePayment:ko_rate': (r) => esito !== 'OK',
+	  'closePaymentV2:ko_rate': (r) => esito !== 'OK',
     },
-    { closePayment: 'ko_rate', ALL:'ko_rate' }
+    { closePaymentV2: 'ko_rate', ALL:'ko_rate' }
   )){
 	fail("esito != ok: "+esito);
 }
