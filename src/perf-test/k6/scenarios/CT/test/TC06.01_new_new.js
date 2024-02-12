@@ -3,7 +3,8 @@ import { check } from 'k6';
 import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
 import { checkPosition } from './api/checkPosition.js';
-import { sendPaymentOutcomeV2 } from './api/checkPosition.js';
+import { activatePaymentNoticeV2 } from './api/activatePaymentNoticeV2.js';
+import { closePaymentV2 } from './api/closePaymentV2.js';
 import { sendPaymentOutcomeV2 } from './api/sendPaymentOutcomeV2.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
@@ -124,7 +125,6 @@ export const options = {
 };
 
 
-
 export function total() {
 
     let baseSoapUrl = "";
@@ -137,14 +137,11 @@ export function total() {
             baseRestUrl = urls[key].REST_BASEURL;
         }
     }
-
     let rndAnagPsp = inputDataUtil.getAnagPsp();
     let rndAnagPaNew = inputDataUtil.getAnagPaNew();
 
     let noticeNmbr = genNoticeNumber();
     let idempotencyKey = genIdempotencyKey();
-
-
 
     res = checkPosition(baseSoapUrl, rndAnagPaNew, noticeNmbr);
 
@@ -152,11 +149,9 @@ export function total() {
     let paymentToken = res.paymentToken;
 
     let outcome = 'OK';
-    res =  closePayment(baseRestUrl,rndAnagPsp,paymentToken,outcome,"09910087308786","09910087308786", res.importoTotale);
-
+    res =  closePaymentV2(baseRestUrl,rndAnagPsp,paymentToken,outcome,"09910087308786","09910087308786", res.importoTotale);
 
     res = sendPaymentOutcomeV2(baseSoapUrl,rndAnagPsp,paymentToken);
-
 }
 
 export default function () {
