@@ -474,10 +474,7 @@ def single_thread(context, soap_primitive, tipo):
     print("nodo soap_response: ", soap_response.content)
     print(soap_primitive.split("_")[1] + "Response")
     setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
-
-        print("response: ", response.content)
-        print(soap_primitive.split("_")[1] + "Response")
-        setattr(context, soap_primitive.split("_")[1] + "Response", response)
+    
 
 def threading(context, primitive_list, list_of_type):
     i = 0
