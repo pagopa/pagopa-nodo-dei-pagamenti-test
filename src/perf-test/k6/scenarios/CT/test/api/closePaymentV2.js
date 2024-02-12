@@ -41,7 +41,7 @@ export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, outcom
   "paymentTokens": [
       "${paymentToken}"
   ],
-  "outcome": "outcome",
+  "outcome": "${outcome}",
   "identificativoPsp": "${psp}",
   "tipoVersamento": "TPAY",
   "identificativoIntermediario": "${intpsp}",
