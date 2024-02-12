@@ -26,6 +26,15 @@ export function genNoticeNumber() {
 }
 
 
+export function genIdempotencyKey() {
+    let key1 = '';
+    let key2 = Math.round((Math.pow(36, 10 + 1) - Math.random() * Math.pow(36, 10))).toString(36).slice(1);
+    for (var i = 11; i > 0; --i) key1 += chars[Math.floor(Math.random() * chars.length)];
+    let returnValue = key1 + "_" + key2;
+    return returnValue;
+}
+
+
 export const getScalini = new SharedArray('scalini', function () {
 
 
@@ -145,15 +154,81 @@ export function total() {
 
     res = checkPosition(baseSoapUrl, rndAnagPaNew, noticeNmbr);
 
-    let res = activatePaymentNoticeV2(baseSoapUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
+    let res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
     let paymentToken = res.paymentToken;
 
     let outcome = 'OK';
-    res =  closePaymentV2(baseRestUrl,rndAnagPsp,paymentToken,outcome,"09910087308786","09910087308786", res.importoTotale);
+    res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, "09910087308786", "09910087308786", res.importoTotale);
 
-    res = sendPaymentOutcomeV2(baseSoapUrl,rndAnagPsp,paymentToken);
+    res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
 }
 
 export default function () {
     total();
+}
+
+export function handleSummary(data) {
+    console.debug('Preparing the end-of-test summary...');
+
+    return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
+
+}
+
+
+export function checks(res, outcome, pattern) {
+
+    check(res, {
+        'ALL over_sla300': (r) => r.timings.duration > 300,
+    },
+        { ALL: 'over_sla300' }
+    );
+
+    check(res, {
+        'ALL over_sla400': (r) => r.timings.duration > 400,
+    },
+        { ALL: 'over_sla400' }
+    );
+
+    check(res, {
+        'ALL over_sla500': (r) => r.timings.duration > 500,
+    },
+        { ALL: 'over_sla500' }
+    );
+
+    check(res, {
+        'ALL over_sla600': (r) => r.timings.duration > 600,
+    },
+        { ALL: 'over_sla600' }
+    );
+
+    check(res, {
+        'ALL over_sla800': (r) => r.timings.duration > 800,
+    },
+        { ALL: 'over_sla800' }
+    );
+
+    check(res, {
+        'ALL over_sla1000': (r) => r.timings.duration > 1000,
+    },
+        { ALL: 'over_sla1000' }
+    );
+
+    check(
+        res,
+        {
+            //'ALL OK status': (r) => r.status == 200,
+            'ALL OK status': (r) => outcome == pattern,
+        },
+        { ALL: 'ok_rate' }
+    );
+
+    check(
+        res,
+        {
+            //'ALL KO status': (r) => r.status !== 200,
+            'ALL KO status': (r) => outcome !== pattern,
+        },
+        { ALL: 'ko_rate' }
+    );
+
 }
