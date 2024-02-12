@@ -9,7 +9,7 @@ network:
             - name: apiservice
               port: 8082
               protocol: TCP
-            selector: "{{ .Values.name }}"
+            selector: "{{ .Values.deployments.performance_test.name }}"
 
     routes:
         performance_test:
