@@ -471,6 +471,7 @@ def single_thread(context, soap_primitive, tipo):
 
         soap_response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
 
+        
     print("nodo soap_response: ", soap_response.content)
     print(soap_primitive.split("_")[1] + "Response")
     setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
