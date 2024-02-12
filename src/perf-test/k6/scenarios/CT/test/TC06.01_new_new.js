@@ -152,9 +152,9 @@ export function total() {
     let noticeNmbr = genNoticeNumber();
     let idempotencyKey = genIdempotencyKey();
 
-    res = checkPosition(baseSoapUrl, rndAnagPaNew, noticeNmbr);
+    let res = checkPosition(baseSoapUrl, rndAnagPaNew, noticeNmbr);
 
-    let res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
     let paymentToken = res.paymentToken;
 
     let outcome = 'OK';
