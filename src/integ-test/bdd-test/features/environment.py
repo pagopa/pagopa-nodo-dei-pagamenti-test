@@ -20,6 +20,7 @@ from io import StringIO
 
 def before_all(context):
     print('Global settings...')
+    print(f"############evn{os.environ}")
 
     lib_dir = ""
     if 'NODOPGDB' not in os.environ :
