@@ -38,7 +38,7 @@ def executeQuery(conn, query:str) -> list:
         if 'APICFG_SUBSCRIPTION_KEY' in os.environ:
             print("#############APICFG_SUBSCRIPTION_KEY esiste!!!!")
             headers["Ocp-Apim-Subscription-Key"] = os.getenv("APICFG_SUBSCRIPTION_KEY", default="")
-            print(f"#############SUBSCRIPTION_KEY {os.getenv("APICFG_SUBSCRIPTION_KEY", default="")}")
+            print(f"#############SUBSCRIPTION_KEY {os.getenv("APICFG_SUBSCRIPTION_KEY")}")
 
         url = apicfg_testing_support.get("base_path") + apicfg_testing_support.get("service")
         response = requests.post(url, data=query, headers=headers)
