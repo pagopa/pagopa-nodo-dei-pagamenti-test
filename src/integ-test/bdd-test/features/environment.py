@@ -43,6 +43,7 @@ def before_all(context):
 
 
     if 'APICFG' in os.environ:
+        print("#############APICFG esiste!!!!")
         apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
         db.set_address(apicfg_testing_support_service)
 
