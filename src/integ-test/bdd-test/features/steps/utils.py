@@ -455,6 +455,7 @@ def single_thread(context, soap_primitive, tipo):
         print(body)
         response = ''
         if 'xml' in getattr(context, primitive):
+            print('entro nel primo if xml')
             # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
             header_host = estrapola_header_host(url_nodo)
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
@@ -463,6 +464,7 @@ def single_thread(context, soap_primitive, tipo):
             url_nodo = get_soap_url_nodo(context, primitive)
             response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
         else:
+            print('entro nel secondo if xml else')
             # headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
             already_xml = False
             if '<' in body: 
@@ -497,7 +499,9 @@ def single_thread(context, soap_primitive, tipo):
             if not already_xml:
                 body = json.loads(body)        
             url_nodo = f"{get_rest_url_nodo(context, primitive)}"
+            print('prima della response')
             response = requests.request(tipo, f"{url_nodo}", headers=headers, json=body, verify=False, proxies = getattr(context,'proxies'))
+            print('dopo la response')
             
         setattr(context, soap_primitive.split("_")[1] + "Response", response)
         print("response: ", response.content)
@@ -508,8 +512,7 @@ def threading(context, primitive_list, list_of_type):
     i = 0
     threads = list()
     while i < len(primitive_list):
-        t = Thread(target=single_thread, args=(
-            context, primitive_list[i], list_of_type[i]))
+        t = Thread(target=single_thread, args=(context, primitive_list[i], list_of_type[i]))
         threads.append(t)
         t.start()
         i += 1
