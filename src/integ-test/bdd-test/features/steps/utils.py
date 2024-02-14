@@ -439,42 +439,69 @@ def single_thread(context, soap_primitive, tipo):
     primitive = replace_context_variables(primitive, context)
     primitive = replace_global_variables(primitive, context)
     
-    if type == 'GET':
-        url_nodo = f"{get_rest_url_nodo(context, primitive)}"
+    if tipo == 'GET':       
         header_host = estrapola_header_host(url_nodo)
         headers = {'X-Forwarded-For': '10.82.39.148', 'Host': header_host}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
+        url_nodo = f"{get_rest_url_nodo(context, primitive)}"
         print(url_nodo)
         soap_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
-        
-    elif type == 'POST':
+        print("soap_response: ", soap_response.content)
+        print(soap_primitive.split("_")[1] + "Response")
+        setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
+    elif tipo == 'POST':
         body = getattr(context, primitive)
         print(body)
         response = ''
         if 'xml' in getattr(context, primitive):
             # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-            url_nodo = get_soap_url_nodo(context, primitive)
-            print(url_nodo)
             header_host = estrapola_header_host(url_nodo)
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
+            url_nodo = get_soap_url_nodo(context, primitive)
+            response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
         else:
             # headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-            url_nodo = f"{get_rest_url_nodo(context, primitive)}"
-            print(url_nodo)
+            already_xml = False
+            if '<' in body: 
+                body = xmltodict.parse(body)
+                body = body["root"]
+                if body != None:
+                    if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
+                        body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+                        if type(body["paymentTokens"]) != list:
+                            l = list()
+                            l.append(body["paymentTokens"])
+                            body["paymentTokens"] = l
+                    if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
+                        body["totalAmount"] = float(body["totalAmount"])
+                    if ('fee' in body.keys()) and (body["fee"] != None):
+                        body["fee"] = float(body["fee"])
+                    if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
+                        body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
+                    if ('positionslist' in body.keys()) and (body["positionslist"] != None):
+                        body["positionslist"] = body["positionslist"]["position"]
+                        if type(body["positionslist"]) != list:
+                            l = list()
+                            l.append(body["positionslist"])
+                            body["positionslist"] = l
+                    body = json.dumps(body, indent=4)
+                body = json.loads(body)
+                already_xml = True
             header_host = estrapola_header_host(url_nodo)
             headers = {'Content-Type': 'application/json', 'Host': header_host}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
-
-        soap_response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
-
-        
-    print("nodo soap_response: ", soap_response.content)
-    print(soap_primitive.split("_")[1] + "Response")
-    setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
+            if not already_xml:
+                body = json.loads(body)        
+            url_nodo = f"{get_rest_url_nodo(context, primitive)}"
+            response = requests.request(tipo, f"{url_nodo}", headers=headers, json=body, verify=False, proxies = getattr(context,'proxies'))
+            
+        setattr(context, soap_primitive.split("_")[1] + "Response", response)
+        print("response: ", response.content)
+        print(soap_primitive.split("_")[1] + "Response")
 
 
 def threading(context, primitive_list, list_of_type):
