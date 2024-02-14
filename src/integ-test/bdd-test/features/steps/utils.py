@@ -451,9 +451,11 @@ def single_thread(context, soap_primitive, tipo):
         print(soap_primitive.split("_")[1] + "Response")
         setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
     elif tipo == 'POST':
+        print(f"la primitive ##########{primitive}")
         body = getattr(context, primitive)
         print(body)
         response = ''
+        
         if 'xml' in getattr(context, primitive):
             print('entro nel primo if xml')
             # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
