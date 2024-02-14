@@ -438,7 +438,7 @@ def single_thread(context, soap_primitive, tipo):
     primitive = replace_local_variables(primitive, context)
     primitive = replace_context_variables(primitive, context)
     primitive = replace_global_variables(primitive, context)
-    
+    print(f"la primitive ##########{primitive}")
     if tipo == 'GET':       
         header_host = estrapola_header_host(url_nodo)
         headers = {'X-Forwarded-For': '10.82.39.148', 'Host': header_host}
@@ -451,7 +451,6 @@ def single_thread(context, soap_primitive, tipo):
         print(soap_primitive.split("_")[1] + "Response")
         setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
     elif tipo == 'POST':
-        print(f"la primitive ##########{primitive}")
         body = getattr(context, primitive)
         print(body)
         response = ''
