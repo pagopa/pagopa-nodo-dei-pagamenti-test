@@ -88,7 +88,6 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoChiediNumeroAvviso": "/nodo-per-psp-richiesta-avvisi/v1",
         "nodoChiediStatoRPT": "/nodo-per-pa/v1",
         "nodoChiediTemplateInformativaPSP": "/nodo-per-psp/v1",
-        "nodoInviaFlussoRendicontazione": "/nodo-per-psp/v1",
         "nodoInviaCarrelloRPT": "/nodo-per-pa/v1",
         "nodoInviaRPT": "/nodo-per-pa/v1",
         "nodoInviaRT": "/nodo-per-psp/v1",
@@ -99,7 +98,7 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoChiediQuadraturaPA": "/nodo-per-pa/v1"
         #"nodoChiediSceltaWISP":"//v1"
     }
-    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") == "":
+    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service").strip() == "":
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
     else:
         return  context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \

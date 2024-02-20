@@ -23,36 +23,34 @@ def before_all(context):
     print('Global settings...')
 
     lib_dir = ""
-    if 'NODOPGDB' not in os.environ :
+    if 'NODOPGDB' not in os.environ:
         user_profile = os.environ.get("USERPROFILE")
         
         if user_profile != None:
             lib_dir = r"\Program Files\Oracle\instantclient_19_9"
-            print("#####################lib_dir", lib_dir) 
+            print("#####################lib_dir", lib_dir)
+            setattr(context, f'user_profile', user_profile)
         else:
             lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
             print("#####################lib_dir", lib_dir) 
      
-    cx_Oracle.init_oracle_client(lib_dir = lib_dir)
-
+        cx_Oracle.init_oracle_client(lib_dir = lib_dir)
+    # -D conffile=src/integ-test/bdd-test/resources/config_sit.json
     myconfigfile = context.config.userdata["conffile"]
     configfile = context.config.userdata.get("configfile", myconfigfile)
     more_userdata = json.load(open(configfile))
 
-
-  #  more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
+    #  more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
     context.config.update_userdata(more_userdata)
     if 'APICFG' in os.environ:
         apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
         db.set_address(apicfg_testing_support_service)
 
-    setattr(context, f'user_profile', user_profile)
-
     db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
     selected_query = utils.query_json(context, 'select_config', 'configurations')
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'),db_selected.get('user'),db_selected.get('password'),db_selected.get('port'))
 
-    exec_query = db.executeQuery(conn, selected_query)
+    exec_query = db.executeQuery(conn, selected_query, as_dict=True)
     db.closeConnection(conn)
 
     config_dict = {}
@@ -61,6 +59,7 @@ def before_all(context):
         config_dict[config_key] = config_value
     
     setattr(context, 'configurations', config_dict)
+
 
 def before_feature(context, feature):
     services = context.config.userdata.get("services")

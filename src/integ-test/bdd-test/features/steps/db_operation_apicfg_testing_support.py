@@ -1,3 +1,5 @@
+import json
+
 import requests
 import os
 
@@ -29,7 +31,7 @@ def execute_read_query(connection, query):
         print(f"The error '{e}' occurred")
 
 
-def executeQuery(conn, query:str) -> list:
+def executeQuery(conn, query:str, as_dict:bool = False) -> list:
     print('execute_sql_query ...')
     print(query)
     try:
@@ -41,7 +43,11 @@ def executeQuery(conn, query:str) -> list:
         url = apicfg_testing_support.get("base_path") + apicfg_testing_support.get("service")
         response = requests.post(url, data=query, headers=headers)
 
-        return response.json()
+        if as_dict:
+            return response.json()
+        else:
+            result = [list(d.values()) for d in response.json()]
+            return response
     except Exception as e:
         print(f"The error '{e}' occurred")
 
