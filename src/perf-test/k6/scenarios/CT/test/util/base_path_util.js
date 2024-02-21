@@ -64,13 +64,15 @@ export function getBasePath(baseUrl, primitive) {
 			"nodoInviaRPT": "/nodo-per-pa/v1",
 			"nodoInviaRT": "/nodo-per-psp/v1",
 			"nodoPAChiediInformativaPA": "/nodo-per-pa/v1",
+			"checkPosition": "/checkPosition",
+			"closePaymentV2": "/v2/closepayment",
 
 			"nodoPerPMv1": "/nodo-per-pm/v1",
 			"nodoPerPMv2": "/nodo-per-pm/v2"
 		}
 	}
 	if (baseUrl.includes("nodo-dei-pagamenti-")) {
-		return baseUrl;
+		return baseUrl + primitiveMapping[primitive];
 	}
 	return baseUrl + primitiveMapping[primitive]
 }
