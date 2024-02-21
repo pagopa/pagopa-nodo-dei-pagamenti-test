@@ -43,6 +43,10 @@ def step_impl(context):
             - mock-ec ( used by nodo-dei-pagamenti to forwarding EC's requests )
             - pagopa-api-config ( used in tests to set DB's nodo-dei-pagamenti correctly according to input test ))
     """
+    if 'APICFG' in os.environ:
+        apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
+        db.set_address(apicfg_testing_support_service)
+
     responses = True
 
     for row in context.table:

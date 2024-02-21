@@ -46,8 +46,7 @@ def executeQuery(conn, query:str, as_dict:bool = False) -> list:
         if as_dict:
             return response.json()
         else:
-            result = [list(d.values()) for d in response.json()]
-            return response
+            return [list(d.values()) for d in response.json()]
     except Exception as e:
         print(f"The error '{e}' occurred")
 
