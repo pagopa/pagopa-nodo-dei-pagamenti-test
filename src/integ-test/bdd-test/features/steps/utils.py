@@ -545,14 +545,18 @@ def searchValueTagRecursive(tag_padre, tag, single_tag):
 
 
 def get_db_connection(db_name, db_cfg, db_online, db_offline, db_selected):
+    db = None
     conn = None
     if db_name == "nodo_online":
+        db = db_online
         conn = db_online.getConnection(db_selected.get('host'), db_selected.get(
             'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     elif db_name == "nodo_offline":
+        db = db_offline
         conn = db_offline.getConnection(db_selected.get('host'), db_selected.get(
             'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     else:
+        db = db_cfg
         conn = db_cfg.getConnection(db_selected.get('host'), db_selected.get(
             'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
-    return conn
+    return db, conn
