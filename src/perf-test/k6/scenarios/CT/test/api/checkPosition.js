@@ -27,7 +27,7 @@ export function checkPosition(baseUrl, rndAnagPa, noticeNmbr) {
         getBasePath(baseUrl, "checkPosition"),
         checkPositionBody(rndAnagPa.CF, noticeNmbr),
         {
-            headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'checkPosition' }),
+            headers: getHeaders({ 'Content-Type': 'application/json' }),
             tags: { checkPosition: 'http_req_duration', ALL: 'http_req_duration', primitiva: "checkPosition" }
         }
     );

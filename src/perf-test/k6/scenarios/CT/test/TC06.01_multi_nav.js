@@ -2,9 +2,8 @@ import { check } from 'k6';
 //import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
-import { checkPosition } from './api/checkPosition.js';
 import { activatePaymentNoticeV2 } from './api/activatePaymentNoticeV2.js';
-import { closePaymentV2 } from './api/closePaymentV2.js';
+import { closePaymentV2_5Token } from './api/closePaymentV2_5Token.js';
 import { sendPaymentOutcomeV2 } from './api/sendPaymentOutcomeV2.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
@@ -152,13 +151,23 @@ export function total() {
     let noticeNmbr = genNoticeNumber();
     let idempotencyKey = genIdempotencyKey();
 
-    let res = checkPosition(baseRestUrl, rndAnagPaNew, noticeNmbr);
-
     res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
     let paymentToken = res.paymentToken;
 
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
+    let secPaymentToken = res.paymentToken;
+
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
+    let thirdPaymentToken = res.paymentToken;
+
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
+    let fourthPaymentToken = res.paymentToken;
+
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
+    let fifthPaymentToken = res.paymentToken;
+
     let outcome = 'OK';
-    res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, "09910087308786", "09910087308786", res.importoTotale);
+    res = closePaymentV2_5Token(baseRestUrl, rndAnagPsp, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, "09910087308786", "09910087308786", res.importoTotale);
 
     res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
 }

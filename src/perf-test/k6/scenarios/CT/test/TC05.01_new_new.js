@@ -245,6 +245,70 @@ export function checks(res, outcome, pattern) {
     { ALL: 'ko_rate' }
   );
 	
+}export function handleSummary(data) {
+  console.debug('Preparing the end-of-test summary...');
+ 
+  return common.handleSummary(data, `${__ENV.outdir}`, `${__ENV.test}`)
+  
+}
+
+
+export function checks(res, outcome, pattern) {
+	
+	 check(res, {
+ 	'ALL over_sla300': (r) => r.timings.duration >300,
+   },
+   { ALL: 'over_sla300' }
+   );
+   
+   check(res, {
+ 	'ALL over_sla400': (r) => r.timings.duration >400,
+   },
+   { ALL: 'over_sla400' }
+   );
+   
+   check(res, {
+ 	'ALL over_sla500': (r) => r.timings.duration >500,
+   },
+   { ALL: 'over_sla500' }
+   );
+   
+   check(res, {
+ 	'ALL over_sla600': (r) => r.timings.duration >600,
+   },
+   { ALL: 'over_sla600' }
+   );
+   
+   check(res, {
+ 	'ALL over_sla800': (r) => r.timings.duration >800,
+   },
+   { ALL: 'over_sla800' }
+   );
+   
+   check(res, {
+ 	'ALL over_sla1000': (r) => r.timings.duration >1000,
+   },
+   { ALL: 'over_sla1000' }
+   );
+   
+   check(
+    res,
+    {
+      //'ALL OK status': (r) => r.status == 200,
+	  'ALL OK status': (r) => outcome == pattern,
+    },
+    { ALL: 'ok_rate' }
+	);
+	
+	 check(
+    res,
+    {
+      //'ALL KO status': (r) => r.status !== 200,
+	  'ALL KO status': (r) => outcome !== pattern,
+    },
+    { ALL: 'ko_rate' }
+  );
+	
 }
 
 

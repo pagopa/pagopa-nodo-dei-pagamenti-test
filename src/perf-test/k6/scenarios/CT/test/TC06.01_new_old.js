@@ -4,6 +4,7 @@ import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
 import { checkPosition } from './api/checkPosition.js';
 import { activatePaymentNoticeV2 } from './api/activatePaymentNoticeV2.js';
+import { RPT_Semplice_N3 } from './api/RPT_Semplice_N3.js';
 import { closePaymentV2 } from './api/closePaymentV2.js';
 import { sendPaymentOutcomeV2 } from './api/sendPaymentOutcomeV2.js';
 import * as common from '../../CommonScript.js';
@@ -104,6 +105,14 @@ export const options = {
         'checks{activatePaymentNoticeV2:over_sla1000}': [],
         'checks{activatePaymentNoticeV2:ok_rate}': [],
         'checks{activatePaymentNoticeV2:ko_rate}': [],
+        'checks{RPT_Semplice_N3:over_sla300}': [],
+        'checks{RPT_Semplice_N3:over_sla400}': [],
+        'checks{RPT_Semplice_N3:over_sla500}': [],
+        'checks{RPT_Semplice_N3:over_sla600}': [],
+        'checks{RPT_Semplice_N3:over_sla800}': [],
+        'checks{RPT_Semplice_N3:over_sla1000}': [],
+        'checks{RPT_Semplice_N3:ok_rate}': [],
+        'checks{RPT_Semplice_N3:ko_rate}': [],
         'checks{closePaymentV2:over_sla300}': [],
         'checks{closePaymentV2:over_sla400}': [],
         'checks{closePaymentV2:over_sla500}': [],
@@ -152,7 +161,7 @@ export function total() {
     let noticeNmbr = genNoticeNumber();
     let idempotencyKey = genIdempotencyKey();
 
-    let res = checkPosition(baseRestUrl, rndAnagPaNew, noticeNmbr);
+    let res = checkPosition(baseSoapUrl, rndAnagPaNew, noticeNmbr);
 
     res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
     let paymentToken = res.paymentToken;
@@ -161,6 +170,9 @@ export function total() {
     res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, "09910087308786", "09910087308786", res.importoTotale);
 
     res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
+
+    console.debug('prima di rpt='+paymentToken+ " importo da versare "+  importoTotaleDaVersare);
+    res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, importoTotaleDaVersare);
 }
 
 export default function () {

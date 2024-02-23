@@ -7,7 +7,7 @@ export const closePayment_Trend = new Trend('closePaymentV2');
 export const All_Trend = new Trend('ALL');
 
 
-export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, outcome, transactionId, additionalTransactionId) {
+export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, additionalTransactionId) {
 
   var dt = new Date();
   let ms = dt.getMilliseconds();
@@ -37,27 +37,32 @@ export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, outcom
     ("0" + dt.getHours()).slice(-2) + ":" + ("0" + dt.getMinutes()).slice(-2) + ":" + ("0" + dt.getSeconds()).slice(-2) + "." + ms + timezone_standard;
 
   return `
-  {
-    "paymentTokens": [
-        "${paymentToken}"
-    ],
-    "outcome": "${outcome}",
-    "idPSP": "${psp}",
-    "idBrokerPSP": "${intpsp}",
-    "idChannel": "${chpsp_c}",
-    "paymentMethod": "TPAY",
-    "transactionId": "${transactionId}",
-    "totalAmount": 10.00,
-    "fee": 0,
-    "timestampOperation": "${dt}",
-    "additionalPaymentInformations": {
-        "key": "${additionalTransactionId}"
-    }
+{
+  "paymentTokens": [
+      "${paymentToken}",
+      "${secPaymentToken}",
+      "${thirdPaymentToken}",
+      "${fourthPaymentToken}",
+      "${fifthPaymentToken}"
+  ],
+  "outcome": "${outcome}",
+  "identificativoPsp": "${psp}",
+  "tipoVersamento": "TPAY",
+  "identificativoIntermediario": "${intpsp}",
+  "identificativoCanale": "${chpsp_c}",
+  "transactionId": "${transactionId}",
+  "totalAmount": 1.0,
+  "fee": 1.0,
+  "timestampOperation": "${dt}",
+  "additionalPaymentInformations": {
+      "transactionId": "${additionalTransactionId}", //09910087308786 o 99910087308786
+      "spoMock": "true"
   }
+}
 `
 };
 
-export function closePaymentV2(baseUrl, rndAnagPsp, paymentToken, outcome, transactionId, additionalTransactionId, totalAmount) {
+export function closePaymentV2_5Token(baseUrl, rndAnagPsp, paymentToken, outcome, transactionId, additionalTransactionId, totalAmount) {
   /*
    var dt = new Date();
    let ms = dt.getMilliseconds();
