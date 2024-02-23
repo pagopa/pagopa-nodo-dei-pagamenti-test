@@ -37,24 +37,23 @@ export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, outcom
     ("0" + dt.getHours()).slice(-2) + ":" + ("0" + dt.getMinutes()).slice(-2) + ":" + ("0" + dt.getSeconds()).slice(-2) + "." + ms + timezone_standard;
 
   return `
-{
-  "paymentTokens": [
-      "${paymentToken}"
-  ],
-  "outcome": "${outcome}",
-  "identificativoPsp": "${psp}",
-  "tipoVersamento": "TPAY",
-  "identificativoIntermediario": "${intpsp}",
-  "identificativoCanale": "${chpsp_c}",
-  "transactionId": "${transactionId}",
-  "totalAmount": 1.0,
-  "fee": 1.0,
-  "timestampOperation": "${dt}",
-  "additionalPaymentInformations": {
-      "transactionId": "${additionalTransactionId}", //09910087308786 o 99910087308786
-      "spoMock": "true"
+  {
+    "paymentTokens": [
+        "${paymentToken}"
+    ],
+    "outcome": "${outcome}",
+    "idPSP": "${psp}",
+    "idBrokerPSP": "${intpsp}",
+    "idChannel": "${chpsp_c}",
+    "paymentMethod": "TPAY",
+    "transactionId": "${transactionId}",
+    "totalAmount": 10.00,
+    "fee": 0,
+    "timestampOperation": "${dt}",
+    "additionalPaymentInformations": {
+        "key": "${additionalTransactionId}"
+    }
   }
-}
 `
 };
 
