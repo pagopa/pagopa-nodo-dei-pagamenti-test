@@ -26,7 +26,7 @@ export function activateV2ReqBody(psp, pspint, chpsp, cfpa, noticeNmbr, idempote
     <noticeNumber>${noticeNmbr}</noticeNumber>
   </qrCode>
   <expirationTime>120000</expirationTime>
-  <amount>10.00</amount>
+  <amount>1.00</amount>
   <dueDate>2021-12-31</dueDate>
   <paymentNote>causale</paymentNote>
   <paymentMethod>PO</paymentMethod>

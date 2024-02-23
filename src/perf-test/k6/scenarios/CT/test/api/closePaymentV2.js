@@ -47,7 +47,7 @@ export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, outcom
     "idChannel": "${chpsp_c}",
     "paymentMethod": "TPAY",
     "transactionId": "${transactionId}",
-    "totalAmount": 10.00,
+    "totalAmount": 1.00,
     "fee": 0,
     "timestampOperation": "${dt}",
     "additionalPaymentInformations": {
