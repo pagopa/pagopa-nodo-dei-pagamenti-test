@@ -380,7 +380,7 @@ def single_thread(context, soap_primitive, tipo):
             url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
         else:
             url_nodo = get_rest_url_nodo(context, primitive)
-        print(url_nodo)
+        print(f"url: {url_nodo}")
         soap_response = requests.get(url_nodo, headers=headers, verify=False)
         print("soap_response: ", soap_response.content)
         print(soap_primitive.split("_")[1] + "Response")
@@ -397,6 +397,7 @@ def single_thread(context, soap_primitive, tipo):
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
 
             url_nodo = get_soap_url_nodo(context, primitive)
+            print(f"url: {url_nodo}")
             response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
             # headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
@@ -435,6 +436,8 @@ def single_thread(context, soap_primitive, tipo):
                 url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
             else:    
                 url_nodo = get_rest_url_nodo(context, primitive)
+                
+            print(f"url: {url_nodo}")
             response = requests.request(tipo, url_nodo, headers=headers, json=body, verify=False)
 
         print("response: ", response.content)
