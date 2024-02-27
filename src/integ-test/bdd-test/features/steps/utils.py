@@ -377,8 +377,11 @@ def single_thread(context, soap_primitive, tipo):
         headers = {'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
-        url_nodo = f"{get_rest_url_nodo(context, primitive)}"
-        print(url_nodo)
+        if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
+            url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+        else:
+            url_nodo = get_rest_url_nodo(context, primitive)
+        print(f"url: {url_nodo}")
         soap_response = requests.get(url_nodo, headers=headers, verify=False)
         print("soap_response: ", soap_response.content)
         print(soap_primitive.split("_")[1] + "Response")
@@ -387,16 +390,18 @@ def single_thread(context, soap_primitive, tipo):
         body = getattr(context, primitive)
         print(body)
         response = ''
+        url_nodo = ''
         if 'xml' in getattr(context, primitive):
             # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': 'api.dev.platform.pagopa.it:443'}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
+
             url_nodo = get_soap_url_nodo(context, primitive)
+            print(f"url: {url_nodo}")
             response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
             # headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
-            already_xml = False
             if '<' in body: 
                 body = xmltodict.parse(body)
                 body = body["root"]
@@ -420,19 +425,21 @@ def single_thread(context, soap_primitive, tipo):
                             l.append(body["positionslist"])
                             body["positionslist"] = l
                     body = json.dumps(body, indent=4)
-                body = json.loads(body)
-                already_xml = True
             headers = {'Content-Type': 'application/json', 'Host': 'api.dev.platform.pagopa.it:443'}
             if 'SUBSCRIPTION_KEY' in os.environ:
-                headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
-            if not already_xml:
-                body = json.loads(body)        
-            url_nodo = f"{get_rest_url_nodo(context, primitive)}"
-            response = requests.request(tipo, f"{url_nodo}", headers=headers, json=body, verify=False)
-            
-        setattr(context, soap_primitive.split("_")[1] + "Response", response)
+                headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')  
+
+            if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
+                url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+            else:    
+                url_nodo = get_rest_url_nodo(context, primitive)
+                
+            print(f"url: {url_nodo}")
+            response = requests.post(url_nodo, body, headers=headers, verify=False)
+
         print("response: ", response.content)
         print(soap_primitive.split("_")[1] + "Response")
+        setattr(context, soap_primitive.split("_")[1] + "Response", response)
     
 
 def threading(context, primitive_list, list_of_type):
