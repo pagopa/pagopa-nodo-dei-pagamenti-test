@@ -42,7 +42,7 @@ export function sendPaymentOutcomeV2ReqBody(psp, intpsp, chpsp, paymentToken) {
     <details>
     <paymentMethod>creditCard</paymentMethod>
     <paymentChannel>app</paymentChannel>
-    <fee>0.00</fee>
+    <fee>0.01</fee>
     <applicationDate>${today}</applicationDate>
     <transferDate>${tomorrow}</transferDate>
     </details>

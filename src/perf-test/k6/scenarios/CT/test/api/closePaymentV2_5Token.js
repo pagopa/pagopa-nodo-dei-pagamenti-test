@@ -52,7 +52,7 @@ export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, secPay
   "identificativoCanale": "${chpsp_c}",
   "transactionId": "${transactionId}",
   "totalAmount": 1.0,
-  "fee": 1.0,
+  "fee": 0,
   "timestampOperation": "${dt}",
   "additionalPaymentInformations": {
       "transactionId": "${additionalTransactionId}", //09910087308786 o 99910087308786

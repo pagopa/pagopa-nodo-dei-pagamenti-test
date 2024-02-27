@@ -156,14 +156,14 @@ export function total() {
         }
     }
     let rndAnagPsp = inputDataUtil.getAnagPsp();
-    let rndAnagPaNew = inputDataUtil.getAnagPaNew();
+    let rndAnagPa = inputDataUtil.getAnagPa();
 
     let noticeNmbr = genNoticeNumber();
     let idempotencyKey = genIdempotencyKey();
 
-    let res = checkPosition(baseSoapUrl, rndAnagPaNew, noticeNmbr);
+    let res = checkPosition(baseSoapUrl, rndAnagPa, noticeNmbr);
 
-    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPa, noticeNmbr, idempotencyKey);
     let paymentToken = res.paymentToken;
 
     let outcome = 'OK';
@@ -172,7 +172,7 @@ export function total() {
     res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
 
     console.debug('prima di rpt='+paymentToken+ " importo da versare "+  importoTotaleDaVersare);
-    res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, importoTotaleDaVersare);
+    res =  RPT_Semplice_N3(baseUrl,rndAnagPa,paymentToken, creditorReferenceId, importoTotaleDaVersare);
 }
 
 export default function () {

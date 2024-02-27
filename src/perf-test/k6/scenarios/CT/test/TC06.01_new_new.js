@@ -147,7 +147,7 @@ export function total() {
         }
     }
     let rndAnagPsp = inputDataUtil.getAnagPsp();
-    let rndAnagPaNew = inputDataUtil.getAnagPaNew();
+    let rndAnagPaNew = inputDataUtil.getAnagPaNewVersPrim2();
 
     let noticeNmbr = genNoticeNumber();
     let idempotencyKey = genIdempotencyKey();
