@@ -188,7 +188,7 @@ Feature: DB checks for nodoChiediEsitoPagamento
             <soapenv:Header/>
             <soapenv:Body>
             <pfn:pspNotifyPaymentRes>
-            <delay>7500</delay>
+            <delay>10000</delay>
             </pfn:pspNotifyPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
