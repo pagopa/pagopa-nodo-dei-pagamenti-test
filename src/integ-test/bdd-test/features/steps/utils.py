@@ -395,13 +395,8 @@ def single_thread(context, soap_primitive, tipo):
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': 'api.dev.platform.pagopa.it:443'}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
-            if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service").strip() == "":
-                print("entro quiiiiiiiiiiiiiiiiiiiiiiiiiii")
-                url_nodo = f"{get_soap_url_nodo(context, primitive)}/{primitive}"
-                print(f"entro quiiiiiiiiiiiiiiiiiiiiiiiiiii e url valeeeeeeeeeeeeee: {url_nodo}")
-            else:
-                print("oppureeeeeeeeeeeeeeeeeeeeeeeeeeeeee entro quiiiiiiiiiiiiiiiiiiiiiiiiiii")
-                url_nodo = get_soap_url_nodo(context, primitive)
+
+            url_nodo = get_soap_url_nodo(context, primitive)
             response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
             # headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
