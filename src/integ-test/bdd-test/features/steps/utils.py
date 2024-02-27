@@ -398,6 +398,7 @@ def single_thread(context, soap_primitive, tipo):
             if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service").strip() == "":
                 print("entro quiiiiiiiiiiiiiiiiiiiiiiiiiii")
                 url_nodo = f"{get_soap_url_nodo(context, primitive)}/{primitive}"
+                print(f"entro quiiiiiiiiiiiiiiiiiiiiiiiiiii e url valeeeeeeeeeeeeee: {url_nodo}")
             else:
                 print("oppureeeeeeeeeeeeeeeeeeeeeeeeeeeeee entro quiiiiiiiiiiiiiiiiiiiiiiiiiii")
                 url_nodo = get_soap_url_nodo(context, primitive)
