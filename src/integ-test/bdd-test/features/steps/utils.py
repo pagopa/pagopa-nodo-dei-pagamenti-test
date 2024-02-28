@@ -439,13 +439,16 @@ def single_thread(context, soap_primitive, tipo):
     primitive = replace_context_variables(primitive, context)
     primitive = replace_global_variables(primitive, context)
     print(f"la primitive ##########{primitive}")
-    if tipo == 'GET':       
-        header_host = estrapola_header_host(url_nodo)
-        headers = {'X-Forwarded-For': '10.82.39.148', 'Host': header_host}
-        if 'SUBSCRIPTION_KEY' in os.environ:
-            headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
+    if tipo == 'GET':
         url_nodo = f"{get_rest_url_nodo(context, primitive)}"
         print(f"url: {url_nodo}")
+
+        header_host = estrapola_header_host(url_nodo)
+        headers = {'X-Forwarded-For': '10.82.39.148', 'Host': header_host}
+
+        if 'SUBSCRIPTION_KEY' in os.environ:
+            headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
+
         soap_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
         print("soap_response: ", soap_response.content)
         print(soap_primitive.split("_")[1] + "Response")
@@ -457,18 +460,24 @@ def single_thread(context, soap_primitive, tipo):
         
         if 'xml' in getattr(context, primitive):
             print('entro nel primo if xml')
+            url_nodo = get_soap_url_nodo(context, primitive)
+            print(f"url: {url_nodo}")
+
             # headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
             header_host = estrapola_header_host(url_nodo)
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host}
+
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
-            url_nodo = get_soap_url_nodo(context, primitive)
-            print(f"url: {url_nodo}")
+
             print('prima della response')
             response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
             print('dopo la response')
         else:
             print('entro nel secondo if xml else')
+            url_nodo = f"{get_rest_url_nodo(context, primitive)}"
+            print(f"url: {url_nodo}")
+
             # headers = {'Content-Type': 'application/json', 'X-Forwarded-For': '10.82.39.148', 'Host': 'api.dev.platform.pagopa.it:443'}
             if '<' in body: 
                 body = xmltodict.parse(body)
@@ -496,12 +505,10 @@ def single_thread(context, soap_primitive, tipo):
 
             header_host = estrapola_header_host(url_nodo)
             headers = {'Content-Type': 'application/json', 'Host': header_host}
+            
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')   
 
-            url_nodo = f"{get_rest_url_nodo(context, primitive)}"
-
-            print(f"url: {url_nodo}")
             response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
             #response = requests.request(tipo, f"{url_nodo}", headers=headers, json=body, verify=False, proxies = getattr(context,'proxies'))
             
