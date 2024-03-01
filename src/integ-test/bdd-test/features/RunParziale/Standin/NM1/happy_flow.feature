@@ -264,7 +264,8 @@ Feature: happy flow with Stand In on and PSP no POSTE for NMU
         And check value $paSendRTV2.idStation is equal to value irraggiungibile
         And verify 1 record for the table RE retrived by the query sottoTipoEvento on db re under macro NewMod1
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
         And delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value 'irraggiungibile' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter invioReceiptStandin set to false
