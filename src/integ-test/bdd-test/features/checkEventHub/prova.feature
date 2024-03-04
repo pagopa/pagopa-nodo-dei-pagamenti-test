@@ -183,7 +183,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         Given the activatePaymentNotice scenario executed successfully
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
-    @test
+    @eventhub
     Scenario: REV_SPO_03 (part 2)
         Given the REV_SPO_03 (part 1) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -634,7 +634,7 @@ Feature: revision checks for sendPaymentOutcomeV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-    @test2
+    @eventhub
     Scenario: Step2 MB
         Given the Step1 MB scenario executed successfully
         And the sendPaymentOutcomeV2 MB scenario executed successfully
@@ -1171,8 +1171,8 @@ Feature: revision checks for sendPaymentOutcomeV2
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
-        
-    @test3
+
+    @eventhub
     Scenario: Step2 MB with metadata
         Given the Step1 MB scenario executed successfully
         And the sendPaymentOutcomeV2 MB scenario executed successfully
