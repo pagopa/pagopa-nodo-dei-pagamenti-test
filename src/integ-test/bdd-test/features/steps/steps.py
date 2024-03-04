@@ -22,6 +22,7 @@ else:
     import db_operation as db
     import db_operation as db_online
     import db_operation as db_offline
+    import db_operation as db_re
     import db_operation as db_wfesp
 if 'APICFG' in os.environ:
     import db_operation_apicfg_testing_support as db
