@@ -8,6 +8,7 @@ import { closePaymentV2 } from './api/closePaymentV2.js';
 import { sendPaymentOutcomeV2 } from './api/sendPaymentOutcomeV2.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
+import { sleep } from 'k6';
 
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
@@ -159,6 +160,8 @@ export function total() {
 
     let outcome = 'OK';
     res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, "09910087308786", "09910087308786", res.importoTotale);
+
+    sleep(1);
 
     res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
 }
