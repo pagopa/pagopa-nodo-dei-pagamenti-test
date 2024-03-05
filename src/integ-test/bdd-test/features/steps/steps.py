@@ -1899,7 +1899,7 @@ def step_impl(context, param, value):
     setattr(context, param, value)
     print(">>>>>>>>>>>>>>>", getattr(context, param))
 
-    exec_query = adopted_db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
     if exec_query is not None:
         print(f'executed query: {exec_query}')
 
