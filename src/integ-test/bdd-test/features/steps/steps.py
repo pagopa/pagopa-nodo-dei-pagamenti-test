@@ -1890,9 +1890,9 @@ def step_impl(context, primitive):
 @step("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
     db_name = "nodo_cfg"
-    db_selected = context.config.userdata.get(
-        "db_configuration").get(db_name)
-    selected_query = utils.query_json(context, 'update_config', 'configurations').replace(
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    update_config_query = "update_config_postgresql" if 'NODOPGDB' in os.environ else "update_config_oracle"
+    selected_query = utils.query_json(context, update_config_query, 'configurations').replace(
         'value', value).replace('key', param)
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
@@ -1979,8 +1979,9 @@ def step_impl(context):
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     config_dict = getattr(context, 'configurations')
+    update_config_query = "update_config_postgresql" if 'NODOPGDB' in os.environ else "update_config_oracle"
     for key, value in config_dict.items():
-        selected_query = utils.query_json(context, 'update_config', 'configurations').replace(
+        selected_query = utils.query_json(context, update_config_query, 'configurations').replace(
             'value', value).replace('key', key)
         adopted_db.executeQuery(conn, selected_query)
 

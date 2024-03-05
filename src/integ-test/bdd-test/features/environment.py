@@ -118,9 +118,10 @@ def after_all(context):
     # conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'),db_selected.get('port'))
 
     # config_dict = getattr(context, 'configurations')
+    # update_config_query = "update_config_postgresql" if 'NODOPGDB' in os.environ else "update_config_oracle"
     # for key, value in config_dict.items():
     #     #print(key, value)
-    #     selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', value).replace('key', key)
+    #     selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', key)
     #     db.executeQuery(conn, selected_query)  
     
     # db.closeConnection(conn)
