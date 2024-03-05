@@ -1469,8 +1469,8 @@ def step_impl(context, sender, method, service, receiver):
     # TODO get url according to receiver
     url_nodo = utils.get_rest_url_nodo(context, service)
     print(url_nodo)
-    headers = {'Content-Type': 'application/json',
-               'Host': header_host}
+    header_host = utils.estrapola_header_host(url_nodo)
+    headers = {'Content-Type': 'application/json','Host': header_host}
     if 'SUBSCRIPTION_KEY' in os.environ:
         headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
 
