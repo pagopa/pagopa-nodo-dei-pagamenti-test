@@ -1983,7 +1983,7 @@ def step_impl(context):
     for key, value in config_dict.items():
         selected_query = utils.query_json(context, update_config_query, 'configurations').replace(
             'value', value).replace('key', key)
-        adopted_db.executeQuery(conn, selected_query)
+        adopted_db.executeQuery(conn, selected_query, as_dict=True)
 
     adopted_db.closeConnection(conn)
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
