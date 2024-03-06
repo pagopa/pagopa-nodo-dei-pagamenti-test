@@ -1892,8 +1892,7 @@ def step_impl(context, param, value):
     db_name = "nodo_cfg"
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
     update_config_query = "update_config_postgresql" if 'NODOPGDB' in os.environ else "update_config_oracle"
-    selected_query = utils.query_json(context, update_config_query, 'configurations').replace(
-        'value', value).replace('key', param)
+    selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', param)
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     setattr(context, param, value)
@@ -2192,8 +2191,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     adopted_db.closeConnection(conn)
 
 
-@step(
-    "update through the query {query_name} of the table {table_name} the parameter {param} with {value}, with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
+@step("update through the query {query_name} of the table {table_name} the parameter {param} with {value}, with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, where_condition, valore, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
     selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace(
@@ -2201,12 +2199,11 @@ def step_impl(context, query_name, table_name, param, value, where_condition, va
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-    exec_query = adopted_db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
     adopted_db.closeConnection(conn)
 
 
-@step(
-    "delete with the query {query_name} from the table {table_name} the parameters where the condition are {where_condition}under macro {macro} on db {db_name}")
+@step("delete with the query {query_name} from the table {table_name} the parameters where the condition are {where_condition}under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, where_condition, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
     selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace(
@@ -2219,8 +2216,7 @@ def step_impl(context, query_name, table_name, where_condition, macro, db_name):
     adopted_db.closeConnection(conn)
 
 
-@step(
-    "generic update through the query {query_name} of the table {table_name} the parameter {param}, with where condition {where_condition} under macro {macro} on db {db_name}")
+@step("generic update through the query {query_name} of the table {table_name} the parameter {param}, with where condition {where_condition} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, where_condition, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
     selected_query = utils.query_json(context, query_name, macro).replace(
@@ -2229,7 +2225,7 @@ def step_impl(context, query_name, table_name, param, where_condition, macro, db
     selected_query = utils.replace_context_variables(selected_query, context)
     selected_query = utils.replace_global_variables(selected_query, context)
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-    exec_query = adopted_db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
     adopted_db.closeConnection(conn)
 
 
@@ -2400,8 +2396,7 @@ def step_impl(context, query_name, table_name, row_keys_fields, row_values_field
     adopted_db.closeConnection(conn)
 
 
-@step(
-    "delete through the query {query_name} into the table {table_name} with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
+@step("delete through the query {query_name} into the table {table_name} with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, where_condition, valore, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
     selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace(
@@ -2413,8 +2408,7 @@ def step_impl(context, query_name, table_name, where_condition, valore, macro, d
     adopted_db.closeConnection(conn)
 
 
-@step(
-    "updates through the query {query_name} of the table {table_name} the parameter {param} with {value} under macro {macro} on db {db_name}")
+@step("updates through the query {query_name} of the table {table_name} the parameter {param} with {value} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
     selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param',
@@ -2427,7 +2421,7 @@ def step_impl(context, query_name, table_name, param, value, macro, db_name):
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-    exec_query = adopted_db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
     adopted_db.closeConnection(conn)
 
 
@@ -3458,8 +3452,7 @@ def step_impl(context, name_macro, db_name, query_name, value, column, table_nam
 ################################################################################################################################################################
 
 
-@step(
-    u"wait until the update to the new state for the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+@step(u"wait until the update to the new state for the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column,
                              table_name):  # step da utilizzare su tabella SNAPSHOT 
 
