@@ -1444,8 +1444,7 @@ def step_impl(context, mock, primitive, value, elem):
     assert body.get(primitive_name)[0].get("receipt")[0].get(elem)[0] == value
 
 
-@then(
-    u'check {mock} receives {primitive} properly having in the transfer with idTransfer {idTransfer} the same {elem} of {other_primitive}')
+@then(u'check {mock} receives {primitive} properly having in the transfer with idTransfer {idTransfer} the same {elem} of {other_primitive}')
 def step_impl(context, mock, primitive, idTransfer, elem, other_primitive):
     _assert = False
     soap_action = getattr(context, other_primitive)
@@ -1972,9 +1971,10 @@ def step_impl(context, query_name, date, macro, db_name):
 
 @then("restore initial configurations")
 def step_impl(context):
+    db_config = context.config.userdata.get("db_configuration")
     db_name = "nodo_cfg"
-    db_selected = context.config.userdata.get(
-        "db_configuration").get(db_name)
+    db_selected = db_config.get(db_name)
+
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     config_dict = getattr(context, 'configurations')
@@ -1986,8 +1986,8 @@ def step_impl(context):
 
     adopted_db.closeConnection(conn)
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
-    refresh_response = requests.get(utils.get_refresh_config_url(
-        context), headers=headers, verify=False)
+    refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+
     time.sleep(10)
     assert refresh_response.status_code == 200
 
@@ -2056,8 +2056,7 @@ def step_impl(context, query_name, xml, position, key):
     setattr(context, key, selected_element)
 
 
-@step(
-    "with the query {query_name1} check assert beetwen elem {elem1} in position {position1:d} and elem {elem2} with position {position2:d} of the query {query_name2}")
+@step("with the query {query_name1} check assert beetwen elem {elem1} in position {position1:d} and elem {elem2} with position {position2:d} of the query {query_name2}")
 def stemp_impl(context, query_name1, elem1, position1, elem2, query_name2, position2):
     result_query1 = getattr(context, query_name1)
     result_query2 = getattr(context, query_name2)
@@ -2229,8 +2228,7 @@ def step_impl(context, query_name, table_name, param, where_condition, macro, db
     adopted_db.closeConnection(conn)
 
 
-@step(
-    u"check datetime plus number of date {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+@step(u"check datetime plus number of date {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
@@ -2308,8 +2306,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     assert elem == value
 
 
-@step(
-    u"checks datetime plus number of date {number} of the record at column {column} in the row {row:d} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+@step(u"checks datetime plus number of date {number} of the record at column {column} in the row {row:d} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number, row):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
@@ -2379,8 +2376,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     assert elem == value
 
 
-@step(
-    "insert through the query {query_name} into the table {table_name} the fields {row_keys_fields} with {row_values_fields} under macro {macro} on db {db_name}")
+@step("insert through the query {query_name} into the table {table_name} the fields {row_keys_fields} with {row_values_fields} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, row_keys_fields, row_values_fields, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
     selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace(
@@ -2439,8 +2435,7 @@ def step_impl(context, query_name, table_name, where_condition, macro, db_name):
     adopted_db.closeConnection(conn)
 
 
-@step(
-    u"checks the value {value} is contained in the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+@step(u"checks the value {value} is contained in the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, value, column, query_name, table_name, db_name, name_macro):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
@@ -2491,8 +2486,7 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     assert elem == value
 
 
-@step(
-    u"verify {number:d} record for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+@step(u"verify {number:d} record for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
@@ -2506,8 +2500,7 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
     assert len(exec_query) == number, f"{len(exec_query)}"
 
 
-@step(
-    u"verify if the records for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro} are not null")
+@step(u"verify if the records for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro} are not null")
 def step_impl(context, query_name, table_name, db_name, name_macro):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
@@ -2523,9 +2516,10 @@ def step_impl(context, query_name, table_name, db_name, name_macro):
 
 @step('check token_valid_to is {condition} token_valid_from plus {param}')
 def step_impl(context, condition, param):
+    db_config = context.config.userdata.get("db_configuration")
     db_name = "nodo_online"
-    nodo_online_db = context.config.userdata.get("db_configuration").get(db_online)
-    adopted_db, nodo_online_conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, nodo_online_db)
+    db_selected = db_config.get(db_name)
+    adopted_db, nodo_online_conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     token_validity_query = utils.query_json(context, 'token_validity', 'AppIO').replace(
         'columns', 'TOKEN_VALID_FROM, TOKEN_VALID_TO').replace('table_name', 'POSITION_ACTIVATE')
