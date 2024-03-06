@@ -56,7 +56,7 @@ def before_all(context):
     config_dict = {}
     for row in exec_query:
         config_key, config_value = row
-        config_dict[row['config_key']] = row['config_value']
+        config_dict[row[config_key]] = row[config_value]
     
     setattr(context, 'configurations', config_dict)
 
