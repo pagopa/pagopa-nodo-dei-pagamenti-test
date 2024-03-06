@@ -42,12 +42,9 @@ RUN chmod +x startPerfTest.sh
 RUN chmod +x stopPerfTest.sh
 RUN chmod -R 777 src/perf-test
 
-#ENV http_proxy=http://10.79.20.33:80
-#ENV https_proxy=http://10.79.20.33:80
-
-ENV http_proxy=
-ENV https_proxy=
-
+ENV http_proxy=http://10.79.20.33:80
+ENV https_proxy=http://10.79.20.33:80
+ENV K6_INFLUXDB_HTTP_PROXY=http://10.79.20.33:80 
 ENTRYPOINT ["./entrypointPRF.sh"]
 
 #CMD ["/bin/sh"]

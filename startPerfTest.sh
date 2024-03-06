@@ -6,6 +6,7 @@ echo "params: ${debugEnabled} ${rampingSel} ${blacklistCT}"
 
 export https_proxy=http://10.79.20.33:80
 export http_proxy=http://10.79.20.33:80
+export K6_INFLUXDB_HTTP_PROXY=http://10.79.20.33:80
 
 executeScript()
 {
@@ -35,7 +36,7 @@ executeScript()
 	
 	echo " HTTPS_PROXY=http://10.79.20.33:80 k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$active_scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://k6nodo:siametricssiametricssiametrics@10.101.132.118:8086/k6nodo $debugParam"
 	
-	HTTPS_PROXY=http://10.79.20.33:80 k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$active_scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://k6nodo:siametricssiametricssiametrics@10.101.132.118:8086/k6nodo $debugParam
+	K6_INFLUXDB_PROXY=http://10.79.20.33:80 ./k6 run --out csv=src/perf-test/k6/scenarios/$active_scenario/test/output/$filename -e scenario=$active_scenario -e test=$active_test -e steps=$test_step -e env=$envTest src/perf-test/k6/scenarios/$active_scenario/test/$active_test.js -e outdir=src/perf-test/k6/scenarios/$active_scenario/test/output --out influxdb=http://k6nodo:siametricssiametricssiametrics@10.101.132.118:8086/k6nodo $debugParam
 
 }
 
