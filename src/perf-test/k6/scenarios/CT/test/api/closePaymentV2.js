@@ -57,7 +57,7 @@ export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, outcom
 `
 };
 
-export function closePaymentV2(baseUrl, rndAnagPsp, paymentToken, outcome, transactionId, additionalTransactionId, totalAmount) {
+export function closePaymentV2(baseUrl, rndAnagPsp, paymentToken, outcome, transactionId, additionalTransactionId) {
   /*
    var dt = new Date();
    let ms = dt.getMilliseconds();

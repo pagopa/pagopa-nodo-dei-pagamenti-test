@@ -8,7 +8,7 @@ import { getBasePath, getHeaders } from "../util/base_path_util.js";
 export const activatePaymentNotice_Trend = new Trend('activatePaymentNoticeV2');
 export const All_Trend = new Trend('ALL');
 
-export function activateV2ReqBody(psp, pspint, chpsp, cfpa, noticeNmbr, idempotencyKey) {
+export function activateV2ReqBody(psp, pspint, chpsp, cfpa, noticeNmbr, idempotencyKey, paymentNote) {
 
   return `
   <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
@@ -28,7 +28,7 @@ export function activateV2ReqBody(psp, pspint, chpsp, cfpa, noticeNmbr, idempote
   <expirationTime>120000</expirationTime>
   <amount>1.00</amount>
   <dueDate>2021-12-31</dueDate>
-  <paymentNote>causale</paymentNote>
+  <paymentNote>${paymentNote}</paymentNote>
   <paymentMethod>PO</paymentMethod>
   <touchPoint>ATM</touchPoint>
   </nod:activatePaymentNoticeV2Request>
@@ -36,11 +36,11 @@ export function activateV2ReqBody(psp, pspint, chpsp, cfpa, noticeNmbr, idempote
   </soapenv:Envelope>`};
 
 
-export function activatePaymentNoticeV2(baseUrl, rndAnagPsp, rndAnagPa, noticeNmbr, idempotencyKey) {
+export function activatePaymentNoticeV2(baseUrl, rndAnagPsp, rndAnagPa, noticeNmbr, idempotencyKey, paymentNote) {
 
-  console.debug(activateV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF, noticeNmbr, idempotencyKey));
+  console.debug(activateV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF, noticeNmbr, idempotencyKey, paymentNote));
   let res = http.post(getBasePath(baseUrl, "activatePaymentNoticeV2"),
-    activateV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF, noticeNmbr, idempotencyKey),
+    activateV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPa.CF, noticeNmbr, idempotencyKey, paymentNote),
     {
       headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'activatePaymentNoticeV2' }),
       tags: { activatePaymentNoticeV2: 'http_req_duration', ALL: 'http_req_duration', primitiva: "activatePaymentNoticeV2" }

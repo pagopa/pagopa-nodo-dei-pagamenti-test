@@ -24,6 +24,12 @@ export function genNoticeNumber() {
     return noticeNumber;
 }
 
+export function transaction_id() {
+    let transactionId = ''
+    for (var i = 8; i > 0; --i) transactionId += chars[Math.floor(Math.random() * chars.length)];
+    return transactionId;
+}
+
 
 export function genIdempotencyKey() {
     let key1 = '';
@@ -150,24 +156,26 @@ export function total() {
 
     let noticeNmbr = genNoticeNumber();
     let idempotencyKey = genIdempotencyKey();
+    let transactionId = transaction_id();
+    let pspTransactionId = transaction_id();
 
-    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
+    var res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey, "3_causale");
     let paymentToken = res.paymentToken;
 
-    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey, "3_causale");
     let secPaymentToken = res.paymentToken;
 
-    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey, "3_causale");
     let thirdPaymentToken = res.paymentToken;
 
-    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey, "3_causale");
     let fourthPaymentToken = res.paymentToken;
 
-    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey, "3_causale");
     let fifthPaymentToken = res.paymentToken;
 
     let outcome = 'OK';
-    res = closePaymentV2_5Token(baseRestUrl, rndAnagPsp, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, "09910087308786", "09910087308786", res.importoTotale);
+    res = closePaymentV2_5Token(baseRestUrl, rndAnagPsp, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, pspTransactionId, res.importoTotale);
 
     res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
 }
