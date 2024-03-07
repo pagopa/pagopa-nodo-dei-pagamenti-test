@@ -26,6 +26,12 @@ export function genNoticeNumber() {
     return noticeNumber;
 }
 
+export function transaction_id() {
+    let transactionId = ''
+    for (var i = 8; i > 0; --i) transactionId += chars[Math.floor(Math.random() * chars.length)];
+    return transactionId;
+}
+
 
 export function genIdempotencyKey() {
     let key1 = '';
@@ -152,6 +158,8 @@ export function total() {
 
     let noticeNmbr = genNoticeNumber();
     let idempotencyKey = genIdempotencyKey();
+    let transactionId = transaction_id();
+    let pspTransactionId = transaction_id();
 
     let res = checkPosition(baseRestUrl, rndAnagPaNew, noticeNmbr);
 
@@ -159,11 +167,7 @@ export function total() {
     let paymentToken = res.paymentToken;
 
     let outcome = 'KO';
-    res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, "09910087308786", "09910087308786", res.importoTotale);
-
-    sleep(1);
-
-    res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
+    res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, res.importoTotale);
 }
 
 export default function () {
