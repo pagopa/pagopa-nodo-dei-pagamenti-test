@@ -9,6 +9,7 @@ import { closePaymentV2 } from './api/closePaymentV2.js';
 import { sendPaymentOutcomeV2 } from './api/sendPaymentOutcomeV2.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
+import { sleep } from 'k6';
 
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
@@ -26,6 +27,11 @@ export function genNoticeNumber() {
     return noticeNumber;
 }
 
+export function transaction_id() {
+    let transactionId = ''
+    for (var i = 8; i > 0; --i) transactionId += chars[Math.floor(Math.random() * chars.length)];
+    return transactionId;
+}
 
 export function genIdempotencyKey() {
     let key1 = '';
@@ -160,6 +166,8 @@ export function total() {
 
     let noticeNmbr = genNoticeNumber();
     let idempotencyKey = genIdempotencyKey();
+    let transactionId = transaction_id();
+    let pspTransactionId = transaction_id();
 
     let res = checkPosition(baseSoapUrl, rndAnagPa, noticeNmbr);
 
@@ -167,7 +175,9 @@ export function total() {
     let paymentToken = res.paymentToken;
 
     let outcome = 'OK';
-    res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, "09910087308786", "09910087308786", res.importoTotale);
+    res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, res.importoTotale);
+
+    sleep(1);
 
     res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
 
