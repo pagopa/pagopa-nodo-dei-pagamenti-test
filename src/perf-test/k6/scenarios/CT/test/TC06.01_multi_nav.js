@@ -4,7 +4,7 @@ import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
 import { activatePaymentNoticeV2 } from './api/activatePaymentNoticeV2.js';
 import { closePaymentV2_5Token } from './api/closePaymentV2_5Token.js';
-import { sendPaymentOutcomeV2 } from './api/sendPaymentOutcomeV2.js';
+import { sendPaymentOutcomeV2MultiToken } from './api/sendPaymentOutcomeV2.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
 import { sleep } from 'k6';
@@ -159,28 +159,34 @@ export function total() {
     let idempotencyKey = genIdempotencyKey();
     let transactionId = transaction_id();
     let pspTransactionId = transaction_id();
-
+	
+	var totalAmount = 0;
     var res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, genNoticeNumber(), genIdempotencyKey(), "3_causale");
     let paymentToken = res.paymentToken;
-
+	totalAmount = parseFloat(totalAmount) + parseFloat(res.amount);
+	
     res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, genNoticeNumber(), genIdempotencyKey(), "3_causale");
     let secPaymentToken = res.paymentToken;
-
+	totalAmount = parseFloat(totalAmount) + parseFloat(res.amount);
+	
     res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, genNoticeNumber(), genIdempotencyKey(), "3_causale");
     let thirdPaymentToken = res.paymentToken;
-
+	totalAmount = parseFloat(totalAmount) + parseFloat(res.amount);
+	
     res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, genNoticeNumber(), genIdempotencyKey(), "3_causale");
     let fourthPaymentToken = res.paymentToken;
-
+	totalAmount = parseFloat(totalAmount) + parseFloat(res.amount);
+	
     res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, genNoticeNumber(), genIdempotencyKey(), "3_causale");
     let fifthPaymentToken = res.paymentToken;
-
+	totalAmount = parseFloat(totalAmount) + parseFloat(res.amount);
+	
     let outcome = 'OK';
-    res = closePaymentV2_5Token(baseRestUrl, rndAnagPsp, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, pspTransactionId, res.importoTotale);
-
+    res = closePaymentV2_5Token(baseRestUrl, rndAnagPsp, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, pspTransactionId, totalAmount);
+	
     sleep(1);
 
-    res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
+    res = sendPaymentOutcomeV2MultiToken(baseSoapUrl, rndAnagPsp, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken);
 }
 
 export default function () {
