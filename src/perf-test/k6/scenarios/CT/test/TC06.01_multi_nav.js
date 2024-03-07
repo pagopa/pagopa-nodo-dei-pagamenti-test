@@ -159,19 +159,19 @@ export function total() {
     let transactionId = transaction_id();
     let pspTransactionId = transaction_id();
 
-    var res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey, "3_causale");
+    var res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, genNoticeNumber(), genIdempotencyKey(), "3_causale");
     let paymentToken = res.paymentToken;
 
-    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey, "3_causale");
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, genNoticeNumber(), genIdempotencyKey(), "3_causale");
     let secPaymentToken = res.paymentToken;
 
-    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey, "3_causale");
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, genNoticeNumber(), genIdempotencyKey(), "3_causale");
     let thirdPaymentToken = res.paymentToken;
 
-    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey, "3_causale");
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, genNoticeNumber(), genIdempotencyKey(), "3_causale");
     let fourthPaymentToken = res.paymentToken;
 
-    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey, "3_causale");
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, genNoticeNumber(), genIdempotencyKey(), "3_causale");
     let fifthPaymentToken = res.paymentToken;
 
     let outcome = 'OK';

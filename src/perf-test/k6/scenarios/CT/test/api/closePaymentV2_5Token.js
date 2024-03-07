@@ -55,14 +55,14 @@ export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, secPay
   "fee": 0,
   "timestampOperation": "${dt}",
   "additionalPaymentInformations": {
-      "transactionId": "${additionalTransactionId}", //09910087308786 o 99910087308786
+      "transactionId": "${additionalTransactionId}",
       "spoMock": "true"
   }
 }
 `
 };
 
-export function closePaymentV2_5Token(baseUrl, rndAnagPsp, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, pspTransactionId) {
+export function closePaymentV2_5Token(baseUrl, rndAnagPsp, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, additionalTransactionId) {
   /*
    var dt = new Date();
    let ms = dt.getMilliseconds();
@@ -113,7 +113,7 @@ export function closePaymentV2_5Token(baseUrl, rndAnagPsp, paymentToken, secPaym
                 }
               };*/
 
-  console.log(closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, pspTransactionId, additionalTransactionId));
+  console.log(closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, additionalTransactionId));
   const res = http.post(
     getBasePath(baseUrl, "closePaymentV2"),
     //JSON.stringify(closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId)),
