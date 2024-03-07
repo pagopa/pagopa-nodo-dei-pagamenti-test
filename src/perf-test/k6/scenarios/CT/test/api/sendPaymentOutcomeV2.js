@@ -25,6 +25,17 @@ export function sendPaymentOutcomeV2ReqBody(psp, intpsp, chpsp, paymentToken) {
   var mm_ = String(tomorrow.getMonth() + 1).padStart(2, '0'); //January is 0!
   var yyyy_ = tomorrow.getFullYear();
   tomorrow = yyyy_ + '-' + mm_ + '-' + dd_;
+  
+  var paymentTokensStr = '';
+  if(Array.isArray(paymentToken)){
+		for(let i = 0; i<paymentToken.length;  i++){
+			paymentTokensStr += '<paymentToken>'+paymentToken[i]+'</paymentToken>';
+		}
+   }
+   else
+   {
+		paymentTokensStr += '<paymentToken>'+paymentToken+'</paymentToken>';
+   }
 
   return `
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -36,7 +47,7 @@ export function sendPaymentOutcomeV2ReqBody(psp, intpsp, chpsp, paymentToken) {
     <idChannel>${chpsp}</idChannel>
     <password>pwdpwdpwd</password>
     <paymentTokens>
-    <paymentToken>${paymentToken}</paymentToken>
+    ${paymentTokensStr}
     </paymentTokens>
     <outcome>OK</outcome>
     <details>
@@ -51,6 +62,12 @@ export function sendPaymentOutcomeV2ReqBody(psp, intpsp, chpsp, paymentToken) {
     </soapenv:Envelope>
 `
 };
+
+export function sendPaymentOutcomeV2MultiToken(baseUrl, rndAnagPsp, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken) {
+	
+	let payTokens = [paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken];
+	sendPaymentOutcomeV2(baseUrl, rndAnagPsp, payTokens);
+}
 
 export function sendPaymentOutcomeV2(baseUrl, rndAnagPsp, paymentToken) {
   //console.debug("VERIFY="+noticeNmbr);

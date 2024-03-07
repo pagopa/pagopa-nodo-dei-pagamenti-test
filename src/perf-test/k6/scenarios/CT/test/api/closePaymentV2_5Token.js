@@ -7,7 +7,7 @@ export const closePayment_Trend = new Trend('closePaymentV2');
 export const All_Trend = new Trend('ALL');
 
 
-export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, additionalTransactionId) {
+export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, additionalTransactionId, totalAmount) {
 
   var dt = new Date();
   let ms = dt.getMilliseconds();
@@ -45,13 +45,17 @@ export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, secPay
       "${fourthPaymentToken}",
       "${fifthPaymentToken}"
   ],
+  "idPSP": "${psp}",
+  "paymentMethod": "TPAY",
+  "idBrokerPSP": "${intpsp}",
+  "idChannel": "${chpsp_c}",
   "outcome": "${outcome}",
   "identificativoPsp": "${psp}",
   "tipoVersamento": "TPAY",
   "identificativoIntermediario": "${intpsp}",
   "identificativoCanale": "${chpsp_c}",
   "transactionId": "${transactionId}",
-  "totalAmount": 1.0,
+  "totalAmount": ${totalAmount},
   "fee": 0,
   "timestampOperation": "${dt}",
   "additionalPaymentInformations": {
@@ -62,7 +66,7 @@ export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, secPay
 `
 };
 
-export function closePaymentV2_5Token(baseUrl, rndAnagPsp, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, additionalTransactionId) {
+export function closePaymentV2_5Token(baseUrl, rndAnagPsp, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, additionalTransactionId, totalAmount) {
   /*
    var dt = new Date();
    let ms = dt.getMilliseconds();
@@ -113,11 +117,12 @@ export function closePaymentV2_5Token(baseUrl, rndAnagPsp, paymentToken, secPaym
                 }
               };*/
 
-  console.log(closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, additionalTransactionId));
+  console.debug(closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, additionalTransactionId, totalAmount));
+  
   const res = http.post(
     getBasePath(baseUrl, "closePaymentV2"),
     //JSON.stringify(closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId)),
-    closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId),
+    closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, secPaymentToken, thirdPaymentToken, fourthPaymentToken, fifthPaymentToken, outcome, transactionId, additionalTransactionId, totalAmount),
     {
       headers: getHeaders({ 'Content-Type': 'application/json' }),
       tags: { closePaymentV2: 'http_req_duration', ALL: 'http_req_duration', primitiva: "closePaymentV2" }
