@@ -158,7 +158,7 @@ export function total() {
     res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
     let paymentToken = res.paymentToken;
 
-    let outcome = 'OK';
+    let outcome = 'KO';
     res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, "09910087308786", "09910087308786", res.importoTotale);
 
     sleep(1);

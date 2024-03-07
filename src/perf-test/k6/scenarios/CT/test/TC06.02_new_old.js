@@ -4,11 +4,11 @@ import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
 import { checkPosition } from './api/checkPosition.js';
 import { activatePaymentNoticeV2 } from './api/activatePaymentNoticeV2.js';
+import { RPT_Semplice_N3 } from './api/RPT_Semplice_N3.js';
 import { closePaymentV2 } from './api/closePaymentV2.js';
 import { sendPaymentOutcomeV2 } from './api/sendPaymentOutcomeV2.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
-import { sleep } from 'k6';
 
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
@@ -21,7 +21,7 @@ const csvBaseUrl = new SharedArray('baseUrl', function () {
 const chars = '0123456789';
 // NoticeNumber
 export function genNoticeNumber() {
-    let noticeNumber = '312';
+    let noticeNumber = '311';
     for (var i = 15; i > 0; --i) noticeNumber += chars[Math.floor(Math.random() * chars.length)];
     return noticeNumber;
 }
@@ -105,6 +105,14 @@ export const options = {
         'checks{activatePaymentNoticeV2:over_sla1000}': [],
         'checks{activatePaymentNoticeV2:ok_rate}': [],
         'checks{activatePaymentNoticeV2:ko_rate}': [],
+        'checks{RPT_Semplice_N3:over_sla300}': [],
+        'checks{RPT_Semplice_N3:over_sla400}': [],
+        'checks{RPT_Semplice_N3:over_sla500}': [],
+        'checks{RPT_Semplice_N3:over_sla600}': [],
+        'checks{RPT_Semplice_N3:over_sla800}': [],
+        'checks{RPT_Semplice_N3:over_sla1000}': [],
+        'checks{RPT_Semplice_N3:ok_rate}': [],
+        'checks{RPT_Semplice_N3:ko_rate}': [],
         'checks{closePaymentV2:over_sla300}': [],
         'checks{closePaymentV2:over_sla400}': [],
         'checks{closePaymentV2:over_sla500}': [],
@@ -148,22 +156,23 @@ export function total() {
         }
     }
     let rndAnagPsp = inputDataUtil.getAnagPsp();
-    let rndAnagPaNew = inputDataUtil.getAnagPaNewVersPrim2();
+    let rndAnagPa = inputDataUtil.getAnagPa();
 
     let noticeNmbr = genNoticeNumber();
     let idempotencyKey = genIdempotencyKey();
 
-    let res = checkPosition(baseRestUrl, rndAnagPaNew, noticeNmbr);
+    let res = checkPosition(baseSoapUrl, rndAnagPa, noticeNmbr);
 
-    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPa, noticeNmbr, idempotencyKey);
     let paymentToken = res.paymentToken;
 
-    let outcome = 'OK';
+    let outcome = 'KO';
     res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, "09910087308786", "09910087308786", res.importoTotale);
 
-    sleep(1);
-
     res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
+
+    console.debug('prima di rpt='+paymentToken+ " importo da versare "+  importoTotaleDaVersare);
+    res =  RPT_Semplice_N3(baseUrl,rndAnagPa,paymentToken, creditorReferenceId, importoTotaleDaVersare);
 }
 
 export default function () {
