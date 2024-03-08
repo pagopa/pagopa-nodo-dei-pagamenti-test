@@ -159,7 +159,9 @@ export function total() {
     let paymentToken = res.paymentToken;
 
     let outcome = 'OK';
-    res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, "09910087308786", "09910087308786", res.importoTotale);
+    let transactionId = common.transaction_id();
+    let pspTransactionId = common.transaction_id();
+    res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, res.importoTotale);
 
     sleep(1);
 
