@@ -3,7 +3,6 @@ import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 import { getBasePath, getHeaders } from "../util/base_path_util.js";
-import * as common from '../../../CommonScript.js';
 import * as util from '../util/k6utils.js';
 import encoding from 'k6/encoding';
 
@@ -86,7 +85,7 @@ export function nodoInviaFlussoRendicontazioneSmall(baseUrl, idPSP, idChannel, i
 	let res = http.post(pathToCall, body,
 		{
 			headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaFlussoRendicontazione' }),
-			tags: { activatePaymentNotice: 'http_req_duration', ALL: 'http_req_duration', primitiva: "nodoInviaFlussoRendicontazioneSmall" }
+			tags: { nodoInviaFlussoRendicontazioneSmall: 'http_req_duration', ALL: 'http_req_duration', primitiva: "nodoInviaFlussoRendicontazioneSmall" }
 		}
 	);
 	console.debug(`nodoInviaFlussoRendicontazioneSmall params req: PSP [${idPSP}] idChannel [${idChannel}], idInt [${idInt}]` )

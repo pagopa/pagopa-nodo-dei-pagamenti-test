@@ -3,11 +3,8 @@ import { check, fail } from 'k6';
 import { parseHTML } from "k6/html";
 import { Trend } from 'k6/metrics';
 import { getBasePath, getHeaders } from "../util/base_path_util.js";
-import * as common from '../../../CommonScript.js';
 import * as util from '../util/k6utils.js';
 import encoding from 'k6/encoding';
-import { html as k6Html } from 'k6';
-
 export const nodoInviaFlussoRendicontazioneBig_Trend = new Trend('nodoInviaFlussoRendicontazioneBig');
 export const All_Trend = new Trend('ALL');
 
@@ -104,10 +101,18 @@ export function nodoInviaFlussoRendicontazioneBig(baseUrl, idPSP, idChannel, idI
 
 	const pathToCall = getBasePath(baseUrl, "nodoInviaFlussoRendicontazione")
 	let body = getBody(idPSP, idChannel, idInt, idPA);
+	// Stima la dimensione effettiva del file XML in byte
+    const byteSize = unescape(encodeURIComponent(body)).length;
+
+    // Converti la dimensione in megabyte
+    const sizeInMegabytes = byteSize / (1024 * 1024);
+
+    // Logga la dimensione effettiva
+    console.log(`Dimensione effettiva del file XML: ${sizeInMegabytes} MB`);
 	let res = http.post(pathToCall, body,
 		{
 			headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaFlussoRendicontazione' }),
-			tags: { activatePaymentNotice: 'http_req_duration', ALL: 'http_req_duration', primitiva: "nodoInviaFlussoRendicontazioneBig" }
+			tags: { nodoInviaFlussoRendicontazioneBig: 'http_req_duration', ALL: 'http_req_duration', primitiva: "nodoInviaFlussoRendicontazioneBig" }
 		}
 	);
 	console.debug(`nodoInviaFlussoRendicontazioneBig params req: PSP [${idPSP}] idChannel [${idChannel}], idInt [${idInt}]`)
