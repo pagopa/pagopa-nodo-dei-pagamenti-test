@@ -1104,15 +1104,15 @@ def step_impl(context, sender, soap_primitive, receiver):
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
-    soap_response = requests.post(url_nodo, getattr(
-        context, soap_primitive), headers=headers, verify=False)
+
+    soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
+
     print(soap_response.content.decode('utf-8'))
     print(soap_response.status_code)
     print(f'soap response: {soap_response.headers}')
     setattr(context, soap_primitive + RESPONSE, soap_response)
 
-    assert (soap_response.status_code ==
-            200), f"status_code {soap_response.status_code}"
+    assert (soap_response.status_code == 200), f"status_code {soap_response.status_code}"
 
 
 @step('send, by sender {sender}, soap action {soap_primitive} to {receiver}')
@@ -1574,10 +1574,7 @@ def step_impl(context, mock, destination, primitive):
         pa_verify_payment_notice_res = context.text
     else:
         pa_verify_payment_notice_res = getattr(context, primitive)
-    pa_verify_payment_notice_res = str(pa_verify_payment_notice_res).replace("#fiscalCodePA#",
-                                                                             context.config.userdata.get(
-                                                                                 "global_configuration").get(
-                                                                                 "creditor_institution_code"))
+    pa_verify_payment_notice_res = str(pa_verify_payment_notice_res).replace("#fiscalCodePA#", context.config.userdata.get("global_configuration").get("creditor_institution_code"))
 
     if '$iuv' in pa_verify_payment_notice_res:
         pa_verify_payment_notice_res = pa_verify_payment_notice_res.replace(
@@ -1587,16 +1584,13 @@ def step_impl(context, mock, destination, primitive):
     print(pa_verify_payment_notice_res)
     if mock == 'EC':
         print(utils.get_soap_mock_ec(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec(context), primitive,
-                                                      pa_verify_payment_notice_res, override=True)
+        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec(context), primitive, pa_verify_payment_notice_res, override=True)
     elif mock == 'EC2':
         print(utils.get_soap_mock_ec2(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec2(context), primitive,
-                                                      pa_verify_payment_notice_res, override=True)
+        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec2(context), primitive, pa_verify_payment_notice_res, override=True)
     elif mock == 'PSP':
         print(utils.get_soap_mock_psp(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_psp(context), primitive,
-                                                      pa_verify_payment_notice_res, override=True)
+        response_status_code = utils.save_soap_action(utils.get_soap_mock_psp(context), primitive, pa_verify_payment_notice_res, override=True)
 
     elif mock == 'PSP2':
         print(utils.get_soap_mock_psp2(context))
@@ -1912,8 +1906,7 @@ def step_impl(context, param, value):
 
 @step("refresh job {job_name} triggered after 10 seconds")
 def step_impl(context, job_name):
-    url_nodo = context.config.userdata.get(
-        "services").get("nodo-dei-pagamenti").get("url")
+    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
 
     # DA UTILIZZARE IN LOCALE (DECOMMENTARE LE 2 RIGHE DI SEGUITO E COMMENTARE LE 2 RIGHE SOTTO pipeline)
@@ -2406,9 +2399,8 @@ def step_impl(context, query_name, table_name, where_condition, valore, macro, d
 @step("updates through the query {query_name} of the table {table_name} the parameter {param} with {value} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param',
-                                                                                                            param).replace(
-        'value', value)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
+
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
@@ -2420,8 +2412,7 @@ def step_impl(context, query_name, table_name, param, value, macro, db_name):
     adopted_db.closeConnection(conn)
 
 
-@step(
-    "delete by the query {query_name} the table {table_name} with the where {where_condition} under macro {macro} on db {db_name}")
+@step("delete by the query {query_name} the table {table_name} with the where {where_condition} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, where_condition, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
     selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace(
@@ -2462,8 +2453,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     adopted_db.closeConnection(conn)
 
 
-@step(
-    u"verify datetime plus number of minutes {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+@step(u"verify datetime plus number of minutes {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
@@ -2491,8 +2481,7 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
     db_selected = db_config.get(db_name)
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    selected_query = utils.query_json(context, query_name, name_macro).replace(
-        "columns", '*').replace("table_name", table_name)
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", '*').replace("table_name", table_name)
 
     exec_query = adopted_db.executeQuery(conn, selected_query)
     print("record query: ", exec_query)
