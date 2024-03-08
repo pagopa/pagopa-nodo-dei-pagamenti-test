@@ -7,7 +7,7 @@ export const closePayment_Trend = new Trend('closePaymentV2');
 export const All_Trend = new Trend('ALL');
 
 
-export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, outcome, transactionId, additionalTransactionId) {
+export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, outcome, transactionId, additionalTransactionId, totalAmount) {
 
   var dt = new Date();
   let ms = dt.getMilliseconds();
@@ -47,7 +47,7 @@ export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, outcom
     "idChannel": "${chpsp_c}",
     "paymentMethod": "TPAY",
     "transactionId": "${transactionId}",
-    "totalAmount": 1.00,
+    "totalAmount": ${totalAmount},
     "fee": 0,
     "timestampOperation": "${dt}",
     "additionalPaymentInformations": {
@@ -57,7 +57,7 @@ export function closePaymentV2ReqBody(psp, intpsp, chpsp_c, paymentToken, outcom
 `
 };
 
-export function closePaymentV2(baseUrl, rndAnagPsp, paymentToken, outcome, transactionId, additionalTransactionId) {
+export function closePaymentV2(baseUrl, rndAnagPsp, paymentToken, outcome, transactionId, additionalTransactionId, totalAmount) {
   /*
    var dt = new Date();
    let ms = dt.getMilliseconds();
@@ -108,11 +108,11 @@ export function closePaymentV2(baseUrl, rndAnagPsp, paymentToken, outcome, trans
                 }
               };*/
 
-  console.log(closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId));
+  console.log(closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId, totalAmount));
   const res = http.post(
     getBasePath(baseUrl, "closePaymentV2"),
     //JSON.stringify(closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId)),
-    closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId),
+    closePaymentV2ReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId, totalAmount),
     {
       headers: getHeaders({ 'Content-Type': 'application/json' }),
       tags: { closePaymentV2: 'http_req_duration', ALL: 'http_req_duration', primitiva: "closePaymentV2" }

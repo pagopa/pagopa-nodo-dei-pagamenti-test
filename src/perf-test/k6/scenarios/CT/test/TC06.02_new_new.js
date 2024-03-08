@@ -5,10 +5,8 @@ import papaparse from './util/papaparse.js';
 import { checkPosition } from './api/checkPosition.js';
 import { activatePaymentNoticeV2 } from './api/activatePaymentNoticeV2.js';
 import { closePaymentV2 } from './api/closePaymentV2.js';
-import { sendPaymentOutcomeV2 } from './api/sendPaymentOutcomeV2.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
-import { sleep } from 'k6';
 
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
@@ -112,14 +110,6 @@ export const options = {
         'checks{closePaymentV2:over_sla1000}': [],
         'checks{closePaymentV2:ok_rate}': [],
         'checks{closePaymentV2:ko_rate}': [],
-        'checks{sendPaymentOutcomeV2:over_sla300}': [],
-        'checks{sendPaymentOutcomeV2:over_sla400}': [],
-        'checks{sendPaymentOutcomeV2:over_sla500}': [],
-        'checks{sendPaymentOutcomeV2:over_sla600}': [],
-        'checks{sendPaymentOutcomeV2:over_sla800}': [],
-        'checks{sendPaymentOutcomeV2:over_sla1000}': [],
-        'checks{sendPaymentOutcomeV2:ok_rate}': [],
-        'checks{sendPaymentOutcomeV2:ko_rate}': [],
         'checks{ALL:over_sla300}': [],
         'checks{ALL:over_sla400}': [],
         'checks{ALL:over_sla500}': [],
