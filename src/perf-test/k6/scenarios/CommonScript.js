@@ -356,6 +356,7 @@ export function genIdempotencyKey(){
 
 export function transaction_id() {
     let transactionId = ''
+    const chars = '0123456789';
     for (var i = 8; i > 0; --i) transactionId += chars[Math.floor(Math.random() * chars.length)];
     return transactionId;
 }

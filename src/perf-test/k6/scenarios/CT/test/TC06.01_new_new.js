@@ -158,9 +158,11 @@ export function total() {
 
     res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey, "causale");
     let paymentToken = res.paymentToken;
+    let importoTotaleDaVersare = res.amount;
+
 
     let outcome = 'OK';
-    res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, res.importoTotale);
+    res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, importoTotaleDaVersare);
 
     sleep(1);
 
