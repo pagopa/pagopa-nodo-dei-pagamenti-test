@@ -167,8 +167,6 @@ export function total() {
     let outcome = 'KO';
     res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, importoTotaleDaVersare);
 
-    console.debug('prima di rpt='+paymentToken+ " importo da versare "+  importoTotaleDaVersare);
-    res =  RPT_Semplice_N3(baseUrl,rndAnagPa,paymentToken, creditorReferenceId, importoTotaleDaVersare);
 }
 
 export default function () {

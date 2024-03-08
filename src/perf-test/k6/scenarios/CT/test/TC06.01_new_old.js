@@ -180,9 +180,6 @@ export function total() {
     sleep(1);
 
     res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
-
-    console.debug('prima di rpt='+paymentToken+ " importo da versare "+  importoTotaleDaVersare);
-    res =  RPT_Semplice_N3(baseUrl,rndAnagPa,paymentToken, creditorReferenceId, importoTotaleDaVersare);
 }
 
 export default function () {

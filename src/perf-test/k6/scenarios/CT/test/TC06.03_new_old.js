@@ -151,8 +151,8 @@ export function total() {
 
     let noticeNmbr = genNoticeNumber();
     let idempotencyKey = genIdempotencyKey();
-    let transactionId = common.transaction_id();
-    let pspTransactionId = common.transaction_id();
+    let transactionId = common.transaction_idKO();
+    let pspTransactionId = common.transaction_idKO();
 
     let res = checkPosition(baseSoapUrl, rndAnagPa, noticeNmbr);
 
@@ -167,8 +167,6 @@ export function total() {
     let outcome = 'OK';
     res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, importoTotaleDaVersare);
 
-    console.debug('prima di rpt='+paymentToken+ " importo da versare "+  importoTotaleDaVersare);
-    res =  RPT_Semplice_N3(baseSoapUrl,rndAnagPa,paymentToken, creditorReferenceId, importoTotaleDaVersare);
 }
 
 export default function () {

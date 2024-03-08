@@ -141,8 +141,8 @@ export function total() {
 
     let noticeNmbr = genNoticeNumber();
     let idempotencyKey = genIdempotencyKey();
-    let transactionId = common.transaction_id();
-    let pspTransactionId = common.transaction_id();
+    let transactionId = common.transaction_idKO();
+    let pspTransactionId = common.transaction_idKO();
 
     let res = checkPosition(baseRestUrl, rndAnagPaNew, noticeNmbr);
 
