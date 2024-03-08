@@ -5,10 +5,8 @@ import papaparse from './util/papaparse.js';
 import { checkPosition } from './api/checkPosition.js';
 import { activatePaymentNoticeV2 } from './api/activatePaymentNoticeV2.js';
 import { closePaymentV2 } from './api/closePaymentV2.js';
-import { sendPaymentOutcomeV2 } from './api/sendPaymentOutcomeV2.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
-import { sleep } from 'k6';
 
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
@@ -25,7 +23,6 @@ export function genNoticeNumber() {
     for (var i = 15; i > 0; --i) noticeNumber += chars[Math.floor(Math.random() * chars.length)];
     return noticeNumber;
 }
-
 
 export function genIdempotencyKey() {
     let key1 = '';
@@ -113,14 +110,6 @@ export const options = {
         'checks{closePaymentV2:over_sla1000}': [],
         'checks{closePaymentV2:ok_rate}': [],
         'checks{closePaymentV2:ko_rate}': [],
-        'checks{sendPaymentOutcomeV2:over_sla300}': [],
-        'checks{sendPaymentOutcomeV2:over_sla400}': [],
-        'checks{sendPaymentOutcomeV2:over_sla500}': [],
-        'checks{sendPaymentOutcomeV2:over_sla600}': [],
-        'checks{sendPaymentOutcomeV2:over_sla800}': [],
-        'checks{sendPaymentOutcomeV2:over_sla1000}': [],
-        'checks{sendPaymentOutcomeV2:ok_rate}': [],
-        'checks{sendPaymentOutcomeV2:ko_rate}': [],
         'checks{ALL:over_sla300}': [],
         'checks{ALL:over_sla400}': [],
         'checks{ALL:over_sla500}': [],
@@ -152,20 +141,18 @@ export function total() {
 
     let noticeNmbr = genNoticeNumber();
     let idempotencyKey = genIdempotencyKey();
+    let transactionId = common.transaction_id();
+    let pspTransactionId = common.transaction_id();
 
     let res = checkPosition(baseRestUrl, rndAnagPaNew, noticeNmbr);
 
-    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey);
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey, "causale");
     let paymentToken = res.paymentToken;
+    let importoTotaleDaVersare = res.amount;
+
 
     let outcome = 'OK';
-    let transactionId = common.transaction_id();
-    let pspTransactionId = common.transaction_id();
-    res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, res.importoTotale);
-
-    sleep(1);
-
-    res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
+    res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, importoTotaleDaVersare);
 }
 
 export default function () {
