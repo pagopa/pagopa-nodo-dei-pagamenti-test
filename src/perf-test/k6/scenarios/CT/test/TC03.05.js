@@ -182,7 +182,7 @@ export function handleSummary(data) {
   
 }
 
-/*
+
 export function checks(res, outcome) {
 	
 	 check(res, {
@@ -239,4 +239,4 @@ export function checks(res, outcome) {
     { ALL: 'ko_rate' }
   );
 	
-} */
+} 
