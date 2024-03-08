@@ -53,8 +53,9 @@ export function getAnagPaNew() {
 
 export function getAnagPaNewVersPrim2() {
 	let paNew = csvAnagPaNewVersPrim2[Math.floor(Math.random() * csvAnagPaNewVersPrim2.length)];
-	console.debug("PA NEW " + JSON.stringify(paNew));
+	console.debug("PA NEW V2 " + JSON.stringify(paNew));
 	return paNew;
 }
+
 
 

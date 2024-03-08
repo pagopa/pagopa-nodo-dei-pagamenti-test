@@ -3,8 +3,8 @@ import { check } from 'k6';
 import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
 import { checkPosition } from './api/checkPosition.js';
-import { activatePaymentNoticeV2 } from './api/activatePaymentNoticeV2.js';
-import { RPT_Semplice_N3 } from './api/RPT_Semplice_N3.js';
+import { activatePaymentNoticeV2Ecomm } from './api/activatePaymentNoticeV2_Ecommerce.js';
+import { RPT_Semplice_N3 } from './api/RPT_Semplice_NMU.js';
 import { closePaymentV2 } from './api/closePaymentV2.js';
 import { sendPaymentOutcomeV2 } from './api/sendPaymentOutcomeV2.js';
 import * as common from '../../CommonScript.js';
@@ -22,7 +22,7 @@ const csvBaseUrl = new SharedArray('baseUrl', function () {
 const chars = '0123456789';
 // NoticeNumber
 export function genNoticeNumber() {
-    let noticeNumber = '311';
+    let noticeNumber = '100';
     for (var i = 15; i > 0; --i) noticeNumber += chars[Math.floor(Math.random() * chars.length)];
     return noticeNumber;
 }
@@ -162,7 +162,8 @@ export function total() {
         }
     }
     let rndAnagPsp = inputDataUtil.getAnagPsp();
-    let rndAnagPa = inputDataUtil.getAnagPa();
+    let rndAnagPa = inputDataUtil.getAnagPaNew();
+    //modificare con AnagPA
 
     let noticeNmbr = genNoticeNumber();
     let idempotencyKey = genIdempotencyKey();
@@ -171,11 +172,16 @@ export function total() {
 
     let res = checkPosition(baseSoapUrl, rndAnagPa, noticeNmbr);
 
-    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPa, noticeNmbr, idempotencyKey);
+    res = activatePaymentNoticeV2Ecomm(baseSoapUrl, rndAnagPa, noticeNmbr, idempotencyKey);
     let paymentToken = res.paymentToken;
+    let creditorReferenceId=res.creditorReferenceId;
+    let importoTotaleDaVersare = res.amount;
+    console.debug("IMPORTO TOTALE: " + importoTotaleDaVersare);
+
+    res = RPT_Semplice_N3(baseSoapUrl, rndAnagPa, paymentToken, creditorReferenceId, importoTotaleDaVersare)
 
     let outcome = 'OK';
-    res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, res.importoTotale);
+    res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, importoTotaleDaVersare);
 
     sleep(1);
 
