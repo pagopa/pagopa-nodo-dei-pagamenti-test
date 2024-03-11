@@ -97,10 +97,11 @@ function getxmlRendicontazione(idFlusso, dataora, data) {
     return encoding.b64encode(xmlDecoded);
 }
 
-export function nodoInviaFlussoRendicontazioneBig(baseUrl, idPSP, idChannel, idInt, idPA) {
+export function nodoInviaFlussoRendicontazioneBig(baseUrl, idPSP, idChannel, idInt, idPA, body) {
 
 	const pathToCall = getBasePath(baseUrl, "nodoInviaFlussoRendicontazione")
-	let body = getBody(idPSP, idChannel, idInt, idPA);
+	//let body = getBody(idPSP, idChannel, idInt, idPA);
+	/*
 	// Stima la dimensione effettiva del file XML in byte
     const byteSize = unescape(encodeURIComponent(body)).length;
 
@@ -108,18 +109,19 @@ export function nodoInviaFlussoRendicontazioneBig(baseUrl, idPSP, idChannel, idI
     const sizeInMegabytes = byteSize / (1024 * 1024);
 
     // Logga la dimensione effettiva
-    console.log(`Dimensione effettiva del file XML: ${sizeInMegabytes} MB`);
+    console.log(`Dimensione effettiva del file XML: ${sizeInMegabytes} MB`);*/
 	let res = http.post(pathToCall, body,
 		{
 			headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'nodoInviaFlussoRendicontazione' }),
 			tags: { nodoInviaFlussoRendicontazioneBig: 'http_req_duration', ALL: 'http_req_duration', primitiva: "nodoInviaFlussoRendicontazioneBig" }
 		}
 	);
+	nodoInviaFlussoRendicontazioneBig_Trend.add(res.timings.duration);
+	All_Trend.add(res.timings.duration);
 	console.debug(`nodoInviaFlussoRendicontazioneBig params req: PSP [${idPSP}] idChannel [${idChannel}], idInt [${idInt}]`)
 	console.debug("nodoInviaFlussoRendicontazioneBig body RES");
 	console.debug(JSON.stringify(res.body));
-	nodoInviaFlussoRendicontazioneBig_Trend.add(res.timings.duration);
-	All_Trend.add(res.timings.duration);
+	
 
 
 	check(res, {

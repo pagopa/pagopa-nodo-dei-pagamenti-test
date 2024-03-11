@@ -4,7 +4,7 @@ import papaparse from './util/papaparse.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
 import * as nodoInviaFlussoRendicontazioneBig from './api/nodoInviaFlussoRendicontazioneBig.js';
-import * as nodoInviaFlussoRendicontazioneSmall from './api/nodoInviaFlussoRendicontazioneBig.js';
+import * as nodoInviaFlussoRendicontazioneSmall from './api/nodoInviaFlussoRendicontazioneSmall.js';
 
 const csvBaseUrl = new SharedArray('baseUrl', function() {
 
@@ -24,7 +24,7 @@ export const options = {
 
 	scenarios: {
 		total: {
-			timeUnit: '4s',
+			timeUnit: '1s',
 			preAllocatedVUs: 1, // how large the initial pool of VUs would be
 			executor: 'ramping-arrival-rate',
 			//executor: 'ramping-vus',
@@ -115,7 +115,7 @@ export function total() {
 
         nodoInviaFlussoRendicontazioneBig.nodoInviaFlussoRendicontazioneBig(baseSoapUrl, rndAnagPsp.PSP, rndAnagPsp.CHPSP, rndAnagPsp.INTPSP, rndAnagPa.PA);
     } else {
-        nodoInviaFlussoRendicontazioneSmall.nodoInviaFlussoRendicontazioneBig(baseSoapUrl, rndAnagPsp.PSP, rndAnagPsp.CHPSP, rndAnagPsp.INTPSP, rndAnagPa.PA);
+        nodoInviaFlussoRendicontazioneSmall.nodoInviaFlussoRendicontazioneSmall(baseSoapUrl, rndAnagPsp.PSP, rndAnagPsp.CHPSP, rndAnagPsp.INTPSP, rndAnagPa.PA);
         
     }
     
