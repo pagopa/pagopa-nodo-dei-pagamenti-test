@@ -1984,14 +1984,12 @@ def step_impl(context):
     time.sleep(10)
     assert refresh_response.status_code == 200
 
-
 @step("execution query {query_name} to get value on the table {table_name}, with the columns {columns} under macro {macro} with db name {db_name}")
 def step_impl(context, query_name, macro, db_name, table_name, columns):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
 
-    selected_query = utils.query_json(context, query_name, macro).replace(
-        "columns", columns).replace("table_name", table_name)
+    selected_query = utils.query_json(context, query_name, macro).replace("columns", columns).replace("table_name", table_name)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_global_variables(selected_query, context)
 
@@ -2037,8 +2035,7 @@ def step_impl(context, query_name, xml, position, key):
     setattr(context, key, selected_element)
 
 
-@step(
-    "through the query {query_name} retrieve xml_no_decode {xml} at position {position:d} and save it under the key {key}")
+@step("through the query {query_name} retrieve xml_no_decode {xml} at position {position:d} and save it under the key {key}")
 def step_impl(context, query_name, xml, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
@@ -3286,19 +3283,15 @@ def step_impl(context, new_attribute, old_attribute):
 
 @step('Select and Update RT for Test retry_PAold with causale versamento {causaleVers}')
 def step_impl(context, causaleVers):
-    db_config = context.config.userdata.get(
-        "db_configuration").get("nodo_online")
-
-    adopted_db, conn = db_online.getConnection(db_config.get('host'), db_config.get(
-        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
+    db_name = "nodo_online"
+    db_config = context.config.userdata.get("db_configuration").get(db_name)
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_config)
 
     # select clob
     xml_content_query = "SELECT XML_CONTENT as clob FROM RT_XML WHERE IDENT_DOMINIO='$activatePaymentNotice.fiscalCode' AND IUV='$iuv'"
 
-    xml_content_query = utils.replace_local_variables(
-        xml_content_query, context)
-    xml_content_query = utils.replace_context_variables(
-        xml_content_query, context)
+    xml_content_query = utils.replace_local_variables(xml_content_query, context)
+    xml_content_query = utils.replace_context_variables(xml_content_query, context)
     xml_content_row = adopted_db.executeQuery(conn, xml_content_query)
 
     xml_rt = parseString(xml_content_row[0][0].read())
