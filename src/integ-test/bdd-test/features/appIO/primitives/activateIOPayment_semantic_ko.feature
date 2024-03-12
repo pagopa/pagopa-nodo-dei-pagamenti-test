@@ -53,7 +53,7 @@ Feature: Semantic checks for activateIOPayment - KO
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC replies to nodo-dei-pagamenti with the paGetPayment
+    
     And initial XML activateIOPayment
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
@@ -105,27 +105,29 @@ Feature: Semantic checks for activateIOPayment - KO
       """
     And EC new version
     And <tag> with <tag_value> in activateIOPayment
+    And <elem> with <elem_value> in paGetPayment
+    And EC replies to nodo-dei-pagamenti with the paGetPayment
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is <error> of activateIOPayment response
     Examples:
-      | tag          | tag_value          | error                               | soapUI test                                            |
-      | idPSP        | pspUnknown         | PPT_PSP_SCONOSCIUTO                 | SEM_AIPR_01                                            |
-      | idPSP        | NOT_ENABLED        | PPT_PSP_DISABILITATO                | SEM_AIPR_02                                            |
-      | idBrokerPSP  | brokerPspUnknown   | PPT_INTERMEDIARIO_PSP_SCONOSCIUTO   | SEM_AIPR_03                                            |
-      | idBrokerPSP  | INT_NOT_ENABLED    | PPT_INTERMEDIARIO_PSP_DISABILITATO  | SEM_AIPR_04                                            |
-      | idChannel    | channelUnknown     | PPT_CANALE_SCONOSCIUTO              | SEM_AIPR_05                                            |
-      | idChannel    | CANALE_NOT_ENABLED | PPT_CANALE_DISABILITATO             | SEM_AIPR_06                                            |
-      | password     | wrongPassword      | PPT_AUTENTICAZIONE                  | SEM_AIPR_08                                            |
-      | fiscalCode   | 10000000000        | PPT_DOMINIO_SCONOSCIUTO             | SEM_AIPR_09                                            |
-      | fiscalCode   | 11111122223        | PPT_DOMINIO_DISABILITATO            | SEM_AIPR_10                                            |
-      | noticeNumber | 511456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit inesistente                     |
-      | noticeNumber | 011456789012345678 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit 0 - progressivo inesistente     |
-      | noticeNumber | 323134567890787583 | PPT_STAZIONE_INT_PA_SCONOSCIUTA     | SEM_AIPR_12 - auxDigit 3 - segregationCode inesistente |
-      | noticeNumber | 316456789012345678 | PPT_STAZIONE_INT_PA_DISABILITATA    | SEM_AIPR_13                                            |
-      | noticeNumber | 099456789012345678 | PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE | SEM_AIRP_14                                            |
-      | noticeNumber | 312456789012345678 | PPT_MULTI_BENEFICIARIO              | SEM_AIPR_15                                            |
-      | noticeNumber | 010456789012345678 | PPT_INTERMEDIARIO_PA_DISABILITATO   | SEM_AIPR_16                                            |
+      | tag          | tag_value          | elem                | elem_value        |error                               | soapUI test                                            |
+      | idPSP        | pspUnknown         | -                   |     nochange      |PPT_PSP_SCONOSCIUTO                 | SEM_AIPR_01                                            |
+      | idPSP        | NOT_ENABLED        | -                   |     nochange      |PPT_PSP_DISABILITATO                | SEM_AIPR_02                                            |
+      | idBrokerPSP  | brokerPspUnknown   | -                   |     nochange      |PPT_INTERMEDIARIO_PSP_SCONOSCIUTO   | SEM_AIPR_03                                            |
+      | idBrokerPSP  | INT_NOT_ENABLED    | -                   |     nochange      |PPT_INTERMEDIARIO_PSP_DISABILITATO  | SEM_AIPR_04                                            |
+      | idChannel    | channelUnknown     | -                   |     nochange      |PPT_CANALE_SCONOSCIUTO              | SEM_AIPR_05                                            |
+      | idChannel    | CANALE_NOT_ENABLED | -                   |     nochange      |PPT_CANALE_DISABILITATO             | SEM_AIPR_06                                            |
+      | password     | wrongPassword      | -                   |     nochange      |PPT_AUTENTICAZIONE                  | SEM_AIPR_08                                            |
+      | fiscalCode   | 10000000000        | -                   |     nochange      |PPT_DOMINIO_SCONOSCIUTO             | SEM_AIPR_09                                            |
+      | fiscalCode   | 11111122223        | -                   |     nochange      |PPT_DOMINIO_DISABILITATO            | SEM_AIPR_10                                            |
+      | noticeNumber | 511456789012345678 | creditorReferenceId | 11456789012345678 |PPT_STAZIONE_INT_PA_SCONOSCIUTA      | SEM_AIPR_12 - auxDigit inesistente                     |
+      | noticeNumber | 011456789012345678 | creditorReferenceId | 456789012345678   |PPT_STAZIONE_INT_PA_SCONOSCIUTA      | SEM_AIPR_12 - auxDigit 0 - progressivo inesistente     |
+      | noticeNumber | 323134567890787583 | creditorReferenceId | 23134567890787583 |PPT_STAZIONE_INT_PA_SCONOSCIUTA      | SEM_AIPR_12 - auxDigit 3 - segregationCode inesistente |
+      | noticeNumber | 316456789012345678 | creditorReferenceId | 16456789012345678 |PPT_STAZIONE_INT_PA_DISABILITATA     | SEM_AIPR_13                                            |
+      | noticeNumber | 099456789012345679 | creditorReferenceId | 456789012345679   | PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE | SEM_AIRP_14                                            |
+      | noticeNumber | 312456789012345678 | creditorReferenceId | 12456789012345678 |PPT_MULTI_BENEFICIARIO               | SEM_AIPR_15                                            |
+      | noticeNumber | 010456789012345678 | creditorReferenceId | 456789012345678   |PPT_INTERMEDIARIO_PA_DISABILITATO    | SEM_AIPR_16                                            |
 
   @runnable
   # idChannel value check: idChannel with value in NODO4_CFG.CANALI whose field MODELLO_PAGAMENTO in NODO4_CFG.CANALI_NODO table of nodo-dei-pagamenti database does not contain value 'ATTIVATO_PRESSO_PSP' (e.g. contains 'IMMEDIATO_MULTIBENEFICIARIO') [SEM_AIPR_07]

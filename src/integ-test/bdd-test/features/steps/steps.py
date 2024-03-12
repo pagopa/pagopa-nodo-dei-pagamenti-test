@@ -718,8 +718,7 @@ def step_impl(context):
     setattr(context, 'rptAttachment', payload)
 
 
-@given(
-    'generate {number:d} notice number and iuv with aux digit {aux_digit:d}, segregation code {segregation_code} and application code {application_code}')
+@given('generate {number:d} notice number and iuv with aux digit {aux_digit:d}, segregation code {segregation_code} and application code {application_code}')
 def step_impl(context, number, aux_digit, segregation_code, application_code):
     segregation_code = utils.replace_global_variables(segregation_code, context)
     application_code = utils.replace_global_variables(application_code, context)
@@ -1063,6 +1062,7 @@ def step_impl(context, type, tag, value, primitive):
 
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
+    
     # use - to skip
     if elem != "-":
         value = utils.replace_local_variables(value, context)
@@ -3399,8 +3399,7 @@ def step_impl(contex, seconds):
             break
 
 
-@step(
-    u"under macro {name_macro} on db {db_name} with the query {query_name} verify the value {value} of the record at column {column} of table {table_name}")
+@step(u"under macro {name_macro} on db {db_name} with the query {query_name} verify the value {value} of the record at column {column} of table {table_name}")
 def step_impl(context, name_macro, db_name, query_name, value, column, table_name):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
