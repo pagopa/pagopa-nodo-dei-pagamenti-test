@@ -368,4 +368,11 @@ export function transaction_idKO() {
   transactionId += "ko";
   return transactionId;
 }
+
+export function iubd() {
+  let iubd = ''
+  const chars = '0123456789';
+  for (var i = 16; i > 0; --i) iubd += chars[Math.floor(Math.random() * chars.length)];
+  return iubd;
+}
 	

@@ -26,6 +26,11 @@ const csvAnagPaNewVersPrim2 = new SharedArray('PA_data_new_VersPrim2', function 
 	return papaparse.parse(open('../../../../data/anagraficaPANewVersPrim2.csv'), { header: true }).data;
 });
 
+const csvAnagPaNewVP2Broadcast = new SharedArray('PA_data_new_VP2Broadcast', function () {
+
+	return papaparse.parse(open('../../../../data/anagraficaPANewVP2Broadcast.csv'), { header: true }).data;
+});
+
 export function getAnagPsp() {
 	let psp = csvAnagPsp[Math.floor(Math.random() * csvAnagPsp.length)];
 	console.debug("PSP " + JSON.stringify(psp));
@@ -53,6 +58,12 @@ export function getAnagPaNew() {
 
 export function getAnagPaNewVersPrim2() {
 	let paNew = csvAnagPaNewVersPrim2[Math.floor(Math.random() * csvAnagPaNewVersPrim2.length)];
+	console.debug("PA NEW V2 " + JSON.stringify(paNew));
+	return paNew;
+}
+
+export function getAnagPaNewVP2Broadcast() {
+	let paNew = csvAnagPaNewVP2Broadcast[Math.floor(Math.random() * csvAnagPaNewVP2Broadcast.length)];
 	console.debug("PA NEW V2 " + JSON.stringify(paNew));
 	return paNew;
 }
