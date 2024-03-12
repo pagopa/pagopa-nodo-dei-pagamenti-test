@@ -6,8 +6,10 @@ import { checkPosition } from './api/checkPosition.js';
 import { activatePaymentNoticeV2Ecomm } from './api/activatePaymentNoticeV2_Ecommerce.js';
 import { RPT_Semplice_NMU } from './api/RPT_Semplice_NMU.js';
 import { closePaymentV2 } from './api/closePaymentV2.js';
+import { sendPaymentOutcomeV2 } from './api/sendPaymentOutcomeV2.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
+import { sleep } from 'k6';
 
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
@@ -119,6 +121,14 @@ export const options = {
         'checks{closePaymentV2:over_sla1000}': [],
         'checks{closePaymentV2:ok_rate}': [],
         'checks{closePaymentV2:ko_rate}': [],
+        'checks{sendPaymentOutcomeV2:over_sla300}': [],
+        'checks{sendPaymentOutcomeV2:over_sla400}': [],
+        'checks{sendPaymentOutcomeV2:over_sla500}': [],
+        'checks{sendPaymentOutcomeV2:over_sla600}': [],
+        'checks{sendPaymentOutcomeV2:over_sla800}': [],
+        'checks{sendPaymentOutcomeV2:over_sla1000}': [],
+        'checks{sendPaymentOutcomeV2:ok_rate}': [],
+        'checks{sendPaymentOutcomeV2:ko_rate}': [],
         'checks{ALL:over_sla300}': [],
         'checks{ALL:over_sla400}': [],
         'checks{ALL:over_sla500}': [],
@@ -151,12 +161,12 @@ export function total() {
 
     let noticeNmbr = genNoticeNumber();
     let idempotencyKey = genIdempotencyKey();
-    let transactionId = common.transaction_idKO();
-    let pspTransactionId = common.transaction_idKO();
+    let transactionId = common.transaction_id();
+    let pspTransactionId = common.transaction_id();
 
     let res = checkPosition(baseSoapUrl, rndAnagPa, noticeNmbr);
 
-    res = activatePaymentNoticeV2Ecomm(baseSoapUrl, rndAnagPa, noticeNmbr, idempotencyKey);
+    res = activatePaymentNoticeV2Ecomm(baseSoapUrl, rndAnagPa, noticeNmbr, idempotencyKey, "sprko");
     let paymentToken = res.paymentToken;
     let creditorReferenceId=res.creditorReferenceId;
     let importoTotaleDaVersare = res.amount;
@@ -167,6 +177,9 @@ export function total() {
     let outcome = 'OK';
     res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, importoTotaleDaVersare);
 
+    sleep(1);
+
+    res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
 }
 
 export default function () {

@@ -3,11 +3,12 @@ import { check } from 'k6';
 import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
 import { checkPosition } from './api/checkPosition.js';
-import { activatePaymentNoticeV2Ecomm } from './api/activatePaymentNoticeV2_Ecommerce.js';
-import { RPT_Semplice_NMU } from './api/RPT_Semplice_NMU.js';
+import { activatePaymentNoticeV2 } from './api/activatePaymentNoticeV2.js';
 import { closePaymentV2 } from './api/closePaymentV2.js';
+import { sendPaymentOutcomeV2 } from './api/sendPaymentOutcomeV2.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
+import { sleep } from 'k6';
 
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
@@ -20,7 +21,7 @@ const csvBaseUrl = new SharedArray('baseUrl', function () {
 const chars = '0123456789';
 // NoticeNumber
 export function genNoticeNumber() {
-    let noticeNumber = '100';
+    let noticeNumber = '312';
     for (var i = 15; i > 0; --i) noticeNumber += chars[Math.floor(Math.random() * chars.length)];
     return noticeNumber;
 }
@@ -103,14 +104,6 @@ export const options = {
         'checks{activatePaymentNoticeV2:over_sla1000}': [],
         'checks{activatePaymentNoticeV2:ok_rate}': [],
         'checks{activatePaymentNoticeV2:ko_rate}': [],
-        'checks{RPT_Semplice_N3:over_sla300}': [],
-        'checks{RPT_Semplice_N3:over_sla400}': [],
-        'checks{RPT_Semplice_N3:over_sla500}': [],
-        'checks{RPT_Semplice_N3:over_sla600}': [],
-        'checks{RPT_Semplice_N3:over_sla800}': [],
-        'checks{RPT_Semplice_N3:over_sla1000}': [],
-        'checks{RPT_Semplice_N3:ok_rate}': [],
-        'checks{RPT_Semplice_N3:ko_rate}': [],
         'checks{closePaymentV2:over_sla300}': [],
         'checks{closePaymentV2:over_sla400}': [],
         'checks{closePaymentV2:over_sla500}': [],
@@ -119,6 +112,14 @@ export const options = {
         'checks{closePaymentV2:over_sla1000}': [],
         'checks{closePaymentV2:ok_rate}': [],
         'checks{closePaymentV2:ko_rate}': [],
+        'checks{sendPaymentOutcomeV2:over_sla300}': [],
+        'checks{sendPaymentOutcomeV2:over_sla400}': [],
+        'checks{sendPaymentOutcomeV2:over_sla500}': [],
+        'checks{sendPaymentOutcomeV2:over_sla600}': [],
+        'checks{sendPaymentOutcomeV2:over_sla800}': [],
+        'checks{sendPaymentOutcomeV2:over_sla1000}': [],
+        'checks{sendPaymentOutcomeV2:ok_rate}': [],
+        'checks{sendPaymentOutcomeV2:ko_rate}': [],
         'checks{ALL:over_sla300}': [],
         'checks{ALL:over_sla400}': [],
         'checks{ALL:over_sla500}': [],
@@ -146,27 +147,26 @@ export function total() {
         }
     }
     let rndAnagPsp = inputDataUtil.getAnagPsp();
-    let rndAnagPa = inputDataUtil.getAnagPaNew();
-    //modificare con AnagPA
+    let rndAnagPaNew = inputDataUtil.getAnagPaNewVersPrim2();
 
     let noticeNmbr = genNoticeNumber();
     let idempotencyKey = genIdempotencyKey();
-    let transactionId = common.transaction_idKO();
-    let pspTransactionId = common.transaction_idKO();
+    let transactionId = common.transaction_id();
+    let pspTransactionId = common.transaction_id();
 
-    let res = checkPosition(baseSoapUrl, rndAnagPa, noticeNmbr);
+    let res = checkPosition(baseRestUrl, rndAnagPaNew, noticeNmbr);
 
-    res = activatePaymentNoticeV2Ecomm(baseSoapUrl, rndAnagPa, noticeNmbr, idempotencyKey);
+    res = activatePaymentNoticeV2(baseSoapUrl, rndAnagPsp, rndAnagPaNew, noticeNmbr, idempotencyKey, "sprko");
     let paymentToken = res.paymentToken;
-    let creditorReferenceId=res.creditorReferenceId;
     let importoTotaleDaVersare = res.amount;
-    console.debug("IMPORTO TOTALE: " + importoTotaleDaVersare);
 
-    res = RPT_Semplice_NMU(baseSoapUrl, rndAnagPa, paymentToken, creditorReferenceId, importoTotaleDaVersare)
 
     let outcome = 'OK';
     res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, importoTotaleDaVersare);
 
+    sleep(1);
+
+    res = sendPaymentOutcomeV2(baseSoapUrl, rndAnagPsp, paymentToken);
 }
 
 export default function () {

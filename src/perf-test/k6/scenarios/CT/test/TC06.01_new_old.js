@@ -4,7 +4,7 @@ import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
 import { checkPosition } from './api/checkPosition.js';
 import { activatePaymentNoticeV2Ecomm } from './api/activatePaymentNoticeV2_Ecommerce.js';
-import { RPT_Semplice_N3 } from './api/RPT_Semplice_NMU.js';
+import { RPT_Semplice_NMU } from './api/RPT_Semplice_NMU.js';
 import { closePaymentV2 } from './api/closePaymentV2.js';
 import { sendPaymentOutcomeV2 } from './api/sendPaymentOutcomeV2.js';
 import * as common from '../../CommonScript.js';
@@ -172,7 +172,7 @@ export function total() {
     let importoTotaleDaVersare = res.amount;
     console.debug("IMPORTO TOTALE: " + importoTotaleDaVersare);
 
-    res = RPT_Semplice_N3(baseSoapUrl, rndAnagPa, paymentToken, creditorReferenceId, importoTotaleDaVersare)
+    res = RPT_Semplice_NMU(baseSoapUrl, rndAnagPa, paymentToken, creditorReferenceId, importoTotaleDaVersare)
 
     let outcome = 'OK';
     res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, importoTotaleDaVersare);
