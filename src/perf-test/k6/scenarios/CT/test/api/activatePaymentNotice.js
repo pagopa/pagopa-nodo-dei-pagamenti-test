@@ -8,7 +8,7 @@ import {getBasePath, getHeaders} from "../util/base_path_util.js";
 export const activatePaymentNotice_Trend = new Trend('activatePaymentNotice');
 export const All_Trend = new Trend('ALL');
 
-export function activateReqBody (psp, pspint, chpsp, cfpa, noticeNmbr, idempotencyKey) {
+export function activateReqBody(psp, pspint, chpsp, cfpa, noticeNmbr, idempotencyKey) {
   //console.debug("noticeNmbr="+noticeNmbr+" |psp="+psp+" |pspint="+pspint+" |chpsp="+chpsp+" |idempotencyKey="+idempotencyKey+" |cfpa="+cfpa);
 	
 	return `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">

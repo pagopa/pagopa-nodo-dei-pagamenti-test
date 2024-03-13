@@ -12,7 +12,7 @@ export const All_Trend = new Trend('ALL');
 export function nodoChiediAvanzamentoPagamento_Pre(baseUrl,paymentToken) {
  const pathToCall = getBasePath(baseUrl, "nodoPerPMv1")+'/avanzamentoPagamento?idPagamento='
 
- let res=http.get(pathToCall'+paymentToken,
+ let res=http.get(pathToCall+paymentToken,
     { headers: getHeaders({ 'Content-Type': 'application/json' }) ,
 	tags: { nodoChiediAvanzamentoPagamento_Pre: 'http_req_duration' , ALL: 'http_req_duration', name: pathToCall+"<idPagamento>", primitiva: "avanzamentoPagamento"}
 	}
