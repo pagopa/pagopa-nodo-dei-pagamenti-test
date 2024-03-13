@@ -22,7 +22,7 @@ const csvBaseUrl = new SharedArray('baseUrl', function () {
 const chars = '0123456789';
 // NoticeNumber
 export function genNoticeNumber(){
-	let noticeNumber='311';
+	let noticeNumber='100';
 	for (var i = 15; i > 0; --i) noticeNumber += chars[Math.floor(Math.random() * chars.length)];
 	return noticeNumber;
 }
