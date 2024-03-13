@@ -3,7 +3,7 @@ import { check } from 'k6';
 import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
 import { chiediInformazioniPagamento } from './api/chiediInformazioniPagamento.js';
-import { closePaymentV2 } from './api/closePaymentV2.js';
+import { closePayment } from './api/closePayment.js';
 import { Attiva } from './api/Attiva.js';
 import { RPT } from './api/RPT.js';
 import * as iuvUtil from './util/iuv_util.js';
@@ -99,22 +99,14 @@ export const options = {
 	'checks{chiediInformazioniPagamento:over_sla1000}': [],
 	'checks{chiediInformazioniPagamento:ok_rate}': [],
 	'checks{chiediInformazioniPagamento:ko_rate}': [],
-	'checks{closePaymentV2:over_sla300}': [],
-	'checks{closePaymentV2:over_sla400}': [],
-	'checks{closePaymentV2:over_sla500}': [],
-	'checks{closePaymentV2:over_sla600}': [],
-	'checks{closePaymentV2:over_sla800}': [],
-	'checks{closePaymentV2:over_sla1000}': [],
-	'checks{closePaymentV2:ok_rate}': [],
-	'checks{closePaymentV2:ko_rate}': [],
-	'checks{sendPaymentOutcome:over_sla300}': [],
-	'checks{sendPaymentOutcome:over_sla400}': [],
-	'checks{sendPaymentOutcome:over_sla500}': [],
-	'checks{sendPaymentOutcome:over_sla600}': [],
-	'checks{sendPaymentOutcome:over_sla800}': [],
-	'checks{sendPaymentOutcome:over_sla1000}': [],
-	'checks{sendPaymentOutcome:ok_rate}': [],
-	'checks{sendPaymentOutcome:ko_rate}': [],
+	'checks{closePayment:over_sla300}': [],
+	'checks{closePayment:over_sla400}': [],
+	'checks{closePayment:over_sla500}': [],
+	'checks{closePayment:over_sla600}': [],
+	'checks{closePayment:over_sla800}': [],
+	'checks{closePayment:over_sla1000}': [],
+	'checks{closePayment:ok_rate}': [],
+	'checks{closePayment:ko_rate}': [],
 	'checks{Attiva:over_sla300}': [],
 	'checks{Attiva:over_sla400}': [],
 	'checks{Attiva:over_sla500}': [],
@@ -173,9 +165,6 @@ export function total() {
  
   let rndAnagPsp = inputDataUtil.getAnagPspV1();
   let rndAnagPaNew = inputDataUtil.getAnagPaNew();
-
-  let transactionId = common.transaction_id();
-  let pspTransactionId = common.transaction_id();
   
   let iuv = iuvUtil.genIuv();
   let ccp = create_UUID().replace("-", "");
@@ -204,7 +193,9 @@ export function total() {
 
     
   let outcome = 'OK';
-  res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, res.importoTotale);
+  let transactionId = common.transaction_id();
+  let pspTransactionId = common.transaction_id();
+  res = closePayment(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, res.importoTotale);
 
   
   //res = sendPaymentOutput(baseSoapUrl,rndAnagPsp,paymentToken);

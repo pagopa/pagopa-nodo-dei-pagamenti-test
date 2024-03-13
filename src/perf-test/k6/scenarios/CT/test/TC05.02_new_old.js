@@ -3,7 +3,7 @@ import { check } from 'k6';
 import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
 import { chiediInformazioniPagamento } from './api/chiediInformazioniPagamento.js';
-import { closePaymentV2 } from './api/closePaymentV2.js';
+import { closePayment } from './api/closePayment.js';
 import { Attiva } from './api/Attiva.js';
 import { RPT } from './api/RPT.js';
 import * as inputDataUtil from './util/input_data_util.js';
@@ -98,13 +98,13 @@ export const options = {
 	'checks{chiediInformazioniPagamento:over_sla1000}': [],
 	'checks{chiediInformazioniPagamento:ok_rate}': [],
 	'checks{chiediInformazioniPagamento:ko_rate}': [],
-	'checks{closePaymentV2:over_sla300}': [],
-	'checks{closePaymentV2:over_sla400}': [],
-	'checks{closePaymentV2:over_sla500}': [],
-	'checks{closePaymentV2:over_sla600}': [],
-	'checks{closePaymentV2:over_sla800}': [],
-	'checks{closePaymentV2:over_sla1000}': [],
-	'checks{closePaymentV2:ok_rate}': [],
+	'checks{closePayment:over_sla300}': [],
+	'checks{closePayment:over_sla400}': [],
+	'checks{closePayment:over_sla500}': [],
+	'checks{closePayment:over_sla600}': [],
+	'checks{closePayment:over_sla800}': [],
+	'checks{closePayment:over_sla1000}': [],
+	'checks{closePayment:ok_rate}': [],
 	'checks{closePaymentV2:ko_rate}': [],
 	'checks{Attiva:over_sla300}': [],
 	'checks{Attiva:over_sla400}': [],
@@ -196,7 +196,7 @@ export function total() {
   
     
   let outcome= 'KO';
-  res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, res.importoTotale);
+  res = closePayment(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, res.importoTotale);
 
 }
 

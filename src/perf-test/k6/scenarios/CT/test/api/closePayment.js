@@ -8,59 +8,7 @@ export const closePayment_Trend = new Trend('closePayment');
 export const All_Trend = new Trend('ALL');
 
 
-export function closePaymentReqBody(psp, intpsp, chpsp_c, paymentToken, outcome, transactionId, additionalTransactionId){
-
-var dt = new Date();
-let ms = dt.getMilliseconds();
-
-var timezone_offset_min = dt.getTimezoneOffset()-120,
-	offset_hrs = parseInt(Math.abs(timezone_offset_min/60)),
-	offset_min = Math.abs(timezone_offset_min%60),
-	timezone_standard;
-
-if(offset_hrs < 10)
-	offset_hrs = '0' + offset_hrs;
-
-if(offset_min < 10)
-	offset_min = '0' + offset_min;
-
-
-if(timezone_offset_min < 0)
-	timezone_standard = '+' + offset_hrs + ':' + offset_min;
-else if(timezone_offset_min > 0)
-	timezone_standard = '-' + offset_hrs + ':' + offset_min;
-else if(timezone_offset_min == 0)
-	timezone_standard = 'Z';
-
-//console.debug(timezone_standard); 
-
-dt = dt.getFullYear() + "-" + ("0" + (dt.getMonth() + 1)).slice(-2) + "-" +  ("0" + dt.getDate()).slice(-2) + "T" + 
-("0" + dt.getHours() ).slice(-2) + ":" + ("0" + dt.getMinutes()).slice(-2) + ":" + ("0" + dt.getSeconds()).slice(-2)+ "." + ms + timezone_standard;
-
-return `
-{
-    "paymentTokens": [
-        "${paymentToken}"
-    ],
-    "outcome": "${outcome}",
-    "identificativoPsp": "${psp}",
-    "tipoVersamento": "BPAY",
-    "identificativoIntermediario": "${intpsp}",
-    "identificativoCanale": "${chpsp_c}",
-    "pspTransactionId": "${transactionId}",
-    "totalAmount": 2.00,
-    "fee": 1.00,
-    "timestampOperation": "${dt}",
-    "additionalPaymentInformations": {
-        "transactionId": "${additionalTransactionId}", //925676 o 025676 
-        "outcomePaymentGateway": "EFF",
-        "authorizationCode": "yenhcunuy37dhu3n7fhjer783hc"
-    }
-}
-`
-};
-
-export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transactionId, additionalTransactionId) {
+export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transactionId, additionalTransactionId, totalAmount ) {
 
  var dt = new Date();
  let ms = dt.getMilliseconds();
@@ -101,8 +49,8 @@ export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transacti
                "identificativoIntermediario": rndAnagPsp.INTPSP,
                "identificativoCanale": rndAnagPsp.CHPSP_C,
                "pspTransactionId": transactionId,
-               "totalAmount": 2.00,
-               "fee": 1.00,
+               "totalAmount": parseFloat(totalAmount),
+               "fee": 0.00,
                "timestampOperation": dt,
                "additionalPaymentInformations": {
                    "transactionId": additionalTransactionId, //925676 o 025676
@@ -113,8 +61,7 @@ export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transacti
 
 
  const res = http.post(
-    getBasePath(baseUrl, "nodoPerPMv1")+'/closepayment',
-    //JSON.stringify(closePaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP_C, paymentToken, outcome, transactionId, additionalTransactionId)),
+    getBasePath(baseUrl, "nodoPerPMv1")+'/v1/closepayment',
     JSON.stringify(body),
     { headers: getHeaders({ 'Content-Type': 'application/json' }) ,
 	tags: { closePayment: 'http_req_duration', ALL: 'http_req_duration', primitiva: "closepayment"}
@@ -167,7 +114,8 @@ export function closePayment(baseUrl,rndAnagPsp,paymentToken, outcome, transacti
 
    let esito='';
    try{
-   esito= res["esito"];
+   esito= JSON.parse(res.body)["esito"];
+   
    }catch(error){}
     
    check(

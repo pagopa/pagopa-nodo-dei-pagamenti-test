@@ -3,7 +3,7 @@ import { check } from 'k6';
 import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
 import { chiediInformazioniPagamento } from './api/chiediInformazioniPagamento.js';
-import { closePayment } from './api/closePaymentV2.js';
+import { closePayment } from './api/closePayment.js';
 import { ActivateIOPayment } from './api/ActivateIOPayment.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
@@ -167,8 +167,9 @@ export function total() {
 
   
   let outcome = 'OK';
-  res =  closePayment(baseRestUrl,rndAnagPsp,paymentToken,outcome,"09910087308786","09910087308786", res.importoTotale);
-
+  let transactionId = common.transaction_id();
+  let pspTransactionId = common.transaction_id();
+  res = closePayment(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, res.importoTotale);
 
   
   // res = sendPaymentOutput(baseSoapUrl,rndAnagPsp,paymentToken);
