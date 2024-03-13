@@ -150,7 +150,7 @@ export function total() {
     let paymentToken = res.paymentToken;
 
     let outcome = 'KO';
-    res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, res.importoTotale);
+    res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, res.amount);
 }
 
 export default function () {
