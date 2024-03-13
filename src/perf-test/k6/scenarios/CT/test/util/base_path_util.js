@@ -35,8 +35,8 @@ export function getBasePath(baseUrl, primitive) {
 			"checkPosition": "/checkPosition",
 			"closePaymentV2": "/v2/closepayment",
 
-			"nodoPerPMv1": "/webservices/input",
-			"nodoPerPMv2": "/webservices/input"
+			"nodoPerPMv1": "",
+			"nodoPerPMv2": ""
 		}
 	}
 	else {

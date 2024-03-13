@@ -45,7 +45,7 @@ export function ActivateIOPayment(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,ide
  
  let res=http.post(getBasePath(baseUrl, "activateIOPayment"),
     activateIOPaymentReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, rndAnagPaNew.CF , noticeNmbr, idempotencyKey),
-    { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'activateIOPayment', 'Host':'api.prf.platform.pagopa.it'}) ,
+    { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'activateIOPayment'}) ,
 	tags: { ActivateIOPayment: 'http_req_duration' , ALL: 'http_req_duration', primitiva: "activateIOPayment"}
 	}
   );
