@@ -1,7 +1,7 @@
 import http from 'k6/http';
 import { check, fail } from 'k6';
 import { Trend } from 'k6/metrics';
-import {getBasePath, getHeaders} from "../util/base_path_util";
+import {getBasePath, getHeaders} from "../util/base_path_util.js";
 
 
 export const nodoNotificaAnnullamento_Trend = new Trend('nodoNotificaAnnullamento');

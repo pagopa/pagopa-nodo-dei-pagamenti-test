@@ -7,7 +7,7 @@ import { sendPaymentOutput } from './api/sendPaymentOutput.js';
 import { ActivateIOPayment } from './api/ActivateIOPayment.js';
 import { inoltraEsitoPagamentoPaypal } from './api/inoltraEsitoPagamentoPaypal.js';
 import * as inputDataUtil from './util/input_data_util.js';
-//import * as test_selector from '../../test_selector.js';
+import * as common from '../../CommonScript.js';
 
 
 const csvBaseUrl = new SharedArray('baseUrl', function () {
