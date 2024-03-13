@@ -97,8 +97,10 @@ export function ActivateIOPayment(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,ide
 
     let outcome='';
     let paymentToken='';
+    let creditorReferenceId = '';
     let result={};
     result.paymentToken=paymentToken;
+    result.creditorReferenceId = creditorReferenceId;
     try{
     let doc = parseHTML(res.body);
     let script = doc.find('outcome');
@@ -106,6 +108,12 @@ export function ActivateIOPayment(baseUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,ide
     let scriptToken = doc.find('paymentToken');
     paymentToken = scriptToken.text();
     result.paymentToken=paymentToken;
+    script = doc.find('creditorReferenceId');
+    creditorReferenceId = script.text();
+    result.creditorReferenceId = creditorReferenceId;
+    script = doc.find('totalAmount');
+    result.amount = script.text();
+    console.debug("activateIOPayment totalAmount: " + result.amount);
     }catch(error){}
 
   /*

@@ -3,7 +3,7 @@ import { check } from 'k6';
 import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
 import { chiediInformazioniPagamento } from './api/chiediInformazioniPagamento.js';
-import { closePayment } from './api/closePaymentV2.js';
+import { closePaymentV2 } from './api/closePaymentV2.js';
 import { ActivateIOPayment } from './api/ActivateIOPayment.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
@@ -83,7 +83,7 @@ export const options = {
   thresholds: {
     
     'http_req_duration{chiediInformazioniPagamento:http_req_duration}': [],
-	'http_req_duration{closePayment:http_req_duration}': [],
+	'http_req_duration{closePaymentV2:http_req_duration}': [],
 	'http_req_duration{sendPaymentOutcome:http_req_duration}': [],
     'http_req_duration{ActivateIOPayment:http_req_duration}': [],
 	'http_req_duration{ALL:http_req_duration}': [],
@@ -95,14 +95,14 @@ export const options = {
 	'checks{chiediInformazioniPagamento:over_sla1000}': [],
 	'checks{chiediInformazioniPagamento:ok_rate}': [],
 	'checks{chiediInformazioniPagamento:ko_rate}': [],
-	'checks{closePayment:over_sla300}': [],
-	'checks{closePayment:over_sla400}': [],
-	'checks{closePayment:over_sla500}': [],
-	'checks{closePayment:over_sla600}': [],
-	'checks{closePayment:over_sla800}': [],
-	'checks{closePayment:over_sla1000}': [],
-	'checks{closePayment:ok_rate}': [],
-	'checks{closePayment:ko_rate}': [],
+	'checks{closePaymentV2:over_sla300}': [],
+	'checks{closePaymentV2:over_sla400}': [],
+	'checks{closePaymentV2:over_sla500}': [],
+	'checks{closePaymentV2:over_sla600}': [],
+	'checks{closePaymentV2:over_sla800}': [],
+	'checks{closePaymentV2:over_sla1000}': [],
+	'checks{closePaymentV2:ok_rate}': [],
+	'checks{closePaymentV2:ko_rate}': [],
 	'checks{sendPaymentOutcome:over_sla300}': [],
 	'checks{sendPaymentOutcome:over_sla400}': [],
 	'checks{sendPaymentOutcome:over_sla500}': [],
@@ -153,19 +153,21 @@ export function total() {
   let rndAnagPaNew = inputDataUtil.getAnagPaNew();
 
   let noticeNmbr = genNoticeNumber();
-  let idempotencyKey = genIdempotencyKey(); 
-  
+  let idempotencyKey = genIdempotencyKey();
+  let transactionId = common.transaction_id();
+  let pspTransactionId = common.transaction_id(); 
   
   
   let res = ActivateIOPayment(baseSoapUrl,rndAnagPsp,rndAnagPaNew,noticeNmbr,idempotencyKey);
   let paymentToken = res.paymentToken;
+  let importoTotaleDaVersare = res.amount;
 
   
   res = chiediInformazioniPagamento(baseRestUrl,paymentToken, rndAnagPaNew);
 
 
   let outcome = 'OK';
-  res =  closePayment(baseRestUrl,rndAnagPsp,paymentToken,outcome,"99999999","09910087308786",res.importoTotale);
+  res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, importoTotaleDaVersare);
 
   
   //res = sendPaymentOutput(baseSoapUrl,rndAnagPsp,paymentToken);

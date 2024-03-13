@@ -3,11 +3,12 @@ import { check } from 'k6';
 import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
 import { chiediInformazioniPagamento } from './api/chiediInformazioniPagamento.js';
-import { closePayment } from './api/closePaymentV2.js';
+import { closePaymentV2 } from './api/closePaymentV2.js';
 import { Attiva } from './api/Attiva.js';
 import { RPT } from './api/RPT.js';
 import * as inputDataUtil from './util/input_data_util.js';
 import * as iuvUtil from './util/iuv_util.js';
+import * as common from '../../CommonScript.js';
 
 
 
@@ -85,7 +86,7 @@ export const options = {
   thresholds: {
     
     'http_req_duration{chiediInformazioniPagamento:http_req_duration}': [],
-	'http_req_duration{closePayment:http_req_duration}': [],
+	'http_req_duration{closePaymentV2:http_req_duration}': [],
     'http_req_duration{Attiva:http_req_duration}': [],
 	'http_req_duration{RPT:http_req_duration}': [],
 	'http_req_duration{ALL:http_req_duration}': [],
@@ -97,14 +98,14 @@ export const options = {
 	'checks{chiediInformazioniPagamento:over_sla1000}': [],
 	'checks{chiediInformazioniPagamento:ok_rate}': [],
 	'checks{chiediInformazioniPagamento:ko_rate}': [],
-	'checks{closePayment:over_sla300}': [],
-	'checks{closePayment:over_sla400}': [],
-	'checks{closePayment:over_sla500}': [],
-	'checks{closePayment:over_sla600}': [],
-	'checks{closePayment:over_sla800}': [],
-	'checks{closePayment:over_sla1000}': [],
-	'checks{closePayment:ok_rate}': [],
-	'checks{closePayment:ko_rate}': [],
+	'checks{closePaymentV2:over_sla300}': [],
+	'checks{closePaymentV2:over_sla400}': [],
+	'checks{closePaymentV2:over_sla500}': [],
+	'checks{closePaymentV2:over_sla600}': [],
+	'checks{closePaymentV2:over_sla800}': [],
+	'checks{closePaymentV2:over_sla1000}': [],
+	'checks{closePaymentV2:ok_rate}': [],
+	'checks{closePaymentV2:ko_rate}': [],
 	'checks{Attiva:over_sla300}': [],
 	'checks{Attiva:over_sla400}': [],
 	'checks{Attiva:over_sla500}': [],
@@ -164,8 +165,9 @@ export function total() {
   let rndAnagPsp = inputDataUtil.getAnagPspV1();
   let rndAnagPaNew = inputDataUtil.getAnagPaNew();
 
-  let noticeNmbr = genNoticeNumber();
-  let idempotencyKey = genIdempotencyKey(); 
+  let transactionId = common.transaction_id();
+  let pspTransactionId = common.transaction_id();
+
   let iuv = iuvUtil.genIuv();
   let ccp = create_UUID().replace("-", "");
   
@@ -189,13 +191,12 @@ export function total() {
   let paymentToken = res.paymentToken;
   
   
-  
   res = chiediInformazioniPagamento(baseRestUrl,paymentToken, rndAnagPaNew);
 
   
     
   let outcome= 'KO';
-  res =  closePayment(baseRestUrl,rndAnagPsp,paymentToken, outcome, "09910087308786", "09910087308786",res.importoTotale);
+  res = closePaymentV2(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, res.importoTotale);
 
 }
 
