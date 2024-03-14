@@ -86,7 +86,7 @@ export const options = {
   thresholds: {
     
     'http_req_duration{chiediInformazioniPagamento:http_req_duration}': [],
-	'http_req_duration{closePaymentV2:http_req_duration}': [],
+	'http_req_duration{closePayment:http_req_duration}': [],
     'http_req_duration{Attiva:http_req_duration}': [],
 	'http_req_duration{RPT:http_req_duration}': [],
 	'http_req_duration{ALL:http_req_duration}': [],
@@ -105,7 +105,7 @@ export const options = {
 	'checks{closePayment:over_sla800}': [],
 	'checks{closePayment:over_sla1000}': [],
 	'checks{closePayment:ok_rate}': [],
-	'checks{closePaymentV2:ko_rate}': [],
+	'checks{closePayment:ko_rate}': [],
 	'checks{Attiva:over_sla300}': [],
 	'checks{Attiva:over_sla400}': [],
 	'checks{Attiva:over_sla500}': [],

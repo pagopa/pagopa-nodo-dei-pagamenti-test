@@ -86,7 +86,7 @@ export const options = {
   thresholds: {
     
     'http_req_duration{chiediInformazioniPagamento:http_req_duration}': [],
-	'http_req_duration{closePaymentV2:http_req_duration}': [],
+	'http_req_duration{closePayment:http_req_duration}': [],
 	'http_req_duration{sendPaymentOutcome:http_req_duration}': [],
     'http_req_duration{Attiva:http_req_duration}': [],
 	'http_req_duration{RPT:http_req_duration}': [],
