@@ -106,7 +106,7 @@ Feature: Semantic checks KO for activatePaymentNoticeReq
   # password value check: wrong password for an idChannel 
   Scenario: Check PPT_AUTENTICAZIONE error on password not associated to psp channel
     Given idChannel with #canale_ATTIVATO_PRESSO_PSP# in activatePaymentNotice
-    And password with pwdpwdpw in activatePaymentNotice
+    And password with pwdpwdpe in activatePaymentNotice
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_AUTENTICAZIONE of activatePaymentNotice response
@@ -130,8 +130,6 @@ Feature: Semantic checks KO for activatePaymentNoticeReq
   @runnable @PG34
   # station value check: combination fiscalCode-noticeNumber identifies a station not present inside column ID_STAZIONE in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database [SEM_APNR_12]
   Scenario Outline: Check PPT_STAZIONE_INT_PA_SCONOSCIUTA error on non-existent station
-    #Given fiscalCode with 77777777777 in activatePaymentNotice
-    # And idempotencyKey with <iKey> in activatePaymentNotice
     Given noticeNumber with <value> in activatePaymentNotice
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
@@ -149,7 +147,6 @@ Feature: Semantic checks KO for activatePaymentNoticeReq
   @runnable @PG34
   # station value check: combination fiscalCode-noticeNumber identifies a station corresponding to an ID_STAZIONE value with field ENABLED = N in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database [SEM_APNR_13]
   Scenario: Check PPT_STAZIONE_INT_PA_DISABILITATA error on disabled station
-    #Given fiscalCode with 77777777777 in activatePaymentNotice
     Given noticeNumber with 316456789012345478 in activatePaymentNotice
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
@@ -158,8 +155,7 @@ Feature: Semantic checks KO for activatePaymentNoticeReq
   @runnable @PG34
   # station value check: combination fiscalCode-noticeNumber identifies a station corresponding to an ID_STAZIONE value with field IP in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database not reachable (e.g. IP = 1.2.3.4) [SEM_APNR_14]
   Scenario: Check PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE error on unreachable station
-    #Given fiscalCode with 77777777777 in activatePaymentNotice
-    Given noticeNumber with 099456789012345678 in activatePaymentNotice
+    Given noticeNumber with 099456789012345679 in activatePaymentNotice
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of activatePaymentNotice response
@@ -167,7 +163,6 @@ Feature: Semantic checks KO for activatePaymentNoticeReq
   @runnable @PG34
   # pa broker value check: combination fiscalCode-noticeNumber identifies a pa broker corresponding to an ID_INTERMEDIARIO_PA value with field ENABLED = N in NODO4_CFG.INTERMEDIARI_PA table of nodo-dei-pagamenti database [SEM_APNR_15]
   Scenario: Check PPT_INTERMEDIARIO_PA_DISABILITATO error on disabled pa broker
-    #Given fiscalCode with 77777777777 in activatePaymentNotice
     Given noticeNumber with 010456789012345678 in activatePaymentNotice
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response

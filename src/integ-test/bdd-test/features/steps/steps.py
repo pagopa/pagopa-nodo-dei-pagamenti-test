@@ -718,8 +718,7 @@ def step_impl(context):
     setattr(context, 'rptAttachment', payload)
 
 
-@given(
-    'generate {number:d} notice number and iuv with aux digit {aux_digit:d}, segregation code {segregation_code} and application code {application_code}')
+@given('generate {number:d} notice number and iuv with aux digit {aux_digit:d}, segregation code {segregation_code} and application code {application_code}')
 def step_impl(context, number, aux_digit, segregation_code, application_code):
     segregation_code = utils.replace_global_variables(segregation_code, context)
     application_code = utils.replace_global_variables(application_code, context)
@@ -1063,6 +1062,7 @@ def step_impl(context, type, tag, value, primitive):
 
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
+    
     # use - to skip
     if elem != "-":
         value = utils.replace_local_variables(value, context)
@@ -1104,15 +1104,15 @@ def step_impl(context, sender, soap_primitive, receiver):
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
-    soap_response = requests.post(url_nodo, getattr(
-        context, soap_primitive), headers=headers, verify=False)
+
+    soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
+
     print(soap_response.content.decode('utf-8'))
     print(soap_response.status_code)
     print(f'soap response: {soap_response.headers}')
     setattr(context, soap_primitive + RESPONSE, soap_response)
 
-    assert (soap_response.status_code ==
-            200), f"status_code {soap_response.status_code}"
+    assert (soap_response.status_code == 200), f"status_code {soap_response.status_code}"
 
 
 @step('send, by sender {sender}, soap action {soap_primitive} to {receiver}')
@@ -1283,8 +1283,7 @@ def step_impl(context, tag, value, primitive):
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
         founded_value = jo.get_value_from_key(json_response, tag)
-        print(
-            f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
+        print(f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert value in str(founded_value)
 
 
@@ -1574,10 +1573,7 @@ def step_impl(context, mock, destination, primitive):
         pa_verify_payment_notice_res = context.text
     else:
         pa_verify_payment_notice_res = getattr(context, primitive)
-    pa_verify_payment_notice_res = str(pa_verify_payment_notice_res).replace("#fiscalCodePA#",
-                                                                             context.config.userdata.get(
-                                                                                 "global_configuration").get(
-                                                                                 "creditor_institution_code"))
+    pa_verify_payment_notice_res = str(pa_verify_payment_notice_res).replace("#fiscalCodePA#", context.config.userdata.get("global_configuration").get("creditor_institution_code"))
 
     if '$iuv' in pa_verify_payment_notice_res:
         pa_verify_payment_notice_res = pa_verify_payment_notice_res.replace(
@@ -1587,16 +1583,13 @@ def step_impl(context, mock, destination, primitive):
     print(pa_verify_payment_notice_res)
     if mock == 'EC':
         print(utils.get_soap_mock_ec(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec(context), primitive,
-                                                      pa_verify_payment_notice_res, override=True)
+        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec(context), primitive, pa_verify_payment_notice_res, override=True)
     elif mock == 'EC2':
         print(utils.get_soap_mock_ec2(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec2(context), primitive,
-                                                      pa_verify_payment_notice_res, override=True)
+        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec2(context), primitive, pa_verify_payment_notice_res, override=True)
     elif mock == 'PSP':
         print(utils.get_soap_mock_psp(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_psp(context), primitive,
-                                                      pa_verify_payment_notice_res, override=True)
+        response_status_code = utils.save_soap_action(utils.get_soap_mock_psp(context), primitive, pa_verify_payment_notice_res, override=True)
 
     elif mock == 'PSP2':
         print(utils.get_soap_mock_psp2(context))
@@ -1912,8 +1905,7 @@ def step_impl(context, param, value):
 
 @step("refresh job {job_name} triggered after 10 seconds")
 def step_impl(context, job_name):
-    url_nodo = context.config.userdata.get(
-        "services").get("nodo-dei-pagamenti").get("url")
+    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
     headers = {'Host': 'api.dev.platform.pagopa.it:443'}
 
     # DA UTILIZZARE IN LOCALE (DECOMMENTARE LE 2 RIGHE DI SEGUITO E COMMENTARE LE 2 RIGHE SOTTO pipeline)
@@ -1991,14 +1983,12 @@ def step_impl(context):
     time.sleep(10)
     assert refresh_response.status_code == 200
 
-
 @step("execution query {query_name} to get value on the table {table_name}, with the columns {columns} under macro {macro} with db name {db_name}")
 def step_impl(context, query_name, macro, db_name, table_name, columns):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
 
-    selected_query = utils.query_json(context, query_name, macro).replace(
-        "columns", columns).replace("table_name", table_name)
+    selected_query = utils.query_json(context, query_name, macro).replace("columns", columns).replace("table_name", table_name)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_global_variables(selected_query, context)
 
@@ -2024,8 +2014,7 @@ def step_impl(context, query_name, param, position, key):
     setattr(context, key, selected_element)
 
 
-@step(
-    "through the query {query_name} retrieve param {param} at position {position:d} in the row {row_number:d} and save it under the key {key}")
+@step("through the query {query_name} retrieve param {param} at position {position:d} in the row {row_number:d} and save it under the key {key}")
 def step_impl(context, query_name, param, position, row_number, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
@@ -2045,8 +2034,7 @@ def step_impl(context, query_name, xml, position, key):
     setattr(context, key, selected_element)
 
 
-@step(
-    "through the query {query_name} retrieve xml_no_decode {xml} at position {position:d} and save it under the key {key}")
+@step("through the query {query_name} retrieve xml_no_decode {xml} at position {position:d} and save it under the key {key}")
 def step_impl(context, query_name, xml, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
@@ -2154,8 +2142,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    selected_query = utils.query_json(context, query_name, name_macro).replace(
-        "columns", column).replace("table_name", table_name)
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
     print(selected_query)
     exec_query = adopted_db.executeQuery(conn, selected_query)
 
@@ -2407,9 +2394,8 @@ def step_impl(context, query_name, table_name, where_condition, valore, macro, d
 @step("updates through the query {query_name} of the table {table_name} the parameter {param} with {value} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param',
-                                                                                                            param).replace(
-        'value', value)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
+
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
@@ -2421,8 +2407,7 @@ def step_impl(context, query_name, table_name, param, value, macro, db_name):
     adopted_db.closeConnection(conn)
 
 
-@step(
-    "delete by the query {query_name} the table {table_name} with the where {where_condition} under macro {macro} on db {db_name}")
+@step("delete by the query {query_name} the table {table_name} with the where {where_condition} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, where_condition, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
     selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace(
@@ -2463,8 +2448,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     adopted_db.closeConnection(conn)
 
 
-@step(
-    u"verify datetime plus number of minutes {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
+@step(u"verify datetime plus number of minutes {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
@@ -2492,8 +2476,7 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
     db_selected = db_config.get(db_name)
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    selected_query = utils.query_json(context, query_name, name_macro).replace(
-        "columns", '*').replace("table_name", table_name)
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", '*').replace("table_name", table_name)
 
     exec_query = adopted_db.executeQuery(conn, selected_query)
     print("record query: ", exec_query)
@@ -2603,8 +2586,7 @@ def step_impl(context, primitive1, primitive2, delay1, restType1, restType2):
     list_of_primitive = [primitive1, primitive2]
     list_of_type = [restType1, restType2]
     list_of_delays = [0, delay1]
-    utils.threading_delayed(context, list_of_primitive,
-                            list_of_delays, list_of_type)
+    utils.threading_delayed(context, list_of_primitive, list_of_delays, list_of_type)
 
 
 
@@ -3298,19 +3280,15 @@ def step_impl(context, new_attribute, old_attribute):
 
 @step('Select and Update RT for Test retry_PAold with causale versamento {causaleVers}')
 def step_impl(context, causaleVers):
-    db_config = context.config.userdata.get(
-        "db_configuration").get("nodo_online")
-
-    adopted_db, conn = db_online.getConnection(db_config.get('host'), db_config.get(
-        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
+    db_name = "nodo_online"
+    db_config = context.config.userdata.get("db_configuration").get(db_name)
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_config)
 
     # select clob
     xml_content_query = "SELECT XML_CONTENT as clob FROM RT_XML WHERE IDENT_DOMINIO='$activatePaymentNotice.fiscalCode' AND IUV='$iuv'"
 
-    xml_content_query = utils.replace_local_variables(
-        xml_content_query, context)
-    xml_content_query = utils.replace_context_variables(
-        xml_content_query, context)
+    xml_content_query = utils.replace_local_variables(xml_content_query, context)
+    xml_content_query = utils.replace_context_variables(xml_content_query, context)
     xml_content_row = adopted_db.executeQuery(conn, xml_content_query)
 
     xml_rt = parseString(xml_content_row[0][0].read())
@@ -3418,8 +3396,7 @@ def step_impl(contex, seconds):
             break
 
 
-@step(
-    u"under macro {name_macro} on db {db_name} with the query {query_name} verify the value {value} of the record at column {column} of table {table_name}")
+@step(u"under macro {name_macro} on db {db_name} with the query {query_name} verify the value {value} of the record at column {column} of table {table_name}")
 def step_impl(context, name_macro, db_name, query_name, value, column, table_name):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)

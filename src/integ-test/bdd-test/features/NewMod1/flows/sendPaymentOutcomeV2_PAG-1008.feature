@@ -184,7 +184,7 @@ Feature: check tags companyName in activateV2 paGetPaymentV2 pspNotifyPaymentV2 
             """
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-
+        And wait 5 seconds for expiration
         And execution query re_pspNotifyPaymentV2_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query re_pspNotifyPaymentV2_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentV2
         And from pspNotifyPaymentV2 check the companySec in transferList.transfer.companyName
