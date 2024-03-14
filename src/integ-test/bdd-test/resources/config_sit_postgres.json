@@ -31,6 +31,14 @@
          "healthcheck": "/info",
          "soap_service": "",
          "rest_service": ""
+      },
+      "apicfg-testing-support": {
+         "url": "https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1",
+         "healthcheck": "/info",
+         "soap_service": " ",
+         "rest_service": " ",
+         "refresh_config_service": "",
+         "subscription_key_name": "APICFG_SUBSCRIPTION_KEY"
       }
    },
    "global_configuration": {
@@ -92,35 +100,35 @@
          "host": "localhost",
          "database": "ndpspct",
          "user": "nodo4_cfg",
-         "password": "NODO4_CFG",
+         "password": "n0D04_CFG",
          "port": "5444"
       },
       "nodo_online": {
          "host": "localhost",
          "database": "ndpspct",
          "user": "nodo_online",
-         "password": "nodo_online",
+         "password": "n0D0_0NLIN3",
          "port": "5444"
       },
       "nodo_offline": {
          "host": "localhost",
          "database": "ndpspct",
          "user": "nodo_offline",
-         "password": "nodo_offline",
+         "password": "n0D0_0FFLIN3",
          "port": "5444"
       },
       "re": {
          "host": "localhost",
          "database": "ndpareht",
          "user": "re",
-         "password": "re",
+         "password": "r3_US3R",
          "port": "5444"
       },
       "wfesp": {
          "host": "localhost",
          "database": "ndpspct",
          "user": "wfesp",
-         "password": "wfesp",
+         "password": "wF35P",
          "port": "5444"
       }
    }
