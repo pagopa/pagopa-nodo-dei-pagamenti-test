@@ -3,7 +3,7 @@ import { check } from 'k6';
 import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
 import { chiediInformazioniPagamento } from './api/chiediInformazioniPagamento.js';
-import { sendPaymentOutput } from './api/sendPaymentOutput.js';
+import { sendPaymentOutcome } from './api/sendPaymentOutcome.js';
 import { ActivateIOPayment } from './api/ActivateIOPayment.js';
 import { inoltraEsitoPagamentoPaypal } from './api/inoltraEsitoPagamentoPaypal.js';
 import * as inputDataUtil from './util/input_data_util.js';
@@ -170,7 +170,7 @@ export function total() {
 
 	
 	
-	res = sendPaymentOutput(baseSoapUrl,rndAnagPsp,paymentToken);
+	res = sendPaymentOutcome(baseSoapUrl,rndAnagPsp,paymentToken);
 
 
 }

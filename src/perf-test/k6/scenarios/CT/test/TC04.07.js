@@ -3,7 +3,7 @@ import { check } from 'k6';
 import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
 import { chiediInformazioniPagamento } from './api/chiediInformazioniPagamento.js';
-import { sendPaymentOutput } from './api/sendPaymentOutput.js';
+import { sendPaymentOutcome } from './api/sendPaymentOutcome.js';
 import { ActivateIOPayment } from './api/ActivateIOPayment.js';
 import { inoltraEsitoPagamentoPaypal } from './api/inoltraEsitoPagamentoPaypal.js';
 import { nodoChiediAvanzamentoPagamento_Post } from './api/nodoChiediAvanzamentoPagamento_Post.js';
@@ -192,7 +192,7 @@ export function total() {
 	res = nodoChiediAvanzamentoPagamento_Pre(baseRestUrl,paymentToken);
 
 
-	res = sendPaymentOutput(baseSoapUrl,rndAnagPsp,paymentToken);
+	res = sendPaymentOutcome(baseSoapUrl,rndAnagPsp,paymentToken);
 
 	
 	

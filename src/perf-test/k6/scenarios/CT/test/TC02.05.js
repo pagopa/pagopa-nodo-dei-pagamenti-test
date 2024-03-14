@@ -12,7 +12,7 @@ import { RT } from './api/RT.js';
 import { RPT_Carrello_1 } from './api/RPT_Carrello_1.js';
 import { RPT_Carrello_5 } from './api/RPT_Carrello_5.js';
 import { RPT_Semplice_N3 } from './api/RPT_Semplice_N3.js';
-import { sendPaymentOutput } from './api/sendPaymentOutput.js';
+import { sendPaymentOutcome } from './api/sendPaymentOutcome.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
 import * as iuvUtil from './util/iuv_util.js';
@@ -486,7 +486,7 @@ export function rpt5() {
 export function OR(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId) {
 
    //console.debug("OR+"+rndAnagPsp.PSP);
- 	let res = sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken);
+ 	let res = sendPaymentOutcome(baseUrl,rndAnagPsp,paymentToken);
 
 
 	res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, amountGlobal);
@@ -501,7 +501,7 @@ export function RO(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId) 
     let res =  RPT_Semplice_N3(baseUrl,rndAnagPaNew,paymentToken, creditorReferenceId, amountGlobal);
 
 
-	res = sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken);
+	res = sendPaymentOutcome(baseUrl,rndAnagPsp,paymentToken);
 
 }
 
