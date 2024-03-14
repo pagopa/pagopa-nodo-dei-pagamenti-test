@@ -1,7 +1,7 @@
 //import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
-import { sendPaymentOutput_NN } from './api/sendPaymentOutput_NN.js';
+import { sendPaymentOutcome_NN } from './api/sendPaymentOutcome_NN.js';
 import { activatePaymentNotice_NN } from './api/activatePaymentNotice_NN.js';
 import { verifyPaymentNotice_NN } from './api/verifyPaymentNotice_NN.js';
 import * as common from '../../CommonScript.js';
@@ -164,7 +164,7 @@ export function total() {
 
 
 
-  res = sendPaymentOutput_NN(baseUrl,rndAnagPsp,paymentToken);
+  res = sendPaymentOutcome_NN(baseUrl,rndAnagPsp,paymentToken);
 
 
 }

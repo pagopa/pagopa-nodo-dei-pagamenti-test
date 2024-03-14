@@ -13,7 +13,7 @@ import { RPT_Carrello_1 } from './api/RPT_Carrello_1.js';
 import { RPT_Carrello_5 } from './api/RPT_Carrello_5.js';
 import { RPT_Semplice_N3 } from './api/RPT_Semplice_N3.js';
 import { sendPaymentOutcome } from './api/sendPaymentOutcome.js';
-import { sendPaymentOutput_NN } from './api/sendPaymentOutput_NN.js';
+import { sendPaymentOutcome_NN } from './api/sendPaymentOutcome_NN.js';
 import { activatePaymentNotice_NN } from './api/activatePaymentNotice_NN.js';
 import { activatePaymentNoticeIdp_NN } from './api/activatePaymentNoticeIdp_NN.js';
 import { verifyPaymentNotice_NN } from './api/verifyPaymentNotice_NN.js';
@@ -749,7 +749,7 @@ function sd2Transf() {
   let paymentToken = executeIdp_NN(rndAnagPsp, rndAnagPaNew, noticeNmbr, 2);
   paymentTokenGlobal = paymentToken;
   console.debug("sd2Transf paymentToken " + paymentToken);
-  res = sendPaymentOutput_NN(baseUrl, rndAnagPsp, paymentToken);
+  res = sendPaymentOutcome_NN(baseUrl, rndAnagPsp, paymentToken);
 
 }
 
@@ -770,7 +770,7 @@ function sd2Transf() {
 //   let paymentToken = executeIdp_NN(rndAnagPsp, rndAnagPaNew, noticeNmbr, 2);
 //   console.debug("sd2TransfMod4 paymentToken " + paymentToken);
 //   paymentTokenGlobal = paymentToken;
-//   res = sendPaymentOutput_NN(baseUrl, rndAnagPsp, paymentToken);
+//   res = sendPaymentOutcome_NN(baseUrl, rndAnagPsp, paymentToken);
 
 // }
 
@@ -791,7 +791,7 @@ function sd5Transf() {
   let paymentToken = executeIdp_NN(rndAnagPsp, rndAnagPaNew, noticeNmbr, 5);
   console.debug("sd5Transf paymentToken" + paymentToken);
   paymentTokenGlobal = paymentToken;
-  res = sendPaymentOutput_NN(baseUrl, rndAnagPsp, paymentToken);
+  res = sendPaymentOutcome_NN(baseUrl, rndAnagPsp, paymentToken);
 
 }
 
@@ -810,7 +810,7 @@ function sd5Transf() {
 //   let paymentToken = executeIdp_NN(rndAnagPsp, rndAnagPaNew, noticeNmbr, 5);
 //   console.debug("sd5TransfMod4 paymentToken" + paymentToken);
 //   paymentTokenGlobal = paymentToken;
-//   res = sendPaymentOutput_NN(baseUrl, rndAnagPsp, paymentToken);
+//   res = sendPaymentOutcome_NN(baseUrl, rndAnagPsp, paymentToken);
 
 // }
 

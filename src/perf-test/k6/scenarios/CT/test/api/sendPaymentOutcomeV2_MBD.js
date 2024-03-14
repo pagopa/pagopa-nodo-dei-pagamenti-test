@@ -5,7 +5,7 @@ import { Trend } from 'k6/metrics';
 import { getBasePath, getHeaders } from "../util/base_path_util.js";
 
 
-export const sendPaymentOutput_Trend = new Trend('sendPaymentOutcomeV2');
+export const sendPaymentOutcome_Trend = new Trend('sendPaymentOutcomeV2');
 export const All_Trend = new Trend('ALL');
 
 
@@ -91,7 +91,7 @@ export function sendPaymentOutcomeV2MBD(baseUrl, rndAnagPsp, paymentToken, mbdEn
   console.debug("sendPaymentOutcomeV2 RES");
   console.debug(JSON.stringify(res));
 
-  sendPaymentOutput_Trend.add(res.timings.duration);
+  sendPaymentOutcome_Trend.add(res.timings.duration);
   All_Trend.add(res.timings.duration);
 
   check(res, {

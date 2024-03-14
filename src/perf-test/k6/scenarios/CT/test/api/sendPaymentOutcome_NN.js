@@ -5,10 +5,10 @@ import { Trend } from 'k6/metrics';
 import {getBasePath, getHeaders} from "../util/base_path_util.js";
 
 
-export const sendPaymentOutput_NN_Trend = new Trend('sendPaymentOutput_NN');
+export const sendPaymentOutcome_NN_Trend = new Trend('sendPaymentOutcome_NN');
 export const All_Trend = new Trend('ALL');
 
-export function sendPaymentOutputReqBody(psp, intpsp, chpsp, paymentToken){
+export function sendPaymentOutcomeReqBody(psp, intpsp, chpsp, paymentToken){
 	
 var today = new Date();
 var tomorrow = new Date();
@@ -48,22 +48,22 @@ return `
 `
 };
 
-export function sendPaymentOutput_NN(baseUrl,rndAnagPsp,paymentToken) {
+export function sendPaymentOutcome_NN(baseUrl,rndAnagPsp,paymentToken) {
  //console.debug("VERIFY="+noticeNmbr);
  
- console.log(sendPaymentOutputReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken));
+ console.log(sendPaymentOutcomeReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken));
  const res = http.post(
 		 getBasePath(baseUrl, "sendPaymentOutcome"),
-    sendPaymentOutputReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken),
+    sendPaymentOutcomeReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken),
     { headers: getHeaders({ 'Content-Type': 'text/xml', 'SOAPAction': 'sendPaymentOutcome' }) ,
 	tags: { sendPaymentOutcome_NN: 'http_req_duration', ALL: 'http_req_duration',primitiva:"sendPaymentOutcome"}
 	}
   );
   
-  console.debug("sendPaymentOutput_NN RES");
+  console.debug("sendPaymentOutcome_NN RES");
   console.debug(JSON.stringify(res));
   
-   sendPaymentOutput_NN_Trend.add(res.timings.duration);
+   sendPaymentOutcome_NN_Trend.add(res.timings.duration);
    All_Trend.add(res.timings.duration);
 
    check(res, {
@@ -111,7 +111,7 @@ export function sendPaymentOutput_NN(baseUrl,rndAnagPsp,paymentToken) {
   }catch(error){}
 
   /*if(outcome=='KO'){
-  console.debug("sendOutcomeNN REQuest----------------"+ sendPaymentOutputReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken)); 
+  console.debug("sendOutcomeNN REQuest----------------"+ sendPaymentOutcomeReqBody(rndAnagPsp.PSP, rndAnagPsp.INTPSP, rndAnagPsp.CHPSP, paymentToken)); 
   console.debug("sendOutcomeNN RESPONSE----------------"+res.body);
   }*/
   
