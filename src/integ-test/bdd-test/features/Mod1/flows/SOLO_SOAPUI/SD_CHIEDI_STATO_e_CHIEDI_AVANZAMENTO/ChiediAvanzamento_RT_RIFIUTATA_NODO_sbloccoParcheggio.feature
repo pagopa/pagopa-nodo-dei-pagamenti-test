@@ -360,5 +360,3 @@ Feature: ChiediAvanzamento_RT_RIFIUTATA_NODO_sbloccoParcheggio
         And checks stato contains RT_ACCETTATA_NODO of nodoChiediStatoRPT response
         And checks stato contains RPT_PARCHEGGIATA_NODO of nodoChiediStatoRPT response
         And check url field not exists in nodoChiediStatoRPT response
-
-   

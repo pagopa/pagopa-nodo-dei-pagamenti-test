@@ -415,6 +415,10 @@ def single_thread(context, soap_primitive, tipo):
                         body["totalAmount"] = float(body["totalAmount"])
                     if ('fee' in body.keys()) and (body["fee"] != None):
                         body["fee"] = float(body["fee"])
+                    if ('importoTotalePagato' in body.keys()) and (body["importoTotalePagato"] != None):
+                        body["importoTotalePagato"] = float(body["importoTotalePagato"])
+                    if ('RRN' in body.keys()) and (body["RRN"] != None):
+                        body["RRN"] = float(body["RRN"])
                     if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
                         body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
                     if ('positionslist' in body.keys()) and (body["positionslist"] != None):
@@ -424,6 +428,7 @@ def single_thread(context, soap_primitive, tipo):
                             l.append(body["positionslist"])
                             body["positionslist"] = l
                     body = json.dumps(body, indent=4)
+                    print(f"body: {body}")
             headers = {'Content-Type': 'application/json', 'Host': 'api.dev.platform.pagopa.it:443'}
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')  

@@ -2586,8 +2586,7 @@ def step_impl(context, primitive1, primitive2, delay1, restType1, restType2):
     list_of_primitive = [primitive1, primitive2]
     list_of_type = [restType1, restType2]
     list_of_delays = [0, delay1]
-    utils.threading_delayed(context, list_of_primitive,
-                            list_of_delays, list_of_type)
+    utils.threading_delayed(context, list_of_primitive, list_of_delays, list_of_type)
 
 
 
