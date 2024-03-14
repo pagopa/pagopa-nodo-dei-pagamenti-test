@@ -5,7 +5,7 @@ import papaparse from './util/papaparse.js';
 import { chiediInformazioniPagamento } from './api/chiediInformazioniPagamento.js';
 import { inoltraEsitoPagamentoPaypal } from './api/inoltraEsitoPagamentoPaypal.js';
 import { Attiva } from './api/Attiva.js';
-import { sendPaymentOutput } from './api/sendPaymentOutput.js';
+import { sendPaymentOutcome } from './api/sendPaymentOutcome.js';
 import { RPT } from './api/RPT.js';
 import * as inputDataUtil from './util/input_data_util.js';
 import { randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
@@ -216,7 +216,7 @@ export function total() {
 
 
   
-  res = sendPaymentOutput(baseSoapUrl,rndAnagPsp,ccp);
+  res = sendPaymentOutcome(baseSoapUrl,rndAnagPsp,ccp);
 
 }
 

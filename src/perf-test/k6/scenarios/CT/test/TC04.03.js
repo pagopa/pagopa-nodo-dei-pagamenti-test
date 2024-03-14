@@ -5,7 +5,7 @@ import papaparse from './util/papaparse.js';
 import { chiediInformazioniPagamento } from './api/chiediInformazioniPagamento.js';
 import { inoltraEsitoPagamentoCarta } from './api/inoltraEsitoPagamentoCarta.js';
 import { ActivateIOPayment } from './api/ActivateIOPayment.js';
-import { sendPaymentOutput } from './api/sendPaymentOutput.js';
+import { sendPaymentOutcome } from './api/sendPaymentOutcome.js';
 import * as inputDataUtil from './util/input_data_util.js';
 //import * as test_selector from '../../test_selector.js';
 
@@ -174,7 +174,7 @@ export function total() {
   
   
   
-  res = sendPaymentOutput(baseSoapUrl,rndAnagPsp,paymentToken);
+  res = sendPaymentOutcome(baseSoapUrl,rndAnagPsp,paymentToken);
 
     
 }

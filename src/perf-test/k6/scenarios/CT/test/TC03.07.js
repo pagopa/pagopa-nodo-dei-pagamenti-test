@@ -12,7 +12,7 @@ import { RT } from './api/RT.js';
 import { RPT_Carrello_1 } from './api/RPT_Carrello_1.js';
 import { RPT_Carrello_5 } from './api/RPT_Carrello_5.js';
 import { RPT_Semplice_N3 } from './api/RPT_Semplice_N3.js';
-import { sendPaymentOutput } from './api/sendPaymentOutput.js';
+import { sendPaymentOutcome } from './api/sendPaymentOutcome.js';
 import { sendPaymentOutput_NN } from './api/sendPaymentOutput_NN.js';
 import { activatePaymentNotice_NN } from './api/activatePaymentNotice_NN.js';
 import { activatePaymentNoticeIdp_NN } from './api/activatePaymentNoticeIdp_NN.js';
@@ -714,7 +714,7 @@ export function OR(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId) 
   console.debug("##OR paymentToken " + paymentToken);
   console.debug("##OR AMOUNT " + amountGlobal);
   console.debug("##OR creditorReferenceId " + creditorReferenceId);
-  let res = sendPaymentOutput(baseUrl, rndAnagPsp, paymentToken);
+  let res = sendPaymentOutcome(baseUrl, rndAnagPsp, paymentToken);
 
   res = RPT_Semplice_N3(baseUrl, rndAnagPaNew, paymentToken, creditorReferenceId, amountGlobal);
 
@@ -729,7 +729,7 @@ export function RO(rndAnagPsp, rndAnagPaNew, paymentToken, creditorReferenceId) 
   console.debug("##RO creditorReferenceId " + creditorReferenceId);
   let res = RPT_Semplice_N3(baseUrl, rndAnagPaNew, paymentToken, creditorReferenceId, amountGlobal);
 
-  res = sendPaymentOutput(baseUrl, rndAnagPsp, paymentToken);
+  res = sendPaymentOutcome(baseUrl, rndAnagPsp, paymentToken);
 
 }
 

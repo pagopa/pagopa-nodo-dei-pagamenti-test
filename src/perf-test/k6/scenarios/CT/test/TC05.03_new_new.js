@@ -168,7 +168,7 @@ export function total() {
   res = closePayment(baseRestUrl, rndAnagPsp, paymentToken, outcome, transactionId, pspTransactionId, importoTotaleDaVersare);
 
   
-  //res = sendPaymentOutput(baseSoapUrl,rndAnagPsp,paymentToken);
+  //res = sendPaymentOutcome(baseSoapUrl,rndAnagPsp,paymentToken);
 
 }
 

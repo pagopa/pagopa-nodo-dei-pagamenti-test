@@ -1,7 +1,7 @@
 //import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
-import { sendPaymentOutput } from './api/sendPaymentOutput.js';
+import { sendPaymentOutcome } from './api/sendPaymentOutcome.js';
 import { activatePaymentNotice } from './api/activatePaymentNotice.js';
 import { RPT_Semplice_N3 } from './api/RPT_Semplice_N3.js';
 import * as common from '../../CommonScript.js';
@@ -169,7 +169,7 @@ export function total() {
     let creditorReferenceId=res.creditorReferenceId;
 	let importoTotaleDaVersare = res.amount;
 
-  res = sendPaymentOutput(baseUrl,rndAnagPsp,paymentToken);
+  res = sendPaymentOutcome(baseUrl,rndAnagPsp,paymentToken);
 
 
 

@@ -211,7 +211,7 @@ export function total() {
 
   
   
-  // res = sendPaymentOutput(baseSoapUrl,rndAnagPsp,paymentToken);
+  // res = sendPaymentOutcome(baseSoapUrl,rndAnagPsp,paymentToken);
 
 }
 
