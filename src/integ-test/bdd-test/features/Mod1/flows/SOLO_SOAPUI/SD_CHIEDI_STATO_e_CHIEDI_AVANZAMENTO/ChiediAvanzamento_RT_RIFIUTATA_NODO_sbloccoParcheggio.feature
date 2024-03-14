@@ -209,7 +209,6 @@ Feature: ChiediAvanzamento_RT_RIFIUTATA_NODO_sbloccoParcheggio
                 <ws:pspInviaRPTResponse>
                     <pspInviaRPTResponse>
                     <esitoComplessivoOperazione>timeout</esitoComplessivoOperazione>
-                    
                     </pspInviaRPTResponse>
                 </ws:pspInviaRPTResponse>
             </soapenv:Body>

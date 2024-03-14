@@ -1283,8 +1283,7 @@ def step_impl(context, tag, value, primitive):
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
         founded_value = jo.get_value_from_key(json_response, tag)
-        print(
-            f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
+        print(f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert value in str(founded_value)
 
 
@@ -2143,8 +2142,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    selected_query = utils.query_json(context, query_name, name_macro).replace(
-        "columns", column).replace("table_name", table_name)
+    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
     print(selected_query)
     exec_query = adopted_db.executeQuery(conn, selected_query)
 
