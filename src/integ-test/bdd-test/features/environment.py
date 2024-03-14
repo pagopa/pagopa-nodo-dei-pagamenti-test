@@ -14,7 +14,7 @@ else:
 if 'APICFG' in os.environ:
     import steps.db_operation_apicfg_testing_support as db
 
-#import allure
+# import allure
 import sys
 from io import StringIO
 
