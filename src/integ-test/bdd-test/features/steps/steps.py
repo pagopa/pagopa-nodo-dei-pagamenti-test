@@ -19,9 +19,6 @@ import utils as utils
 from behave import *
 from requests.exceptions import RetryError
 
-from pypac import PACSession
-from requests.auth import HTTPProxyAuth
-
 # Constants
 RESPONSE = "Response"
 REQUEST = "Request"
