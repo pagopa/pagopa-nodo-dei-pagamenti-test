@@ -64,7 +64,7 @@ def step_impl(context):
             password = my_credentials.get("password")
 
             if url == 'https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1/info':
-                resp = requests.get(url, headers=headers, verify=False, auth=(username, password))
+                resp = requests.get(url, headers=headers, verify=False, proxies=proxies, auth=(username, password))
             else:
                 resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
         ####RUN IN REMOTO
