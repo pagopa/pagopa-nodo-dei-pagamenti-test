@@ -13,6 +13,11 @@ function replace {
 }
 
 file=$file_config
+
+if [ -n "$4" ]; then
+    file="$4"
+    echo "replace config file param"
+fi
  
 echo "replace config file $file START"
 
