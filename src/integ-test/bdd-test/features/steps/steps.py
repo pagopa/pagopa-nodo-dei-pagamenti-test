@@ -19,6 +19,9 @@ import utils as utils
 from behave import *
 from requests.exceptions import RetryError
 
+from pypac import PACSession
+from requests.auth import HTTPProxyAuth
+
 # Constants
 RESPONSE = "Response"
 REQUEST = "Request"
@@ -42,7 +45,13 @@ def step_impl(context):
         header_host = utils.estrapola_header_host(row.get("url"))
         print(f"header_host -> {header_host}")
         headers = {'Host': header_host}
-        resp = requests.get(url, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+
+        proxy_pac = utils.get_proxy_settings()
+        proxy_url = utils.get_proxy(proxy_pac)
+        
+        print(f"PROXYYYYYYYYYYY: {proxy}")
+
+        resp = requests.get(url, headers=headers, verify=False)
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
 
