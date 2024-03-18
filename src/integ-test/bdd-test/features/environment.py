@@ -87,11 +87,9 @@ def before_feature(context, feature):
 
 
 def before_scenario(context, scenario):
-    ####RUN DA LOCALE
-    if user_profile == None:
-        context.stdout_capture = StringIO()
-        context.original_stdout = sys.stdout
-        sys.stdout = context.stdout_capture
+    context.stdout_capture = StringIO()
+    context.original_stdout = sys.stdout
+    sys.stdout = context.stdout_capture
 
 
 def after_scenario(context, scenario):
