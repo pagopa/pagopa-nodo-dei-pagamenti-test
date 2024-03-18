@@ -6,3 +6,4 @@ pagoPA_PERF_apim_REAL;https://api.uat.platform.pagopa.it/nodo-replica-ndp;;https
 local;http://localhost:8080;;http://localhost:8080;http://localhost:8080
 pagoPA_PERF_apim_Oracle;https://nodo-dei-pagamenti-prf-npa-nodopagamenti.tst-npc.sia.eu/webservices/input;10.230.9.5;https://nodo-dei-pagamenti-prf-npa-nodopagamenti.tst-npc.sia.eu/webservices/input;https://nodo-dei-pagamenti-prf-npa-nodopagamenti/azurept
 pagoPA_PERF_loadB_Oracle;http://localhost:83/nodo-prf;http://localhost:83/nodo-prf;http://localhost:83/nodo-prf;http://localhost:83/nodo-prf
+pagoPA_PERF_loadB_Oracle_azure;http://10.70.74.200:80/nodo-prf;http://10.70.74.200:80/nodo-prf;http://10.70.74.200:80/nodo-prf;http://10.70.74.200:80/nodo-prf

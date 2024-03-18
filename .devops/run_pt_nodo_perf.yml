@@ -97,7 +97,7 @@ stages:
                 active_test=$2
                 test_step=${rampingSel}
      
-                envTest="pagoPA_PERF_apim_Oracle"
+                envTest="pagoPA_PERF_loadB_Oracle_azure"
             
                 echo -----------------------------------------
                 echo *** Main K6 Perf Test Script ***
