@@ -64,13 +64,17 @@ def step_impl(context):
             password = my_credentials.get("password")
 
             if url == 'https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1/info':
-                resp = requests.get(url, headers=headers, verify=False)
+                resp = requests.get(url, headers=headers, verify=False, auth=(username, password))
             else:
-                resp = requests.get(url, headers=headers, verify=False, proxies=proxies, auth=(username, password))
+                resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
         ####RUN IN REMOTO
         else:
-            print(f"############URL:{url} proxies {proxies}")
-            resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
+            if url == 'https://api.dev.platform.pagopa.it/apiconfig/testing-support/pnexi/v1/info':
+                print(f"############URL:{url} proxies {proxies} auth: {username} e {password}")
+                resp = requests.get(url, headers=headers, verify=False, proxies=proxies, auth=(username, password))
+            else:
+                resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
+                print(f"############URL:{url} proxies {proxies}")
 
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
