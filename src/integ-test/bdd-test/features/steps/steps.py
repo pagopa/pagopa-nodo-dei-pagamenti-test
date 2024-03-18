@@ -19,9 +19,6 @@ import utils as utils
 from behave import *
 from requests.exceptions import RetryError
 
-from pypac import PACSession
-from requests.auth import HTTPProxyAuth
-
 # Constants
 RESPONSE = "Response"
 REQUEST = "Request"
@@ -1115,8 +1112,7 @@ def step_impl(context, sender, soap_primitive, receiver):
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
-    soap_response = requests.post(url_nodo, getattr(
-        context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+    soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     print(soap_response.content.decode('utf-8'))
     print(soap_response.status_code)
     print(f'soap response: {soap_response.headers}')
