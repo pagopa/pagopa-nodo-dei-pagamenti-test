@@ -5,7 +5,7 @@ import scenario3 from './TC06.03_new_new.js';
 import scenario4 from './TC06.04_new_old.js';
 
 export const options = {
-    summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'count'],
+    summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'p(99)', 'p(99.99)', 'p(100)', 'count'],
     discardResponseBodies: false,
     thresholds: {
 
