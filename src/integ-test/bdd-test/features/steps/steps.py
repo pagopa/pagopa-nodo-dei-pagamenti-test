@@ -1494,7 +1494,7 @@ def step_impl(context, sender, method, service, receiver):
     headers = {'Content-Type': 'application/json',
                'Host': 'api.dev.platform.pagopa.it:443'}
     if 'SUBSCRIPTION_KEY' in os.environ:
-        headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY')}
+        headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
 
     body = context.text or ""
     if '_json' in service:
