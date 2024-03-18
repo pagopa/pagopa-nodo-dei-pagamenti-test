@@ -14,9 +14,6 @@ import xmltodict
 
 from urllib.parse import urlparse
 
-import winreg
-import pacparser
-
 # Decommentare per test in pipeline
 #from requests.packages.urllib3.util.retry import Retry 
 
@@ -658,31 +655,31 @@ def replace_specific_string(original_string, target_string, replacement):
 
 
 
-def get_proxy_settings():
-    try:
-        # Apre la chiave di registro corrispondente alle impostazioni del proxy
-        key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Internet Settings")
+# def get_proxy_settings():
+#     try:
+#         # Apre la chiave di registro corrispondente alle impostazioni del proxy
+#         key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Internet Settings")
  
-        # Legge il valore dell'URL dello script PAC
-        pac_url, _ = winreg.QueryValueEx(key, "AutoConfigURL")
-        return pac_url if pac_url else None
-    except FileNotFoundError:
-        print("Impossibile trovare le impostazioni del proxy nel Registro di sistema.")
-        return None
-    except Exception as e:
-        print("Errore durante la lettura delle impostazioni del proxy:", e)
-        return None
+#         # Legge il valore dell'URL dello script PAC
+#         pac_url, _ = winreg.QueryValueEx(key, "AutoConfigURL")
+#         return pac_url if pac_url else None
+#     except FileNotFoundError:
+#         print("Impossibile trovare le impostazioni del proxy nel Registro di sistema.")
+#         return None
+#     except Exception as e:
+#         print("Errore durante la lettura delle impostazioni del proxy:", e)
+#         return None
     
 
-# Funzione per ottenere l'URL del proxy da un file PAC
-def get_proxy(pac_file):
-    # Carica il file PAC
-    pac = pacparser.parse_pac_file(pac_file)
+# # Funzione per ottenere l'URL del proxy da un file PAC
+# def get_proxy(pac_file):
+#     # Carica il file PAC
+#     pac = pacparser.parse_pac_file(pac_file)
 
-    # Imposta il percorso del file PAC
-    pac.init()
+#     # Imposta il percorso del file PAC
+#     pac.init()
 
-    # Ottieni l'URL del proxy per l'URL specificato
-    proxy_url = pac.find_proxy(pac_file)
+#     # Ottieni l'URL del proxy per l'URL specificato
+#     proxy_url = pac.find_proxy(pac_file)
 
-    return proxy_url
+#     return proxy_url
