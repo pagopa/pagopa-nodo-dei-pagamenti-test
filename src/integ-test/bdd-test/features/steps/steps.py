@@ -36,6 +36,13 @@ def step_impl(context):
     """
     responses = True
 
+    try:
+        user_profile = getattr(context, "user_profile")
+        print(f"User Profile: {user_profile} local run!")
+    except AttributeError as e:
+        print(f"User Profile None: {e} remote run!")
+    proxies = getattr(context, "proxies")
+
     for row in context.table:
         print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
@@ -47,9 +54,6 @@ def step_impl(context):
         if row.get("subscription_key_name") != "":
             if row.get("subscription_key_name") in os.environ:
                 headers[SUBKEY] = os.getenv(row.get("subscription_key_name"))
-
-        user_profile = getattr(context, "user_profile")
-        proxies = getattr(context, "proxies")
 
         ####RUN DA LOCALE
         if user_profile != None:
