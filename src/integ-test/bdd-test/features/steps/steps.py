@@ -36,6 +36,8 @@ def step_impl(context):
     """
     responses = True
 
+    user_profile = None
+
     try:
         user_profile = getattr(context, "user_profile")
         print(f"User Profile: {user_profile} local run!")
