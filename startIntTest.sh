@@ -107,8 +107,8 @@ fi
 echo "Clearing allure-result folder"
 find /test/allure/allure-result/ -type f -delete
 
-echo "executing command: behave -f allure_behave.formatter:AllureFormatter -o /test/allure-result $folder --tags=$tags --no-capture --no-capture-stderrhelpcls -D conffile=$file_config"
-behave -f allure_behave.formatter:AllureFormatter -o /test/allure/allure-result $folder --tags=$tags --no-capture --no-capture-stderr -D conffile=$file_config
+echo "executing command: behave -f allure_behave.formatter:AllureFormatter -o /test/allure-result $folder --tags=$tags --no-capture --no-capture-stderrhelpcls -D conffile=$file"
+behave -f allure_behave.formatter:AllureFormatter -o /test/allure/allure-result $folder --tags=$tags --no-capture --no-capture-stderr -D conffile=$file
 
 if [ "$history" = false ]; then
     echo "Removing history folders..."
