@@ -5,7 +5,7 @@ import { SharedArray } from 'k6/data';
 export function getBasePath(baseUrl, primitive) {
 	var primitiveMapping;
 
-	if (baseUrl.includes("nodo-p-prf") || baseUrl.includes("localhost") || baseUrl.includes("pagoPA_PERF_loadB_Oracle_azure")) {
+	if (baseUrl.includes("nodo-p-prf") || baseUrl.includes("localhost") || baseUrl.includes("nodo-prf")) {
 		primitiveMapping = {
 			"verificaBollettino": "/webservices/input",
 			"verifyPaymentNotice": "/webservices/input",
