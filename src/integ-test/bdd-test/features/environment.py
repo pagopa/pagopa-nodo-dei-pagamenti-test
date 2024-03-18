@@ -64,9 +64,10 @@ def before_feature(context, feature):
     #         config_ec(context)
 
 def before_scenario(context, scenario):
-    context.stdout_capture = StringIO()
-    context.original_stdout = sys.stdout
-    sys.stdout = context.stdout_capture
+    pass
+    # context.stdout_capture = StringIO()
+    # context.original_stdout = sys.stdout
+    # sys.stdout = context.stdout_capture
 
 def after_scenario(context, scenario):
     try:
