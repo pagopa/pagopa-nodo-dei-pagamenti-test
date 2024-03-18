@@ -25,6 +25,7 @@ from requests.auth import HTTPProxyAuth
 # Constants
 RESPONSE = "Response"
 REQUEST = "Request"
+SUBKEY = "Ocp-Apim-Subscription-Key"
 
 
 # Steps definitions
@@ -45,13 +46,28 @@ def step_impl(context):
         header_host = utils.estrapola_header_host(row.get("url"))
         print(f"header_host -> {header_host}")
         headers = {'Host': header_host}
-
-        proxy_pac = utils.get_proxy_settings()
-        proxy_url = utils.get_proxy(proxy_pac)
         
-        print(f"PROXYYYYYYYYYYY: {proxy}")
+        if row.get("subscription_key_name") != "":
+            if row.get("subscription_key_name") in os.environ:
+                headers[SUBKEY] = os.getenv(row.get("subscription_key_name"))
 
-        resp = requests.get(url, headers=headers, verify=False)
+        user_profile = getattr(context, "user_profile")
+        proxies = getattr(context, "proxies")
+
+        ####RUN DA LOCALE
+        if user_profile != None:
+            my_credentials = getattr(context, "my_credentials")
+            username = my_credentials.get("username")
+            password = my_credentials.get("password")
+
+            if url == 'https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1/info':
+                resp = requests.get(url, headers=headers, verify=False)
+            else:
+                resp = requests.get(url, headers=headers, verify=False, proxies=proxies, auth=(username, password))
+        ####RUN IN REMOTO
+        else:
+            resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
+
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
 
