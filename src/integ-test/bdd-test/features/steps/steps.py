@@ -69,10 +69,8 @@ def step_impl(context):
                 resp = requests.get(url, headers=headers, verify=False, proxies=proxies, auth=(username, password))
         ####RUN IN REMOTO
         else:
-            if url == 'https://api.dev.platform.pagopa.it/apiconfig/testing-support/pnexi/v1/info':
-                resp = requests.get(url, headers=headers, verify=False)
-            else:
-                resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
+            print(f"############URL:{url} proxies {proxies}")
+            resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
 
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
