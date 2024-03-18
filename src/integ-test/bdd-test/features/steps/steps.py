@@ -46,12 +46,24 @@ def step_impl(context):
         print(f"header_host -> {header_host}")
         headers = {'Host': header_host}
 
-        proxy_pac = utils.get_proxy_settings()
-        proxy_url = utils.get_proxy(proxy_pac)
-        
-        print(f"PROXYYYYYYYYYYY: {proxy}")
+        # proxy_pac = utils.get_proxy_settings()
+        # proxy_url = utils.get_proxy(proxy_pac)
 
-        resp = requests.get(url, headers=headers, verify=False)
+        username = "OFFICE\CO0C484"
+        password = "Napoli12345!"
+
+        proxy = "http://cipchtritonws01.office.corp.sia.it:8080"
+
+        if url == 'https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1/info':
+            resp = requests.get(url, headers=headers, verify=False, proxies={"http": proxy, "https": proxy}, auth=(username, password))
+        else:
+            resp = requests.get(url, headers=headers, verify=False, proxies={"http": proxy, "https": proxy}, auth=(username, password))
+        # Puoi fare qualcosa con la risposta qui, ad esempio leggerla o analizzarla
+        #print(response.text)
+        
+        #print(f"PROXYYYYYYYYYYY: {proxy}")
+
+        #resp = requests.get(url, headers=headers, verify=False)
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
 
