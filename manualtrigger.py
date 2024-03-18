@@ -11,9 +11,9 @@ app = Flask(__name__)
 logs_directory = '/test/allure/allure-result'
 zip_file_path = '/test/allure/allure-result.zip'
 
-def run_script(tags, folder):
+def run_script(tags, folder, configFile):
     # execute script
-    subprocess.Popen(["bash", "./startIntTest.sh", "true", tags, folder], stdin=subprocess.PIPE)
+    subprocess.Popen(["bash", "./startIntTest.sh", "true", tags, folder, configFile], stdin=subprocess.PIPE)
 
 def run_stop_script():
     # execute script
@@ -28,9 +28,9 @@ def start_test():
 	if 'tags' in data and 'folder' in data:
 		tags = data['tags']
 		folder = data['folder']
-		
+		configFile = data['configFile']
 	    # execute tests
-		script_thread = threading.Thread(target=run_script, args=(tags, folder))
+		script_thread = threading.Thread(target=run_script, args=(tags, folder, configFile))
 		script_thread.start()
 	
 		return jsonify({"message": "test started"})
