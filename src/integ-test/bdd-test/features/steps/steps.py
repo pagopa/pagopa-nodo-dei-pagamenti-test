@@ -25,6 +25,7 @@ from requests.auth import HTTPProxyAuth
 # Constants
 RESPONSE = "Response"
 REQUEST = "Request"
+SUBKEY = "Ocp-Apim-Subscription-Key"
 
 
 # Steps definitions
@@ -45,9 +46,10 @@ def step_impl(context):
         header_host = utils.estrapola_header_host(row.get("url"))
         print(f"header_host -> {header_host}")
         headers = {'Host': header_host}
-
-        # proxy_pac = utils.get_proxy_settings()
-        # proxy_url = utils.get_proxy(proxy_pac)
+        
+        if row.get("subscription_key_name") != "":
+            if row.get("subscription_key_name") in os.environ:
+                headers[SUBKEY] = os.getenv(row.get("subscription_key_name"))
 
         username = "OFFICE\CO0C484"
         password = "Napoli12345!"
@@ -55,15 +57,10 @@ def step_impl(context):
         proxy = "http://cipchtritonws01.office.corp.sia.it:8080"
 
         if url == 'https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1/info':
-            resp = requests.get(url, headers=headers, verify=False, proxies={"http": proxy, "https": proxy}, auth=(username, password))
+            resp = requests.get(url, headers=headers, verify=False)
         else:
             resp = requests.get(url, headers=headers, verify=False, proxies={"http": proxy, "https": proxy}, auth=(username, password))
-        # Puoi fare qualcosa con la risposta qui, ad esempio leggerla o analizzarla
-        #print(response.text)
-        
-        #print(f"PROXYYYYYYYYYYY: {proxy}")
 
-        #resp = requests.get(url, headers=headers, verify=False)
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
 
