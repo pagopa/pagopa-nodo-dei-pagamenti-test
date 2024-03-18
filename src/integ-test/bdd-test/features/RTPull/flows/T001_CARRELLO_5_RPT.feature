@@ -967,9 +967,6 @@ Feature: T001_CARRELLO_5_RPT
         When job pspChiediListaAndChiediRt triggered after 15 seconds
         And job paInviaRt triggered after 20 seconds
         And wait 130 seconds for expiration
-        #And generic update through the query param_update_generic_where_condition of the table CANALI the parameter PROTOCOLLO = 'HTTPS', with where condition ID_CANALE like '6000%' under macro update_query on db nodo_cfg
-        #And refresh job ALL triggered after 10 seconds
-        #And wait 10 seconds for expiration
         And replace iuv content with $1iuv content
         Then checks the value RPT_RICEVUTA_NODO, RPT_ACCETTATA_NODO, RPT_INVIATA_A_PSP, RPT_ACCETTATA_PSP, RT_RICEVUTA_NODO, RT_ACCETTATA_NODO, RT_INVIATA_PA, RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro RTPull
         And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro RTPull
