@@ -12,29 +12,46 @@ import allure
 import sys
 from io import StringIO
 
+user_profile = os.environ.get("USERPROFILE")
+
 
 def before_all(context):
     print('Global settings...')
 
     myconfigfile = context.config.userdata["conffile"]
-    configfile = context.config.userdata.get("configfile", myconfigfile)
-    more_userdata = json.load(open(configfile))
+    more_userdata = json.load(open(myconfigfile))
 
-  #  more_userdata = json.load(open(os.path.join(context.config.base_dir + "/../resources/config.json")))
     context.config.update_userdata(more_userdata)
     proxyEnabled = context.config.userdata.get("global_configuration").get("proxyEnabled")
 
-    proxies = {
-        'http': 'http://10.79.20.33:80',
-        'https': 'http://10.79.20.33:80',
-    }
+    ####MY CREDENTIALS
+    ####RUN DA LOCALE
+    if user_profile != None:
+        my_cred = {
+            'username': 'OFFICE\CO0C484',
+            'password': 'Napoli12345!',
+        }
+        setattr(context, 'my_credentials', my_cred)
+        setattr(context, 'user_profile', user_profile)
 
-    proxy = "http://cipchtritonws01.office.corp.sia.it:8080"
-
-    if proxyEnabled == False:
-        proxies = None
-    setattr(context, 'proxies', proxies)
     print('Proxy enabled: ', proxyEnabled)
+    if proxyEnabled == 'True':
+        ####RUN DA LOCALE
+        if user_profile != None:
+            proxies = {
+                'http': 'http://cipchtritonws01.office.corp.sia.it:8080',
+                'https': 'http://cipchtritonws01.office.corp.sia.it:8080',
+            }
+        ####RUN IN REMOTO
+        else:
+            proxies = {
+                'http': 'http://10.79.20.33:80',
+                'https': 'http://10.79.20.33:80',
+            }
+    else:
+        proxies = None
+        
+    setattr(context, 'proxies', proxies)
 
     db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
     selected_query = utils.query_json(context, 'select_config', 'configurations')
@@ -70,9 +87,11 @@ def before_feature(context, feature):
 
 
 def before_scenario(context, scenario):
-    context.stdout_capture = StringIO()
-    context.original_stdout = sys.stdout
-    sys.stdout = context.stdout_capture
+    ####RUN DA LOCALE
+    if user_profile == None:
+        context.stdout_capture = StringIO()
+        context.original_stdout = sys.stdout
+        sys.stdout = context.stdout_capture
 
 
 def after_scenario(context, scenario):

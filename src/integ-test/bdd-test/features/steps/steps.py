@@ -51,15 +51,22 @@ def step_impl(context):
             if row.get("subscription_key_name") in os.environ:
                 headers[SUBKEY] = os.getenv(row.get("subscription_key_name"))
 
-        username = "OFFICE\CO0C484"
-        password = "Napoli12345!"
+        user_profile = getattr(context, "user_profile")
+        proxies = getattr(context, "proxies")
 
-        proxy = "http://cipchtritonws01.office.corp.sia.it:8080"
+        ####RUN DA LOCALE
+        if user_profile != None:
+            my_credentials = getattr(context, "my_credentials")
+            username = my_credentials.get("username")
+            password = my_credentials.get("password")
 
-        if url == 'https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1/info':
-            resp = requests.get(url, headers=headers, verify=False)
+            if url == 'https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1/info':
+                resp = requests.get(url, headers=headers, verify=False)
+            else:
+                resp = requests.get(url, headers=headers, verify=False, proxies=proxies, auth=(username, password))
+        ####RUN IN REMOTO
         else:
-            resp = requests.get(url, headers=headers, verify=False, proxies={"http": proxy, "https": proxy}, auth=(username, password))
+            resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
 
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
