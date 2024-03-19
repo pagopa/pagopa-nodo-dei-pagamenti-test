@@ -78,12 +78,8 @@ def step_impl(context):
                 resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
         ####RUN IN REMOTO
         else:
-            if url == 'https://api.dev.platform.pagopa.it/apiconfig/testing-support/pnexi/v1/info':
-                print(f"############URL:{url}")
-                resp = requests.get(url, headers=headers, verify=False)
-            else:
-                resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
-                print(f"############URL:{url} proxies {proxies}")
+            resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
+            print(f"############URL:{url} proxies {proxies}")
 
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
