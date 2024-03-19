@@ -19,10 +19,17 @@ import utils as utils
 from behave import *
 from requests.exceptions import RetryError
 
+import urllib3
+
 # Constants
 RESPONSE = "Response"
 REQUEST = "Request"
 SUBKEY = "Ocp-Apim-Subscription-Key"
+
+#disabilita gli avvisi relativi alle richieste non sicure (nessuna verifica SSL alla richiesta https)
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
 
 
 # Steps definitions
@@ -35,7 +42,7 @@ def step_impl(context):
             - pagopa-api-config ( used in tests to set DB's nodo-dei-pagamenti correctly according to input test ))
     """
     responses = True
-
+    
     user_profile = None
 
     try:
@@ -59,19 +66,21 @@ def step_impl(context):
 
         ####RUN DA LOCALE
         if user_profile != None:
-            my_credentials = getattr(context, "my_credentials")
-            username = my_credentials.get("username")
-            password = my_credentials.get("password")
+            # my_credentials = getattr(context, "my_credentials")
+            # username = my_credentials.get("username")
+            # password = my_credentials.get("password")
 
             if url == 'https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1/info':
-                resp = requests.get(url, headers=headers, verify=False, proxies=proxies, auth=(username, password))
+                print(f"############URL:{url}")
+                resp = requests.get(url, headers=headers, verify=False)
             else:
+                print(f"############URL:{url} proxies {proxies}")
                 resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
         ####RUN IN REMOTO
         else:
             if url == 'https://api.dev.platform.pagopa.it/apiconfig/testing-support/pnexi/v1/info':
-                print(f"############URL:{url} proxies {proxies} auth: {username} e {password}")
-                resp = requests.get(url, headers=headers, verify=False, proxies=proxies, auth=(username, password))
+                print(f"############URL:{url}")
+                resp = requests.get(url, headers=headers, verify=False)
             else:
                 resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
                 print(f"############URL:{url} proxies {proxies}")

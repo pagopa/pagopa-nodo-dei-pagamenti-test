@@ -27,13 +27,13 @@ def before_all(context):
     ####MY CREDENTIALS
     ####RUN DA LOCALE
     if user_profile != None:
-        username_my_system = os.environ.get("MYCREDUSER")
-        password_my_system = os.environ.get("MYCREDPASS")
-        my_cred = {
-            'username': username_my_system,
-            'password': password_my_system,
-        }
-        setattr(context, 'my_credentials', my_cred)
+        # username_my_system = os.environ.get("MYCREDUSER")
+        # password_my_system = os.environ.get("MYCREDPASS")
+        # my_cred = {
+        #     'username': username_my_system,
+        #     'password': password_my_system,
+        # }
+        #setattr(context, 'my_credentials', my_cred)
         setattr(context, 'user_profile', user_profile)
 
     print('Proxy enabled: ', proxyEnabled)
