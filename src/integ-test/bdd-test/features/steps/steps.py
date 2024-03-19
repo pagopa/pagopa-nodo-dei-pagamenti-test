@@ -11,7 +11,22 @@ from sre_constants import ASSERT
 from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
 import xmltodict
-import db_operation_pg as db
+
+if 'NODOPGDB' in os.environ:
+    import db_operation_pg as db
+    import db_operation_pg as db_online
+    import db_operation_pg as db_offline
+    import db_operation_pg as db_re
+    import db_operation_pg as db_wfesp
+else:
+    import db_operation as db
+    import db_operation as db_online
+    import db_operation as db_offline
+    import db_operation as db_re
+    import db_operation as db_wfesp
+if 'APICFG' in os.environ:
+    import db_operation_apicfg_testing_support as db
+
 import json_operations as jo
 import pytz
 import requests
@@ -30,8 +45,6 @@ SUBKEY = "Ocp-Apim-Subscription-Key"
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
-
-
 # Steps definitions
 @given('systems up')
 def step_impl(context):
@@ -41,8 +54,11 @@ def step_impl(context):
             - mock-ec ( used by nodo-dei-pagamenti to forwarding EC's requests )
             - pagopa-api-config ( used in tests to set DB's nodo-dei-pagamenti correctly according to input test ))
     """
+    if 'APICFG' in os.environ:
+        apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
+        db.set_address(apicfg_testing_support_service)
+
     responses = True
-    
     user_profile = None
 
     try:
@@ -51,11 +67,13 @@ def step_impl(context):
     except AttributeError as e:
         print(f"User Profile None: {e} remote run!")
     proxies = getattr(context, "proxies")
+    dbRun = getattr(context, "dbRun")
 
     for row in context.table:
         print(f"calling: {row.get('name')} -> {row.get('url')}")
         url = row.get("url") + row.get("healthcheck")
         print(f"calling -> {url}")
+
         header_host = utils.estrapola_header_host(row.get("url"))
         print(f"header_host -> {header_host}")
         headers = {'Host': header_host}
@@ -64,22 +82,27 @@ def step_impl(context):
             if row.get("subscription_key_name") in os.environ:
                 headers[SUBKEY] = os.getenv(row.get("subscription_key_name"))
 
-        ####RUN DA LOCALE
-        if user_profile != None:
-            # my_credentials = getattr(context, "my_credentials")
-            # username = my_credentials.get("username")
-            # password = my_credentials.get("password")
+        
+        #CHECK SE LANCIO DA DB POSTGRES O ORACLE
+        if dbRun == "Postgres":
+            ####RUN DA LOCALE
+            if user_profile != None:
+                # my_credentials = getattr(context, "my_credentials")
+                # username = my_credentials.get("username")
+                # password = my_credentials.get("password")
 
-            if url == 'https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1/info':
-                print(f"############URL:{url}")
-                resp = requests.get(url, headers=headers, verify=False)
+                if url == 'https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1/info':
+                    print(f"############URL:{url}")
+                    resp = requests.get(url, headers=headers, verify=False)
+                else:
+                    print(f"############URL:{url} proxies {proxies}")
+                    resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
+            ####RUN IN REMOTO
             else:
-                print(f"############URL:{url} proxies {proxies}")
                 resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
-        ####RUN IN REMOTO
-        else:
-            resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
-            print(f"############URL:{url} proxies {proxies}")
+                print(f"############URL:{url} proxies {proxies}")
+        elif dbRun == "Oracle":
+            resp = requests.get(url, headers=headers, verify=False)
 
         print(f"response: {resp.status_code}")
         responses &= (resp.status_code == 200)
@@ -106,12 +129,14 @@ def step_impl(context, primitive):
         if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
             idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[
                 0].firstChild.data
-				
+
         payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
 
-        payload = payload.replace('#idempotency_key_POSTE#', f"{str(random.randint(10000000000, 99999999999))}_{str(random.randint(1000000000, 9999999999))}")
-								  
-        payload = payload.replace('#idempotency_key_IOname#', "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
+        payload = payload.replace('#idempotency_key_POSTE#',
+                                  f"{str(random.randint(10000000000, 99999999999))}_{str(random.randint(1000000000, 9999999999))}")
+
+        payload = payload.replace('#idempotency_key_IOname#',
+                                  "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
 
     if "#timedate#" in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
@@ -136,14 +161,15 @@ def step_impl(context, primitive):
 
     if '#identificativoFlusso#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
-        identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
-								  
+        identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(
+            random.randint(0, 10000))
+
         payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
         setattr(context, 'identificativoFlusso', identificativoFlusso)
 
     if '#iubd#' in payload:
         iubd = '' + str(random.randint(10000000, 20000000)) + \
-            str(random.randint(10000000, 20000000))
+               str(random.randint(10000000, 20000000))
         payload = payload.replace('#iubd#', iubd)
         setattr(context, 'iubd', iubd)
 
@@ -156,7 +182,7 @@ def step_impl(context, primitive):
         ccpms = str(utils.current_milli_time())
         payload = payload.replace('#ccpms#', ccpms)
         setattr(context, "ccpms", ccpms)
-    
+
     if "#ccpms2#" in payload:
         ccpms2 = str(utils.current_milli_time()) + '1'
         payload = payload.replace('#ccpms2#', ccpms2)
@@ -175,15 +201,15 @@ def step_impl(context, primitive):
     if '#IUV#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
         IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + \
-            datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
+              datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
         payload = payload.replace('#IUV#', IUV)
         setattr(context, 'IUV', IUV)
 
     if '#IUV2#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
-        IUV2 = str(date + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + '-' + str(random.randint(0, 100000))) 
+        IUV2 = str(date + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + '-' + str(random.randint(0, 100000)))
         payload = payload.replace('#IUV2#', IUV2)
-        setattr(context, 'IUV2', IUV2)					  
+        setattr(context, 'IUV2', IUV2)
 
     if '#notice_number#' in payload:
         notice_number = f"30211{str(random.randint(1000000000000, 9999999999999))}"
@@ -227,8 +253,8 @@ def step_impl(context, primitive):
 
     if '#CARRELLO#' in payload:
         CARRELLO = "CARRELLO" + "-" + \
-            str(getattr(context, 'date') +
-                datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+                   str(getattr(context, 'date') +
+                       datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
         payload = payload.replace('#CARRELLO#', CARRELLO)
         setattr(context, 'CARRELLO', CARRELLO)
 
@@ -252,7 +278,7 @@ def step_impl(context, primitive):
         timedate = date + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
         ccp3 = str(random.randint(0, 10000)) + timedate
         payload = payload.replace('#ccp3#', ccp3)
-        setattr(context, 'ccp3', ccp3)					   
+        setattr(context, 'ccp3', ccp3)
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
 
@@ -288,7 +314,6 @@ def step_impl(context, primitive):
 
 @step('from body {filebody} initial XML {primitive}')
 def step_impl(context, primitive, filebody):
-
     # Specifica il percorso del tuo file XML
     file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
 
@@ -306,10 +331,11 @@ def step_impl(context, primitive, filebody):
         if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
             idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[
                 0].firstChild.data
-				
+
         payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
-								  
-        payload = payload.replace('#idempotency_key_IOname#', "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
+
+        payload = payload.replace('#idempotency_key_IOname#',
+                                  "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
 
     if "#timedate#" in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
@@ -334,14 +360,15 @@ def step_impl(context, primitive, filebody):
 
     if '#identificativoFlusso#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
-        identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(random.randint(0, 10000))
-								  
+        identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(
+            random.randint(0, 10000))
+
         payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
         setattr(context, 'identificativoFlusso', identificativoFlusso)
 
     if '#iubd#' in payload:
         iubd = '' + str(random.randint(10000000, 20000000)) + \
-            str(random.randint(10000000, 20000000))
+               str(random.randint(10000000, 20000000))
         payload = payload.replace('#iubd#', iubd)
         setattr(context, 'iubd', iubd)
 
@@ -354,7 +381,7 @@ def step_impl(context, primitive, filebody):
         ccpms = str(utils.current_milli_time())
         payload = payload.replace('#ccpms#', ccpms)
         setattr(context, "ccpms", ccpms)
-    
+
     if "#ccpms2#" in payload:
         ccpms2 = str(utils.current_milli_time()) + '1'
         payload = payload.replace('#ccpms2#', ccpms2)
@@ -373,15 +400,15 @@ def step_impl(context, primitive, filebody):
     if '#IUV#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
         IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + \
-            datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
+              datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
         payload = payload.replace('#IUV#', IUV)
         setattr(context, 'IUV', IUV)
 
     if '#IUV2#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
-        IUV2 = str(date + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + '-' + str(random.randint(0, 100000))) 
+        IUV2 = str(date + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + '-' + str(random.randint(0, 100000)))
         payload = payload.replace('#IUV2#', IUV2)
-        setattr(context, 'IUV2', IUV2)					  
+        setattr(context, 'IUV2', IUV2)
 
     if '#notice_number#' in payload:
         notice_number = f"30211{str(random.randint(1000000000000, 9999999999999))}"
@@ -425,8 +452,8 @@ def step_impl(context, primitive, filebody):
 
     if '#CARRELLO#' in payload:
         CARRELLO = "CARRELLO" + "-" + \
-            str(getattr(context, 'date') +
-                datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+                   str(getattr(context, 'date') +
+                       datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
         payload = payload.replace('#CARRELLO#', CARRELLO)
         setattr(context, 'CARRELLO', CARRELLO)
 
@@ -450,7 +477,7 @@ def step_impl(context, primitive, filebody):
         timedate = date + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
         ccp3 = str(random.randint(0, 10000)) + timedate
         payload = payload.replace('#ccp3#', ccp3)
-        setattr(context, 'ccp3', ccp3)					   
+        setattr(context, 'ccp3', ccp3)
     if '$iuv' in payload:
         payload = payload.replace('$iuv', getattr(context, 'iuv'))
 
@@ -488,9 +515,9 @@ def step_impl(context, primitive, filebody):
 
     setattr(context, primitive, payload)
 
+
 @given('from body {filebody} initial JSON {primitive}')
 def step_impl(context, primitive, filebody):
-    
     file_json = open(f"src/integ-test/bdd-test/resources/json/{filebody}.json")
     data_json = json.load(file_json)
 
@@ -500,9 +527,9 @@ def step_impl(context, primitive, filebody):
     payload = utils.replace_global_variables(payload, context)
     setattr(context, f"{primitive}JSON", payload)
 
-   # jsonDict = json.loads(payload)
-  #  payload = utils.json2xml(jsonDict)
-  #  payload = '<root>' + payload + '</root>'
+    # jsonDict = json.loads(payload)
+    #  payload = utils.json2xml(jsonDict)
+    #  payload = '<root>' + payload + '</root>'
     if "#iuv#" in payload:
         iuv = '11' + str(random.randint(1000000000000, 9999999999999))
         payload = payload.replace('#iuv#', iuv)
@@ -510,7 +537,7 @@ def step_impl(context, primitive, filebody):
     if "#iuv1#" in payload:
         iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
         payload = payload.replace('#iuv1#', iuv1)
-        setattr(context, "iuv1", iuv1)	
+        setattr(context, "iuv1", iuv1)
     if "#iuv2#" in payload:
         iuv2 = '11' + str(random.randint(1000000000000, 9999999999999))
         payload = payload.replace('#iuv2#', iuv2)
@@ -522,7 +549,7 @@ def step_impl(context, primitive, filebody):
     if "#iuv4#" in payload:
         iuv4 = '11' + str(random.randint(1000000000000, 9999999999999))
         payload = payload.replace('#iuv4#', iuv4)
-        setattr(context, "iuv4", iuv4)			   
+        setattr(context, "iuv4", iuv4)
     if '#transaction_id#' in payload:
         transaction_id = str(random.randint(10000000, 99999999))
         payload = payload.replace('#transaction_id#', transaction_id)
@@ -538,7 +565,7 @@ def step_impl(context, primitive, filebody):
     if '$psp_transaction_id' in payload:
         payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
     setattr(context, primitive, payload)
-    
+
 
 @given('initial JSON {primitive}')
 def step_impl(context, primitive):
@@ -558,7 +585,7 @@ def step_impl(context, primitive):
     if "#iuv1#" in payload:
         iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
         payload = payload.replace('#iuv1#', iuv1)
-        setattr(context, "iuv1", iuv1)	
+        setattr(context, "iuv1", iuv1)
     if "#iuv2#" in payload:
         iuv2 = '11' + str(random.randint(1000000000000, 9999999999999))
         payload = payload.replace('#iuv2#', iuv2)
@@ -570,7 +597,7 @@ def step_impl(context, primitive):
     if "#iuv4#" in payload:
         iuv4 = '11' + str(random.randint(1000000000000, 9999999999999))
         payload = payload.replace('#iuv4#', iuv4)
-        setattr(context, "iuv4", iuv4)			   
+        setattr(context, "iuv4", iuv4)
     if '#transaction_id#' in payload:
         transaction_id = str(random.randint(10000000, 99999999))
         payload = payload.replace('#transaction_id#', transaction_id)
@@ -586,8 +613,6 @@ def step_impl(context, primitive):
     if '$psp_transaction_id' in payload:
         payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
     setattr(context, primitive, payload)
-
-
 
 
 @step('RPT generation')
@@ -621,7 +646,7 @@ def step_impl(context):
 
     if "#CCP#" in payload:
         CCP = 'CCP' + '-' + \
-            str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+              str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
         payload = payload.replace('#CCP#', CCP)
         setattr(context, "CCP", CCP)
 
@@ -630,7 +655,7 @@ def step_impl(context):
 
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
-        setattr(context, 'timedate', timedate)									  
+        setattr(context, 'timedate', timedate)
 
     if '#IuV#' in payload:
         iuv = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
@@ -640,16 +665,16 @@ def step_impl(context):
 
     if '#iuv2#' in payload:
         iuv = 'IUV' + '-' + \
-            str(date + '-' +
-                datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
+              str(date + '-' +
+                  datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
         payload = payload.replace('#iuv2#', iuv)
         setattr(context, '2iuv', iuv)
 
     if '#IUVspecial#' in payload:
         IUVspecial = '!ìUV[#à°]_' + \
-            datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3] + '$§'
+                     datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3] + '$§'
         payload = payload.replace('#IUVspecial#', IUVspecial)
-        setattr(context, 'IUVspecial', IUVspecial)							 
+        setattr(context, 'IUVspecial', IUVspecial)
 
     if '#IUV_#' in payload:
         IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
@@ -658,7 +683,7 @@ def step_impl(context):
 
     if '#IUV#' in payload:
         IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + \
-            datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+              datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#IUV#', IUV)
         setattr(context, 'IUV', IUV)
 
@@ -670,13 +695,13 @@ def step_impl(context):
 
     if '#CARRELLO#' in payload:
         CARRELLO = "CARRELLO" + "-" + \
-            str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+                   str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
         payload = payload.replace('#CARRELLO#', CARRELLO)
         setattr(context, 'CARRELLO', CARRELLO)
 
     if '#carrello#' in payload:
         prova = utils.random_s()
-        print('############', prova)						
+        print('############', prova)
         carrello = pa + "302" + "0" + str(random.randint(1000, 2000)) + str(
             random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + prova
         print(carrello)
@@ -709,7 +734,7 @@ def step_impl(context):
 
     if '#date#' in payload:
         payload = payload.replace('#date#', date)
-    
+
     if '#sdf#' in payload:
         timedate = date + datetime.datetime.now().strftime("-%H:%M:%S.%f")[:-3]
         payload = payload.replace('#sdf#', timedate)
@@ -718,7 +743,7 @@ def step_impl(context):
     if '#mills_time#' in payload:
         millisec = str(int(time.time() * 1000))
         payload = payload.replace('#mills_time#', millisec)
-        setattr(context, 'mills_time', millisec)					  
+        setattr(context, 'mills_time', millisec)
 
     payload = utils.replace_global_variables(payload, context)
 
@@ -762,13 +787,12 @@ def step_impl(context, number, pa, notice_number):
     setattr(context, f'{number}carrello', carrello)
 
 
-
 @given('RPT{number:d} generation')
 def step_impl(context, number):
     payload = context.text or ""
-    payload = utils.replace_local_variables(payload, context)														 
+    payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
-    
+
     payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
     timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
@@ -783,22 +807,20 @@ def step_impl(context, number):
 
     if f"#IUV{number}#" in payload:
         IUV = str(utils.current_milli_time()) + \
-            '-' + str(random.randint(0, 10000))
+              '-' + str(random.randint(0, 10000))
         payload = payload.replace(f'#IUV{number}#', IUV)
         setattr(context, f'{number}IUV', IUV)
 
     if f'#iUV{number}#' in payload:
-							  
-							
-        iuv = 'IUV2' + '-' + str(date + '-' +  datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
+        iuv = 'IUV2' + '-' + str(date + '-' + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
         payload = payload.replace(f'#iUV{number}#', iuv)
         setattr(context, f'{number}iUV', iuv)
 
     if '#IUV_{number}#' in payload:
         IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' + \
-            datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+               datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
         payload = payload.replace('#IUV_{number}#', IUV_)
-        setattr(context, f'{number}IUV_', IUV_)							   
+        setattr(context, f'{number}IUV_', IUV_)
 
     if f"#ccp{number}#" in payload:
         ccp = str(int(time.time() * 1000))
@@ -808,7 +830,7 @@ def step_impl(context, number):
     if f"#codiceContestoPagamento{number}" in payload:
         ccp = str(random.randint(1000000000000, 9999999999999))
         payload = payload.replace(f'#codiceContestoPagamento{number}#', ccp)
-        setattr(context, f"{number}codiceContestoPagamento", ccp)												  												 
+        setattr(context, f"{number}codiceContestoPagamento", ccp)
 
     if f"#CCP{number}#" in payload:
         ccp2 = str(utils.current_milli_time()) + '1'
@@ -838,7 +860,7 @@ def step_impl(context, number):
 
     if f'#iuv{number}#' in payload:
         iuv = "IUV" + str(random.randint(0, 10000)) + "-" + \
-            datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
+              datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
         payload = payload.replace(f'#iuv{number}#', iuv)
         setattr(context, f'{number}iuv', iuv)
 
@@ -848,7 +870,6 @@ def step_impl(context, number):
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
 
-    
     setattr(context, f'rpt{number}Attachment', payload)
 
 
@@ -862,7 +883,7 @@ def step_impl(context):
 
     if '#iubd#' in payload:
         iubd = '' + str(random.randint(10000000, 20000000)) + \
-            str(random.randint(10000000, 20000000))
+               str(random.randint(10000000, 20000000))
         payload = payload.replace('#iubd#', iubd)
         setattr(context, 'iubd', iubd)
     print(">>>>>>>>>>>>", payload)
@@ -884,7 +905,7 @@ def step_impl(context, number):
 
     if f'#iubd{number}#' in payload:
         iubd = '' + str(random.randint(10000000, 20000000)) + \
-            str(random.randint(10000000, 20000000))
+               str(random.randint(10000000, 20000000))
         payload = payload.replace(f'#iubd{number}#', iubd)
         setattr(context, f'{number}iubd', iubd)
 
@@ -896,10 +917,9 @@ def step_impl(context, number):
 
 
 @given('RT{number:d} generation')
-								  
 def step_impl(context, number):
     payload = context.text or ""
-    payload = utils.replace_local_variables(payload, context)														 
+    payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
     date = datetime.date.today().strftime("%Y-%m-%d")
@@ -928,9 +948,7 @@ def step_impl(context, number):
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
 
-    
     setattr(context, f'rt{number}Attachment', payload)
-
 
 
 @given('RT generation')
@@ -939,7 +957,7 @@ def step_impl(context):
     payload = utils.replace_global_variables(payload, context)
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
-    
+
     if '#date#' in payload:
         date = datetime.date.today().strftime("%Y-%m-%d")
         payload = payload.replace('#date#', date)
@@ -951,18 +969,17 @@ def step_impl(context):
         payload = payload.replace('#timedate#', timedate)
         setattr(context, 'timedate', timedate)
 
-
     if "#ccp#" in payload:
         ccp = str(utils.current_milli_time())
         payload = payload.replace('#ccp#', ccp)
         setattr(context, "ccp", ccp)
-    
+
     setattr(context, 'rt', payload)
 
     payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
-    
+
     print("RT generato: ", payload)
     setattr(context, 'rtAttachment', payload)
 
@@ -982,14 +999,15 @@ def step_impl(context):
         payload = payload.replace('#date#', date)
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
-    
+
     payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
-    
+
     print("RT generato: ", payload)
     setattr(context, 'rrAttachment', payload)
+
 
 @given('ER generation')
 def step_impl(context):
@@ -1006,12 +1024,12 @@ def step_impl(context):
         payload = payload.replace('#date#', date)
     if "#timedate#" in payload:
         payload = payload.replace('#timedate#', timedate)
-    
+
     payload_b = bytes(payload, 'UTF-8')
     payload_uni = b64.b64encode(payload_b)
     payload = f"{payload_uni}".split("'")[1]
     print(payload)
-    
+
     print("RT generato: ", payload)
     setattr(context, 'erAttachment', payload)
 
@@ -1049,7 +1067,7 @@ def step_impl(context):
 
     if '#iuv#' in payload:
         iuv = "IUV" + str(random.randint(0, 10000)) + "-" + \
-            datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
+              datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
         payload = payload.replace('#iuv#', iuv)
         setattr(context, 'iuv', iuv)
 
@@ -1071,7 +1089,7 @@ def step_impl(context, type, tag, value, primitive):
         value = utils.replace_local_variables(value, context)
         value = utils.replace_context_variables(value, context)
         value = utils.replace_global_variables(value, context)
-        type_string = type.upper() 
+        type_string = type.upper()
         if type_string == "XML":
             xml = utils.manipulate_soap_action(getattr(context, primitive), tag, value)
             setattr(context, primitive, xml)
@@ -1082,6 +1100,7 @@ def step_impl(context, type, tag, value, primitive):
 
 @given('{elem} with {value} in {action}')
 def step_impl(context, elem, value, action):
+    
     # use - to skip
     if elem != "-":
         value = utils.replace_local_variables(value, context)
@@ -1089,9 +1108,6 @@ def step_impl(context, elem, value, action):
         value = utils.replace_global_variables(value, context)
         xml = utils.manipulate_soap_action(getattr(context, action), elem, value)
         setattr(context, action, xml)
-
-
-        
 
 
 @given('replace {old_tag} tag in {action} with {new_tag}')
@@ -1129,13 +1145,13 @@ def step_impl(context, sender, soap_primitive, receiver):
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
     soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+
     print(soap_response.content.decode('utf-8'))
     print(soap_response.status_code)
     print(f'soap response: {soap_response.headers}')
     setattr(context, soap_primitive + RESPONSE, soap_response)
 
-    assert (soap_response.status_code ==
-            200), f"status_code {soap_response.status_code}"
+    assert (soap_response.status_code == 200), f"status_code {soap_response.status_code}"
 
 
 @step('send, by sender {sender}, soap action {soap_primitive} to {receiver}')
@@ -1147,9 +1163,10 @@ def step_impl(context, sender, soap_primitive, receiver):
     if 'NODOPGDB' in os.environ:
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
         if 'SUBSCRIPTION_KEY' in os.environ:
-            headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')        
+            headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
     else:
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': header_host}  # set what your server accepts        
+
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
@@ -1169,10 +1186,20 @@ def step_impl(context, job_name, seconds):
     headers = {'Host': header_host}
 
     user_profile = os.environ.get("USERPROFILE")
+    nodo_response = None
+    dbRun = getattr(context, "dbRun")
     
-    nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False, proxies = getattr(context,'proxies'))
-    print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
-    
+    if dbRun == "Postgres":
+        nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
+    elif dbRun == "Oracle":
+        if user_profile != None:
+            nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
+            print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
+        else:
+            nodo_response = requests.get(f"{url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
+            print(f">>>>>>>>>>>>>>>>>> {url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}")
+
     setattr(context, job_name + RESPONSE, nodo_response)
 
 
@@ -1183,7 +1210,7 @@ def step_impl(context, tag, value, primitive):
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
     value = utils.replace_global_variables(value, context)
-    
+
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
@@ -1213,7 +1240,7 @@ def step_impl(context, path_tag, value, primitive):
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
     value = utils.replace_global_variables(value, context)
-    
+
     if 'xml' in soap_response.headers['content-type']:
         my_document_xml = soap_response.content
         list_tag_value = []
@@ -1221,22 +1248,24 @@ def step_impl(context, path_tag, value, primitive):
         data = list_tag_value[0]
         print(f'check path tag "{path_tag}" - expected: {value}, obtained: {data}')
         assert value == data
-        
+
+
 @then('from {key} check the {value} in {path_tag}')
 def step_impl(context, path_tag, value, key):
     query_body = getattr(context, key)
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
     value = utils.replace_global_variables(value, context)
-    
+
     if 'xml' in query_body:
         list_tag_value = []
         list_tag_value = utils.searchValueTag(query_body, path_tag, False)
         data = list_tag_value[0]
         print(f'check path tag "{path_tag}" - expected: {value}, obtained: {data}')
         assert value == data
-    else: 
+    else:
         assert False
+
 
 @then('compare list between {tag} in {primitive} response and {value}')
 def step_impl(context, tag, value, primitive):
@@ -1256,7 +1285,7 @@ def step_impl(context, tag, value, primitive):
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
     value = utils.replace_global_variables(value, context)
-    
+
     if 'xml' in soap_response.headers['content-type']:
         my_document = parseString(soap_response.content)
         if len(my_document.getElementsByTagName('faultCode')) > 0:
@@ -1276,6 +1305,7 @@ def step_impl(context, tag, value, primitive):
         founded_value = jo.get_value_from_key(json_response, tag)
         print(f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
         assert str(founded_value) != value
+
 
 # controlla che il valore value sia una sottostringa del contenuto del tag
 @then('check substring {value} in {tag} content of {primitive} response')
@@ -1300,8 +1330,7 @@ def step_impl(context, tag, value, primitive):
         node_response = getattr(context, primitive + RESPONSE)
         json_response = node_response.json()
         founded_value = jo.get_value_from_key(json_response, tag)
-        print(
-            f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
+        print(f'check tag "{tag}" - expected: {value}, obtained: {json_response.get(tag)}')
         assert value in str(founded_value)
 
 
@@ -1484,7 +1513,7 @@ def step_impl(context, mock, primitive, idTransfer, elem, other_primitive):
 @step('the {name} scenario executed successfully')
 def step_impl(context, name):
     phase = (
-        [phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
+            [phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
     text_step = ''.join(
         [step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
     context.execute_steps(text_step)
@@ -1495,9 +1524,10 @@ def step_impl(context, name, n):
     if n > 0:
         for i in range(n):
             phase = (
-                [phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
+                    [phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
             text_step = ''.join(
-                [step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
+                [step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in
+                 phase.steps])
             context.execute_steps(text_step)
 
 
@@ -1509,8 +1539,8 @@ def step_impl(context, sender, method, service, receiver):
     header_host = utils.estrapola_header_host(url_nodo)
     headers = {'Content-Type': 'application/json','Host': header_host}
     if 'SUBSCRIPTION_KEY' in os.environ:
-        headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
-
+        headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
+    dbRun = getattr(context, "dbRun")
     body = context.text or ""
     if '_json' in service:
         service = service.split('_')[0]
@@ -1519,7 +1549,8 @@ def step_impl(context, sender, method, service, receiver):
         body = xmltodict.parse(bodyXml)
         body = body["root"]
         if body != None:
-            if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
+            if ('paymentTokens' in body.keys()) and (
+                    body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
                 body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
                 if type(body["paymentTokens"]) != list:
                     l = list()
@@ -1550,6 +1581,7 @@ def step_impl(context, sender, method, service, receiver):
         url_nodo = utils.replace_local_variables(url_nodo, context)
         url_nodo = utils.replace_context_variables(url_nodo, context)
         run_local = True
+
         print(f"{url_nodo}")
     else:
         service = utils.replace_local_variables(service, context)
@@ -1559,14 +1591,26 @@ def step_impl(context, sender, method, service, receiver):
         json_body = json.loads(body)
     else:
         json_body = None
+
+    nodo_response = None
     if run_local:
         if '_json' in url_nodo:
             url_nodo = url_nodo.split('_')[0]
-            nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
+            if dbRun == "Postgres":
+                nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
+            elif dbRun == "Oracle":
+                nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
         else:
-           nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies')) 
+            if dbRun == "Postgres":
+                nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies')) 
+            elif dbRun == "Oracle":
+                nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
     else:
-        nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
+        if dbRun == "Postgres":
+            nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
+        elif dbRun == "Oracle":
+            nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False)   
+
     setattr(context, service.split('?')[0], json_body)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
     print(service.split('?')[0] + RESPONSE)
@@ -1587,10 +1631,7 @@ def step_impl(context, mock, destination, primitive):
         pa_verify_payment_notice_res = context.text
     else:
         pa_verify_payment_notice_res = getattr(context, primitive)
-    pa_verify_payment_notice_res = str(pa_verify_payment_notice_res).replace("#fiscalCodePA#",
-                                                                             context.config.userdata.get(
-                                                                                 "global_configuration").get(
-                                                                                 "creditor_institution_code"))
+    pa_verify_payment_notice_res = str(pa_verify_payment_notice_res).replace("#fiscalCodePA#", context.config.userdata.get("global_configuration").get("creditor_institution_code"))
 
     if '$iuv' in pa_verify_payment_notice_res:
         pa_verify_payment_notice_res = pa_verify_payment_notice_res.replace(
@@ -1600,17 +1641,13 @@ def step_impl(context, mock, destination, primitive):
     print(pa_verify_payment_notice_res)
     if mock == 'EC':
         print(utils.get_soap_mock_ec(context))
-        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_ec(context), primitive,
-                                                      pa_verify_payment_notice_res, override=True)
+        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec(context), primitive, pa_verify_payment_notice_res, override=True)
     elif mock == 'EC2':
         print(utils.get_soap_mock_ec2(context))
-        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_ec2(context), primitive,
-                                                      pa_verify_payment_notice_res, override=True)
+        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec2(context), primitive, pa_verify_payment_notice_res, override=True)
     elif mock == 'PSP':
         print(utils.get_soap_mock_psp(context))
-        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_psp(context), primitive,
-                                                      pa_verify_payment_notice_res, override=True)
-
+        response_status_code = utils.save_soap_action(utils.get_soap_mock_psp(context), primitive, pa_verify_payment_notice_res, override=True)
     elif mock == 'PSP2':
         print(utils.get_soap_mock_psp2(context))
         response_status_code = utils.save_soap_action(context, utils.get_soap_mock_psp2(context), primitive,
@@ -1681,13 +1718,13 @@ def step_impl(context):
                      pspNotifyPaymentReq_transferList_sorted)
     for x in mixed_list:
         assert x[0].get("transfer")[0].get("idTransfer")[
-            0] == x[1].get("transfer")[0].get("idtransfer")[0]
+                   0] == x[1].get("transfer")[0].get("idtransfer")[0]
         assert x[0].get("transfer")[0].get("transferAmount")[
-            0] == x[1].get("transfer")[0].get("transferamount")[0]
+                   0] == x[1].get("transfer")[0].get("transferamount")[0]
         assert x[0].get("transfer")[0].get("fiscalCodePA")[
-            0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
+                   0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
         assert x[0].get("transfer")[0].get("IBAN")[
-            0] == x[1].get("transfer")[0].get("iban")[0]
+                   0] == x[1].get("transfer")[0].get("iban")[0]
 
     pspNotifyPaymentBody = \
         pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
@@ -1699,13 +1736,13 @@ def step_impl(context):
     assert pspNotifyPaymentBody.get(
         "idpsp")[0] == inoltroEsito["identificativoPsp"]
     assert pspNotifyPaymentBody.get("idbrokerpsp")[
-        0] == inoltroEsito["identificativoIntermediario"]
+               0] == inoltroEsito["identificativoIntermediario"]
     assert pspNotifyPaymentBody.get(
         "idchannel")[0] == inoltroEsito["identificativoCanale"]
     assert float(pspNotifyPaymentBody.get("creditcardpayment")[0].get("fee")[0]) == float(
         inoltroEsito["importoTotalePagato"]) - float(data["paymentAmount"][0])
     assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("rrn")[
-        0] == str(inoltroEsito["RRN"])
+               0] == str(inoltroEsito["RRN"])
     assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("outcomepaymentgateway")[0] == str(
         inoltroEsito["esitoTransazioneCarta"])
     assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("totalamount")[0] == str(
@@ -1716,27 +1753,27 @@ def step_impl(context):
         inoltroEsito["codiceAutorizzativo"])
 
     assert pspNotifyPaymentBody.get("paymentdescription")[0] == \
-        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-        0].get(
-        "data")[0].get("description")[0]
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("description")[0]
     assert pspNotifyPaymentBody.get("companyname")[0] == \
-        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-        0].get(
-        "data")[0].get("companyName")[0]
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("companyName")[0]
 
     assert pspNotifyPaymentBody.get("paymenttoken")[0] == \
-        activateIOPaymentResponseXml.getElementsByTagName("paymentToken")[
-        0].firstChild.data
+           activateIOPaymentResponseXml.getElementsByTagName("paymentToken")[
+               0].firstChild.data
     assert pspNotifyPaymentBody.get("fiscalcodepa")[0] == my_document.getElementsByTagName('fiscalCode')[
         0].firstChild.data
     assert pspNotifyPaymentBody.get("debtamount")[0] == \
-        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-        0].get(
-        "data")[0].get("paymentAmount")[0]
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("paymentAmount")[0]
     assert pspNotifyPaymentBody.get("creditorreferenceid")[0] == \
-        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-        0].get(
-        "data")[0].get("creditorReferenceId")[0]
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("creditorReferenceId")[0]
 
 
 @step('save {primitive} response in {new_primitive}')
@@ -1758,14 +1795,17 @@ def step_impl(context):
     iuv = '11' + str(random.randint(1000000000000, 9999999999999))
     setattr(context, "iuv", iuv)
 
+
 @step('current date generation')
 def step_impl(context):
     date = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome'))).strftime("%Y-%m-%d %H:%M:%S")
     setattr(context, 'date', date)
 
+
 @step('current date plus {minutes:d} minutes generation')
 def step_impl(context, minutes):
-    date_plus_minutes = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(minutes = minutes)).strftime("%Y-%m-%d %H:%M:%S")
+    date_plus_minutes = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(
+        minutes=minutes)).strftime("%Y-%m-%d %H:%M:%S")
     setattr(context, 'date_plus_minutes', date_plus_minutes)
 
 
@@ -1822,13 +1862,13 @@ def step_impl(context):
                      pspNotifyPaymentReq_transferList_sorted)
     for x in mixed_list:
         assert x[0].get("transfer")[0].get("idTransfer")[
-            0] == x[1].get("transfer")[0].get("idtransfer")[0]
+                   0] == x[1].get("transfer")[0].get("idtransfer")[0]
         assert x[0].get("transfer")[0].get("transferAmount")[
-            0] == x[1].get("transfer")[0].get("transferamount")[0]
+                   0] == x[1].get("transfer")[0].get("transferamount")[0]
         assert x[0].get("transfer")[0].get("fiscalCodePA")[
-            0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
+                   0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
         assert x[0].get("transfer")[0].get("IBAN")[
-            0] == x[1].get("transfer")[0].get("iban")[0]
+                   0] == x[1].get("transfer")[0].get("iban")[0]
 
     pspNotifyPaymentBody = \
         pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
@@ -1840,30 +1880,30 @@ def step_impl(context):
     assert pspNotifyPaymentBody.get(
         "idpsp")[0] == inoltroEsito["identificativoPsp"]
     assert pspNotifyPaymentBody.get("idbrokerpsp")[
-        0] == inoltroEsito["identificativoIntermediario"]
+               0] == inoltroEsito["identificativoIntermediario"]
     assert pspNotifyPaymentBody.get(
         "idchannel")[0] == inoltroEsito["identificativoCanale"]
     assert pspNotifyPaymentBody.get("paymenttoken")[0] == \
-        activateIOPaymentResponseXml.getElementsByTagName("paymentToken")[
-        0].firstChild.data
+           activateIOPaymentResponseXml.getElementsByTagName("paymentToken")[
+               0].firstChild.data
     assert pspNotifyPaymentBody.get("paymentdescription")[0] == \
-        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-        0].get(
-        "data")[0].get("description")[0]
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("description")[0]
     assert pspNotifyPaymentBody.get("fiscalcodepa")[0] == my_document.getElementsByTagName('fiscalCode')[
         0].firstChild.data
     assert pspNotifyPaymentBody.get("companyname")[0] == \
-        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-        0].get(
-        "data")[0].get("companyName")[0]
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("companyName")[0]
     assert pspNotifyPaymentBody.get("creditorreferenceid")[0] == \
-        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-        0].get(
-        "data")[0].get("creditorReferenceId")[0]
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("creditorReferenceId")[0]
     assert pspNotifyPaymentBody.get("debtamount")[0] == \
-        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-        0].get(
-        "data")[0].get("paymentAmount")[0]
+           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
+               0].get(
+               "data")[0].get("paymentAmount")[0]
     assert pspNotifyPaymentBody.get("paypalpayment")[0].get(
         "transactionid")[0] == inoltroEsito["idTransazione"]
     assert pspNotifyPaymentBody.get("paypalpayment")[0].get(
@@ -1900,22 +1940,31 @@ def step_impl(context, primitive):
 
 @step("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
-    db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
-    selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', f'$${value}$$').replace('key', param)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    db_name = "nodo_cfg"
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    update_config_query = "update_config_postgresql" if 'NODOPGDB' in os.environ else "update_config_oracle"
+    selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', param)
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     setattr(context, param, value)
     print(">>>>>>>>>>>>>>>", getattr(context, param))
 
-    exec_query = db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
     if exec_query is not None:
         print(f'executed query: {exec_query}')
 
-    db.closeConnection(conn)
+    adopted_db.closeConnection(conn)
+
     header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
     headers = {'Host': header_host}
-    refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+
+    dbRun = getattr(context, "dbRun")
+    refresh_response = None
+    if dbRun == "Postgres":
+        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+    elif dbRun == "Oracle":
+        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+
     time.sleep(5)
     print('refresh_response: ', refresh_response)
     assert refresh_response.status_code == 200
@@ -1923,18 +1972,18 @@ def step_impl(context, param, value):
 
 @step("refresh job {job_name} triggered after 10 seconds")
 def step_impl(context, job_name):
-    url_nodo = context.config.userdata.get(
-        "services").get("nodo-dei-pagamenti").get("url")
+
+    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
     header_host = utils.estrapola_header_host(url_nodo)
     headers = {'Host': header_host}
 
-    # DA UTILIZZARE IN LOCALE (DECOMMENTARE LE 2 RIGHE DI SEGUITO E COMMENTARE LE 2 RIGHE SOTTO pipeline)
-    # nodo_response = requests.get("https://api.dev.platform.pagopa.it/nodo/monitoring/v1/config/refresh/ALL", headers=headers, verify=False)
+    dbRun = getattr(context, "dbRun")
+    refresh_response = None
+    if dbRun == "Postgres":
+        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+    elif dbRun == "Oracle":
+        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
-    # pipeline
-    # nodo_response = requests.get(f"{url_nodo}/monitoring/v1/config/refresh/{job_name}", headers=headers, verify=False)
-    
-    refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     setattr(context, job_name + RESPONSE, refresh_response)
     time.sleep(10)
     assert refresh_response.status_code == 200
@@ -1942,7 +1991,6 @@ def step_impl(context, job_name):
 
 @step("change date {date} to {add_remove} minutes {minutes:d}")
 def stemp_impl(context, date, add_remove, minutes):
-
     if date == 'Today':
         date = datetime.datetime.today().astimezone(pytz.timezone('Europe/Rome'))
     else:
@@ -1964,42 +2012,58 @@ def step_impl(context, query_name, date, macro, db_name):
     date = utils.replace_context_variables(date, context)
 
     if date == 'Today':
-        #date = str(datetime.datetime.today())
+        # date = str(datetime.datetime.today())
         date = datetime.datetime.today().astimezone(pytz.timezone('Europe/Rome')).strftime("%Y-%m-%d %H:%M:%S")
 
     if date == 'Yesterday':
         date = str(datetime.datetime.today().astimezone(pytz.timezone('Europe/Rome')) - datetime.timedelta(days=1))
 
     if date == '1minuteLater':
-        date = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(minutes=1)).strftime("%Y-%m-%d %H:%M:%S")
+        date = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(
+            minutes=1)).strftime("%Y-%m-%d %H:%M:%S")
 
     selected_query = utils.query_json(context, query_name, macro).replace('date', date)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    exec_query = db.executeQuery(conn, selected_query)
-    db.closeConnection(conn)
+    exec_query = adopted_db.executeQuery(conn, selected_query)
+    adopted_db.closeConnection(conn)
 
 
 @then("restore initial configurations")
 def step_impl(context):
-    db_selected = context.config.userdata.get(
-        "db_configuration").get('nodo_cfg')
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    db_config = context.config.userdata.get("db_configuration")
+    db_name = "nodo_cfg"
+    db_selected = db_config.get(db_name)
+
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     config_dict = getattr(context, 'configurations')
-    for key, value in config_dict.items():
-        selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', f'$${value}$$').replace('key', key)
-        db.executeQuery(conn, selected_query)
+    update_config_query = "update_config_postgresql" if 'NODOPGDB' in os.environ else "update_config_oracle"
 
-    db.closeConnection(conn)
+    dbRun = getattr(context, "dbRun")
+
+    for key, value in config_dict.items():
+
+        selected_query = None
+        if dbRun == "Postgres":
+            selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', f'$${value}$$').replace('key', key)
+        if dbRun == "Oracle":
+            selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', key)
+        
+        adopted_db.executeQuery(conn, selected_query, as_dict=True)
+
+    adopted_db.closeConnection(conn)
     header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
     headers = {'Host': header_host}
-    refresh_response = requests.get(utils.get_refresh_config_url(
-        context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+
+    refresh_response = None
+    if dbRun == "Postgres":
+        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+    if dbRun == "Oracle":
+        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+
     time.sleep(10)
     assert refresh_response.status_code == 200
-
 
 @step("execution query {query_name} to get value on the table {table_name}, with the columns {columns} under macro {macro} with db name {db_name}")
 def step_impl(context, query_name, macro, db_name, table_name, columns):
@@ -2011,10 +2075,9 @@ def step_impl(context, query_name, macro, db_name, table_name, columns):
     selected_query = utils.replace_context_variables(selected_query, context)
     selected_query = utils.replace_global_variables(selected_query, context)
 
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    exec_query = db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(conn, selected_query)
     if exec_query is not None:
         print(f'executed query: {exec_query}')
     setattr(context, query_name, exec_query)
@@ -2118,7 +2181,7 @@ def step_impl(context, elem, primitive):
     my_document = parseString(payload)
     if len(my_document.getElementsByTagName(elem)) > 0:
         elem_value = my_document.getElementsByTagName(elem)[0].firstChild.data
-        wait_time = (int(elem_value)+200) / 1000
+        wait_time = (int(elem_value) + 200) / 1000
         print(f"wait for: {wait_time} seconds")
         time.sleep(wait_time)
     else:
@@ -2153,20 +2216,21 @@ def step_impl(context, seconds):
     #  sendPaymentOutcome record
     pass
 
+
 @step(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, value, column, query_name, table_name, db_name, name_macro):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
 
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
+
     print(selected_query)
-    exec_query = db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(conn, selected_query)
 
     query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)
@@ -2196,7 +2260,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
         for elem in split_value:
             assert elem in query_result, f"check expected element: {value}, obtained: {query_result}"
 
-    db.closeConnection(conn)
+    adopted_db.closeConnection(conn)
 
 
 @step("update through the query {query_name} of the table {table_name} the parameter {param} with {value}, with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
@@ -2215,23 +2279,25 @@ def step_impl(context, query_name, table_name, param, value, where_condition, va
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
     selected_query = utils.replace_global_variables(selected_query, context)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
-    exec_query = db.executeQuery(conn, selected_query)
-    db.closeConnection(conn)
+
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+    adopted_db.closeConnection(conn)
+
 
 @step("delete with the query {query_name} from the table {table_name} the parameters where the condition are {where_condition}under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, where_condition, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('where_condition', where_condition)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace(
+        'where_condition', where_condition)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
     selected_query = utils.replace_global_variables(selected_query, context)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
-    exec_query = db.executeQuery(conn, selected_query)
-    db.closeConnection(conn)
 
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+    exec_query = adopted_db.executeQuery(conn, selected_query)
+    adopted_db.closeConnection(conn)
 
 
 @step("generic update through the query {query_name} of the table {table_name} the parameter {param}, with where condition {where_condition} under macro {macro} on db {db_name}")
@@ -2246,42 +2312,46 @@ def step_impl(context, query_name, table_name, param, where_condition, macro, db
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
     selected_query = utils.replace_global_variables(selected_query, context)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
-    exec_query = db.executeQuery(conn, selected_query)
-    db.closeConnection(conn)
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+    adopted_db.closeConnection(conn)
 
 
 @step(u"check datetime plus number of date {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     if number == 'default_token_duration_validity_millis':
-        default = int(
-            getattr(context, 'default_token_duration_validity_millis')) / 60000
+        default = int(getattr(context, 'default_token_duration_validity_millis')) / 60000
+
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
         selected_query = utils.replace_global_variables(selected_query, context)
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
-        exec_query = db.executeQuery(conn, selected_query)
+ 
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d %H:%M')
-																																		 
-    elif number == 'default_idempotency_key_validity_minutes':	   
+
+    elif number == 'default_idempotency_key_validity_minutes':
         default = int(getattr(context, 'default_idempotency_key_validity_minutes'))
         print("###################", default)
-        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
+        value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(
+            minutes=default)).strftime('%Y-%m-%d %H:%M')
         print(">>>>>>>>>>>>>>>>>>>", value)
+
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
         selected_query = utils.replace_global_variables(selected_query, context)
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
-        exec_query = db.executeQuery(conn, selected_query)
+
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d %H:%M')
@@ -2295,74 +2365,85 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         selected_query = utils.replace_global_variables(selected_query, context)
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
-        exec_query = db.executeQuery(conn, selected_query)
+
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d %H:%M')
-														
     elif number == 'Today':
         value = (datetime.datetime.today()).strftime('%Y-%m-%d')
+
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
         selected_query = utils.replace_global_variables(selected_query, context)
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
-        exec_query = db.executeQuery(conn, selected_query)
+
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d')
 
     elif 'minutes:' in number:
         min = int(number.split(':')[1]) / 60000
+
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(minutes=min)).strftime('%Y-%m-%d %H:%M')
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
         selected_query = utils.replace_global_variables(selected_query, context)
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
-        exec_query = db.executeQuery(conn, selected_query)
+
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d %H:%M')
     else:
         number = int(number)
+
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +datetime.timedelta(days=number)).strftime('%Y-%m-%d')
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
         selected_query = utils.replace_global_variables(selected_query, context)
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
-        exec_query = db.executeQuery(conn, selected_query)
+
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[0].strftime('%Y-%m-%d')
 
-    db.closeConnection(conn)
+    adopted_db.closeConnection(conn)
 
     print(f"check expected element: {value}, obtained: {elem}")
     assert elem == value
+
 
 @step(u"checks datetime plus number of date {number} of the record at column {column} in the row {row:d} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number, row):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     if number == 'default_token_duration_validity_millis':
-        default = int(
-            getattr(context, 'default_token_duration_validity_millis')) / 60000
+        default = int(getattr(context, 'default_token_duration_validity_millis')) / 60000
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
                  datetime.timedelta(minutes=default)).strftime('%Y-%m-%d %H:%M')
+
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
         selected_query = utils.replace_global_variables(selected_query, context)
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
-        exec_query = db.executeQuery(conn, selected_query)
+
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[row].strftime('%Y-%m-%d %H:%M')
 
     elif number == 'default_idempotency_key_validity_minutes':
-        default = int(
-            getattr(context, 'default_idempotency_key_validity_minutes'))
+        default = int(getattr(context, 'default_idempotency_key_validity_minutes'))
         print("###################", default)
 
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
@@ -2373,18 +2454,23 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         selected_query = utils.replace_global_variables(selected_query, context)
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
-        exec_query = db.executeQuery(conn, selected_query)
+
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[row].strftime('%Y-%m-%d %H:%M')
 
     elif number == 'Today':
         value = (datetime.datetime.today()).strftime('%Y-%m-%d')
+
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
         selected_query = utils.replace_global_variables(selected_query, context)
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
-        exec_query = db.executeQuery(conn, selected_query)
+
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[row].strftime('%Y-%m-%d')
@@ -2393,11 +2479,14 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         min = int(number.split(':')[1]) / 60000
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
                  datetime.timedelta(minutes=min)).strftime('%Y-%m-%d %H:%M')
+
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
         selected_query = utils.replace_global_variables(selected_query, context)
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
-        exec_query = db.executeQuery(conn, selected_query)
+
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[row].strftime('%Y-%m-%d %H:%M')
@@ -2405,50 +2494,56 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
         number = int(number)
         value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
                  datetime.timedelta(days=number)).strftime('%Y-%m-%d')
+
         selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
         selected_query = utils.replace_global_variables(selected_query, context)
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
-        exec_query = db.executeQuery(conn, selected_query)
+
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         elem = query_result[row].strftime('%Y-%m-%d')
 
-    db.closeConnection(conn)
+    adopted_db.closeConnection(conn)
 
     print(f"check expected element: {value}, obtained: {elem}")
     assert elem == value
 
 
 @step("insert through the query {query_name} into the table {table_name} the fields {row_keys_fields} with {row_values_fields} under macro {macro} on db {db_name}")
-def step_impl(context, query_name, table_name, row_keys_fields, row_values_fields, macro, db_name):											 
-											 
+def step_impl(context, query_name, table_name, row_keys_fields, row_values_fields, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('row_keys_fields', row_keys_fields).replace('row_values_fields', row_values_fields)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace(
+        'row_keys_fields', row_keys_fields).replace('row_values_fields', row_values_fields)
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
     row_values_fields = utils.replace_global_variables(row_values_fields, context)
     row_values_fields = utils.replace_local_variables(row_values_fields, context)
     row_values_fields = utils.replace_context_variables(row_values_fields, context)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
-    exec_query = db.executeQuery(conn, selected_query)
-    db.closeConnection(conn)
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+    exec_query = adopted_db.executeQuery(conn, selected_query)
+    adopted_db.closeConnection(conn)
+
 
 @step("delete through the query {query_name} into the table {table_name} with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, where_condition, valore, macro, db_name):
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('where_condition', where_condition).replace('valore', valore)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace(
+        'where_condition', where_condition).replace('valore', valore)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
-    exec_query = db.executeQuery(conn, selected_query)
-    db.closeConnection(conn)
-
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+    exec_query = adopted_db.executeQuery(conn, selected_query)
+    adopted_db.closeConnection(conn)
 
 
 @step("updates through the query {query_name} of the table {table_name} the parameter {param} with {value} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, macro, db_name):
+
+    dbRun = getattr(context, "dbRun")
 												 								                                                                 
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
     value = utils.replace_global_variables(value, context)
@@ -2456,31 +2551,35 @@ def step_impl(context, query_name, table_name, param, value, macro, db_name):
     value = utils.replace_context_variables(value, context)
 
     selected_query = ''
-    if value == 'null':
+    if dbRun == "Postgres":
+        if value == 'null':
+            selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
+        else:
+            selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$')
+    elif dbRun == "Oracle":
         selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
-    else:
-        selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$')
-        
+    
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
 
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
-    exec_query = db.executeQuery(conn, selected_query)
-    db.closeConnection(conn)
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+    adopted_db.closeConnection(conn)
+
 
 
 @step("delete by the query {query_name} the table {table_name} with the where {where_condition} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, where_condition, macro, db_name):
-												 
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('where_condition', where_condition)
+    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace(
+        'where_condition', where_condition)
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
-    exec_query = db.executeQuery(conn, selected_query)
-    db.closeConnection(conn)
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+    exec_query = adopted_db.executeQuery(conn, selected_query)
+    adopted_db.closeConnection(conn)
 
 
 @step(u"checks the value {value} is contained in the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
@@ -2488,15 +2587,14 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
 
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
     print(selected_query)
-    exec_query = db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(conn, selected_query)
 
     query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)
@@ -2506,33 +2604,35 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     value = utils.replace_context_variables(value, context)
 
     query_string = str(query_result)
-    
+
     print("value: ", value)
 
     assert value in query_string, f"value obtained: {value}, query obtained: {query_string}"
 
-    db.closeConnection(conn)
+    adopted_db.closeConnection(conn)
+
 
 @step(u"verify datetime plus number of minutes {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, column, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     number = int(number) / 60000
-    value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) +
-             datetime.timedelta(minutes=number)).strftime('%Y-%m-%d %H:%M')
+    value = (datetime.datetime.now().astimezone(pytz.timezone('Europe/Rome')) + datetime.timedelta(minutes=number)).strftime('%Y-%m-%d %H:%M')
+
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
-    exec_query = db.executeQuery(conn, selected_query)
+
+    exec_query = adopted_db.executeQuery(conn, selected_query)
+
     query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)
     elem = query_result[0].strftime('%Y-%m-%d %H:%M')
 
-    db.closeConnection(conn)
+    adopted_db.closeConnection(conn)
 
     print(f"check expected element: {value}, obtained: {elem}")
     assert elem == value
@@ -2542,14 +2642,15 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
 def step_impl(context, query_name, table_name, db_name, name_macro, number):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", '*').replace("table_name", table_name)
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
-    exec_query = db.executeQuery(conn, selected_query)
+
+    exec_query = adopted_db.executeQuery(conn, selected_query)
+
     print("record query: ", exec_query)
     assert len(exec_query) == number, f"{len(exec_query)}"
 
@@ -2558,30 +2659,31 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
 def step_impl(context, query_name, table_name, db_name, name_macro):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", '*').replace("table_name", table_name)
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
-    exec_query = db.executeQuery(conn, selected_query)
+
+    exec_query = adopted_db.executeQuery(conn, selected_query)
+
     print("record query: ", exec_query)
     assert len(exec_query) > 0, f"{len(exec_query)}"
 
 
 @step('check token_valid_to is {condition} token_valid_from plus {param}')
 def step_impl(context, condition, param):
-    nodo_online_db = context.config.userdata.get(
-        "db_configuration").get('nodo_online')
-    nodo_online_conn = db.getConnection(nodo_online_db.get('host'), nodo_online_db.get(
-        'database'), nodo_online_db.get('user'), nodo_online_db.get('password'), nodo_online_db.get('port'))
+    db_config = context.config.userdata.get("db_configuration")
+    db_name = "nodo_online"
+    db_selected = db_config.get(db_name)
+    adopted_db, nodo_online_conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     token_validity_query = utils.query_json(context, 'token_validity', 'AppIO').replace(
         'columns', 'TOKEN_VALID_FROM, TOKEN_VALID_TO').replace('table_name', 'POSITION_ACTIVATE')
-    token_valid_from, token_valid_to = db.executeQuery(
+    token_valid_from, token_valid_to = adopted_db.executeQuery(
         nodo_online_conn, token_validity_query)[0]
-    db.closeConnection(nodo_online_conn)
+    adopted_db.closeConnection(nodo_online_conn)
 
     print(token_valid_to)
     print(token_valid_from)
@@ -2610,7 +2712,6 @@ def step_impl(context, condition, param):
 
 @step('check value {value1} is {condition} value {value2}')
 def step_impl(context, value1, condition, value2):
-
     value1 = utils.replace_local_variables(value1, context)
     value1 = utils.replace_context_variables(value1, context)
     value1 = utils.replace_global_variables(value1, context)
@@ -2631,10 +2732,11 @@ def step_impl(context, value1, condition, value2):
     else:
         assert False
 
+
 @then('check payload tag {tag} field not exists in {payload}')
 def step_impl(context, tag, payload):
     from xml.etree.ElementTree import fromstring
-    #payload = getattr(context, payload)
+    # payload = getattr(context, payload)
     payload = utils.replace_local_variables(payload, context)
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
@@ -2650,6 +2752,7 @@ def step_impl(context, primitive1, primitive2, restType1, restType2):
     list_of_type = [restType1, restType2]
     utils.threading(context, list_of_primitive, list_of_type)
 
+
 # 2 primitives called in parallel, with delay1 applied to primitive2
 
 
@@ -2658,8 +2761,8 @@ def step_impl(context, primitive1, primitive2, delay1, restType1, restType2):
     list_of_primitive = [primitive1, primitive2]
     list_of_type = [restType1, restType2]
     list_of_delays = [0, delay1]
-    utils.threading_delayed(context, list_of_primitive,
-                            list_of_delays, list_of_type)
+    utils.threading_delayed(context, list_of_primitive, list_of_delays, list_of_type)
+
 
 
 @then("check primitive response {primitive1} and primitive response {primitive2}")
@@ -2724,13 +2827,13 @@ def step_impl(context, primitive1, primitive2):
     # AccessiConcorrenziali 3c_ACT_SPO
     elif outcome1 == 'KO' and faultCode1 == 'PPT_PAGAMENTO_DUPLICATO' and outcome2 == 'KO' and faultCode2 == 'PPT_TOKEN_SCADUTO':
         assert True
-     # AccessiConcorrenziali 3d_ACT_SPO
+    # AccessiConcorrenziali 3d_ACT_SPO
     elif outcome1 == 'OK' and outcome2 == 'KO' and faultCode2 == 'PPT_TOKEN_SCADUTO':
         assert True
     # AccessiConcorrenziali 3e_ACT_SPO
     elif outcome1 == 'KO' and outcome2 == 'KO' and faultCode2 == 'PPT_SEMANTICA' and description2 == 'Activation pending on position':
         assert True
-     # AccessiConcorrenziali 3e_ACT_SPO
+    # AccessiConcorrenziali 3e_ACT_SPO
     elif outcome2 == 'KO' and outcome1 == 'KO' and faultCode1 == 'PPT_TOKEN_SCADUTO':
         assert True
     else:
@@ -2741,18 +2844,26 @@ def step_impl(context, primitive1, primitive2):
 def step_impl(context, query_name, json_elem, position, key):
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
-    selected_element = result_query[0][position].tobytes().decode('utf-8')
-    
+
+    dbRun = getattr(context, "dbRun")
+    selected_element = ''
+    if dbRun == "Postgres":
+        selected_element = result_query[0][position].tobytes().decode('utf-8')
+    elif dbRun == "Oracle":
+        selected_element = result_query[0][position]
+        selected_element = selected_element.read()
+        selected_element = selected_element.decode("utf-8")
+
     jsonDict = json.loads(selected_element)
     selected_element = utils.json2xml(jsonDict)
-    selected_element = '<root>' + selected_element + '</root>'	
-	
+    selected_element = '<root>' + selected_element + '</root>'
+
     print(f'{json_elem}: {selected_element}')
     setattr(context, key, selected_element)
 
+
 @step('checking value {value1} is {condition} value {value2}')
 def step_impl(context, value1, condition, value2):
-
     value1 = utils.replace_local_variables(value1, context)
     value1 = utils.replace_context_variables(value1, context)
     value1 = utils.replace_global_variables(value1, context)
@@ -2778,7 +2889,6 @@ def step_impl(context, value1, condition, value2):
 
 @then("check db PAG-590_01")
 def step_impl(context):
-
     # from activatePaymentNotice2 = activatePaymentNotice1
     activatePaymentNotice2 = parseString(
         getattr(context, 'activatePaymentNotice2'))
@@ -2805,10 +2915,10 @@ def step_impl(context):
     query4 = f"SELECT * FROM RPT_VERSAMENTI v JOIN RPT r ON v.FK_RPT = r.ID WHERE r.IUV = '{iuv}' AND r.IDENT_DOMINIO = '$activatePaymentNotice1.fiscalCode'"
 
     db_config = context.config.userdata.get("db_configuration")
-    db_selected = db_config.get("nodo_online")
+    db_name = "nodo_online"
+    db_selected = db_config.get(db_name)
 
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     query_payment_replaced = utils.replace_local_variables(
         query_payment, context)
@@ -2821,21 +2931,21 @@ def step_impl(context):
     query3_replaced = utils.replace_local_variables(query3, context)
     query4_replaced = utils.replace_local_variables(query4, context)
 
-    rpt_id_row = db.executeQuery(conn, query_payment_replaced)
-    service_row = db.executeQuery(conn, query_service_replaced)
-    transfer_row = db.executeQuery(conn, query_transfer_replaced)
-    rpt = db.executeQuery(conn, query1_replaced)
-    plan = db.executeQuery(conn, query2_replaced)
-    act = db.executeQuery(conn, query3_replaced)
-    vers = db.executeQuery(conn, query4_replaced)
+    rpt_id_row = adopted_db.executeQuery(conn, query_payment_replaced)
+    service_row = adopted_db.executeQuery(conn, query_service_replaced)
+    transfer_row = adopted_db.executeQuery(conn, query_transfer_replaced)
+    rpt = adopted_db.executeQuery(conn, query1_replaced)
+    plan = adopted_db.executeQuery(conn, query2_replaced)
+    act = adopted_db.executeQuery(conn, query3_replaced)
+    vers = adopted_db.executeQuery(conn, query4_replaced)
 
     debtor_id = service_row[0][0]
     print(debtor_id)
 
     query_debtor = f"SELECT ID, ENTITY_UNIQUE_IDENTIFIER_VALUE FROM POSITION_SUBJECT WHERE ID = '{debtor_id}'"
-    debtor_row = db.executeQuery(conn, query_debtor)
+    debtor_row = adopted_db.executeQuery(conn, query_debtor)
 
-    db.closeConnection(conn)
+    adopted_db.closeConnection(conn)
 
     # POSITION_ACTIVATE
     ID2 = act[0][0]
@@ -2938,7 +3048,7 @@ def step_impl(context):
     assert STATION_VERSION == 2
     assert PSP_ID == psp
     assert BROKER_PSP_ID == psp
-    assert CHANNEL_ID == psp+'_01'
+    assert CHANNEL_ID == psp + '_01'
     assert IDEMPOTENCY_KEY == None
     assert AMOUNT == 10
     assert FEE == None
@@ -3039,27 +3149,27 @@ def step_impl(context):
     query3 = f"SELECT s.* FROM PSP s where s.ID_PSP = '{psp}'"
     query4 = f"SELECT s.METADATA FROM POSITION_PAYMENT_PLAN s where s.NOTICE_ID = '{noticeNumber}' and s.PA_FISCAL_CODE= '{pa}'"
 
+    db_name = "nodo_online"
     db_config = context.config.userdata.get(
-        "db_configuration").get("nodo_online")
+        "db_configuration").get(db_name)
 
-    conn = db.getConnection(db_config.get('host'), db_config.get(
-        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_config)
 
-    rows = db.executeQuery(conn, query)
-    rows1 = db.executeQuery(conn, query1)
-    rows2 = db.executeQuery(conn, query2)
-    rows4 = db.executeQuery(conn, query4)
+    rows = adopted_db.executeQuery(conn, query)
+    rows1 = adopted_db.executeQuery(conn, query1)
+    rows2 = adopted_db.executeQuery(conn, query2)
+    rows4 = adopted_db.executeQuery(conn, query4)
 
-    db.closeConnection(conn)
+    adopted_db.closeConnection(conn)
 
-    db_config = context.config.userdata.get("db_configuration").get("nodo_cfg")
+    db_name = "nodo_cfg"
+    db_config = context.config.userdata.get("db_configuration").get(db_name)
 
-    conn = db.getConnection(db_config.get('host'), db_config.get(
-        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_config)
 
-    rows3 = db.executeQuery(conn, query3)
+    rows3 = adopted_db.executeQuery(conn, query3)
 
-    db.closeConnection(conn)
+    adopted_db.closeConnection(conn)
 
     assert rows[0][1] == rows1[0][0]
     assert rows[0][2] == rows1[0][1]
@@ -3092,7 +3202,6 @@ def step_impl(context):
 
 @then("RTP XML check")
 def step_impl(context):
-
     XML = "SELECT XML FROM POSITION_RECEIPT_XML WHERE PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken' and PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and NOTICE_ID='$activatePaymentNotice.noticeNumber'"
     query = "SELECT BROKER_PA_ID, STATION_ID, PAYMENT_TOKEN, NOTICE_ID, PA_FISCAL_CODE, OUTCOME, CREDITOR_REFERENCE_ID, AMOUNT, PSP_ID, CHANNEL_ID, PAYMENT_CHANNEL, PAYMENT_METHOD, FEE, INSERTED_TIMESTAMP, APPLICATION_DATE, TRANSFER_DATE  FROM POSITION_PAYMENT WHERE PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken' and PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and NOTICE_ID='$activatePaymentNotice.noticeNumber'"
     query1 = "SELECT DESCRIPTION, COMPANY_NAME, OFFICE_NAME  FROM POSITION_SERVICE WHERE PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and NOTICE_ID='$activatePaymentNotice.noticeNumber'"
@@ -3100,24 +3209,22 @@ def step_impl(context):
     query3 = "SELECT su.ENTITY_UNIQUE_IDENTIFIER_TYPE, su.ENTITY_UNIQUE_IDENTIFIER_VALUE, su.FULL_NAME, su.STREET_NAME, su.CIVIC_NUMBER, su.POSTAL_CODE, su.CITY, su.STATE_PROVINCE_REGION, su.COUNTRY, su.EMAIL  FROM POSITION_SUBJECT su JOIN POSITION_RECEIPT sr ON su.ID = sr.PAYER_ID WHERE sr.PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and sr.NOTICE_ID='$activatePaymentNotice.noticeNumber' and su.SUBJECT_TYPE='PAYER'"
     query4 = "SELECT TRANSFER_IDENTIFIER, AMOUNT, PA_FISCAL_CODE_SECONDARY, IBAN, REMITTANCE_INFORMATION, TRANSFER_CATEGORY  FROM POSITION_TRANSFER WHERE PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and NOTICE_ID='$activatePaymentNotice.noticeNumber'"
 
-    db_config = context.config.userdata.get(
-        "db_configuration").get("nodo_online")
-
-    conn = db.getConnection(db_config.get('host'), db_config.get(
-        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
+    db_name = "nodo_online"
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     XML = utils.replace_local_variables(XML, context)
-    xml_rows = db.executeQuery(conn, XML)
+    xml_rows = adopted_db.executeQuery(conn, XML)
     query = utils.replace_local_variables(query, context)
-    rows = db.executeQuery(conn, query)
+    rows = adopted_db.executeQuery(conn, query)
     query1 = utils.replace_local_variables(query1, context)
-    rows1 = db.executeQuery(conn, query1)
+    rows1 = adopted_db.executeQuery(conn, query1)
     query2 = utils.replace_local_variables(query2, context)
-    rows2 = db.executeQuery(conn, query2)
+    rows2 = adopted_db.executeQuery(conn, query2)
     query3 = utils.replace_local_variables(query3, context)
-    rows3 = db.executeQuery(conn, query3)
+    rows3 = adopted_db.executeQuery(conn, query3)
     query4 = utils.replace_local_variables(query4, context)
-    rows4 = db.executeQuery(conn, query4)
+    rows4 = adopted_db.executeQuery(conn, query4)
 
     xml_rpt = parseString(xml_rows[0][0])
 
@@ -3152,17 +3259,17 @@ def step_impl(context):
 
     pspId = rows[0][8]
 
-    db.closeConnection(conn)
+    adopted_db.closeConnection(conn)
 
     query5 = "SELECT CODICE_FISCALE, RAGIONE_SOCIALE  FROM PSP WHERE ID_PSP='$activatePaymentNotice.idPSP'"
-    db_config = context.config.userdata.get("db_configuration").get("nodo_cfg")
-    conn = db.getConnection(db_config.get('host'), db_config.get(
-        'database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
+    db_name = "nodo_cfg"
+    db_config = context.config.userdata.get("db_configuration").get(db_name)
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_config)
 
     query5 = utils.replace_local_variables(query5, context)
-    rows5 = db.executeQuery(conn, query5)
+    rows5 = adopted_db.executeQuery(conn, query5)
 
-    db.closeConnection(conn)
+    adopted_db.closeConnection(conn)
 
     pspCodiceFiscale = rows5[0][0]
     # campo pspPartitaIVA mancante nella tabella PSP
@@ -3185,7 +3292,7 @@ def step_impl(context):
     assert xml_rpt.getElementsByTagName(
         "outcome")[0].firstChild.data == outcome
     assert xml_rpt.getElementsByTagName("creditorReferenceId")[
-        0].firstChild.data == credRefId
+               0].firstChild.data == credRefId
 
     paymentAmount = xml_rpt.getElementsByTagName("paymentAmount")[
         0].firstChild.data
@@ -3198,9 +3305,9 @@ def step_impl(context):
     assert xml_rpt.getElementsByTagName(
         "description")[0].firstChild.data == description
     assert xml_rpt.getElementsByTagName("entityUniqueIdentifierType")[
-        0].firstChild.data == debIdentifierType
+               0].firstChild.data == debIdentifierType
     assert xml_rpt.getElementsByTagName("entityUniqueIdentifierValue")[
-        0].firstChild.data == debIdentifierValue
+               0].firstChild.data == debIdentifierValue
     assert xml_rpt.getElementsByTagName(
         "fullName")[0].firstChild.data == debName
     assert xml_rpt.getElementsByTagName(
@@ -3211,7 +3318,7 @@ def step_impl(context):
         "postalCode")[0].firstChild.data == debCode
     assert xml_rpt.getElementsByTagName("city")[0].firstChild.data == debCity
     assert xml_rpt.getElementsByTagName("stateProvinceRegion")[
-        0].firstChild.data == debRegion
+               0].firstChild.data == debRegion
     assert xml_rpt.getElementsByTagName(
         "country")[0].firstChild.data == debCountry
     assert xml_rpt.getElementsByTagName(
@@ -3229,24 +3336,24 @@ def step_impl(context):
         "fiscalCodePA")[0].firstChild.data == transPaFiscalCodeSecondary
     assert xml_rpt.getElementsByTagName("IBAN")[0].firstChild.data == transIban
     assert xml_rpt.getElementsByTagName("remittanceInformation")[
-        0].firstChild.data == transRemittanceInformation
+               0].firstChild.data == transRemittanceInformation
     assert xml_rpt.getElementsByTagName("transferCategory")[
-        0].firstChild.data == transTransferCategory
+               0].firstChild.data == transTransferCategory
 
     assert xml_rpt.getElementsByTagName("idPSP")[0].firstChild.data == pspId
     assert xml_rpt.getElementsByTagName("pspFiscalCode")[
-        0].firstChild.data == pspCodiceFiscale
+               0].firstChild.data == pspCodiceFiscale
     assert xml_rpt.getElementsByTagName("PSPCompanyName")[
-        0].firstChild.data == pspRagioneSociale
+               0].firstChild.data == pspRagioneSociale
     assert xml_rpt.getElementsByTagName(
         "idChannel")[0].firstChild.data == channelId
 
     if payChannel == None:
         assert xml_rpt.getElementsByTagName("channelDescription")[
-            0].firstChild.data == 'NA'
+                   0].firstChild.data == 'NA'
     else:
         assert xml_rpt.getElementsByTagName("channelDescription")[
-            0].firstChild.data == payChannel
+                   0].firstChild.data == payChannel
 
     if len(xml_rpt.getElementsByTagName("officeName")) > 0:
         officeName = rows1[0][2]
@@ -3266,9 +3373,9 @@ def step_impl(context):
         payEmail = rows3[0][9]
 
     assert xml_rpt.getElementsByTagName("entityUniqueIdentifierType")[
-        0].firstChild.data == payIdentifierType
+               0].firstChild.data == payIdentifierType
     assert xml_rpt.getElementsByTagName("entityUniqueIdentifierValue")[
-        0].firstChild.data == payIdentifierValue
+               0].firstChild.data == payIdentifierValue
     assert xml_rpt.getElementsByTagName(
         "fullName")[0].firstChild.data == payName
     assert xml_rpt.getElementsByTagName(
@@ -3279,7 +3386,7 @@ def step_impl(context):
         "postalCode")[0].firstChild.data == payCode
     assert xml_rpt.getElementsByTagName("city")[0].firstChild.data == payCity
     assert xml_rpt.getElementsByTagName("stateProvinceRegion")[
-        0].firstChild.data == payRegion
+               0].firstChild.data == payRegion
     assert xml_rpt.getElementsByTagName(
         "country")[0].firstChild.data == payCountry
     assert xml_rpt.getElementsByTagName(
@@ -3288,7 +3395,7 @@ def step_impl(context):
     if len(xml_rpt.getElementsByTagName("paymentMethod")) > 0:
         payMethod = rows[0][11]
         assert xml_rpt.getElementsByTagName("paymentMethod")[
-            0].firstChild.data == payMethod
+                   0].firstChild.data == payMethod
 
     """    
     if len(xml_rpt.getElementsByTagName("fee")) > 0:
@@ -3353,17 +3460,18 @@ def step_impl(context, new_attribute, old_attribute):
 
 @step('Select and Update RT for Test retry_PAold with causale versamento {causaleVers}')
 def step_impl(context, causaleVers):
-    db_config = context.config.userdata.get(
-        "db_configuration").get("nodo_online")
 
-    conn = db.getConnection(db_config.get('host'), db_config.get('database'), db_config.get('user'), db_config.get('password'), db_config.get('port'))
+    db_name = "nodo_online"
+    db_config = context.config.userdata.get("db_configuration").get(db_name)
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_config)
 
     # select clob
     xml_content_query = "SELECT XML_CONTENT as clob FROM RT_XML WHERE IDENT_DOMINIO='$activatePaymentNotice.fiscalCode' AND IUV='$iuv'"
 
     xml_content_query = utils.replace_local_variables(xml_content_query, context)
     xml_content_query = utils.replace_context_variables(xml_content_query, context)
-    xml_content_row = db.executeQuery(conn, xml_content_query)
+
+    xml_content_row = adopted_db.executeQuery(conn, xml_content_query)
 
     xml_rt = parseString(xml_content_row[0][0])
     node = xml_rt.getElementsByTagName('causaleVersamento')[0]
@@ -3376,9 +3484,9 @@ def step_impl(context, causaleVers):
     query_update = utils.replace_local_variables(query_update, context)
     query_update = utils.replace_context_variables(query_update, context)
 
-    db.executeQuery(conn, query_update)
+    adopted_db.executeQuery(conn, query_update)
 
-    db.closeConnection(conn)
+    adopted_db.closeConnection(conn)
 
 
 @step(u'run in parallel "{feature}", "{scenario}"')
@@ -3448,6 +3556,7 @@ def step_impl(context):
     for key, value in cache.items():
         setattr(context, key, value)
 
+
 @step('check field in {primitive} response')
 def step_impl(context, primitive):
     soap_response = getattr(context, primitive + RESPONSE)
@@ -3468,61 +3577,70 @@ def step_impl(contex, seconds):
         if datetime.datetime.now() >= endT:
             break
 
+
 @step(u"under macro {name_macro} on db {db_name} with the query {query_name} verify the value {value} of the record at column {column} of table {table_name}")
 def step_impl(context, name_macro, db_name, query_name, value, column, table_name):
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
 
-    conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
         
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
     print(selected_query)
-    exec_query = db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(conn, selected_query)
+    print('#############', exec_query)
+
     query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)
 
     value = utils.replace_global_variables(value, context)
     value = utils.replace_local_variables(value, context)
     value = utils.replace_context_variables(value, context)
-    
+
     assert value in query_result, f"check expected element: {value}, obtained: {query_result}"
-    
-    db.closeConnection(conn)
+
+    adopted_db.closeConnection(conn)
 
 
 ################################################################################################################################################################
 
 
 @step(u"wait until the update to the new state for the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
-def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, table_name):  #step da utilizzare su tabella SNAPSHOT 
+def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column,
+                             table_name):  # step da utilizzare su tabella SNAPSHOT 
 
     # Legge i dati dalla tabella specificata utilizzando la connessione fornita
     # e continua a controllare periodicamente per gli aggiornamenti fino a quando non viene trovato uno.
 
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
+
     conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
+
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
     print(selected_query)
-    exec_query = db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(conn, selected_query)
 
     query_result = [t[0] for t in exec_query]
     print('query_result: ', query_result)
-    
+
     ultima_modifica = query_result
 
     i = 0
     while i <= 50:
-        exec_query = db.executeQuery(conn, selected_query)
-        nuova_modifica = exec_query [0][0]
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+        nuova_modifica = exec_query[0][0]
 
         if nuova_modifica != ultima_modifica:
             print("Trovato aggiornamento!")
@@ -3532,9 +3650,7 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
             print("Nessun aggiornamento trovato, attendo...")
             time.sleep(3)  # attende 3 secondi prima del prossimo controllo
             i += 1
-
-    db.closeConnection(conn)
-
+    adopted_db.closeConnection(conn)
 
 
 @step(u"polling for the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
@@ -3597,7 +3713,6 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
 
     db.closeConnection(conn)
 
-
 # step per salvare nel context una variabile key recuperata dal db tramite query query_name
 @step("through the query {query_name} retrieve valid noticeID from POSITION_PAYMENT_PLAN on db {db_name}")
 def step_impl(context, query_name, db_name):
@@ -3614,10 +3729,9 @@ def step_impl(context, query_name, db_name):
 
         query = f"SELECT * FROM POSITION_PAYMENT_PLAN ppp WHERE NOTICE_ID = {notice_temp}"
 
-        conn = db.getConnection(db_selected.get('host'), db_selected.get(
-        'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-        exec_query = db.executeQuery(conn, query)
+        exec_query = adopted_db.executeQuery(conn, query)
 
         if len(exec_query) == 1:
             rowExpected = row

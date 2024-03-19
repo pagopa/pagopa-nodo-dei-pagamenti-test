@@ -6,31 +6,44 @@
          "healthcheck": "/monitor/health",
          "soap_service": "/webservices/input",
          "rest_service": "runlocal",
-         "refresh_config_service": "/config/refresh/ALL"
+         "refresh_config_service": "/config/refresh/ALL",
+         "subscription_key_name": ""
       },
       "mock-ec": {
          "url": "http://localhost:81/mock-ec-sit/servizi/PagamentiTelematiciRPT",
          "healthcheck": "/info",
          "soap_service": "",
-         "rest_service": ""
+         "rest_service": "",
+         "subscription_key_name": ""
       },
       "mock-psp": {
          "url": "http://localhost:81/pspmock-sit/servizi/MockPSP",
          "healthcheck": "/info",
          "soap_service": "",
-         "rest_service": ""
+         "rest_service": "",
+         "subscription_key_name": ""
       },
       "secondary-mock-ec": {
          "url": "http://localhost:81/secondary-mock-ec-sit/secondary-mock-ec",
          "healthcheck": "/info",
          "soap_service": "",
-         "rest_service": ""
+         "rest_service": "",
+         "subscription_key_name": ""
       },
       "secondary-mock-psp": {
          "url": "http://localhost:81/psp-sec-mock-sit/psp-sec-mock",
          "healthcheck": "/info",
          "soap_service": "",
-         "rest_service": ""
+         "rest_service": "",
+         "subscription_key_name": ""
+      },
+      "apicfg-testing-support": {
+        "url": "https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/o/v1",
+        "healthcheck": "/info",
+        "soap_service": " ",
+        "rest_service": " ",
+        "refresh_config_service": "",
+        "subscription_key_name": "APICFG_SUBSCRIPTION_KEY"
       }
    },
    "global_configuration": {

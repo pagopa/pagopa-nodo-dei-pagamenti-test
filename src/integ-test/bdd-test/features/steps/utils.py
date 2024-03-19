@@ -90,7 +90,6 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoChiediNumeroAvviso": "/nodo-per-psp-richiesta-avvisi/v1",
         "nodoChiediStatoRPT": "/nodo-per-pa/v1",
         "nodoChiediTemplateInformativaPSP": "/nodo-per-psp/v1",
-        "nodoInviaFlussoRendicontazione": "/nodo-per-psp/v1",
         "nodoInviaCarrelloRPT": "/nodo-per-pa/v1",
         "nodoInviaRPT": "/nodo-per-pa/v1",
         "nodoInviaRT": "/nodo-per-psp/v1",
@@ -101,7 +100,7 @@ def get_soap_url_nodo(context, primitive=-1):
         "nodoChiediQuadraturaPA": "/nodo-per-pa/v1"
         #"nodoChiediSceltaWISP":"//v1"
     }
-    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service") == "":
+    if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("soap_service").strip() == "":
         return context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") + primitive_mapping.get(primitive)
     else:
         return  context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url") \
@@ -434,13 +433,17 @@ def isDate(string: str):
 
 def single_thread(context, soap_primitive, tipo):
     print("single_thread")
+    dbRun = getattr(context, "dbRun")
     primitive = soap_primitive.split("_")[0]
     primitive = replace_local_variables(primitive, context)
     primitive = replace_context_variables(primitive, context)
     primitive = replace_global_variables(primitive, context)
     print(f"primitive: {primitive}")
     if tipo == 'GET':
-        url_nodo = f"{get_rest_url_nodo(context, primitive)}"
+        if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
+            url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+        else:
+            url_nodo = get_rest_url_nodo(context, primitive)
         print(f"url: {url_nodo}")
 
         header_host = estrapola_header_host(url_nodo)
@@ -448,16 +451,23 @@ def single_thread(context, soap_primitive, tipo):
 
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers = {'Ocp-Apim-Subscription-Key', os.getenv('SUBSCRIPTION_KEY') }
-
-        soap_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        
+        soap_response = ''
+        if dbRun == "Postgres":
+            soap_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        elif dbRun == "Oracle":
+            soap_response = requests.get(url_nodo, headers=headers, verify=False)
         print("response: ", soap_response.content)
+
         print(soap_primitive.split("_")[1] + "Response")
         setattr(context, soap_primitive.split("_")[1] + "Response", soap_response)
     elif tipo == 'POST':
         body = getattr(context, primitive)
         print(body)
+
         response = ''
-        
+        url_nodo = ''
+
         if 'xml' in getattr(context, primitive):
             url_nodo = get_soap_url_nodo(context, primitive)
             print(f"url: {url_nodo}")
@@ -469,7 +479,11 @@ def single_thread(context, soap_primitive, tipo):
             if 'SUBSCRIPTION_KEY' in os.environ:
                 headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
 
-            response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+            response = ''
+            if dbRun == "Postgres":
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+            elif dbRun == 'Oracle':
+                response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
             url_nodo = f"{get_rest_url_nodo(context, primitive)}"
             print(f"url: {url_nodo}")
@@ -495,6 +509,10 @@ def single_thread(context, soap_primitive, tipo):
                         body["totalAmount"] = float(body["totalAmount"])
                     if ('fee' in body.keys()) and (body["fee"] != None):
                         body["fee"] = float(body["fee"])
+                    if ('importoTotalePagato' in body.keys()) and (body["importoTotalePagato"] != None):
+                        body["importoTotalePagato"] = float(body["importoTotalePagato"])
+                    if ('RRN' in body.keys()) and (body["RRN"] != None):
+                        body["RRN"] = float(body["RRN"])
                     if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
                         body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
                     if ('positionslist' in body.keys()) and (body["positionslist"] != None):
@@ -504,8 +522,19 @@ def single_thread(context, soap_primitive, tipo):
                             l.append(body["positionslist"])
                             body["positionslist"] = l
                     body = json.dumps(body, indent=4)
+                    print(f"body: {body}")
 
-            response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+            if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
+                url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+            else:    
+                url_nodo = get_rest_url_nodo(context, primitive)
+
+            response = ''
+            print(f"url: {url_nodo}")
+            if dbRun == "Postgres":
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+            elif dbRun == 'Oarcle':
+                response = requests.post(url_nodo, body, headers=headers, verify=False)            
             
         setattr(context, soap_primitive.split("_")[1] + "Response", response)
         print("response: ", response.content)
@@ -683,3 +712,29 @@ def replace_specific_string(original_string, target_string, replacement):
 #     proxy_url = pac.find_proxy(pac_file)
 
 #     return proxy_url
+
+def get_db_connection(db_name, db_cfg, db_online, db_offline, db_re, db_wfesp, db_selected):
+    db = None
+    conn = None
+    if db_name.lower() == "nodo_online":
+        db = db_online
+        conn = db_online.getConnection(db_selected.get('host'), db_selected.get(
+            'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    elif db_name.lower() == "nodo_offline":
+        db = db_offline
+        conn = db_offline.getConnection(db_selected.get('host'), db_selected.get(
+            'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    elif db_name.lower() == "re":
+        db = db_re
+        conn = db_re.getConnection(db_selected.get('host'), db_selected.get(
+            'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    elif db_name.lower() == "wfesp":
+        db = db_wfesp
+        conn = db_wfesp.getConnection(db_selected.get('host'), db_selected.get(
+            'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    else:
+        db = db_cfg
+        conn = db_cfg.getConnection(db_selected.get('host'), db_selected.get(
+            'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    return db, conn
+

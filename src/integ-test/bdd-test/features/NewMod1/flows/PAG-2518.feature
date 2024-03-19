@@ -334,7 +334,7 @@ Feature: PAG-2518 941
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column INSERTED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
         And checks the value closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 of the record at column UPDATED_BY of the table PM_METADATA retrived by the query transactionid on db nodo_online under macro NewMod1
 
-    @test @company
+    @test @company @test1
     Scenario: Test 1 (part 3)
         Given the Test 1 (part 2) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
