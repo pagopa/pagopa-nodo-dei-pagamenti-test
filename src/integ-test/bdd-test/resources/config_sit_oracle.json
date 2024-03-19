@@ -47,7 +47,7 @@
       }
    },
    "global_configuration": {
-   	"proxyEnabled": "true",
+   	"proxyEnabled": "True",
       "dbRun": "Oracle",
       "creditor_institution_code": "66666666666",
       "creditor_institution_code_old": "66666666666",

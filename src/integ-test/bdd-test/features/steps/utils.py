@@ -204,10 +204,15 @@ def get_rest_mock_psp(context):
 
 def save_soap_action(context, mock, primitive, soap_action, override=False):
     # set what your server accepts
+    dbRun = getattr(context, "dbRun")
     headers = {'Content-Type': 'application/xml'}
     print(f'{mock}/response/{primitive}?override={override}')
-    response = requests.post(
-        f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+
+    response = None
+    if dbRun == "Postgres":
+        response = requests.post(f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+    elif dbRun == "Oracle":
+        response = requests.post(f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False)
     print(response.content, response.status_code)
     return response.status_code
 
@@ -417,8 +422,12 @@ def query_json(context, name_query, name_macro):
         query = json.load(open(os.path.join(context.config.base_dir + "/../resources/query_AutomationTest_oracle.json")))
     selected_query = query.get(name_macro).get(name_query)
     if '$' in selected_query:
-        selected_query = replace_local_variables_for_query(selected_query, context)
-        selected_query = replace_context_variables_for_query(selected_query, context)
+        if dbRun == "Postgres":
+            selected_query = replace_local_variables_for_query(selected_query, context)
+            selected_query = replace_context_variables_for_query(selected_query, context)
+        elif dbRun == "Oracle":
+            selected_query = replace_local_variables(selected_query, context)
+            selected_query = replace_context_variables(selected_query, context)
         selected_query = replace_global_variables(selected_query, context)
     return selected_query
 

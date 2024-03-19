@@ -12,18 +12,9 @@ from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
 import xmltodict
 
-if 'NODOPGDB' in os.environ:
-    import db_operation_pg as db
-    import db_operation_pg as db_online
-    import db_operation_pg as db_offline
-    import db_operation_pg as db_re
-    import db_operation_pg as db_wfesp
-else:
-    import db_operation as db
-    import db_operation as db_online
-    import db_operation as db_offline
-    import db_operation as db_re
-    import db_operation as db_wfesp
+import db_operation_pg
+import db_operation
+
 if 'APICFG' in os.environ:
     import db_operation_apicfg_testing_support as db
 
@@ -41,6 +32,11 @@ RESPONSE = "Response"
 REQUEST = "Request"
 SUBKEY = "Ocp-Apim-Subscription-Key"
 
+db_online = None
+db_offline = None
+db_re = None
+db_wfesp = None
+
 #disabilita gli avvisi relativi alle richieste non sicure (nessuna verifica SSL alla richiesta https)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -54,9 +50,29 @@ def step_impl(context):
             - mock-ec ( used by nodo-dei-pagamenti to forwarding EC's requests )
             - pagopa-api-config ( used in tests to set DB's nodo-dei-pagamenti correctly according to input test ))
     """
+    
     if 'APICFG' in os.environ:
         apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
         db.set_address(apicfg_testing_support_service)
+
+    dbRun = getattr(context, "dbRun")
+    print(f"DB SELECTED -> {dbRun}")
+
+    global db_online
+    global db_offline
+    global db_re
+    global db_wfesp
+
+    if dbRun == "Postgres":
+        db_online = db_operation_pg
+        db_offline = db_operation_pg
+        db_re = db_operation_pg
+        db_wfesp = db_operation_pg
+    elif dbRun == "Oracle":
+        db_online = db_operation
+        db_offline =  db_operation
+        db_re = db_operation
+        db_wfesp = db_operation
 
     responses = True
     user_profile = None
@@ -66,8 +82,6 @@ def step_impl(context):
         print(f"User Profile: {user_profile} local run!")
     except AttributeError as e:
         print(f"User Profile None: {e} remote run!")
-    proxies = getattr(context, "proxies")
-    dbRun = getattr(context, "dbRun")
 
     for row in context.table:
         print(f"calling: {row.get('name')} -> {row.get('url')}")
@@ -81,10 +95,10 @@ def step_impl(context):
         if row.get("subscription_key_name") != "":
             if row.get("subscription_key_name") in os.environ:
                 headers[SUBKEY] = os.getenv(row.get("subscription_key_name"))
-
-        
+    
         #CHECK SE LANCIO DA DB POSTGRES O ORACLE
         if dbRun == "Postgres":
+            proxies = getattr(context, "proxies")
             ####RUN DA LOCALE
             if user_profile != None:
                 # my_credentials = getattr(context, "my_credentials")
@@ -1129,7 +1143,7 @@ def step_impl(context, attribute, value, elem, primitive):
 
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
-
+    dbRun = getattr(context, "dbRun")
     url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
     header_host = utils.estrapola_header_host(url_nodo)
 
@@ -1144,7 +1158,12 @@ def step_impl(context, sender, soap_primitive, receiver):
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
-    soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+
+    soap_response = None
+    if dbRun == "Postgres":
+        soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+    elif dbRun == "Oracle":
+        soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
 
     print(soap_response.content.decode('utf-8'))
     print(soap_response.status_code)
@@ -1641,17 +1660,16 @@ def step_impl(context, mock, destination, primitive):
     print(pa_verify_payment_notice_res)
     if mock == 'EC':
         print(utils.get_soap_mock_ec(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec(context), primitive, pa_verify_payment_notice_res, override=True)
+        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_ec(context), primitive, pa_verify_payment_notice_res, override=True)
     elif mock == 'EC2':
         print(utils.get_soap_mock_ec2(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_ec2(context), primitive, pa_verify_payment_notice_res, override=True)
+        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_ec2(context), primitive, pa_verify_payment_notice_res, override=True)
     elif mock == 'PSP':
         print(utils.get_soap_mock_psp(context))
-        response_status_code = utils.save_soap_action(utils.get_soap_mock_psp(context), primitive, pa_verify_payment_notice_res, override=True)
+        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_psp(context), primitive, pa_verify_payment_notice_res, override=True)
     elif mock == 'PSP2':
         print(utils.get_soap_mock_psp2(context))
-        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_psp2(context), primitive,
-                                                      pa_verify_payment_notice_res, override=True)
+        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_psp2(context), primitive, pa_verify_payment_notice_res, override=True)
     else:
         assert False, "Invalid mock"
     assert response_status_code == 200
