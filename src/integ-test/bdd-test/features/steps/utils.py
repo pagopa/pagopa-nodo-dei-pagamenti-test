@@ -409,8 +409,12 @@ def get_history(context, rest_mock, notice_number, primitive):
 
 
 def query_json(context, name_query, name_macro):
-    query = json.load(open(os.path.join(
-        context.config.base_dir + "/../resources/query_AutomationTest.json")))
+    dbRun = getattr(context, "dbRun")
+    query = ''
+    if dbRun == "Postgres":
+        query = json.load(open(os.path.join(context.config.base_dir + "/../resources/query_AutomationTest_postgres.json")))
+    elif dbRun == "Oracle":
+        query = json.load(open(os.path.join(context.config.base_dir + "/../resources/query_AutomationTest_oracle.json")))
     selected_query = query.get(name_macro).get(name_query)
     if '$' in selected_query:
         selected_query = replace_local_variables_for_query(selected_query, context)
