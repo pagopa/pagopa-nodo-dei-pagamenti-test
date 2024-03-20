@@ -56,5 +56,7 @@ RUN chmod 777 /test/allure/allure-result
 RUN echo $tags
 RUN echo $folder
 
+ENV http_proxy=http://10.79.20.33:80
+ENV https_proxy=http://10.79.20.33:80
 
 ENTRYPOINT ["./entrypoint.sh"]
