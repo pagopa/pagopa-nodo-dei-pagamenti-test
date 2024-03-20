@@ -80,21 +80,20 @@ def before_all(context):
     if 'APICFG' in os.environ:
         apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
         db.set_address(apicfg_testing_support_service)
-    print("#####OOOOOOOOOOOOOOOOOOOOOOOOO")
+
     db_name = "nodo_cfg"
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
     selected_query = utils.query_json(context, 'select_config', 'configurations')
     adopted_db, conn = utils.get_db_connection_for_env(db_name, db, db_selected)
-    print("#####ESEGUO QUERYYYYYYYYYY")
+
     exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
-    print("#####ESEGUO QUERYYYYYYYYYY FATTOOOOOOOOOOOOOOOOOOOO")
 
     db.closeConnection(conn)
     print("#####CONFIG DICT")
     config_dict = {}
     for row in exec_query:
-        config_key, config_value = row
         print(f"#####ROWWWWWWW {row}")
+        config_key, config_value = row
         print(f"#####CONFIGKEY {config_key} E CONFIGVALUE {config_value}")
         config_dict[row[config_key]] = row[config_value]
     
