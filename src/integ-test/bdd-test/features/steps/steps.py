@@ -12,8 +12,8 @@ from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
 import xmltodict
 
-import db_operation_pg
-import db_operation
+import db_operation_postgres
+import db_operation_oracle
 
 if 'APICFG' in os.environ:
     import db_operation_apicfg_testing_support as db
@@ -64,15 +64,15 @@ def step_impl(context):
     global db_wfesp
 
     if dbRun == "Postgres":
-        db_online = db_operation_pg
-        db_offline = db_operation_pg
-        db_re = db_operation_pg
-        db_wfesp = db_operation_pg
+        db_online = db_operation_postgres
+        db_offline = db_operation_postgres
+        db_re = db_operation_postgres
+        db_wfesp = db_operation_postgres
     elif dbRun == "Oracle":
-        db_online = db_operation
-        db_offline =  db_operation
-        db_re = db_operation
-        db_wfesp = db_operation
+        db_online = db_operation_oracle
+        db_offline =  db_operation_oracle
+        db_re = db_operation_oracle
+        db_wfesp = db_operation_oracle
 
     responses = True
     user_profile = None

@@ -69,7 +69,7 @@ def execute_read_query(connection, query):
         print(f"The error '{e}' occurred")
 
 # wrapper    
-def executeQuery(conn, query:str) -> list:
+def executeQuery(conn, query:str, as_dict:bool = False) -> list:
     return execute_read_query(conn, query)
 
 
