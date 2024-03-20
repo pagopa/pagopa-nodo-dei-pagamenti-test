@@ -8,7 +8,7 @@ if 'NODOPGDB' in os.environ:
     import steps.db_operation_postgres as db 
 else:
     import steps.db_operation_oracle as db
-    import cx_Oracle
+    
 
 if 'APICFG' in os.environ:
     import steps.db_operation_apicfg_testing_support as db
@@ -17,6 +17,11 @@ try:
     import allure
 except ImportError:
     print(">>>>>>>>>>>>>>>>>No import Allure for Oracle pipeline")
+
+try:
+    import cx_Oracle
+except ModuleNotFoundError:
+    print(">>>>>>>>>>>>>>>>>No import CX_ORACLE for Postgres pipeline")
     
 import sys
 from io import StringIO
