@@ -123,7 +123,6 @@ def before_scenario(context, scenario):
 
 def after_scenario(context, scenario):
     try:
-        # sys.stdout = sys.__stdout__
         sys.stdout = context.original_stdout
 
         context.stdout_capture.seek(0)
