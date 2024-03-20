@@ -47,7 +47,7 @@ def before_all(context):
             #setattr(context, 'my_credentials', my_cred)
             setattr(context, 'user_profile', user_profile)
 
-        print('Proxy enabled: ', proxyEnabled)
+        print(f"Proxy enabled: {proxyEnabled}")
         if proxyEnabled == 'True':
             ####RUN DA LOCALE
             if user_profile != None:
@@ -71,11 +71,11 @@ def before_all(context):
         if 'NODOPGDB' not in os.environ: 
             if user_profile != None:
                 lib_dir = r"\Program Files\Oracle\instantclient_19_9"
-                print("#####################lib_dir", lib_dir)
+                print(f"#####################lib_dir {lib_dir}")
                 setattr(context, f'user_profile', user_profile)
             else:
                 lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
-                print("#####################lib_dir", lib_dir) 
+                print(f"#####################lib_dir {lib_dir}") 
         
             cx_Oracle.init_oracle_client(lib_dir = lib_dir)
 
@@ -133,10 +133,10 @@ def after_scenario(context, scenario):
         context.stdout_capture.close()
 
         # Stampa l'output nel terminale
-        print("\nCaptured stdout:\n", captured_stdout)
+        print(f"\nCaptured stdout:\n{captured_stdout}")
 
     except Exception as e:
-        print("Eccezione " + e)
+        print(f"After scenario Eccezione {e}")
 
 
 def after_feature(context, feature):
