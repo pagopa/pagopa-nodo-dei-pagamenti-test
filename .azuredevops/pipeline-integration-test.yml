@@ -224,6 +224,7 @@ stages:
               echo 'Install Behave'
               sudo pip3 install behave 
               sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
+              apt-get update && apt-get install -y procps
               echo python version
               python3 -V
               whereis behave
