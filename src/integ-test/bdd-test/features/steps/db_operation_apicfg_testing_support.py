@@ -40,10 +40,11 @@ def executeQuery(conn, query:str, as_dict:bool = False) -> list:
         headers = {}
         if 'APICFG_SUBSCRIPTION_KEY' in os.environ:
             headers["Ocp-Apim-Subscription-Key"] = os.getenv("APICFG_SUBSCRIPTION_KEY", default="")
-
+        
         url = apicfg_testing_support.get("base_path") + apicfg_testing_support.get("service")
+        print(f"#####ROWWWWWWW URLLLLLLLLLLLLLLLLLL {url}")
         response = requests.post(url, data=query, headers=headers)
-
+        print(f"#####RESPONSE URLLLLLLLLLLLLLLLLLL {response.json()}")
         if as_dict:
             return response.json()
         else:
