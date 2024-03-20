@@ -80,7 +80,7 @@ def before_all(context):
     if 'APICFG' in os.environ:
         apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
         db.set_address(apicfg_testing_support_service)
-
+    print("#####OOOOOOOOOOOOOOOOOOOOOOOOO")
     db_name = "nodo_cfg"
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
     selected_query = utils.query_json(context, 'select_config', 'configurations')
