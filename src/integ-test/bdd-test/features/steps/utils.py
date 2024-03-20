@@ -751,3 +751,20 @@ def get_db_connection(db_name, db_cfg, db_online, db_offline, db_re, db_wfesp, d
             'database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     return db, conn
 
+#Ricerca chiavi in json
+#obj = oggetto json deserializzato
+#ricerca = chiave da cercare
+def ricerca_chiavi(obj, ricerca, chiavi_trovate=None):
+    if chiavi_trovate is None:
+        chiavi_trovate = set()
+
+    if isinstance(obj, dict):
+        for chiave, valore in obj.items():
+            if chiave == ricerca:
+                chiavi_trovate.add(chiave)
+            ricerca_chiavi(valore, ricerca, chiavi_trovate)
+    elif isinstance(obj, list):
+        for elemento in obj:
+            ricerca_chiavi(elemento, ricerca, chiavi_trovate)
+
+    return list(chiavi_trovate)

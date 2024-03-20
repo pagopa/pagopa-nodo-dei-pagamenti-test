@@ -1550,15 +1550,18 @@ def step_impl(context, name, n):
             context.execute_steps(text_step)
 
 
+
 @when(u'{sender} sends rest {method} {service} to {receiver}')
 def step_impl(context, sender, method, service, receiver):
-    # TODO get url according to receiver
+
     url_nodo = utils.get_rest_url_nodo(context, service)
     print(url_nodo)
     header_host = utils.estrapola_header_host(url_nodo)
     headers = {'Content-Type': 'application/json','Host': header_host}
+
     if 'SUBSCRIPTION_KEY' in os.environ:
         headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
+
     dbRun = getattr(context, "dbRun")
     body = context.text or ""
     if '_json' in service:
@@ -1618,7 +1621,7 @@ def step_impl(context, sender, method, service, receiver):
             if dbRun == "Postgres":
                 nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
             elif dbRun == "Oracle":
-                nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
+                nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
         else:
             if dbRun == "Postgres":
                 nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies')) 

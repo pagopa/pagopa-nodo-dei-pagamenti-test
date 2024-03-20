@@ -278,7 +278,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2 946
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test 
+    @test
     Scenario: SEM_SPO_7.1 (part 3)
         Given the SEM_SPO_7.1 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
@@ -344,7 +344,7 @@ Feature: flow / semantic checks for sendPaymentOutcomeV2 946
         And paymentToken with $activatePaymentNoticeV2_2Response.paymentToken in sendPaymentOutcomeV2
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-    @test
+    @test @prova1
     Scenario: SEM_SPO_13 (part 4)
         Given the SEM_SPO_13 (part 3) scenario executed successfully
         And paymentToken with $activatePaymentNoticeV2_1Response.paymentToken in sendPaymentOutcomeV2
