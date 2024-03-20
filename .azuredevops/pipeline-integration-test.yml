@@ -33,8 +33,8 @@ variables:
     file_behave: src/integ-test/bdd-test/resources/config_dev.json    
   ${{ if eq(parameters['env'], 'sit') }}:
     NODO_URL: "https://api.dev.platform.pagopa.it/nodo"
-    file_config: $(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/config_sit.json
-    file_behave: src/integ-test/bdd-test/resources/config_sit.json
+    file_config: $(Build.SourcesDirectory)/src/integ-test/bdd-test/resources/config_sit_oracle.json
+    file_behave: src/integ-test/bdd-test/resources/config_sit_oracle.json
 
 stages:
   - stage: prepare_env
