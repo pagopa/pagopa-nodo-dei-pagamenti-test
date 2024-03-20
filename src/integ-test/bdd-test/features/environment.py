@@ -4,12 +4,6 @@ import os
 import requests
 import steps.utils as utils
 
-if 'NODOPGDB' in os.environ:
-    import steps.db_operation_postgres as db 
-else:
-    import steps.db_operation_oracle as db
-    
-
 if 'APICFG' in os.environ:
     import steps.db_operation_apicfg_testing_support as db
 
@@ -73,16 +67,15 @@ def before_all(context):
 
     elif dbRun == "Oracle":
         lib_dir = ""
-        if 'NODOPGDB' not in os.environ: 
-            if user_profile != None:
-                lib_dir = r"\Program Files\Oracle\instantclient_19_9"
-                print(f"#####################lib_dir {lib_dir}")
-                setattr(context, f'user_profile', user_profile)
-            else:
-                lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
-                print(f"#####################lib_dir {lib_dir}") 
+        if user_profile != None:
+            lib_dir = r"\Program Files\Oracle\instantclient_19_9"
+            print(f"#####################lib_dir {lib_dir}")
+            setattr(context, f'user_profile', user_profile)
+        else:
+            lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
+            print(f"#####################lib_dir {lib_dir}") 
         
-            cx_Oracle.init_oracle_client(lib_dir = lib_dir)
+        cx_Oracle.init_oracle_client(lib_dir = lib_dir)
 
     if 'APICFG' in os.environ:
         apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
