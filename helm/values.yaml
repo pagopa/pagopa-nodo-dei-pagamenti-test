@@ -36,6 +36,11 @@ secrets:
         password: AgBooVpDQh2AhGFBY4jhEkUK+S7YIM5xu427ZciG+2FaQp9kOpiBttgCEzMS+X9GanyF3hMnAqu0Atl++o3UwSA5ccN1L64e7BRpODBqR3fLRuo34Hg1H3GG57cU9QAQzevoz3C+OWq/wlPVwjnK0Uf4yPiFMcDHsMFTnVEMO/2pgrsIT3NljggwN5OU5QrWfDsCCg2x3vvgWncTNUQn7NVMXPBU/Aafb2m3r7u54ZUMoxQGPzDmcLOfxTYOn5klyDoikUtrmSbQaxn7ic6H231FrxMWGKA1T0eK4dSpwHF2Y96nzuIwszwk6Wt5wvU4aIsv7V16fwdvMPsb1wl32no1m0VcGUTZEI/51CcpsoL+EemZT+Atsi/oaWamFYYpenx1bye6DanuQ/jWakbGsKDITVJs0rN/gCHsqT1XMFpyxVslX5BYC1zMXDVMKDjRVedNzq4y8ZOCqtimcsWCxYWl/5P4x0i1D6F6pOPKG/QFVeYGMkJ5KdL4olp4hRKdjCcRjCsLtOdmcDhCra+Vh7qvHAnimYMxEtuxwxxJS68ayrEEBh/vk6q+aqeT4U4RHF2H86rPQr/7LNsIUc5fVwNDSTJ72GiO7vdMYFjdHwInTuq+l7AKd6dnYoNzWgfMnDiQNgykVZOFrAU3rdbg27Yv2vQWq0uUh8aaDKYIUOv6os02WMA8974ts/o0Gn7eaSRDv8dsjg==
         username: AgAKR/qZn7WUG8SvgN7fqu+/9iMQZFNpgEmEw1FJXwkOeyJkEpFvPp4yiOYnZoaAbplee54bWQ/zAmDTdNiknmxAkCoA8btwIRGpGGAHPEzJhZbcxaTfb+lvkHZYwTrEw7WLnsox1MIa4nCEX0BJmgzn6IMJPsQalKT2U8hFATO23v1wImPeFSvjcaSe8vBpenA7afREPm4+1dE1SrMb8cbXpnTDDWAEoSMYxoSabMLyDivrs6aqLild3fx/0X8LFY2nNu5EkEdF3oSnI2668wLMpVLlCHxtNod5mlJMJOm5Luer15v0Pb9lj4K5dJ+Y5XKS3iI0a1/EewuTuMuLqJD7Rntu9ErjBxt7l7SANjk7ebK37t4YGnH+pce8usrPVu9iOCFl8Fx7Czd/SpmYW/alQI4A+/vQ2J9wvL+Enh6BWEa5typ2EtF9bwntfhH8uTCKV5xxZVwKMTayBpMwYEXIUmDDhBbimFjo98UZgMheFdGiyQ+nZc76C8SPGGhcd0WUsbyWFsPAM69QBIRh459y19xSf1Tar9EaalzxXtPAJhBXb2K9ii+XtQy0nz+VQINC8d163gE8ezP/nRExL5HovDOqz5dtVum7mIGxgWIIY5gH62gvBtBcXSBhTt6JDELFA5I5nLfnIp3DbCx9AWPRTc3+wSWnDMJRNqo7rIPmMzWm/B/adPT6+3Q8jX1LN3EZpRx3qg==
 
+    subscription_key:
+        name: subscription-key
+        password: AgACtzqW6XFlrusr0CGG//UQ/sd5cHR8wT4n5eM4U5v1t2p1WedgfdNHTXNqr5Fliu3etXxPHXyUMA5XilRBTP8uEH+LOMyCeqVemIKxyB9Et7DLVneXJvJDhZK0C9C60sB9GreH52vzd/vDvtKeH6YxG5D87wqEFgL5t493hqeiOF02Lm3MY1rSL/xC58d3/8e0qE4zEaxguL+xv4PnS+mF91LBjM+MuNu3ObepiSfwGK3x2lsK4GL2R7ciyGFDqAd0kPIHOLCnfVJTTDvAyvYE/7xGrdCBYCSIossmeD7WE8KxaFL4FGHYb3tN8eupvw0Z5+M/Nvx9CeIv+PNI2t36VjV4MMC+vTT3UYpn7fGXf+/XLlthiCDX3YUSq7icxNZlDixbY3mFPXQ+bsTmZepY8NkiirjG90WcOS703QVwVvAMwm34EBNrDB0i9ChpmupWSS/+KOzn7UA6wzbHaYMRvRZAX6ClfSmjW+7ORBKd46GJbzCslaXo3anP5KBbYd/dh2GlxCypuXZcjM+d7hOnSmhb+JhOu+g7VYZlaurw5PTu3qWMGEgGZt0fHCmJIbv005ETmFPXUJ1D1RZL7UpG0dwETRx/AtQGAz9KEah4NP2hHXiJri/Vhiy5ZH40qJ9eXRrUBqd/O4K4F1U15GXMPlqFFE/LLT8aivx3VsdlVoqf6FEt7jyTpaQLcuq41TKqOEPATIbEXNToZeXRwaAPCWEoqSVP8nTQj4um8NHKPg==
+        username: AgACtzqW6XFlrusr0CGG//UQ/sd5cHR8wT4n5eM4U5v1t2p1WedgfdNHTXNqr5Fliu3etXxPHXyUMA5XilRBTP8uEH+LOMyCeqVemIKxyB9Et7DLVneXJvJDhZK0C9C60sB9GreH52vzd/vDvtKeH6YxG5D87wqEFgL5t493hqeiOF02Lm3MY1rSL/xC58d3/8e0qE4zEaxguL+xv4PnS+mF91LBjM+MuNu3ObepiSfwGK3x2lsK4GL2R7ciyGFDqAd0kPIHOLCnfVJTTDvAyvYE/7xGrdCBYCSIossmeD7WE8KxaFL4FGHYb3tN8eupvw0Z5+M/Nvx9CeIv+PNI2t36VjV4MMC+vTT3UYpn7fGXf+/XLlthiCDX3YUSq7icxNZlDixbY3mFPXQ+bsTmZepY8NkiirjG90WcOS703QVwVvAMwm34EBNrDB0i9ChpmupWSS/+KOzn7UA6wzbHaYMRvRZAX6ClfSmjW+7ORBKd46GJbzCslaXo3anP5KBbYd/dh2GlxCypuXZcjM+d7hOnSmhb+JhOu+g7VYZlaurw5PTu3qWMGEgGZt0fHCmJIbv005ETmFPXUJ1D1RZL7UpG0dwETRx/AtQGAz9KEah4NP2hHXiJri/Vhiy5ZH40qJ9eXRrUBqd/O4K4F1U15GXMPlqFFE/LLT8aivx3VsdlVoqf6FEt7jyTpaQLcuq41TKqOEPATIbEXNToZeXRwaAPCWEoqSVP8nTQj4um8NHKPg==
+
 network:
     services:
         integration_test:
@@ -119,6 +124,13 @@ deployments:
               secretKeyRef:
                 key: username
                 name: "{{ .Values.secrets.integration_db_config.name }}"
+          - name: APICFG_SUBSCRIPTION_KEY
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: "{{ .Values.secrets.subscription_key.name }}"
+          - name: APICFG
+            value: True
           - name: db_cfg_password_sit
             valueFrom:
               secretKeyRef:
