@@ -725,6 +725,11 @@ def replace_specific_string(original_string, target_string, replacement):
 #     proxy_url = pac.find_proxy(pac_file)
 
 #     return proxy_url
+    
+#metodo override del get_db_connection per l'environment
+def get_db_connection_for_env(db_name, db_cfg, db_selected):
+    return get_db_connection(db_name, db_cfg, '', '', '', '', db_selected)
+
 
 def get_db_connection(db_name, db_cfg, db_online, db_offline, db_re, db_wfesp, db_selected):
     db = None

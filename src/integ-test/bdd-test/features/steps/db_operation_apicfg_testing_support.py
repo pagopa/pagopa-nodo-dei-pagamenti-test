@@ -11,6 +11,7 @@ apicfg_testing_support = {
 
 def set_address(service):
     apicfg_testing_support["base_path"] = service.get("url")
+    print("Basepath setted")
 
 
 def create_connection(db_name, db_user, db_password, db_host, db_port):

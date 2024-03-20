@@ -81,11 +81,12 @@ def before_all(context):
         apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
         db.set_address(apicfg_testing_support_service)
 
-    db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
+    db_name = "nodo_cfg"
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
     selected_query = utils.query_json(context, 'select_config', 'configurations')
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
+    adopted_db, conn = utils.get_db_connection_for_env(db_name, db, db_selected)
+    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
 
-    exec_query = db.executeQuery(conn, selected_query, as_dict=True)
     db.closeConnection(conn)
 
     config_dict = {}
