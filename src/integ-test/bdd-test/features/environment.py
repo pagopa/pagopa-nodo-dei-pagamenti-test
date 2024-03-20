@@ -5,9 +5,7 @@ import requests
 import steps.utils as utils
 
 if 'NODOPGDB' in os.environ:
-    import steps.db_operation_postgres as db
-    import psycopg2
-    from psycopg2 import OperationalError    
+    import steps.db_operation_postgres as db 
 else:
     import steps.db_operation_oracle as db
     import cx_Oracle
