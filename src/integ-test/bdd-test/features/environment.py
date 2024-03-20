@@ -3,6 +3,7 @@ from behave.model import Table
 import os
 import requests
 import steps.utils as utils
+
 if 'NODOPGDB' in os.environ:
     import steps.db_operation_postgres as db
     import psycopg2
@@ -14,7 +15,11 @@ else:
 if 'APICFG' in os.environ:
     import steps.db_operation_apicfg_testing_support as db
 
-import allure
+try:
+    import allure
+except ImportError:
+    print(">>>>>>>>>>>>>>>>>No import Allure for Oracle pipeline")
+    
 import sys
 from io import StringIO
 
