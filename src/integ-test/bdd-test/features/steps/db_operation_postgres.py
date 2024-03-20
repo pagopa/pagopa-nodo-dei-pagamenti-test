@@ -1,6 +1,9 @@
-import psycopg2
-from psycopg2 import OperationalError
-from psycopg2 import pool
+try:
+    import psycopg2
+    from psycopg2 import OperationalError
+    from psycopg2 import pool
+except ModuleNotFoundError:
+    print(">>>>>>>>>>>>>>>>>No import db_operation_postgres for Oracle pipeline")
 
 conn_pool = None
 

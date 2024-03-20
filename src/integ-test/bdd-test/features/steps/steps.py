@@ -12,10 +12,8 @@ from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
 import xmltodict
 
-try:
-    import db_operation_postgres
-except ModuleNotFoundError:
-    print(">>>>>>>>>>>>>>>>>No import db_operation_postgres for Oracle pipeline")
+
+import db_operation_postgres
 import db_operation_oracle
 
 if 'APICFG' in os.environ:
