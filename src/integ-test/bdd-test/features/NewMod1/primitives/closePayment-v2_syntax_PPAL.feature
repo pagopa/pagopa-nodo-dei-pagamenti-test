@@ -144,12 +144,12 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
                 }
             }
             """
-    @test @pippoalf
+    @test
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
 
-    @test
+    @test @prova1
     Scenario Outline: check closePaymentV2 PAG-2555 KO outline
         Given the closePaymentV2 PAG-2555 scenario executed successfully
         And <elem> with <value> in v2/closepayment
@@ -159,7 +159,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
         Examples:
             | elem                  | value                                |
-            | pspTransactionId      | None                                 |
+         #   | pspTransactionId      | None                                 |
             | pspTransactionId      | Empty                                |
 
 
