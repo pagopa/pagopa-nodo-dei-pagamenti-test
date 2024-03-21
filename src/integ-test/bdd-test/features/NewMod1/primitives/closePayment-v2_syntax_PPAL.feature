@@ -149,7 +149,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
 
-    @test
+
     Scenario Outline: check closePaymentV2 PAG-2555 KO outline
         Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And <elem> with <value> in v2/closepayment
@@ -159,12 +159,12 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
         Examples:
             | elem                  | value                                |
-         #   | pspTransactionId      | None                                 |
+            | pspTransactionId      | None                                 |
             | pspTransactionId      | Empty                                |
 
 
 
-    @test 
+   
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount None
         Given the activatePaymentNoticeV2 OK scenario executed successfully
         And initial JSON v2/closepayment
@@ -198,7 +198,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test 
+
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount oversize
         Given the activatePaymentNoticeV2 OK scenario executed successfully
         And initial JSON v2/closepayment
@@ -234,7 +234,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
 
-    @test 
+
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount Empty
         Given the activatePaymentNoticeV2 OK scenario executed successfully
         And initial JSON v2/closepayment
@@ -269,7 +269,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test 
+
     Scenario: check closePaymentV2 PAG-2555 KO fee None
         Given the activatePaymentNoticeV2 OK scenario executed successfully
         And initial JSON v2/closepayment
@@ -303,7 +303,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test 
+
     Scenario: check closePaymentV2 PAG-2555 KO fee oversize
         Given the activatePaymentNoticeV2 OK scenario executed successfully
         And initial JSON v2/closepayment
@@ -339,7 +339,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
 
-    @test 
+
     Scenario: check closePaymentV2 PAG-2555 KO fee Empty
         Given the activatePaymentNoticeV2 OK scenario executed successfully
         And initial JSON v2/closepayment
@@ -374,7 +374,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test 
+
     Scenario: check closePaymentV2 PAG-2555 KO timestampOperation None
         Given the activatePaymentNoticeV2 OK scenario executed successfully
         And initial JSON v2/closepayment
@@ -408,7 +408,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test
+
     Scenario: check closePaymentV2 PAG-2555 KO timestampOperation Empty
         Given the activatePaymentNoticeV2 OK scenario executed successfully
         And initial JSON v2/closepayment
@@ -443,7 +443,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test 
+ 
     Scenario: check closePaymentV2 PAG-2555 KO transactionId None
         Given the activatePaymentNoticeV2 OK scenario executed successfully
         And initial JSON v2/closepayment
@@ -477,7 +477,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test @prova1
+
     Scenario: check closePaymentV2 PAG-2555 KO pspTransactionId None
         Given the activatePaymentNoticeV2 OK scenario executed successfully
         And initial JSON v2/closepayment
