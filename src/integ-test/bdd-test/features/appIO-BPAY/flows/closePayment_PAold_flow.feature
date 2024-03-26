@@ -1065,7 +1065,7 @@ Feature: flow checks for closePayment - PA old
       When job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
       And wait 5 seconds for expiration
-   @test
+
    Scenario: FLUSSO_OLD_CP_08 (part 3)
       Given the FLUSSO_OLD_CP_08 (part 2) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -1277,7 +1277,7 @@ Feature: flow checks for closePayment - PA old
       When job annullamentoRptMaiRichiesteDaPm triggered after 65 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
       And wait 5 seconds for expiration
-   @test
+
    Scenario: FLUSSO_OLD_CP_10 (part 3)
       Given the FLUSSO_OLD_CP_10 (part 2) scenario executed successfully
       And the closePayment scenario executed successfully
