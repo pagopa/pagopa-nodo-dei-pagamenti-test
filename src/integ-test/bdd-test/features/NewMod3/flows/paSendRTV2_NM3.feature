@@ -1562,7 +1562,9 @@ Feature: flow tests for paSendRTV2 1115
     # PSRTV2_ACTV1_20
 
     Scenario: PSRTV2_ACTV1_20 (part 1)
-        Given the verifyPaymentNotice scenario executed successfully
+        Given updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro NewMod1 on db nodo_cfg
+        And refresh job ALL triggered after 10 seconds
+        And the verifyPaymentNotice scenario executed successfully
         And the activatePaymentNotice request scenario executed successfully
         And the paGetPaymentV2 response scenario executed successfully
         And lastPayment with 0 in paGetPaymentV2
