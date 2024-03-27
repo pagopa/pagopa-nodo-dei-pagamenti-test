@@ -1,10 +1,10 @@
 import { check } from 'k6';
 //import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { SharedArray } from 'k6/data';
-import papaparse from './util/papaparse.js';
-import { RPT } from './api/RPT_Semplice.js';
-import { RT } from './api/RT.js';
-import { nodoChiediCopiaRT } from './api/nodoChiediCopiaRT.js';
+import papaparse from './util/papaparse.js';;
+import { nodoChiediInformativaPA } from './api/nodoChiediInformativaPA.js';
+import { nodoPAChiediInformativaPA } from './api/nodoPAChiediInformativaPA.js';
+import { nodoChiediCatalogoServiziV2 } from './api/nodoChiediCatalogoServiziV2.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
 //import * as test_selector from '../../test_selector.js';
@@ -82,34 +82,34 @@ export const options = {
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'p(99)', 'p(99.99)', 'p(100)', 'count'],
   discardResponseBodies: false,
   thresholds: {
-    'http_req_duration{RPT_Semplice:http_req_duration}': [],
-    'http_req_duration{RT:http_req_duration}': [],
+    'http_req_duration{nodoChiediInformativaPA:http_req_duration}': [],
+    'http_req_duration{nodoPAChiediInformativaPA:http_req_duration}': [],
     'http_req_duration{RPT_Carrello_5:http_req_duration}': [],
     'http_req_duration{ALL:http_req_duration}': [],
-    'checks{RPT_Semplice:over_sla300}': [],
-    'checks{RPT_Semplice:over_sla400}': [],
-    'checks{RPT_Semplice:over_sla500}': [],
-    'checks{RPT_Semplice:over_sla600}': [],
-    'checks{RPT_Semplice:over_sla800}': [],
-    'checks{RPT_Semplice:over_sla1000}': [],
-    'checks{RPT_Semplice:ok_rate}': [],
-    'checks{RPT_Semplice:ko_rate}': [],
-    'checks{RT:over_sla300}': [],
-    'checks{RT:over_sla400}': [],
-    'checks{RT:over_sla500}': [],
-    'checks{RT:over_sla600}': [],
-    'checks{RT:over_sla800}': [],
-    'checks{RT:over_sla1000}': [],
-    'checks{RT:ok_rate}': [],
-    'checks{RT:ko_rate}': [],
-    'checks{nodoChiediCopiaRT:over_sla300}': [],
-    'checks{nodoChiediCopiaRT:over_sla400}': [],
-    'checks{nodoChiediCopiaRT:over_sla500}': [],
-    'checks{nodoChiediCopiaRT:over_sla600}': [],
-    'checks{nodoChiediCopiaRT:over_sla800}': [],
-    'checks{nodoChiediCopiaRT:over_sla1000}': [],
-    'checks{nodoChiediCopiaRT:ok_rate}': [],
-    'checks{nodoChiediCopiaRT:ko_rate}': [],
+    'checks{nodoChiediInformativaPA:over_sla300}': [],
+    'checks{nodoChiediInformativaPA:over_sla400}': [],
+    'checks{nodoChiediInformativaPA:over_sla500}': [],
+    'checks{nodoChiediInformativaPA:over_sla600}': [],
+    'checks{nodoChiediInformativaPA:over_sla800}': [],
+    'checks{nodoChiediInformativaPA:over_sla1000}': [],
+    'checks{nodoChiediInformativaPA:ok_rate}': [],
+    'checks{nodoChiediInformativaPA:ko_rate}': [],
+    'checks{nodoPAChiediInformativaPA:over_sla300}': [],
+    'checks{nodoPAChiediInformativaPA:over_sla400}': [],
+    'checks{nodoPAChiediInformativaPA:over_sla500}': [],
+    'checks{nodoPAChiediInformativaPA:over_sla600}': [],
+    'checks{nodoPAChiediInformativaPA:over_sla800}': [],
+    'checks{nodoPAChiediInformativaPA:over_sla1000}': [],
+    'checks{nodoPAChiediInformativaPA:ok_rate}': [],
+    'checks{nodoPAChiediInformativaPA:ko_rate}': [],
+    'checks{nodoChiediCatalogoServiziV2:over_sla300}': [],
+    'checks{nodoChiediCatalogoServiziV2:over_sla400}': [],
+    'checks{nodoChiediCatalogoServiziV2:over_sla500}': [],
+    'checks{nodoChiediCatalogoServiziV2:over_sla600}': [],
+    'checks{nodoChiediCatalogoServiziV2:over_sla800}': [],
+    'checks{nodoChiediCatalogoServiziV2:over_sla1000}': [],
+    'checks{nodoChiediCatalogoServiziV2:ok_rate}': [],
+    'checks{nodoChiediCatalogoServiziV2:ko_rate}': [],
     'checks{ALL:over_sla300}': [],
     'checks{ALL:over_sla400}': [],
     'checks{ALL:over_sla500}': [],
@@ -136,13 +136,11 @@ export function total() {
   let rndAnagPsp = inputDataUtil.getAnagPsp();
   let rndAnagPa = inputDataUtil.getAnagPa();
 
-  let iuv = genIuv();
+  let res = nodoChiediInformativaPA(baseSoapUrl, rndAnagPsp);
 
-  let res = RPT(baseSoapUrl, rndAnagPsp, rndAnagPa, iuv);
+  res = nodoPAChiediInformativaPA(baseSoapUrl, rndAnagPa);
 
-  res = RT(baseSoapUrl, rndAnagPsp, rndAnagPa, iuv);
-
-  res = nodoChiediCopiaRT(baseSoapUrl, rndAnagPa, iuv, "PERFORMANCE");
+  res = nodoChiediCatalogoServiziV2(baseSoapUrl, rndAnagPsp);
 
 }
 

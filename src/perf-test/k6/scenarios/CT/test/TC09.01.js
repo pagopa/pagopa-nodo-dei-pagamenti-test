@@ -1,10 +1,10 @@
 import { check } from 'k6';
 //import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { SharedArray } from 'k6/data';
-import papaparse from './util/papaparse.js';
+import papaparse from './util/papaparse.js';;
+import { nodoChiediListaPendentiRPT } from './api/nodoChiediListaPendentiRPT.js';
 import { RPT } from './api/RPT_Semplice.js';
-import { RT } from './api/RT.js';
-import { nodoChiediCopiaRT } from './api/nodoChiediCopiaRT.js';
+import { nodoChiediStatoRPT } from './api/nodoChiediStatoRPT.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
 //import * as test_selector from '../../test_selector.js';
@@ -82,10 +82,18 @@ export const options = {
   summaryTrendStats: ['avg', 'min', 'max', 'p(90)', 'p(95)', 'p(99)', 'p(99.99)', 'p(100)', 'count'],
   discardResponseBodies: false,
   thresholds: {
+    'http_req_duration{nodoChiediListaPendentiRPT:http_req_duration}': [],
     'http_req_duration{RPT_Semplice:http_req_duration}': [],
-    'http_req_duration{RT:http_req_duration}': [],
     'http_req_duration{RPT_Carrello_5:http_req_duration}': [],
     'http_req_duration{ALL:http_req_duration}': [],
+    'checks{nodoChiediListaPendentiRPT:over_sla300}': [],
+    'checks{nodoChiediListaPendentiRPT:over_sla400}': [],
+    'checks{nodoChiediListaPendentiRPT:over_sla500}': [],
+    'checks{nodoChiediListaPendentiRPT:over_sla600}': [],
+    'checks{nodoChiediListaPendentiRPT:over_sla800}': [],
+    'checks{nodoChiediListaPendentiRPT:over_sla1000}': [],
+    'checks{nodoChiediListaPendentiRPT:ok_rate}': [],
+    'checks{nodoChiediListaPendentiRPT:ko_rate}': [],
     'checks{RPT_Semplice:over_sla300}': [],
     'checks{RPT_Semplice:over_sla400}': [],
     'checks{RPT_Semplice:over_sla500}': [],
@@ -94,22 +102,14 @@ export const options = {
     'checks{RPT_Semplice:over_sla1000}': [],
     'checks{RPT_Semplice:ok_rate}': [],
     'checks{RPT_Semplice:ko_rate}': [],
-    'checks{RT:over_sla300}': [],
-    'checks{RT:over_sla400}': [],
-    'checks{RT:over_sla500}': [],
-    'checks{RT:over_sla600}': [],
-    'checks{RT:over_sla800}': [],
-    'checks{RT:over_sla1000}': [],
-    'checks{RT:ok_rate}': [],
-    'checks{RT:ko_rate}': [],
-    'checks{nodoChiediCopiaRT:over_sla300}': [],
-    'checks{nodoChiediCopiaRT:over_sla400}': [],
-    'checks{nodoChiediCopiaRT:over_sla500}': [],
-    'checks{nodoChiediCopiaRT:over_sla600}': [],
-    'checks{nodoChiediCopiaRT:over_sla800}': [],
-    'checks{nodoChiediCopiaRT:over_sla1000}': [],
-    'checks{nodoChiediCopiaRT:ok_rate}': [],
-    'checks{nodoChiediCopiaRT:ko_rate}': [],
+    'checks{nodoChiediStatoRPT:over_sla300}': [],
+    'checks{nodoChiediStatoRPT:over_sla400}': [],
+    'checks{nodoChiediStatoRPT:over_sla500}': [],
+    'checks{nodoChiediStatoRPT:over_sla600}': [],
+    'checks{nodoChiediStatoRPT:over_sla800}': [],
+    'checks{nodoChiediStatoRPT:over_sla1000}': [],
+    'checks{nodoChiediStatoRPT:ok_rate}': [],
+    'checks{nodoChiediStatoRPT:ko_rate}': [],
     'checks{ALL:over_sla300}': [],
     'checks{ALL:over_sla400}': [],
     'checks{ALL:over_sla500}': [],
@@ -140,9 +140,9 @@ export function total() {
 
   let res = RPT(baseSoapUrl, rndAnagPsp, rndAnagPa, iuv);
 
-  res = RT(baseSoapUrl, rndAnagPsp, rndAnagPa, iuv);
+  res = nodoChiediListaPendentiRPT(baseSoapUrl, rndAnagPa);
 
-  res = nodoChiediCopiaRT(baseSoapUrl, rndAnagPa, iuv, "PERFORMANCE");
+  res = nodoChiediStatoRPT(baseSoapUrl, rndAnagPa, iuv, "PERFORMANCE");
 
 }
 
