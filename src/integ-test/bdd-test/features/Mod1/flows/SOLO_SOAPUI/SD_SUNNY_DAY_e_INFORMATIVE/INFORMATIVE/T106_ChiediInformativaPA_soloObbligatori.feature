@@ -10,11 +10,11 @@ Feature: T106_ChiediInformativaPA_soloObbligatori
             <soapenv:Header/>
             <soapenv:Body>
                 <ws:nodoChiediInformativaPA>
-                    <!--identificativoPSP>#psp#</identificativoPSP-->
+                    <identificativoPSP>#psp#</identificativoPSP>
                     <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
                     <identificativoCanale>#canale#</identificativoCanale>
                     <password>pwdpwdpwd</password>
-                    <!--identificativoDominio>#creditor_institution_code#</identificativoDominio-->
+                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
                 </ws:nodoChiediInformativaPA>
             </soapenv:Body>
             </soapenv:Envelope>

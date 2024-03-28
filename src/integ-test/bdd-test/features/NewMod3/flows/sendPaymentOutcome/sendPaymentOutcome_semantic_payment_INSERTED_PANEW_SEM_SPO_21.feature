@@ -53,7 +53,7 @@ Feature: Check semantic payment status
         Then check outcome is OK of activatePaymentNotice response
 
 @runnable
-    Scenario: Verify  in POSITION_STATUS table
+    Scenario: Verify in POSITION_STATUS table
         Given the Execute activatePaymentNotice scenario executed successfully
         And initial XML sendPaymentOutcome
             """
