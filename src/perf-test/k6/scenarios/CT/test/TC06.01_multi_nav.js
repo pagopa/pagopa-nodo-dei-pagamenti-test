@@ -53,7 +53,7 @@ export const options = {
 
     scenarios: {
         total: {
-            timeUnit: '4s',
+            timeUnit: '7s',
             preAllocatedVUs: 1, // how large the initial pool of VUs would be
             executor: 'ramping-arrival-rate',
             //executor: 'ramping-vus',
@@ -155,8 +155,6 @@ export function total() {
     let rndAnagPsp = inputDataUtil.getAnagPsp();
     let rndAnagPaNew = inputDataUtil.getAnagPaNewVersPrim2();
 
-    let noticeNmbr = genNoticeNumber();
-    let idempotencyKey = genIdempotencyKey();
     let transactionId = transaction_id();
     let pspTransactionId = transaction_id();
 	
