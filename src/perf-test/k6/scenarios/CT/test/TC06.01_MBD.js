@@ -75,7 +75,7 @@ export const options = {
                 { target: getScalini[0].Scalino_CT_10, duration: 0 + 's' },
                 { target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10 + 's' }, //to uncomment
             ],
-            tags: { test_type: 'ALL' },
+            tags: { test_type: 'ALL', scenarioName: 'TC06.01_MBD' },
             exec: 'total',
         }
 

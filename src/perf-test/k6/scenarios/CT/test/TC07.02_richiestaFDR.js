@@ -3,8 +3,8 @@ import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
 import * as common from '../../CommonScript.js';
 import * as inputDataUtil from './util/input_data_util.js';
-import * as nodoInviaFlussoRendicontazioneBig from './api/nodoInviaFlussoRendicontazioneBig.js';
-import * as nodoInviaFlussoRendicontazioneSmall from './api/nodoInviaFlussoRendicontazioneSmall.js';
+import * as nodoChiediElencoFlussiRendicontazione from './api/nodoChiediElencoFlussiRendicontazione.js';
+import * as nodoChiediFlussoRendicontazione from './api/nodoChiediFlussoRendicontazione.js';
 
 const csvBaseUrl = new SharedArray('baseUrl', function() {
 
@@ -51,7 +51,7 @@ export const options = {
 				{ target: getScalini[0].Scalino_CT_10, duration: 0 + 's' },
 				{ target: getScalini[0].Scalino_CT_10, duration: getScalini[0].Scalino_CT_TIME_10 + 's' }, //to uncomment
 			],
-			tags: { test_type: 'ALL', scenarioName: 'TC07.01_invioFDR' },
+			tags: { test_type: 'ALL', scenarioName: 'TC07.02_richiestaFDR' },
 			exec: 'total',
 		}
 
@@ -60,25 +60,25 @@ export const options = {
 	discardResponseBodies: false,
 	thresholds: {
 
-		'http_req_duration{nodoInviaFlussoRendicontazioneBig:http_req_duration}': [],
-		'http_req_duration{nodoInviaFlussoRendicontazioneSmall:http_req_duration}': [],
+		'http_req_duration{nodoChiediElencoFlussiRendicontazione:http_req_duration}': [],
+		'http_req_duration{nodoChiediFlussoRendicontazione:http_req_duration}': [],
 		'http_req_duration{ALL:http_req_duration}': [],
-		'checks{nodoInviaFlussoRendicontazioneBig:over_sla300}': [],
-		'checks{nodoInviaFlussoRendicontazioneBig:over_sla400}': [],
-		'checks{nodoInviaFlussoRendicontazioneBig:over_sla500}': [],
-		'checks{nodoInviaFlussoRendicontazioneBig:over_sla600}': [],
-		'checks{nodoInviaFlussoRendicontazioneBig:over_sla800}': [],
-		'checks{nodoInviaFlussoRendicontazioneBig:over_sla1000}': [],
-		'checks{nodoInviaFlussoRendicontazioneBig:ok_rate}': [],
-		'checks{nodoInviaFlussoRendicontazioneBig:ko_rate}': [],
-		'checks{nodoInviaFlussoRendicontazioneSmall:over_sla300}': [],
-		'checks{nodoInviaFlussoRendicontazioneSmall:over_sla400}': [],
-		'checks{nodoInviaFlussoRendicontazioneSmall:over_sla500}': [],
-		'checks{nodoInviaFlussoRendicontazioneSmall:over_sla600}': [],
-		'checks{nodoInviaFlussoRendicontazioneSmall:over_sla800}': [],
-		'checks{nodoInviaFlussoRendicontazioneSmall:over_sla1000}': [],
-		'checks{nodoInviaFlussoRendicontazioneSmall:ok_rate}': [],
-		'checks{nodoInviaFlussoRendicontazioneSmall:ko_rate}': [],
+		'checks{nodoChiediElencoFlussiRendicontazione:over_sla300}': [],
+		'checks{nodoChiediElencoFlussiRendicontazione:over_sla400}': [],
+		'checks{nodoChiediElencoFlussiRendicontazione:over_sla500}': [],
+		'checks{nodoChiediElencoFlussiRendicontazione:over_sla600}': [],
+		'checks{nodoChiediElencoFlussiRendicontazione:over_sla800}': [],
+		'checks{nodoChiediElencoFlussiRendicontazione:over_sla1000}': [],
+		'checks{nodoChiediElencoFlussiRendicontazione:ok_rate}': [],
+		'checks{nodoChiediElencoFlussiRendicontazione:ko_rate}': [],
+		'checks{nodoChiediFlussoRendicontazione:over_sla300}': [],
+		'checks{nodoChiediFlussoRendicontazione:over_sla400}': [],
+		'checks{nodoChiediFlussoRendicontazione:over_sla500}': [],
+		'checks{nodoChiediFlussoRendicontazione:over_sla600}': [],
+		'checks{nodoChiediFlussoRendicontazione:over_sla800}': [],
+		'checks{nodoChiediFlussoRendicontazione:over_sla1000}': [],
+		'checks{nodoChiediFlussoRendicontazione:ok_rate}': [],
+		'checks{nodoChiediFlussoRendicontazione:ko_rate}': [],
 		'checks{ALL:over_sla300}': [],
 		'checks{ALL:over_sla400}': [],
 		'checks{ALL:over_sla500}': [],
@@ -111,13 +111,13 @@ export function total() {
     
     const randomValue = Math.random(); // num between 0 and 1
 
-    if (randomValue <= 0.7) { // 70 % 
-
-        nodoInviaFlussoRendicontazioneBig.nodoInviaFlussoRendicontazioneBig(baseSoapUrl, rndAnagPsp.PSP, rndAnagPsp.CHPSP, rndAnagPsp.INTPSP, rndAnagPa.PA);
-    } else {
-        nodoInviaFlussoRendicontazioneSmall.nodoInviaFlussoRendicontazioneSmall(baseSoapUrl, rndAnagPsp.PSP, rndAnagPsp.CHPSP, rndAnagPsp.INTPSP, rndAnagPa.PA);
+    //if (randomValue <= 0.7) { // 70 % 
+		//baseUrl, idPsp, idInt, idStation, idPa
+        nodoChiediElencoFlussiRendicontazione.nodoChiediElencoFlussiRendicontazione(baseSoapUrl, rndAnagPsp.PSP, rndAnagPa.INTPA, rndAnagPa.STAZPA, rndAnagPa.PA);
+    //} else {
+        nodoChiediFlussoRendicontazione.nodoChiediFlussoRendicontazione(baseSoapUrl, rndAnagPsp.PSP, rndAnagPsp.CHPSP, rndAnagPsp.INTPSP, rndAnagPa.PA);
         
-    }
+    //}
     
 }
 
