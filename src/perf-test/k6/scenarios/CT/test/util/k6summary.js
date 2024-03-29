@@ -244,7 +244,9 @@ function nonTrendMetricValueForSum(metric, timeUnit) {
 function summarizeMetrics(options, data, decorate) {
   var indent = options.indent + '  '
   var result = []
-
+  if (options.scenarioName) {
+	result.push(indent + options.scenarioName)
+  }
   var names = []
   var nameLenMax = 0
 
@@ -367,7 +369,6 @@ function summarizeMetrics(options, data, decorate) {
 
     result.push(indent + fmtIndent + markColor(mark) + ' ' + fmtName + ' ' + getData(name))
   }
-
   return result
 }
 
