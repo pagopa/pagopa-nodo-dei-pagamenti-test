@@ -45,7 +45,7 @@ export const options = {
 
     scenarios: {
         total: {
-            timeUnit: '4s',
+            timeUnit: '3s',
             preAllocatedVUs: 1, // how large the initial pool of VUs would be
             executor: 'ramping-arrival-rate',
             //executor: 'ramping-vus',
