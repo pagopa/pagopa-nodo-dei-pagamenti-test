@@ -1609,7 +1609,6 @@ def step_impl(context, sender, method, service, receiver):
     else:
         service = utils.replace_local_variables(service, context)
         service = utils.replace_context_variables(service, context)
-        print(f"{url_nodo}/{service}")
     if len(body) > 1:
         json_body = json.loads(body)
     else:
@@ -1619,16 +1618,20 @@ def step_impl(context, sender, method, service, receiver):
     if run_local:
         if '_json' in url_nodo:
             url_nodo = url_nodo.split('_')[0]
+
+            print(f"URL REST: {url_nodo}")
             if dbRun == "Postgres":
                 nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
             elif dbRun == "Oracle":
                 nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
         else:
+            print(f"URL REST: {url_nodo}")
             if dbRun == "Postgres":
                 nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies')) 
             elif dbRun == "Oracle":
                 nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
     else:
+        print(f"URL REST: {url_nodo}/{service}")
         if dbRun == "Postgres":
             nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
         elif dbRun == "Oracle":
@@ -1988,6 +1991,7 @@ def step_impl(context, param, value):
         refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
     time.sleep(5)
+    print(f"URL refresh: {utils.get_refresh_config_url(context)}")
     print('refresh_response: ', refresh_response)
     assert refresh_response.status_code == 200
 

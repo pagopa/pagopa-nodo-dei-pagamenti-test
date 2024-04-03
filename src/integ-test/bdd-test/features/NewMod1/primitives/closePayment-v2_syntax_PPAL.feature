@@ -144,14 +144,15 @@ Feature: syntax checks for closePaymentV2 - PAYPAL 966
                 }
             }
             """
-    @test 
+
+    @test
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
 
 
     Scenario Outline: check closePaymentV2 PAG-2555 KO outline
-        Given the closePaymentV2 PAG-2555 scenario executed successfully
+        Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And <elem> with <value> in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 400
@@ -164,13 +165,14 @@ Feature: syntax checks for closePaymentV2 - PAYPAL 966
 
 
 
-  
+
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount None
-        Given initial JSON v2/closepayment
+        Given the activatePaymentNoticeV2 OK scenario executed successfully
+        And initial JSON v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                    "$activatePaymentNoticeV21Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -197,13 +199,14 @@ Feature: syntax checks for closePaymentV2 - PAYPAL 966
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
- 
+
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount oversize
-        Given initial JSON v2/closepayment
+        Given the activatePaymentNoticeV2 OK scenario executed successfully
+        And initial JSON v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                    "$activatePaymentNoticeV21Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -232,13 +235,14 @@ Feature: syntax checks for closePaymentV2 - PAYPAL 966
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
 
-  
+
     Scenario: check closePaymentV2 PAG-2555 KO totalAmount Empty
-        Given initial JSON v2/closepayment
+        Given the activatePaymentNoticeV2 OK scenario executed successfully
+        And initial JSON v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                    "$activatePaymentNoticeV21Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -266,13 +270,14 @@ Feature: syntax checks for closePaymentV2 - PAYPAL 966
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
- 
+
     Scenario: check closePaymentV2 PAG-2555 KO fee None
-        Given initial JSON v2/closepayment
+        Given the activatePaymentNoticeV2 OK scenario executed successfully
+        And initial JSON v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                    "$activatePaymentNoticeV21Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -299,13 +304,14 @@ Feature: syntax checks for closePaymentV2 - PAYPAL 966
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    
+
     Scenario: check closePaymentV2 PAG-2555 KO fee oversize
-        Given initial JSON v2/closepayment
+        Given the activatePaymentNoticeV2 OK scenario executed successfully
+        And initial JSON v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                    "$activatePaymentNoticeV21Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -334,13 +340,14 @@ Feature: syntax checks for closePaymentV2 - PAYPAL 966
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
 
-   
+
     Scenario: check closePaymentV2 PAG-2555 KO fee Empty
-        Given initial JSON v2/closepayment
+        Given the activatePaymentNoticeV2 OK scenario executed successfully
+        And initial JSON v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                    "$activatePaymentNoticeV21Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -368,13 +375,14 @@ Feature: syntax checks for closePaymentV2 - PAYPAL 966
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-  
+
     Scenario: check closePaymentV2 PAG-2555 KO timestampOperation None
-        Given initial JSON v2/closepayment
+        Given the activatePaymentNoticeV2 OK scenario executed successfully
+        And initial JSON v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                    "$activatePaymentNoticeV21Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -401,13 +409,14 @@ Feature: syntax checks for closePaymentV2 - PAYPAL 966
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-   
+
     Scenario: check closePaymentV2 PAG-2555 KO timestampOperation Empty
-        Given initial JSON v2/closepayment
+        Given the activatePaymentNoticeV2 OK scenario executed successfully
+        And initial JSON v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                    "$activatePaymentNoticeV21Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -435,13 +444,14 @@ Feature: syntax checks for closePaymentV2 - PAYPAL 966
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-   
+
     Scenario: check closePaymentV2 PAG-2555 KO transactionId None
-        Given initial JSON v2/closepayment
+        Given the activatePaymentNoticeV2 OK scenario executed successfully
+        And initial JSON v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                    "$activatePaymentNoticeV21Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -468,13 +478,14 @@ Feature: syntax checks for closePaymentV2 - PAYPAL 966
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    
+
     Scenario: check closePaymentV2 PAG-2555 KO pspTransactionId None
-        Given initial JSON v2/closepayment
+        Given the activatePaymentNoticeV2 OK scenario executed successfully
+        And initial JSON v2/closepayment
             """
             {
                 "paymentTokens": [
-                    "a3738f8bff1f4a32998fc197bd0a6b05"
+                    "$activatePaymentNoticeV21Response.paymentToken"
                 ],
                 "outcome": "OK",
                 "idPSP": "#psp#",
@@ -510,7 +521,8 @@ Feature: syntax checks for closePaymentV2 - PAYPAL 966
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-    @test 
+
+    @test
     Scenario: update DB
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds

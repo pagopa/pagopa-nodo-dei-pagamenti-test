@@ -1820,6 +1820,7 @@ Feature: flow tests for paSendRTV2 1115
         When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
 
+
     @test @company
     Scenario: PSRTV2_ACTV1_24 (part 3)
         Given the PSRTV2_ACTV1_24 (part 2) scenario executed successfully
