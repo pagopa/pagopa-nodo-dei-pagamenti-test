@@ -1,7 +1,6 @@
 {
     "configurations": {
         "select_config": "SELECT ck.CONFIG_KEY, ck.CONFIG_VALUE from CONFIGURATION_KEYS ck",
-        "update_config_postgresql": "UPDATE CONFIGURATION_KEYS SET CONFIG_VALUE = E'value' WHERE CONFIG_KEY = 'key'",
         "update_config_oracle": "UPDATE CONFIGURATION_KEYS s SET s.CONFIG_VALUE = q'[value]' WHERE s.CONFIG_KEY = 'key'"
     },
     "NewMod3": {

@@ -2,7 +2,7 @@ Feature: Check semantic payment status 1285
 
     Background:
         Given systems up
-    
+
     Scenario: Execute verifyPaymentNotice
         Given initial XML verifyPaymentNotice
             """
@@ -52,7 +52,7 @@ Feature: Check semantic payment status 1285
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-@runnable
+    @runnable
     Scenario: Verify in POSITION_STATUS table
         Given the Execute activatePaymentNotice scenario executed successfully
         And initial XML sendPaymentOutcome

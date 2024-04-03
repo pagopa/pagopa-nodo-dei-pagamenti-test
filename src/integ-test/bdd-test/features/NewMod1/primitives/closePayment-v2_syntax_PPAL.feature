@@ -512,7 +512,7 @@ Feature: syntax checks for closePaymentV2 - PAYPAL 966
         And check outcome is KO of v2/closepayment response
         And check description is Invalid additionalPaymentInformations of v2/closepayment response
 
-    @test
+    @test @prova1
     Scenario: check closePaymentV2 PAG-2555 OK
         Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And the closePaymentV2 PAG-2555 scenario executed successfully

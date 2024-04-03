@@ -2,20 +2,20 @@ Feature: T106_ChiediInformativaPA_soloObbligatori 484
 
     Background:
         Given systems up
-@runnable
+    @runnable
     Scenario: Send nodoChiediInformativaPA
         Given initial XML nodoChiediInformativaPA
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-                <ws:nodoChiediInformativaPA>
-                    <identificativoPSP>#psp#</identificativoPSP>
-                    <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
-                    <identificativoCanale>#canale#</identificativoCanale>
-                    <password>pwdpwdpwd</password>
-                    <identificativoDominio>#creditor_institution_code#</identificativoDominio>
-                </ws:nodoChiediInformativaPA>
+            <ws:nodoChiediInformativaPA>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
+            <password>pwdpwdpwd</password>
+            <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            </ws:nodoChiediInformativaPA>
             </soapenv:Body>
             </soapenv:Envelope>
             """
