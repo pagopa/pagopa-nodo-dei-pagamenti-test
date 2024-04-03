@@ -1540,7 +1540,6 @@ def step_impl(context, sender, method, service, receiver):
     else:
         service = utils.replace_local_variables(service, context)
         service = utils.replace_context_variables(service, context)
-        print(f"{url_nodo}/{service}")
     if len(body) > 1:
         json_body = json.loads(body)
     else:
@@ -1548,11 +1547,13 @@ def step_impl(context, sender, method, service, receiver):
     if run_local:
         if '_json' in url_nodo:
             url_nodo = url_nodo.split('_')[0]
-            print(f"{url_nodo}")
+            print(f"URL REST: {url_nodo}")
             nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
         else:
+            print(f"URL REST: {url_nodo}")
             nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
     else:
+        print(f"URL REST: {url_nodo}/{service}")
         nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False)
     setattr(context, service.split('?')[0], json_body)
     setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
