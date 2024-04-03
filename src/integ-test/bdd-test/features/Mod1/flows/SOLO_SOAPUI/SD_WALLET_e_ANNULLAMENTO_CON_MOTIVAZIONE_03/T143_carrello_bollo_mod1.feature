@@ -220,22 +220,25 @@ Feature: T143_carrello_bollo_mod1 771
         And check totalRows field exists in listaPSP response
         And check data field exists in listaPSP response
 
-    @sync @prova1
+    @runnable @prova1
     Scenario: Execution Esito Mod1
         Given the Execute nodoChiediListaPSP - carte scenario executed successfully
-        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
+        And initial XML pspInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
             <soapenv:Body>
-            <ws:pspInviaCarrelloRPTCarteResponse>
+            <ws:pspInviaCarrelloRPTResponse>
             <pspInviaCarrelloRPTResponse>
             <esitoComplessivoOperazione>OK</esitoComplessivoOperazione>
+            <identificativoCarrello>$nodoInviaCarrelloRPT.identificativoCarrello</identificativoCarrello>
+            <parametriPagamentoImmediato>idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello</parametriPagamentoImmediato>
             </pspInviaCarrelloRPTResponse>
-            </ws:pspInviaCarrelloRPTCarteResponse>
+            </ws:pspInviaCarrelloRPTResponse>
             </soapenv:Body>
             </soapenv:Envelope>
             """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         #non toccare i valori
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
@@ -246,7 +249,7 @@ Feature: T143_carrello_bollo_mod1 771
                 "identificativoIntermediario": "#psp#",
                 "identificativoCanale": "#canale#",
                 "tipoOperazione":"mobile",
-                "mobileToken":"123ABC456"
+                "mobileToken":"123ABC457"
             }
             """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
