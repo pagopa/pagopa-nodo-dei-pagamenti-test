@@ -6,7 +6,7 @@ import { getBasePath, getHeaders } from "../util/base_path_util.js";
 export const nodoChiediFlussoRendicontazione_Trend = new Trend('nodoChiediFlussoRendicontazione');
 export const All_Trend = new Trend('ALL');
 
-function getBody(idInt, idStation, idFlusso) {
+function getBody(idInt, idStation, idPA, idPSP, idFlusso) {
 
 	return `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header/>
@@ -15,16 +15,18 @@ function getBody(idInt, idStation, idFlusso) {
                     <identificativoIntermediarioPA>${idInt}</identificativoIntermediarioPA>
                     <identificativoStazioneIntermediarioPA>${idStation}</identificativoStazioneIntermediarioPA>
                     <password>pwdpwdpwd</password>
+                    <identificativoDominio>${idPA}</identificativoDominio>
+                    <identificativoPSP>${idPSP}</identificativoPSP>
                     <identificativoFlusso>${idFlusso}</identificativoFlusso>
                 </ws:nodoChiediFlussoRendicontazione>
             </soapenv:Body>
             </soapenv:Envelope>`;
 }
 
-export function nodoChiediFlussoRendicontazione(baseUrl, idInt, idStation, idPa, idFlusso) {
+export function nodoChiediFlussoRendicontazione(baseUrl, idInt, idStation, idPa, idPSP, idFlusso) {
 
 	const pathToCall = getBasePath(baseUrl, "nodoChiediFlussoRendicontazione")
-	let body = getBody(idInt, idStation, idPa, idFlusso);
+	let body = getBody(idInt, idStation, idPa, idPSP, idFlusso);
 	
 	let res = http.post(pathToCall, body,
 		{
@@ -77,12 +79,12 @@ export function nodoChiediFlussoRendicontazione(baseUrl, idInt, idStation, idPa,
 	);
 
 
-	let outcome = '';
+	let fault = '';
 
 	try {
 		let doc = parseHTML(res.body);
-		let script = doc.find('esito');
-		outcome = script.text();
+		let script = doc.find('fault');
+		fault = script.text();
 	} catch (error) { }
 
 
@@ -90,7 +92,7 @@ export function nodoChiediFlussoRendicontazione(baseUrl, idInt, idStation, idPa,
 	check(
 		res,
 		{
-			'nodoChiediFlussoRendicontazione:ok_rate': (r) => outcome == 'OK',
+			'nodoChiediFlussoRendicontazione:ok_rate': (r) => fault == '',
 		},
 		{ nodoChiediFlussoRendicontazione: 'ok_rate', ALL: 'ok_rate' }
 	);
@@ -98,11 +100,11 @@ export function nodoChiediFlussoRendicontazione(baseUrl, idInt, idStation, idPa,
 	if (check(
 		res,
 		{
-			'nodoChiediFlussoRendicontazione:ko_rate': (r) => outcome != 'OK',
+			'nodoChiediFlussoRendicontazione:ko_rate': (r) => fault != '',
 		},
 		{ nodoChiediFlussoRendicontazione: 'ko_rate', ALL: 'ko_rate' }
 	)) {
-		fail("outcome != OK: " + outcome);
+		fail("fault is : " + fault);
 	}
 
 	return res;

@@ -79,11 +79,13 @@ export function nodoChiediElencoFlussiRendicontazione(baseUrl, idPsp, idInt, idS
 
 
 	let fault = '';
-
+	let identificativoFlusso = undefined;
 	try {
 		let doc = parseHTML(res.body);
 		let script = doc.find('fault');
 		fault = script.text();
+		script = doc.find('identificativoFlusso').first();
+		identificativoFlusso = script.text();
 	} catch (error) { }
 
 
@@ -106,5 +108,5 @@ export function nodoChiediElencoFlussiRendicontazione(baseUrl, idPsp, idInt, idS
 		fail(`response with fault: [${fault}]`);
 	}
 
-	return res;
+	return identificativoFlusso;
 }

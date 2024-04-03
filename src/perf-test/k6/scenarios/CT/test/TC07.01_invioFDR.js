@@ -2,7 +2,6 @@ import { check } from 'k6';
 import { SharedArray } from 'k6/data';
 import papaparse from './util/papaparse.js';
 import * as common from '../../CommonScript.js';
-import * as inputDataUtil from './util/input_data_util.js';
 import * as nodoInviaFlussoRendicontazioneBig from './api/nodoInviaFlussoRendicontazioneBig.js';
 import * as nodoInviaFlussoRendicontazioneSmall from './api/nodoInviaFlussoRendicontazioneSmall.js';
 
@@ -86,11 +85,13 @@ export const options = {
 		'checks{ALL:over_sla800}': [],
 		'checks{ALL:over_sla1000}': [],
 		'checks{ALL:ok_rate}': [],
-		'checks{ALL:ko_rate}': [],
+		'checks{ALL:ko_rate}': []
 	},
 
 
 };
+
+export const bodyRendicontazioneBig = nodoInviaFlussoRendicontazioneBig.getBody('pspStress90', 'canaleStress90', 'intPspStress90', 'paStress90');
 
 export default function () {
     total();
@@ -106,16 +107,17 @@ export function total() {
             baseSoapUrl = urls[key].SOAP_BASEURL;
         }
     }
-    let rndAnagPsp = inputDataUtil.getAnagPsp();
-    let rndAnagPa = inputDataUtil.getAnagPa();
     
     const randomValue = Math.random(); // num between 0 and 1
 
-    if (randomValue <= 0.7) { // 70 % 
-
-        nodoInviaFlussoRendicontazioneBig.nodoInviaFlussoRendicontazioneBig(baseSoapUrl, rndAnagPsp.PSP, rndAnagPsp.CHPSP, rndAnagPsp.INTPSP, rndAnagPa.PA);
+    if (randomValue <= 0.7) { // 70 %
+    	if(bodyRendicontazioneBig == undefined){
+			console.debug("body was undefined");
+			bodyRendicontazioneBig = nodoInviaFlussoRendicontazioneBig.getBody('pspStress90', 'canaleStress90', 'intPspStress90', 'paStress90');
+		}
+        nodoInviaFlussoRendicontazioneBig.nodoInviaFlussoRendicontazioneBig(baseSoapUrl, 'pspStress90', 'canaleStress90', 'intPspStress90', 'paStress90', bodyRendicontazioneBig);
     } else {
-        nodoInviaFlussoRendicontazioneSmall.nodoInviaFlussoRendicontazioneSmall(baseSoapUrl, rndAnagPsp.PSP, rndAnagPsp.CHPSP, rndAnagPsp.INTPSP, rndAnagPa.PA);
+        nodoInviaFlussoRendicontazioneSmall.nodoInviaFlussoRendicontazioneSmall(baseSoapUrl, 'pspStress91', 'canaleStress91', 'intPspStress91', 'paStress91');
         
     }
     

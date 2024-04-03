@@ -8,7 +8,7 @@ import encoding from 'k6/encoding';
 export const nodoInviaFlussoRendicontazioneBig_Trend = new Trend('nodoInviaFlussoRendicontazioneBig');
 export const All_Trend = new Trend('ALL');
 
-function getBody(idPSP, idChannel, idInt, idPA) {
+export function getBody(idPSP, idChannel, idInt, idPA) {
 
 	const currentDate = new Date();
 
@@ -73,7 +73,7 @@ function getxmlRendicontazione(idFlusso, dataora, data) {
         <dataEsitoSingoloPagamento>${data}</dataEsitoSingoloPagamento>
     </datiSingoliPagamenti>`;
 
-    const targetSizeInMegabytes = 50;
+    const targetSizeInMegabytes = 125;
     let xmlenc = encoding.b64encode(xmlDecoded);
     let byteSize = xmlenc.length * 3 / 4; // ogni carattere Base64 rappresenta 6 bit di dati
 
@@ -97,11 +97,10 @@ function getxmlRendicontazione(idFlusso, dataora, data) {
     return encoding.b64encode(xmlDecoded);
 }
 
-export function nodoInviaFlussoRendicontazioneBig(baseUrl, idPSP, idChannel, idInt, idPA) {
+export function nodoInviaFlussoRendicontazioneBig(baseUrl, idPSP, idChannel, idInt, idPA, body) {
 
 	const pathToCall = getBasePath(baseUrl, "nodoInviaFlussoRendicontazione")
-	let body = getBody(idPSP, idChannel, idInt, idPA);
-	
+		
 	// Stima la dimensione effettiva del file XML in byte
     const byteSize = unescape(encodeURIComponent(body)).length;
 

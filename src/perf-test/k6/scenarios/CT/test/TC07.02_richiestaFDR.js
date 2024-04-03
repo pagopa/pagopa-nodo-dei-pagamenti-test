@@ -95,6 +95,7 @@ export const options = {
 export default function () {
     total();
 }
+var identificativoFlusso;
 
 export function total() {
 
@@ -106,18 +107,25 @@ export function total() {
             baseSoapUrl = urls[key].SOAP_BASEURL;
         }
     }
-    let rndAnagPsp = inputDataUtil.getAnagPsp();
-    let rndAnagPa = inputDataUtil.getAnagPa();
     
     const randomValue = Math.random(); // num between 0 and 1
-
-    //if (randomValue <= 0.7) { // 70 % 
-		//baseUrl, idPsp, idInt, idStation, idPa
-        nodoChiediElencoFlussiRendicontazione.nodoChiediElencoFlussiRendicontazione(baseSoapUrl, rndAnagPsp.PSP, rndAnagPa.INTPA, rndAnagPa.STAZPA, rndAnagPa.PA);
-    //} else {
-        nodoChiediFlussoRendicontazione.nodoChiediFlussoRendicontazione(baseSoapUrl, rndAnagPsp.PSP, rndAnagPsp.CHPSP, rndAnagPsp.INTPSP, rndAnagPa.PA);
+	
+    if (randomValue <= 0.7) { // 70 % 
+        identificativoFlusso = nodoChiediElencoFlussiRendicontazione.nodoChiediElencoFlussiRendicontazione(baseSoapUrl, 'pspStress90', 'intPaStress90', 'stazPaStress90', 'paStress90');
+        console.debug("idFlusso "+ identificativoFlusso);
+    } else {
+		if(identificativoFlusso != undefined) {	
+			//baseUrl, idInt, idStation, idPa, idPSP, idFlusso
+        	nodoChiediFlussoRendicontazione.nodoChiediFlussoRendicontazione(baseSoapUrl, 'intPaStress90', 'stazPaStress90', 'paStress90', 'pspStress90', identificativoFlusso);
+        }
+        else
+        {
+			console.warn("identificativoFlusso undefined, calling nodoChiediElencoFlussiRendicontazione instead of nodoChiediFlussoRendicontazione");
+			identificativoFlusso = nodoChiediElencoFlussiRendicontazione.nodoChiediElencoFlussiRendicontazione(baseSoapUrl, 'pspStress90', 'intPaStress90', 'stazPaStress90', 'paStress90');
+        	console.debug("idFlusso "+ identificativoFlusso);
+		}
         
-    //}
+    }
     
 }
 
