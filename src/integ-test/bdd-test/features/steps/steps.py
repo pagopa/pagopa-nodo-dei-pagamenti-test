@@ -1148,11 +1148,11 @@ def step_impl(context, sender, soap_primitive, receiver):
     url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
     header_host = utils.estrapola_header_host(url_nodo)
 
-    if 'NODOPGDB' in os.environ:
+    if dbRun == "Postgres":
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
-    else:
+    elif dbRun == "Oracle":
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': header_host}  # set what your server accepts
     
     #url_nodo = "http://localhost:81/nodo-sit/webservices/input"
@@ -1179,12 +1179,13 @@ def step_impl(context, sender, soap_primitive, receiver):
 
     url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
     header_host = utils.estrapola_header_host(url_nodo)
+    dbRun = getattr(context, "dbRun")
 
-    if 'NODOPGDB' in os.environ:
+    if dbRun == "Postgres":
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
         if 'SUBSCRIPTION_KEY' in os.environ:
             headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
-    else:
+    elif dbRun == "Oracle":
         headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': header_host}  # set what your server accepts        
 
     print("url_nodo: ", url_nodo)
@@ -1965,9 +1966,10 @@ def step_impl(context, primitive):
 
 @step("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
+    dbRun = getattr(context, "dbRun")
     db_name = "nodo_cfg"
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    update_config_query = "update_config_postgresql" if 'NODOPGDB' in os.environ else "update_config_oracle"
+    update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
     selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', param)
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
@@ -1982,8 +1984,7 @@ def step_impl(context, param, value):
 
     header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
     headers = {'Host': header_host}
-
-    dbRun = getattr(context, "dbRun")
+    
     refresh_response = None
     if dbRun == "Postgres":
         refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
@@ -2057,6 +2058,7 @@ def step_impl(context, query_name, date, macro, db_name):
 
 @then("restore initial configurations")
 def step_impl(context):
+    dbRun = getattr(context, "dbRun")
     db_config = context.config.userdata.get("db_configuration")
     db_name = "nodo_cfg"
     db_selected = db_config.get(db_name)
@@ -2064,9 +2066,8 @@ def step_impl(context):
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
     config_dict = getattr(context, 'configurations')
-    update_config_query = "update_config_postgresql" if 'NODOPGDB' in os.environ else "update_config_oracle"
+    update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
 
-    dbRun = getattr(context, "dbRun")
 
     for key, value in config_dict.items():
 
