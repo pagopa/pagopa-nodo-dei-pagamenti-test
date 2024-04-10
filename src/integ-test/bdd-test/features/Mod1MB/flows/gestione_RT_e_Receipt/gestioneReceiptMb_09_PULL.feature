@@ -308,12 +308,12 @@ Feature: gestioneReceiptMb_09_PULL 850
         And replace pa content with #creditor_institution_code# content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
-        
+
         And replace station_id content with #id_station# content
         And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition FK_PA = $objId AND FK_STAZIONE = $stationID under macro update_query on db nodo_cfg
-        
+
         And replace pa content with $pa1 content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
@@ -354,13 +354,13 @@ Feature: gestioneReceiptMb_09_PULL 850
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
             """
             {
-            "idPagamento":"$sessionToken",
-            "identificativoPsp":"#psp#",
-            "tipoVersamento":"BBT",
-            "identificativoIntermediario":"#psp#",
-            "identificativoCanale":"#canaleRtPull_sec#",
-            "tipoOperazione":"mobile",
-            "mobileToken":"123ABC456"
+                "idPagamento": "$sessionToken",
+                "identificativoPsp": "#psp#",
+                "tipoVersamento": "BBT",
+                "identificativoIntermediario": "#psp#",
+                "identificativoCanale": "#canaleRtPull_sec#",
+                "tipoOperazione": "mobile",
+                "mobileToken": "123ABC456"
             }
             """
         Then verify the HTTP status code of inoltroEsito/mod1 response is 200
@@ -409,7 +409,7 @@ Feature: gestioneReceiptMb_09_PULL 850
         And replace pa content with #creditor_institution_code# content
         And execution query get_pa_id to get value on the table PA, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query get_pa_id retrieve param objId at position 0 and save it under the key objId
-        
+
         And replace station_id content with #id_station# content
         And execution query by_station_id to get value on the table STAZIONI, with the columns OBJ_ID under macro costanti with db name nodo_cfg
         And through the query by_station_id retrieve param stationID at position 0 and save it under the key stationID
@@ -526,7 +526,7 @@ Feature: gestioneReceiptMb_09_PULL 850
         And through the query by_notice_number_and_payment_token retrieve param recipientBroker1 at position 6 and save it under the key recipientBroker1
         And through the query by_notice_number_and_payment_token retrieve param recipientStation1 at position 7 and save it under the key recipientStation1
         And through the query by_notice_number_and_payment_token retrieve param status1 at position 8 and save it under the key status1
-        
+
         #checks
         And check value $paFiscalCode1 is equal to value $expFiscalCode
         And check value $noticeID1 is equal to value $expNoticeID
@@ -555,8 +555,8 @@ Feature: gestioneReceiptMb_09_PULL 850
         And check value $recipientPA1 is equal to value $pa1
         And check value $recipientBroker1 is equal to value $pa1
         And check value $recipientStation1 is equal to value #id_station_secondary#
-    
-@runnable 
+
+    @runnable
     Scenario: Check POSITION_RETRY_PA_SEND_RT table
         Given the job pspChiediRT (Phase 4) scenario executed successfully
         And wait 60 seconds for expiration
