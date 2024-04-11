@@ -2679,7 +2679,7 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
     exec_query = adopted_db.executeQuery(conn, selected_query)
 
     print("record query: ", exec_query)
-    assert len(exec_query) == number, f"{len(exec_query)}"
+    assert len(exec_query) == number, f"The number of query record is: {len(exec_query)}"
 
 
 @step(u"verify if the records for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro} are not null")
@@ -3611,8 +3611,6 @@ def step_impl(context, name_macro, db_name, query_name, value, column, table_nam
     db_selected = db_config.get(db_name)
 
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
         
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
     selected_query = utils.replace_global_variables(selected_query, context)
@@ -3646,8 +3644,6 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column,
 
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
     selected_query = utils.replace_global_variables(selected_query, context)
