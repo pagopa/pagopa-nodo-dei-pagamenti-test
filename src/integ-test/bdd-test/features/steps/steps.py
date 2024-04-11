@@ -2292,6 +2292,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 
 @step("update through the query {query_name} of the table {table_name} the parameter {param} with {value}, with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, where_condition, valore, macro, db_name):
+    dbRun = getattr(context, "dbRun")
     db_selected = context.config.userdata.get("db_configuration").get(db_name)
 
     value = utils.replace_global_variables(value, context)
@@ -2302,7 +2303,12 @@ def step_impl(context, query_name, table_name, param, value, where_condition, va
     where_condition = utils.replace_local_variables(where_condition, context)
     where_condition = utils.replace_context_variables(where_condition, context)
 
-    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$').replace('where_condition', where_condition).replace('valore', valore)
+    selected_query = ''
+    if dbRun == "Postgres":
+        selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$').replace('where_condition', where_condition).replace('valore', valore)
+    elif dbRun == "Oracle":
+        selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value).replace('where_condition', where_condition).replace('valore', valore)
+    
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
     selected_query = utils.replace_global_variables(selected_query, context)
