@@ -135,7 +135,7 @@ Feature: Semantic checks for verifyPaymentReq - KO 1400
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of verifyPaymentNotice response
 
-  @runnable @PG34 @prova1
+  @runnable @PG34
   # station value check: combination fiscalCode-noticeNumber identifies a station corresponding to an ID_STAZIONE value with field IP in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database not reachable (e.g. IP = 1.2.3.4) [SEM_VPNR_14]
   Scenario: Check PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE error on unreachable station
     Given noticeNumber with 346456789012345478 in verifyPaymentNotice
