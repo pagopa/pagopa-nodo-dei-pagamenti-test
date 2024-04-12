@@ -2,7 +2,7 @@ Feature:  block checks for verificaBollettino - position status in NOTIFIED [Ver
 
   Background:
     Given systems up
-    And EC new version
+    
 
 
    # Verify RPT Phase

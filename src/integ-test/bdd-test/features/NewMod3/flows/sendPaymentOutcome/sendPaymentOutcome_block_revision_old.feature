@@ -110,7 +110,7 @@ Feature: Block revision for sendPaymentOutcome - PA old 1251
 @runnable
     Scenario: [SPO_REV_02]
         Given the Initialize sendPaymentOutcome (Phase 3) scenario executed successfully
-        And EC new version
+        
         And outcome with KO in sendPaymentOutcome
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response

@@ -25,7 +25,7 @@ Feature: Pag-1163_Paypal_NM3_Setup 1012
                 </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC new version
+        
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 

@@ -24,7 +24,7 @@ Feature: Semantic checks for paVerifyPaymentNoticeRes 1539
          </soapenv:Body>
          </soapenv:Envelope>
          """
-      And EC new version
+      
       And idChannel with USE_NEW_FAULT_CODE=Y
 
    @ALL

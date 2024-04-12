@@ -51,7 +51,7 @@ Feature: semantic checks for pspNotifyPaymentReq - payPal [T_01] 124
             </soapenv:Body>
         </soapenv:Envelope>
       """
-    And EC new version
+    
 
   Scenario: 1. Execute activateIOPaymentReq request
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti

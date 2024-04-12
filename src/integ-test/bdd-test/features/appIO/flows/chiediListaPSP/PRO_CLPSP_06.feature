@@ -2,7 +2,7 @@ Feature: PRO_CLPSP_06 53
 
 Background:
  Given systems up
- And EC new version
+ 
 
  Scenario: Execute verifyPaymentNotice (Phase 1)
     Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 6000

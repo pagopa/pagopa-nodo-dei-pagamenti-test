@@ -2,7 +2,7 @@ Feature: process tests for generazioneRicevute [DB_GR_15] 1317
 
   Background:
     Given systems up
-    And EC new version
+    
 
   # Verify phase
   Scenario: Execute verifyPaymentNotice request

@@ -96,7 +96,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - OK 127
         </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC new version
+    
   Scenario: Execute activateIOPaymentReq request
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response

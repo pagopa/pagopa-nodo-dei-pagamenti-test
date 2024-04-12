@@ -2,7 +2,7 @@ Feature: Semantic checks oon inoltroEsitoPaypal primitive for new EC 121
 
     Background:
         Given systems up
-        And EC new version
+        
 
 ################################################## PARTE 1 ########################################################################################################
     

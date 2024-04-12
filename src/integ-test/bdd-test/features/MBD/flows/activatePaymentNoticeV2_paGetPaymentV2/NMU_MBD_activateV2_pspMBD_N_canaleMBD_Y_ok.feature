@@ -4,7 +4,7 @@ Feature: activatePaymentNoticeV2Request with psp NO MBD and canale MBD
 
     Background:
         Given systems up
-        And EC new version
+        
 
     # checkPosition phase
     Scenario: Execute checkPosition request

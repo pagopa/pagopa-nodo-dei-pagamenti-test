@@ -4,7 +4,7 @@ Feature: activatePaymentNoticeV2Request with MBD flow OK
 
     Background:
         Given systems up
-        And EC new version
+        
 
     # checkPosition phase
     Scenario: Execute checkPosition request

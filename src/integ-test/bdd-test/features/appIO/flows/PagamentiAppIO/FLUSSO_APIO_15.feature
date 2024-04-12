@@ -2,7 +2,7 @@ Feature: FLUSSO_APIO_15 85
 
     Background:
         Given systems up
-        And EC new version
+        
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA

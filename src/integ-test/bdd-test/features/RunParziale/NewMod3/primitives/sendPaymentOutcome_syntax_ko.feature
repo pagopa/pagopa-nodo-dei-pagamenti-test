@@ -50,7 +50,7 @@ Feature: Syntax checks for sendPaymentOutcome - KO 1545
         </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC new version
+    
 
   @ALL
   # attribute value check

@@ -2,7 +2,7 @@ Feature: PRO_CLPSP_03 50
 
 Background:
  Given systems up
- And EC new version
+ 
 
  Scenario: Execute verifyPaymentNotice (Phase 1)
     Given initial XML verifyPaymentNotice

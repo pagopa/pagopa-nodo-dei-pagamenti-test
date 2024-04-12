@@ -2,7 +2,7 @@ Feature:  block checks for verificaBollettino - position status in PAID [Verific
 
   Background:
     Given systems up
-    And EC new version
+    
 
 
    # Verify RPT Phase

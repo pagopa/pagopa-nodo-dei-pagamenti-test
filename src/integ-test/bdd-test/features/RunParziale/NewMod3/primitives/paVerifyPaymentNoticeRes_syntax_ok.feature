@@ -20,7 +20,7 @@ Feature: syntax checks for paVerifyPaymentNoticeRes - OK 1541
          </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC new version
+    
 
   @ALL
   Scenario Outline: Check paVerifyPaymentRes response with missing optional fields

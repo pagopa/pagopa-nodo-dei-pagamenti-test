@@ -30,7 +30,7 @@ Feature: flow checks for verificaBollettino 1355
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC new version
+        
         When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check faultCode is PPT_MULTI_BENEFICIARIO of nodoVerificaRPT response
         And check faultString is La chiamata non è compatibile con il nuovo modello PSP. of nodoVerificaRPT response
@@ -88,7 +88,7 @@ Feature: flow checks for verificaBollettino 1355
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC new version
+        
         When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is OK of verificaBollettino response
         And check allCCP field exists in verificaBollettino response

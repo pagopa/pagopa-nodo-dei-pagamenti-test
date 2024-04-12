@@ -20,7 +20,7 @@ Feature: process tests for Retry_DB_GR_04 1127
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC new version
+        
 
     # Verify phase
     Scenario: Execute verifyPaymentNotice request

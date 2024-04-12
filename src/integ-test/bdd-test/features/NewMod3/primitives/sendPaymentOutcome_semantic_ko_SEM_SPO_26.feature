@@ -2,7 +2,7 @@ Feature: Semantic checks for sendPaymentOutcome - KO - SEM_SPO_26 1390
 
   Background:
     Given systems up
-    And EC new version    
+        
 
    # activatePaymentNoticeReq phase
   Scenario: Execute activatePaymentNotice request

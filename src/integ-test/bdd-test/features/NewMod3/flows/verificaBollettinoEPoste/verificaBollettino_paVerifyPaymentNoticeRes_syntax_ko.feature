@@ -18,7 +18,7 @@ Feature: syntax checks for paVerifyPaymentNotice - KO 1345
       </soapenv:Body>
     </soapenv:Envelope>
     """
-    And EC new version
+    
 
   # element value check
   @runnable

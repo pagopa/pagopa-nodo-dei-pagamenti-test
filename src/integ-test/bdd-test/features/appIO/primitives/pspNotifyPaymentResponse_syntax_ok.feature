@@ -51,7 +51,7 @@ Feature: Syntax checks for pspNotifyPaymentResponse - OK 129
             </soapenv:Body>
         </soapenv:Envelope>
       """
-    And EC new version
+    
 
 
   Scenario: Execute activateIOPaymentReq request

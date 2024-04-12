@@ -23,7 +23,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - same outcome - ok [SEM_SPO_
       </soapenv:Body>
     </soapenv:Envelope>
     """
-    And EC new version    
+        
 
   # ActivatePaymentNoticeReq phase
   Scenario: Execute activatePaymentNotice request

@@ -42,7 +42,7 @@ Feature: process tests for TF_POSTE_04 1338
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC new version
+        
 
     # Verify phase
     Scenario: Execute verificaBollettino request

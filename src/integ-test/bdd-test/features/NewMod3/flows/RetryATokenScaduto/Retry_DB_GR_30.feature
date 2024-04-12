@@ -2,7 +2,7 @@ Feature: process tests for Retry_DB_GR_30 1143
 
   Background:
     Given systems up
-    And EC new version
+    
 
   Scenario: initial verifyPaymentNotice
     Given update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition BROADCAST and where value ('Y') under macro update_query on db nodo_cfg

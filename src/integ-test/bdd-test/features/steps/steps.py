@@ -125,10 +125,6 @@ def step_impl(context):
     assert responses
 
 
-@given(u'EC {version} version')
-def step_impl(context, version):
-    # TODO implement with api-config
-    pass
 
 
 @step('initial XML {primitive}')
@@ -2135,11 +2131,16 @@ def step_impl(context, query_name, param, position, row_number, key):
 
 @step("through the query {query_name} retrieve xml {xml} at position {position:d} and save it under the key {key}")
 def step_impl(context, query_name, xml, position, key):
+    dbRun = getattr(context, "dbRun")
     result_query = getattr(context, query_name)
     print(f'{query_name}: {result_query}')
-    selected_element = result_query[0][position].tobytes().decode('utf-8')
-    # selected_element = selected_element.read()
-    # selected_element = selected_element.decode("utf-8")
+
+    selected_element = ''
+    if dbRun == "Postgres":
+        selected_element = result_query[0][position].tobytes().decode('utf-8')
+    elif dbRun == "Oracle":
+        selected_element = result_query[0][position].read().decode('utf-8')
+
     print(f'{xml}: {selected_element}')
     setattr(context, key, selected_element)
 

@@ -2,7 +2,7 @@
 
 #     Background:
 #         Given systems up
-#         And EC new version
+#         
 
 #     Scenario: Execute verifyPaymentNotice (Phase 1)
 #         Given initial XML verifyPaymentNotice

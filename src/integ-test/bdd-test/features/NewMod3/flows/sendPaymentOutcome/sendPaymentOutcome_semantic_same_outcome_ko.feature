@@ -2,7 +2,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - same outcome - ko [SEM_SPO_
 
   Background:
     Given systems up
-    And EC new version    
+        
 
   # activatePaymentNoticeReq phase
   Scenario: Execute activatePaymentNotice request

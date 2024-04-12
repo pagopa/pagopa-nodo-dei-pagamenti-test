@@ -20,7 +20,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
          </soapenv:Body>
       </soapenv:Envelope>
       """
-	 And EC new version
+	 
 
 
   # Verify Phase 1

@@ -28,7 +28,7 @@ Feature: flow checks for verificaBollettino - EC new 1339
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC new version
+    
     When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
     Then check esito is KO of nodoVerificaRPT response
     And check faultCode is PPT_MULTI_BENEFICIARIO of nodoVerificaRPT response

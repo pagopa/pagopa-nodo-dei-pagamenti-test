@@ -2,7 +2,7 @@ Feature: FLUSSO_APIO_12.1 78
 
 Background:
  Given systems up
- And EC new version
+ 
 
  Scenario: Execute verifyPaymentNotice (Phase 1)
     Given initial XML verifyPaymentNotice

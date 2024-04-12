@@ -24,7 +24,7 @@ Feature:  semantic checks for paGetPaymentRes - KO 1382
 				</soapenv:Body>
 			</soapenv:Envelope>
 			"""
-		And EC new version
+		
 
 	@runnable
 	# fiscalCodePA and IBAN check: fiscalCodePA and IBAN not in db, fiscalCodePA with field ENABLED = N, IBAN not associated to fiscalCodePa in NODO4_CFG.INFORMATIVE_CONTO_ACCREDITO_DETAIL table

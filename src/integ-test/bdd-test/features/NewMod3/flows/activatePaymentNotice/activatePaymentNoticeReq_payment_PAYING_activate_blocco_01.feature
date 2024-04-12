@@ -2,7 +2,7 @@ Feature:  block check for activatePaymentNoticeReq - position status in PAYING [
 
   Background:
     Given systems up
-    And EC new version
+    
 
   Scenario: Execute activatePaymentNotice request
     Given initial XML activatePaymentNotice

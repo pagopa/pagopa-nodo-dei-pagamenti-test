@@ -18,7 +18,7 @@ Feature: Semantic checks for verificaBollettino - KO 1547
            </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC new version
+    
 
   @ALL
   # idPSP value check: idPSP not in db [SEM_VB_01]

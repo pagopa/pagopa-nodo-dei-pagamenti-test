@@ -332,7 +332,7 @@ Feature: process tests for retry a token scaduto 1209
     When psp sends SOAP nodoInviaRPT to nodo-dei-pagamenti
     Then check esito is OK of nodoInviaRPT response
 
-  @runnable
+  @runnable @prova1
   Scenario: DB check [retry_PaOld_31]
     Given the Execute nodoInviaRPT1 request scenario executed successfully
     And wait 5 seconds for expiration

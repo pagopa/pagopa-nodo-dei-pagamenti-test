@@ -2,7 +2,7 @@ Feature: process tests for generazioneRicevute [DB_GR_20] 1324
 
   Background:
     Given systems up
-    And EC new version
+    
 
 
   # Verify phase
@@ -25,7 +25,7 @@ Feature: process tests for generazioneRicevute [DB_GR_20] 1324
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC new version
+    
     # set broadcast=true
     And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1201' under macro update_query on db nodo_cfg
     When refresh job ALL triggered after 10 seconds

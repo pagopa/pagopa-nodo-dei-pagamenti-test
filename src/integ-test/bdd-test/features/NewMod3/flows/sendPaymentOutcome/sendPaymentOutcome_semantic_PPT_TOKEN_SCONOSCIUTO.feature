@@ -2,7 +2,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - PPT_TOKEN_SCONOSCIUTO [SEM_
 
   Background:
     Given systems up 
-    And EC new version    
+        
 
   # activatePaymentNoticeReq phase
   Scenario: Execute activatePaymentNotice request

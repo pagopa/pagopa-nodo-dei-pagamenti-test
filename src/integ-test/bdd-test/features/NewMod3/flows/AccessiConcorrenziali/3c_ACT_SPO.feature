@@ -2,7 +2,7 @@ Feature: process tests for accessiConCorrenziali [3c_ACT_SPO] 972
 
     Background:
         Given systems up
-        And EC new version
+        
 
     # 3c_ACT_SPO
     Scenario: Execute activatePaymentNotice request

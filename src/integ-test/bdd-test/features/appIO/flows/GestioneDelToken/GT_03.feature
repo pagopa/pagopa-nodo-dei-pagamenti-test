@@ -2,7 +2,7 @@ Feature: GT_03 56
 
     Background:
         Given systems up
-        And EC new version
+        
 
     Scenario: Execute verifyPaymentNotice (Phase 1)
         Given nodo-dei-pagamenti has config parameter useIdempotency set to true

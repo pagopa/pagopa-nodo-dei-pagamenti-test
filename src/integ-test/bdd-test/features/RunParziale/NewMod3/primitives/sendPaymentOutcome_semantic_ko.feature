@@ -49,7 +49,7 @@ Feature: Semantic checks for sendPaymentOutcome - KO 1542
            </soapenv:Body>
         </soapenv:Envelope>
       """
-	And EC new version
+	
 
   @ALL
   # idPSP value check: idPSP not in db [SEM_SPO_01]

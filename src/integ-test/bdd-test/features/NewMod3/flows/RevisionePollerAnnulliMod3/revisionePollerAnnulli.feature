@@ -2,7 +2,7 @@ Feature: process tests for reviione-poller annulli01_02 1219
 
   Background:
     Given systems up
-    And EC new version
+    
 
   Scenario: Execute verifyPaymentNotice (Phase 1)
     Given initial XML verifyPaymentNotice

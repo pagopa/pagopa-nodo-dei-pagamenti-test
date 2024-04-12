@@ -2,7 +2,7 @@ Feature: Syntax checks for sendPaymentOutcome - OK 1546
 
   Background:
     Given systems up
-    And EC new version
+    
     And initial XML activatePaymentNotice
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"

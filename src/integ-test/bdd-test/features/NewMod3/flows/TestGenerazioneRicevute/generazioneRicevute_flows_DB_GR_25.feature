@@ -20,7 +20,7 @@ Feature: process tests for generazioneRicevute 1311
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC new version
+    
 
   # Verify phase
   Scenario: Execute verifyPaymentNotice request

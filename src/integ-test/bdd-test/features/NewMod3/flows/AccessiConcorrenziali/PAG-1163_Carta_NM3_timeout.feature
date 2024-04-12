@@ -2,7 +2,7 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_NM3_timeout] 99
 
     Background:
         Given systems up
-        And EC new version
+        
 
     Scenario: Execute verifyPaymentNotice request
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr# and application code NA
@@ -25,7 +25,7 @@ Feature: process tests for accessiConCorrenziali [PAG-1163_Carta_NM3_timeout] 99
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC new version
+        
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 

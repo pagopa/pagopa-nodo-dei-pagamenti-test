@@ -23,7 +23,7 @@ Feature:  block checks for verifyPaymentReq - position status in NOTIFIED [Verif
          </soapenv:Body>
       </soapenv:Envelope>
       """
-	 And EC new version
+	 
     When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
     

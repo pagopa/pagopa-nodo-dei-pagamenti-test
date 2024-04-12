@@ -25,7 +25,7 @@ Feature: Checks for EC new and nodoVerificaRPT 1375
           </soapenv:Body>
         </soapenv:Envelope>
       """
-    And EC new version
+    
 
   @runnable
   # check PPT_MULTI_BENEFICIARIO error - PRO_VPNR_04

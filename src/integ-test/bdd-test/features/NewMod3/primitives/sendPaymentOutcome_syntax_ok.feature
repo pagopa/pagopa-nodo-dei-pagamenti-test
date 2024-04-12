@@ -2,7 +2,7 @@ Feature: Syntax checks for sendPaymentOutcome - OK 1393
 
   Background:
     Given systems up
-    And EC new version
+    
     And initial XML activatePaymentNotice
     """
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
@@ -28,6 +28,7 @@ Feature: Syntax checks for sendPaymentOutcome - OK 1393
     </soapenv:Envelope>
     """
     And PSP sends soap activatePaymentNotice to nodo-dei-pagamenti
+    Then check outcome is OK of activatePaymentNotice response
 
     @runnable
     # [SIN_SPO_00]

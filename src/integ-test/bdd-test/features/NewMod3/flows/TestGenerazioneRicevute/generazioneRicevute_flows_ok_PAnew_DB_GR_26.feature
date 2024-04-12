@@ -2,7 +2,7 @@ Feature: process tests for generazioneRicevute [DB_GR_26] 1325
 
   Background:
     Given systems up
-    And EC new version
+    
 
 
   # Verify phase
@@ -25,7 +25,7 @@ Feature: process tests for generazioneRicevute [DB_GR_26] 1325
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC new version
+    
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 

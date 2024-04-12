@@ -96,7 +96,6 @@ Feature: Process checks for activateIOPayment request 2
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC new version
     
     @runnable
     Scenario: Check PPT_ERRORE_EMESSO_DA_PAA error [PRO_AIPR_01]

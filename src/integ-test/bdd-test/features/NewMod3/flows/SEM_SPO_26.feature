@@ -2,7 +2,7 @@ Feature: semantic checks for sendPaymentOutcomeReq - STATO PAID - PPT_PAGAMENTO_
 
   Background:
     Given systems up
-    And EC new version
+    
 
   # ActivatePaymentNoticeReq phase [SEM_SPO_13]
   Scenario: Execute activatePaymentNotice request

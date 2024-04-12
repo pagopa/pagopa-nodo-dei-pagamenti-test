@@ -118,7 +118,7 @@ Feature:  process checks for verifyPaymentNotice 1358
                </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC new version
+        
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
         And check paymentDescription is paVerifyPaymentNotice of verifyPaymentNotice response

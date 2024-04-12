@@ -25,7 +25,7 @@ Feature: Semantic checks for paGetPaymentRes - OK 1383
           </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC new version
+    
 
   @runnable
   Scenario Outline: Check outcome OK on amount or fiscalCodePA of paGetPaymentRes different from paGetPaymentReq

@@ -25,7 +25,7 @@ Feature: process check for activatePaymentNotice - KO 1077
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC new version
+    
 
   # KO from PA [PRO_APNR_06]
   @runnable

@@ -51,7 +51,7 @@ Feature: syntax checks for pspNotifyPaymentReq - CreditCard [T_01] 125
             </soapenv:Body>
         </soapenv:Envelope>
       """
-    And EC new version
+    
 
   Scenario: Execute activateIOPaymentReq request
     When IO sends SOAP activateIOPayment to nodo-dei-pagamenti

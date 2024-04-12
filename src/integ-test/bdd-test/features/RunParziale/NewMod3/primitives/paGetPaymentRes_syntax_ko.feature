@@ -24,7 +24,7 @@ Feature: Syntax checks for paGetPaymentRes - KO 1537
             </soapenv:Body>
          </soapenv:Envelope>
          """
-      And EC new version
+      
 
    @ALL
    # element value check

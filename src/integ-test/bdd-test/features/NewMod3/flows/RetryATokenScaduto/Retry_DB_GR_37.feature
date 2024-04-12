@@ -4,7 +4,7 @@ Feature: process tests for Retry_DB_GR_37 1150
     Given systems up
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with N, with where condition BROADCAST and where value ('Y') under macro update_query on db nodo_cfg
     And update through the query param_update_in of the table PA_STAZIONE_PA the parameter BROADCAST with Y, with where condition OBJ_ID and where value ('13') under macro update_query on db nodo_cfg
-    And EC new version
+    
 
   Scenario: job refresh pa (1)
     Given refresh job ALL triggered after 10 seconds

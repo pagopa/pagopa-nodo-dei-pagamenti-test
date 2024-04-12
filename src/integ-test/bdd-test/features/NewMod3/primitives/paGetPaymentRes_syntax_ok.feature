@@ -24,7 +24,7 @@ Feature: Syntax checks for paGetPaymentRes - OK 1385
 				</soapenv:Body>
 			</soapenv:Envelope>
 			"""
-		And EC new version
+		
 
 	@runnable
 	Scenario Outline: Check paGetPayment response with missing optional fields

@@ -14,6 +14,12 @@ import xmltodict
 
 from urllib.parse import urlparse
 
+
+try:
+    import cx_Oracle
+except ModuleNotFoundError:
+    print(">>>>>>>>>>>>>>>>>No import CX_ORACLE for Postgres pipeline")
+
 # Decommentare per test in pipeline
 #from requests.packages.urllib3.util.retry import Retry 
 
@@ -386,11 +392,12 @@ def replace_local_variables(body, context):
             tag = field.replace('$', '').split('.')[1]
             if isinstance(saved_elem, str):
                 document = parseString(saved_elem)
+            elif isinstance(saved_elem, cx_Oracle.LOB):
+                document = parseString(saved_elem.read())
             else:
                 document = parseString(saved_elem.content)
                 print(tag)
-            value = document.getElementsByTagNameNS(
-                '*', tag)[0].firstChild.data
+            value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
         body = body.replace(field, value)
     return body
 

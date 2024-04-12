@@ -103,7 +103,7 @@ Feature: Semantic checks for activateIOPayment - KO 116
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC new version
+    
     And <tag> with <tag_value> in activateIOPayment
     And <elem> with <elem_value> in paGetPayment
     And EC replies to nodo-dei-pagamenti with the paGetPayment

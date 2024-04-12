@@ -2,7 +2,7 @@ Feature: process tests for Retry_DB_GR_31 1144
 
   Background:
     Given systems up
-    And EC new version
+    
 
   Scenario: initial verifyPaymentNotice
     Given initial XML verifyPaymentNotice

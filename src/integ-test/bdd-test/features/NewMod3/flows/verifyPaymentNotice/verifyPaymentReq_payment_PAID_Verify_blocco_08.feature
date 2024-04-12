@@ -2,7 +2,7 @@ Feature:  block checks for verifyPaymentReq - position status in PAID [Verify_bl
 
   Background:
     Given systems up
-    And EC new version
+    
 
   # Verify Phase 1
   Scenario: Execute verifyPaymentNotice request

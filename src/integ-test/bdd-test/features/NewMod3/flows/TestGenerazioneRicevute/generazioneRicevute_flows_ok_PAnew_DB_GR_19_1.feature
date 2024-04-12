@@ -2,7 +2,7 @@ Feature: process tests for generazioneRicevute [DB_GR_19.1] 1323
 
   Background:
     Given systems up
-    And EC new version
+    
 
 
   # Verify phase
@@ -26,7 +26,7 @@ Feature: process tests for generazioneRicevute [DB_GR_19.1] 1323
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC new version
+    
     # set broadcast=true
     And execution query get_broadcast to get value on the table PA_STAZIONE_PA, with the columns psp.OBJ_ID under macro costanti with db name nodo_cfg
     And through the query get_broadcast retrieve param objId at position 0 and save it under the key objId
