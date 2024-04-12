@@ -135,17 +135,13 @@ Feature: Semantic checks for verifyPaymentReq - KO 1400
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_DISABILITATA of verifyPaymentNotice response
 
-  @runnable @PG34 
+  @runnable @PG34 @prova1
   # station value check: combination fiscalCode-noticeNumber identifies a station corresponding to an ID_STAZIONE value with field IP in NODO4_CFG.STAZIONI table of nodo-dei-pagamenti database not reachable (e.g. IP = 1.2.3.4) [SEM_VPNR_14]
   Scenario: Check PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE error on unreachable station
-    #Given fiscalCode with 77777777777 in verifyPaymentNotice
-    Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter IP = 'CIAO', with where condition OBJ_ID = '16631' under macro update_query on db nodo_cfg
-    When refresh job ALL triggered after 10 seconds
-    And psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
+    Given noticeNumber with 346456789012345478 in verifyPaymentNotice
+    When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of verifyPaymentNotice response
     And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of verifyPaymentNotice response
-    And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter IP = 'mock-ec-primary-sit.tst-npc.sia.eu', with where condition OBJ_ID = '16631' under macro update_query on db nodo_cfg
-    And refresh job ALL triggered after 10 seconds
 
   @runnable @PG34 
   # pa broker value check: combination fiscalCode-noticeNumber identifies a pa broker corresponding to an ID_INTERMEDIARIO_PA value with field ENABLED = N in NODO4_CFG.INTERMEDIARI_PA table of nodo-dei-pagamenti database [SEM_VPNR_15]
