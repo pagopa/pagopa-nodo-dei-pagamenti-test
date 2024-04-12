@@ -2,7 +2,7 @@ Feature: flow checks for verificaBollettino - EC old [TF_POSTE_07] 1352
 
   Background:
     Given systems up
-    And EC old version
+    
 
 
   # verificaBollettinoReq phase

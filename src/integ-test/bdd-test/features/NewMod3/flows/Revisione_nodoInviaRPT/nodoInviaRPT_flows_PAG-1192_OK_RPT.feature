@@ -2,7 +2,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_OK_RPT] 1236
 
     Background:
         Given systems up
-        And EC old version
+        
 
     Scenario: Execute activatePaymentNotice request
         Given initial XML activatePaymentNotice

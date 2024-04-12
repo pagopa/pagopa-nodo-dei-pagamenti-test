@@ -2,7 +2,7 @@ Feature: PRO_ANNULLO_07_PPALOLD 27
 
     Background:
         Given systems up
-        And EC old version
+        
 
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given nodo-dei-pagamenti has config parameter scheduler.cancelIOPaymentActorMinutesToBack set to 1

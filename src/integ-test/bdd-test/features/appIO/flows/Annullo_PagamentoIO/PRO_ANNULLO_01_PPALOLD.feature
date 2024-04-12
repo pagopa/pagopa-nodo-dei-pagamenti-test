@@ -2,7 +2,7 @@ Feature: PRO_ANNULLO_01_PPALOLD 17
 
     Background:
         Given systems up
-        And EC old version
+        
 
 
     Scenario: Execute nodoVerificaRPT (Phase 1)

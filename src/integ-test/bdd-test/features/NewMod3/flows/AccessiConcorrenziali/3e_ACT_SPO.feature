@@ -2,7 +2,7 @@ Feature: process tests for accessiConCorrenziali [3e_ACT_SPO] 974
 
     Background:
         Given systems up
-        And EC old version
+        
 
     # 3e_ACT_SPO
     Scenario: Execute activatePaymentNotice request

@@ -2,7 +2,7 @@ Feature: Check semantic payment status 1289
 
     Background:
         Given systems up
-        And EC old version
+        
 
     Scenario: Execute verifyPaymentNotice
         Given initial XML verifyPaymentNotice

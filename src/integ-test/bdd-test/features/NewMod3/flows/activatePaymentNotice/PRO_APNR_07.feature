@@ -25,7 +25,7 @@ Feature: process check for activatePaymentNotice - KO 1086
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC old version
+    
   
   @runnable
   # Timeout from PA [PRO_APNR_07]

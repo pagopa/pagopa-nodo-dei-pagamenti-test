@@ -2,7 +2,7 @@ Feature: process tests for REGR_retryTokenScaduto_OK 998
 
   Background:
     Given systems up
-    And EC old version
+    
 
   Scenario: Execute verifyPaymentNotice request
     Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#

@@ -2,7 +2,7 @@ Feature: process tests for nodoInviaRPT [PAG-1192_RPT_timeout_b] 1237
 
     Background:
         Given systems up
-        And EC old version
+        
     #START SETUP
     Scenario: Execute activatePaymentNotice request
         Given initial XML activatePaymentNotice

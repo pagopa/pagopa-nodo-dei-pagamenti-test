@@ -20,7 +20,7 @@ Feature: process tests for retryAtokenScaduto 1197
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC old version
+    
 
   # Verify phase
   Scenario: Execute verifyPaymentNotice request

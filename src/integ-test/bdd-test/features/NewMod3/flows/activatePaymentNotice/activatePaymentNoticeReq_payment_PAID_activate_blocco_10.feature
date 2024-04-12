@@ -2,7 +2,7 @@ Feature: process tests for retry on a PAID transaction with different token [Act
 
     Background:
         Given systems up
-        And EC old version
+        
         And initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"

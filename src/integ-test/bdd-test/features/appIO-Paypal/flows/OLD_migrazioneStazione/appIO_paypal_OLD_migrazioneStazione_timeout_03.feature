@@ -2,7 +2,7 @@ Feature: process test for appIO_paypal with station migration from V1 to V2 befo
 
     Background:
         Given systems up
-        And EC old version
+        
 
     # nodoVerificaRPT phase
     Scenario: Execute nodoVerificaRPT request

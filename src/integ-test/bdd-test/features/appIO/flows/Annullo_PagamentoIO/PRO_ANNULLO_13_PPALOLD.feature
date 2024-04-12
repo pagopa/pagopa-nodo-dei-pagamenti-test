@@ -2,7 +2,7 @@ Feature: PRO_ANNULLO_13_PPALOLD 41
 
     Background:
         Given systems up
-        And EC old version
+        
 
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 10000

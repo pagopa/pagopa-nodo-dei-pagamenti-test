@@ -24,7 +24,7 @@ Feature:  block checks for verifyPaymentReq - position status in INSERTED (mod3C
          </soapenv:Body>
          </soapenv:Envelope>
          """
-      And EC old version
+      
       When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
       Then check outcome is OK of verifyPaymentNotice response
 

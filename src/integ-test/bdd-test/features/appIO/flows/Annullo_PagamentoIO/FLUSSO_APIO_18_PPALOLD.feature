@@ -2,7 +2,7 @@ Feature: FLUSSO_APIO_18_PPALOLD 7
 
     Background:
         Given systems up
-        And EC old version
+        
 
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given RPT generation

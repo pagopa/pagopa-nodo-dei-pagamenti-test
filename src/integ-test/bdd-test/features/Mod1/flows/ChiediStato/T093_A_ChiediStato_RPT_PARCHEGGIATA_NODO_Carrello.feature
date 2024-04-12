@@ -267,11 +267,10 @@ Feature: process tests for ChiediStato_RPT_PARCHEGGIATA_NODO_Carrello 296
         #Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
         Then check url contains https://acardste.vaservices.eu:1443/wallet of nodoChiediStatoRPT response
     
-    @runnable
+    @runnable @prova1
     Scenario: Execute second nodoInviaCarrelloRPT
         Given the Execute second nodoChiediStatoRPT request scenario executed successfully
         And initial XML nodoInviaCarrelloRPT
-
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
             <soapenv:Header>

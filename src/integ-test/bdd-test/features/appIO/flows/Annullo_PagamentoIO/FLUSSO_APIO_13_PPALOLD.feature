@@ -2,7 +2,7 @@ Feature: FLUSSO_APIO_13_PPALOLD 3
 
     Background:
         Given systems up
-        And EC old version
+        
 
     Scenario: Execute nodoVerificaRPT (Phase 1)
         Given RPT generation

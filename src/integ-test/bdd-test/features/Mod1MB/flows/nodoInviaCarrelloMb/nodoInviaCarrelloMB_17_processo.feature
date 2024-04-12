@@ -3,7 +3,7 @@ Feature: process tests for nodoInviaCarrelloMB[nodoInviaCarrelloMB_17] 889
 
     Background:
         Given systems up
-        And EC old version
+        
     Scenario: RPT generation
         Given generate 1 notice number and iuv with aux digit 3, segregation code #cod_segr_old# and application code NA
 

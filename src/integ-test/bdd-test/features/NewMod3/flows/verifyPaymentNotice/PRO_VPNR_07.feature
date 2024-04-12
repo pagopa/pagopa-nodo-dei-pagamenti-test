@@ -20,7 +20,7 @@ Feature: process checks for VerifyPaymentNoticeReq - EC old 1356
          </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC old version
+    
    # verifyPaymentNotice KO - EC old [PRO_VPNR_07]
 
 @runnable

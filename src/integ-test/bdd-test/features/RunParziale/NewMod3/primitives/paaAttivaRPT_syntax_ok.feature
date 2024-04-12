@@ -25,7 +25,7 @@ Feature: check syntax OK for paaAttivaRPT 1531
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
+        
 
 @ALL
     Scenario Outline:

@@ -63,7 +63,7 @@ Feature: flow checks for verificaBollettino 1355
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
+        
         When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
 
@@ -113,7 +113,7 @@ Feature: flow checks for verificaBollettino 1355
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
+        
         When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is OK of verificaBollettino response
         And wait 5 seconds for expiration
@@ -177,7 +177,7 @@ Feature: flow checks for verificaBollettino 1355
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
+        
         When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is KO of verificaBollettino response
         And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of verificaBollettino response
@@ -204,7 +204,7 @@ Feature: flow checks for verificaBollettino 1355
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
+        
         When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is KO of verificaBollettino response
         And check faultCode is PPT_IBAN_ACCREDITO of verificaBollettino response
@@ -250,7 +250,7 @@ Feature: flow checks for verificaBollettino 1355
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
+        
         When PSP sends SOAP verificaBollettino to nodo-dei-pagamenti
         Then check outcome is KO of verificaBollettino response
         And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of verificaBollettino response

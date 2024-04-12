@@ -2,7 +2,7 @@ Feature: process test for NM3 with station migration from V1 to V2 1097
 
     Background:
         Given systems up
-        And EC old version
+        
 
 
     # Verify phase

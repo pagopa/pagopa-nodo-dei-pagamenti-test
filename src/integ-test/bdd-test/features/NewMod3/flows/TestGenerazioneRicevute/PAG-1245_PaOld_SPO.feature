@@ -2,7 +2,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO] 1335
 
     Background:
         Given systems up
-        And EC old version
+        
 
 
     # Verify phase
@@ -104,7 +104,7 @@ Feature: process tests for generazioneRicevute [PAG-1245_PaOld_SPO] 1335
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
+        
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 

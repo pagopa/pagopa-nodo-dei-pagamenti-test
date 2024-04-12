@@ -20,7 +20,7 @@ Feature: check syntax KO for paaVerificaRPTRes 1380
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
+        
 
     @runnable
     Scenario Outline: Check PPT_STAZIONE_INT_PA_ERRORE_RESPONSE error on invalid body element value

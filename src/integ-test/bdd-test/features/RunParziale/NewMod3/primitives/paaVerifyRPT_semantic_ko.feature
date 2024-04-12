@@ -2,7 +2,7 @@ Feature: check semantic paaVerifyRPT - KO 1532
 
     Background:
         Given systems up
-        And EC old version
+        
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">

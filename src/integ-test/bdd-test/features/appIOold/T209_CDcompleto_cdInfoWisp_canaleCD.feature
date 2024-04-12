@@ -2,7 +2,7 @@ Feature: process tests for T209_CDcompleto_cdInfoWisp_canaleCD 157
 
 Background:
     Given systems up
-    And EC old version
+    
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
     And RPT1 generation
         """

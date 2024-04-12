@@ -20,7 +20,7 @@ Feature: check syntax OK for paaVerificaRPTRes 1381
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
+        
 
     @runnable
     Scenario Outline:

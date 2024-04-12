@@ -2,7 +2,7 @@ Feature: process tests for accessiConCorrenziali [1c - RPT+SPO] 978
 
     Background:
         Given systems up
-        And EC old version
+        
 
     #Test Suit 1a
     Scenario: Execute activatePaymentNotice request

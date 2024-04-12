@@ -2,7 +2,7 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_12] 1245
 
     Background:
         Given systems up
-        And EC old version
+        
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">

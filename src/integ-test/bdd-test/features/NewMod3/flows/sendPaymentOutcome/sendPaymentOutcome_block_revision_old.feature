@@ -96,7 +96,7 @@ Feature: Block revision for sendPaymentOutcome - PA old 1251
 @runnable
     Scenario: [SPO_REV_01]
         Given the Initialize sendPaymentOutcome (Phase 3) scenario executed successfully
-        And EC old version
+        
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
         And wait 10 seconds for expiration

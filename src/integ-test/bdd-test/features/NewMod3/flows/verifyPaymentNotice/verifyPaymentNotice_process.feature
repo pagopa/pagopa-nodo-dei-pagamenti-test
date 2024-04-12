@@ -66,7 +66,7 @@ Feature:  process checks for verifyPaymentNotice 1358
                </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
+        
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
         And check paymentDescription is paaVerificaRPT of verifyPaymentNotice response
@@ -153,7 +153,7 @@ Feature:  process checks for verifyPaymentNotice 1358
                </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
+        
         When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
         And check causaleVersamento is paaVerificaRPT of nodoVerificaRPT response
@@ -199,7 +199,7 @@ Feature:  process checks for verifyPaymentNotice 1358
                </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
+        
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of verifyPaymentNotice response
         And check faultCode is PPT_ERRORE_EMESSO_DA_PAA of verifyPaymentNotice response

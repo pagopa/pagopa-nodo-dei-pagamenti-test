@@ -2,7 +2,7 @@ Feature: process tests for retryAtokenScaduto 1165
 
   Background:
     Given systems up
-    And EC old version
+    
 
   Scenario: Execute activatePaymentNotice request
     Given initial XML activatePaymentNotice

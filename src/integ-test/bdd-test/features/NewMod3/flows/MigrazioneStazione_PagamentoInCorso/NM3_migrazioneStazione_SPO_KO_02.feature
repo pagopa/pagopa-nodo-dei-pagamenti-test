@@ -20,7 +20,7 @@ Feature: process tests for NM3 with station migration from V1 to V2 1099
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
+        
 
     # Verify phase
     Scenario: Execute verifyPaymentNotice request

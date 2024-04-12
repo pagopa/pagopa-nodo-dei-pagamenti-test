@@ -2,7 +2,7 @@ Feature: process tests for accessiConCorrenziali [1d - RPT+SPO] 979
 
     Background:
         Given systems up
-        And EC old version
+        
 
     #1a - RPT + SPO_a
     Scenario: Execute activatePaymentNotice request

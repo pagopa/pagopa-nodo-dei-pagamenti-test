@@ -2,7 +2,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC 122
 
     Background:
         Given systems up
-        And EC old version
+        
         And nodo-dei-pagamenti has config parameter scheduler.jobName_mod3CancelV1.enabled set to false
 
     ################################################## PARTE 1 ########################################################################################################

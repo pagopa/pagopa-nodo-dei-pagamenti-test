@@ -26,7 +26,7 @@ Feature: process check for activatePaymentNotice - KO 1376
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    And EC old version
+    
 
 @runnable
   Scenario Outline: semantic check on paaAttivaRPTRes

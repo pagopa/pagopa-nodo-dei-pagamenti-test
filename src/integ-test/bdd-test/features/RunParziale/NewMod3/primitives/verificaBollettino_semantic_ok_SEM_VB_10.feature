@@ -2,7 +2,7 @@ Feature: Semantic checks for verificaBollettino - OK 1549
 
     Background:
         Given systems up
-        And EC old version
+        
     @ALL
     Scenario: Execute verificaBollttino [SEM_VB_10]
         Given initial XML verificaBollettino

@@ -2,7 +2,7 @@ Feature: process tests for retry on a NOTICE_STORED transaction with different t
 
     Background:
         Given systems up
-        And EC old version
+        
         And initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"

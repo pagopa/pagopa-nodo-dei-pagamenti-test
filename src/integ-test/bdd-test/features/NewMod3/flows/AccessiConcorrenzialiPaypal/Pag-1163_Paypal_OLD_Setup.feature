@@ -30,7 +30,7 @@ Feature: Pag-1163_Paypal_OLD_Setup 1017
                </soapenv:Body>
             </soapenv:Envelope>
             """
-         And EC old version
+         
          When PSP sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
          Then check esito is OK of nodoVerificaRPT response
 

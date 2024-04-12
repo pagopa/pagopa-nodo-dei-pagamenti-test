@@ -25,7 +25,7 @@ Feature: check syntax KO for paaAttivaRPT 1530
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC old version
+        
 
 @ALL
     Scenario Outline:
