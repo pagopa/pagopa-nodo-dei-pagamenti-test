@@ -553,7 +553,7 @@ def single_thread(context, soap_primitive, tipo):
             print(f"url: {url_nodo}")
             if dbRun == "Postgres":
                 response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
-            elif dbRun == 'Oarcle':
+            elif dbRun == 'Oracle':
                 response = requests.post(url_nodo, body, headers=headers, verify=False)            
             
         setattr(context, soap_primitive.split("_")[1] + "Response", response)
