@@ -15,6 +15,9 @@ import xmltodict
 from urllib.parse import urlparse
 
 
+import string
+
+
 try:
     import cx_Oracle
 except ModuleNotFoundError:
@@ -780,3 +783,14 @@ def ricerca_chiavi(obj, ricerca, chiavi_trovate=None):
             ricerca_chiavi(elemento, ricerca, chiavi_trovate)
 
     return list(chiavi_trovate)
+
+
+
+
+###METODO PER VERIFICARE CHE LA STRINGA HA CARATTERI SPECIALI
+def contiene_caratteri_speciali(stringa):
+    caratteri_speciali = string.punctuation + "'"
+    for carattere in stringa:
+        if carattere in caratteri_speciali:
+            return True
+    return False

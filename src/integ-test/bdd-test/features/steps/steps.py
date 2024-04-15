@@ -2069,7 +2069,10 @@ def step_impl(context):
 
         selected_query = None
         if dbRun == "Postgres":
-            selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f'$${value}$$').replace('key', key)
+            if utils.contiene_caratteri_speciali(value):
+                selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f'$${value}$$').replace('key', key)
+            else:
+                selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', key)
         if dbRun == "Oracle":
             selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', key)
         
@@ -2309,7 +2312,10 @@ def step_impl(context, query_name, table_name, param, value, where_condition, va
 
     selected_query = ''
     if dbRun == "Postgres":
-        selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$').replace('where_condition', where_condition).replace('valore', valore)
+        if utils.contiene_caratteri_speciali(value):
+            selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$').replace('where_condition', where_condition).replace('valore', valore)
+        else:
+            selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value).replace('where_condition', where_condition).replace('valore', valore)
     elif dbRun == "Oracle":
         selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value).replace('where_condition', where_condition).replace('valore', valore)
     
@@ -2592,7 +2598,10 @@ def step_impl(context, query_name, table_name, param, value, macro, db_name):
         if value == 'null':
             selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
         else:
-            selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$')
+            if utils.contiene_caratteri_speciali(value):
+                selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$')
+            else:
+                selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
     elif dbRun == "Oracle":
         selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
     
