@@ -787,7 +787,7 @@ def ricerca_chiavi(obj, ricerca, chiavi_trovate=None):
 
 
 
-###METODO PER VERIFICARE CHE LA STRINGA HA CARATTERI SPECIALI
+###METODO PER VERIFICARE CHE LA STRINGA ABBIA CARATTERI SPECIALI
 def contiene_caratteri_speciali(stringa):
     caratteri_speciali = string.punctuation + "'"
     for carattere in stringa:

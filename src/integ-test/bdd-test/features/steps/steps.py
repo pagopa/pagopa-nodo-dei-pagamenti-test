@@ -2064,17 +2064,9 @@ def step_impl(context):
     config_dict = getattr(context, 'configurations')
     update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
 
-
     for key, value in config_dict.items():
 
-        selected_query = None
-        if dbRun == "Postgres":
-            if utils.contiene_caratteri_speciali(value):
-                selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f'$${value}$$').replace('key', key)
-            else:
-                selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', key)
-        if dbRun == "Oracle":
-            selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', key)
+        selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', key)
         
         adopted_db.executeQuery(conn, selected_query, as_dict=True)
 
@@ -2312,10 +2304,10 @@ def step_impl(context, query_name, table_name, param, value, where_condition, va
 
     selected_query = ''
     if dbRun == "Postgres":
-        if utils.contiene_caratteri_speciali(value):
-            selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$').replace('where_condition', where_condition).replace('valore', valore)
-        else:
+        if db_name == "nodo_cfg":
             selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value).replace('where_condition', where_condition).replace('valore', valore)
+        else:
+            selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$').replace('where_condition', where_condition).replace('valore', valore)
     elif dbRun == "Oracle":
         selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value).replace('where_condition', where_condition).replace('valore', valore)
     
@@ -2598,10 +2590,10 @@ def step_impl(context, query_name, table_name, param, value, macro, db_name):
         if value == 'null':
             selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
         else:
-            if utils.contiene_caratteri_speciali(value):
-                selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$')
-            else:
+            if db_name == "nodo_cfg":
                 selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
+            else:
+                selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$')
     elif dbRun == "Oracle":
         selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
     
