@@ -2,6 +2,7 @@ Feature: T106_ChiediInformativaPA_soloObbligatori 484
 
     Background:
         Given systems up
+        
     @runnable
     Scenario: Send nodoChiediInformativaPA
         Given initial XML nodoChiediInformativaPA
@@ -15,6 +16,27 @@ Feature: T106_ChiediInformativaPA_soloObbligatori 484
             <identificativoCanale>#canale#</identificativoCanale>
             <password>pwdpwdpwd</password>
             <identificativoDominio>#creditor_institution_code#</identificativoDominio>
+            </ws:nodoChiediInformativaPA>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When PSP sends SOAP nodoChiediInformativaPA to nodo-dei-pagamenti
+        Then check xmlInformativa field exists in nodoChiediInformativaPA response
+        And check ppt:nodoChiediInformativaPARisposta field exists in nodoChiediInformativaPA response
+        And check fault field not exists in nodoChiediInformativaPA response
+
+
+    @runnable
+    Scenario: Send nodoChiediInformativaPA senza identificativoDominio 
+        Given initial XML nodoChiediInformativaPA
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:nodoChiediInformativaPA>
+            <identificativoIntermediarioPSP>#psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale#</identificativoCanale>
+            <password>pwdpwdpwd</password>
             </ws:nodoChiediInformativaPA>
             </soapenv:Body>
             </soapenv:Envelope>
