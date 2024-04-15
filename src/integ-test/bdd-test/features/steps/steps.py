@@ -2069,7 +2069,7 @@ def step_impl(context):
 
         selected_query = None
         if dbRun == "Postgres":
-            selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', f'$${value}$$').replace('key', key)
+            selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f'$${value}$$').replace('key', key)
         if dbRun == "Oracle":
             selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', key)
         
