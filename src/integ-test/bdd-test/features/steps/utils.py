@@ -403,8 +403,8 @@ def replace_local_variables(body, context):
                     print(tag)
                 value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
             body = body.replace(field, value)
-    except ModuleNotFoundError:
-        print(">>>>>Replace local variables No import CX_ORACLE for Postgres pipeline")
+    except NameError as e:
+        print(">>>>>Replace local variables No import CX_ORACLE for Postgres pipeline -> ", e)
     return body
 
 
