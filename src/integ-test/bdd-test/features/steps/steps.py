@@ -107,10 +107,6 @@ def step_impl(context):
             proxies = getattr(context, "proxies")
             ####RUN DA LOCALE
             if user_profile != None:
-                # my_credentials = getattr(context, "my_credentials")
-                # username = my_credentials.get("username")
-                # password = my_credentials.get("password")
-
                 if url == 'https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1/info':
                     print(f"############URL:{url}")
                     resp = requests.get(url, headers=headers, verify=False)
