@@ -3245,6 +3245,7 @@ def step_impl(context):
 
 @then("RTP XML check")
 def step_impl(context):
+    dbRun = getattr(context, "dbRun")
     XML = "SELECT XML FROM POSITION_RECEIPT_XML WHERE PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken' and PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and NOTICE_ID='$activatePaymentNotice.noticeNumber'"
     query = "SELECT BROKER_PA_ID, STATION_ID, PAYMENT_TOKEN, NOTICE_ID, PA_FISCAL_CODE, OUTCOME, CREDITOR_REFERENCE_ID, AMOUNT, PSP_ID, CHANNEL_ID, PAYMENT_CHANNEL, PAYMENT_METHOD, FEE, INSERTED_TIMESTAMP, APPLICATION_DATE, TRANSFER_DATE  FROM POSITION_PAYMENT WHERE PAYMENT_TOKEN ='$activatePaymentNoticeResponse.paymentToken' and PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and NOTICE_ID='$activatePaymentNotice.noticeNumber'"
     query1 = "SELECT DESCRIPTION, COMPANY_NAME, OFFICE_NAME  FROM POSITION_SERVICE WHERE PA_FISCAL_CODE='$activatePaymentNotice.fiscalCode' and NOTICE_ID='$activatePaymentNotice.noticeNumber'"
@@ -3268,8 +3269,16 @@ def step_impl(context):
     rows3 = adopted_db.executeQuery(conn, query3)
     query4 = utils.replace_local_variables(query4, context)
     rows4 = adopted_db.executeQuery(conn, query4)
-
-    xml_rpt = parseString(xml_rows[0][0])
+    
+    xml_rpt = ''
+    if dbRun == "Postgres":
+        xml_rpt = parseString(xml_rows[0][0])
+    elif dbRun == "Oracle":
+        if isinstance(xml_rows[0][0], cx_Oracle.LOB):
+        # Se xml_content_lob è un oggetto cx_Oracle.LOB, puoi leggere i dati e convertirli in bytes
+            xml_rpt = parseString(xml_rows[0][0].read())
+        else:
+            xml_rpt = parseString(xml_rows[0][0])
 
     brokerPaId = rows[0][0]
     stationId = rows[0][1]
@@ -3710,18 +3719,19 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
     num_state = len(list_value)
     db_config = context.config.userdata.get("db_configuration")
     db_selected = db_config.get(db_name)
-    conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'), db_selected.get('port'))
     
     selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
+    
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
     print(selected_query)
     ###Polling se il numero di record della query sono maggiori uguali al numero atteso 
     ###(metto il maggiore in modo che se ci sono più stati dopo li visualizzo tutti)
     i = 0
     while i <= 10:
-        exec_query = db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(conn, selected_query)
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
         #nuova_modifica = exec_query [0][0]
