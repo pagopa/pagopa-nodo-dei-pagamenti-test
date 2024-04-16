@@ -1174,6 +1174,7 @@ def step_impl(context, sender, soap_primitive, receiver):
 @step('send, by sender {sender}, soap action {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
 
+    dbRun = getattr(context, "dbRun")
     url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
     header_host = utils.estrapola_header_host(url_nodo)
     dbRun = getattr(context, "dbRun")
@@ -1188,10 +1189,16 @@ def step_impl(context, sender, soap_primitive, receiver):
     print("url_nodo: ", url_nodo)
     print("nodo soap_request sent >>>", getattr(context, soap_primitive))
     print("headers: ", headers)
-    soap_response = requests.post(url_nodo, getattr(
-        context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
-    print(soap_response.content)
+    
+    soap_response = None
+    if dbRun == "Postgres":
+        soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+    elif dbRun == "Oracle":
+        soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
+
+    print(soap_response.content.decode('utf-8'))
     print(soap_response.status_code)
+    print(f'soap response: {soap_response.headers}')
     setattr(context, soap_primitive + RESPONSE, soap_response)
 
 
