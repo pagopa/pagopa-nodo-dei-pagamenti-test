@@ -386,14 +386,21 @@ def replace_local_variables_for_query(body, context):
 
 
 def replace_local_variables(body, context):
+    dbRun = getattr(context, "dbRun")
     pattern = re.compile('\\$\\w+\\.\\w+')
     match = pattern.findall(body)
-    try:
-        for field in match:
-            saved_elem = getattr(context, field.replace('$', '').split('.')[0])
-            value = saved_elem
-            if len(field.replace('$', '').split('.')) > 1:
-                tag = field.replace('$', '').split('.')[1]
+    for field in match:
+        saved_elem = getattr(context, field.replace('$', '').split('.')[0])
+        value = saved_elem
+        if len(field.replace('$', '').split('.')) > 1:
+            tag = field.replace('$', '').split('.')[1]
+            if dbRun == "Postgres":
+                if isinstance(saved_elem, str):
+                    document = parseString(saved_elem)
+                else:
+                    document = parseString(saved_elem.content)
+                    print(tag)
+            elif dbRun == "Oracle":
                 if isinstance(saved_elem, str):
                     document = parseString(saved_elem)  
                 elif isinstance(saved_elem, cx_Oracle.LOB):
@@ -401,10 +408,8 @@ def replace_local_variables(body, context):
                 else:
                     document = parseString(saved_elem.content)
                     print(tag)
-                value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
-            body = body.replace(field, value)
-    except NameError as e:
-        print(">>>>>Replace local variables No import CX_ORACLE for Postgres pipeline -> ", e)
+            value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
+        body = body.replace(field, value)
     return body
 
 
