@@ -2,7 +2,9 @@ Feature: process tests for retryAtokenScaduto 1169
 
   Background:
     Given systems up
-    And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to false
+
+  Scenario: Execute verifyPaymentNotice request
+    Given nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to false
     And initial XML verifyPaymentNotice
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -21,10 +23,6 @@ Feature: process tests for retryAtokenScaduto 1169
       </soapenv:Body>
       </soapenv:Envelope>
       """
-    
-
-  # Verify phase
-  Scenario: Execute verifyPaymentNotice request
     When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of verifyPaymentNotice response
 
@@ -172,14 +170,11 @@ Feature: process tests for retryAtokenScaduto 1169
     When job mod3CancelV1 triggered after 5 seconds
     And wait 15 seconds for expiration
     Then verify the HTTP status code of mod3CancelV1 response is 200
-
-  Scenario: DB check
-    Given the Execute poller Annulli scenario executed successfully
-    Then checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
+    And checks the value RT_GENERATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query stati_rpt on db nodo_online under macro NewMod3
 
   # Payment Outcome Phase outcome OK
   Scenario: Execute sendPaymentOutcome request
-    Given the DB check scenario executed successfully
+    Given the Execute poller Annulli scenario executed successfully
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">

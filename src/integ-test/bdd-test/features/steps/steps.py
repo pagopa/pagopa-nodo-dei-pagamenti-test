@@ -26,6 +26,11 @@ import utils as utils
 from behave import *
 from requests.exceptions import RetryError
 
+try:
+    import cx_Oracle
+except ModuleNotFoundError:
+    print(">>>>>>>>>>>>>>>>>No import CX_ORACLE for Postgres pipeline")
+
 import urllib3
 
 # Constants
@@ -3499,6 +3504,7 @@ def step_impl(context, new_attribute, old_attribute):
 @step('Select and Update RT for Test retry_PAold with causale versamento {causaleVers}')
 def step_impl(context, causaleVers):
 
+    dbRun = getattr(context, "dbRun")
     db_name = "nodo_online"
     db_config = context.config.userdata.get("db_configuration").get(db_name)
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_config)
@@ -3510,8 +3516,17 @@ def step_impl(context, causaleVers):
     xml_content_query = utils.replace_context_variables(xml_content_query, context)
 
     xml_content_row = adopted_db.executeQuery(conn, xml_content_query)
-
-    xml_rt = parseString(xml_content_row[0][0])
+    
+    xml_rt = ''
+    if dbRun == "Postgres":
+        xml_rt = parseString(xml_content_row[0][0])
+    elif dbRun == "Oracle":
+        if isinstance(xml_content_row[0][0], cx_Oracle.LOB):
+        # Se xml_content_lob è un oggetto cx_Oracle.LOB, puoi leggere i dati e convertirli in bytes
+            xml_rt = parseString(xml_content_row[0][0].read())
+        else:
+            xml_rt = parseString(xml_content_row[0][0])
+        
     node = xml_rt.getElementsByTagName('causaleVersamento')[0]
     node.firstChild.replaceWholeText(f'{causaleVers}')
     xml_rt_string = xml_rt.toxml()
