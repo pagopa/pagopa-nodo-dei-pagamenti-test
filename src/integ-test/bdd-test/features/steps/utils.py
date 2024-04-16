@@ -388,20 +388,23 @@ def replace_local_variables_for_query(body, context):
 def replace_local_variables(body, context):
     pattern = re.compile('\\$\\w+\\.\\w+')
     match = pattern.findall(body)
-    for field in match:
-        saved_elem = getattr(context, field.replace('$', '').split('.')[0])
-        value = saved_elem
-        if len(field.replace('$', '').split('.')) > 1:
-            tag = field.replace('$', '').split('.')[1]
-            if isinstance(saved_elem, str):
-                document = parseString(saved_elem)
-            elif isinstance(saved_elem, cx_Oracle.LOB):
-                document = parseString(saved_elem.read())
-            else:
-                document = parseString(saved_elem.content)
-                print(tag)
-            value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
-        body = body.replace(field, value)
+    try:
+        for field in match:
+            saved_elem = getattr(context, field.replace('$', '').split('.')[0])
+            value = saved_elem
+            if len(field.replace('$', '').split('.')) > 1:
+                tag = field.replace('$', '').split('.')[1]
+                if isinstance(saved_elem, str):
+                    document = parseString(saved_elem)  
+                elif isinstance(saved_elem, cx_Oracle.LOB):
+                    document = parseString(saved_elem.read())
+                else:
+                    document = parseString(saved_elem.content)
+                    print(tag)
+                value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
+            body = body.replace(field, value)
+    except ModuleNotFoundError:
+        print(">>>>>Replace local variables No import CX_ORACLE for Postgres pipeline")
     return body
 
 
