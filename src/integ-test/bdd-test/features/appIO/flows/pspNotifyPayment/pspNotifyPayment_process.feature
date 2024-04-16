@@ -85,7 +85,7 @@ Feature: process checks for pspNotifyPayment 114
       <paf:paGetPaymentRes>
       <outcome>OK</outcome>
       <data>
-      <creditorReferenceId>02$iuv</creditorReferenceId>
+      <creditorReferenceId>$iuv</creditorReferenceId>
       <paymentAmount>10.00</paymentAmount>
       <dueDate>2021-12-31</dueDate>
       <!--Optional:-->
