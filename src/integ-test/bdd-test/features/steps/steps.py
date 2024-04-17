@@ -1231,32 +1231,38 @@ def step_impl(context, job_name, seconds):
 # verifica che il valore cercato corrisponda all'intera sottostringa del tag
 @then('check {tag} is {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
-    soap_response = getattr(context, primitive + RESPONSE)
-    value = utils.replace_local_variables(value, context)
-    value = utils.replace_context_variables(value, context)
-    value = utils.replace_global_variables(value, context)
+    try:
+        soap_response = getattr(context, primitive + RESPONSE)
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
+        value = utils.replace_global_variables(value, context)
 
-    if 'xml' in soap_response.headers['content-type']:
-        my_document = parseString(soap_response.content)
-        if len(my_document.getElementsByTagName('faultCode')) > 0:
-            print("fault code: ", my_document.getElementsByTagName(
-                'faultCode')[0].firstChild.data)
-            print("fault string: ", my_document.getElementsByTagName(
-                'faultString')[0].firstChild.data)
-            # if len(my_document.getElementsByTagName('description')[0])>0:
-            #     print("description: ", my_document.getElementsByTagName(
-            #         'description')[0].firstChild.data)
-        data = my_document.getElementsByTagName(tag)[0].firstChild.data
-        print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
-        assert value == data
-    else:
-        node_response = getattr(context, primitive + RESPONSE)
-        json_response = node_response.json()
-        founded_value = jo.get_value_from_key(json_response, tag)
-        print(
-            f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
-        assert str(founded_value) == value
-
+        if 'xml' in soap_response.headers['content-type']:
+            my_document = parseString(soap_response.content)
+            if len(my_document.getElementsByTagName('faultCode')) > 0:
+                print("fault code: ", my_document.getElementsByTagName(
+                    'faultCode')[0].firstChild.data)
+                print("fault string: ", my_document.getElementsByTagName(
+                    'faultString')[0].firstChild.data)
+                # if len(my_document.getElementsByTagName('description')[0])>0:
+                #     print("description: ", my_document.getElementsByTagName(
+                #         'description')[0].firstChild.data)
+            data = my_document.getElementsByTagName(tag)[0].firstChild.data
+            print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
+            assert value == data, f"assert compare {value} and {data} Failed!"
+        else:
+            node_response = getattr(context, primitive + RESPONSE)
+            json_response = node_response.json()
+            founded_value = jo.get_value_from_key(json_response, tag)
+            print(
+                f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
+            assert str(founded_value) == value
+    except Exception as e:
+        print(f"the exception is -----------> {e}")
+        # Segnala al framework di Cucumber che il test è fallito
+        context.failed = True
+        # Rilancia l'eccezione per interrompere l'esecuzione del test
+        raise e  
 
 # a partire da un path tag passato in input, la funzione verifica che il valore cercato corrisponda all'intera sottostringa del tag 
 @then('check from {path_tag} the {value} of {primitive} response')
@@ -2313,7 +2319,7 @@ def step_impl(context, query_name, table_name, param, value, where_condition, va
     selected_query = ''
     if dbRun == "Postgres":
         if db_name == "nodo_cfg":
-            selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value).replace('where_condition', where_condition).replace('valore', valore)
+            selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f"'{value}'").replace('where_condition', where_condition).replace('valore', valore)
         else:
             selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$').replace('where_condition', where_condition).replace('valore', valore)
     elif dbRun == "Oracle":
@@ -2596,10 +2602,10 @@ def step_impl(context, query_name, table_name, param, value, macro, db_name):
     selected_query = ''
     if dbRun == "Postgres":
         if value == 'null':
-            selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
+            selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f"'{value}'")
         else:
             if db_name == "nodo_cfg":
-                selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
+                selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f"'{value}'")
             else:
                 selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f'$${value}$$')
     elif dbRun == "Oracle":
