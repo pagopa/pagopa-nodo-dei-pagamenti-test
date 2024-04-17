@@ -121,7 +121,7 @@ Feature: Block revision for sendPaymentOutcomeV2
         And saving v2/closepayment request in v2/closepayment
 
 
-    Scenario: sendPaymentOutcomeV2
+    Scenario: sendPaymentOutcomeV2 request
         Given the closePaymentV2 request scenario executed successfully
         And initial XML sendPaymentOutcomeV2
             """
@@ -178,7 +178,7 @@ Feature: Block revision for sendPaymentOutcomeV2
     @zendesk
     Scenario: parallel calls and test scenario
         Given the sendPaymentOutcomeV2 request scenario executed successfully
-        And calling primitive v2/closepayment_v2/closepayment POST and sendPaymentOutcome_sendPaymentOutcome POST with 50 ms delay
+        And calling primitive v2/closepayment_v2/closepayment POST and sendPaymentOutcomeV2_sendPaymentOutcomeV2 POST with 50 ms delay
         Then check outcome is KO of sendPaymentOutcomeV2 response
         And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
         And check description is Payment sconosciuto of sendPaymentOutcomeV2 response
