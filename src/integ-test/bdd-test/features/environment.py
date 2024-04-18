@@ -147,7 +147,7 @@ def after_all(context):
     db_name = "nodo_cfg"
     db_selected = db_config.get(db_name)
 
-    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+    adopted_db, conn = utils.get_db_connection_for_env(db_name, db, db_selected)
 
     config_dict = getattr(context, 'configurations')
     update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
