@@ -1258,11 +1258,15 @@ def step_impl(context, tag, value, primitive):
                 f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
             assert str(founded_value) == value
     except Exception as e:
-        print(f"the exception is -----------> {e}")
-        # Segnala al framework di Cucumber che il test è fallito
-        context.failed = True
-        # Rilancia l'eccezione per interrompere l'esecuzione del test
-        raise e  
+        if isinstance(e, AssertionError):
+            print("Assertion Error:", e)
+        else:    
+            print(f"the exception is -----------> {e}")
+            # Segnala al framework di Cucumber che il test è fallito
+            context.failed = True
+            # Rilancia l'eccezione per interrompere l'esecuzione del test
+            raise e
+
 
 # a partire da un path tag passato in input, la funzione verifica che il valore cercato corrisponda all'intera sottostringa del tag 
 @then('check from {path_tag} the {value} of {primitive} response')
