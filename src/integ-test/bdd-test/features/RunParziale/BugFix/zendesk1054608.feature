@@ -194,7 +194,7 @@ Feature: Block revision for sendPaymentOutcome
             """
         And saving v2/closepayment request in v2/closepayment
 
-    @zendesk
+    @test
     Scenario: parallel calls and test scenario
         Given the closePaymentV2 request scenario executed successfully
         And calling primitive nodoInviaRPT_nodoInviaRPT POST and v2/closepayment_v2/closepayment POST in parallel
