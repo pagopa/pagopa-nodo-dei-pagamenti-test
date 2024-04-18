@@ -201,7 +201,7 @@ Feature: flow tests for closePaymentV2
         Given the closePaymentV2 request scenario executed successfully
         And calling primitive jobs/trigger/mod3CancelV1 GET and v2/closepayment_v2/closepayment POST in parallel
 
-    @zendesk
+    @test
     Scenario: sendPaymentOutcome request
         Given the primitive calling scenario executed successfully
         And initial XML sendPaymentOutcome

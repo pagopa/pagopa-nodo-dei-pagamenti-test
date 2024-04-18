@@ -173,7 +173,7 @@ Feature: Block revision for sendPaymentOutcome
             """
         Then saving sendPaymentOutcome request in sendPaymentOutcome
 
-    @zendesk
+    @test
     Scenario: parallel calls and test scenario
         Given the sendPaymentOutcome request scenario executed successfully
         And calling primitive v2/closepayment_v2/closepayment POST and sendPaymentOutcome_sendPaymentOutcome POST with 50 ms delay

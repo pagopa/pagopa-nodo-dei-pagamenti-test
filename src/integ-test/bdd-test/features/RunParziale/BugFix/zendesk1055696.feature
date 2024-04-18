@@ -315,7 +315,7 @@ Feature: Block revision for sendPaymentOutcome
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-    @zendesk
+    @test
     Scenario: sendPaymentOutcome request
         Given the closePaymentV2 request scenario executed successfully
         And initial XML sendPaymentOutcome
