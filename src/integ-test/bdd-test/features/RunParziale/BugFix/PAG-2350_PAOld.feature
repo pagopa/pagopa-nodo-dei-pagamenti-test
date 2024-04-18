@@ -217,7 +217,7 @@ Feature: Block revision for sendPaymentOutcome
         When job mod3CancelV1 triggered after 4 seconds
         Then verify the HTTP status code of mod3CancelV1 response is 200
         
-    @prova
+    @test
     Scenario: sendPaymentOutcome request
         Given the mod3CancelV1 scenario executed successfully
         And nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 3600000
