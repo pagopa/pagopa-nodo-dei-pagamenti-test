@@ -3,6 +3,7 @@ from behave.model import Table
 import os
 import requests
 import steps.utils as utils
+import time
 
 if 'APICFG' in os.environ:
     import steps.db_operation_apicfg_testing_support as db
@@ -141,20 +142,43 @@ def after_feature(context, feature):
 
 
 def after_all(context):
-    pass
-    # header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
-    # db_selected = context.config.userdata.get("db_configuration").get('nodo_cfg')
-    # conn = db.getConnection(db_selected.get('host'), db_selected.get('database'), db_selected.get('user'), db_selected.get('password'),db_selected.get('port'))
+    dbRun = getattr(context, "dbRun")
+    db_config = context.config.userdata.get("db_configuration")
+    db_name = "nodo_cfg"
+    db_selected = db_config.get(db_name)
 
-    # config_dict = getattr(context, 'configurations')
-    # for key, value in config_dict.items():
-    #     #print(key, value)
-    #     selected_query = utils.query_json(context, 'update_config', 'configurations').replace('value', f'$${value}$$').replace('key', key)
-    #     db.executeQuery(conn, selected_query)
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    # db.closeConnection(conn)
-    # headers = {'Host': header_host}
-    # requests.get(utils.get_refresh_config_url(context),verify=False,headers=headers, proxies = getattr(context,'proxies'))
+    config_dict = getattr(context, 'configurations')
+    update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
+
+    for key, value in config_dict.items():
+
+        selected_query = ''
+
+        if dbRun == 'Postgres':
+            if utils.contiene_carattere_apice(value):
+                value = value.replace("'", "''")
+
+            selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', key)
+        
+        elif dbRun == 'Oracle':
+            selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', key)
+        
+        adopted_db.executeQuery(conn, selected_query, as_dict=True)
+
+    adopted_db.closeConnection(conn)
+    header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
+    headers = {'Host': header_host}
+
+    refresh_response = None
+    if dbRun == "Postgres":
+        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+    if dbRun == "Oracle":
+        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+
+    time.sleep(10)
+    assert refresh_response.status_code == 200
 
 
 
