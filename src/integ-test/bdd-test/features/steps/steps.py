@@ -1953,12 +1953,6 @@ def step_impl(context):
         inoltroEsito["timestampOperazione"])
 
 
-@step('idChannel with USE_NEW_FAULT_CODE=Y')
-def step_impl(context):
-    # TODO verify with api-config
-    pass
-
-
 @step("random idempotencyKey having {value} as idPSP in {primitive}")
 def step_impl(context, value, primitive):
     value = utils.replace_local_variables(value, context)

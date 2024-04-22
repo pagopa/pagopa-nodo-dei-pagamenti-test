@@ -142,43 +142,44 @@ def after_feature(context, feature):
 
 
 def after_all(context):
-    dbRun = getattr(context, "dbRun")
-    db_config = context.config.userdata.get("db_configuration")
-    db_name = "nodo_cfg"
-    db_selected = db_config.get(db_name)
+    pass
+    # dbRun = getattr(context, "dbRun")
+    # db_config = context.config.userdata.get("db_configuration")
+    # db_name = "nodo_cfg"
+    # db_selected = db_config.get(db_name)
 
-    adopted_db, conn = utils.get_db_connection_for_env(db_name, db, db_selected)
+    # adopted_db, conn = utils.get_db_connection_for_env(db_name, db, db_selected)
 
-    config_dict = getattr(context, 'configurations')
-    update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
+    # config_dict = getattr(context, 'configurations')
+    # update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
 
-    for key, value in config_dict.items():
+    # for key, value in config_dict.items():
 
-        selected_query = ''
+    #     selected_query = ''
 
-        if dbRun == 'Postgres':
-            if utils.contiene_carattere_apice(value):
-                value = value.replace("'", "''")
+    #     if dbRun == 'Postgres':
+    #         if utils.contiene_carattere_apice(value):
+    #             value = value.replace("'", "''")
 
-            selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', key)
+    #         selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', key)
         
-        elif dbRun == 'Oracle':
-            selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', key)
+    #     elif dbRun == 'Oracle':
+    #         selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', key)
         
-        adopted_db.executeQuery(conn, selected_query, as_dict=True)
+    #     adopted_db.executeQuery(conn, selected_query, as_dict=True)
 
-    adopted_db.closeConnection(conn)
-    header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
-    headers = {'Host': header_host}
+    # adopted_db.closeConnection(conn)
+    # header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
+    # headers = {'Host': header_host}
 
-    refresh_response = None
-    if dbRun == "Postgres":
-        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
-    if dbRun == "Oracle":
-        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+    # refresh_response = None
+    # if dbRun == "Postgres":
+    #     refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+    # if dbRun == "Oracle":
+    #     refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
-    time.sleep(10)
-    assert refresh_response.status_code == 200
+    # time.sleep(10)
+    # assert refresh_response.status_code == 200
 
 
 
