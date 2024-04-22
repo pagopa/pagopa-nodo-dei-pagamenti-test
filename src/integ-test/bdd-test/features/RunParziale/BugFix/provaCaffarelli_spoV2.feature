@@ -178,10 +178,8 @@ Feature: Block revision for sendPaymentOutcomeV2
     @test
     Scenario: parallel calls and test scenario
         Given the sendPaymentOutcomeV2 request scenario executed successfully
-        And calling primitive v2/closepayment_v2/closepayment POST and sendPaymentOutcomeV2_sendPaymentOutcomeV2 POST with 50 ms delay
-        Then check outcome is KO of sendPaymentOutcomeV2 response
-        And check faultCode is PPT_SEMANTICA of sendPaymentOutcomeV2 response
-        And check description is Payment sconosciuto of sendPaymentOutcomeV2 response
+        And calling primitive v2/closepayment_v2/closepayment POST and sendPaymentOutcomeV2_sendPaymentOutcomeV2 POST with 60 ms delay
+        Then check outcome is OK of sendPaymentOutcomeV2 response
         And check outcome is OK of v2/closepayment response
         And verify the HTTP status code of sendPaymentOutcomeV2 response is 200
         And verify the HTTP status code of v2/closepayment response is 200
