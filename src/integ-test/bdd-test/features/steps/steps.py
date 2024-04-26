@@ -1230,31 +1230,41 @@ def step_impl(context, job_name, seconds):
 # verifica che il valore cercato corrisponda all'intera sottostringa del tag
 @then('check {tag} is {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
-    soap_response = getattr(context, primitive + RESPONSE)
-    value = utils.replace_local_variables(value, context)
-    value = utils.replace_context_variables(value, context)
-    value = utils.replace_global_variables(value, context)
+    try:
+        soap_response = getattr(context, primitive + RESPONSE)
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
+        value = utils.replace_global_variables(value, context)
 
-    if 'xml' in soap_response.headers['content-type']:
-        my_document = parseString(soap_response.content)
-        if len(my_document.getElementsByTagName('faultCode')) > 0:
-            print("fault code: ", my_document.getElementsByTagName(
-                'faultCode')[0].firstChild.data)
-            print("fault string: ", my_document.getElementsByTagName(
-                'faultString')[0].firstChild.data)
-            # if len(my_document.getElementsByTagName('description')[0])>0:
-            #     print("description: ", my_document.getElementsByTagName(
-            #         'description')[0].firstChild.data)
-        data = my_document.getElementsByTagName(tag)[0].firstChild.data
-        print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
-        assert value == data, f"assert compare {value} and {data} Failed!"
-    else:
-        node_response = getattr(context, primitive + RESPONSE)
-        json_response = node_response.json()
-        founded_value = jo.get_value_from_key(json_response, tag)
-        print(
-            f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
-        assert str(founded_value) == value
+        if 'xml' in soap_response.headers['content-type']:
+            my_document = parseString(soap_response.content)
+            if len(my_document.getElementsByTagName('faultCode')) > 0:
+                print("fault code: ", my_document.getElementsByTagName(
+                    'faultCode')[0].firstChild.data)
+                print("fault string: ", my_document.getElementsByTagName(
+                    'faultString')[0].firstChild.data)
+                # if len(my_document.getElementsByTagName('description')[0])>0:
+                #     print("description: ", my_document.getElementsByTagName(
+                #         'description')[0].firstChild.data)
+            data = my_document.getElementsByTagName(tag)[0].firstChild.data
+            print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
+            assert value == data, f"check tag {tag} - expected: {value}, obtained: {data} in xml"
+        else:
+            node_response = getattr(context, primitive + RESPONSE)
+            json_response = node_response.json()
+            founded_value = jo.get_value_from_key(json_response, tag)
+            print(f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
+            assert str(founded_value) == value, f"check tag {tag} - expected: {value}, obtained: {data} in json"
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 
@@ -1361,41 +1371,63 @@ def step_impl(context, tag, value, primitive):
 
 @step('checks {tag} contains {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
-    soap_response = getattr(context, primitive + RESPONSE)
-    if 'xml' in soap_response.headers['content-type']:
-        my_document = parseString(soap_response.content)
-        nodeList = my_document.getElementsByTagName(tag)
-        values = [node.childNodes[0].nodeValue for node in nodeList]
-        print(values)
-        assert value in values
+    try:
+        soap_response = getattr(context, primitive + RESPONSE)
+        if 'xml' in soap_response.headers['content-type']:
+            my_document = parseString(soap_response.content)
+            nodeList = my_document.getElementsByTagName(tag)
+            values = [node.childNodes[0].nodeValue for node in nodeList]
+            print(values)
+            assert value in values, f"{tag} doesn't contains {value} in {primitive} response"
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @then('check {tag} contains {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
-    value = utils.replace_local_variables(value, context)
-    value = utils.replace_context_variables(value, context)
-    soap_response = getattr(context, primitive + RESPONSE)
-    if 'xml' in soap_response.headers['content-type']:
-        my_document = parseString(soap_response.content)
-        if len(my_document.getElementsByTagName('faultCode')) > 0:
-            print("fault code: ", my_document.getElementsByTagName(
-                'faultCode')[0].firstChild.data)
-            print("fault string: ", my_document.getElementsByTagName(
-                'faultString')[0].firstChild.data)
-            if my_document.getElementsByTagName('description'):
-                print("description: ", my_document.getElementsByTagName(
-                    'description')[0].firstChild.data)
-        data = my_document.getElementsByTagName(tag)[0].firstChild.data
-        print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
-        assert value in data
-    else:
-        node_response = getattr(context, primitive + RESPONSE)
-        json_response = node_response.json()
-        json_response = jo.convert_json_values_toString(json_response)
-        print('>>>>>>>>>>>>>>', json_response)
-        print(value)
-        find = jo.search_value(json_response, tag, value)
-        assert find
+    try:
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
+        soap_response = getattr(context, primitive + RESPONSE)
+        if 'xml' in soap_response.headers['content-type']:
+            my_document = parseString(soap_response.content)
+            if len(my_document.getElementsByTagName('faultCode')) > 0:
+                print("fault code: ", my_document.getElementsByTagName(
+                    'faultCode')[0].firstChild.data)
+                print("fault string: ", my_document.getElementsByTagName(
+                    'faultString')[0].firstChild.data)
+                if my_document.getElementsByTagName('description'):
+                    print("description: ", my_document.getElementsByTagName(
+                        'description')[0].firstChild.data)
+            data = my_document.getElementsByTagName(tag)[0].firstChild.data
+            print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
+            assert value in data, f"check tag {tag} - expected: {value}, obtained: {data} in xml"
+        else:
+            node_response = getattr(context, primitive + RESPONSE)
+            json_response = node_response.json()
+            json_response = jo.convert_json_values_toString(json_response)
+            print('>>>>>>>>>>>>>>', json_response)
+            print(value)
+            find = jo.search_value(json_response, tag, value)
+            assert find, f"check tag {tag} - expected: {value}, obtained: {data} in json"
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 # TODO tag.sort in xml response
@@ -2152,6 +2184,7 @@ def step_impl(context, query_name, param, position, row_number, key):
     selected_element = result_query[row_number][position]
     print(f'{param}: {selected_element}')
     setattr(context, key, selected_element)
+    
 
 
 @step("through the query {query_name} retrieve xml {xml} at position {position:d} and save it under the key {key}")
@@ -2272,48 +2305,59 @@ def step_impl(context, seconds):
 
 @step(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, value, column, query_name, table_name, db_name, name_macro): 
-    db_config = context.config.userdata.get("db_configuration")
-    db_selected = db_config.get(db_name)
+    try:
+        db_config = context.config.userdata.get("db_configuration")
+        db_selected = db_config.get(db_name)
 
-    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
-    selected_query = utils.replace_global_variables(selected_query, context)
-    selected_query = utils.replace_local_variables(selected_query, context)
-    selected_query = utils.replace_context_variables(selected_query, context)
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
 
-    print(selected_query)
-    exec_query = adopted_db.executeQuery(conn, selected_query)
+        print(selected_query)
+        exec_query = adopted_db.executeQuery(conn, selected_query)
 
-    query_result = [t[0] for t in exec_query]
-    print('query_result: ', query_result)
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+       # assert 5 == 4,f"5 è diverso da 4"
+        if value == 'None':
+            print('Check value None')
+            assert query_result[0] == None, f"assert result query with None Failed!"
+        elif value == 'NotNone':
+            print('Check value NotNone')
+            assert query_result[0] != None, f"assert result query with Not None Failed!"
+        else:
+            value = utils.replace_global_variables(value, context)
+            value = utils.replace_local_variables(value, context)
+            value = utils.replace_context_variables(value, context)
+            split_value = [status.strip() for status in value.split(',')]
+            for i, elem in enumerate(query_result):
+                if isinstance(elem, str) and elem.isdigit():
+                    query_result[i] = float(elem)
+                elif isinstance(elem, datetime.date):
+                    query_result[i] = elem.strftime('%Y-%m-%d')
 
-    if value == 'None':
-        print('Check value None')
-        assert query_result[0] == None, f"assert result query with None Failed!"
-    elif value == 'NotNone':
-        print('Check value NotNone')
-        assert query_result[0] != None, f"assert result query with Not None Failed!"
-    else:
-        value = utils.replace_global_variables(value, context)
-        value = utils.replace_local_variables(value, context)
-        value = utils.replace_context_variables(value, context)
-        split_value = [status.strip() for status in value.split(',')]
-        for i, elem in enumerate(query_result):
-            if isinstance(elem, str) and elem.isdigit():
-                query_result[i] = float(elem)
-            elif isinstance(elem, datetime.date):
-                query_result[i] = elem.strftime('%Y-%m-%d')
+            for i, elem in enumerate(split_value):
+                if utils.isFloat(elem) or elem.isdigit():
+                    split_value[i] = float(elem)
 
-        for i, elem in enumerate(split_value):
-            if utils.isFloat(elem) or elem.isdigit():
-                split_value[i] = float(elem)
+            print("value: ", split_value)
+            for elem in split_value:
+                assert elem in query_result, f"check expected element: {value}, obtained: {query_result}"
 
-        print("value: ", split_value)
-        for elem in split_value:
-            assert elem in query_result, f"check expected element: {value}, obtained: {query_result}"
-
-    adopted_db.closeConnection(conn)
+        adopted_db.closeConnection(conn)
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step("update through the query {query_name} of the table {table_name} the parameter {param} with {value}, with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
