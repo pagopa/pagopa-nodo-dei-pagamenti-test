@@ -2306,6 +2306,7 @@ def step_impl(context, seconds):
 @step(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, value, column, query_name, table_name, db_name, name_macro): 
     try:
+        dbRun = getattr(context, "dbRun")
         db_config = context.config.userdata.get("db_configuration")
         db_selected = db_config.get(db_name)
 
@@ -2324,7 +2325,10 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
        # assert 5 == 4,f"5 è diverso da 4"
         if value == 'None':
             print('Check value None')
-            assert query_result[0] == None, f"assert result query with None Failed!"
+            if dbRun == "Postgres":
+                assert query_result[0] == '', f"assert result query with None for Postgres Failed!"
+            elif dbRun == "Oracle":
+                assert query_result[0] == None, f"assert result query with None for Oracle Failed!"
         elif value == 'NotNone':
             print('Check value NotNone')
             assert query_result[0] != None, f"assert result query with Not None Failed!"
@@ -3786,6 +3790,7 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column,
 def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, table_name, value):
     # Legge i dati dalla tabella specificata utilizzando la connessione fornita
     # e continua a controllare periodicamente per gli aggiornamenti fino a quando non trova i record attesi
+    dbRun = getattr(context, "dbRun")
     list_value = value.split(",")
     num_state = len(list_value)
     db_config = context.config.userdata.get("db_configuration")
@@ -3817,11 +3822,14 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
             i += 1
 
     if value == 'None':
-        print('None')
-        assert query_result[0] == None
+        print('Check value None')
+        if dbRun == "Postgres":
+            assert query_result[0] == '', f"assert result query with None for Postgres Failed!"
+        elif dbRun == "Oracle":
+            assert query_result[0] == None, f"assert result query with None for Oracle Failed!"
     elif value == 'NotNone':
-        print('NotNone')
-        assert query_result[0] != None
+        print('Check value NotNone')
+        assert query_result[0] != None, f"assert result query with Not None Failed!"
     else:
         value = utils.replace_global_variables(value, context)
         value = utils.replace_local_variables(value, context)
