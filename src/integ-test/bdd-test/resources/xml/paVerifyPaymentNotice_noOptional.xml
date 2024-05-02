@@ -1,0 +1,19 @@
+        
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+    <soapenv:Header />
+    <soapenv:Body>
+        <paf:paVerifyPaymentNoticeRes>
+            <outcome>OK</outcome>
+            <paymentList>
+                <paymentOptionDescription>
+                    <amount>10.00</amount>
+                    <options>EQ</options>
+                    <allCCP>false</allCCP>
+                </paymentOptionDescription>
+            </paymentList>
+            <paymentDescription>Pagamento di Test</paymentDescription>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
+            <companyName>companyName</companyName>
+        </paf:paVerifyPaymentNoticeRes>
+    </soapenv:Body>
+</soapenv:Envelope>

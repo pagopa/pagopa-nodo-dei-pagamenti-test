@@ -1,0 +1,16 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<nod:activatePaymentNoticeV2Request>
+            <idPSP>#pspEcommerce#</idPSP>
+            <idBrokerPSP>#brokerEcommerce#</idBrokerPSP>
+            <idChannel>#canaleEcommerce#</idChannel>
+			<password>#password#</password>
+			<qrCode>
+				<fiscalCode>#creditor_institution_code#</fiscalCode>
+				<noticeNumber>302$iuv</noticeNumber>
+			</qrCode>
+			<amount>10.00</amount>
+		</nod:activatePaymentNoticeV2Request>
+	</soapenv:Body>
+</soapenv:Envelope>

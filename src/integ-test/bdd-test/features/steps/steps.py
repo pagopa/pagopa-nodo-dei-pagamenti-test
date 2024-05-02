@@ -537,10 +537,11 @@ def step_impl(context, primitive, filebody):
     payload = utils.replace_context_variables(payload, context)
     payload = utils.replace_global_variables(payload, context)
     setattr(context, f"{primitive}JSON", payload)
+    
+    jsonDict = json.loads(payload)
+    payload = utils.json2xml(jsonDict)
+    payload = '<root>' + payload + '</root>'
 
-    # jsonDict = json.loads(payload)
-    #  payload = utils.json2xml(jsonDict)
-    #  payload = '<root>' + payload + '</root>'
     if "#iuv#" in payload:
         iuv = '11' + str(random.randint(1000000000000, 9999999999999))
         payload = payload.replace('#iuv#', iuv)

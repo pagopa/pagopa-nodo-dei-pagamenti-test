@@ -1,0 +1,32 @@
+            
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+    <soapenv:Header />
+    <soapenv:Body>
+        <paf:paGetPaymentRes>
+            <outcome>OK</outcome>
+            <data>
+                <creditorReferenceId>02$iuv</creditorReferenceId>
+                <paymentAmount>10.00</paymentAmount>
+                <dueDate>2021-12-31</dueDate>
+                <description>pagamentoTest</description>
+                <debtor>
+                    <uniqueIdentifier>
+                        <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+                        <entityUniqueIdentifierValue>77777777777</entityUniqueIdentifierValue>
+                    </uniqueIdentifier>
+                    <fullName>Massimo Benvegnù</fullName>
+                </debtor>
+                <transferList>
+                    <transfer>
+                        <idTransfer>1</idTransfer>
+                        <transferAmount>10.00</transferAmount>
+                        <fiscalCodePA>$activatePaymentNotice.fiscalCode</fiscalCodePA>
+                        <IBAN>IT45R0760103200000000001016</IBAN>
+                        <remittanceInformation>testPaGetPayment</remittanceInformation>
+                        <transferCategory>paGetPaymentTest</transferCategory>
+                    </transfer>
+                </transferList>
+            </data>
+        </paf:paGetPaymentRes>
+    </soapenv:Body>
+</soapenv:Envelope>

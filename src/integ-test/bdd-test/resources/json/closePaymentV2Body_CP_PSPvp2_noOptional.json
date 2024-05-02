@@ -1,0 +1,26 @@
+{
+    "paymentTokens": [
+        "$activatePaymentNoticeV2Response.paymentToken"
+    ],
+    "outcome": "OK",
+    "idPSP": "#psp#",
+    "idBrokerPSP": "#psp#",
+    "idChannel": "#canale_versione_primitive_2#",
+    "paymentMethod": "CP",
+    "transactionId": "#transaction_id#",
+    "totalAmount": 12,
+    "fee": 2,
+    "primaryCiIncurredFee": 1,
+    "idBundle": "0bf0c282-3054-11ed-af20-acde48001122",
+    "idCiBundle": "0bf0c35e-3054-11ed-af20-acde48001122",
+    "timestampOperation": "2023-11-30T12:46:46.554+01:00",
+    "additionalPaymentInformations": {
+        "rrn": "11223344",
+        "outcomePaymentGateway": "00",
+        "totalAmount": "12",
+        "fee": "2",
+        "timestampOperation": "2023-11-30T12:46:46.554+01:00",
+        "authorizationCode": "123456",
+        "paymentGateway": "00"
+    }
+}
