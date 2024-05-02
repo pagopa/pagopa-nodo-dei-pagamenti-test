@@ -2325,10 +2325,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
        # assert 5 == 4,f"5 è diverso da 4"
         if value == 'None':
             print('Check value None')
-            if dbRun == "Postgres":
-                assert query_result[0] == '', f"assert result query with None for Postgres Failed!"
-            elif dbRun == "Oracle":
-                assert query_result[0] == None, f"assert result query with None for Oracle Failed!"
+            assert query_result[0] == None, f"assert result query with None for Failed!"
         elif value == 'NotNone':
             print('Check value NotNone')
             assert query_result[0] != None, f"assert result query with Not None Failed!"
@@ -3823,10 +3820,7 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
 
     if value == 'None':
         print('Check value None')
-        if dbRun == "Postgres":
-            assert query_result[0] == '', f"assert result query with None for Postgres Failed!"
-        elif dbRun == "Oracle":
-            assert query_result[0] == None, f"assert result query with None for Oracle Failed!"
+        assert query_result[0] == None, f"assert result query with None for Failed!"
     elif value == 'NotNone':
         print('Check value NotNone')
         assert query_result[0] != None, f"assert result query with Not None Failed!"
