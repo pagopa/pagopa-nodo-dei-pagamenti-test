@@ -1,4 +1,4 @@
-Feature: PG-72 close with channel VP1
+Feature: PG-72 close with channel VP1 3
 
     Background:
         Given systems up

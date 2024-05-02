@@ -1,4 +1,4 @@
-Feature: Block revision for sendPaymentOutcomeV2
+Feature: Block revision for sendPaymentOutcomeV2 1
 
     Background:
         Given systems up
@@ -253,7 +253,7 @@ Feature: Block revision for sendPaymentOutcomeV2
     @test
     Scenario: parallel calls and test scenario
         Given the sendPaymentOutcomeV2 request scenario executed successfully
-        And calling primitive v2/closepayment_v2/closepayment POST and sendPaymentOutcomeV2_sendPaymentOutcomeV2 POST with 50 ms delay
+        And calling primitive v2/closepayment_v2/closepayment POST and sendPaymentOutcomeV2_sendPaymentOutcomeV2 POST with 100 ms delay
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And check outcome is OK of v2/closepayment response
         And verify the HTTP status code of sendPaymentOutcomeV2 response is 200

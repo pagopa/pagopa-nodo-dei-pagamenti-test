@@ -1231,31 +1231,57 @@ def step_impl(context, job_name, seconds):
 # verifica che il valore cercato corrisponda all'intera sottostringa del tag
 @then('check {tag} is {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
-    soap_response = getattr(context, primitive + RESPONSE)
-    value = utils.replace_local_variables(value, context)
-    value = utils.replace_context_variables(value, context)
-    value = utils.replace_global_variables(value, context)
+    try:
+        soap_response = getattr(context, primitive + RESPONSE)
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
+        value = utils.replace_global_variables(value, context)
 
-    if 'xml' in soap_response.headers['content-type']:
-        my_document = parseString(soap_response.content)
-        if len(my_document.getElementsByTagName('faultCode')) > 0:
-            print("fault code: ", my_document.getElementsByTagName(
-                'faultCode')[0].firstChild.data)
-            print("fault string: ", my_document.getElementsByTagName(
-                'faultString')[0].firstChild.data)
-            # if len(my_document.getElementsByTagName('description')[0])>0:
-            #     print("description: ", my_document.getElementsByTagName(
-            #         'description')[0].firstChild.data)
-        data = my_document.getElementsByTagName(tag)[0].firstChild.data
-        print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
-        assert value == data, f"assert compare {value} and {data} Failed!"
-    else:
-        node_response = getattr(context, primitive + RESPONSE)
-        json_response = node_response.json()
-        founded_value = jo.get_value_from_key(json_response, tag)
-        print(
-            f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
-        assert str(founded_value) == value
+        fault_code = ''
+        fault_string = ''
+        description = ''
+        if 'xml' in soap_response.headers['content-type']:
+            my_document = parseString(soap_response.content)
+            if len(my_document.getElementsByTagName('faultCode')) > 0:
+                fault_code = my_document.getElementsByTagName('faultCode')[0].firstChild.data
+                fault_string = my_document.getElementsByTagName('faultString')[0].firstChild.data
+                
+                if my_document.getElementsByTagName('description'):
+                    description = my_document.getElementsByTagName('description')[0].firstChild.data
+                else:
+                    description = 'description empty!!!'
+
+            data = my_document.getElementsByTagName(tag)[0].firstChild.data
+             
+            print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
+            assert value == data, f"""check tag {tag} - expected: {value}, obtained: {data} in xml
+                                      description: {description}
+                                      fault code: {fault_code}
+                                      fault string: {fault_string}
+                                   """
+        else:
+            node_response = getattr(context, primitive + RESPONSE)
+            status_code = node_response.status_code
+            json_response = node_response.json()
+            founded_value = jo.get_value_from_key(json_response, tag)
+
+            if status_code is not 200:
+                description = jo.get_value_from_key(json_response, 'descrizione')
+                
+            print(f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
+            assert str(founded_value) == value, f"""check tag {tag} - expected: {value}, obtained: {founded_value} in json
+                                                 description: {description}
+                                                 """
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 
@@ -1362,41 +1388,74 @@ def step_impl(context, tag, value, primitive):
 
 @step('checks {tag} contains {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
-    soap_response = getattr(context, primitive + RESPONSE)
-    if 'xml' in soap_response.headers['content-type']:
-        my_document = parseString(soap_response.content)
-        nodeList = my_document.getElementsByTagName(tag)
-        values = [node.childNodes[0].nodeValue for node in nodeList]
-        print(values)
-        assert value in values
+    try:
+        soap_response = getattr(context, primitive + RESPONSE)
+        if 'xml' in soap_response.headers['content-type']:
+            my_document = parseString(soap_response.content)
+            nodeList = my_document.getElementsByTagName(tag)
+            values = [node.childNodes[0].nodeValue for node in nodeList]
+            print(values)
+            assert value in values, f"{tag} doesn't contains {value} in {primitive} response"
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @then('check {tag} contains {value} of {primitive} response')
 def step_impl(context, tag, value, primitive):
-    value = utils.replace_local_variables(value, context)
-    value = utils.replace_context_variables(value, context)
-    soap_response = getattr(context, primitive + RESPONSE)
-    if 'xml' in soap_response.headers['content-type']:
-        my_document = parseString(soap_response.content)
-        if len(my_document.getElementsByTagName('faultCode')) > 0:
-            print("fault code: ", my_document.getElementsByTagName(
-                'faultCode')[0].firstChild.data)
-            print("fault string: ", my_document.getElementsByTagName(
-                'faultString')[0].firstChild.data)
-            if my_document.getElementsByTagName('description'):
-                print("description: ", my_document.getElementsByTagName(
-                    'description')[0].firstChild.data)
-        data = my_document.getElementsByTagName(tag)[0].firstChild.data
-        print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
-        assert value in data
-    else:
-        node_response = getattr(context, primitive + RESPONSE)
-        json_response = node_response.json()
-        json_response = jo.convert_json_values_toString(json_response)
-        print('>>>>>>>>>>>>>>', json_response)
-        print(value)
-        find = jo.search_value(json_response, tag, value)
-        assert find
+    try:
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
+        soap_response = getattr(context, primitive + RESPONSE)
+
+        fault_code = ''
+        fault_string = ''
+        description = ''
+        if 'xml' in soap_response.headers['content-type']:
+            my_document = parseString(soap_response.content)
+            if len(my_document.getElementsByTagName('faultCode')) > 0:
+                fault_code = my_document.getElementsByTagName('faultCode')[0].firstChild.data
+                fault_string = my_document.getElementsByTagName('faultString')[0].firstChild.data
+
+                if my_document.getElementsByTagName('description'):
+                    description = my_document.getElementsByTagName('description')[0].firstChild.data
+                else:
+                    description = 'description empty!!!'
+
+            data = my_document.getElementsByTagName(tag)[0].firstChild.data
+            print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
+            assert value in data, f"""check tag {tag} contains - expected: {value} in {primitive} response, obtained: {data} in xml
+                            description: {description}
+                            fault code: {fault_code}
+                            fault string: {fault_string}
+                        """
+        else:
+            node_response = getattr(context, primitive + RESPONSE)
+            json_response = node_response.json()
+            json_response = jo.convert_json_values_toString(json_response)
+            print('>>>>>>>>>>>>>>', json_response)
+            print(value)
+            founded_value = jo.get_value_from_key(json_response, tag)
+            find = jo.search_value(json_response, tag, value)
+            assert find, f"check tag {tag} contains - expected: {value} in {primitive} response, obtained: {founded_value} in json"
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 # TODO tag.sort in xml response
@@ -1996,14 +2055,17 @@ def step_impl(context, param, value):
     header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
     headers = {'Host': header_host}
     
+    print("Refreshing...")
     refresh_response = None
     if dbRun == "Postgres":
+        print(f"URL refresh: {utils.get_refresh_config_url(context)}")
         refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     elif dbRun == "Oracle":
+        print(f"URL refresh: {utils.get_refresh_config_url(context)}")
         refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
     time.sleep(5)
-    print(f"URL refresh: {utils.get_refresh_config_url(context)}")
+    
     print('refresh_response: ', refresh_response)
     assert refresh_response.status_code == 200
 
@@ -2016,10 +2078,14 @@ def step_impl(context, job_name):
     headers = {'Host': header_host}
 
     dbRun = getattr(context, "dbRun")
+
+    print("Refreshing...")
     refresh_response = None
     if dbRun == "Postgres":
+        print(f"URL refresh: {utils.get_refresh_config_url(context)}")
         refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
     elif dbRun == "Oracle":
+        print(f"URL refresh: {utils.get_refresh_config_url(context)}")
         refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
     setattr(context, job_name + RESPONSE, refresh_response)
@@ -2146,6 +2212,7 @@ def step_impl(context, query_name, param, position, row_number, key):
     selected_element = result_query[row_number][position]
     print(f'{param}: {selected_element}')
     setattr(context, key, selected_element)
+    
 
 
 @step("through the query {query_name} retrieve xml {xml} at position {position:d} and save it under the key {key}")
@@ -2267,6 +2334,7 @@ def step_impl(context, seconds):
 @step(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, value, column, query_name, table_name, db_name, name_macro): 
     try:
+        dbRun = getattr(context, "dbRun")
         db_config = context.config.userdata.get("db_configuration")
         db_selected = db_config.get(db_name)
 
@@ -2282,10 +2350,10 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
-
+       # assert 5 == 4,f"5 è diverso da 4"
         if value == 'None':
             print('Check value None')
-            assert query_result[0] == None, f"assert result query with None Failed!"
+            assert query_result[0] == None, f"assert result query with None for Failed!"
         elif value == 'NotNone':
             print('Check value NotNone')
             assert query_result[0] != None, f"assert result query with Not None Failed!"
@@ -2309,8 +2377,16 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
                 assert elem in query_result, f"check expected element: {value}, obtained: {query_result}"
 
         adopted_db.closeConnection(conn)
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
     except Exception as e:
-        print("Check value in record DB ERROR -> ", e)
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step("update through the query {query_name} of the table {table_name} the parameter {param} with {value}, with where condition {where_condition} and where value {valore} under macro {macro} on db {db_name}")
@@ -2328,10 +2404,13 @@ def step_impl(context, query_name, table_name, param, value, where_condition, va
 
     selected_query = ''
     if dbRun == "Postgres":
-        if utils.contiene_carattere_apice(value):
-            value = value.replace("'", "''")
+        if value == 'null':
+            selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
+        else:
+            if utils.contiene_carattere_apice(value):
+                value = value.replace("'", "''")
 
-        selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f"'{value}'").replace('where_condition', where_condition).replace('valore', valore)
+            selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f"'{value}'").replace('where_condition', where_condition).replace('valore', valore)
     
     elif dbRun == "Oracle":
         selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value).replace('where_condition', where_condition).replace('valore', valore)
@@ -2612,10 +2691,13 @@ def step_impl(context, query_name, table_name, param, value, macro, db_name):
 
     selected_query = ''
     if dbRun == "Postgres":
-        if utils.contiene_carattere_apice(value):
-            value = value.replace("'", "''")
-        
-        selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f"'{value}'")
+        if value == 'null':
+            selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
+        else:
+            if utils.contiene_carattere_apice(value):
+                value = value.replace("'", "''")
+            
+            selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f"'{value}'")
        
     elif dbRun == "Oracle":
         selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
@@ -3733,6 +3815,7 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column,
 def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, table_name, value):
     # Legge i dati dalla tabella specificata utilizzando la connessione fornita
     # e continua a controllare periodicamente per gli aggiornamenti fino a quando non trova i record attesi
+    dbRun = getattr(context, "dbRun")
     list_value = value.split(",")
     num_state = len(list_value)
     db_config = context.config.userdata.get("db_configuration")
@@ -3764,11 +3847,11 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
             i += 1
 
     if value == 'None':
-        print('None')
-        assert query_result[0] == None
+        print('Check value None')
+        assert query_result[0] == None, f"assert result query with None for Failed!"
     elif value == 'NotNone':
-        print('NotNone')
-        assert query_result[0] != None
+        print('Check value NotNone')
+        assert query_result[0] != None, f"assert result query with Not None Failed!"
     else:
         value = utils.replace_global_variables(value, context)
         value = utils.replace_local_variables(value, context)

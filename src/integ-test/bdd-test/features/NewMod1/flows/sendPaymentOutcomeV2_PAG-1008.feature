@@ -1,4 +1,4 @@
-Feature: check tags companyName in activateV2 paGetPaymentV2 pspNotifyPaymentV2 paSendRTV2
+Feature: check tags companyName in activateV2 paGetPaymentV2 pspNotifyPaymentV2 paSendRTV2 1
 
     Background:
         Given systems up
