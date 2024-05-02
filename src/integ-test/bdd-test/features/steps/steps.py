@@ -1236,25 +1236,41 @@ def step_impl(context, tag, value, primitive):
         value = utils.replace_context_variables(value, context)
         value = utils.replace_global_variables(value, context)
 
+        fault_code = ''
+        fault_string = ''
+        description = ''
         if 'xml' in soap_response.headers['content-type']:
             my_document = parseString(soap_response.content)
             if len(my_document.getElementsByTagName('faultCode')) > 0:
-                print("fault code: ", my_document.getElementsByTagName(
-                    'faultCode')[0].firstChild.data)
-                print("fault string: ", my_document.getElementsByTagName(
-                    'faultString')[0].firstChild.data)
-                # if len(my_document.getElementsByTagName('description')[0])>0:
-                #     print("description: ", my_document.getElementsByTagName(
-                #         'description')[0].firstChild.data)
+                fault_code = my_document.getElementsByTagName('faultCode')[0].firstChild.data
+                fault_string = my_document.getElementsByTagName('faultString')[0].firstChild.data
+                
+                if my_document.getElementsByTagName('description'):
+                    description = my_document.getElementsByTagName('description')[0].firstChild.data
+                else:
+                    description = 'description empty!!!'
+
             data = my_document.getElementsByTagName(tag)[0].firstChild.data
+             
             print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
-            assert value == data, f"check tag {tag} - expected: {value}, obtained: {data} in xml"
+            assert value == data, f"""check tag {tag} - expected: {value}, obtained: {data} in xml
+                                      description: {description}
+                                      fault code: {fault_code}
+                                      fault string: {fault_string}
+                                   """
         else:
             node_response = getattr(context, primitive + RESPONSE)
+            status_code = node_response.status_code
             json_response = node_response.json()
             founded_value = jo.get_value_from_key(json_response, tag)
+
+            if status_code is not 200:
+                description = jo.get_value_from_key(json_response, 'descrizione')
+                
             print(f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
-            assert str(founded_value) == value, f"check tag {tag} - expected: {value}, obtained: {data} in json"
+            assert str(founded_value) == value, f"""check tag {tag} - expected: {value}, obtained: {founded_value} in json
+                                                 description: {description}
+                                                 """
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
         print("----->>>> Assertion Error: ", e)
@@ -1397,27 +1413,38 @@ def step_impl(context, tag, value, primitive):
         value = utils.replace_local_variables(value, context)
         value = utils.replace_context_variables(value, context)
         soap_response = getattr(context, primitive + RESPONSE)
+
+        fault_code = ''
+        fault_string = ''
+        description = ''
         if 'xml' in soap_response.headers['content-type']:
             my_document = parseString(soap_response.content)
             if len(my_document.getElementsByTagName('faultCode')) > 0:
-                print("fault code: ", my_document.getElementsByTagName(
-                    'faultCode')[0].firstChild.data)
-                print("fault string: ", my_document.getElementsByTagName(
-                    'faultString')[0].firstChild.data)
+                fault_code = my_document.getElementsByTagName('faultCode')[0].firstChild.data
+                fault_string = my_document.getElementsByTagName('faultString')[0].firstChild.data
+
                 if my_document.getElementsByTagName('description'):
-                    print("description: ", my_document.getElementsByTagName(
-                        'description')[0].firstChild.data)
+                    description = my_document.getElementsByTagName('description')[0].firstChild.data
+                else:
+                    description = 'description empty!!!'
+
             data = my_document.getElementsByTagName(tag)[0].firstChild.data
             print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
-            assert value in data, f"check tag {tag} - expected: {value}, obtained: {data} in xml"
+            assert value in data, f"""check tag {tag} contains - expected: {value} in {primitive} response, obtained: {data} in xml
+                            description: {description}
+                            fault code: {fault_code}
+                            fault string: {fault_string}
+                        """
         else:
             node_response = getattr(context, primitive + RESPONSE)
             json_response = node_response.json()
             json_response = jo.convert_json_values_toString(json_response)
             print('>>>>>>>>>>>>>>', json_response)
             print(value)
+            founded_value = jo.get_value_from_key(json_response, tag)
             find = jo.search_value(json_response, tag, value)
-            assert find, f"check tag {tag} - expected: {value}, obtained: {data} in json"
+            assert find, f"check tag {tag} contains - expected: {value} in {primitive} response, obtained: {founded_value} in json"
+
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
         print("----->>>> Assertion Error: ", e)
