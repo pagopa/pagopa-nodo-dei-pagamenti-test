@@ -326,11 +326,11 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02] 832
             """
         When EC sends SOAP activateIOPayment to nodo-dei-pagamenti
         Then check outcome is OK of activateIOPayment response
-        And restore initial configurations
 
 
     Scenario: Trigger paInviaRt
         Given the Execute activateIOPayment scenario executed successfully
+        And nodo-dei-pagamenti has config parameter scheduler.jobName_paInviaRt.enabled set to true
         When job paInviaRt triggered after 5 seconds
         Then verify the HTTP status code of paInviaRt response is 200
         And wait 5 seconds for expiration
@@ -349,9 +349,6 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02] 832
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
         And check enteBeneficiario field exists in informazioniPagamento response
-
-    #And check $1iuv field exists in informazioniPagamento response
-    #And check #creditor_institution_code# field exists in informazioniPagamento response
 
 
     Scenario: Execute nodoInoltroEsitoCarta
@@ -461,4 +458,3 @@ Feature: Flows checks for nodoInviaCarrelloRPT [PAG-1642_02] 832
 
         #DB-CHECK-POSITION_STATUS_SNAPSHOT
         And checks the value NOTIFIED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query DB_GEST_ANN_notice_number on db nodo_online under macro Mod1Mb
-        And restore initial configurations

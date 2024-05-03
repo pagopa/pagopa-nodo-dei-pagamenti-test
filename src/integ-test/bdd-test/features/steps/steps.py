@@ -1240,25 +1240,26 @@ def step_impl(context, tag, value, primitive):
         fault_code = ''
         fault_string = ''
         description = ''
+
         if 'xml' in soap_response.headers['content-type']:
             my_document = parseString(soap_response.content)
             if len(my_document.getElementsByTagName('faultCode')) > 0:
                 fault_code = my_document.getElementsByTagName('faultCode')[0].firstChild.data
                 fault_string = my_document.getElementsByTagName('faultString')[0].firstChild.data
                 
-                if my_document.getElementsByTagName('description'):
+                if my_document.getElementsByTagName('description') and my_document.getElementsByTagName('description')[0].firstChild:
                     description = my_document.getElementsByTagName('description')[0].firstChild.data
                 else:
                     description = 'description empty!!!'
 
             data = my_document.getElementsByTagName(tag)[0].firstChild.data
-             
-            print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
+            
             assert value == data, f"""check tag {tag} - expected: {value}, obtained: {data} in xml
                                       description: {description}
                                       fault code: {fault_code}
                                       fault string: {fault_string}
                                    """
+            print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
         else:
             node_response = getattr(context, primitive + RESPONSE)
             status_code = node_response.status_code
@@ -1267,11 +1268,11 @@ def step_impl(context, tag, value, primitive):
 
             if status_code is not 200:
                 description = jo.get_value_from_key(json_response, 'descrizione')
-                
-            print(f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
+                   
             assert str(founded_value) == value, f"""check tag {tag} - expected: {value}, obtained: {founded_value} in json
                                                  description: {description}
                                                  """
+            print(f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
         print("----->>>> Assertion Error: ", e)
@@ -1424,27 +1425,30 @@ def step_impl(context, tag, value, primitive):
                 fault_code = my_document.getElementsByTagName('faultCode')[0].firstChild.data
                 fault_string = my_document.getElementsByTagName('faultString')[0].firstChild.data
 
-                if my_document.getElementsByTagName('description'):
+                if my_document.getElementsByTagName('description') and my_document.getElementsByTagName('description')[0].firstChild:
                     description = my_document.getElementsByTagName('description')[0].firstChild.data
                 else:
                     description = 'description empty!!!'
 
             data = my_document.getElementsByTagName(tag)[0].firstChild.data
-            print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
+            
             assert value in data, f"""check tag {tag} contains - expected: {value} in {primitive} response, obtained: {data} in xml
                             description: {description}
                             fault code: {fault_code}
                             fault string: {fault_string}
                         """
+            print(f'check tag "{tag}" - expected: {value}, obtained: {data}')
         else:
             node_response = getattr(context, primitive + RESPONSE)
             json_response = node_response.json()
             json_response = jo.convert_json_values_toString(json_response)
-            print('>>>>>>>>>>>>>>', json_response)
-            print(value)
+
             founded_value = jo.get_value_from_key(json_response, tag)
             find = jo.search_value(json_response, tag, value)
             assert find, f"check tag {tag} contains - expected: {value} in {primitive} response, obtained: {founded_value} in json"
+            
+            print('>>>>>>>>>>>>>>', json_response)
+            print(value)
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
@@ -1712,8 +1716,14 @@ def step_impl(context, sender, method, service, receiver):
 
 @then('verify the HTTP status code of {action} response is {value}')
 def step_impl(context, action, value):
-    print(f'HTTP status expected: {value} - obtained:{getattr(context, action + RESPONSE).status_code}')
-    assert int(value) == getattr(context, action + RESPONSE).status_code
+    try:
+        assert int(value) == getattr(context, action + RESPONSE).status_code,f'HTTP status expected: {value} - obtained:{getattr(context, action + RESPONSE).status_code}'
+        print(f'HTTP status expected: {value} - obtained:{getattr(context, action + RESPONSE).status_code}')
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
 
 
 @given('{mock} replies to {destination} with the {primitive}')
