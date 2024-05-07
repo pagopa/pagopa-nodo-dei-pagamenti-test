@@ -1637,7 +1637,7 @@ Feature: flow tests for paSendRTV2 1115
         And the sendPaymentOutcome request scenario executed successfully
         When psp sends soap sendPaymentOutcome to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcome response
-    @test @company @pippoalf
+    @test @company
     Scenario: PSRTV2_ACTV1_21 (part 3)
         Given the PSRTV2_ACTV1_21 (part 2) scenario executed successfully
         And wait 12 seconds for expiration

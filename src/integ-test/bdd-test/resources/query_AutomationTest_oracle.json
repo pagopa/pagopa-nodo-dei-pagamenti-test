@@ -4,6 +4,7 @@
         "update_config_oracle": "UPDATE CONFIGURATION_KEYS s SET s.CONFIG_VALUE = q'[value]' WHERE s.CONFIG_KEY = 'key'"
     },
     "NewMod3": {
+        "select_activatev2": "SELECT columns FROM table_name WHERE NOTICE_ID = '$activatePaymentNoticeV2.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNoticeV2.fiscalCode'",
         "payment_status": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode'",
         "payment_status_orderby_time": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice.fiscalCode' ORDER BY INSERTED_TIMESTAMP ASC",
         "payment_status_only_act1": "SELECT columns FROM table_name WHERE NOTICE_ID ='$activatePaymentNotice1.noticeNumber' AND PA_FISCAL_CODE = '$activatePaymentNotice1.fiscalCode'",
