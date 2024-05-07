@@ -602,7 +602,7 @@ Feature: Semantic checks for activateIOPayment - KO 116
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
     Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 3600000
 
-  @runnable @prova
+  @runnable
   # [SEM_AIPR_25]
   Scenario: [SEM_AIPR_25]
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
