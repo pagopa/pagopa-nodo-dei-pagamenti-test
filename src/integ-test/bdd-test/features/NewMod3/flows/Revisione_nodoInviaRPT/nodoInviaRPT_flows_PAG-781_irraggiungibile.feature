@@ -2,8 +2,12 @@ Feature: process tests for nodoInviaRPT [PAG-781_irragiungibile] 1240
 
     Background:
         Given systems up
-        
-        And initial XML verifyPaymentNotice
+
+
+
+    # Verify phase
+    Scenario: Execute verifyPaymentNotice request
+        Given  initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
             <soapenv:Header/>
@@ -22,9 +26,6 @@ Feature: process tests for nodoInviaRPT [PAG-781_irragiungibile] 1240
             </soapenv:Envelope>
 
             """
-
-    # Verify phase
-    Scenario: Execute verifyPaymentNotice request
         When PSP sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
 
@@ -181,7 +182,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_irragiungibile] 1240
             </pay_i:datiVersamento>
             </pay_i:RPT>
             """
-    
+
     Scenario: Excecute nodoInviaRPT
         Given the Define RPT scenario executed successfully
         And initial XML nodoInviaRPT
@@ -397,7 +398,7 @@ Feature: process tests for nodoInviaRPT [PAG-781_irragiungibile] 1240
         When psp sends soap activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
 
-        @runnable
+    @runnable
     Scenario: Execute sendPaymentOutcome request
         Given the activatePaymentNotice1 request scenario executed successfully
         And initial XML sendPaymentOutcome
