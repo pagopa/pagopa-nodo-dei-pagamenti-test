@@ -484,7 +484,7 @@ Feature: Semantic checks for activateIOPayment - KO 116
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
     And wait 10 seconds for expiration
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-    And restore initial configurations
+    Given nodo-dei-pagamenti has config parameter useIdempotency set to true
 
 
   # [SEM_AIPR_21]
@@ -534,11 +534,11 @@ Feature: Semantic checks for activateIOPayment - KO 116
     And <tag> with <value> in activateIOPayment
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
-    And restore initial configurations
+    Given nodo-dei-pagamenti has config parameter useIdempotency set to true
     Examples:
       | tag          | value              | soapUI test |
       | noticeNumber | $5noticeNumber     | SEM_AIPR_22 |
-  #| fiscalCode   | 90000000001        | SEM_AIPR_22 |
+    #  | fiscalCode   | 90000000001        | SEM_AIPR_22 |
 
   @runnable
   Scenario Outline: Check PPT_PAGAMENTO_IN_CORSO error on idempotencyKey validity
@@ -548,7 +548,7 @@ Feature: Semantic checks for activateIOPayment - KO 116
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
-    And restore initial configurations
+    Given nodo-dei-pagamenti has config parameter useIdempotency set to true
     Examples:
       | tag                         | value                 | soapUI test |
       | amount                      | 12.00                 | SEM_AIPR_22 |
@@ -588,7 +588,7 @@ Feature: Semantic checks for activateIOPayment - KO 116
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
-    And restore initial configurations
+    Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 10
 
   @runnable
   # [SEM_AIPR_24]
@@ -600,8 +600,9 @@ Feature: Semantic checks for activateIOPayment - KO 116
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
+    Given nodo-dei-pagamenti has config parameter default_durata_token_IO set to 3600000
 
-  @runnable
+  @runnable @prova
   # [SEM_AIPR_25]
   Scenario: [SEM_AIPR_25]
     Given nodo-dei-pagamenti has config parameter useIdempotency set to false
@@ -611,7 +612,7 @@ Feature: Semantic checks for activateIOPayment - KO 116
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-    And restore initial configurations
+    Given nodo-dei-pagamenti has config parameter useIdempotency set to true
 
   @runnable
   # [SEM_AIPR_26]
@@ -624,7 +625,7 @@ Feature: Semantic checks for activateIOPayment - KO 116
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-    And restore initial configurations
+    Given nodo-dei-pagamenti has config parameter useIdempotency set to true
 
   @runnable
   # [SEM_AIPR_27]
@@ -635,7 +636,7 @@ Feature: Semantic checks for activateIOPayment - KO 116
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
-    And restore initial configurations
+    Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 10
 
   @runnable 
   # [SEM_AIPR_28]
@@ -648,7 +649,8 @@ Feature: Semantic checks for activateIOPayment - KO 116
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
-    And restore initial configurations
+    Given nodo-dei-pagamenti has config parameter default_idempotency_key_validity_minutes set to 10
+    And nodo-dei-pagamenti has config parameter useIdempotency set to true
 
   @runnable
   # [SEM_AIPR_29]
@@ -669,4 +671,3 @@ Feature: Semantic checks for activateIOPayment - KO 116
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is KO of activateIOPayment response
     And check faultCode is PPT_PAGAMENTO_IN_CORSO of activateIOPayment response
-    And restore initial configurations

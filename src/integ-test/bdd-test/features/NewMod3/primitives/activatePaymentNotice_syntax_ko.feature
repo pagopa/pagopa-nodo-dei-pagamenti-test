@@ -33,7 +33,7 @@ Feature: Syntax checks KO for activatePaymentNoticeReq 1373
     When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is KO of activatePaymentNotice response
     And check faultCode is PPT_SINTASSI_EXTRAXSD of activatePaymentNotice response
-    #@apim i test sotto sono stati momentaneamente commentati in attesa di runnable su APIM
+
     Examples:
       | elem                         | value                                                                                                                                                                                                               | soapUI test   |
       | soapenv:Body                 | None                                                                                                                                                                                                                | SIN_APNR_02   |
