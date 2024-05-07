@@ -2673,7 +2673,7 @@ def step_impl(context, query_name, table_name, row_keys_fields, row_values_field
     row_values_fields = utils.replace_local_variables(row_values_fields, context)
     row_values_fields = utils.replace_context_variables(row_values_fields, context)
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-    exec_query = adopted_db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
     adopted_db.closeConnection(conn)
 
 
@@ -2685,7 +2685,7 @@ def step_impl(context, query_name, table_name, where_condition, valore, macro, d
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-    exec_query = adopted_db.executeQuery(conn, selected_query)
+    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
     adopted_db.closeConnection(conn)
 
 
