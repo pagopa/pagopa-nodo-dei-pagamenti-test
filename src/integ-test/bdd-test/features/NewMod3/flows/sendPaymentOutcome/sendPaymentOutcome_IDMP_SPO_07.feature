@@ -5,7 +5,7 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency 1264
 
   # Activate Phase
   Scenario: Execute activatePaymentNotice request
-    Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
+    Given nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to true
     And nodo-dei-pagamenti has config parameter useIdempotency set to true
     And initial XML activatePaymentNotice
       """

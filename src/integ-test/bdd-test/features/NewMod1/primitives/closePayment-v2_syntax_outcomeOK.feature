@@ -848,7 +848,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-    @test @prova
+    @test
     Scenario: check closePaymentV2 PAG-2555 OK with timezone +
         Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And the closePaymentV2 PAG-2555 with timeZone + scenario executed successfully

@@ -67,7 +67,7 @@ Feature:  semantic checks for paVerifyPaymentNoticeRes faultCode 1357
          | PAA_CIAO                    | Errore sconosciuto                                          |
 
    # management of KO from PA - PRO_VPNR_06
-   @runnable @prova
+   @runnable
    Scenario: Check PPT_ERRORE_EMESSO_DA_PAA error when paVerifyPaymentRes contains a KO
          Given initial XML verifyPaymentNotice
          """
