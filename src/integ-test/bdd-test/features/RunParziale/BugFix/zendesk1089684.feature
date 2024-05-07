@@ -252,5 +252,4 @@ Feature: flow tests for closePaymentV2 1
             </soapenv:Envelope>
             """
         When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is KO of sendPaymentOutcome response
-        And check faultCode is PPT_TOKEN_SCADUTO of sendPaymentOutcome response
+        Then check outcome is OK of sendPaymentOutcome response

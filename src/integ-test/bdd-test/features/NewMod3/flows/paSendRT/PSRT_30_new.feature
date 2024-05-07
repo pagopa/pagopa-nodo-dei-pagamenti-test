@@ -1400,7 +1400,7 @@ Feature: process tests for paSendRT [PSRT_30] 1113
         When job paSendRt triggered after 5 seconds
         And wait 10 seconds for expiration
 
-    @runnable @pippoalf
+    @runnable @prova
     Scenario: 27 job paSendRt
         Given the 27 Define sendPaymentOutcome scenario executed successfully
         And initial XML paSendRT
@@ -1415,8 +1415,8 @@ Feature: process tests for paSendRT [PSRT_30] 1113
             """
         And EC replies to nodo-dei-pagamenti with the paSendRT
         And nodo-dei-pagamenti has config parameter scheduler.jobName_paSendRt.enabled set to true
-        When job paSendRt triggered after 6 seconds
-        And wait 15 seconds for expiration
+        When job paSendRt triggered after 10 seconds
+        And wait 10 seconds for expiration
         Then checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online under macro NewMod3
