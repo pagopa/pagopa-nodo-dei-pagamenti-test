@@ -216,7 +216,7 @@ Feature: revision checks for sendPaymentOutcomeV2 950
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         And wait 5 seconds for expiration
-    @test 
+    @test
     Scenario: REV_SPO_03 (part 3)
         Given the REV_SPO_03 (part 2) scenario executed successfully
         And the sendPaymentOutcomeV2 scenario executed successfully
