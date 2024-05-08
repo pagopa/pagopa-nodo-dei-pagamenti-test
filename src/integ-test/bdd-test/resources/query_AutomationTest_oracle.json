@@ -169,7 +169,7 @@
         "by_ccp": "SELECT columns FROM table_name WHERE CCP = '$ccp'",
         "by_notice_number_and_payment_token": "SELECT columns FROM table_name s WHERE s.NOTICE_ID = '$noticeNumber' AND s.PAYMENT_TOKEN = '$paymentToken'",
         "by_notice_number_and_payment_token_orderby_receiptStation": "SELECT columns FROM table_name s WHERE s.NOTICE_ID = '$noticeNumber' AND s.PAYMENT_TOKEN = '$paymentToken' order by s.RECIPIENT_STATION_ID ASC",
-        "by_notice_number_and_payment_token_orderbyDESC_receiptStation": "SELECT columns FROM table_name s WHERE s.NOTICE_ID = '$noticeNumber' AND s.PAYMENT_TOKEN = '$paymentToken' order by s.RECIPIENT_STATION_ID DESC",
+        "by_notice_number_and_payment_token_orderbyASC_updtimestamp": "SELECT columns FROM table_name s WHERE s.NOTICE_ID = '$noticeNumber' AND s.PAYMENT_TOKEN = '$paymentToken' order by s.UPDATED_TIMESTAMP ASC",
         "by_psp": "SELECT columns FROM table_name s WHERE s.ID_PSP = '$psp'",
         "by_ccp_and_ident_dominio": "SELECT columns FROM table_name WHERE CCP = '$idCarrello' and IDENT_DOMINIO = '$pa'",
         "by_payment_token_and_pa_fiscal_code": "SELECT s.columns FROM table_name s WHERE s.PAYMENT_TOKEN = '$paymentToken' and s.PA_FISCAL_CODE = '$pa'",

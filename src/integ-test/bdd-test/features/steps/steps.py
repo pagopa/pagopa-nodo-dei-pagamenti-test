@@ -2865,25 +2865,36 @@ def step_impl(context, condition, param):
 
 @step('check value {value1} is {condition} value {value2}')
 def step_impl(context, value1, condition, value2):
-    value1 = utils.replace_local_variables(value1, context)
-    value1 = utils.replace_context_variables(value1, context)
-    value1 = utils.replace_global_variables(value1, context)
-    value2 = utils.replace_local_variables(value2, context)
-    value2 = utils.replace_context_variables(value2, context)
-    value2 = utils.replace_global_variables(value2, context)
+    try:
+        value1 = utils.replace_local_variables(value1, context)
+        value1 = utils.replace_context_variables(value1, context)
+        value1 = utils.replace_global_variables(value1, context)
+        value2 = utils.replace_local_variables(value2, context)
+        value2 = utils.replace_context_variables(value2, context)
+        value2 = utils.replace_global_variables(value2, context)
 
-    if condition == 'equal to':
-        assert value1 == value2, f"{value1} != {value2}"
-    elif condition == 'greater than':
-        assert value1 > value2, f"{value1} <= {value2}"
-    elif condition == 'smaller than':
-        assert value1 < value2, f"{value1} >= {value2}"
-    elif condition == 'not equal to':
-        assert value1 != value2, f"{value1} = {value2}"
-    elif condition == 'containing':
-        assert value2 in value1, f"{value1} contains {value2}"
-    else:
-        assert False
+        if condition == 'equal to':
+            assert value1 == value2, f"{value1} != {value2}"
+        elif condition == 'greater than':
+            assert value1 > value2, f"{value1} <= {value2}"
+        elif condition == 'smaller than':
+            assert value1 < value2, f"{value1} >= {value2}"
+        elif condition == 'not equal to':
+            assert value1 != value2, f"{value1} = {value2}"
+        elif condition == 'containing':
+            assert value2 in value1, f"{value1} contains {value2}"
+        else:
+            assert False
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @then('check payload tag {tag} field not exists in {payload}')

@@ -609,24 +609,24 @@ Feature: gestioneReceiptMb_11 854
         #extraction from POSITION_RECEIPT_RECIPIENT table
         And replace paymentToken content with $1carrello content
         #row 1
-        And execution query by_notice_number_and_payment_token_orderbyDESC_receiptStation to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro Mod1Mb with db name nodo_online
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param noticeID1 at position 2 and save it under the key noticeID1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param creditorReferenceId1 at position 3 and save it under the key creditorReferenceId1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param paymentToken1 at position 4 and save it under the key paymentToken1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param recipientPA1 at position 5 and save it under the key recipientPA1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param recipientBroker1 at position 6 and save it under the key recipientBroker1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param recipientStation1 at position 7 and save it under the key recipientStation1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param status1 at position 8 and save it under the key status1
+        And execution query by_notice_number_and_payment_token_orderbyASC_updtimestamp to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro Mod1Mb with db name nodo_online
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param noticeID1 at position 2 and save it under the key noticeID1
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param creditorReferenceId1 at position 3 and save it under the key creditorReferenceId1
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param paymentToken1 at position 4 and save it under the key paymentToken1
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param recipientPA1 at position 5 and save it under the key recipientPA1
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param recipientBroker1 at position 6 and save it under the key recipientBroker1
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param recipientStation1 at position 7 and save it under the key recipientStation1
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param status1 at position 8 and save it under the key status1
         # row 2
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param paFiscalCode2 at position 1 in the row 1 and save it under the key paFiscalCode2
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param noticeID2 at position 2 in the row 1 and save it under the key noticeID2
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param creditorReferenceId2 at position 3 in the row 1 and save it under the key creditorReferenceId2
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param paymentToken2 at position 4 in the row 1 and save it under the key paymentToken2
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param recipientPA2 at position 5 in the row 1 and save it under the key recipientPA2
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param recipientBroker2 at position 6 in the row 1 and save it under the key recipientBroker2
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param recipientStation2 at position 7 in the row 1 and save it under the key recipientStation2
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param status2 at position 8 in the row 1 and save it under the key status2
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param paFiscalCode2 at position 1 in the row 1 and save it under the key paFiscalCode2
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param noticeID2 at position 2 in the row 1 and save it under the key noticeID2
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param creditorReferenceId2 at position 3 in the row 1 and save it under the key creditorReferenceId2
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param paymentToken2 at position 4 in the row 1 and save it under the key paymentToken2
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param recipientPA2 at position 5 in the row 1 and save it under the key recipientPA2
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param recipientBroker2 at position 6 in the row 1 and save it under the key recipientBroker2
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param recipientStation2 at position 7 in the row 1 and save it under the key recipientStation2
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param status2 at position 8 in the row 1 and save it under the key status2
         
         
         #checks
@@ -649,15 +649,15 @@ Feature: gestioneReceiptMb_11 854
         #And check value $status1 is equal to value NOTICE_SENT
 
         #extraction from POSITION_RECEIPT_XML
-        And execution query by_notice_number_and_payment_token_orderbyDESC_receiptStation to get value on the table POSITION_RECEIPT_XML, with the columns * under macro Mod1Mb with db name nodo_online
+        And execution query by_notice_number_and_payment_token_orderbyASC_updtimestamp to get value on the table POSITION_RECEIPT_XML, with the columns * under macro Mod1Mb with db name nodo_online
         #row 1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param noticeID1 at position 2 and save it under the key noticeID1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param creditorReferenceId1 at position 3 and save it under the key creditorReferenceId1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param paymentToken1 at position 4 and save it under the key paymentToken1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param recipientPA1 at position 8 and save it under the key recipientPA1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param recipientBroker1 at position 9 and save it under the key recipientBroker1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param recipientStation1 at position 10 and save it under the key recipientStation1
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param noticeID1 at position 2 and save it under the key noticeID1
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param creditorReferenceId1 at position 3 and save it under the key creditorReferenceId1
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param paymentToken1 at position 4 and save it under the key paymentToken1
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param recipientPA1 at position 8 and save it under the key recipientPA1
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param recipientBroker1 at position 9 and save it under the key recipientBroker1
+        And through the query by_notice_number_and_payment_token_orderbyASC_updtimestamp retrieve param recipientStation1 at position 10 and save it under the key recipientStation1
         #checks
         And check value $paFiscalCode1 is equal to value $expFiscalCode
         And check value $noticeID1 is equal to value $expNoticeID
@@ -699,24 +699,23 @@ Feature: gestioneReceiptMb_11 854
         And checks the value 1 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query by_notice_number_and_pa on db nodo_online under macro Mod1Mb
-        And restore initial configurations
 
-@runnable
+@runnable @prova
     Scenario: Checks
         Given the Check POSITION_RETRY_PA_SEND_RT table scenario executed successfully
         And wait 60 seconds for expiration
         When job paSendRt triggered after 5 seconds
         And job paSendRt triggered after 20 seconds
         And wait 15 seconds for expiration
-        And execution query by_notice_number_and_payment_token_orderbyDESC_receiptStation to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro Mod1Mb with db name nodo_online
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param noticeID1 at position 2 and save it under the key noticeID1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param creditorReferenceId1 at position 3 and save it under the key creditorReferenceId1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param paymentToken1 at position 4 and save it under the key paymentToken1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param recipientPA1 at position 5 and save it under the key recipientPA1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param recipientBroker1 at position 6 and save it under the key recipientBroker1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param recipientStation1 at position 7 and save it under the key recipientStation1
-        And through the query by_notice_number_and_payment_token_orderbyDESC_receiptStation retrieve param status1 at position 8 and save it under the key status1
+        And execution query by_notice_number_and_payment_token to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns * under macro Mod1Mb with db name nodo_online
+        And through the query by_notice_number_and_payment_token retrieve param paFiscalCode1 at position 1 and save it under the key paFiscalCode1
+        And through the query by_notice_number_and_payment_token retrieve param noticeID1 at position 2 and save it under the key noticeID1
+        And through the query by_notice_number_and_payment_token retrieve param creditorReferenceId1 at position 3 and save it under the key creditorReferenceId1
+        And through the query by_notice_number_and_payment_token retrieve param paymentToken1 at position 4 and save it under the key paymentToken1
+        And through the query by_notice_number_and_payment_token retrieve param recipientPA1 at position 5 and save it under the key recipientPA1
+        And through the query by_notice_number_and_payment_token retrieve param recipientBroker1 at position 6 and save it under the key recipientBroker1
+        And through the query by_notice_number_and_payment_token retrieve param recipientStation1 at position 7 and save it under the key recipientStation1
+        And through the query by_notice_number_and_payment_token retrieve param status1 at position 8 and save it under the key status1
         
         #checks
         And check value $paFiscalCode1 is equal to value $expFiscalCode
@@ -726,3 +725,4 @@ Feature: gestioneReceiptMb_11 854
         And check value $recipientPA1 is equal to value $pa1
         And check value $recipientBroker1 is equal to value $pa1
         And check value $recipientStation1 is equal to value #id_station_secondary#
+        And nodo-dei-pagamenti has config parameter scheduler.paSendRtMaxRetry set to 5
