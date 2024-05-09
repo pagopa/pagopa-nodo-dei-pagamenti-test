@@ -1832,16 +1832,7 @@ def step_impl(context, mock, primitive, idTransfer, elem, other_primitive):
 @step('the {name} scenario executed successfully')
 def step_impl(context, name):
     phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
-
-    for step in phase.steps:
-        step.keyword
-        step.name
-        step.table
-        text_step = ''.join(step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" + (step.table or '') + "\n\"\"\"\n")
-        print(text_step)
-
-    text_step = ''.join([step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" + (step.table or '') + "\n\"\"\"\n" for step in phase.steps])
-
+    text_step = ''.join([step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
     context.execute_steps(text_step)
 
 
