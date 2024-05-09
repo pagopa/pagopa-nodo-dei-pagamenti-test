@@ -3,12 +3,12 @@
     <soapenv:Header/>
     <soapenv:Body>
         <nod:verificaBollettinoReq>
-            <idPSP>#pspPoste#</idPSP>
-            <idBrokerPSP>#brokerPspPoste#</idBrokerPSP>
-            <idChannel>#channelPoste#</idChannel>
-            <password>pwdpwdpwd</password>
-            <ccPost>#ccPoste#</ccPost>
-            <noticeNumber>302#iuv#</noticeNumber>
+            <idPSP>$idPSP</idPSP>
+            <idBrokerPSP>$idBrokerPSP</idBrokerPSP>
+            <idChannel>$idChannel</idChannel>
+            <password>$password</password>
+            <ccPost>$ccPost</ccPost>
+            <noticeNumber>$noticeNumber</noticeNumber>
         </nod:verificaBollettinoReq>
     </soapenv:Body>
 </soapenv:Envelope>

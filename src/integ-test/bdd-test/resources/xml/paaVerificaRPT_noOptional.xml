@@ -4,11 +4,11 @@
     <soapenv:Body>
         <ws:paaVerificaRPTRisposta>
             <paaVerificaRPTRisposta>
-                <esito>OK</esito>
+                <esito>$esito</esito>
                 <datiPagamentoPA>
-                    <importoSingoloVersamento>1.00</importoSingoloVersamento>
-                    <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
-                    <causaleVersamento>prova/RFDB/$iuv/TESTO/causale del versamento</causaleVersamento>
+                    <importoSingoloVersamento>$importoSingoloVersamento</importoSingoloVersamento>
+                    <ibanAccredito>$ibanAccredito</ibanAccredito>
+                    <causaleVersamento>$causaleVersamento</causaleVersamento>
                 </datiPagamentoPA>
             </paaVerificaRPTRisposta>
         </ws:paaVerificaRPTRisposta>
