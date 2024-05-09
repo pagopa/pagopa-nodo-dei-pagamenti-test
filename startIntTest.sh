@@ -32,7 +32,7 @@ replace $file ".services.\"nodo-dei-pagamenti\".subscription_key_name"  ""
 
 replace $file ".services.\"mock-ec\".url"           "https://api.dev.platform.pagopa.it/mock-ec/api/v1"
 replace $file ".services.\"mock-ec\".healthcheck"   "/info"
-replace $file ".services.\"mock-ec\".soap_service"  "/mock-ec"
+replace $file ".services.\"mock-ec\".soap_service"  ""
 replace $file ".services.\"mock-ec\".rest_service"  ""
 replace $file ".services.\"mock-ec\".subscription_key_name"  ""
 
