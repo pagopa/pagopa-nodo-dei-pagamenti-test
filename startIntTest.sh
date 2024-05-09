@@ -21,61 +21,94 @@ fi
  
 echo "replace config file $file START"
 
-#replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://api.dev.platform.pagopa.it/nodo"
-replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://nodo-p-sit.tst-npc.sia.eu"
-#replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://test.nexi.ndp.pagopa.it/nodo-p-sit.tst-npc.sia.eu"
-replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"
-#replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitoring/v1/monitor/health"
-#replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  ""
-replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  "/webservices/input"
-#replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  ""
-replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  "rest"
-replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/config/refresh/ALL"
-#replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/monitoring/v1/config/refresh/ALL"
+######################## PUNTAMENTI VIA APIM #####################
+
+replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://api.dev.platform.pagopa.it/nodo"
+replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitoring/v1/monitor/health"
+replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  ""
+replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  ""
+replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/monitoring/v1/config/refresh/ALL"
 replace $file ".services.\"nodo-dei-pagamenti\".subscription_key_name"  ""
 
-
-#replace $file ".services.\"mock-ec\".url"           "https://api.dev.platform.pagopa.it/mock-ec/api/v1"
-replace $file ".services.\"mock-ec\".url"           "https://mock-ec-primary-sit.tst-npc.sia.eu/servizi/PagamentiTelematiciRPT"
+replace $file ".services.\"mock-ec\".url"           "https://api.dev.platform.pagopa.it/mock-ec/api/v1"
 replace $file ".services.\"mock-ec\".healthcheck"   "/info"
-#replace $file ".services.\"mock-ec\".soap_service"  "/mock-ec"
-replace $file ".services.\"mock-ec\".soap_service"  ""
+replace $file ".services.\"mock-ec\".soap_service"  "/mock-ec"
 replace $file ".services.\"mock-ec\".rest_service"  ""
 replace $file ".services.\"mock-ec\".subscription_key_name"  ""
 
-
-#replace $file ".services.\"secondary-mock-ec\".url"           "https://api.dev.platform.pagopa.it/secondary-mock-ec/api/v1"
-replace $file ".services.\"secondary-mock-ec\".url"           "https://mock-ec-secondary-sit.tst-npc.sia.eu/secondary-mock-ec"
+replace $file ".services.\"secondary-mock-ec\".url"           "https://api.dev.platform.pagopa.it/secondary-mock-ec/api/v1"
 replace $file ".services.\"secondary-mock-ec\".healthcheck"   "/info"
 replace $file ".services.\"secondary-mock-ec\".soap_service"  ""
 replace $file ".services.\"secondary-mock-ec\".rest_service"  ""
 replace $file ".services.\"secondary-mock-ec\".subscription_key_name"  ""
 
-
-#replace $file ".services.\"mock-psp\".url"           "https://api.dev.platform.pagopa.it/mock-psp-service/api/v1"
-replace $file ".services.\"mock-psp\".url"           "https://mock-psp-primary-sit.tst-npc.sia.eu/servizi/MockPSP"
+replace $file ".services.\"mock-psp\".url"           "https://api.dev.platform.pagopa.it/mock-psp-service/api/v1"
 replace $file ".services.\"mock-psp\".healthcheck"   "/info"
 replace $file ".services.\"mock-psp\".soap_service"  ""
 replace $file ".services.\"mock-psp\".rest_service"  ""
 replace $file ".services.\"mock-psp\".subscription_key_name"  ""
 
-
-#replace $file ".services.\"secondary-mock-psp\".url"           "https://api.dev.platform.pagopa.it/secondary-mock-psp-service/api/v1"
-replace $file ".services.\"secondary-mock-psp\".url"           "https://mock-psp-secondary-sit.tst-npc.sia.eu/psp-sec-mock"
+replace $file ".services.\"secondary-mock-psp\".url"           "https://api.dev.platform.pagopa.it/secondary-mock-psp-service/api/v1"
 replace $file ".services.\"secondary-mock-psp\".healthcheck"   "/info"
 replace $file ".services.\"secondary-mock-psp\".soap_service"  ""
 replace $file ".services.\"secondary-mock-psp\".rest_service"  ""
 replace $file ".services.\"secondary-mock-psp\".subscription_key_name"  ""
 
 
-#replace $file ".services.\"mock-pm\".url"           "https://api.dev.platform.pagopa.it/mock-pm-sit/api/v1"
-#replace $file ".services.\"mock-pm\".healthcheck"   "/info"
-replace $file ".services.\"mock-pm\".url"           "https://mock-pm-sit.tst-npc.sia.eu/PerfPMMock"
-replace $file ".services.\"mock-pm\".healthcheck"   "/actuator/health"
+replace $file ".services.\"mock-pm\".url"           "https://api.dev.platform.pagopa.it/mock-pm-sit/api/v1"
+replace $file ".services.\"mock-pm\".healthcheck"   "/info"
 replace $file ".services.\"mock-pm\".soap_service"  ""
 replace $file ".services.\"mock-pm\".rest_service"  ""
 replace $file ".services.\"mock-pm\".subscription_key_name"  ""
 
+
+######################### PUNTAMENTI SENZA APIM #####################
+
+
+#replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://nodo-p-sit.tst-npc.sia.eu"
+#replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://test.nexi.ndp.pagopa.it/nodo-p-sit.tst-npc.sia.eu"
+#replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"
+#replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  "/webservices/input"
+#replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  "rest"
+#replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/config/refresh/ALL"
+
+
+# replace $file ".services.\"mock-ec\".url"           "https://mock-ec-primary-sit.tst-npc.sia.eu/servizi/PagamentiTelematiciRPT"
+# replace $file ".services.\"mock-ec\".healthcheck"   "/info"
+# replace $file ".services.\"mock-ec\".soap_service"  ""
+# replace $file ".services.\"mock-ec\".rest_service"  ""
+# replace $file ".services.\"mock-ec\".subscription_key_name"  ""
+
+
+# replace $file ".services.\"secondary-mock-ec\".url"           "https://mock-ec-secondary-sit.tst-npc.sia.eu/secondary-mock-ec"
+# replace $file ".services.\"secondary-mock-ec\".healthcheck"   "/info"
+# replace $file ".services.\"secondary-mock-ec\".soap_service"  ""
+# replace $file ".services.\"secondary-mock-ec\".rest_service"  ""
+# replace $file ".services.\"secondary-mock-ec\".subscription_key_name"  ""
+
+
+# replace $file ".services.\"mock-psp\".url"           "https://mock-psp-primary-sit.tst-npc.sia.eu/servizi/MockPSP"
+# replace $file ".services.\"mock-psp\".healthcheck"   "/info"
+# replace $file ".services.\"mock-psp\".soap_service"  ""
+# replace $file ".services.\"mock-psp\".rest_service"  ""
+# replace $file ".services.\"mock-psp\".subscription_key_name"  ""
+
+
+# replace $file ".services.\"secondary-mock-psp\".url"           "https://mock-psp-secondary-sit.tst-npc.sia.eu/psp-sec-mock"
+# replace $file ".services.\"secondary-mock-psp\".healthcheck"   "/info"
+# replace $file ".services.\"secondary-mock-psp\".soap_service"  ""
+# replace $file ".services.\"secondary-mock-psp\".rest_service"  ""
+# replace $file ".services.\"secondary-mock-psp\".subscription_key_name"  ""
+
+
+# replace $file ".services.\"mock-pm\".url"           "https://mock-pm-sit.tst-npc.sia.eu/PerfPMMock"
+# replace $file ".services.\"mock-pm\".healthcheck"   "/actuator/health"
+# replace $file ".services.\"mock-pm\".soap_service"  ""
+# replace $file ".services.\"mock-pm\".rest_service"  ""
+# replace $file ".services.\"mock-pm\".subscription_key_name"  ""
+
+
+######################## PUNTMANETI SERVIZIO APICONFIGCACHE #####################
 
 replace $file ".services.\"apicfg-testing-support\".url"           "https://api.dev.platform.pagopa.it/apiconfig/testing-support/pnexi/v1"
 replace $file ".services.\"apicfg-testing-support\".healthcheck"   "/info"
@@ -83,7 +116,7 @@ replace $file ".services.\"apicfg-testing-support\".soap_service"  ""
 replace $file ".services.\"apicfg-testing-support\".rest_service"  ""
 replace $file ".services.\"apicfg-testing-support\".subscription_key_name"  "APICFG_SUBSCRIPTION_KEY"
 
-
+##################### DB CONFIG #####################
 
 
 replace $file ".db_configuration.nodo_cfg.host"     $db_cfg_host_sit
