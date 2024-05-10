@@ -13,7 +13,7 @@ from requests.adapters import HTTPAdapter
 import xmltodict
 
 from urllib.parse import urlparse
-
+from behave.model import Table, Row
 
 import string
 
@@ -811,3 +811,66 @@ def contiene_carattere_apice(stringa):
         if carattere in caratteri_apice:
             return True
     return False
+
+
+
+
+###METODO PER FARE LA TRANSPOSE VERTICALE DELLA CONTEXT TABLE, RITORNA UNA TABLE
+def transpose_table(table):
+    i = 0
+    transposed_table_dict = {}
+    for row in table:
+        if i < 1:
+           transposed_table_dict[row.headings[0]] = row.headings[1] 
+        else:   
+            transposed_table_dict[row[0]] = row[1]
+        i+=1
+
+   # Ottiene le chiavi del dict come intestazioni delle colonne
+    headers = list(transposed_table_dict.keys())
+    # Costruisci una lista di righe della tabella
+    rows = [list(transposed_table_dict.values())]
+
+    return Table(headings=headers, rows=rows)
+
+
+###METODO PER FARE LA TRANSPOSE VERTICALE DELLA CONTEXT TABLE, RITORNA UNA DICT DELLA TABLE TRANSPOSTA
+def transpose_table_to_dict(table):
+    i = 0
+    transposed_table_dict = {}
+    for row in table:
+        if i < 1:
+           transposed_table_dict[row.headings[0]] = row.headings[1] 
+        else:   
+            transposed_table_dict[row[0]] = row[1]
+        i+=1
+
+    return transposed_table_dict
+
+
+###METODO PER CREARE UNA DICT DA UNA CONTEXT TABLE, RITORNA UNA DICT DELLA TABLE
+def table_to_dict(table, type_table):
+    dict_table = {}
+    # Definisco i valori predefiniti
+    predefined_values = {'horizontal', 'vertical'}
+
+    if type_table == 'horizontal':
+        for row in table:
+            for field, value in row.items():
+                # Aggiunge la chiave e il valore al dict
+                if field in dict_table:
+                    dict_table[field].append(value)
+                else:
+                    dict_table[field] = [value]
+    elif type_table == 'vertical':
+        for row in table:
+            dict_table[row.headings[0]] = [row.headings[1]]
+            break
+
+        for row in table:
+            dict_table[row[0]] = [row[1]]
+            
+    else:
+        raise ValueError(f"Invalid value of type table: {type_table}. It should be one of {predefined_values}")
+    
+    return dict_table

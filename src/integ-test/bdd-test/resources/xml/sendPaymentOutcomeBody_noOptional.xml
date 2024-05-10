@@ -3,12 +3,12 @@
     <soapenv:Header/>
     <soapenv:Body>
         <nod:sendPaymentOutcomeReq>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
-            <paymentToken>$activatePaymentNoticeResponse.paymentToken</paymentToken>
-            <outcome>OK</outcome>
+            <idPSP>$idPSP</idPSP>
+            <idBrokerPSP>$idBrokerPSP</idBrokerPSP>
+            <idChannel>$idChannel</idChannel>
+            <password>$password</password>
+            <paymentToken>$paymentToken</paymentToken>
+            <outcome>$outcome</outcome>
         </nod:sendPaymentOutcomeReq>
     </soapenv:Body>
 </soapenv:Envelope>
