@@ -23,6 +23,11 @@ from io import StringIO
 
 user_profile = os.environ.get("USERPROFILE")
 
+# Variabile globale per segnalare se lo scenario "after" deve essere eseguito
+execute_after_scenario = False
+
+# Nome scenario After
+name_scenario_after = ''
 
 def before_all(context):
     print('Global settings...')
@@ -92,6 +97,12 @@ def before_all(context):
 
 
 def before_feature(context, feature):
+    global name_scenario_after
+
+    for scenario in feature.scenarios:
+        if 'after' in scenario.tags:
+            name_scenario_after = scenario.name
+
     services = context.config.userdata.get("services")
     # add heading
     feature.background.steps[0].table = Table(headings=("name", "url", "healthcheck", "soap_service", "rest_service", "refresh_config_service", "subscription_key_name"))
@@ -108,14 +119,35 @@ def before_feature(context, feature):
         feature.background.steps[0].table.add_row(row)
 
 
+
 def before_scenario(context, scenario):
+    global execute_after_scenario
+    if 'after' in scenario.effective_tags:
+        execute_after_scenario = True
+
     context.stdout_capture = StringIO()
     context.original_stdout = sys.stdout
     sys.stdout = context.stdout_capture
 
 
+
 def after_scenario(context, scenario):
     try:
+        global execute_after_scenario
+        global name_scenario_after
+
+        if execute_after_scenario:
+            print("----> AFTER STEP EXECUTING...")
+            name = name_scenario_after
+            # # Resetta la variabile per evitare di eseguire lo scenario "after" più volte
+            execute_after_scenario = False  
+
+            # # Esegue tutti gli step dello scenario "after"
+            phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
+            text_step = ''.join([step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
+            context.execute_steps(text_step)
+            print("----> AFTER STEP COMPLETED")
+
         sys.stdout = context.original_stdout
 
         context.stdout_capture.seek(0)

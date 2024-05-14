@@ -16,7 +16,7 @@
     "timestampOperation": "$timestampOperationExt",
     "additionalPaymentInformations": {
         "rrn": "$rrn",
-        "outcomePaymentGateway": "$outcomePaymentGateway",
+        "outcomePaymentGateway": "$outPaymentGateway",
         "totalAmount": "$totalAmount1",
         "fee": "$fee1",
         "timestampOperation": "$timestampOperation1",

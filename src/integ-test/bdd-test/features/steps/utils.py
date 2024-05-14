@@ -847,7 +847,6 @@ def transpose_table_to_dict(table):
 
     return transposed_table_dict
 
-
 ###METODO PER CREARE UNA DICT DA UNA CONTEXT TABLE, RITORNA UNA DICT DELLA TABLE
 def table_to_dict(table, type_table):
     dict_table = {}
@@ -874,3 +873,6 @@ def table_to_dict(table, type_table):
         raise ValueError(f"Invalid value of type table: {type_table}. It should be one of {predefined_values}")
     
     return dict_table
+
+
+

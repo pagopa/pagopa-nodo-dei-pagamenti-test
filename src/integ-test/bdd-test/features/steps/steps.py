@@ -129,198 +129,210 @@ def step_impl(context):
 
 @step('initial XML {primitive}')
 def step_impl(context, primitive):
-    payload = context.text or ""
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
+    try:
+        payload = context.text or ""
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
+        payload = utils.replace_global_variables(payload, context)
 
-    if len(payload) > 0:
-        my_document = parseString(payload)
-        idBrokerPSP = "70000000001"
-        if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
-            idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[
-                0].firstChild.data
+        if len(payload) > 0:
+            my_document = parseString(payload)
+            idBrokerPSP = "70000000001"
+            if len(my_document.getElementsByTagName('idBrokerPSP')) > 0:
+                idBrokerPSP = my_document.getElementsByTagName('idBrokerPSP')[
+                    0].firstChild.data
 
-        payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+            payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
 
-        payload = payload.replace('#idempotency_key_POSTE#',
-                                  f"{str(random.randint(10000000000, 99999999999))}_{str(random.randint(1000000000, 9999999999))}")
+            payload = payload.replace('#idempotency_key_POSTE#',
+                                    f"{str(random.randint(10000000000, 99999999999))}_{str(random.randint(1000000000, 9999999999))}")
 
-        payload = payload.replace('#idempotency_key_IOname#',
-                                  "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
+            payload = payload.replace('#idempotency_key_IOname#',
+                                    "IOname" + "_" + str(random.randint(1000000000, 9999999999)))
 
-    if "#timedate#" in payload:
-        date = datetime.date.today().strftime("%Y-%m-%d")
-        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-        payload = payload.replace('#timedate#', timedate)
-        setattr(context, 'timedate', timedate)
+        if "#timedate#" in payload:
+            date = datetime.date.today().strftime("%Y-%m-%d")
+            timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#timedate#', timedate)
+            setattr(context, 'timedate', timedate)
 
-    if '#date#' in payload:
-        date = datetime.date.today().strftime("%Y-%m-%d")
-        payload = payload.replace('#date#', date)
-        setattr(context, 'date', date)
+        if '#date#' in payload:
+            date = datetime.date.today().strftime("%Y-%m-%d")
+            payload = payload.replace('#date#', date)
+            setattr(context, 'date', date)
 
-    if '#yesterday_date#' in payload:
-        yesterday_date = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
-        payload = payload.replace('#yesterday_date#', yesterday_date)
-        setattr(context, 'yesterday_date', yesterday_date)
+        if '#yesterday_date#' in payload:
+            yesterday_date = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#yesterday_date#', yesterday_date)
+            setattr(context, 'yesterday_date', yesterday_date)
 
-    if '#tomorrow_date#' in payload:
-        tomorrow_date = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
-        payload = payload.replace('#tomorrow_date#', tomorrow_date)
-        setattr(context, 'tomorrow_date', tomorrow_date)
+        if '#tomorrow_date#' in payload:
+            tomorrow_date = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#tomorrow_date#', tomorrow_date)
+            setattr(context, 'tomorrow_date', tomorrow_date)
 
-    if '#identificativoFlusso#' in payload:
-        date = datetime.date.today().strftime("%Y-%m-%d")
-        identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(
-            random.randint(0, 10000))
+        if '#identificativoFlusso#' in payload:
+            date = datetime.date.today().strftime("%Y-%m-%d")
+            identificativoFlusso = date + context.config.userdata.get("global_configuration").get("psp") + "-" + str(
+                random.randint(0, 10000))
 
-        payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
-        setattr(context, 'identificativoFlusso', identificativoFlusso)
+            payload = payload.replace('#identificativoFlusso#', identificativoFlusso)
+            setattr(context, 'identificativoFlusso', identificativoFlusso)
 
-    if '#iubd#' in payload:
-        iubd = '' + str(random.randint(10000000, 20000000)) + \
-               str(random.randint(10000000, 20000000))
-        payload = payload.replace('#iubd#', iubd)
-        setattr(context, 'iubd', iubd)
+        if '#iubd#' in payload:
+            iubd = '' + str(random.randint(10000000, 20000000)) + \
+                str(random.randint(10000000, 20000000))
+            payload = payload.replace('#iubd#', iubd)
+            setattr(context, 'iubd', iubd)
 
-    if "#ccp#" in payload:
-        ccp = str(random.randint(100000000000000, 999999999999999))
-        payload = payload.replace('#ccp#', ccp)
-        setattr(context, "ccp", ccp)
+        if "#ccp#" in payload:
+            ccp = str(random.randint(100000000000000, 999999999999999))
+            payload = payload.replace('#ccp#', ccp)
+            setattr(context, "ccp", ccp)
 
-    if "#ccpms#" in payload:
-        ccpms = str(utils.current_milli_time())
-        payload = payload.replace('#ccpms#', ccpms)
-        setattr(context, "ccpms", ccpms)
+        if "#ccpms#" in payload:
+            ccpms = str(utils.current_milli_time())
+            payload = payload.replace('#ccpms#', ccpms)
+            setattr(context, "ccpms", ccpms)
 
-    if "#ccpms2#" in payload:
-        ccpms2 = str(utils.current_milli_time()) + '1'
-        payload = payload.replace('#ccpms2#', ccpms2)
-        setattr(context, "ccpms2", ccpms2)
+        if "#ccpms2#" in payload:
+            ccpms2 = str(utils.current_milli_time()) + '1'
+            payload = payload.replace('#ccpms2#', ccpms2)
+            setattr(context, "ccpms2", ccpms2)
 
-    if "#iuv#" in payload:
-        iuv = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv#', iuv)
-        setattr(context, "iuv", iuv)
+        if "#iuv#" in payload:
+            iuv = '11' + str(random.randint(1000000000000, 9999999999999))
+            payload = payload.replace('#iuv#', iuv)
+            setattr(context, "iuv", iuv)
 
-    if "#iuv1#" in payload:
-        iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv1#', iuv1)
-        setattr(context, "iuv1", iuv1)
+        if "#iuv1#" in payload:
+            iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
+            payload = payload.replace('#iuv1#', iuv1)
+            setattr(context, "iuv1", iuv1)
 
-    if '#IUV#' in payload:
-        date = datetime.date.today().strftime("%Y-%m-%d")
-        IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + \
-              datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
-        payload = payload.replace('#IUV#', IUV)
-        setattr(context, 'IUV', IUV)
+        if '#IUV#' in payload:
+            date = datetime.date.today().strftime("%Y-%m-%d")
+            IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + \
+                datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#IUV#', IUV)
+            setattr(context, 'IUV', IUV)
 
-    if '#IUV2#' in payload:
-        date = datetime.date.today().strftime("%Y-%m-%d")
-        IUV2 = str(date + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + '-' + str(random.randint(0, 100000)))
-        payload = payload.replace('#IUV2#', IUV2)
-        setattr(context, 'IUV2', IUV2)
+        if '#IUV2#' in payload:
+            date = datetime.date.today().strftime("%Y-%m-%d")
+            IUV2 = str(date + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3] + '-' + str(random.randint(0, 100000)))
+            payload = payload.replace('#IUV2#', IUV2)
+            setattr(context, 'IUV2', IUV2)
 
-    if '#notice_number#' in payload:
-        notice_number = f"30211{str(random.randint(1000000000000, 9999999999999))}"
-        payload = payload.replace('#notice_number#', notice_number)
-        setattr(context, "iuv", notice_number[1:])
+        if '#notice_number#' in payload:
+            notice_number = f"30211{str(random.randint(1000000000000, 9999999999999))}"
+            payload = payload.replace('#notice_number#', notice_number)
+            setattr(context, "iuv", notice_number[1:])
 
-    if '#notice_number_old#' in payload:
-        notice_number = f"31211{str(random.randint(1000000000000, 9999999999999))}"
-        payload = payload.replace('#notice_number_old#', notice_number)
-        setattr(context, "iuv", notice_number[1:])
+        if '#notice_number_old#' in payload:
+            notice_number = f"31211{str(random.randint(1000000000000, 9999999999999))}"
+            payload = payload.replace('#notice_number_old#', notice_number)
+            setattr(context, "iuv", notice_number[1:])
 
-    if '#carrello#' in payload:
-        carrello = "77777777777" + "302" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#carrello#', carrello)
-        setattr(context, 'carrello', carrello)
+        if '#carrello#' in payload:
+            carrello = "77777777777" + "302" + "0" + str(random.randint(1000, 2000)) + str(
+                random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#carrello#', carrello)
+            setattr(context, 'carrello', carrello)
 
-    if '#carrello1#' in payload:
-        carrello1 = "77777777777" + "302" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
-        payload = payload.replace('#carrello1#', carrello1)
-        setattr(context, 'carrello1', carrello1)
+        if '#carrello1#' in payload:
+            carrello1 = "77777777777" + "302" + "0" + str(random.randint(1000, 2000)) + str(
+                random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+            payload = payload.replace('#carrello1#', carrello1)
+            setattr(context, 'carrello1', carrello1)
 
-    if '#secCarrello#' in payload:
-        secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#secCarrello#', secCarrello)
-        setattr(context, 'secCarrello', secCarrello)
+        if '#secCarrello#' in payload:
+            secCarrello = "77777777777" + "301" + "0" + str(random.randint(1000, 2000)) + str(
+                random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#secCarrello#', secCarrello)
+            setattr(context, 'secCarrello', secCarrello)
 
-    if '#carrNOTENABLED#' in payload:
-        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
-        setattr(context, 'carrNOTENABLED', carrNOTENABLED)
+        if '#carrNOTENABLED#' in payload:
+            carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+                random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
+            setattr(context, 'carrNOTENABLED', carrNOTENABLED)
 
-    if '#thrCarrello#' in payload:
-        thrCarrello = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#thrCarrello#', thrCarrello)
-        setattr(context, 'thrCarrello', thrCarrello)
+        if '#thrCarrello#' in payload:
+            thrCarrello = "77777777777" + "088" + "0" + str(random.randint(1000, 2000)) + str(
+                random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#thrCarrello#', thrCarrello)
+            setattr(context, 'thrCarrello', thrCarrello)
 
-    if '#CARRELLO#' in payload:
-        CARRELLO = "CARRELLO" + "-" + \
-                   str(getattr(context, 'date') +
-                       datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
-        payload = payload.replace('#CARRELLO#', CARRELLO)
-        setattr(context, 'CARRELLO', CARRELLO)
+        if '#CARRELLO#' in payload:
+            CARRELLO = "CARRELLO" + "-" + \
+                    str(getattr(context, 'date') +
+                        datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+            payload = payload.replace('#CARRELLO#', CARRELLO)
+            setattr(context, 'CARRELLO', CARRELLO)
 
-    if '#CARRELLO1#' in payload:
-        CARRELLO1 = "CARRELLO" + str(random.randint(0, 100000))
-        payload = payload.replace('#CARRELLO1#', CARRELLO1)
-        setattr(context, 'CARRELLO1', CARRELLO1)
+        if '#CARRELLO1#' in payload:
+            CARRELLO1 = "CARRELLO" + str(random.randint(0, 100000))
+            payload = payload.replace('#CARRELLO1#', CARRELLO1)
+            setattr(context, 'CARRELLO1', CARRELLO1)
 
-    if '#CARRELLO2#' in payload:
-        CARRELLO2 = "CARRELLO" + str(random.randint(0, 10000))
-        payload = payload.replace('#CARRELLO2#', CARRELLO2)
-        setattr(context, 'CARRELLO2', CARRELLO2)
+        if '#CARRELLO2#' in payload:
+            CARRELLO2 = "CARRELLO" + str(random.randint(0, 10000))
+            payload = payload.replace('#CARRELLO2#', CARRELLO2)
+            setattr(context, 'CARRELLO2', CARRELLO2)
 
-    if '#carrelloMills#' in payload:
-        carrello = str(utils.current_milli_time())
-        payload = payload.replace('#carrelloMills#', carrello)
-        setattr(context, 'carrelloMills', carrello)
+        if '#carrelloMills#' in payload:
+            carrello = str(utils.current_milli_time())
+            payload = payload.replace('#carrelloMills#', carrello)
+            setattr(context, 'carrelloMills', carrello)
 
-    if '#ccp3#' in payload:
-        date = datetime.date.today().strftime("%Y-%m-%d")
-        timedate = date + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
-        ccp3 = str(random.randint(0, 10000)) + timedate
-        payload = payload.replace('#ccp3#', ccp3)
-        setattr(context, 'ccp3', ccp3)
-    if '$iuv' in payload:
-        payload = payload.replace('$iuv', getattr(context, 'iuv'))
+        if '#ccp3#' in payload:
+            date = datetime.date.today().strftime("%Y-%m-%d")
+            timedate = date + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3]
+            ccp3 = str(random.randint(0, 10000)) + timedate
+            payload = payload.replace('#ccp3#', ccp3)
+            setattr(context, 'ccp3', ccp3)
+        if '$iuv' in payload:
+            payload = payload.replace('$iuv', getattr(context, 'iuv'))
 
-    if '$intermediarioPA' in payload:
-        payload = payload.replace(
-            '$intermediarioPA', getattr(context, 'intermediarioPA'))
+        if '$intermediarioPA' in payload:
+            payload = payload.replace(
+                '$intermediarioPA', getattr(context, 'intermediarioPA'))
 
-    if '$identificativoFlusso' in payload:
-        payload = payload.replace('$identificativoFlusso', getattr(
-            context, 'identificativoFlusso'))
+        if '$identificativoFlusso' in payload:
+            payload = payload.replace('$identificativoFlusso', getattr(
+                context, 'identificativoFlusso'))
 
-    if '$1ccp' in payload:
-        payload = payload.replace('$1ccp', getattr(context, 'ccp1'))
+        if '$1ccp' in payload:
+            payload = payload.replace('$1ccp', getattr(context, 'ccp1'))
 
-    if '$2ccp' in payload:
-        payload = payload.replace('$2ccp', getattr(context, 'ccp2'))
+        if '$2ccp' in payload:
+            payload = payload.replace('$2ccp', getattr(context, 'ccp2'))
 
-    if '$rendAttachment' in payload:
-        rendAttachment = getattr(context, 'rendAttachment')
-        rendAttachment_b = bytes(rendAttachment, 'UTF-8')
-        rendAttachment_uni = b64.b64encode(rendAttachment_b)
-        rendAttachment_uni = f"{rendAttachment_uni}".split("'")[1]
-        payload = payload.replace('$rendAttachment', rendAttachment_uni)
+        if '$rendAttachment' in payload:
+            rendAttachment = getattr(context, 'rendAttachment')
+            rendAttachment_b = bytes(rendAttachment, 'UTF-8')
+            rendAttachment_uni = b64.b64encode(rendAttachment_b)
+            rendAttachment_uni = f"{rendAttachment_uni}".split("'")[1]
+            payload = payload.replace('$rendAttachment', rendAttachment_uni)
 
-    if '#carrello#' in payload:
-        carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#carrello#', carrello)
-        setattr(context, 'carrello', carrello)
+        if '#carrello#' in payload:
+            carrello = "77777777777" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+                random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#carrello#', carrello)
+            setattr(context, 'carrello', carrello)
 
-    setattr(context, primitive, payload)
+        setattr(context, primitive, payload)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 
@@ -830,471 +842,591 @@ def step_impl(context, primitive, type_table, filebody):
 
 @given('from body {filebody} initial JSON {primitive}')
 def step_impl(context, primitive, filebody):
-    file_json = open(f"src/integ-test/bdd-test/resources/json/{filebody}.json")
-    data_json = json.load(file_json)
+    try:
+        file_json = open(f"src/integ-test/bdd-test/resources/json/{filebody}.json")
+        data_json = json.load(file_json)
 
-    payload = json.dumps(data_json)
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
-    setattr(context, f"{primitive}JSON", payload)
-    
-    jsonDict = json.loads(payload)
-    payload = utils.json2xml(jsonDict)
-    payload = '<root>' + payload + '</root>'
+        payload = json.dumps(data_json)
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
+        payload = utils.replace_global_variables(payload, context)
+        setattr(context, f"{primitive}JSON", payload)
+        
+        jsonDict = json.loads(payload)
+        payload = utils.json2xml(jsonDict)
+        payload = '<root>' + payload + '</root>'
 
-    if "#iuv#" in payload:
-        iuv = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv#', iuv)
-        setattr(context, "iuv", iuv)
-    if "#iuv1#" in payload:
-        iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv1#', iuv1)
-        setattr(context, "iuv1", iuv1)
-    if "#iuv2#" in payload:
-        iuv2 = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv2#', iuv2)
-        setattr(context, "iuv2", iuv2)
-    if "#iuv3#" in payload:
-        iuv3 = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv3#', iuv3)
-        setattr(context, "iuv3", iuv3)
-    if "#iuv4#" in payload:
-        iuv4 = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv4#', iuv4)
-        setattr(context, "iuv4", iuv4)
-    if '#transaction_id#' in payload:
-        transaction_id = str(random.randint(10000000, 99999999))
-        payload = payload.replace('#transaction_id#', transaction_id)
-        setattr(context, 'transaction_id', transaction_id)
-    if '#psp_transaction_id#' in payload:
-        psp_transaction_id = str(random.randint(10000000, 99999999))
-        payload = payload.replace('#psp_transaction_id#', psp_transaction_id)
-        setattr(context, 'psp_transaction_id', psp_transaction_id)
-    if '$iuv' in payload:
-        payload = payload.replace('$iuv', getattr(context, 'iuv'))
-    if '$transaction_id' in payload:
-        payload = payload.replace('$transaction_id', getattr(context, 'transaction_id'))
-    if '$psp_transaction_id' in payload:
-        payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
-    setattr(context, primitive, payload)
+        if "#iuv#" in payload:
+            iuv = '11' + str(random.randint(1000000000000, 9999999999999))
+            payload = payload.replace('#iuv#', iuv)
+            setattr(context, "iuv", iuv)
+        if "#iuv1#" in payload:
+            iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
+            payload = payload.replace('#iuv1#', iuv1)
+            setattr(context, "iuv1", iuv1)
+        if "#iuv2#" in payload:
+            iuv2 = '11' + str(random.randint(1000000000000, 9999999999999))
+            payload = payload.replace('#iuv2#', iuv2)
+            setattr(context, "iuv2", iuv2)
+        if "#iuv3#" in payload:
+            iuv3 = '11' + str(random.randint(1000000000000, 9999999999999))
+            payload = payload.replace('#iuv3#', iuv3)
+            setattr(context, "iuv3", iuv3)
+        if "#iuv4#" in payload:
+            iuv4 = '11' + str(random.randint(1000000000000, 9999999999999))
+            payload = payload.replace('#iuv4#', iuv4)
+            setattr(context, "iuv4", iuv4)
+        if '#transaction_id#' in payload:
+            transaction_id = str(random.randint(10000000, 99999999))
+            payload = payload.replace('#transaction_id#', transaction_id)
+            setattr(context, 'transaction_id', transaction_id)
+        if '#psp_transaction_id#' in payload:
+            psp_transaction_id = str(random.randint(10000000, 99999999))
+            payload = payload.replace('#psp_transaction_id#', psp_transaction_id)
+            setattr(context, 'psp_transaction_id', psp_transaction_id)
+        if '$iuv' in payload:
+            payload = payload.replace('$iuv', getattr(context, 'iuv'))
+        if '$transaction_id' in payload:
+            payload = payload.replace('$transaction_id', getattr(context, 'transaction_id'))
+        if '$psp_transaction_id' in payload:
+            payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
+        setattr(context, primitive, payload)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @given('initial JSON {primitive}')
 def step_impl(context, primitive):
-    payload = context.text or ""
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
-    setattr(context, f"{primitive}JSON", payload)
+    try:
+        payload = context.text or ""
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
+        payload = utils.replace_global_variables(payload, context)
+        setattr(context, f"{primitive}JSON", payload)
 
-    jsonDict = json.loads(payload)
-    payload = utils.json2xml(jsonDict)
-    payload = '<root>' + payload + '</root>'
-    if "#iuv#" in payload:
-        iuv = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv#', iuv)
-        setattr(context, "iuv", iuv)
-    if "#iuv1#" in payload:
-        iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv1#', iuv1)
-        setattr(context, "iuv1", iuv1)
-    if "#iuv2#" in payload:
-        iuv2 = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv2#', iuv2)
-        setattr(context, "iuv2", iuv2)
-    if "#iuv3#" in payload:
-        iuv3 = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv3#', iuv3)
-        setattr(context, "iuv3", iuv3)
-    if "#iuv4#" in payload:
-        iuv4 = '11' + str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace('#iuv4#', iuv4)
-        setattr(context, "iuv4", iuv4)
-    if '#transaction_id#' in payload:
-        transaction_id = str(random.randint(10000000, 99999999))
-        payload = payload.replace('#transaction_id#', transaction_id)
-        setattr(context, 'transaction_id', transaction_id)
-    if '#psp_transaction_id#' in payload:
-        psp_transaction_id = str(random.randint(10000000, 99999999))
-        payload = payload.replace('#psp_transaction_id#', psp_transaction_id)
-        setattr(context, 'psp_transaction_id', psp_transaction_id)
-    if '$iuv' in payload:
-        payload = payload.replace('$iuv', getattr(context, 'iuv'))
-    if '$transaction_id' in payload:
-        payload = payload.replace('$transaction_id', getattr(context, 'transaction_id'))
-    if '$psp_transaction_id' in payload:
-        payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
-    setattr(context, primitive, payload)
+        jsonDict = json.loads(payload)
+        payload = utils.json2xml(jsonDict)
+        payload = '<root>' + payload + '</root>'
+        if "#iuv#" in payload:
+            iuv = '11' + str(random.randint(1000000000000, 9999999999999))
+            payload = payload.replace('#iuv#', iuv)
+            setattr(context, "iuv", iuv)
+        if "#iuv1#" in payload:
+            iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
+            payload = payload.replace('#iuv1#', iuv1)
+            setattr(context, "iuv1", iuv1)
+        if "#iuv2#" in payload:
+            iuv2 = '11' + str(random.randint(1000000000000, 9999999999999))
+            payload = payload.replace('#iuv2#', iuv2)
+            setattr(context, "iuv2", iuv2)
+        if "#iuv3#" in payload:
+            iuv3 = '11' + str(random.randint(1000000000000, 9999999999999))
+            payload = payload.replace('#iuv3#', iuv3)
+            setattr(context, "iuv3", iuv3)
+        if "#iuv4#" in payload:
+            iuv4 = '11' + str(random.randint(1000000000000, 9999999999999))
+            payload = payload.replace('#iuv4#', iuv4)
+            setattr(context, "iuv4", iuv4)
+        if '#transaction_id#' in payload:
+            transaction_id = str(random.randint(10000000, 99999999))
+            payload = payload.replace('#transaction_id#', transaction_id)
+            setattr(context, 'transaction_id', transaction_id)
+        if '#psp_transaction_id#' in payload:
+            psp_transaction_id = str(random.randint(10000000, 99999999))
+            payload = payload.replace('#psp_transaction_id#', psp_transaction_id)
+            setattr(context, 'psp_transaction_id', psp_transaction_id)
+        if '$iuv' in payload:
+            payload = payload.replace('$iuv', getattr(context, 'iuv'))
+        if '$transaction_id' in payload:
+            payload = payload.replace('$transaction_id', getattr(context, 'transaction_id'))
+        if '$psp_transaction_id' in payload:
+            payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
+        setattr(context, primitive, payload)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step('RPT generation')
 def step_impl(context):
-    payload = context.text or ""
-    date = datetime.date.today().strftime("%Y-%m-%d")
-    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+    try:
+        payload = context.text or ""
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
 
-    setattr(context, 'date', date)
-    setattr(context, 'timedate', timedate)
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
-
-    pa = context.config.userdata.get(
-        'global_configuration').get('creditor_institution_code')
-
-    if "#iuv#" in payload:
-        iuv = f"14{str(random.randint(1000000000000, 9999999999999))}"
-        payload = payload.replace('#iuv#', iuv)
-        setattr(context, 'iuv', iuv)
-
-    if "#ccp#" in payload:
-        ccp = str(int(time.time() * 1000))
-        payload = payload.replace('#ccp#', ccp)
-        setattr(context, "ccp", ccp)
-
-    if "#ccp1#" in payload:
-        ccp1 = str(utils.current_milli_time())
-        payload = payload.replace('#ccp1#', ccp1)
-        setattr(context, "1ccp", ccp1)
-
-    if "#CCP#" in payload:
-        CCP = 'CCP' + '-' + \
-              str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
-        payload = payload.replace('#CCP#', CCP)
-        setattr(context, "CCP", CCP)
-
-    if '#date#' in payload:
-        payload = payload.replace('#date#', date)
-
-    if "#timedate#" in payload:
-        payload = payload.replace('#timedate#', timedate)
+        setattr(context, 'date', date)
         setattr(context, 'timedate', timedate)
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
 
-    if '#IuV#' in payload:
-        iuv = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
-                                                                         2000)) + str(random.randint(1000, 2000)) + '00'
-        payload = payload.replace('#IuV#', iuv)
-        setattr(context, 'IuV', iuv)
+        pa = context.config.userdata.get(
+            'global_configuration').get('creditor_institution_code')
 
-    if '#iuv2#' in payload:
-        iuv = 'IUV' + '-' + \
-              str(date + '-' +
-                  datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
-        payload = payload.replace('#iuv2#', iuv)
-        setattr(context, '2iuv', iuv)
+        if "#iuv#" in payload:
+            iuv = f"14{str(random.randint(1000000000000, 9999999999999))}"
+            payload = payload.replace('#iuv#', iuv)
+            setattr(context, 'iuv', iuv)
 
-    if '#IUVspecial#' in payload:
-        IUVspecial = '!ìUV[#à°]_' + \
-                     datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3] + '$§'
-        payload = payload.replace('#IUVspecial#', IUVspecial)
-        setattr(context, 'IUVspecial', IUVspecial)
+        if "#ccp#" in payload:
+            ccp = str(int(time.time() * 1000))
+            payload = payload.replace('#ccp#', ccp)
+            setattr(context, "ccp", ccp)
 
-    if '#IUV_#' in payload:
-        IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-        payload = payload.replace('#IUV_#', IUV_)
-        setattr(context, 'IUV_', IUV_)
+        if "#ccp1#" in payload:
+            ccp1 = str(utils.current_milli_time())
+            payload = payload.replace('#ccp1#', ccp1)
+            setattr(context, "1ccp", ccp1)
 
-    if '#IUV#' in payload:
-        IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + \
-              datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-        payload = payload.replace('#IUV#', IUV)
-        setattr(context, 'IUV', IUV)
+        if "#CCP#" in payload:
+            CCP = 'CCP' + '-' + \
+                str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+            payload = payload.replace('#CCP#', CCP)
+            setattr(context, "CCP", CCP)
 
-    if '#idCarrello#' in payload:
-        idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#idCarrello#', idCarrello)
-        setattr(context, 'idCarrello', idCarrello)
+        if '#date#' in payload:
+            payload = payload.replace('#date#', date)
 
-    if '#CARRELLO#' in payload:
-        CARRELLO = "CARRELLO" + "-" + \
-                   str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
-        payload = payload.replace('#CARRELLO#', CARRELLO)
-        setattr(context, 'CARRELLO', CARRELLO)
+        if "#timedate#" in payload:
+            payload = payload.replace('#timedate#', timedate)
+            setattr(context, 'timedate', timedate)
 
-    if '#carrello#' in payload:
-        prova = utils.random_s()
-        print('############', prova)
-        carrello = pa + "302" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + prova
-        print(carrello)
-        payload = payload.replace('#carrello#', carrello)
-        setattr(context, 'carrello', carrello)
+        if '#IuV#' in payload:
+            iuv = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
+                                                                            2000)) + str(random.randint(1000, 2000)) + '00'
+            payload = payload.replace('#IuV#', iuv)
+            setattr(context, 'IuV', iuv)
 
-    if '#carrello1#' in payload:
-        carrello1 = pa + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
-            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
-        payload = payload.replace('#carrello1#', carrello1)
-        setattr(context, 'carrello1', carrello1)
+        if '#iuv2#' in payload:
+            iuv = 'IUV' + '-' + \
+                str(date + '-' +
+                    datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
+            payload = payload.replace('#iuv2#', iuv)
+            setattr(context, '2iuv', iuv)
 
-    if '#secCarrello#' in payload:
-        secCarrello = pa + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
-            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#secCarrello#', secCarrello)
-        setattr(context, 'secCarrello', secCarrello)
+        if '#IUVspecial#' in payload:
+            IUVspecial = '!ìUV[#à°]_' + \
+                        datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3] + '$§'
+            payload = payload.replace('#IUVspecial#', IUVspecial)
+            setattr(context, 'IUVspecial', IUVspecial)
 
-    if '#thrCarrello#' in payload:
-        thrCarrello = pa + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
-            1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#thrCarrello#', thrCarrello)
-        setattr(context, 'thrCarrello', thrCarrello)
+        if '#IUV_#' in payload:
+            IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#IUV_#', IUV_)
+            setattr(context, 'IUV_', IUV_)
 
-    if '#carrNOTENABLED#' in payload:
-        carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
-            random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
-        payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
-        setattr(context, 'carrNOTENABLED', carrNOTENABLED)
+        if '#IUV#' in payload:
+            IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + \
+                datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#IUV#', IUV)
+            setattr(context, 'IUV', IUV)
 
-    if '#date#' in payload:
-        payload = payload.replace('#date#', date)
+        if '#idCarrello#' in payload:
+            idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+                random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#idCarrello#', idCarrello)
+            setattr(context, 'idCarrello', idCarrello)
 
-    if '#sdf#' in payload:
-        timedate = date + datetime.datetime.now().strftime("-%H:%M:%S.%f")[:-3]
-        payload = payload.replace('#sdf#', timedate)
-        setattr(context, 'sdf', timedate)
+        if '#CARRELLO#' in payload:
+            CARRELLO = "CARRELLO" + "-" + \
+                    str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+            payload = payload.replace('#CARRELLO#', CARRELLO)
+            setattr(context, 'CARRELLO', CARRELLO)
 
-    if '#mills_time#' in payload:
-        millisec = str(int(time.time() * 1000))
-        payload = payload.replace('#mills_time#', millisec)
-        setattr(context, 'mills_time', millisec)
+        if '#carrello#' in payload:
+            prova = utils.random_s()
+            print('############', prova)
+            carrello = pa + "302" + "0" + str(random.randint(1000, 2000)) + str(
+                random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + prova
+            print(carrello)
+            payload = payload.replace('#carrello#', carrello)
+            setattr(context, 'carrello', carrello)
 
-    payload = utils.replace_global_variables(payload, context)
+        if '#carrello1#' in payload:
+            carrello1 = pa + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
+                1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+            payload = payload.replace('#carrello1#', carrello1)
+            setattr(context, 'carrello1', carrello1)
 
-    setattr(context, 'rpt', payload)
-    payload_b = bytes(payload, 'UTF-8')
-    payload_uni = b64.b64encode(payload_b)
-    payload = f"{payload_uni}".split("'")[1]
+        if '#secCarrello#' in payload:
+            secCarrello = pa + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
+                1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#secCarrello#', secCarrello)
+            setattr(context, 'secCarrello', secCarrello)
 
-    print("RPT generato: ", payload)
-    setattr(context, 'rptAttachment', payload)
+        if '#thrCarrello#' in payload:
+            thrCarrello = pa + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
+                1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#thrCarrello#', thrCarrello)
+            setattr(context, 'thrCarrello', thrCarrello)
+
+        if '#carrNOTENABLED#' in payload:
+            carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+                random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
+            setattr(context, 'carrNOTENABLED', carrNOTENABLED)
+
+        if '#date#' in payload:
+            payload = payload.replace('#date#', date)
+
+        if '#sdf#' in payload:
+            timedate = date + datetime.datetime.now().strftime("-%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#sdf#', timedate)
+            setattr(context, 'sdf', timedate)
+
+        if '#mills_time#' in payload:
+            millisec = str(int(time.time() * 1000))
+            payload = payload.replace('#mills_time#', millisec)
+            setattr(context, 'mills_time', millisec)
+
+        payload = utils.replace_global_variables(payload, context)
+
+        setattr(context, 'rpt', payload)
+        payload_b = bytes(payload, 'UTF-8')
+        payload_uni = b64.b64encode(payload_b)
+        payload = f"{payload_uni}".split("'")[1]
+
+        print("RPT generato: ", payload)
+        setattr(context, 'rptAttachment', payload)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @given('generate {number:d} notice number and iuv with aux digit {aux_digit:d}, segregation code {segregation_code} and application code {application_code}')
 def step_impl(context, number, aux_digit, segregation_code, application_code):
-    segregation_code = utils.replace_global_variables(segregation_code, context)
-    application_code = utils.replace_global_variables(application_code, context)
-    if aux_digit == 0 or aux_digit == 3:
-        iuv = f"11{random.randint(10000000000, 99999999999)}00"
-        reference_code = application_code if aux_digit == 0 else segregation_code
-        notice_number = f"{aux_digit}{reference_code}{iuv}"
-    elif aux_digit == 1 or aux_digit == 2:
-        iuv = random.randint(10000000000000000, 99999999999999999)
-        notice_number = f"{aux_digit}{iuv}"
-    else:
-        assert False
+    try:
+        segregation_code = utils.replace_global_variables(segregation_code, context)
+        application_code = utils.replace_global_variables(application_code, context)
+        if aux_digit == 0 or aux_digit == 3:
+            iuv = f"11{random.randint(10000000000, 99999999999)}00"
+            reference_code = application_code if aux_digit == 0 else segregation_code
+            notice_number = f"{aux_digit}{reference_code}{iuv}"
+        elif aux_digit == 1 or aux_digit == 2:
+            iuv = random.randint(10000000000000000, 99999999999999999)
+            notice_number = f"{aux_digit}{iuv}"
+        else:
+            assert False, f"aux digit {aux_digit} wrong!!!"
 
-    setattr(context, f"{number}iuv", str(iuv))
-    setattr(context, f'{number}noticeNumber', notice_number)
+        setattr(context, f"{number}iuv", str(iuv))
+        setattr(context, f'{number}noticeNumber', notice_number)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @given('generate {number:d} cart with PA {pa} and notice number {notice_number}')
 def step_impl(context, number, pa, notice_number):
-    pa = utils.replace_local_variables(pa, context)
-    pa = utils.replace_context_variables(pa, context)
-    pa = utils.replace_global_variables(pa, context)
+    try:
+        pa = utils.replace_local_variables(pa, context)
+        pa = utils.replace_context_variables(pa, context)
+        pa = utils.replace_global_variables(pa, context)
 
-    notice_number = utils.replace_local_variables(notice_number, context)
-    notice_number = utils.replace_context_variables(notice_number, context)
+        notice_number = utils.replace_local_variables(notice_number, context)
+        notice_number = utils.replace_context_variables(notice_number, context)
 
-    carrello = f"{pa}{notice_number}-{utils.random_s()}"
-    setattr(context, f'{number}carrello', carrello)
+        carrello = f"{pa}{notice_number}-{utils.random_s()}"
+        setattr(context, f'{number}carrello', carrello)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @given('RPT{number:d} generation')
 def step_impl(context, number):
-    payload = context.text or ""
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
+    try:
+        payload = context.text or ""
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
 
-    payload = utils.replace_global_variables(payload, context)
-    date = datetime.date.today().strftime("%Y-%m-%d")
-    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    setattr(context, 'date', date)
-    setattr(context, 'timedate', timedate)
+        payload = utils.replace_global_variables(payload, context)
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+        setattr(context, 'date', date)
+        setattr(context, 'timedate', timedate)
 
-    if f"#intermediarioPA {number}#" in payload:
-        intermediarioPA = "44444444444_05"
-        payload = payload.replace(
-            f'#intermediarioPA{number}#', intermediarioPA)
-        setattr(context, f"intermediarioPA{number}", intermediarioPA)
+        if f"#intermediarioPA {number}#" in payload:
+            intermediarioPA = "44444444444_05"
+            payload = payload.replace(
+                f'#intermediarioPA{number}#', intermediarioPA)
+            setattr(context, f"intermediarioPA{number}", intermediarioPA)
 
-    if f"#IUV{number}#" in payload:
-        IUV = str(utils.current_milli_time()) + \
-              '-' + str(random.randint(0, 10000))
-        payload = payload.replace(f'#IUV{number}#', IUV)
-        setattr(context, f'{number}IUV', IUV)
+        if f"#IUV{number}#" in payload:
+            IUV = str(utils.current_milli_time()) + \
+                '-' + str(random.randint(0, 10000))
+            payload = payload.replace(f'#IUV{number}#', IUV)
+            setattr(context, f'{number}IUV', IUV)
 
-    if f'#iUV{number}#' in payload:
-        iuv = 'IUV2' + '-' + str(date + '-' + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
-        payload = payload.replace(f'#iUV{number}#', iuv)
-        setattr(context, f'{number}iUV', iuv)
+        if f'#iUV{number}#' in payload:
+            iuv = 'IUV2' + '-' + str(date + '-' + datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
+            payload = payload.replace(f'#iUV{number}#', iuv)
+            setattr(context, f'{number}iUV', iuv)
 
-    if '#IUV_{number}#' in payload:
-        IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' + \
-               datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-        payload = payload.replace('#IUV_{number}#', IUV_)
-        setattr(context, f'{number}IUV_', IUV_)
+        if '#IUV_{number}#' in payload:
+            IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' + \
+                datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#IUV_{number}#', IUV_)
+            setattr(context, f'{number}IUV_', IUV_)
 
-    if f"#ccp{number}#" in payload:
-        ccp = str(int(time.time() * 1000))
-        payload = payload.replace(f'#ccp{number}#', ccp)
-        setattr(context, f"{number}ccp", ccp)
+        if f"#ccp{number}#" in payload:
+            ccp = str(int(time.time() * 1000))
+            payload = payload.replace(f'#ccp{number}#', ccp)
+            setattr(context, f"{number}ccp", ccp)
 
-    if f"#codiceContestoPagamento{number}" in payload:
-        ccp = str(random.randint(1000000000000, 9999999999999))
-        payload = payload.replace(f'#codiceContestoPagamento{number}#', ccp)
-        setattr(context, f"{number}codiceContestoPagamento", ccp)
+        if f"#codiceContestoPagamento{number}" in payload:
+            ccp = str(random.randint(1000000000000, 9999999999999))
+            payload = payload.replace(f'#codiceContestoPagamento{number}#', ccp)
+            setattr(context, f"{number}codiceContestoPagamento", ccp)
 
-    if f"#CCP{number}#" in payload:
-        ccp2 = str(utils.current_milli_time()) + '1'
-        payload = payload.replace(f'#CCP{number}#', ccp2)
-        setattr(context, f"{number}CCP", ccp2)
+        if f"#CCP{number}#" in payload:
+            ccp2 = str(utils.current_milli_time()) + '1'
+            payload = payload.replace(f'#CCP{number}#', ccp2)
+            setattr(context, f"{number}CCP", ccp2)
 
-    if "#timedate#" in payload:
-        payload = payload.replace('#timedate#', timedate)
+        if "#timedate#" in payload:
+            payload = payload.replace('#timedate#', timedate)
 
-    if '#date#' in payload:
-        payload = payload.replace('#date#', date)
+        if '#date#' in payload:
+            payload = payload.replace('#date#', date)
 
-    if '$date+1' in payload:
-        date = getattr(context, 'date')
-        date = datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M:%S.%f')
-        date = date + datetime.timedelta(hours=1)
-        date = date.strftime("%Y-%m-%dT%H:%M:%S.%f")
-        print('####', date)
-        payload = payload.replace('$date+1', date)
-        setattr(context, '$date+1', date)
+        if '$date+1' in payload:
+            date = getattr(context, 'date')
+            date = datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M:%S.%f')
+            date = date + datetime.timedelta(hours=1)
+            date = date.strftime("%Y-%m-%dT%H:%M:%S.%f")
+            print('####', date)
+            payload = payload.replace('$date+1', date)
+            setattr(context, '$date+1', date)
 
-    if f'#IuV{number}#' in payload:
-        IuV = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
-                                                                         2000)) + str(random.randint(1000, 2000)) + '00'
-        payload = payload.replace(f'#IuV{number}#', IuV)
-        setattr(context, f'{number}IuV', IuV)
+        if f'#IuV{number}#' in payload:
+            IuV = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
+                                                                            2000)) + str(random.randint(1000, 2000)) + '00'
+            payload = payload.replace(f'#IuV{number}#', IuV)
+            setattr(context, f'{number}IuV', IuV)
 
-    if f'#iuv{number}#' in payload:
-        iuv = "IUV" + str(random.randint(0, 10000)) + "-" + \
-              datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
-        payload = payload.replace(f'#iuv{number}#', iuv)
-        setattr(context, f'{number}iuv', iuv)
+        if f'#iuv{number}#' in payload:
+            iuv = "IUV" + str(random.randint(0, 10000)) + "-" + \
+                datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")[:-3]
+            payload = payload.replace(f'#iuv{number}#', iuv)
+            setattr(context, f'{number}iuv', iuv)
 
-    setattr(context, f'rpt{number}', payload)
-    payload_b = bytes(payload, 'UTF-8')
-    payload_uni = b64.b64encode(payload_b)
-    payload = f"{payload_uni}".split("'")[1]
-    print(payload)
+        setattr(context, f'rpt{number}', payload)
+        payload_b = bytes(payload, 'UTF-8')
+        payload_uni = b64.b64encode(payload_b)
+        payload = f"{payload_uni}".split("'")[1]
+        print(payload)
 
-    setattr(context, f'rpt{number}Attachment', payload)
+        setattr(context, f'rpt{number}Attachment', payload)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @given('MB generation')
 def step_impl(context):
-    payload = context.text or ""
+    try:
+        payload = context.text or ""
 
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
+        payload = utils.replace_global_variables(payload, context)
 
-    if '#iubd#' in payload:
-        iubd = '' + str(random.randint(10000000, 20000000)) + \
-               str(random.randint(10000000, 20000000))
-        payload = payload.replace('#iubd#', iubd)
-        setattr(context, 'iubd', iubd)
-    print(">>>>>>>>>>>>", payload)
+        if '#iubd#' in payload:
+            iubd = '' + str(random.randint(10000000, 20000000)) + \
+                str(random.randint(10000000, 20000000))
+            payload = payload.replace('#iubd#', iubd)
+            setattr(context, 'iubd', iubd)
+        print(">>>>>>>>>>>>", payload)
 
-    payload_b = bytes(payload, 'UTF-8')
-    payload_uni = b64.b64encode(payload_b)
-    payload = f"{payload_uni}".split("'")[1]
+        payload_b = bytes(payload, 'UTF-8')
+        payload_uni = b64.b64encode(payload_b)
+        payload = f"{payload_uni}".split("'")[1]
 
-    setattr(context, 'bollo', payload)
+        setattr(context, 'bollo', payload)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @given('MB{number:d} generation')
 def step_impl(context, number):
-    payload = context.text or ""
+    try:
+        payload = context.text or ""
 
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
+        payload = utils.replace_global_variables(payload, context)
 
-    if f'#iubd{number}#' in payload:
-        iubd = '' + str(random.randint(10000000, 20000000)) + \
-               str(random.randint(10000000, 20000000))
-        payload = payload.replace(f'#iubd{number}#', iubd)
-        setattr(context, f'{number}iubd', iubd)
+        if f'#iubd{number}#' in payload:
+            iubd = '' + str(random.randint(10000000, 20000000)) + \
+                str(random.randint(10000000, 20000000))
+            payload = payload.replace(f'#iubd{number}#', iubd)
+            setattr(context, f'{number}iubd', iubd)
 
-    payload_b = bytes(payload, 'UTF-8')
-    payload_uni = b64.b64encode(payload_b)
-    payload = f"{payload_uni}".split("'")[1]
+        payload_b = bytes(payload, 'UTF-8')
+        payload_uni = b64.b64encode(payload_b)
+        payload = f"{payload_uni}".split("'")[1]
 
-    setattr(context, f'{number}bollo', payload)
+        setattr(context, f'{number}bollo', payload)
+    
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @given('RT{number:d} generation')
 def step_impl(context, number):
-    payload = context.text or ""
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
-    payload = utils.replace_global_variables(payload, context)
-    date = datetime.date.today().strftime("%Y-%m-%d")
-    timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-    setattr(context, 'date', date)
-    setattr(context, 'timedate', timedate)
+    try:
+        payload = context.text or ""
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
+        payload = utils.replace_global_variables(payload, context)
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+        setattr(context, 'date', date)
+        setattr(context, 'timedate', timedate)
 
-    if "#timedate#" in payload:
-        payload = payload.replace('#timedate#', timedate)
+        if "#timedate#" in payload:
+            payload = payload.replace('#timedate#', timedate)
 
-    if '#date#' in payload:
-        payload = payload.replace('#date#', date)
+        if '#date#' in payload:
+            payload = payload.replace('#date#', date)
 
-    if f"#IUV{number}#" in payload:
-        IUV = str(utils.current_milli_time()) + '-' + str(random.randint(0, 100000))
-        payload = payload.replace(f'#IUV{number}#', IUV)
-        setattr(context, f'{number}IUV', IUV)
+        if f"#IUV{number}#" in payload:
+            IUV = str(utils.current_milli_time()) + '-' + str(random.randint(0, 100000))
+            payload = payload.replace(f'#IUV{number}#', IUV)
+            setattr(context, f'{number}IUV', IUV)
 
-    if f"#ccp{number}#" in payload:
-        ccp = str(utils.current_milli_time() + '1')
-        payload = payload.replace(f'#ccp{number}#', ccp)
-        setattr(context, f"{number}ccp", ccp)
+        if f"#ccp{number}#" in payload:
+            ccp = str(utils.current_milli_time() + '1')
+            payload = payload.replace(f'#ccp{number}#', ccp)
+            setattr(context, f"{number}ccp", ccp)
 
-    payload_b = bytes(payload, 'UTF-8')
-    payload_uni = b64.b64encode(payload_b)
-    payload = f"{payload_uni}".split("'")[1]
-    print(payload)
+        payload_b = bytes(payload, 'UTF-8')
+        payload_uni = b64.b64encode(payload_b)
+        payload = f"{payload_uni}".split("'")[1]
+        print(payload)
 
-    setattr(context, f'rt{number}Attachment', payload)
+        setattr(context, f'rt{number}Attachment', payload)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @given('RT generation')
 def step_impl(context):
-    payload = context.text or ""
-    payload = utils.replace_global_variables(payload, context)
-    payload = utils.replace_local_variables(payload, context)
-    payload = utils.replace_context_variables(payload, context)
+    try:
+        payload = context.text or ""
+        payload = utils.replace_global_variables(payload, context)
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
 
-    if '#date#' in payload:
-        date = datetime.date.today().strftime("%Y-%m-%d")
-        payload = payload.replace('#date#', date)
-        setattr(context, 'date', date)
+        if '#date#' in payload:
+            date = datetime.date.today().strftime("%Y-%m-%d")
+            payload = payload.replace('#date#', date)
+            setattr(context, 'date', date)
 
-    if "#timedate#" in payload:
-        date = datetime.date.today().strftime("%Y-%m-%d")
-        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
-        payload = payload.replace('#timedate#', timedate)
-        setattr(context, 'timedate', timedate)
+        if "#timedate#" in payload:
+            date = datetime.date.today().strftime("%Y-%m-%d")
+            timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#timedate#', timedate)
+            setattr(context, 'timedate', timedate)
 
-    if "#ccp#" in payload:
-        ccp = str(utils.current_milli_time())
-        payload = payload.replace('#ccp#', ccp)
-        setattr(context, "ccp", ccp)
+        if "#ccp#" in payload:
+            ccp = str(utils.current_milli_time())
+            payload = payload.replace('#ccp#', ccp)
+            setattr(context, "ccp", ccp)
 
-    setattr(context, 'rt', payload)
+        setattr(context, 'rt', payload)
 
-    payload_b = bytes(payload, 'UTF-8')
-    payload_uni = b64.b64encode(payload_b)
-    payload = f"{payload_uni}".split("'")[1]
+        payload_b = bytes(payload, 'UTF-8')
+        payload_uni = b64.b64encode(payload_b)
+        payload = f"{payload_uni}".split("'")[1]
 
-    print("RT generato: ", payload)
-    setattr(context, 'rtAttachment', payload)
+        print("RT generato: ", payload)
+        setattr(context, 'rtAttachment', payload)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @given('RR generation')
@@ -1398,17 +1530,29 @@ def step_impl(context):
 
 @given('for {type} replace {tag} with {value} in {primitive}')
 def step_impl(context, type, tag, value, primitive):
-    if tag != "-":
-        value = utils.replace_local_variables(value, context)
-        value = utils.replace_context_variables(value, context)
-        value = utils.replace_global_variables(value, context)
-        type_string = type.upper()
-        if type_string == "XML":
-            xml = utils.manipulate_soap_action(getattr(context, primitive), tag, value)
-            setattr(context, primitive, xml)
-        elif type_string == "JSON":
-            json = utils.manipulate_json(getattr(context, primitive), tag, value)
-            setattr(context, primitive, json)
+    try:
+        if tag != "-":
+            value = utils.replace_local_variables(value, context)
+            value = utils.replace_context_variables(value, context)
+            value = utils.replace_global_variables(value, context)
+            type_string = type.upper()
+            if type_string == "XML":
+                xml = utils.manipulate_soap_action(getattr(context, primitive), tag, value)
+                setattr(context, primitive, xml)
+            elif type_string == "JSON":
+                json = utils.manipulate_json(getattr(context, primitive), tag, value)
+                setattr(context, primitive, json)
+    
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @given('{elem} with {value} in {action}')
@@ -1442,92 +1586,126 @@ def step_impl(context, attribute, value, elem, primitive):
 
 @step('{sender} sends soap {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
-    dbRun = getattr(context, "dbRun")
-    url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
-    header_host = utils.estrapola_header_host(url_nodo)
+    try:
+        dbRun = getattr(context, "dbRun")
+        url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
+        header_host = utils.estrapola_header_host(url_nodo)
 
-    if dbRun == "Postgres":
-        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
-        if 'SUBSCRIPTION_KEY' in os.environ:
-            headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
-    elif dbRun == "Oracle":
-        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': header_host}  # set what your server accepts
-    
-    #url_nodo = "http://localhost:81/nodo-sit/webservices/input"
-    print("url_nodo: ", url_nodo)
-    print("nodo soap_request sent >>>", getattr(context, soap_primitive))
-    print("headers: ", headers)
+        if dbRun == "Postgres":
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
+            if 'SUBSCRIPTION_KEY' in os.environ:
+                headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
+        elif dbRun == "Oracle":
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': header_host}  # set what your server accepts
+        
+        #url_nodo = "http://localhost:81/nodo-sit/webservices/input"
+        print("url_nodo: ", url_nodo)
+        print("nodo soap_request sent >>>", getattr(context, soap_primitive))
+        print("headers: ", headers)
 
-    soap_response = None
-    if dbRun == "Postgres":
-        soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
-    elif dbRun == "Oracle":
-        soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
+        soap_response = None
+        if dbRun == "Postgres":
+            soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        elif dbRun == "Oracle":
+            soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
 
-    print(soap_response.content.decode('utf-8'))
-    print(soap_response.status_code)
-    print(f'soap response: {soap_response.headers}')
-    setattr(context, soap_primitive + RESPONSE, soap_response)
+        print(soap_response.content.decode('utf-8'))
+        print(soap_response.status_code)
+        print(f'soap response: {soap_response.headers}')
+        setattr(context, soap_primitive + RESPONSE, soap_response)
 
-    assert (soap_response.status_code == 200), f"status_code {soap_response.status_code}"
+        assert (soap_response.status_code == 200), f"status_code {soap_response.status_code}"
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step('send, by sender {sender}, soap action {soap_primitive} to {receiver}')
 def step_impl(context, sender, soap_primitive, receiver):
+    try:
+        dbRun = getattr(context, "dbRun")
+        url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
+        header_host = utils.estrapola_header_host(url_nodo)
+        dbRun = getattr(context, "dbRun")
 
-    dbRun = getattr(context, "dbRun")
-    url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
-    header_host = utils.estrapola_header_host(url_nodo)
-    dbRun = getattr(context, "dbRun")
+        if dbRun == "Postgres":
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
+            if 'SUBSCRIPTION_KEY' in os.environ:
+                headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
+        elif dbRun == "Oracle":
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': header_host}  # set what your server accepts        
 
-    if dbRun == "Postgres":
-        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
-        if 'SUBSCRIPTION_KEY' in os.environ:
-            headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
-    elif dbRun == "Oracle":
-        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': header_host}  # set what your server accepts        
+        print("url_nodo: ", url_nodo)
+        print("nodo soap_request sent >>>", getattr(context, soap_primitive))
+        print("headers: ", headers)
+        
+        soap_response = None
+        if dbRun == "Postgres":
+            soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        elif dbRun == "Oracle":
+            soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
 
-    print("url_nodo: ", url_nodo)
-    print("nodo soap_request sent >>>", getattr(context, soap_primitive))
-    print("headers: ", headers)
-    
-    soap_response = None
-    if dbRun == "Postgres":
-        soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False, proxies = getattr(context,'proxies'))
-    elif dbRun == "Oracle":
-        soap_response = requests.post(url_nodo, getattr(context, soap_primitive), headers=headers, verify=False)
+        print(soap_response.content.decode('utf-8'))
+        print(soap_response.status_code)
+        print(f'soap response: {soap_response.headers}')
+        setattr(context, soap_primitive + RESPONSE, soap_response)
 
-    print(soap_response.content.decode('utf-8'))
-    print(soap_response.status_code)
-    print(f'soap response: {soap_response.headers}')
-    setattr(context, soap_primitive + RESPONSE, soap_response)
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @when('job {job_name} triggered after {seconds} seconds')
 def step_impl(context, job_name, seconds):
-    seconds = utils.replace_local_variables(seconds, context)
-    time.sleep(int(seconds))
-    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
-    header_host = utils.estrapola_header_host(url_nodo)
-    headers = {'Host': header_host}
+    try:
+        seconds = utils.replace_local_variables(seconds, context)
+        time.sleep(int(seconds))
+        url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
+        header_host = utils.estrapola_header_host(url_nodo)
+        headers = {'Host': header_host}
 
-    user_profile = os.environ.get("USERPROFILE")
-    nodo_response = None
-    dbRun = getattr(context, "dbRun")
-    
-    if dbRun == "Postgres":
-        nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False, proxies = getattr(context,'proxies'))
-        print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
-    elif dbRun == "Oracle":
-        if user_profile != None:
-            nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
+        user_profile = os.environ.get("USERPROFILE")
+        nodo_response = None
+        dbRun = getattr(context, "dbRun")
+        
+        if dbRun == "Postgres":
+            nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False, proxies = getattr(context,'proxies'))
             print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
-        else:
-            nodo_response = requests.get(f"{url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
-            print(f">>>>>>>>>>>>>>>>>> {url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}")
+        elif dbRun == "Oracle":
+            if user_profile != None:
+                nodo_response = requests.get(f"{url_nodo}/jobs/trigger/{job_name}", headers=headers, verify=False)
+                print(f">>>>>>>>>>>>>>>>>> {url_nodo}/jobs/trigger/{job_name}")
+            else:
+                nodo_response = requests.get(f"{url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}", headers=headers, verify=False)
+                print(f">>>>>>>>>>>>>>>>>> {url_nodo}-monitoring/monitoring/v1/jobs/trigger/{job_name}")
 
-    setattr(context, job_name + RESPONSE, nodo_response)
+        setattr(context, job_name + RESPONSE, nodo_response)
 
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 # verifica che il valore cercato corrisponda all'intera sottostringa del tag
 @then('check {tag} is {value} of {primitive} response')
@@ -1590,19 +1768,30 @@ def step_impl(context, tag, value, primitive):
 # a partire da un path tag passato in input, la funzione verifica che il valore cercato corrisponda all'intera sottostringa del tag 
 @then('check from {path_tag} the {value} of {primitive} response')
 def step_impl(context, path_tag, value, primitive):
-    soap_response = getattr(context, primitive + RESPONSE)
-    value = utils.replace_local_variables(value, context)
-    value = utils.replace_context_variables(value, context)
-    value = utils.replace_global_variables(value, context)
+    try:
+        soap_response = getattr(context, primitive + RESPONSE)
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
+        value = utils.replace_global_variables(value, context)
 
-    if 'xml' in soap_response.headers['content-type']:
-        my_document_xml = soap_response.content
-        list_tag_value = []
-        list_tag_value = utils.searchValueTag(my_document_xml, path_tag, False)
-        data = list_tag_value[0]
-        print(f'check path tag "{path_tag}" - expected: {value}, obtained: {data}')
-        assert value == data
+        if 'xml' in soap_response.headers['content-type']:
+            my_document_xml = soap_response.content
+            list_tag_value = []
+            list_tag_value = utils.searchValueTag(my_document_xml, path_tag, False)
+            data = list_tag_value[0]
+            print(f'check path tag "{path_tag}" - expected: {value}, obtained: {data}')
+            assert value == data
 
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 @then('from {key} check the {value} in {path_tag}')
 def step_impl(context, path_tag, value, key):
@@ -2315,13 +2504,24 @@ def step_impl(context):
 
 @step("random idempotencyKey having {value} as idPSP in {primitive}")
 def step_impl(context, value, primitive):
-    value = utils.replace_local_variables(value, context)
-    value = utils.replace_context_variables(value, context)
-    value = utils.replace_global_variables(value, context)
+    try:
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
+        value = utils.replace_global_variables(value, context)
 
-    xml = utils.manipulate_soap_action(getattr(context, primitive), "idempotencyKey",
-                                       f"{value}_{str(random.randint(1000000000, 9999999999))}")
-    setattr(context, primitive, xml)
+        xml = utils.manipulate_soap_action(getattr(context, primitive), "idempotencyKey",
+                                        f"{value}_{str(random.randint(1000000000, 9999999999))}")
+        setattr(context, primitive, xml)
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step("random noticeNumber in {primitive}")
