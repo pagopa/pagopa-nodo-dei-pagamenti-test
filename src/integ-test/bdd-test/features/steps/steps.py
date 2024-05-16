@@ -429,6 +429,15 @@ def step_impl(context, primitive, type_table, filebody):
             iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
             payload = payload.replace('#iuv1#', iuv1)
             setattr(context, "iuv1", iuv1)
+        
+        if "#iuv3#" in payload:
+            iuv3 = '11' + str(random.randint(1000000000000, 9999999999999))
+            payload = payload.replace('#iuv3#', iuv3)
+            setattr(context, "iuv3", iuv3)
+
+        if "#iuv4#" in payload:
+            iuv4 = '11' + str(random.randint(1000000000000, 9999999999999))
+            payload = payload.replace('#iuv4#', iuv4)
 
         if '#IUV#' in payload:
             date = datetime.date.today().strftime("%Y-%m-%d")
@@ -2840,6 +2849,73 @@ def step_impl(context, seconds):
     pass
 
 
+
+@step(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query on db {db_name} with where datatable {type_table}")
+def step_impl(context, value, column, table_name, db_name, type_table): 
+    try:
+
+        dbRun = getattr(context, "dbRun")
+        db_config = context.config.userdata.get("db_configuration")
+        db_selected = db_config.get(db_name)
+
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable per le where conditions e la mette in una dict
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
+        # Costruisce la query a partire dalla where
+        selected_query = utils.generate_select(dict_fields_values)
+
+        selected_query = selected_query.replace("columns", column).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
+
+        print(selected_query)
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+
+        query_result = [t[0] for t in exec_query]
+        print('query_result: ', query_result)
+       # assert 5 == 4,f"5 è diverso da 4"
+        if value == 'None':
+            print('Check value None')
+            assert query_result[0] == None, f"assert result query with None for Failed!"
+        elif value == 'NotNone':
+            print('Check value NotNone')
+            assert query_result[0] != None, f"assert result query with Not None Failed!"
+        else:
+            value = utils.replace_global_variables(value, context)
+            value = utils.replace_local_variables(value, context)
+            value = utils.replace_context_variables(value, context)
+            split_value = [status.strip() for status in value.split(',')]
+            for i, elem in enumerate(query_result):
+                if isinstance(elem, str) and elem.isdigit():
+                    query_result[i] = float(elem)
+                elif isinstance(elem, datetime.date):
+                    query_result[i] = elem.strftime('%Y-%m-%d')
+
+            for i, elem in enumerate(split_value):
+                if utils.isFloat(elem) or elem.isdigit():
+                    split_value[i] = float(elem)
+
+            print("value: ", split_value)
+            for elem in split_value:
+                assert elem in query_result, f"check expected element: {value}, obtained: {query_result}"
+
+        adopted_db.closeConnection(conn)
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
+
+
+
 @step(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, value, column, query_name, table_name, db_name, name_macro): 
     try:
@@ -3290,38 +3366,100 @@ def step_impl(context, column, query_name, table_name, db_name, name_macro, numb
     assert elem == value
 
 
+
+@step(u"verify {number:d} record for the table {table_name} retrived by the query on db {db_name} with where datatable {type_table}")
+def step_impl(context, table_name, db_name, type_table, number):
+    try:
+        db_config = context.config.userdata.get("db_configuration")
+        db_selected = db_config.get(db_name)
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable per le where conditions e la mette in una dict
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
+        # Costruisce la query a partire dalla where
+        selected_query = utils.generate_select(dict_fields_values)
+
+        selected_query = selected_query.replace("columns", '*').replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
+
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+
+        print("record query: ", exec_query)
+        assert len(exec_query) == number, f"The number of query record is: {len(exec_query)}"
+    
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
+
+
+
+
 @step(u"verify {number:d} record for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")
 def step_impl(context, query_name, table_name, db_name, name_macro, number):
-    db_config = context.config.userdata.get("db_configuration")
-    db_selected = db_config.get(db_name)
-    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+    try:
+        db_config = context.config.userdata.get("db_configuration")
+        db_selected = db_config.get(db_name)
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", '*').replace("table_name", table_name)
-    selected_query = utils.replace_global_variables(selected_query, context)
-    selected_query = utils.replace_local_variables(selected_query, context)
-    selected_query = utils.replace_context_variables(selected_query, context)
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", '*').replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
 
-    exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(conn, selected_query)
 
-    print("record query: ", exec_query)
-    assert len(exec_query) == number, f"The number of query record is: {len(exec_query)}"
+        print("record query: ", exec_query)
+        assert len(exec_query) == number, f"The number of query record is: {len(exec_query)}"
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step(u"verify if the records for the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro} are not null")
 def step_impl(context, query_name, table_name, db_name, name_macro):
-    db_config = context.config.userdata.get("db_configuration")
-    db_selected = db_config.get(db_name)
-    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+    try:
+        db_config = context.config.userdata.get("db_configuration")
+        db_selected = db_config.get(db_name)
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    selected_query = utils.query_json(context, query_name, name_macro).replace("columns", '*').replace("table_name", table_name)
-    selected_query = utils.replace_global_variables(selected_query, context)
-    selected_query = utils.replace_local_variables(selected_query, context)
-    selected_query = utils.replace_context_variables(selected_query, context)
+        selected_query = utils.query_json(context, query_name, name_macro).replace("columns", '*').replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
 
-    exec_query = adopted_db.executeQuery(conn, selected_query)
+        exec_query = adopted_db.executeQuery(conn, selected_query)
 
-    print("record query: ", exec_query)
-    assert len(exec_query) > 0, f"{len(exec_query)}"
+        print("record query: ", exec_query)
+        assert len(exec_query) > 0, f"{len(exec_query)}"
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step('check token_valid_to is {condition} token_valid_from plus {param}')
