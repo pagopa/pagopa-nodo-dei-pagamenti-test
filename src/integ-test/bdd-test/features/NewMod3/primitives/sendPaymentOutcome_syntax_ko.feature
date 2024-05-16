@@ -5,52 +5,52 @@ Feature: Syntax checks for sendPaymentOutcome - KO 1392
     And initial XML sendPaymentOutcome
       """
       <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
-        <soapenv:Header/>
-        <soapenv:Body>
-          <nod:sendPaymentOutcomeReq>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>pwdpwdpwd</password>
-            <idempotencyKey>#idempotency_key#</idempotencyKey>
-            <paymentToken>12345678901234567890123456789012</paymentToken>
-            <outcome>OK</outcome>
-            <!--Optional:-->
-            <details>
-              <paymentMethod>creditCard</paymentMethod>
-              <!--Optional:-->
-              <paymentChannel>app</paymentChannel>
-              <fee>2.00</fee>
-              <!--Optional:-->
-              <payer>
-                <uniqueIdentifier>
-                  <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-                  <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
-                </uniqueIdentifier>
-                <fullName>name</fullName>
-                <!--Optional:-->
-                <streetName>street</streetName>
-                <!--Optional:-->
-                <civicNumber>civic</civicNumber>
-                <!--Optional:-->
-                <postalCode>postal</postalCode>
-                <!--Optional:-->
-                <city>city</city>
-                <!--Optional:-->
-                <stateProvinceRegion>state</stateProvinceRegion>
-                <!--Optional:-->
-                <country>IT</country>
-                <!--Optional:-->
-                <e-mail>prova@test.it</e-mail>
-              </payer>
-              <applicationDate>2021-12-12</applicationDate>
-              <transferDate>2021-12-11</transferDate>
-            </details>
-          </nod:sendPaymentOutcomeReq>
-        </soapenv:Body>
+      <soapenv:Header/>
+      <soapenv:Body>
+      <nod:sendPaymentOutcomeReq>
+      <idPSP>#psp#</idPSP>
+      <idBrokerPSP>#psp#</idBrokerPSP>
+      <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
+      <password>pwdpwdpwd</password>
+      <idempotencyKey>#idempotency_key#</idempotencyKey>
+      <paymentToken>12345678901234567890123456789012</paymentToken>
+      <outcome>OK</outcome>
+      <!--Optional:-->
+      <details>
+      <paymentMethod>creditCard</paymentMethod>
+      <!--Optional:-->
+      <paymentChannel>app</paymentChannel>
+      <fee>2.00</fee>
+      <!--Optional:-->
+      <payer>
+      <uniqueIdentifier>
+      <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
+      <entityUniqueIdentifierValue>77777777777_01</entityUniqueIdentifierValue>
+      </uniqueIdentifier>
+      <fullName>name</fullName>
+      <!--Optional:-->
+      <streetName>street</streetName>
+      <!--Optional:-->
+      <civicNumber>civic</civicNumber>
+      <!--Optional:-->
+      <postalCode>postal</postalCode>
+      <!--Optional:-->
+      <city>city</city>
+      <!--Optional:-->
+      <stateProvinceRegion>state</stateProvinceRegion>
+      <!--Optional:-->
+      <country>IT</country>
+      <!--Optional:-->
+      <e-mail>prova@test.it</e-mail>
+      </payer>
+      <applicationDate>2021-12-12</applicationDate>
+      <transferDate>2021-12-11</transferDate>
+      </details>
+      </nod:sendPaymentOutcomeReq>
+      </soapenv:Body>
       </soapenv:Envelope>
       """
-    
+
 
   @runnable
   # attribute value check
@@ -152,10 +152,13 @@ Feature: Syntax checks for sendPaymentOutcome - KO 1392
       | idempotencyKey              | Empty                                                                                                                                                                                                                                                             | SIN_SPO_81   |
       | idempotencyKey              | 60000000001.1244565744                                                                                                                                                                                                                                            | SIN_SPO_82   |
       | idempotencyKey              | 60000000001_%244565744                                                                                                                                                                                                                                            | SIN_SPO_82   |
-      | idempotencyKey              | #psp#-1244565744                                                                                                                                                                                                                                            | SIN_SPO_82   |
-      | idempotencyKey              | 1244565768_#psp#                                                                                                                                                                                                                                            | SIN_SPO_82   |
+      | idempotencyKey              | #psp#-1244565744                                                                                                                                                                                                                                                  | SIN_SPO_82   |
+      | idempotencyKey              | 1244565768_#psp#                                                                                                                                                                                                                                                  | SIN_SPO_82   |
       | idempotencyKey              | 1244565744                                                                                                                                                                                                                                                        | SIN_SPO_82   |
       | idempotencyKey              | 600000000011244565744                                                                                                                                                                                                                                             | SIN_SPO_82   |
       | idempotencyKey              | 60000000001_12345678901                                                                                                                                                                                                                                           | SIN_SPO_83   |
       | idempotencyKey              | 60000000001_12445657                                                                                                                                                                                                                                              | SIN_SPO_84   |
-      | idempotencyKey              | 600000hj123_124456576                                                                                                                                                                                                                                             | SIN_SPO_85   |
+      | idempotencyKey              | A1_12345678901                                                                                                                                                                                                                                                    | SIN_SPO_83   |
+      | idempotencyKey              | 700ABCD17E000hj123_12445657                                                                                                                                                                                                                                       | SIN_SPO_84   |
+      | idempotencyKey              | A_1234567890                                                                                                                                                                                                                                                      | SIN_SPO_83   |
+      | idempotencyKey              | 700ABCD17E000hj1234_1244565789                                                                                                                                                                                                                                    | SIN_SPO_84   |

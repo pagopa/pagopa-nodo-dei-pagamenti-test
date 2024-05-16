@@ -37,7 +37,7 @@ Feature: syntax checks KO for activatePaymentNoticeV2Request 958
         Examples:
             | elem             | attribute     | value                                     | soapUI test  |
             | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_APNV2_01 |
-    @newfix
+    @test
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
         Given <elem> with <value> in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
@@ -84,7 +84,10 @@ Feature: syntax checks KO for activatePaymentNoticeV2Request 958
             | idempotencyKey                     | 700000000011244565744                                                                                                                                                                                                           | SIN_APNV2_20           |
             | idempotencyKey                     | 70000000001_12445657684                                                                                                                                                                                                         | SIN_APNV2_21           |
             | idempotencyKey                     | 70000000001_124456576                                                                                                                                                                                                           | SIN_APNV2_22           |
-            | idempotencyKey                     | 700000hj123_1244565767                                                                                                                                                                                                          | SIN_APNV2_22.1         |
+            | idempotencyKey                     | A1_124456576                                                                                                                                                                                                                    | SIN_APNV2_21           |
+            | idempotencyKey                     | 700ABCD17E000hj123_124456576                                                                                                                                                                                                    | SIN_APNV2_22           |
+            | idempotencyKey                     | A_1244565768                                                                                                                                                                                                                    | SIN_APNV2_21           |
+            | idempotencyKey                     | 700ABCD17E000hj1234_1244565768                                                                                                                                                                                                  | SIN_APNV2_22           |
             | expirationTime                     | Empty                                                                                                                                                                                                                           | SIN_APNV2_36           |
             | expirationTime                     | 2021-12-12T12:12:12                                                                                                                                                                                                             | SIN_APNV2_37           |
             | expirationTime                     | 48:12:12                                                                                                                                                                                                                        | SIN_APNV2_37           |
