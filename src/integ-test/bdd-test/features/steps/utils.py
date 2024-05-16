@@ -882,4 +882,31 @@ def table_to_dict(table, type_table):
     return dict_table
 
 
+###METODO PER CREARE UNA SELECT CON WHERE
+def generate_select(dict_fields_values):
+    list_where_keys = []
+    list_where_values = []
+    dict_where = {}
 
+    selected_query = 'SELECT columns FROM table_name'
+
+    for fields, values in dict_fields_values.items():
+        for value in values:
+            if fields == 'where_keys':
+                list_where_keys.append(value)
+            elif fields == 'where_values':
+                list_where_values.append(value)
+
+
+    for j in range(0, len(list_where_keys)):
+        dict_where[list_where_keys[j]] = list_where_values[j]
+
+    i = 0
+    for where_key, where_value in dict_where.items():
+        if i == 0:
+            selected_query += f" WHERE {where_key} = '{where_value}'"
+        else:
+            selected_query += f" AND {where_key} = '{where_value}'"
+        i += 1
+    
+    return selected_query

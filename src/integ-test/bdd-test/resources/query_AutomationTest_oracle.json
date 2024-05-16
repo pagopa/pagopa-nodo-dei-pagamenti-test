@@ -331,6 +331,7 @@
         "id_sessione_activateio": "SELECT columns FROM table_name WHERE ID_SESSIONE = '$activateIOPaymentResponse.paymentToken'",
         "payment_token": "SELECT columns FROM table_name WHERE TOKEN = '$activatePaymentNoticeV2Response.paymentToken'",
         "PAYMENT_TOKEN": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$activatePaymentNoticeV2Response.paymentToken'",
+        "PAYMENT_TOKEN_DYNAMIC": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = 'where_condition'",
         "PAYMENT_TOKEN_spo": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcome.paymentToken'",
         "PAYMENT_TOKEN_spov2": "SELECT columns FROM table_name WHERE PAYMENT_TOKEN = '$sendPaymentOutcomeV2.paymentToken'",
         "TOKEN_spov2": "SELECT columns FROM table_name WHERE TOKEN = '$sendPaymentOutcomeV2.paymentToken'",
