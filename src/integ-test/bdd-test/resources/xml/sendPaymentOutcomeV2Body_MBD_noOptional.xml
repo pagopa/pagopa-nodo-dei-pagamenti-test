@@ -1,0 +1,28 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <nod:sendPaymentOutcomeV2Request>
+            <idPSP>$idPSP</idPSP>
+            <idBrokerPSP>$idBrokerPSP</idBrokerPSP>
+            <idChannel>$idChannel</idChannel>
+            <password>$password</password>
+            <paymentTokens>
+                <paymentToken>$paymentToken</paymentToken>
+            </paymentTokens>
+            <outcome>$outcome</outcome>
+            <details>
+                <paymentMethod>$paymentMethod</paymentMethod>
+                <fee>$fee</fee>
+                <applicationDate>2021-12-12</applicationDate>
+                <transferDate>2021-12-11</transferDate>
+                <marcheDaBollo>
+                    <marcaDaBollo>
+                        <paymentToken>$paymentToken</paymentToken>
+                        <idTransfer>1</idTransfer>
+                        <MBDAttachment>$MBDAttachment</MBDAttachment>
+                    </marcaDaBollo>
+                </marcheDaBollo>
+            </details>
+        </nod:sendPaymentOutcomeV2Request>
+    </soapenv:Body>
+</soapenv:Envelope>

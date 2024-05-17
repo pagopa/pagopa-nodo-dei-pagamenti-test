@@ -132,35 +132,31 @@ def before_scenario(context, scenario):
 
 
 def after_scenario(context, scenario):
-    try:
-        global execute_after_scenario
-        global name_scenario_after
+    global execute_after_scenario
+    global name_scenario_after
 
-        if execute_after_scenario:
-            print("----> AFTER STEP EXECUTING...")
-            name = name_scenario_after
-            # # Resetta la variabile per evitare di eseguire lo scenario "after" più volte
-            execute_after_scenario = False  
+    if execute_after_scenario:
+        print("----> AFTER STEP EXECUTING...")
+        name = name_scenario_after
+        # # Resetta la variabile per evitare di eseguire lo scenario "after" più volte
+        execute_after_scenario = False  
 
-            # # Esegue tutti gli step dello scenario "after"
-            phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
-            text_step = ''.join([step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
-            context.execute_steps(text_step)
-            print("----> AFTER STEP COMPLETED")
+        # # Esegue tutti gli step dello scenario "after"
+        phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
+        text_step = ''.join([step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
+        context.execute_steps(text_step)
+        print("----> AFTER STEP COMPLETED")
 
-        sys.stdout = context.original_stdout
+    sys.stdout = context.original_stdout
 
-        context.stdout_capture.seek(0)
-        captured_stdout = context.stdout_capture.read()
+    context.stdout_capture.seek(0)
+    captured_stdout = context.stdout_capture.read()
 
-        allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
-        context.stdout_capture.close()
+    allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+    context.stdout_capture.close()
 
-        # Stampa l'output nel terminale
-        print(f"\nCaptured stdout:\n{captured_stdout}")
-
-    except Exception as e:
-        print(f"After scenario Eccezione {e}")
+    # Stampa l'output nel terminale
+    print(f"\nCaptured stdout:\n{captured_stdout}")
 
 
 def after_feature(context, feature):

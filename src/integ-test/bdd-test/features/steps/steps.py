@@ -1280,6 +1280,53 @@ def step_impl(context, number):
         # Interrompiamo il test
         raise e
 
+@given('MB generation {filebody} with datatable {type_table}')
+def step_impl(context, filebody, type_table):
+    try:
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable per le where conditions e la mette in una dict
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
+
+        # Specifica il percorso del tuo file XML
+        file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+
+        # Leggi il contenuto del file XML come stringa
+        with open(file_path, 'r') as file:
+            payload = file.read()
+
+        #replace placeHolder with value by datatable
+        for fields, values in dict_fields_values.items():
+            for value in values:
+                payload = payload.replace(f"${fields}", value)
+
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
+        payload = utils.replace_global_variables(payload, context)
+
+        if '#iubd#' in payload:
+            iubd = '' + str(random.randint(10000000, 20000000)) + \
+                str(random.randint(10000000, 20000000))
+            payload = payload.replace('#iubd#', iubd)
+            setattr(context, 'iubd', iubd)
+        print(">>>>>>>>>>>>", payload)
+
+        payload_b = bytes(payload, 'UTF-8')
+        payload_uni = b64.b64encode(payload_b)
+        payload = f"{payload_uni}".split("'")[1]
+
+        setattr(context, 'bollo', payload)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
+
 
 @given('MB generation')
 def step_impl(context):
@@ -1756,7 +1803,7 @@ def step_impl(context, tag, value, primitive):
             json_response = node_response.json()
             founded_value = jo.get_value_from_key(json_response, tag)
 
-            if status_code is not 200:
+            if status_code != 200:
                 description = jo.get_value_from_key(json_response, 'descrizione')
                    
             assert str(founded_value) == value, f"""check tag {tag} - expected: {value}, obtained: {founded_value} in json
@@ -2122,95 +2169,106 @@ def step_impl(context, name, n):
 
 @when(u'{sender} sends rest {method} {service} to {receiver}')
 def step_impl(context, sender, method, service, receiver):
+    try:
+        url_nodo = utils.get_rest_url_nodo(context, service)
+        print(url_nodo)
+        header_host = utils.estrapola_header_host(url_nodo)
+        headers = {'Content-Type': 'application/json','Host': header_host}
 
-    url_nodo = utils.get_rest_url_nodo(context, service)
-    print(url_nodo)
-    header_host = utils.estrapola_header_host(url_nodo)
-    headers = {'Content-Type': 'application/json','Host': header_host}
+        if 'SUBSCRIPTION_KEY' in os.environ:
+            headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
 
-    if 'SUBSCRIPTION_KEY' in os.environ:
-        headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
+        dbRun = getattr(context, "dbRun")
+        body = context.text or ""
+        if '_json' in service:
+            service = service.split('_')[0]
+            print(service)
+            bodyXml = getattr(context, service)
+            body = xmltodict.parse(bodyXml)
+            body = body["root"]
+            if body != None:
+                if ('paymentTokens' in body.keys()) and (
+                        body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
+                    body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+                    if type(body["paymentTokens"]) != list:
+                        l = list()
+                        l.append(body["paymentTokens"])
+                        body["paymentTokens"] = l
+                if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
+                    body["totalAmount"] = float(body["totalAmount"])
+                if ('fee' in body.keys()) and (body["fee"] != None):
+                    body["fee"] = float(body["fee"])
+                if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
+                    body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
+                if ('positionslist' in body.keys()) and (body["positionslist"] != None):
+                    body["positionslist"] = body["positionslist"]["position"]
+                    if type(body["positionslist"]) != list:
+                        l = list()
+                        l.append(body["positionslist"])
+                        body["positionslist"] = l
+                body = json.dumps(body, indent=4)
+            else:
+                body = """{}"""
+        print(body)
+        body = utils.replace_local_variables(body, context)
+        body = utils.replace_context_variables(body, context)
+        body = utils.replace_global_variables(body, context)
+        print(body)
+        run_local = False
+        if service in url_nodo:
+            url_nodo = utils.replace_local_variables(url_nodo, context)
+            url_nodo = utils.replace_context_variables(url_nodo, context)
+            run_local = True
 
-    dbRun = getattr(context, "dbRun")
-    body = context.text or ""
-    if '_json' in service:
-        service = service.split('_')[0]
-        print(service)
-        bodyXml = getattr(context, service)
-        body = xmltodict.parse(bodyXml)
-        body = body["root"]
-        if body != None:
-            if ('paymentTokens' in body.keys()) and (
-                    body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
-                body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
-                if type(body["paymentTokens"]) != list:
-                    l = list()
-                    l.append(body["paymentTokens"])
-                    body["paymentTokens"] = l
-            if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
-                body["totalAmount"] = float(body["totalAmount"])
-            if ('fee' in body.keys()) and (body["fee"] != None):
-                body["fee"] = float(body["fee"])
-            if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
-                body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
-            if ('positionslist' in body.keys()) and (body["positionslist"] != None):
-                body["positionslist"] = body["positionslist"]["position"]
-                if type(body["positionslist"]) != list:
-                    l = list()
-                    l.append(body["positionslist"])
-                    body["positionslist"] = l
-            body = json.dumps(body, indent=4)
+            print(f"{url_nodo}")
         else:
-            body = """{}"""
-    print(body)
-    body = utils.replace_local_variables(body, context)
-    body = utils.replace_context_variables(body, context)
-    body = utils.replace_global_variables(body, context)
-    print(body)
-    run_local = False
-    if service in url_nodo:
-        url_nodo = utils.replace_local_variables(url_nodo, context)
-        url_nodo = utils.replace_context_variables(url_nodo, context)
-        run_local = True
-
-        print(f"{url_nodo}")
-    else:
-        service = utils.replace_local_variables(service, context)
-        service = utils.replace_context_variables(service, context)
-    if len(body) > 1:
-        json_body = json.loads(body)
-    else:
-        json_body = None
-
-    nodo_response = None
-    if run_local:
-        if '_json' in url_nodo:
-            url_nodo = url_nodo.split('_')[0]
-
-            print(f"URL REST: {url_nodo}")
-            if dbRun == "Postgres":
-                nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
-            elif dbRun == "Oracle":
-                nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
+            service = utils.replace_local_variables(service, context)
+            service = utils.replace_context_variables(service, context)
+        if len(body) > 1:
+            json_body = json.loads(body)
         else:
-            print(f"URL REST: {url_nodo}")
-            if dbRun == "Postgres":
-                nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies')) 
-            elif dbRun == "Oracle":
-                nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
-    else:
-        print(f"URL REST: {url_nodo}/{service}")
-        if dbRun == "Postgres":
-            nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
-        elif dbRun == "Oracle":
-            nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False)   
+            json_body = None
 
-    setattr(context, service.split('?')[0], json_body)
-    setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
-    print(service.split('?')[0] + RESPONSE)
-    print(nodo_response.content)
-    print(f'URL: {nodo_response.url}')
-    print(f'rest response: {nodo_response.headers}')
+        nodo_response = None
+        if run_local:
+            if '_json' in url_nodo:
+                url_nodo = url_nodo.split('_')[0]
+
+                print(f"URL REST: {url_nodo}")
+                if dbRun == "Postgres":
+                    nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
+                elif dbRun == "Oracle":
+                    nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
+            else:
+                print(f"URL REST: {url_nodo}")
+                if dbRun == "Postgres":
+                    nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies')) 
+                elif dbRun == "Oracle":
+                    nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
+        else:
+            print(f"URL REST: {url_nodo}/{service}")
+            if dbRun == "Postgres":
+                nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
+            elif dbRun == "Oracle":
+                nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False)   
+
+        setattr(context, service.split('?')[0], json_body)
+        setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
+        print(service.split('?')[0] + RESPONSE)
+        print(nodo_response.content)
+        print(f'URL: {nodo_response.url}')
+        print(f'rest response: {nodo_response.headers}')
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @then('verify the HTTP status code of {action} response is {value}')
@@ -2227,33 +2285,45 @@ def step_impl(context, action, value):
 
 @given('{mock} replies to {destination} with the {primitive}')
 def step_impl(context, mock, destination, primitive):
-    if context.text:
-        pa_verify_payment_notice_res = context.text
-    else:
-        pa_verify_payment_notice_res = getattr(context, primitive)
-    pa_verify_payment_notice_res = str(pa_verify_payment_notice_res).replace("#fiscalCodePA#", context.config.userdata.get("global_configuration").get("creditor_institution_code"))
+    try:
+        if context.text:
+            pa_verify_payment_notice_res = context.text
+        else:
+            pa_verify_payment_notice_res = getattr(context, primitive)
+        pa_verify_payment_notice_res = str(pa_verify_payment_notice_res).replace("#fiscalCodePA#", context.config.userdata.get("global_configuration").get("creditor_institution_code"))
 
-    if '$iuv' in pa_verify_payment_notice_res:
-        pa_verify_payment_notice_res = pa_verify_payment_notice_res.replace(
-            '$iuv', getattr(context, 'iuv'))
+        if '$iuv' in pa_verify_payment_notice_res:
+            pa_verify_payment_notice_res = pa_verify_payment_notice_res.replace(
+                '$iuv', getattr(context, 'iuv'))
 
-    setattr(context, primitive, pa_verify_payment_notice_res)
-    print(pa_verify_payment_notice_res)
-    if mock == 'EC':
-        print(utils.get_soap_mock_ec(context))
-        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_ec(context), primitive, pa_verify_payment_notice_res, override=True)
-    elif mock == 'EC2':
-        print(utils.get_soap_mock_ec2(context))
-        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_ec2(context), primitive, pa_verify_payment_notice_res, override=True)
-    elif mock == 'PSP':
-        print(utils.get_soap_mock_psp(context))
-        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_psp(context), primitive, pa_verify_payment_notice_res, override=True)
-    elif mock == 'PSP2':
-        print(utils.get_soap_mock_psp2(context))
-        response_status_code = utils.save_soap_action(context, utils.get_soap_mock_psp2(context), primitive, pa_verify_payment_notice_res, override=True)
-    else:
-        assert False, "Invalid mock"
-    assert response_status_code == 200
+        setattr(context, primitive, pa_verify_payment_notice_res)
+        print(pa_verify_payment_notice_res)
+        if mock == 'EC':
+            print(utils.get_soap_mock_ec(context))
+            response_status_code = utils.save_soap_action(context, utils.get_soap_mock_ec(context), primitive, pa_verify_payment_notice_res, override=True)
+        elif mock == 'EC2':
+            print(utils.get_soap_mock_ec2(context))
+            response_status_code = utils.save_soap_action(context, utils.get_soap_mock_ec2(context), primitive, pa_verify_payment_notice_res, override=True)
+        elif mock == 'PSP':
+            print(utils.get_soap_mock_psp(context))
+            response_status_code = utils.save_soap_action(context, utils.get_soap_mock_psp(context), primitive, pa_verify_payment_notice_res, override=True)
+        elif mock == 'PSP2':
+            print(utils.get_soap_mock_psp2(context))
+            response_status_code = utils.save_soap_action(context, utils.get_soap_mock_psp2(context), primitive, pa_verify_payment_notice_res, override=True)
+        else:
+            assert False, "Invalid mock"
+        assert response_status_code == 200
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @given('{mock} wait for {sec} seconds at {action}')
@@ -2592,48 +2662,70 @@ def step_impl(context, param, value):
 
 @step("after {seconds} seconds triggered refresh job {job_name}")
 def step_impl(context, job_name, seconds):
+    try:
+        url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
+        header_host = utils.estrapola_header_host(url_nodo)
+        headers = {'Host': header_host}
 
-    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
-    header_host = utils.estrapola_header_host(url_nodo)
-    headers = {'Host': header_host}
+        dbRun = getattr(context, "dbRun")
 
-    dbRun = getattr(context, "dbRun")
+        print("Refreshing...")
+        refresh_response = None
+        if dbRun == "Postgres":
+            print(f"URL refresh: {utils.get_refresh_config_url(context)}")
+            refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        elif dbRun == "Oracle":
+            print(f"URL refresh: {utils.get_refresh_config_url(context)}")
+            refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
-    print("Refreshing...")
-    refresh_response = None
-    if dbRun == "Postgres":
-        print(f"URL refresh: {utils.get_refresh_config_url(context)}")
-        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
-    elif dbRun == "Oracle":
-        print(f"URL refresh: {utils.get_refresh_config_url(context)}")
-        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+        setattr(context, job_name + RESPONSE, refresh_response)
+        time.sleep(int(seconds))
+        assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
 
-    setattr(context, job_name + RESPONSE, refresh_response)
-    time.sleep(seconds)
-    assert refresh_response.status_code == 200
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step("refresh job {job_name} triggered after 10 seconds")
 def step_impl(context, job_name):
+    try:
+        url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
+        header_host = utils.estrapola_header_host(url_nodo)
+        headers = {'Host': header_host}
 
-    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
-    header_host = utils.estrapola_header_host(url_nodo)
-    headers = {'Host': header_host}
+        dbRun = getattr(context, "dbRun")
 
-    dbRun = getattr(context, "dbRun")
+        print("Refreshing...")
+        refresh_response = None
+        if dbRun == "Postgres":
+            print(f"URL refresh: {utils.get_refresh_config_url(context)}")
+            refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        elif dbRun == "Oracle":
+            print(f"URL refresh: {utils.get_refresh_config_url(context)}")
+            refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
-    print("Refreshing...")
-    refresh_response = None
-    if dbRun == "Postgres":
-        print(f"URL refresh: {utils.get_refresh_config_url(context)}")
-        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
-    elif dbRun == "Oracle":
-        print(f"URL refresh: {utils.get_refresh_config_url(context)}")
-        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+        setattr(context, job_name + RESPONSE, refresh_response)
+        time.sleep(10)
+        assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
 
-    setattr(context, job_name + RESPONSE, refresh_response)
-    time.sleep(10)
-    assert refresh_response.status_code == 200
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step("change date {date} to {add_remove} minutes {minutes:d}")
@@ -3291,34 +3383,46 @@ def step_impl(context, query_name, table_name, where_condition, valore, macro, d
 
 @step("updates through the query {query_name} of the table {table_name} the parameter {param} with {value} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, value, macro, db_name):
+    try:
+        dbRun = getattr(context, "dbRun")
+                                                                                                                                                    
+        db_selected = context.config.userdata.get("db_configuration").get(db_name)
+        value = utils.replace_global_variables(value, context)
+        value = utils.replace_local_variables(value, context)
+        value = utils.replace_context_variables(value, context)
 
-    dbRun = getattr(context, "dbRun")
-												 								                                                                 
-    db_selected = context.config.userdata.get("db_configuration").get(db_name)
-    value = utils.replace_global_variables(value, context)
-    value = utils.replace_local_variables(value, context)
-    value = utils.replace_context_variables(value, context)
-
-    selected_query = ''
-    if dbRun == "Postgres":
-        if value == 'null':
+        selected_query = ''
+        if dbRun == "Postgres":
+            if value == 'null':
+                selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
+            else:
+                if utils.contiene_carattere_apice(value):
+                    value = value.replace("'", "''")
+                
+                selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f"'{value}'")
+        
+        elif dbRun == "Oracle":
             selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
-        else:
-            if utils.contiene_carattere_apice(value):
-                value = value.replace("'", "''")
-            
-            selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', f"'{value}'")
-       
-    elif dbRun == "Oracle":
-        selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('value', value)
-    
-    selected_query = utils.replace_global_variables(selected_query, context)
-    selected_query = utils.replace_local_variables(selected_query, context)
-    selected_query = utils.replace_context_variables(selected_query, context)
+        
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
 
-    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
-    adopted_db.closeConnection(conn)
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+        exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+        adopted_db.closeConnection(conn)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
+
 
 
 
