@@ -2590,7 +2590,7 @@ def step_impl(context, param, value):
     assert refresh_response.status_code == 200
 
 
-@step("refresh job {job_name} triggered after {seconds} seconds")
+@step("after {seconds} seconds triggered refresh job {job_name}")
 def step_impl(context, job_name, seconds):
 
     url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
