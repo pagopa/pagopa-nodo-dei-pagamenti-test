@@ -2588,6 +2588,29 @@ def step_impl(context, param, value):
     assert refresh_response.status_code == 200
 
 
+@step("refresh job {job_name} triggered after {seconds} seconds")
+def step_impl(context, job_name, seconds):
+
+    url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
+    header_host = utils.estrapola_header_host(url_nodo)
+    headers = {'Host': header_host}
+
+    dbRun = getattr(context, "dbRun")
+
+    print("Refreshing...")
+    refresh_response = None
+    if dbRun == "Postgres":
+        print(f"URL refresh: {utils.get_refresh_config_url(context)}")
+        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+    elif dbRun == "Oracle":
+        print(f"URL refresh: {utils.get_refresh_config_url(context)}")
+        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+
+    setattr(context, job_name + RESPONSE, refresh_response)
+    time.sleep(seconds)
+    assert refresh_response.status_code == 200
+
+
 @step("refresh job {job_name} triggered after 10 seconds")
 def step_impl(context, job_name):
 
