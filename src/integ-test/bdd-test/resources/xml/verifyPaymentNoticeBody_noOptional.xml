@@ -3,13 +3,13 @@
     <soapenv:Header/>
     <soapenv:Body>
         <nod:verifyPaymentNoticeReq>
-            <idPSP>#psp#</idPSP>
-            <idBrokerPSP>#id_broker_psp#</idBrokerPSP>
-            <idChannel>#canale_ATTIVATO_PRESSO_PSP#</idChannel>
-            <password>#password#</password>
+            <idPSP>$idPSP</idPSP>
+            <idBrokerPSP>$idBrokerPSP</idBrokerPSP>
+            <idChannel>$idChannel</idChannel>
+            <password>$password</password>
             <qrCode>
-                <fiscalCode>#creditor_institution_code#</fiscalCode>
-                <noticeNumber>002#iuv#</noticeNumber>
+                <fiscalCode>$fiscalCode</fiscalCode>
+                <noticeNumber>$noticeNumber</noticeNumber>
             </qrCode>
         </nod:verifyPaymentNoticeReq>
     </soapenv:Body>

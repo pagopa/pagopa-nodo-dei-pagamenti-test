@@ -3,17 +3,17 @@
     <soapenv:Header />
     <soapenv:Body>
         <paf:paVerifyPaymentNoticeRes>
-            <outcome>OK</outcome>
+            <outcome>$outcome</outcome>
             <paymentList>
                 <paymentOptionDescription>
-                    <amount>10.00</amount>
-                    <options>EQ</options>
-                    <allCCP>false</allCCP>
+                    <amount>$amount</amount>
+                    <options>$options</options>
+                    <allCCP>$allCCP</allCCP>
                 </paymentOptionDescription>
             </paymentList>
-            <paymentDescription>Pagamento di Test</paymentDescription>
-            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
-            <companyName>companyName</companyName>
+            <paymentDescription>$paymentDescription</paymentDescription>
+            <fiscalCodePA>$fiscalCodePA</fiscalCodePA>
+            <companyName>$companyName</companyName>
         </paf:paVerifyPaymentNoticeRes>
     </soapenv:Body>
 </soapenv:Envelope>
