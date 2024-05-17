@@ -4,6 +4,8 @@ import os
 import datetime
 from webbrowser import get
 from xml.dom.minidom import parseString
+import random
+import string
 
 from behave.__main__ import main as behave_main
 import time
@@ -39,6 +41,11 @@ def random_s():
         strNumRand += str(random.randint(0, 9))
         cont -= 1
     return strNumRand
+
+def genera_stringa():
+    lunghezza = random.randint(2, 18)
+    caratteri = string.ascii_letters + string.digits
+    return ''.join(random.choice(caratteri) for _ in range(lunghezza))
 
 
 def compare_lists(lista_api, lista_query):

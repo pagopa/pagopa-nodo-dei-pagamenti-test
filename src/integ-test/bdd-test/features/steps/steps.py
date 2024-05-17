@@ -143,6 +143,8 @@ def step_impl(context, primitive):
                     0].firstChild.data
 
             payload = payload.replace('#idempotency_key#', f"{idBrokerPSP}_{str(random.randint(1000000000, 9999999999))}")
+            
+            payload = payload.replace('#alpha_idempotency_key#', f"{utils.genera_stringa()}_{str(random.randint(1000000000, 9999999999))}")
 
             payload = payload.replace('#idempotency_key_POSTE#',
                                     f"{str(random.randint(10000000000, 99999999999))}_{str(random.randint(1000000000, 9999999999))}")
