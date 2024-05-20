@@ -38,7 +38,7 @@
          "subscription_key_name": ""
       },
       "apicfg-testing-support": {
-        "url": "https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/o/v1",
+        "url": "https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/p/v1",
         "healthcheck": "/info",
         "soap_service": " ",
         "rest_service": " ",
