@@ -2993,7 +2993,7 @@ def step_impl(context, value, column, table_name, db_name, type_table):
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
-       # assert 5 == 4,f"5 è diverso da 4"
+       
         if value == 'None':
             print('Check value None')
             assert query_result[0] == None, f"assert result query with None for Failed!"
@@ -3052,7 +3052,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
 
         query_result = [t[0] for t in exec_query]
         print('query_result: ', query_result)
-       # assert 5 == 4,f"5 è diverso da 4"
+       
         if value == 'None':
             print('Check value None')
             assert query_result[0] == None, f"assert result query with None for Failed!"

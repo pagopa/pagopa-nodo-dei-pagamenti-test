@@ -1,6 +1,4 @@
-<marcaDaBollo
-    xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo"
-    xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
+<marcaDaBollo xmlns="http://www.agenziaentrate.gov.it/2014/MarcaDaBollo" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#">
     <PSP>
         <CodiceFiscale>$CodiceFiscale</CodiceFiscale>
         <Denominazione>$Denominazione</Denominazione>
@@ -10,19 +8,18 @@
     <Importo>$Importo</Importo>
     <TipoBollo>$TipoBollo</TipoBollo>
     <ImprontaDocumento>
-        <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+        <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
         <ns2:DigestValue>$DigestValue</ns2:DigestValue>
     </ImprontaDocumento>
-    <Signature
-        xmlns="http://www.w3.org/2000/09/xmldsig#">
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
         <SignedInfo>
-            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
-            <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" />
+            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+            <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
             <Reference URI="">
                 <Transforms>
-                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
                 </Transforms>
-                <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+                <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
                 <DigestValue>$DigestValue</DigestValue>
             </Reference>
         </SignedInfo>

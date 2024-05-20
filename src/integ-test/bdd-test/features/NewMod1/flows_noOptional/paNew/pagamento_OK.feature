@@ -2098,7 +2098,7 @@ Feature: NMU flows con pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
-        And from body with datatable vertical paGetPaymentV2_MBD_2transfer_noOptional initial XML paGetPaymentV2
+        And from body with datatable vertical paGetPaymentV2_MBD_noOptional initial XML paGetPaymentV2
             | outcome                     | OK                                           |
             | creditorReferenceId         | 10$iuv                                       |
             | paymentAmount               | 10.00                                        |
@@ -2108,9 +2108,8 @@ Feature: NMU flows con pagamento OK
             | entityUniqueIdentifierType  | G                                            |
             | entityUniqueIdentifierValue | 44444444444                                  |
             | fullName                    | Massimo Benvegnù                             |
-            | transferAmount              | 5.00                                         |
-            | fiscalCodePA1               | $activatePaymentNoticeV2.fiscalCode          |
-            | fiscalCodePA2               | #creditor_institution_code_secondary#        |
+            | transferAmount              | 10.00                                        |
+            | fiscalCodePA                | #creditor_institution_code_secondary#        |
             | hashDocumento               | wHpFSLCGZjIvNSXxqtGbxg7275t446DRTk5ZrsdUQ6E= |
             | tipoBollo                   | 01                                           |
             | provinciaResidenza          | MI                                           |
