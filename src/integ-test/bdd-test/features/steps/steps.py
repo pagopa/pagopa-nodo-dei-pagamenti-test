@@ -2621,16 +2621,10 @@ def step_impl(context, param, value):
 
         update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
 
-        selected_query = ''
+        if utils.contiene_carattere_apice(value):
+            value = value.replace("'", "''")
 
-        if dbRun == 'Postgres':
-            if utils.contiene_carattere_apice(value):
-                value = value.replace("'", "''")
-
-            selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', param)
-
-        elif dbRun == 'Oracle':
-            selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', param)
+        selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', param)
 
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
@@ -2832,16 +2826,10 @@ def step_impl(context):
 
     for key, value in config_dict.items():
 
-        selected_query = ''
+        if utils.contiene_carattere_apice(value):
+            value = value.replace("'", "''")
 
-        if dbRun == 'Postgres':
-            if utils.contiene_carattere_apice(value):
-                value = value.replace("'", "''")
-
-            selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', key)
-        
-        elif dbRun == 'Oracle':
-            selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', key)
+        selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', key)
         
         adopted_db.executeQuery(conn, selected_query, as_dict=True)
 
