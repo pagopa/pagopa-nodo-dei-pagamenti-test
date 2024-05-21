@@ -2658,6 +2658,37 @@ def step_impl(context, param, value):
     
     print('refresh_response: ', refresh_response)
     assert refresh_response.status_code == 200
+    
+    
+@step("update parameter {param} on configuration keys with value {value}")
+def step_impl(context, param, value):
+    dbRun = getattr(context, "dbRun")
+    db_name = "nodo_cfg"
+    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+
+    update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
+
+    selected_query = ''
+
+    if dbRun == 'Postgres':
+        if utils.contiene_carattere_apice(value):
+            value = value.replace("'", "''")
+
+        selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', param)
+
+    elif dbRun == 'Oracle':
+        selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', param)
+
+    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+    setattr(context, param, value)
+    print(">>>>>>>>>>>>>>>", getattr(context, param))
+
+    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+    if exec_query is not None:
+        print(f'executed query: {exec_query}')
+
+    adopted_db.closeConnection(conn)
 
 
 @step("after {seconds} seconds triggered refresh job {job_name}")
@@ -2679,7 +2710,8 @@ def step_impl(context, job_name, seconds):
             refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
         setattr(context, job_name + RESPONSE, refresh_response)
-        time.sleep(int(seconds))
+        print(f"wait for: {seconds} seconds")
+        time.sleep(seconds)
         assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
 
     except AssertionError as e:
