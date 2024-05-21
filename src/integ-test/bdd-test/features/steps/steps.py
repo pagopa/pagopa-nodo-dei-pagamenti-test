@@ -2614,81 +2614,99 @@ def step_impl(context, primitive):
 
 @step("nodo-dei-pagamenti has config parameter {param} set to {value}")
 def step_impl(context, param, value):
-    dbRun = getattr(context, "dbRun")
-    db_name = "nodo_cfg"
-    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    try:
+        dbRun = getattr(context, "dbRun")
+        db_name = "nodo_cfg"
+        db_selected = context.config.userdata.get("db_configuration").get(db_name)
 
-    update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
+        update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
 
-    selected_query = ''
+        selected_query = ''
 
-    if dbRun == 'Postgres':
-        if utils.contiene_carattere_apice(value):
-            value = value.replace("'", "''")
+        if dbRun == 'Postgres':
+            if utils.contiene_carattere_apice(value):
+                value = value.replace("'", "''")
 
-        selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', param)
+            selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', param)
 
-    elif dbRun == 'Oracle':
-        selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', param)
+        elif dbRun == 'Oracle':
+            selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', param)
 
-    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    setattr(context, param, value)
-    print(">>>>>>>>>>>>>>>", getattr(context, param))
+        setattr(context, param, value)
+        print(">>>>>>>>>>>>>>>", getattr(context, param))
 
-    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
-    if exec_query is not None:
-        print(f'executed query: {exec_query}')
+        exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+        if exec_query is not None:
+            print(f'executed query: {exec_query}')
 
-    adopted_db.closeConnection(conn)
+        adopted_db.closeConnection(conn)
 
-    header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
-    headers = {'Host': header_host}
-    
-    print("Refreshing...")
-    refresh_response = None
-    if dbRun == "Postgres":
-        print(f"URL refresh: {utils.get_refresh_config_url(context)}")
-        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
-    elif dbRun == "Oracle":
-        print(f"URL refresh: {utils.get_refresh_config_url(context)}")
-        refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
+        header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
+        headers = {'Host': header_host}
+        
+        print("Refreshing...")
+        refresh_response = None
+        if dbRun == "Postgres":
+            print(f"URL refresh: {utils.get_refresh_config_url(context)}")
+            refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        elif dbRun == "Oracle":
+            print(f"URL refresh: {utils.get_refresh_config_url(context)}")
+            refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
-    time.sleep(5)
-    
-    print('refresh_response: ', refresh_response)
-    assert refresh_response.status_code == 200
+        time.sleep(5)
+        
+        print('refresh_response: ', refresh_response)
+        assert refresh_response.status_code == 200, f"Refresh Failed!!!!"
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
     
     
 @step("update parameter {param} on configuration keys with value {value}")
 def step_impl(context, param, value):
-    dbRun = getattr(context, "dbRun")
-    db_name = "nodo_cfg"
-    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    try:
+        dbRun = getattr(context, "dbRun")
+        db_name = "nodo_cfg"
+        db_selected = context.config.userdata.get("db_configuration").get(db_name)
 
-    update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
+        update_config_query = "update_config_postgresql" if dbRun == "Postgres" else "update_config_oracle"
 
-    selected_query = ''
-
-    if dbRun == 'Postgres':
         if utils.contiene_carattere_apice(value):
             value = value.replace("'", "''")
 
         selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', f"'{value}'").replace('key', param)
 
-    elif dbRun == 'Oracle':
-        selected_query = utils.query_json(context, update_config_query, 'configurations').replace('value', value).replace('key', param)
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+        setattr(context, param, value)
+        print(">>>>>>>>>>>>>>>", getattr(context, param))
 
-    setattr(context, param, value)
-    print(">>>>>>>>>>>>>>>", getattr(context, param))
+        exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+        if exec_query is not None:
+            print(f'executed query: {exec_query}')
 
-    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
-    if exec_query is not None:
-        print(f'executed query: {exec_query}')
+        adopted_db.closeConnection(conn)
 
-    adopted_db.closeConnection(conn)
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step("wait {seconds} seconds after triggered refresh job {job_name}")
@@ -2711,7 +2729,7 @@ def step_impl(context, job_name, seconds):
 
         setattr(context, job_name + RESPONSE, refresh_response)
         print(f"wait for: {seconds} seconds")
-        time.sleep(seconds)
+        time.sleep(int(seconds))
         assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
 
     except AssertionError as e:
@@ -3175,19 +3193,31 @@ def step_impl(context, query_name, table_name, where_condition, macro, db_name):
 
 @step("generic update through the query {query_name} of the table {table_name} the parameter {param}, with where condition {where_condition} under macro {macro} on db {db_name}")
 def step_impl(context, query_name, table_name, param, where_condition, macro, db_name):
-    db_selected = context.config.userdata.get("db_configuration").get(db_name)
+    try:
+        db_selected = context.config.userdata.get("db_configuration").get(db_name)
 
-    where_condition = utils.replace_global_variables(where_condition, context)
-    where_condition = utils.replace_local_variables(where_condition, context)
-    where_condition = utils.replace_context_variables(where_condition, context)
+        where_condition = utils.replace_global_variables(where_condition, context)
+        where_condition = utils.replace_local_variables(where_condition, context)
+        where_condition = utils.replace_context_variables(where_condition, context)
 
-    selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('where_condition', where_condition)
-    selected_query = utils.replace_local_variables(selected_query, context)
-    selected_query = utils.replace_context_variables(selected_query, context)
-    selected_query = utils.replace_global_variables(selected_query, context)
-    adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-    exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
-    adopted_db.closeConnection(conn)
+        selected_query = utils.query_json(context, query_name, macro).replace('table_name', table_name).replace('param', param).replace('where_condition', where_condition)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+        exec_query = adopted_db.executeQuery(conn, selected_query, as_dict=True)
+        adopted_db.closeConnection(conn)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step(u"check datetime plus number of date {number} of the record at column {column} of the table {table_name} retrived by the query {query_name} on db {db_name} under macro {name_macro}")

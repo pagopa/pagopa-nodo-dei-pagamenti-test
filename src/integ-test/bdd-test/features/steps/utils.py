@@ -906,7 +906,12 @@ def generate_select(dict_fields_values):
         if i == 0:
             selected_query += f" WHERE {where_key} = '{where_value}'"
         else:
-            selected_query += f" AND {where_key} = '{where_value}'"
+            if where_key == 'INSERTED_TIMESTAMP':
+                selected_query += f" AND {where_key} > {where_value}"
+            elif where_key == 'ORDER BY':
+                selected_query += f" {where_key} {where_value}"
+            else:    
+                selected_query += f" AND {where_key} = '{where_value}'"
         i += 1
     
     return selected_query

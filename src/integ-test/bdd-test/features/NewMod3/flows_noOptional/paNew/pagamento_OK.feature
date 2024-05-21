@@ -557,7 +557,7 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -589,27 +589,27 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -634,16 +634,20 @@ Feature: NM3 flows con pagamento OK
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # RE
-        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query sottoTipoEvento_paVerifyPayment on db re with where datatable horizontal
-            | where_keys        | where_values                                |
-            | PAYMENT_TOKEN     | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO       | paVerifyPaymentNotice                       |
-            | SOTTO_TIPO_EVENTO | REQ                                         |
-        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query sottoTipoEvento_paGetPayment on db re with where datatable horizontal
+        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
+            | TIPO_EVENTO        | paVerifyPaymentNotice                       |
+            | SOTTO_TIPO_EVENTO  | REQ                                         |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
             | where_keys        | where_values                                |
             | PAYMENT_TOKEN     | $activatePaymentNoticeResponse.paymentToken |
             | TIPO_EVENTO       | paGetPaymentV2                              |
             | SOTTO_TIPO_EVENTO | REQ                                         |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                           |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                        |
         And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD with where datatable horizontal with db name re
         And through the query re_paSendRT_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
         And check value $paSendRT.standIn is equal to value true
@@ -974,4 +978,4 @@ Feature: NM3 flows con pagamento OK
         And update parameter gec.enabled on configuration keys with value false
         And update parameter invioReceiptStandin on configuration keys with value false
         And wait 5 seconds after triggered refresh job ALL
-        # mettere una wait dentro il refresh job e creare un nuovo "has config parameter" senza timesleep
+# mettere una wait dentro il refresh job e creare un nuovo "has config parameter" senza timesleep
