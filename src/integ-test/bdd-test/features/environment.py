@@ -156,6 +156,10 @@ def after_scenario(context, scenario):
         allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
 
         context.stdout_capture.close()
+
+        # Stampa l'output nel terminale
+        print(f"\nCaptured stdout:\n{captured_stdout}")
+
     elif dbRun == "Oracle":
         ####RUN DA LOCALE
         if user_profile != None:
@@ -167,8 +171,10 @@ def after_scenario(context, scenario):
 
             context.stdout_capture.close()
 
-    # Stampa l'output nel terminale
-    print(f"\nCaptured stdout:\n{captured_stdout}")
+            # Stampa l'output nel terminale
+            print(f"\nCaptured stdout:\n{captured_stdout}")
+
+
 
 
 def after_feature(context, feature):
