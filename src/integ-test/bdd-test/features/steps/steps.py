@@ -2691,7 +2691,7 @@ def step_impl(context, param, value):
     adopted_db.closeConnection(conn)
 
 
-@step("after {seconds} seconds triggered refresh job {job_name}")
+@step("wait {seconds} seconds after triggered refresh job {job_name}")
 def step_impl(context, job_name, seconds):
     try:
         url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")

@@ -501,16 +501,15 @@ Feature: NM3 flows con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_7 @after
+    @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_7 @after @standin
     Scenario: NM3 flow OK, FLOW with standin flag_standin_pa: verify -> paVerify standin --> resp verify senza flag standin activate -> paGetPaymentV2 standin spo+ -> paSendRT con flagStandin BIZ+ (NM3-19)
-        Given insert through the query insert_query into the table STAND_IN_STATIONS the fields STATION_CODE with 'irraggiungibile' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
-        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to true
-        And nodo-dei-pagamenti has config parameter station.stand-in set to 66666666666_08
-        And wait 50 seconds for expiration
+        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        And update parameter invioReceiptStandin on configuration keys with value true
+        And update parameter station.stand-in on configuration keys with value 66666666666_08
+        And wait 5 seconds after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 346#iuv#     |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     |
         And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
@@ -525,10 +524,10 @@ Feature: NM3 flows con pagamento OK
         And check standin field not exists in verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 346$iuv      | 10.00  |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347$iuv      | 10.00  |
         And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
             | outcome                     | OK                                |
-            | creditorReferenceId         | 46$iuv                            |
+            | creditorReferenceId         | 47$iuv                            |
             | paymentAmount               | 10.00                             |
             | dueDate                     | 2021-12-31                        |
             | description                 | pagamentoTest                     |
@@ -655,15 +654,15 @@ Feature: NM3 flows con pagamento OK
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_8 @after
+    @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_8 @after @standin
     Scenario: NM3 flow OK, FLOW with standin flag_standin_psp: verify -> paVerify standin --> resp verify con flag standin activate -> paGetPaymentV2 standin --> resp activate con flag standin spo+ -> paSendRT senza flag standin BIZ+ (NM3-20)
-        Given insert through the query insert_query into the table STAND_IN_STATIONS the fields STATION_CODE with 'irraggiungibile' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to true
-        And nodo-dei-pagamenti has config parameter station.stand-in set to 66666666666_08
-        And wait 50 seconds for expiration
+        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to true
+        And update parameter invioReceiptStandin on configuration keys with value true
+        And update parameter station.stand-in on configuration keys with value 66666666666_08
+        And wait 5 seconds after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 346#iuv#     |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     |
         And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
@@ -678,10 +677,10 @@ Feature: NM3 flows con pagamento OK
         And check standin is true of verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 346$iuv      | 10.00  |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347$iuv      | 10.00  |
         And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
             | outcome                     | OK                                |
-            | creditorReferenceId         | 46$iuv                            |
+            | creditorReferenceId         | 47$iuv                            |
             | paymentAmount               | 10.00                             |
             | dueDate                     | 2021-12-31                        |
             | description                 | pagamentoTest                     |
@@ -807,17 +806,16 @@ Feature: NM3 flows con pagamento OK
         And verify 2 record for the table RE retrived by the query sottoTipoEvento on db re under macro NewMod3
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_9 @after
+    @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_9 @after @standin
     Scenario: NM3 flow OK, FLOW with standin flag_standin_pa e flag_standin_psp: verify -> paVerify standin --> resp verify con flag standin activate -> paGetPaymentV2 standin --> resp activate con flag standin spo+ -> paSendRT con flag standin BIZ+ (NM3-21)
-        Given insert through the query insert_query into the table STAND_IN_STATIONS the fields STATION_CODE with 'irraggiungibile' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
-        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to true
-        And nodo-dei-pagamenti has config parameter station.stand-in set to 66666666666_08
-        And wait 50 seconds for expiration
+        And update parameter invioReceiptStandin on configuration keys with value false
+        And update parameter station.stand-in on configuration keys with value 66666666666_08
+        And wait 5 seconds after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 346#iuv#     |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     |
         And from body with datatable vertical paVerifyPaymentNotice_noOptional initial XML paVerifyPaymentNotice
             | outcome            | OK                          |
             | amount             | 10.00                       |
@@ -832,10 +830,10 @@ Feature: NM3 flows con pagamento OK
         And check standin is true of verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 346$iuv      | 10.00  |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347$iuv      | 10.00  |
         And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
             | outcome                     | OK                                |
-            | creditorReferenceId         | 46$iuv                            |
+            | creditorReferenceId         | 47$iuv                            |
             | paymentAmount               | 10.00                             |
             | dueDate                     | 2021-12-31                        |
             | description                 | pagamentoTest                     |
@@ -973,8 +971,7 @@ Feature: NM3 flows con pagamento OK
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
-        And delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value 'irraggiungibile' under macro update_query on db nodo_cfg
-        And nodo-dei-pagamenti has config parameter gec.enabled set to false
-        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to false
-        And after 2 seconds triggered refresh job ALL
+        And update parameter gec.enabled on configuration keys with value false
+        And update parameter invioReceiptStandin on configuration keys with value false
+        And wait 5 seconds after triggered refresh job ALL
         # mettere una wait dentro il refresh job e creare un nuovo "has config parameter" senza timesleep
