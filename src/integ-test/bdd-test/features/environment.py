@@ -147,20 +147,25 @@ def after_scenario(context, scenario):
         context.execute_steps(text_step)
         print("----> AFTER STEP COMPLETED")
 
-    sys.stdout = context.original_stdout
-
-    context.stdout_capture.seek(0)
-    captured_stdout = context.stdout_capture.read()
-
     dbRun = getattr(context, "dbRun")
     if dbRun == "Postgres":
+        sys.stdout = context.original_stdout
+        context.stdout_capture.seek(0)
+        captured_stdout = context.stdout_capture.read()
+
         allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+
+        context.stdout_capture.close()
     elif dbRun == "Oracle":
         ####RUN DA LOCALE
         if user_profile != None:
+            sys.stdout = context.original_stdout
+            context.stdout_capture.seek(0)
+            captured_stdout = context.stdout_capture.read()
+
             allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
 
-    context.stdout_capture.close()
+            context.stdout_capture.close()
 
     # Stampa l'output nel terminale
     print(f"\nCaptured stdout:\n{captured_stdout}")
