@@ -152,7 +152,14 @@ def after_scenario(context, scenario):
     context.stdout_capture.seek(0)
     captured_stdout = context.stdout_capture.read()
 
-    allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+    dbRun = getattr(context, "dbRun")
+    if dbRun == "Postgres":
+        allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+    elif dbRun == "Oracle":
+        ####RUN DA LOCALE
+        if user_profile != None:
+            allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+
     context.stdout_capture.close()
 
     # Stampa l'output nel terminale
