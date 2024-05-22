@@ -2712,9 +2712,9 @@ def step_impl(context, param, value):
 @step("wait {seconds} seconds after triggered refresh job {job_name}")
 def step_impl(context, job_name, seconds):
     try:
-        url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
-        header_host = utils.estrapola_header_host(url_nodo)
-        headers = {'Host': header_host}
+        headers = {}
+        if 'APICFG_SUBSCRIPTION_KEY' in os.environ:
+            headers["Ocp-Apim-Subscription-Key"] = os.getenv("APICFG_SUBSCRIPTION_KEY", default="")
 
         dbRun = getattr(context, "dbRun")
 

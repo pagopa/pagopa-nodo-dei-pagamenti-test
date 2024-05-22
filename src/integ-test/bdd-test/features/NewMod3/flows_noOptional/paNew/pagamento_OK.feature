@@ -501,9 +501,10 @@ Feature: NM3 flows con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_7 @after @standin
+    @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_7 @after @standin1
     Scenario: NM3 flow OK, FLOW with standin flag_standin_pa: verify -> paVerify standin --> resp verify senza flag standin activate -> paGetPaymentV2 standin spo+ -> paSendRT con flagStandin BIZ+ (NM3-19)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '5000000' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '5000000' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And wait 5 seconds after triggered refresh job ALL
@@ -525,12 +526,13 @@ Feature: NM3 flows con pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
             | outcome                     | OK                                |
             | creditorReferenceId         | 47$iuv                            |
             | paymentAmount               | 10.00                             |
             | dueDate                     | 2021-12-31                        |
             | description                 | pagamentoTest                     |
+            | companyName                 | companyName                       |
             | entityUniqueIdentifierType  | G                                 |
             | entityUniqueIdentifierValue | 77777777777                       |
             | fullName                    | Massimo Benvegnù                  |
@@ -539,7 +541,7 @@ Feature: NM3 flows con pagamento OK
             | IBAN                        | IT45R0760103200000000001016       |
             | remittanceInformation       | testPaGetPayment                  |
             | transferCategory            | paGetPaymentTest                  |
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And check standin field not exists in activatePaymentNotice response
@@ -635,20 +637,20 @@ Feature: NM3 flows con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # RE
         And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                        |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | TIPO_EVENTO        | paVerifyPaymentNotice               |
+            | SOTTO_TIPO_EVENTO  | REQ                                 |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                    |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                 |
+        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
             | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | paVerifyPaymentNotice                       |
+            | TIPO_EVENTO        | paGetPaymentV2                              |
             | SOTTO_TIPO_EVENTO  | REQ                                         |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
             | ORDER BY           | DATA_ORA_EVENTO ASC                         |
-        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys        | where_values                                |
-            | PAYMENT_TOKEN     | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO       | paGetPaymentV2                              |
-            | SOTTO_TIPO_EVENTO | REQ                                         |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                           |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                        |
-        And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD with where datatable horizontal with db name re
+        And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod3 with db name re
         And through the query re_paSendRT_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
         And check value $paSendRT.standIn is equal to value true
         And check value $paSendRT.idStation is equal to value irraggiungibile
@@ -661,6 +663,7 @@ Feature: NM3 flows con pagamento OK
     @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_8 @after @standin
     Scenario: NM3 flow OK, FLOW with standin flag_standin_psp: verify -> paVerify standin --> resp verify con flag standin activate -> paGetPaymentV2 standin --> resp activate con flag standin spo+ -> paSendRT senza flag standin BIZ+ (NM3-20)
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to true
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '5000000' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
         And wait 5 seconds after triggered refresh job ALL
@@ -682,12 +685,13 @@ Feature: NM3 flows con pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
             | outcome                     | OK                                |
             | creditorReferenceId         | 47$iuv                            |
             | paymentAmount               | 10.00                             |
             | dueDate                     | 2021-12-31                        |
             | description                 | pagamentoTest                     |
+            | companyName                 | companyName                       |
             | entityUniqueIdentifierType  | G                                 |
             | entityUniqueIdentifierValue | 77777777777                       |
             | fullName                    | Massimo Benvegnù                  |
@@ -696,7 +700,7 @@ Feature: NM3 flows con pagamento OK
             | IBAN                        | IT45R0760103200000000001016       |
             | remittanceInformation       | testPaGetPayment                  |
             | transferCategory            | paGetPaymentTest                  |
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And check standin is true of activatePaymentNotice response
@@ -714,7 +718,7 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -746,27 +750,27 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -791,17 +795,21 @@ Feature: NM3 flows con pagamento OK
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # RE
-        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query sottoTipoEvento_paVerifyPayment on db re with where datatable horizontal
-            | where_keys        | where_values                                |
-            | PAYMENT_TOKEN     | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO       | paVerifyPaymentNotice                       |
-            | SOTTO_TIPO_EVENTO | REQ                                         |
-        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query sottoTipoEvento_paGetPayment on db re with where datatable horizontal
-            | where_keys        | where_values                                |
-            | PAYMENT_TOKEN     | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO       | paGetPaymentV2                              |
-            | SOTTO_TIPO_EVENTO | REQ                                         |
-        And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD with where datatable horizontal with db name re
+        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                        |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | TIPO_EVENTO        | paVerifyPaymentNotice               |
+            | SOTTO_TIPO_EVENTO  | REQ                                 |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                    |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                 |
+        And checks the value None of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
+            | TIPO_EVENTO        | paGetPaymentV2                              |
+            | SOTTO_TIPO_EVENTO  | REQ                                         |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+        And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod3 with db name re
         And through the query re_paSendRT_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
         And check payload tag standIn field not exists in $paSendRT
         And check value $paSendRT.idStation is equal to value irraggiungibile
@@ -812,7 +820,8 @@ Feature: NM3 flows con pagamento OK
 
     @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_9 @after @standin
     Scenario: NM3 flow OK, FLOW with standin flag_standin_pa e flag_standin_psp: verify -> paVerify standin --> resp verify con flag standin activate -> paGetPaymentV2 standin --> resp activate con flag standin spo+ -> paSendRT con flag standin BIZ+ (NM3-21)
-        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '5000000' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '5000000' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value false
         And update parameter station.stand-in on configuration keys with value 66666666666_08
@@ -835,12 +844,13 @@ Feature: NM3 flows con pagamento OK
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347$iuv      | 10.00  |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
             | outcome                     | OK                                |
             | creditorReferenceId         | 47$iuv                            |
             | paymentAmount               | 10.00                             |
             | dueDate                     | 2021-12-31                        |
             | description                 | pagamentoTest                     |
+            | companyName                 | companyName                       |
             | entityUniqueIdentifierType  | G                                 |
             | entityUniqueIdentifierValue | 77777777777                       |
             | fullName                    | Massimo Benvegnù                  |
@@ -849,7 +859,7 @@ Feature: NM3 flows con pagamento OK
             | IBAN                        | IT45R0760103200000000001016       |
             | remittanceInformation       | testPaGetPayment                  |
             | transferCategory            | paGetPaymentTest                  |
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And check standin is true of activatePaymentNotice response
@@ -867,7 +877,7 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -899,27 +909,27 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query position_status_n on db nodo_online with where datatable horizontal
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -944,17 +954,21 @@ Feature: NM3 flows con pagamento OK
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # RE
-        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query sottoTipoEvento_paVerifyPayment on db re with where datatable horizontal
-            | where_keys        | where_values                                |
-            | PAYMENT_TOKEN     | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO       | paVerifyPaymentNotice                       |
-            | SOTTO_TIPO_EVENTO | REQ                                         |
-        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query sottoTipoEvento_paGetPayment on db re with where datatable horizontal
-            | where_keys        | where_values                                |
-            | PAYMENT_TOKEN     | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO       | paGetPaymentV2                              |
-            | SOTTO_TIPO_EVENTO | REQ                                         |
-        And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD with where datatable horizontal with db name re
+        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                        |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | TIPO_EVENTO        | paVerifyPaymentNotice               |
+            | SOTTO_TIPO_EVENTO  | REQ                                 |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                    |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                 |
+        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
+            | TIPO_EVENTO        | paGetPaymentV2                              |
+            | SOTTO_TIPO_EVENTO  | REQ                                         |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+        And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod3 with db name re
         And through the query re_paSendRT_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
         And check value $paSendRT.standIn is equal to value true
         And check value $paSendRT.idStation is equal to value irraggiungibile
@@ -975,6 +989,7 @@ Feature: NM3 flows con pagamento OK
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '5000000' under macro update_query on db nodo_cfg
         And update parameter gec.enabled on configuration keys with value false
         And update parameter invioReceiptStandin on configuration keys with value false
         And wait 5 seconds after triggered refresh job ALL

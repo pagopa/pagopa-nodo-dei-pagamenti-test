@@ -195,9 +195,7 @@ def get_soap_mock_psp2(context):
 
 def get_refresh_config_url(context):
     if context.config.userdata.get('services').get('nodo-dei-pagamenti').get('refresh_config_service') is not None:
-        return context.config.userdata.get('services').get('nodo-dei-pagamenti').get('url') \
-            + context.config.userdata.get('services').get(
-                'nodo-dei-pagamenti').get('refresh_config_service')
+        return context.config.userdata.get('services').get('nodo-dei-pagamenti').get('refresh_config_service')
     else:
         return ""
 
