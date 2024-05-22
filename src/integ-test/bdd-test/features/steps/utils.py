@@ -915,3 +915,15 @@ def generate_select(dict_fields_values):
         i += 1
     
     return selected_query
+
+###METODO PER CREARE UNA SELECT CON WHERE
+def generate_string_column_table(list_col_split):
+    i = 0
+    columns = ''
+    for single_columns in list_col_split:
+        if i == len(list_col_split)-1:
+            columns += single_columns
+        else:
+            columns += single_columns + ','
+        i += 1
+    return columns

@@ -327,12 +327,12 @@ def step_impl(context, primitive):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -561,12 +561,12 @@ def step_impl(context, primitive, type_table, filebody):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -841,12 +841,12 @@ def step_impl(context, primitive, type_table, filebody):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -905,12 +905,12 @@ def step_impl(context, primitive, filebody):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -965,12 +965,12 @@ def step_impl(context, primitive):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -1118,12 +1118,12 @@ def step_impl(context):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -1148,12 +1148,12 @@ def step_impl(context, number, aux_digit, segregation_code, application_code):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -1173,12 +1173,12 @@ def step_impl(context, number, pa, notice_number):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -1271,12 +1271,12 @@ def step_impl(context, number):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -1318,12 +1318,12 @@ def step_impl(context, filebody, type_table):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -1352,12 +1352,12 @@ def step_impl(context):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -1385,12 +1385,12 @@ def step_impl(context, number):
     
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -1432,12 +1432,12 @@ def step_impl(context, number):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -1477,12 +1477,12 @@ def step_impl(context):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -1603,12 +1603,12 @@ def step_impl(context, type, tag, value, primitive):
     
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -1676,12 +1676,12 @@ def step_impl(context, sender, soap_primitive, receiver):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -1718,12 +1718,12 @@ def step_impl(context, sender, soap_primitive, receiver):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -1756,12 +1756,12 @@ def step_impl(context, job_name, seconds):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -1812,12 +1812,12 @@ def step_impl(context, tag, value, primitive):
             print(f'check tag "{tag}" - expected: {value}, obtained: {founded_value}')
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -1842,12 +1842,12 @@ def step_impl(context, path_tag, value, primitive):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -1947,12 +1947,12 @@ def step_impl(context, tag, value, primitive):
             assert value in values, f"{tag} doesn't contains {value} in {primitive} response"
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -2000,12 +2000,12 @@ def step_impl(context, tag, value, primitive):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -2261,12 +2261,12 @@ def step_impl(context, sender, method, service, receiver):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -2278,7 +2278,7 @@ def step_impl(context, action, value):
         print(f'HTTP status expected: {value} - obtained:{getattr(context, action + RESPONSE).status_code}')
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
 
@@ -2316,12 +2316,12 @@ def step_impl(context, mock, destination, primitive):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -2595,12 +2595,12 @@ def step_impl(context, value, primitive):
         setattr(context, primitive, xml)
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -2656,12 +2656,12 @@ def step_impl(context, param, value):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
     
@@ -2693,12 +2693,12 @@ def step_impl(context, param, value):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -2728,12 +2728,12 @@ def step_impl(context, job_name, seconds):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -2762,12 +2762,12 @@ def step_impl(context, job_name):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -3004,12 +3004,114 @@ def step_impl(context, seconds):
     pass
 
 
+@step(u"generate list columns {columns} and dict fields values expected {fields_values_expected} for query checks all values with datatable {type_table}")
+def step_impl(context, columns, fields_values_expected, type_table):
+    try:
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable per i valori dei fields e values per la query allo step successivo
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
+
+        # Costruisce la list columns e la dict da passare al checks allo step successivo
+        list_columns = list()  
+        dict_fields_values_expected = {}
+
+        for field, value in zip(dict_fields_values['column'], dict_fields_values['value']):
+                dict_fields_values_expected[field] = value
+
+
+        for field, value in dict_fields_values_expected.items():
+            list_columns.append(field)
+
+        setattr(context, columns, list_columns)
+        setattr(context, fields_values_expected, dict_fields_values_expected)
+
+        print(f"list columns: {list_columns}")
+        print(f"dict fields values expected: {dict_fields_values}")
+    
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print(f"----->>>> Assertion Error: {e}")
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print(f"----->>>> Exception: {e}")
+        # Interrompiamo il test
+        raise e
+
+@step(u"checks all values by {d_fields_values_expected} of the record for each columns {l_columns} of the table {table_name} retrived by the query on db {db_name} with where datatable {type_table}")
+def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name, type_table): 
+    try:
+        db_config = context.config.userdata.get("db_configuration")
+        db_selected = db_config.get(db_name)
+
+        string_list_columns = utils.replace_context_variables(l_columns, context).replace("[", '').replace("]", '').replace("'",'')
+        list_col_split = [col.strip() for col in string_list_columns.split(',')]
+        columns = utils.generate_string_column_table(list_col_split)
+ 
+        dict_fields_values_obtained = {}
+        ###CONVERSIONE STRINGA IN DICT
+        dict_fields_values_expected = json.loads(utils.replace_context_variables(d_fields_values_expected, context).replace("'",'"'))
+
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable per le where conditions e la mette in una dict
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
+        # Costruisce la query a partire dalla where
+        selected_query = utils.generate_select(dict_fields_values)
+
+        selected_query = selected_query.replace("columns", columns).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
+
+        print(f"query to execute: {selected_query}")
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+        assert exec_query != None, f"Result query empty!!!!"
+
+        for field, value_obt in zip(list_col_split, exec_query[0]):
+            dict_fields_values_obtained[field] = value_obt
+
+        print(f"dict query result: {dict_fields_values_obtained}")
+
+        ###CHECKS PHASE
+        for field, value in dict_fields_values_expected.items():
+            if value == 'None':
+                assert dict_fields_values_obtained[field] == None, f"assert result query with None for Failed for field: {field}"
+                print(f"Check value None  for field {field} ---> OK !!!")
+            elif value == 'NotNone':
+                assert dict_fields_values_obtained[field] != None, f"assert result query with Not None Failed for field: {field}"
+                print(f"Check value NotNone  for field {field} ---> OK !!!")
+            else:
+                value = utils.replace_global_variables(value, context)
+                value = utils.replace_local_variables(value, context)
+                value = utils.replace_context_variables(value, context)
+
+                if utils.isFloat(value):
+                    assert float(dict_fields_values_obtained[field]) == float(value), f"check for field: {field} ---> expected element: {float(value)}, obtained: {float(dict_fields_values_obtained[field])}"
+                else:
+                    assert str(dict_fields_values_obtained[field]) == str(value), f"check for field: {field} ---> expected element: {str(value)}, obtained: {str(dict_fields_values_obtained[field])}"
+                print(f"check for field: {field} ---> expected element: {value}, obtained: {dict_fields_values_obtained[field]} ---> OK !!!")
+
+        adopted_db.closeConnection(conn)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print(f"----->>>> Assertion Error: {e}")
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print(f"----->>>> Exception: {e}")
+        # Interrompiamo il test
+        raise e
+
+
 
 @step(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query on db {db_name} with where datatable {type_table}")
 def step_impl(context, value, column, table_name, db_name, type_table): 
     try:
-
-        dbRun = getattr(context, "dbRun")
         db_config = context.config.userdata.get("db_configuration")
         db_selected = db_config.get(db_name)
 
@@ -3060,12 +3162,12 @@ def step_impl(context, value, column, table_name, db_name, type_table):
         adopted_db.closeConnection(conn)
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -3119,12 +3221,12 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
         adopted_db.closeConnection(conn)
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -3198,12 +3300,12 @@ def step_impl(context, query_name, table_name, param, where_condition, macro, db
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -3464,12 +3566,12 @@ def step_impl(context, query_name, table_name, param, value, macro, db_name):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -3571,12 +3673,12 @@ def step_impl(context, table_name, db_name, type_table, number):
     
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -3602,12 +3704,12 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -3631,12 +3733,12 @@ def step_impl(context, query_name, table_name, db_name, name_macro):
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
@@ -3703,12 +3805,12 @@ def step_impl(context, value1, condition, value2):
             assert False
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e}")
         # Interrompiamo il test
         raise AssertionError(str(e))
     except Exception as e:
         # Gestione di tutte le altre eccezioni
-        print("----->>>> Exception:", e)
+        print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
 
