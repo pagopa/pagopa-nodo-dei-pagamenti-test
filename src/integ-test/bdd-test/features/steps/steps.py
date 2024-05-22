@@ -3068,6 +3068,108 @@ def step_impl(context, seconds):
     pass
 
 
+@step(u"generate list columns {columns} and dict fields values expected {fields_values_expected} for query checks all values with datatable {type_table}")
+def step_impl(context, columns, fields_values_expected, type_table):
+    try:
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable per i valori dei fields e values per la query allo step successivo
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
+
+        # Costruisce la list columns e la dict da passare al checks allo step successivo
+        list_columns = list()  
+        dict_fields_values_expected = {}
+
+        for field, value in zip(dict_fields_values['column'], dict_fields_values['value']):
+                dict_fields_values_expected[field] = value
+
+
+        for field, value in dict_fields_values_expected.items():
+            list_columns.append(field)
+
+        setattr(context, columns, list_columns)
+        setattr(context, fields_values_expected, dict_fields_values_expected)
+
+        print(f"list columns: {list_columns}")
+        print(f"dict fields values expected: {dict_fields_values}")
+    
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print(f"----->>>> Assertion Error: {e}")
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print(f"----->>>> Exception: {e}")
+        # Interrompiamo il test
+        raise e
+
+@step(u"checks all values by {d_fields_values_expected} of the record for each columns {l_columns} of the table {table_name} retrived by the query on db {db_name} with where datatable {type_table}")
+def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name, type_table): 
+    try:
+        db_config = context.config.userdata.get("db_configuration")
+        db_selected = db_config.get(db_name)
+
+        string_list_columns = utils.replace_context_variables(l_columns, context).replace("[", '').replace("]", '').replace("'",'')
+        list_col_split = [col.strip() for col in string_list_columns.split(',')]
+        columns = utils.generate_string_column_table(list_col_split)
+ 
+        dict_fields_values_obtained = {}
+        ###CONVERSIONE STRINGA IN DICT
+        dict_fields_values_expected = json.loads(utils.replace_context_variables(d_fields_values_expected, context).replace("'",'"'))
+
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable per le where conditions e la mette in una dict
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
+        # Costruisce la query a partire dalla where
+        selected_query = utils.generate_select(dict_fields_values)
+
+        selected_query = selected_query.replace("columns", columns).replace("table_name", table_name)
+        selected_query = utils.replace_global_variables(selected_query, context)
+        selected_query = utils.replace_local_variables(selected_query, context)
+        selected_query = utils.replace_context_variables(selected_query, context)
+
+        print(f"query to execute: {selected_query}")
+        exec_query = adopted_db.executeQuery(conn, selected_query)
+        assert exec_query != None, f"Result query empty!!!!"
+
+        for field, value_obt in zip(list_col_split, exec_query[0]):
+            dict_fields_values_obtained[field] = value_obt
+
+        print(f"dict query result: {dict_fields_values_obtained}")
+
+        ###CHECKS PHASE
+        for field, value in dict_fields_values_expected.items():
+            if value == 'None':
+                assert dict_fields_values_obtained[field] == None, f"assert result query with None for Failed for field: {field}"
+                print(f"Check value None  for field {field} ---> OK !!!")
+            elif value == 'NotNone':
+                assert dict_fields_values_obtained[field] != None, f"assert result query with Not None Failed for field: {field}"
+                print(f"Check value NotNone  for field {field} ---> OK !!!")
+            else:
+                value = utils.replace_global_variables(value, context)
+                value = utils.replace_local_variables(value, context)
+                value = utils.replace_context_variables(value, context)
+
+                if utils.isFloat(value):
+                    assert float(dict_fields_values_obtained[field]) == float(value), f"check for field: {field} ---> expected element: {float(value)}, obtained: {float(dict_fields_values_obtained[field])}"
+                else:
+                    assert str(dict_fields_values_obtained[field]) == str(value), f"check for field: {field} ---> expected element: {str(value)}, obtained: {str(dict_fields_values_obtained[field])}"
+                print(f"check for field: {field} ---> expected element: {value}, obtained: {dict_fields_values_obtained[field]} ---> OK !!!")
+
+        adopted_db.closeConnection(conn)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print(f"----->>>> Assertion Error: {e}")
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print(f"----->>>> Exception: {e}")
+        # Interrompiamo il test
+        raise e
 
 @step(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query on db {db_name} with where datatable {type_table}")
 def step_impl(context, value, column, table_name, db_name, type_table): 
@@ -3886,49 +3988,73 @@ def step_impl(context, primitive1, primitive2):
 
 @step("through the query {query_name} convert json {json_elem} at position {position:d} to xml and save it under the key {key}")
 def step_impl(context, query_name, json_elem, position, key):
-    result_query = getattr(context, query_name)
-    print(f'{query_name}: {result_query}')
+    try:
+        result_query = getattr(context, query_name)
+        print(f'{query_name}: {result_query}')
 
-    dbRun = getattr(context, "dbRun")
-    selected_element = ''
-    if dbRun == "Postgres":
-        selected_element = result_query[0][position].tobytes().decode('utf-8')
-    elif dbRun == "Oracle":
-        selected_element = result_query[0][position]
-        selected_element = selected_element.read()
-        selected_element = selected_element.decode("utf-8")
+        dbRun = getattr(context, "dbRun")
+        selected_element = ''
+        if dbRun == "Postgres":
+            selected_element = result_query[0][position].tobytes().decode('utf-8')
+        elif dbRun == "Oracle":
+            selected_element = result_query[0][position]
+            selected_element = selected_element.read()
+            selected_element = selected_element.decode("utf-8")
 
-    jsonDict = json.loads(selected_element)
-    selected_element = utils.json2xml(jsonDict)
-    selected_element = '<root>' + selected_element + '</root>'
+        jsonDict = json.loads(selected_element)
+        selected_element = utils.json2xml(jsonDict)
+        selected_element = '<root>' + selected_element + '</root>'
 
-    print(f'{json_elem}: {selected_element}')
-    setattr(context, key, selected_element)
+        print(f'{json_elem}: {selected_element}')
+        setattr(context, key, selected_element)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step('checking value {value1} is {condition} value {value2}')
 def step_impl(context, value1, condition, value2):
-    value1 = utils.replace_local_variables(value1, context)
-    value1 = utils.replace_context_variables(value1, context)
-    value1 = utils.replace_global_variables(value1, context)
-    value2 = utils.replace_local_variables(value2, context)
-    value2 = utils.replace_context_variables(value2, context)
-    value2 = utils.replace_global_variables(value2, context)
+    try:
+        value1 = utils.replace_local_variables(value1, context)
+        value1 = utils.replace_context_variables(value1, context)
+        value1 = utils.replace_global_variables(value1, context)
+        value2 = utils.replace_local_variables(value2, context)
+        value2 = utils.replace_context_variables(value2, context)
+        value2 = utils.replace_global_variables(value2, context)
 
-    value1 = str(value1)
-    value1 = "".join(value1.split())
-    value2 = str(value2)
+        value1 = str(value1)
+        value1 = "".join(value1.split())
+        value2 = str(value2)
 
-    if condition == 'equal to':
-        assert value1 == value2, f"{value1} != {value2}"
-    elif condition == 'greater than':
-        assert value1 > value2, f"{value1} <= {value2}"
-    elif condition == 'smaller than':
-        assert value1 < value2, f"{value1} >= {value2}"
-    elif condition == 'containing':
-        assert value2 in value1, f"{value1} contains {value2}"
-    else:
-        assert False
+        if condition == 'equal to':
+            assert value1 == value2, f"{value1} != {value2}"
+        elif condition == 'greater than':
+            assert value1 > value2, f"{value1} <= {value2}"
+        elif condition == 'smaller than':
+            assert value1 < value2, f"{value1} >= {value2}"
+        elif condition == 'containing':
+            assert value2 in value1, f"{value1} contains {value2}"
+        else:
+            assert False
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @then("check db PAG-590_01")

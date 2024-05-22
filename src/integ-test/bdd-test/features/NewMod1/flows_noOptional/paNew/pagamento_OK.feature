@@ -99,7 +99,23 @@ Feature: NMU flows con pagamento OK
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # # POSITION_SUBJECT
-        # And checks all values NotNone,PAYER,$sendPaymentOutcomeV2.entityUniqueIdentifierType,$sendPaymentOutcomeV2.fullName,$sendPaymentOutcomeV2.streetName,$sendPaymentOutcomeV2.civicNumber,$sendPaymentOutcomeV2.postalCode,$sendPaymentOutcomeV2.city,$sendPaymentOutcomeV2.stateProvinceRegion,$sendPaymentOutcomeV2.country,prova@test.it,NotNone,NotNone of the record for each columns ID,SUBJECT_TYPE,ENTITY_UNIQUE_IDENTIFIER_TYPE,FULL_NAME,STREET_NAME,CIVIC_NUMBER,POSTAL_CODE,CITY,STATE_PROVINCE_REGION,COUNTRY,EMAIL,INSERTED_TIMESTAMP,UPDATED_TIMESTAMP of the table POSITION_SUBJECT retrived by the query on db nodo_online with where datatable horizontal
+        # And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+        #     | column                        | value                                            |
+        #     | ID                            | NotNone                                          |
+        #     | SUBJECT_TYPE                  | PAYER                                            |
+        #     | ENTITY_UNIQUE_IDENTIFIER_TYPE | $sendPaymentOutcomeV2.entityUniqueIdentifierType |
+        #     | FULL_NAME                     | $sendPaymentOutcomeV2.fullName                   |
+        #     | STREET_NAME                   | $sendPaymentOutcomeV2.streetName                 |
+        #     | CIVIC_NUMBER                  | $sendPaymentOutcomeV2.civicNumber                |
+        #     | POSTAL_CODE                   | $sendPaymentOutcomeV2.postalCode                 |
+        #     | CITY                          | $sendPaymentOutcomeV2.city                       |
+        #     | STATE_PROVINCE_REGION         | $sendPaymentOutcomeV2.stateProvinceRegion        |
+        #     | COUNTRY                       | $sendPaymentOutcomeV2.country                    |
+        #     | EMAIL                         | prova@test.it                                    |
+        #     | PSP_COMPANY_NAME              | NotNone                                          |
+        #     | INSERTED_TIMESTAMP            | NotNone                                          |
+        #     | UPDATED_TIMESTAMP             | NotNone                                          |
+        # And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SUBJECT retrived by the query on db nodo_online with where datatable horizontal
         #     | where_keys                     | where_values                                      |
         #     | ENTITY_UNIQUE_IDENTIFIER_VALUE | $sendPaymentOutcomeV2.entityUniqueIdentifierValue |
         #     | INSERTED_TIMESTAMP             | TO_DATE ('$date','YYYY-MM-DD HH24:MI:SS')         |
@@ -107,7 +123,6 @@ Feature: NMU flows con pagamento OK
         #     | where_keys                     | where_values                                      |
         #     | ENTITY_UNIQUE_IDENTIFIER_VALUE | $sendPaymentOutcomeV2.entityUniqueIdentifierValue |
         #     | INSERTED_TIMESTAMP             | TO_DATE ('$date','YYYY-MM-DD HH24:MI:SS')         |
-        
         # POSITION_RECEIPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -135,213 +150,21 @@ Feature: NMU flows con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-
-        # POSITION_PAYMENT
-        # And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-        #     | column                | value                                         |
-        #     | PLUTO                 | NotNone                                       |
-        #     | PIPPO                 | $activatePaymentNoticeV2Response.paymentToken |
-        # And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
-        #     | where_keys     | where_values                          |
-        #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-        #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-
-    # # POSITION_RECEIPT
-
-    # And checks the value sendPaymentOutcomeV2 of the record at column UPDATED_BY of the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And verify 1 record for the table POSITION_RECEIPT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-
-
-    # # POSITION_PAYMENT
-    # And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value $paGetPaymentV2.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value $activatePaymentNoticeV2_1Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column BROKER_PA_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value #stazione_versione_primitive_2# of the record at column STATION_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value 2 of the record at column STATION_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value $sendPaymentOutcomeV2.idPSP of the record at column PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value $sendPaymentOutcomeV2.idBrokerPSP of the record at column BROKER_PSP_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value #canale_versione_primitive_2# of the record at column CHANNEL_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value $activatePaymentNoticeV2.idempotencyKey of the record at column IDEMPOTENCY_KEY of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value $activatePaymentNoticeV2.amount of the record at column AMOUNT of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value 2 of the record at column FEE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # #Colonna FEE_SPO: PAG-2154 Gestione fee da closePayment/sendPaymentOutcome
-    # And checks the value $sendPaymentOutcomeV2.fee of the record at column FEE_SPO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value $sendPaymentOutcomeV2.outcome of the record at column OUTCOME of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value $sendPaymentOutcomeV2.paymentMethod of the record at column PAYMENT_METHOD of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value $sendPaymentOutcomeV2.paymentChannel of the record at column PAYMENT_CHANNEL of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value $sendPaymentOutcomeV2.transferDate of the record at column TRANSFER_DATE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value NotNone of the record at column PAYER_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value $sendPaymentOutcomeV2.applicationDate of the record at column APPLICATION_DATE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value NotNone of the record at column FK_PAYMENT_PLAN of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value None of the record at column RPT_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value NotNone of the record at column PAYMENT_TYPE of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value None of the record at column CARRELLO_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value NotNone of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value NotNone of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value None of the record at column FLAG_ACTIVATE_RESP_MISSING of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value NotNone of the record at column FLAG_PAYPAL of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value NotNone of the record at column INSERTED_BY of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value sendPaymentOutcomeV2 of the record at column UPDATED_BY of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value $transaction_id of the record at column TRANSACTION_ID of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And checks the value v2 of the record at column CLOSE_VERSION of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-    # And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    #     | where_keys     | where_values                          |
-    #     | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-    #     | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-
-
-
-    # # POSITION_RECEIPT_XML
-    # And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value $paGetPaymentV2.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value $activatePaymentNoticeV2_1Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value NotNone of the record at column XML of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value NotNone of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value #stazione_versione_primitive_2# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value NotNone of the record at column INSERTED_BY of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value sendPaymentOutcomeV2 of the record at column UPDATED_BY of the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-
-    # # POSITION_RECEIPT_RECIPIENT
-    # And checks the value NotNone of the record at column ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value $paGetPaymentV2.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value $activatePaymentNoticeV2_1Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column RECIPIENT_PA_FISCAL_CODE of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column RECIPIENT_BROKER_PA_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value #stazione_versione_primitive_2# of the record at column RECIPIENT_STATION_ID of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value NotNone of the record at column FK_POSITION_RECEIPT of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value NotNone of the record at column FK_RECEIPT_XML of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value NotNone of the record at column INSERTED_BY of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And checks the value sendPaymentOutcomeV2 of the record at column UPDATED_BY of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-
-    # # POSITION_RECEIPT_RECIPIENT_STATUS
-    # And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTIFIED of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-    # And verify 3 record for the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-
-    # # RE
-    # And execution query sprv2_req_spov2 to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
-    # And through the query sprv2_req_spov2 convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
-    # And checking value $XML_RE.outcome is equal to value OK
-    # And checking value $XML_RE.paymentToken is equal to value $activatePaymentNoticeV2_1Response.paymentToken
-    # And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
-    # And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-    # And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-    # And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-    # And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
+        # RE
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentResult-v2                          |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE)                                |
+        And through the query result_query convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
+        And checking value $XML_RE.outcome is equal to value OK
+        And checking value $XML_RE.paymentToken is equal to value $activatePaymentNoticeV2_1Response.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
+        And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
+        And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
+        And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
+        And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
 
 
 
