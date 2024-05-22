@@ -507,7 +507,7 @@ Feature: NM3 flows con pagamento OK
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '5000000' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And wait 5 seconds after triggered refresh job ALL
+        And wait 60 seconds after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     |
@@ -650,23 +650,36 @@ Feature: NM3 flows con pagamento OK
             | SOTTO_TIPO_EVENTO  | REQ                                         |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
             | ORDER BY           | DATA_ORA_EVENTO ASC                         |
-        And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod3 with db name re
-        And through the query re_paSendRT_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
+            | TIPO_EVENTO        | paSendRTV2                                  |
+            | SOTTO_TIPO_EVENTO  | REQ                                         |
+            | ESITO              | INVIATA_KO                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
         And check value $paSendRT.standIn is equal to value true
-        And check value $paSendRT.idStation is equal to value irraggiungibile
+        And check value $paSendRT.idStation is equal to value standin
 
         # ESAMINARE QUESTO STEP SOTTO PER INCLUDERE NEL DATATABLE LA SELECT CON LA WHERE CONDITION CON LA IN
-        And verify 2 record for the table RE retrived by the query sottoTipoEvento on db re under macro NewMod3
+        And verify 2 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber                         |
+            | TIPO_EVENTO        | ('paGetPayment', 'paGetPaymentV2', 'paVerifyPaymentNotice') |
+            | SOTTO_TIPO_EVENTO  | REQ                                                         |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                         |
 
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_8 @after @standin
+    @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_8 @after @standin2
     Scenario: NM3 flow OK, FLOW with standin flag_standin_psp: verify -> paVerify standin --> resp verify con flag standin activate -> paGetPaymentV2 standin --> resp activate con flag standin spo+ -> paSendRT senza flag standin BIZ+ (NM3-20)
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to true
+        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '5000000' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And wait 5 seconds after triggered refresh job ALL
+        And wait 60 seconds after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     |
@@ -802,30 +815,43 @@ Feature: NM3 flows con pagamento OK
             | SOTTO_TIPO_EVENTO  | REQ                                 |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                    |
             | ORDER BY           | DATA_ORA_EVENTO ASC                 |
-        And checks the value None of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
+        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
             | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
             | TIPO_EVENTO        | paGetPaymentV2                              |
             | SOTTO_TIPO_EVENTO  | REQ                                         |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
             | ORDER BY           | DATA_ORA_EVENTO ASC                         |
-        And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod3 with db name re
-        And through the query re_paSendRT_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
+            | TIPO_EVENTO        | paSendRTV2                                  |
+            | SOTTO_TIPO_EVENTO  | REQ                                         |
+            | ESITO              | INVIATA_KO                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
         And check payload tag standIn field not exists in $paSendRT
-        And check value $paSendRT.idStation is equal to value irraggiungibile
+        And check value $paSendRT.idStation is equal to value standin
 
         # ESAMINARE QUESTO STEP SOTTO PER INCLUDERE NEL DATATABLE LA SELECT CON LA WHERE CONDITION CON LA IN
-        And verify 2 record for the table RE retrived by the query sottoTipoEvento on db re under macro NewMod3
+        And verify 2 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber                         |
+            | TIPO_EVENTO        | ('paGetPayment', 'paGetPaymentV2', 'paVerifyPaymentNotice') |
+            | SOTTO_TIPO_EVENTO  | REQ                                                         |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                         |
 
 
-    @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_9 @after @standin
+    @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_9 @after @standin3
     Scenario: NM3 flow OK, FLOW with standin flag_standin_pa e flag_standin_psp: verify -> paVerify standin --> resp verify con flag standin activate -> paGetPaymentV2 standin --> resp activate con flag standin spo+ -> paSendRT con flag standin BIZ+ (NM3-21)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '5000000' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '5000000' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
-        And update parameter invioReceiptStandin on configuration keys with value false
+        And update parameter invioReceiptStandin on configuration keys with value true
         And update parameter station.stand-in on configuration keys with value 66666666666_08
-        And wait 5 seconds after triggered refresh job ALL
+        And wait 60 seconds after triggered refresh job ALL
         And from body with datatable horizontal verifyPaymentNoticeBody_noOptional initial XML verifyPaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347#iuv#     |
@@ -968,13 +994,26 @@ Feature: NM3 flows con pagamento OK
             | SOTTO_TIPO_EVENTO  | REQ                                         |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
             | ORDER BY           | DATA_ORA_EVENTO ASC                         |
-        And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod3 with db name re
-        And through the query re_paSendRT_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
+            | TIPO_EVENTO        | paSendRTV2                                  |
+            | SOTTO_TIPO_EVENTO  | REQ                                         |
+            | ESITO              | INVIATA_KO                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
         And check value $paSendRT.standIn is equal to value true
-        And check value $paSendRT.idStation is equal to value irraggiungibile
+        And check value $paSendRT.idStation is equal to value standin
 
         # ESAMINARE QUESTO STEP SOTTO PER INCLUDERE NEL DATATABLE LA SELECT CON LA WHERE CONDITION CON LA IN
-        And verify 2 record for the table RE retrived by the query sottoTipoEvento on db re under macro NewMod3
+        And verify 2 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber                         |
+            | TIPO_EVENTO        | ('paGetPayment', 'paGetPaymentV2', 'paVerifyPaymentNotice') |
+            | SOTTO_TIPO_EVENTO  | REQ                                                         |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                         |
 
 
     @after
@@ -988,9 +1027,9 @@ Feature: NM3 flows con pagamento OK
     Scenario: After restore
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '5000000' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '5000000' under macro update_query on db nodo_cfg
         And update parameter gec.enabled on configuration keys with value false
         And update parameter invioReceiptStandin on configuration keys with value false
-        And wait 5 seconds after triggered refresh job ALL
+        And wait 60 seconds after triggered refresh job ALL
 # mettere una wait dentro il refresh job e creare un nuovo "has config parameter" senza timesleep
