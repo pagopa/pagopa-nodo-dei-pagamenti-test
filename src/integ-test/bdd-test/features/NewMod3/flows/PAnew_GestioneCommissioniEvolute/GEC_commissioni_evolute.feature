@@ -168,10 +168,11 @@ Feature: Commissioni evolute process 1103
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @newfix
+    @newfix @prova
     # sunny day activate
     Scenario: Execute activate 2
-        Given nodo-dei-pagamenti has config parameter gec.enabled set to true
+        Given update parameter gec.enabled on configuration keys with value true
+        And wait 60 seconds after triggered refresh job ALL
         And the activatePaymentNoticeV2 scenario executed successfully
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
