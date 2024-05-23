@@ -378,11 +378,14 @@ def replace_local_variables_for_query(body, context):
             else:
                 document = parseString(saved_elem.content)
                 print(tag)
-            if '-' in tag:
-                tag_finale = tag.split('-')[1]
-                value = document.getElementsByTagNameNS('*', tag.split('-')[0])[0].firstChild.data
-            else:
-                value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
+            try:
+                if '-' in tag:
+                    tag_finale = tag.split('-')[1]
+                    value = document.getElementsByTagNameNS('*', tag.split('-')[0])[0].firstChild.data
+                else:
+                    value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
+            except Exception as e:
+                raise Exception(f"Errore nel metodo replace_local_variables_for_query: il Tag '{tag}' non esiste nel contesto") from e
         if len(tag_finale) > 1:
             body = body.replace(field, f'$${value}-{tag_finale}$$')
         else:
@@ -413,9 +416,14 @@ def replace_local_variables(body, context):
                 else:
                     document = parseString(saved_elem.content)
                     print(tag)
-            value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
+            try:
+                value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
+            except Exception as e:
+                raise Exception(f"Errore nel metodo replace_local_variables: il Tag '{tag}' non esiste nel contesto") from e
         body = body.replace(field, value)
     return body
+    
+
 
 
 def replace_global_variables(payload, context):
