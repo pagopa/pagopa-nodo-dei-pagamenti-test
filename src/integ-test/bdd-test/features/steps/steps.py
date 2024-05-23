@@ -3088,9 +3088,6 @@ def step_impl(context, columns, fields_values_expected, type_table):
 
         setattr(context, columns, list_columns)
         setattr(context, fields_values_expected, dict_fields_values_expected)
-
-        print(f"list columns: {list_columns}")
-        print(f"dict fields values expected: {dict_fields_values}")
     
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
@@ -3112,10 +3109,6 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
         string_list_columns = utils.replace_context_variables(l_columns, context).replace("[", '').replace("]", '').replace("'",'')
         list_col_split = [col.strip() for col in string_list_columns.split(',')]
         columns = utils.generate_string_column_table(list_col_split)
- 
-        dict_fields_values_obtained = {}
-        ###CONVERSIONE STRINGA IN DICT
-        dict_fields_values_expected = json.loads(utils.replace_context_variables(d_fields_values_expected, context).replace("'",'"'))
 
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
@@ -3130,33 +3123,42 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        print(f"query to execute: {selected_query}")
         exec_query = adopted_db.executeQuery(conn, selected_query)
         assert exec_query != None, f"Result query empty!!!!"
 
-        for field, value_obt in zip(list_col_split, exec_query[0]):
-            dict_fields_values_obtained[field] = value_obt
+        ###CONVERSIONE STRINGA IN DICT
+        dict_fields_values_expected = json.loads(utils.replace_context_variables(d_fields_values_expected, context).replace("'",'"'))
 
-        print(f"dict query result: {dict_fields_values_obtained}")
+        ###CREAZIONE LIST VALUES EXPECTED E SIZE VALUE CON COMMA
+        list_values_expected, size_dict_fields_values_expected = utils.generate_list_values_exp_and_size_value_comma(dict_fields_values_expected)
+
+        ###CREAZIONE LIST DI DICT VALUES EXPECTED BY SIZE
+        list_dict_fields_values_expected = utils.generate_list_dict_values_exp(list_col_split, size_dict_fields_values_expected, list_values_expected)
+       
+        ###CREAZIONE LIST DI DICT VALUES OBTAINED
+        list_dict_fields_values_obtained = utils.generate_list_dict_values_obt(list_col_split, exec_query)
+
+        print(f"query result: {list_dict_fields_values_obtained}")
 
         ###CHECKS PHASE
-        for field, value in dict_fields_values_expected.items():
-            if value == 'None':
-                assert dict_fields_values_obtained[field] == None, f"assert result query with None for Failed for field: {field}"
-                print(f"Check value None  for field {field} ---> OK !!!")
-            elif value == 'NotNone':
-                assert dict_fields_values_obtained[field] != None, f"assert result query with Not None Failed for field: {field}"
-                print(f"Check value NotNone  for field {field} ---> OK !!!")
-            else:
-                value = utils.replace_global_variables(value, context)
-                value = utils.replace_local_variables(value, context)
-                value = utils.replace_context_variables(value, context)
-
-                if utils.isFloat(value):
-                    assert float(dict_fields_values_obtained[field]) == float(value), f"check for field: {field} ---> expected element: {float(value)}, obtained: {float(dict_fields_values_obtained[field])}"
+        for single_dict_fields_values_obtained, single_dict_fields_values_expected in zip(list_dict_fields_values_obtained, list_dict_fields_values_expected):
+            for field, value in single_dict_fields_values_obtained.items():
+                if single_dict_fields_values_expected[field] == 'None':
+                    assert value == None, f"assert result query with None for Failed for field: {field}"
+                    print(f"Check value None for field {field} ---> OK !!!")
+                elif single_dict_fields_values_expected[field] == 'NotNone':
+                    assert value != None, f"assert result query with Not None Failed for field: {field}"
+                    print(f"Check value NotNone for field {field} ---> OK !!!")
                 else:
-                    assert str(dict_fields_values_obtained[field]) == str(value), f"check for field: {field} ---> expected element: {str(value)}, obtained: {str(dict_fields_values_obtained[field])}"
-                print(f"check for field: {field} ---> expected element: {value}, obtained: {dict_fields_values_obtained[field]} ---> OK !!!")
+                    single_dict_fields_values_expected[field] = utils.replace_global_variables(single_dict_fields_values_expected[field], context)
+                    single_dict_fields_values_expected[field] = utils.replace_local_variables(single_dict_fields_values_expected[field], context)
+                    single_dict_fields_values_expected[field] = utils.replace_context_variables(single_dict_fields_values_expected[field], context)
+
+                    if utils.isFloat(single_dict_fields_values_expected[field]):
+                        assert float(value) == float(single_dict_fields_values_expected[field]), f"check for field: {field} ---> expected element: {float(single_dict_fields_values_expected[field])}, obtained: {float(value)}"
+                    else:
+                        assert str(value) == str(single_dict_fields_values_expected[field]), f"check for field: {field} ---> expected element: {str(single_dict_fields_values_expected[field])}, obtained: {str(value)}"
+                    print(f"check for field: {field} ---> expected element: {single_dict_fields_values_expected[field]}, obtained: {value} ---> OK !!!")
 
         adopted_db.closeConnection(conn)
 
@@ -3730,7 +3732,7 @@ def step_impl(context, table_name, db_name, type_table, number):
 
         exec_query = adopted_db.executeQuery(conn, selected_query)
 
-        print("record query: ", exec_query)
+        print("record query result: ", exec_query)
         assert len(exec_query) == number, f"The number of query record is: {len(exec_query)}"
     
     except AssertionError as e:
@@ -3761,7 +3763,7 @@ def step_impl(context, query_name, table_name, db_name, name_macro, number):
 
         exec_query = adopted_db.executeQuery(conn, selected_query)
 
-        print("record query: ", exec_query)
+        print("record query result: ", exec_query)
         assert len(exec_query) == number, f"The number of query record is: {len(exec_query)}"
 
     except AssertionError as e:
@@ -3790,7 +3792,7 @@ def step_impl(context, query_name, table_name, db_name, name_macro):
 
         exec_query = adopted_db.executeQuery(conn, selected_query)
 
-        print("record query: ", exec_query)
+        print("record query result: ", exec_query)
         assert len(exec_query) > 0, f"{len(exec_query)}"
 
     except AssertionError as e:

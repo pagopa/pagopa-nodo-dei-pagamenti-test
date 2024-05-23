@@ -939,3 +939,65 @@ def generate_string_column_table(list_col_split):
             columns += single_columns + ','
         i += 1
     return columns
+
+###METODO PER CREARE UNA SELECT CON WHERE
+def generate_list_values_exp_and_size_value_comma(dict_fields_values_expected):   
+    count_comma_value = 0
+    count_comma_value_max = 0
+    list_values_expected = list()
+    size_values_comma_expected = 0
+
+    for field, value in dict_fields_values_expected.items():
+        count_comma_value_temp = count_comma_value
+        if ',' in value:
+            count_comma_value = value.count(',')
+            if count_comma_value > count_comma_value_temp:
+                count_comma_value_max = count_comma_value
+
+            count_comma_value_temp = count_comma_value
+
+    size_values_comma_expected = count_comma_value_max
+
+    for i in range(0, size_values_comma_expected+1):
+        list_values_expected_single = list()
+        list_value = list()
+        for field, value in dict_fields_values_expected.items():
+            if ',' in value:
+                list_value = value.split(',')
+                list_values_expected_single.append(list_value[i])
+            else:
+                list_values_expected_single.append(value)
+
+        list_values_expected.append(list_values_expected_single)
+
+    return list_values_expected, size_values_comma_expected
+
+
+###METODO PER CREARE LIST DI DICT VALUES EXPECTED BY SIZE
+def generate_list_dict_values_exp(list_col_split, size_dict_fields_values_expected, list_values_expected):
+    list_dict_fields_values_expected = list()
+    
+
+    for i in range(0, size_dict_fields_values_expected+1):
+        dict_fields_values_expected_temp = {}
+        for field, value_obt in zip(list_col_split, list_values_expected[i]):
+            dict_fields_values_expected_temp[field] = value_obt
+        list_dict_fields_values_expected.append(dict_fields_values_expected_temp)
+
+    return list_dict_fields_values_expected
+
+
+
+###METODO PER CREARE LIST DI DICT VALUES OBTAINED
+def generate_list_dict_values_obt(list_col_split, exec_query):
+    list_dict_fields_values_obtained = list()
+        
+    size_result_query = len(exec_query)
+
+    for i in range(0, size_result_query):
+        dict_fields_values_obtained = {}
+        for field, value_obt in zip(list_col_split, exec_query[i]):
+            dict_fields_values_obtained[field] = value_obt
+        list_dict_fields_values_obtained.append(dict_fields_values_obtained)
+
+    return list_dict_fields_values_obtained
