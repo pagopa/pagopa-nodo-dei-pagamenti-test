@@ -138,96 +138,68 @@ Feature: NMU flows con pagamento KO
         And check outcome is KO of v2/closepayment response
         And check description is Unknown token of v2/closepayment response
         And wait 5 seconds for expiration
-
         # POSITION_PAYMENT_STATUS
         ###ACTIVATE 1
-        And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-        And checks the value $activatePaymentNoticeV2_1.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-        And checks the value $paGetPayment_1Request.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-        And checks the value $activatePaymentNoticeV2_1Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
-        And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                           |
+            | ID                    | NotNone                                         |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2_1Request.fiscalCode    |
+            | CREDITOR_REFERENCE_ID | $paGetPayment_1Request.creditorReferenceId      |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2_1Response.paymentToken |
+            | STATUS                | PAYING,CANCELLED                                |
+            | INSERTED_TIMESTAMP    | NotNone                                         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_1Request.noticeNumber |
         ###ACTIVATE 2
-        And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-        And checks the value $activatePaymentNoticeV2_2.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-        And checks the value $paGetPayment_2Request.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-        And checks the value $activatePaymentNoticeV2_2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
-        And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                           |
+            | ID                    | NotNone                                         |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2_2Request.fiscalCode    |
+            | CREDITOR_REFERENCE_ID | $paGetPayment_2Request.creditorReferenceId      |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2_2Response.paymentToken |
+            | STATUS                | PAYING,CANCELLED                                |
+            | INSERTED_TIMESTAMP    | NotNone                                         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_2Request.noticeNumber |
         ###ACTIVATE 3
-        And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-        And checks the value $activatePaymentNoticeV2_3.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-        And checks the value $paGetPayment_3Request.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-        And checks the value $activatePaymentNoticeV2_3Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
-        And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                           |
+            | ID                    | NotNone                                         |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2_3Request.fiscalCode    |
+            | CREDITOR_REFERENCE_ID | $paGetPayment_3Request.creditorReferenceId      |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2_3Response.paymentToken |
+            | STATUS                | PAYING,CANCELLED                                |
+            | INSERTED_TIMESTAMP    | NotNone                                         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_3Request.noticeNumber |
         ###ACTIVATE 4
-        And checks the value NotNone of the record at column ID of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-        And checks the value $activatePaymentNoticeV2_4.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-        And checks the value $paGetPayment_4Request.creditorReferenceId of the record at column CREDITOR_REFERENCE_ID of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-        And checks the value $activatePaymentNoticeV2_4Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                                   |
-            | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
-        And checks the value PAYING,CANCELLED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                           |
+            | ID                    | NotNone                                         |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2_4Request.fiscalCode    |
+            | CREDITOR_REFERENCE_ID | $paGetPayment_4Request.creditorReferenceId      |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2_4Response.paymentToken |
+            | STATUS                | PAYING,CANCELLED                                |
+            | INSERTED_TIMESTAMP    | NotNone                                         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                   |
             | NOTICE_ID  | $activatePaymentNoticeV2_4Request.noticeNumber |
+
 
 
     # # POSITION_PAYMENT_STATUS_SNAPSHOT
@@ -629,4 +601,3 @@ Feature: NMU flows con pagamento KO
         Then verify the HTTP status code of v2/closepayment response is 400
         And check outcome is KO of v2/closepayment response
         And check description is Unacceptable outcome when token has expired of v2/closepayment response
-      
