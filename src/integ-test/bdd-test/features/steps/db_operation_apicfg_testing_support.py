@@ -22,19 +22,18 @@ def getConnection(host:str, database:str, user:str, password:str, port:str):
     return None
 
 
-def execute_read_query(connection, query):
-    print('execute_sql_query ...')
-    print(query)
+# def execute_read_query(connection, query):
+#     print('execute_sql_query ...')
+#     print(query)
 
-    try:
-        print('executing_sql_query ...')
-    except Exception as e:
-        print(f"The error '{e}' occurred")
+#     try:
+#         print('executing_sql_query ...')
+#     except Exception as e:
+#         print(f"The error '{e}' occurred")
 
 
 def executeQuery(conn, query:str, as_dict:bool = False) -> list:
-    print('execute_sql_query ...')
-    print(query)
+    print(f' Executing query [{query}] on genericQuery service...')
     try:
         print('executing_sql_query ...')
         headers = {}

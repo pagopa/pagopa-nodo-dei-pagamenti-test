@@ -3192,7 +3192,6 @@ def step_impl(context, value, column, table_name, db_name, type_table):
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        print(selected_query)
         exec_query = adopted_db.executeQuery(conn, selected_query)
 
         query_result = [t[0] for t in exec_query]
@@ -3251,7 +3250,6 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
 
-        print(selected_query)
         exec_query = adopted_db.executeQuery(conn, selected_query)
 
         query_result = [t[0] for t in exec_query]
@@ -3666,7 +3664,7 @@ def step_impl(context, value, column, query_name, table_name, db_name, name_macr
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
-    print(selected_query)
+
     exec_query = adopted_db.executeQuery(conn, selected_query)
 
     query_result = [t[0] for t in exec_query]
@@ -4778,7 +4776,7 @@ def step_impl(context, name_macro, db_name, query_name, value, column, table_nam
     selected_query = utils.replace_global_variables(selected_query, context)
     selected_query = utils.replace_local_variables(selected_query, context)
     selected_query = utils.replace_context_variables(selected_query, context)
-    print(selected_query)
+
     exec_query = adopted_db.executeQuery(conn, selected_query)
     print('#############', exec_query)
 
@@ -4814,7 +4812,6 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column,
 
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
-    print(selected_query)
     exec_query = adopted_db.executeQuery(conn, selected_query)
 
     query_result = [t[0] for t in exec_query]
@@ -4854,7 +4851,7 @@ def leggi_tabella_con_attesa(context, db_name, query_name, name_macro, column, t
     selected_query = utils.replace_context_variables(selected_query, context)
     
     adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-    print(selected_query)
+
     ###Polling se il numero di record della query sono maggiori uguali al numero atteso 
     ###(metto il maggiore in modo che se ci sono più stati dopo li visualizzo tutti)
     i = 0

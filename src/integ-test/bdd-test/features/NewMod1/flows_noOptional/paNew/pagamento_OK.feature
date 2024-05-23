@@ -98,31 +98,31 @@ Feature: NMU flows con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        # # POSITION_SUBJECT
-        # And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-        #     | column                        | value                                            |
-        #     | ID                            | NotNone                                          |
-        #     | SUBJECT_TYPE                  | PAYER                                            |
-        #     | ENTITY_UNIQUE_IDENTIFIER_TYPE | $sendPaymentOutcomeV2.entityUniqueIdentifierType |
-        #     | FULL_NAME                     | $sendPaymentOutcomeV2.fullName                   |
-        #     | STREET_NAME                   | $sendPaymentOutcomeV2.streetName                 |
-        #     | CIVIC_NUMBER                  | $sendPaymentOutcomeV2.civicNumber                |
-        #     | POSTAL_CODE                   | $sendPaymentOutcomeV2.postalCode                 |
-        #     | CITY                          | $sendPaymentOutcomeV2.city                       |
-        #     | STATE_PROVINCE_REGION         | $sendPaymentOutcomeV2.stateProvinceRegion        |
-        #     | COUNTRY                       | $sendPaymentOutcomeV2.country                    |
-        #     | EMAIL                         | prova@test.it                                    |
-        #     | PSP_COMPANY_NAME              | NotNone                                          |
-        #     | INSERTED_TIMESTAMP            | NotNone                                          |
-        #     | UPDATED_TIMESTAMP             | NotNone                                          |
-        # And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SUBJECT retrived by the query on db nodo_online with where datatable horizontal
-        #     | where_keys                     | where_values                                      |
-        #     | ENTITY_UNIQUE_IDENTIFIER_VALUE | $sendPaymentOutcomeV2.entityUniqueIdentifierValue |
-        #     | INSERTED_TIMESTAMP             | TO_DATE ('$date','YYYY-MM-DD HH24:MI:SS')         |
-        # And verify 1 record for the table POSITION_SUBJECT retrived by the query on db nodo_online with where datatable horizontal
-        #     | where_keys                     | where_values                                      |
-        #     | ENTITY_UNIQUE_IDENTIFIER_VALUE | $sendPaymentOutcomeV2.entityUniqueIdentifierValue |
-        #     | INSERTED_TIMESTAMP             | TO_DATE ('$date','YYYY-MM-DD HH24:MI:SS')         |
+        # POSITION_SUBJECT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                        | value                                            |
+            | ID                            | NotNone                                          |
+            | SUBJECT_TYPE                  | PAYER                                            |
+            | ENTITY_UNIQUE_IDENTIFIER_TYPE | $sendPaymentOutcomeV2.entityUniqueIdentifierType |
+            | FULL_NAME                     | $sendPaymentOutcomeV2.fullName                   |
+            | STREET_NAME                   | $sendPaymentOutcomeV2.streetName                 |
+            | CIVIC_NUMBER                  | $sendPaymentOutcomeV2.civicNumber                |
+            | POSTAL_CODE                   | $sendPaymentOutcomeV2.postalCode                 |
+            | CITY                          | $sendPaymentOutcomeV2.city                       |
+            | STATE_PROVINCE_REGION         | $sendPaymentOutcomeV2.stateProvinceRegion        |
+            | COUNTRY                       | $sendPaymentOutcomeV2.country                    |
+            | EMAIL                         | prova@test.it                                    |
+            | PSP_COMPANY_NAME              | NotNone                                          |
+            | INSERTED_TIMESTAMP            | NotNone                                          |
+            | UPDATED_TIMESTAMP             | NotNone                                          |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SUBJECT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys                     | where_values                                      |
+            | ENTITY_UNIQUE_IDENTIFIER_VALUE | $sendPaymentOutcomeV2.entityUniqueIdentifierValue |
+            | INSERTED_TIMESTAMP             | TO_DATE ('$date','YYYY-MM-DD HH24:MI:SS')         |
+        And verify 1 record for the table POSITION_SUBJECT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys                     | where_values                                      |
+            | ENTITY_UNIQUE_IDENTIFIER_VALUE | $sendPaymentOutcomeV2.entityUniqueIdentifierValue |
+            | INSERTED_TIMESTAMP             | TO_DATE ('$date','YYYY-MM-DD HH24:MI:SS')         |
         # POSITION_RECEIPT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -159,12 +159,10 @@ Feature: NMU flows con pagamento OK
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE)                                |
         And through the query result_query convert json PAYLOAD at position 0 to xml and save it under the key XML_RE
         And checking value $XML_RE.outcome is equal to value OK
-        And checking value $XML_RE.paymentToken is equal to value $activatePaymentNoticeV2_1Response.paymentToken
-        And checking value $XML_RE.description is equal to value $paGetPaymentV2.description
+        And checking value $XML_RE.paymentToken is equal to value $activatePaymentNoticeV2Response.paymentToken
+        And checking value $XML_RE.description is equal to value $paGetPayment.description
         And checking value $XML_RE.fiscalCode is equal to value $activatePaymentNoticeV2.fiscalCode
-        And checking value $XML_RE.companyName is equal to value $paGetPaymentV2.companyName
-        And checking value $XML_RE.debtor is equal to value $paGetPaymentV2.entityUniqueIdentifierValue
-        And checking value $XML_RE.officeName is equal to value $paGetPaymentV2.officeName
+        And checking value $XML_RE.debtor is equal to value $paGetPayment.entityUniqueIdentifierValue
 
 
 
