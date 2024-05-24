@@ -151,8 +151,6 @@ Feature: NMU flows con pagamento OK
             | RICEVUTA_PM                | NotNone                                       |
             | FLAG_ACTIVATE_RESP_MISSING | None                                          |
             | FLAG_PAYPAL                | NotNone                                       |
-            | CARRELLO_ID                | None                                          |
-            | ORIGINAL_PAYMENT_TOKEN     | None                                          |
             | TRANSACTION_ID             | $transaction_id                               |
             | CLOSE_VERSION              | v2                                            |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal

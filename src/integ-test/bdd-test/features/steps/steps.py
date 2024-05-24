@@ -2637,8 +2637,11 @@ def step_impl(context, param, value):
 
         adopted_db.closeConnection(conn)
 
-        header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
-        headers = {'Host': header_host}
+        # header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
+        # headers = {'Host': header_host}
+        headers = {}
+        if 'APICFG_SUBSCRIPTION_KEY' in os.environ:
+            headers["Ocp-Apim-Subscription-Key"] = os.getenv("APICFG_SUBSCRIPTION_KEY", default="")
         
         print("Refreshing...")
         refresh_response = None
@@ -3110,8 +3113,6 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
         list_col_split = [col.strip() for col in string_list_columns.split(',')]
         columns = utils.generate_string_column_table(list_col_split)
 
-        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-
         assert context.table is not None, f"Datatable non inserita!!!"
         # Legge la datatable per le where conditions e la mette in una dict
         dict_fields_values = utils.table_to_dict(context.table, type_table)
@@ -3122,6 +3123,8 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
         selected_query = utils.replace_global_variables(selected_query, context)
         selected_query = utils.replace_local_variables(selected_query, context)
         selected_query = utils.replace_context_variables(selected_query, context)
+
+        adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
         exec_query = adopted_db.executeQuery(conn, selected_query)
         assert exec_query != None, f"Result query empty!!!!"

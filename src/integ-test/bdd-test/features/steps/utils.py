@@ -940,7 +940,7 @@ def generate_string_column_table(list_col_split):
         i += 1
     return columns
 
-###METODO PER CREARE UNA SELECT CON WHERE
+###METODO PER CREARE LIST VALUES EXPECTED E SIZE VALUE CON COMMA
 def generate_list_values_exp_and_size_value_comma(dict_fields_values_expected):   
     count_comma_value = 0
     count_comma_value_max = 0
