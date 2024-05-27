@@ -799,8 +799,8 @@ def step_impl(context, primitive, type_table, filebody):
         if user_profile != None:
             file_json = open(f"src/integ-test/bdd-test/resources/json/{filebody}.json")
         ###RUN DA REMOTO
-        else:
-            file_json = open(f"/agent/_work/1/s/nodo/extracted/src/integ-test/bdd-test/resources/json/{filebody}.json")
+        else:                   
+            file_json = open(f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/json/{filebody}.json")
             
         data_json = json.load(file_json)
 
@@ -2932,9 +2932,9 @@ def step_impl(context, job_name, seconds):
 @step("refresh job {job_name} triggered after 10 seconds")
 def step_impl(context, job_name):
     try:
-        url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
-        header_host = utils.estrapola_header_host(url_nodo)
-        headers = {'Host': header_host}
+        headers = {}
+        if 'APICFG_SUBSCRIPTION_KEY' in os.environ:
+            headers["Ocp-Apim-Subscription-Key"] = os.getenv("APICFG_SUBSCRIPTION_KEY", default="")
 
         dbRun = getattr(context, "dbRun")
 
@@ -3025,8 +3025,10 @@ def step_impl(context):
         adopted_db.executeQuery(conn, selected_query, as_dict=True)
 
     adopted_db.closeConnection(conn)
-    header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
-    headers = {'Host': header_host}
+    
+    headers = {}
+    if 'APICFG_SUBSCRIPTION_KEY' in os.environ:
+        headers["Ocp-Apim-Subscription-Key"] = os.getenv("APICFG_SUBSCRIPTION_KEY", default="")
 
     refresh_response = None
     if dbRun == "Postgres":
