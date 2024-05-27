@@ -84,9 +84,9 @@ def step_impl(context):
 
     try:
         user_profile = getattr(context, "user_profile")
-        print(f"User Profile: {user_profile} local run!")
+        print(f"User Profile: {user_profile} ->>> local run!")
     except AttributeError as e:
-        print(f"User Profile None: {e} remote run!")
+        print(f"----->>>> Exception: User Profile None: {e} ->>> remote run!")
 
     for row in context.table:
         print(f"calling: {row.get('name')} -> {row.get('url')}")
@@ -343,7 +343,7 @@ def step_impl(context, primitive, type_table, filebody):
     try:
         # Legge la datatable e la mette in una dict
         dict_fields_values = utils.table_to_dict(context.table, type_table)
-
+        print(f"directory corrente!!!! -------------->>>>>>>{os.getcwd()}") 
         # Specifica il percorso del tuo file XML
         file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
 

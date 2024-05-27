@@ -39,12 +39,11 @@ def before_all(context):
     proxyEnabled = context.config.userdata.get("global_configuration").get("proxyEnabled")
     dbRun = context.config.userdata.get("global_configuration").get("dbRun")
     setattr(context, 'dbRun', dbRun)
-    ####MY CREDENTIALS
-    ####RUN DA LOCALE
-    if dbRun == "Postgres":
-        if user_profile != None:
-            setattr(context, 'user_profile', user_profile)
 
+    if user_profile != None:
+        setattr(context, 'user_profile', user_profile)
+
+    if dbRun == "Postgres":
         print(f"Proxy enabled: {proxyEnabled}")
         if proxyEnabled == 'True':
             ####RUN DA LOCALE
@@ -61,15 +60,17 @@ def before_all(context):
                 }
         else:
             proxies = None
-            
+    
         setattr(context, 'proxies', proxies)
 
     elif dbRun == "Oracle":
         lib_dir = ""
+        ####RUN DA LOCALE
         if user_profile != None:
             lib_dir = r"\Program Files\Oracle\instantclient_19_9"
             print(f"#####################lib_dir {lib_dir}")
             setattr(context, f'user_profile', user_profile)
+        ####RUN IN REMOTO
         else:
             lib_dir = os.path.abspath(os.path.join(__file__, os.pardir, os.pardir, os.pardir, os.pardir, os.pardir, 'oracle', 'instantclient_21_6'))
             print(f"#####################lib_dir {lib_dir}") 
