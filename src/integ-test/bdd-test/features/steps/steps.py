@@ -344,8 +344,23 @@ def step_impl(context, primitive, type_table, filebody):
         # Legge la datatable e la mette in una dict
         dict_fields_values = utils.table_to_dict(context.table, type_table)
         print(f"directory corrente!!!! -------------->>>>>>>{os.getcwd()}") 
-        # Specifica il percorso del tuo file XML
-        file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+
+        file_path = ''
+        user_profile = None
+        try:
+            user_profile = getattr(context, "user_profile")
+            print(f"User Profile: {user_profile} ->>> local run!")
+        except AttributeError as e:
+            print(f"User Profile None: {e} ->>> remote run!")
+
+        ####RUN DA LOCALE
+        if user_profile != None:
+            # Specifica il percorso del tuo file XML da locale
+            file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+        ###RUN DA REMOTO
+        else:      
+            # Specifica il percorso del tuo file XML da remoto
+            file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
 
         # Leggi il contenuto del file XML come stringa
         with open(file_path, 'r') as file:
@@ -579,8 +594,23 @@ def step_impl(context, primitive, type_table, filebody):
 
 @step('from body {filebody} initial XML {primitive}')
 def step_impl(context, primitive, filebody):
-    # Specifica il percorso del tuo file XML
-    file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+
+    file_path = ''
+    user_profile = None
+    try:
+        user_profile = getattr(context, "user_profile")
+        print(f"User Profile: {user_profile} ->>> local run!")
+    except AttributeError as e:
+        print(f"User Profile None: {e} ->>> remote run!")
+        
+    ####RUN DA LOCALE
+    if user_profile != None:
+        # Specifica il percorso del tuo file XML da locale
+        file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+    ###RUN DA REMOTO
+    else:      
+        # Specifica il percorso del tuo file XML da remoto
+        file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"   
 
     # Leggi il contenuto del file XML come stringa
     with open(file_path, 'r') as file:
@@ -1002,8 +1032,22 @@ def step_impl(context, filebody, type_table):
         # Legge la datatable per le where conditions e la mette in una dict
         dict_fields_values = utils.table_to_dict(context.table, type_table)
 
-        # Specifica il percorso del tuo file XML
-        file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+        file_path = ''
+        user_profile = None
+        try:
+            user_profile = getattr(context, "user_profile")
+            print(f"User Profile: {user_profile} ->>> local run!")
+        except AttributeError as e:
+            print(f"User Profile None: {e} ->>> remote run!")
+            
+        ####RUN DA LOCALE
+        if user_profile != None:
+            # Specifica il percorso del tuo file XML da locale
+            file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+        ###RUN DA REMOTO
+        else:      
+            # Specifica il percorso del tuo file XML da remoto
+            file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"   
 
         # Leggi il contenuto del file XML come stringa
         with open(file_path, 'r') as file:
@@ -1475,8 +1519,22 @@ def step_impl(context, filebody, type_table):
         # Legge la datatable per le where conditions e la mette in una dict
         dict_fields_values = utils.table_to_dict(context.table, type_table)
 
-        # Specifica il percorso del tuo file XML
-        file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+        file_path = ''
+        user_profile = None
+        try:
+            user_profile = getattr(context, "user_profile")
+            print(f"User Profile: {user_profile} ->>> local run!")
+        except AttributeError as e:
+            print(f"User Profile None: {e} ->>> remote run!")
+            
+        ####RUN DA LOCALE
+        if user_profile != None:
+            # Specifica il percorso del tuo file XML da locale
+            file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+        ###RUN DA REMOTO
+        else:      
+            # Specifica il percorso del tuo file XML da remoto
+            file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"   
 
         # Leggi il contenuto del file XML come stringa
         with open(file_path, 'r') as file:
