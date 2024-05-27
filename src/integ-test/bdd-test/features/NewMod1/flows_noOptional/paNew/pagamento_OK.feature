@@ -137,7 +137,7 @@ Feature: NMU flows con pagamento OK
             | BROKER_PSP_ID              | $sendPaymentOutcomeV2.idBrokerPSP             |
             | CHANNEL_ID                 | #canale_versione_primitive_2#                 |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | 2                                             |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | $sendPaymentOutcomeV2.outcome                 |
             | INSERTED_BY                | NotNone                                       |
             | UPDATED_BY                 | sendPaymentOutcomeV2                          |
@@ -177,7 +177,7 @@ Feature: NMU flows con pagamento OK
             | PSP_VAT_NUMBER        | None                                          |
             | PSP_COMPANY_NAME      | NotNone                                       |
             | CHANNEL_DESCRIPTION   | NotNone                                       |
-            | FEE                   | 2                                             |
+            | FEE                   | 2.00                                          |
             | PAYMENT_DATE_TIME     | NotNone                                       |
             | RT_ID                 | None                                          |
             | FK_POSITION_PAYMENT   | NotNone                                       |
@@ -2354,10 +2354,217 @@ Feature: NMU flows con pagamento OK
 
 
 
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_21 @after
+    Scenario: NMU flow OK con Multitoken, FLOW: con token1: PA Old, token2: PA New vp1, token3: PA New vp2, token4: PA New vp1 standin, token5: PA New vp2 standin. Le PA New hanno tutte delle broadcast sia vp1 che vp2. checkPosition con 5 nav, 5x activateV2 (la presenza del flag standin dipende dalla configurazione del psp eCommerce, non da quella del PSP vero) -> token1: paaAttivaRPT, token2: paGetPayment 5 transfer paPrincip = paSecond, token3: paGetPaymentV2 5 transfer paPrincip = paSecond, token4: paGetPayment verso ACA 5 transfer paPrincip = paSecond e token5: paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, nodoInviaRPT token1, closeV2+ -> pspNotifyV2 con 5 token e senza il flag standin=true, spoV2+ con 5 token -> token1: paaInviaRT+; token2: paSendRT verso stazione principale, paSendRT/V2 verso broadcast PA secondarie (compresa PA principale che è anche secondaria?); token3: paSendRTV2 verso stazione principale, paSendRT/V2 verso broadcast PA secondarie, paSendRTV2 verso broadcast PA principale (anche le paSendRT visto che è sia principale che secondaria?); token4: paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie (compresa PA principale che è anche secondaria?); token5: paSendRTV2 verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie, paSendRTV2 verso broadcast PA principale (anche le paSendRT visto che è sia principale che secondaria?). Tutte le receipt NON hanno il flag standin=true, 5x BIZ+ e SPRv2+ (NMU-35)
+        Given update parameter invioReceiptStandin on configuration keys with value true
+        And from body with datatable vertical checkPositionBody_5element initial JSON checkPosition
+            | fiscalCode1   | #creditor_institution_code_old# |
+            | fiscalCode2   | #creditor_institution_code#     |
+            | fiscalCode3   | #creditor_institution_code#     |
+            | fiscalCode4   | #creditor_institution_code#     |
+            | fiscalCode5   | #creditor_institution_code#     |
+            | noticeNumber1 | 312#iuv#                        |
+            | noticeNumber2 | 302#iuv1#                       |
+            | noticeNumber3 | 310#iuv2#                       |
+            | noticeNumber4 | 347#iuv3#                       |
+            | noticeNumber5 | 347#iuv4#                       |
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                      | noticeNumber | amount |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code_old# | 312$iuv      | 10.00  |
+        And from body with datatable vertical paaAttivaRPT_noOptional initial XML paaAttivaRPT
+            | esito                    | OK                                          |
+            | importoSingoloVersamento | $activatePaymentNoticeV2.amount             |
+            | ibanAccredito            | IT45R0760103200000000001016                 |
+            | causaleVersamento        | prova/RFDB/018431538193400/TXT/causale $iuv |
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_1Request
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_1
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 302$iuv1     | 25.00  |
+        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+            | outcome                     | OK                                  |
+            | creditorReferenceId         | 02$iuv                              |
+            | paymentAmount               | 25.00                               |
+            | dueDate                     | 2021-12-31                          |
+            | description                 | pagamentoTest                       |
+            | entityUniqueIdentifierType  | G                                   |
+            | entityUniqueIdentifierValue | 77777777777                         |
+            | fullName                    | Massimo Benvegnù                    |
+            | transferAmount              | 5.00                                |
+            | fiscalCodePA1               | $activatePaymentNoticeV2.fiscalCode |
+            | IBAN                        | IT45R0760103200000000001016         |
+            | fiscalCodePA2               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA3               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA4               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA5               | $activatePaymentNoticeV2.fiscalCode |
+            | remittanceInformation       | testPaGetPayment                    |
+            | transferCategory            | paGetPaymentTest                    |
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_2Request
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_2
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 310$iuv2     | 25.00  |
+        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+            | outcome                     | OK                                  |
+            | creditorReferenceId         | 10$iuv                              |
+            | paymentAmount               | 25.00                               |
+            | dueDate                     | 2021-12-12                          |
+            | description                 | pagamentoTest                       |
+            | companyName                 | company                             |
+            | entityUniqueIdentifierType  | G                                   |
+            | entityUniqueIdentifierValue | 44444444444                         |
+            | fullName                    | Massimo Benvegnù                    |
+            | transferAmount              | 5.00                                |
+            | fiscalCodePA1               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA2               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA3               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA4               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA5               | $activatePaymentNoticeV2.fiscalCode |
+            | IBAN                        | IT45R0760103200000000001016         |
+            | remittanceInformation       | /RFB/00202200000217527/5.00/TXT/    |
+            | transferCategory            | paGetPaymentTest                    |
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_3Request
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_3
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv3     | 25.00  |
+        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+            | outcome                     | OK                                  |
+            | creditorReferenceId         | 47$iuv                              |
+            | paymentAmount               | 25.00                               |
+            | dueDate                     | 2021-12-31                          |
+            | description                 | pagamentoTest                       |
+            | entityUniqueIdentifierType  | G                                   |
+            | entityUniqueIdentifierValue | 77777777777                         |
+            | fullName                    | Massimo Benvegnù                    |
+            | transferAmount              | 5.00                                |
+            | fiscalCodePA1               | $activatePaymentNoticeV2.fiscalCode |
+            | IBAN                        | IT45R0760103200000000001016         |
+            | fiscalCodePA2               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA3               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA4               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA5               | $activatePaymentNoticeV2.fiscalCode |
+            | remittanceInformation       | testPaGetPayment                    |
+            | transferCategory            | paGetPaymentTest                    |
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_4Request
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_4
+        Given update parameter station.stand-in on configuration keys with value 66666666666_08
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter versione_primitive = '2', with where condition OBJ_ID = '5000000' under macro update_query on db nodo_cfg
+        And from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv4     | 25.00  |
+        And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
+            | outcome                     | OK                                  |
+            | creditorReferenceId         | 10$iuv                              |
+            | paymentAmount               | 25.00                               |
+            | dueDate                     | 2021-12-12                          |
+            | description                 | pagamentoTest                       |
+            | companyName                 | company                             |
+            | entityUniqueIdentifierType  | G                                   |
+            | entityUniqueIdentifierValue | 44444444444                         |
+            | fullName                    | Massimo Benvegnù                    |
+            | transferAmount              | 5.00                                |
+            | fiscalCodePA1               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA2               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA3               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA4               | $activatePaymentNoticeV2.fiscalCode |
+            | fiscalCodePA5               | $activatePaymentNoticeV2.fiscalCode |
+            | IBAN                        | IT45R0760103200000000001016         |
+            | remittanceInformation       | /RFB/00202200000217527/5.00/TXT/    |
+            | transferCategory            | paGetPaymentTest                    |
+        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_5Request
+        And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_5
+        Given RPT generation RPT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old#                 |
+            | identificativoStazioneRichiedente | #id_station_old#                                |
+            | dataOraMessaggioRichiesta         | 2016-09-16T11:24:10                             |
+            | importoTotaleDaVersare            | $activatePaymentNoticeV2_1Request.amount        |
+            | identificativoUnivocoVersamento   | $iuv                                            |
+            | codiceContestoPagamento           | $activatePaymentNoticeV2_1Response.paymentToken |
+            | importoSingoloVersamento          | $activatePaymentNoticeV2_1Request.amount        |
+        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker_old#                                 |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                                |
+            | identificativoDominio                 | #creditor_institution_code#                     |
+            | identificativoUnivocoVersamento       | $iuv                                            |
+            | codiceContestoPagamento               | $activatePaymentNoticeV2_1Response.paymentToken |
+            | password                              | #password#                                      |
+            | identificativoPSP                     | #psp_AGID#                                      |
+            | identificativoIntermediarioPSP        | #broker_AGID#                                   |
+            | identificativoCanale                  | #canale_AGID_02#                                |
+            | rpt                                   | $rptAttachment                                  |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        Given from body with datatable vertical closePaymentV2Body_CP_5paymentTokens_noOptional initial json v2/closepayment
+            | token1                | $activatePaymentNoticeV2_1Response.paymentToken |
+            | token2                | $activatePaymentNoticeV2_2Response.paymentToken |
+            | token3                | $activatePaymentNoticeV2_3Response.paymentToken |
+            | token4                | $activatePaymentNoticeV2_4Response.paymentToken |
+            | token5                | $activatePaymentNoticeV2_5Response.paymentToken |
+            | outcome               | OK                                              |
+            | idPSP                 | #psp#                                           |
+            | idBrokerPSP           | #psp#                                           |
+            | idChannel             | #canale_versione_primitive_2#                   |
+            | paymentMethod         | CP                                              |
+            | transactionId         | #transaction_id#                                |
+            | totalAmountExt        | 42                                              |
+            | feeExt                | 2                                               |
+            | primaryCiIncurredFee  | 1                                               |
+            | idBundle              | 0bf0c282-3054-11ed-af20-acde48001122            |
+            | idCiBundle            | 0bf0c35e-3054-11ed-af20-acde48001122            |
+            | timestampOperationExt | 2023-11-30T12:46:46.554+01:00                   |
+            | rrn                   | 11223344                                        |
+            | outPaymentGateway     | 00                                              |
+            | totalAmount1          | 42                                              |
+            | fee1                  | 2                                               |
+            | timestampOperation1   | 2021-07-09T17:06:03                             |
+            | authorizationCode     | 123456                                          |
+            | paymentGateway        | 00                                              |
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        Given from body with datatable vertical sendPaymentOutcomeV2Body_5paymentToken_noOptional initial XML sendPaymentOutcomeV2
+            | idPSP       | #psp#                                           |
+            | idBrokerPSP | #psp#                                           |
+            | idChannel   | #canale_ATTIVATO_PRESSO_PSP#                    |
+            | password    | #password#                                      |
+            | payToken1   | $activatePaymentNoticeV2_1Response.paymentToken |
+            | payToken2   | $activatePaymentNoticeV2_2Response.paymentToken |
+            | payToken3   | $activatePaymentNoticeV2_3Response.paymentToken |
+            | payToken4   | $activatePaymentNoticeV2_4Response.paymentToken |
+            | payToken5   | $activatePaymentNoticeV2_5Response.paymentToken |
+            | outcome     | OK                                              |
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
+
+
+
 
     @after
     Scenario: After restore
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro NewMod1 on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter versione_primitive = '1', with where condition OBJ_ID = '5000000' under macro update_query on db nodo_cfg
+        And update parameter invioReceiptStandin on configuration keys with value false
+        And update parameter station.stand-in on configuration keys with value 66666666666_01
         And wait 60 seconds after triggered refresh job ALL
 

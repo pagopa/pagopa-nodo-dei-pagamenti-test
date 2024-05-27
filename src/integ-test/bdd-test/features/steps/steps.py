@@ -431,6 +431,11 @@ def step_impl(context, primitive, type_table, filebody):
             iuv1 = '11' + str(random.randint(1000000000000, 9999999999999))
             payload = payload.replace('#iuv1#', iuv1)
             setattr(context, "iuv1", iuv1)
+
+        if "#iuv2#" in payload:
+            iuv2 = '11' + str(random.randint(1000000000000, 9999999999999))
+            payload = payload.replace('#iuv2#', iuv2)
+            setattr(context, "iuv2", iuv2)
         
         if "#iuv3#" in payload:
             iuv3 = '11' + str(random.randint(1000000000000, 9999999999999))
@@ -962,6 +967,176 @@ def step_impl(context, primitive):
         if '$psp_transaction_id' in payload:
             payload = payload.replace('$psp_transaction_id', getattr(context, 'psp_transaction_id'))
         setattr(context, primitive, payload)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
+
+
+
+@step('RPT generation {filebody} with datatable {type_table}')
+def step_impl(context, filebody, type_table):
+    try:
+
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable per le where conditions e la mette in una dict
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
+
+        # Specifica il percorso del tuo file XML
+        file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+
+        # Leggi il contenuto del file XML come stringa
+        with open(file_path, 'r') as file:
+            payload = file.read()
+
+        #replace placeHolder with value by datatable
+        for fields, values in dict_fields_values.items():
+            for value in values:
+                payload = payload.replace(f"${fields}", value)
+
+        date = datetime.date.today().strftime("%Y-%m-%d")
+        timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+
+        setattr(context, 'date', date)
+        setattr(context, 'timedate', timedate)
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
+
+        pa = context.config.userdata.get(
+            'global_configuration').get('creditor_institution_code')
+
+        if "#iuv#" in payload:
+            iuv = f"14{str(random.randint(1000000000000, 9999999999999))}"
+            payload = payload.replace('#iuv#', iuv)
+            setattr(context, 'iuv', iuv)
+
+        if "#ccp#" in payload:
+            ccp = str(int(time.time() * 1000))
+            payload = payload.replace('#ccp#', ccp)
+            setattr(context, "ccp", ccp)
+
+        if "#ccp1#" in payload:
+            ccp1 = str(utils.current_milli_time())
+            payload = payload.replace('#ccp1#', ccp1)
+            setattr(context, "1ccp", ccp1)
+
+        if "#CCP#" in payload:
+            CCP = 'CCP' + '-' + \
+                str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+            payload = payload.replace('#CCP#', CCP)
+            setattr(context, "CCP", CCP)
+
+        if '#date#' in payload:
+            payload = payload.replace('#date#', date)
+
+        if "#timedate#" in payload:
+            payload = payload.replace('#timedate#', timedate)
+            setattr(context, 'timedate', timedate)
+
+        if '#IuV#' in payload:
+            iuv = '0' + str(random.randint(1000, 2000)) + str(random.randint(1000,
+                                                                            2000)) + str(random.randint(1000, 2000)) + '00'
+            payload = payload.replace('#IuV#', iuv)
+            setattr(context, 'IuV', iuv)
+
+        if '#iuv2#' in payload:
+            iuv = 'IUV' + '-' + \
+                str(date + '-' +
+                    datetime.datetime.now().strftime("%H:%M:%S.%f")[:-3])
+            payload = payload.replace('#iuv2#', iuv)
+            setattr(context, '2iuv', iuv)
+
+        if '#IUVspecial#' in payload:
+            IUVspecial = '!ìUV[#à°]_' + \
+                        datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3] + '$§'
+            payload = payload.replace('#IUVspecial#', IUVspecial)
+            setattr(context, 'IUVspecial', IUVspecial)
+
+        if '#IUV_#' in payload:
+            IUV_ = 'IUV' + str(random.randint(0, 10000)) + '_' + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#IUV_#', IUV_)
+            setattr(context, 'IUV_', IUV_)
+
+        if '#IUV#' in payload:
+            IUV = 'IUV' + str(random.randint(0, 10000)) + '-' + date + \
+                datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#IUV#', IUV)
+            setattr(context, 'IUV', IUV)
+
+        if '#idCarrello#' in payload:
+            idCarrello = "09812374659" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+                random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#idCarrello#', idCarrello)
+            setattr(context, 'idCarrello', idCarrello)
+
+        if '#CARRELLO#' in payload:
+            CARRELLO = "CARRELLO" + "-" + \
+                    str(date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3])
+            payload = payload.replace('#CARRELLO#', CARRELLO)
+            setattr(context, 'CARRELLO', CARRELLO)
+
+        if '#carrello#' in payload:
+            prova = utils.random_s()
+            print('############', prova)
+            carrello = pa + "302" + "0" + str(random.randint(1000, 2000)) + str(
+                random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + prova
+            print(carrello)
+            payload = payload.replace('#carrello#', carrello)
+            setattr(context, 'carrello', carrello)
+
+        if '#carrello1#' in payload:
+            carrello1 = pa + "311" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
+                1000, 2000)) + str(random.randint(1000, 2000)) + "00" + utils.random_s()
+            payload = payload.replace('#carrello1#', carrello1)
+            setattr(context, 'carrello1', carrello1)
+
+        if '#secCarrello#' in payload:
+            secCarrello = pa + "301" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
+                1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#secCarrello#', secCarrello)
+            setattr(context, 'secCarrello', secCarrello)
+
+        if '#thrCarrello#' in payload:
+            thrCarrello = pa + "088" + "0" + str(random.randint(1000, 2000)) + str(random.randint(
+                1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#thrCarrello#', thrCarrello)
+            setattr(context, 'thrCarrello', thrCarrello)
+
+        if '#carrNOTENABLED#' in payload:
+            carrNOTENABLED = "11111122223" + "311" + "0" + str(random.randint(1000, 2000)) + str(
+                random.randint(1000, 2000)) + str(random.randint(1000, 2000)) + "00" + "-" + utils.random_s()
+            payload = payload.replace('#carrNOTENABLED#', carrNOTENABLED)
+            setattr(context, 'carrNOTENABLED', carrNOTENABLED)
+
+        if '#date#' in payload:
+            payload = payload.replace('#date#', date)
+
+        if '#sdf#' in payload:
+            timedate = date + datetime.datetime.now().strftime("-%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#sdf#', timedate)
+            setattr(context, 'sdf', timedate)
+
+        if '#mills_time#' in payload:
+            millisec = str(int(time.time() * 1000))
+            payload = payload.replace('#mills_time#', millisec)
+            setattr(context, 'mills_time', millisec)
+
+        payload = utils.replace_global_variables(payload, context)
+
+        setattr(context, 'rpt', payload)
+        payload_b = bytes(payload, 'UTF-8')
+        payload_uni = b64.b64encode(payload_b)
+        payload = f"{payload_uni}".split("'")[1]
+
+        print("RPT generato: ", payload)
+        setattr(context, 'rptAttachment', payload)
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert

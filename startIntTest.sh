@@ -66,7 +66,7 @@ echo "replace config file $file START"
 
 
 replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://nodo-p-sit.tst-npc.sia.eu"
-replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://test.nexi.ndp.pagopa.it/nodo-p-sit.tst-npc.sia.eu"
+#replace $file ".services.\"nodo-dei-pagamenti\".url"           "https://test.nexi.ndp.pagopa.it/nodo-p-sit.tst-npc.sia.eu"
 replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitor/health"
 replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  "/webservices/input"
 replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  "rest"
