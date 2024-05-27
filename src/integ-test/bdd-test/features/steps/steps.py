@@ -789,7 +789,12 @@ def step_impl(context, primitive, type_table, filebody):
         dict_fields_values = utils.table_to_dict(context.table, type_table)
 
         file_json = ''
-        user_profile = getattr(context, "user_profile")
+        user_profile = None
+        try:
+            user_profile = getattr(context, "user_profile")
+            print(f"User Profile: {user_profile} ->>> local run!")
+        except AttributeError as e:
+            print(f"User Profile None: {e} ->>> remote run!")
         ####RUN DA LOCALE
         if user_profile != None:
             file_json = open(f"src/integ-test/bdd-test/resources/json/{filebody}.json")
