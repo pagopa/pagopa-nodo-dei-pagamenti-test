@@ -800,7 +800,7 @@ def step_impl(context, primitive, type_table, filebody):
             file_json = open(f"src/integ-test/bdd-test/resources/json/{filebody}.json")
         ###RUN DA REMOTO
         else:
-            file_json = open(f"/nodo/extracted/src/integ-test/bdd-test/resources/json/{filebody}.json")
+            file_json = open(f"/agent/_work/1/s/nodo/extracted/src/integ-test/bdd-test/resources/json/{filebody}.json")
             
         data_json = json.load(file_json)
 
