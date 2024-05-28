@@ -317,7 +317,7 @@ Feature: NMU flows con pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 60 seconds after triggered refresh job ALL
+        And wait 7 seconds after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -406,7 +406,7 @@ Feature: NMU flows con pagamento OK
             | fee1                  | 2                                             |
             | timestampOperation1   | 2021-07-09T17:06:03                           |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 60 seconds after triggered refresh job ALL
+        And wait 7 seconds after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -498,7 +498,7 @@ Feature: NMU flows con pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 60 seconds after triggered refresh job ALL
+        And wait 7 seconds after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -677,7 +677,7 @@ Feature: NMU flows con pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 60 seconds after triggered refresh job ALL
+        And wait 7 seconds after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -765,7 +765,7 @@ Feature: NMU flows con pagamento OK
             | fee1                  | 2                                             |
             | timestampOperation1   | 2021-07-09T17:06:03                           |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 60 seconds after triggered refresh job ALL
+        And wait 7 seconds after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -857,7 +857,7 @@ Feature: NMU flows con pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 60 seconds after triggered refresh job ALL
+        And wait 7 seconds after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -1042,7 +1042,7 @@ Feature: NMU flows con pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 60 seconds after triggered refresh job ALL
+        And wait 7 seconds after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -1134,7 +1134,7 @@ Feature: NMU flows con pagamento OK
             | fee1                  | 2                                             |
             | timestampOperation1   | 2021-07-09T17:06:03                           |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 60 seconds after triggered refresh job ALL
+        And wait 7 seconds after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -1230,7 +1230,7 @@ Feature: NMU flows con pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 60 seconds after triggered refresh job ALL
+        And wait 7 seconds after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -1415,7 +1415,7 @@ Feature: NMU flows con pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 60 seconds after triggered refresh job ALL
+        And wait 7 seconds after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -1505,7 +1505,7 @@ Feature: NMU flows con pagamento OK
             | fee1                  | 2                                             |
             | timestampOperation1   | 2021-07-09T17:06:03                           |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 60 seconds after triggered refresh job ALL
+        And wait 7 seconds after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -1601,7 +1601,7 @@ Feature: NMU flows con pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 60 seconds after triggered refresh job ALL
+        And wait 7 seconds after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
@@ -2254,7 +2254,7 @@ Feature: NMU flows con pagamento OK
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_20 @after
     Scenario: NMU flow OK con broadcast paPrinc!=paSec MBD, FLOW: con PA con broadcast sia vp1 che vp2, checkPosition con 1 nav, activateV2 -> paGetPaymentV2 con MBD, closeV2+ -> pspNotifyPaymentV2 con MBD, spoV2 con MBD+ -> paSendRTV2 con MBD verso stazione principale, paSendRT con IBAN fittizio e paSendRTV2 con MBD verso le broadcast delle PA secondarie, paSendRTV2 con MBD verso le broadcast vp2 della PA principale, BIZ+ e SPRv2+ (NMU-49)
         Given updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro NewMod1 on db nodo_cfg
-        And wait 60 seconds after triggered refresh job ALL
+        And wait 7 seconds after triggered refresh job ALL
         And MB generation MBD_generation with datatable vertical
             | CodiceFiscale | #creditor_institution_code#                  |
             | Denominazione | #psp#                                        |
@@ -2437,7 +2437,10 @@ Feature: NMU flows con pagamento OK
         Then check outcome is OK of activatePaymentNoticeV2 response
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_3Request
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_3
-        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+        Given update parameter station.stand-in on configuration keys with value 66666666666_01
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        And wait 60 seconds after triggered refresh job ALL
+        And from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv3     | 25.00  |
         And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
@@ -2464,13 +2467,14 @@ Feature: NMU flows con pagamento OK
         And saving activatePaymentNoticeV2 request in activatePaymentNoticeV2_4Request
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_4
         Given update parameter station.stand-in on configuration keys with value 66666666666_08
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter versione_primitive = '2', with where condition OBJ_ID = '5000000' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        And wait 60 seconds after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv4     | 25.00  |
         And from body with datatable vertical paGetPaymentV2_5transfer_noOptional initial XML paGetPaymentV2
             | outcome                     | OK                                  |
-            | creditorReferenceId         | 10$iuv                              |
+            | creditorReferenceId         | 47$iuv                              |
             | paymentAmount               | 25.00                               |
             | dueDate                     | 2021-12-12                          |
             | description                 | pagamentoTest                       |
@@ -2495,7 +2499,8 @@ Feature: NMU flows con pagamento OK
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old#                 |
             | identificativoStazioneRichiedente | #id_station_old#                                |
-            | dataOraMessaggioRichiesta         | 2016-09-16T11:24:10                             |
+            | dataOraMessaggioRichiesta         | #timedate#                                      |
+            | dataEsecuzionePagamento           | #date#                                          |
             | importoTotaleDaVersare            | $activatePaymentNoticeV2_1Request.amount        |
             | identificativoUnivocoVersamento   | $iuv                                            |
             | codiceContestoPagamento           | $activatePaymentNoticeV2_1Response.paymentToken |
@@ -2525,7 +2530,7 @@ Feature: NMU flows con pagamento OK
             | idChannel             | #canale_versione_primitive_2#                   |
             | paymentMethod         | CP                                              |
             | transactionId         | #transaction_id#                                |
-            | totalAmountExt        | 42                                              |
+            | totalAmountExt        | 110                                             |
             | feeExt                | 2                                               |
             | primaryCiIncurredFee  | 1                                               |
             | idBundle              | 0bf0c282-3054-11ed-af20-acde48001122            |
@@ -2533,7 +2538,7 @@ Feature: NMU flows con pagamento OK
             | timestampOperationExt | 2023-11-30T12:46:46.554+01:00                   |
             | rrn                   | 11223344                                        |
             | outPaymentGateway     | 00                                              |
-            | totalAmount1          | 42                                              |
+            | totalAmount1          | 110                                             |
             | fee1                  | 2                                               |
             | timestampOperation1   | 2021-07-09T17:06:03                             |
             | authorizationCode     | 123456                                          |
@@ -2563,7 +2568,7 @@ Feature: NMU flows con pagamento OK
     Scenario: After restore
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro NewMod1 on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter versione_primitive = '1', with where condition OBJ_ID = '5000000' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value false
         And update parameter station.stand-in on configuration keys with value 66666666666_01
         And wait 60 seconds after triggered refresh job ALL

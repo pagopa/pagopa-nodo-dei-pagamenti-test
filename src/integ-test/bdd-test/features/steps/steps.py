@@ -343,7 +343,6 @@ def step_impl(context, primitive, type_table, filebody):
     try:
         # Legge la datatable e la mette in una dict
         dict_fields_values = utils.table_to_dict(context.table, type_table)
-        print(f"directory corrente!!!! -------------->>>>>>>{os.getcwd()}") 
 
         file_path = ''
         user_profile = None
