@@ -76,7 +76,7 @@ def before_all(context):
             print(f"#####################lib_dir {lib_dir}") 
         
         cx_Oracle.init_oracle_client(lib_dir = lib_dir)
-
+    print(f"OS ENV ------------------->>>> {os.environ}")
     if 'APICFG' in os.environ:
         apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
         db.set_address(apicfg_testing_support_service)
