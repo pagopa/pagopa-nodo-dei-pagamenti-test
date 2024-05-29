@@ -90,11 +90,8 @@ def step_impl(context):
             url = row.get("url") + row.get("healthcheck")
             print(f"calling -> {url}")
 
-            header_host = utils.estrapola_header_host(row.get("url"))
-            print(f"header_host -> {header_host}")
-            headers = {'Host': header_host}
-            
-            headers[SUBKEY] = "2da21a24a3474673ad8464edb4a71011"
+            headers = {}
+            headers["Ocp-Apim-Subscription-Key"] = "2da21a24a3474673ad8464edb4a71011"
         
             #CHECK SE LANCIO DA DB POSTGRES O ORACLE
             if dbRun == "Postgres":
@@ -1896,16 +1893,10 @@ def step_impl(context, sender, soap_primitive, receiver):
     try:
         dbRun = getattr(context, "dbRun")
         url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
-        header_host = utils.estrapola_header_host(url_nodo)
-
-        if dbRun == "Postgres":
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
-            if 'SUBSCRIPTION_KEY' in os.environ:
-                headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
-        elif dbRun == "Oracle":
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': header_host}  # set what your server accepts
+        headers = {}
+        headers["Ocp-Apim-Subscription-Key"] = "2da21a24a3474673ad8464edb4a71011"
+        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
         
-        #url_nodo = "http://localhost:81/nodo-sit/webservices/input"
         print("url_nodo: ", url_nodo)
         print("nodo soap_request sent >>>", getattr(context, soap_primitive))
         print("headers: ", headers)
@@ -1943,12 +1934,9 @@ def step_impl(context, sender, soap_primitive, receiver):
         header_host = utils.estrapola_header_host(url_nodo)
         dbRun = getattr(context, "dbRun")
 
-        if dbRun == "Postgres":
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
-            if 'SUBSCRIPTION_KEY' in os.environ:
-                headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
-        elif dbRun == "Oracle":
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': header_host}  # set what your server accepts        
+        headers = {}
+        headers["Ocp-Apim-Subscription-Key"] = "2da21a24a3474673ad8464edb4a71011"
+        headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive}
 
         print("url_nodo: ", url_nodo)
         print("nodo soap_request sent >>>", getattr(context, soap_primitive))
@@ -1983,8 +1971,8 @@ def step_impl(context, job_name, seconds):
         seconds = utils.replace_local_variables(seconds, context)
         time.sleep(int(seconds))
         url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
-        header_host = utils.estrapola_header_host(url_nodo)
-        headers = {'Host': header_host}
+        headers = {}
+        headers["Ocp-Apim-Subscription-Key"] = "2da21a24a3474673ad8464edb4a71011"
 
         user_profile = os.environ.get("USERPROFILE")
         nodo_response = None
@@ -2421,11 +2409,9 @@ def step_impl(context, sender, method, service, receiver):
     try:
         url_nodo = utils.get_rest_url_nodo(context, service)
         print(url_nodo)
-        header_host = utils.estrapola_header_host(url_nodo)
-        headers = {'Content-Type': 'application/json','Host': header_host}
-
-        if 'SUBSCRIPTION_KEY' in os.environ:
-            headers['Ocp-Apim-Subscription-Key'] = os.getenv('SUBSCRIPTION_KEY')
+        headers = {}
+        headers["Ocp-Apim-Subscription-Key"] = "2da21a24a3474673ad8464edb4a71011"
+        headers = {'Content-Type': 'application/json'}
 
         dbRun = getattr(context, "dbRun")
         body = context.text or ""
@@ -2606,8 +2592,8 @@ def step_impl(context):
     activateIOPaymentResponseXml = parseString(
         activateIOPaymentResponse.content)
 
-    header_host = utils.estrapola_header_host(f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment")
-    headers = {'Host': header_host}
+    headers = {}
+    headers["Ocp-Apim-Subscription-Key"] = "2da21a24a3474673ad8464edb4a71011"
 
     paGetPaymentJson = requests.get(
         f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers, proxies = getattr(context,'proxies'))
@@ -2752,8 +2738,8 @@ def step_impl(context):
     activateIOPaymentResponseXml = parseString(
         activateIOPaymentResponse.content)
 
-    header_host = utils.estrapola_header_host(f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment")
-    headers = {'Host': header_host}
+    headers = {}
+    headers["Ocp-Apim-Subscription-Key"] = "2da21a24a3474673ad8464edb4a71011"
 
     paGetPaymentJson = requests.get(
         f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers, proxies = getattr(context,'proxies'))
