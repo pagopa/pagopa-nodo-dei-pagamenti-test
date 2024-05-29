@@ -5,8 +5,7 @@ import requests
 import steps.utils as utils
 import time
 
-if 'APICFG' in os.environ:
-    import steps.db_operation_apicfg_testing_support as db
+import steps.db_operation_apicfg_testing_support as db
 
 try:
     import allure
@@ -77,9 +76,9 @@ def before_all(context):
         
         cx_Oracle.init_oracle_client(lib_dir = lib_dir)
 
-    if 'APICFG' in os.environ:
-        apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
-        db.set_address(apicfg_testing_support_service)
+
+    apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
+    db.set_address(apicfg_testing_support_service)
 
     db_name = "nodo_cfg"
     db_selected = context.config.userdata.get("db_configuration").get(db_name)

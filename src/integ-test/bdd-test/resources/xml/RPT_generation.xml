@@ -51,7 +51,7 @@
 		<pay_i:nazioneBeneficiario>IT</pay_i:nazioneBeneficiario>
 	</pay_i:enteBeneficiario>
 	<pay_i:datiVersamento>
-		<pay_i:dataEsecuzionePagamento>2016-09-16</pay_i:dataEsecuzionePagamento>
+		<pay_i:dataEsecuzionePagamento>$dataEsecuzionePagamento</pay_i:dataEsecuzionePagamento>
 		<pay_i:importoTotaleDaVersare>$importoTotaleDaVersare</pay_i:importoTotaleDaVersare>
 		<pay_i:tipoVersamento>PO</pay_i:tipoVersamento>
 		<pay_i:identificativoUnivocoVersamento>$identificativoUnivocoVersamento</pay_i:identificativoUnivocoVersamento>
