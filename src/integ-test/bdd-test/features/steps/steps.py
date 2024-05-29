@@ -93,9 +93,7 @@ def step_impl(context):
         print(f"header_host -> {header_host}")
         headers = {'Host': header_host}
         
-        if row.get("subscription_key_name") != "":
-            if row.get("subscription_key_name") in os.environ:
-                headers[SUBKEY] = os.getenv(row.get("subscription_key_name"))
+        headers[SUBKEY] = "2da21a24a3474673ad8464edb4a71011"
     
         #CHECK SE LANCIO DA DB POSTGRES O ORACLE
         if dbRun == "Postgres":
