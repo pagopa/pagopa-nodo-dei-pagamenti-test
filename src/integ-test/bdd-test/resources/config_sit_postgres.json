@@ -6,7 +6,7 @@
          "healthcheck": "/monitor/health",
          "soap_service": "/webservices/input",
          "rest_service": "runlocal",
-         "refresh_config_service": "/config/refresh/ALL",
+         "refresh_config_service": "https://nodo-p-sit.tst-npc.sia.eu/config/refresh/ALL",
          "subscription_key_name": ""
       },
       "mock-ec": {

@@ -36,8 +36,7 @@ def executeQuery(conn, query:str, as_dict:bool = False) -> list:
     print(f' Executing query [{query}] on genericQuery service...')
     try:
         print('executing_sql_query ...')
-        headers = {}
-        headers["Ocp-Apim-Subscription-Key"] = "2da21a24a3474673ad8464edb4a71011"
+        headers = {'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}
 
         url = apicfg_testing_support.get("base_path") + apicfg_testing_support.get("service")
         print(f">>>>>>>>>>>>>>db operation apicfg URL {url}")

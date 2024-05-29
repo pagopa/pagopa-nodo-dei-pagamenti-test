@@ -317,7 +317,7 @@ Feature: NMU flows con pagamento OK
             | authorizationCode     | 123456                                        |
             | paymentGateway        | 00                                            |
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
-        And wait 7 seconds after triggered refresh job ALL
+        And wait 60 seconds after triggered refresh job ALL
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
