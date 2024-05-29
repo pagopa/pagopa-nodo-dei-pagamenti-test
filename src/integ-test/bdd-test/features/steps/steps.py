@@ -11,12 +11,9 @@ from sre_constants import ASSERT
 from xml.dom.minicompat import NodeList
 from xml.dom.minidom import parseString
 import xmltodict
-
 import db_operation_postgres
 import db_operation_oracle
-
-if 'APICFG' in os.environ:
-    import db_operation_apicfg_testing_support as db
+import db_operation_apicfg_testing_support as db
 
 import json_operations as jo
 import pytz
@@ -56,9 +53,8 @@ def step_impl(context):
             - pagopa-api-config ( used in tests to set DB's nodo-dei-pagamenti correctly according to input test ))
     """
     
-    if 'APICFG' in os.environ:
-        apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
-        db.set_address(apicfg_testing_support_service)
+    apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
+    db.set_address(apicfg_testing_support_service)
 
     dbRun = getattr(context, "dbRun")
     print(f"DB SELECTED -> {dbRun}")
@@ -2885,8 +2881,7 @@ def step_impl(context, param, value):
         # header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
         # headers = {'Host': header_host}
         headers = {}
-        if 'APICFG_SUBSCRIPTION_KEY' in os.environ:
-            headers["Ocp-Apim-Subscription-Key"] = os.getenv("APICFG_SUBSCRIPTION_KEY", default="")
+        headers["Ocp-Apim-Subscription-Key"] = "2da21a24a3474673ad8464edb4a71011"
         
         print("Refreshing...")
         refresh_response = None
@@ -2955,8 +2950,7 @@ def step_impl(context, param, value):
 def step_impl(context, job_name, seconds):
     try:
         headers = {}
-        if 'APICFG_SUBSCRIPTION_KEY' in os.environ:
-            headers["Ocp-Apim-Subscription-Key"] = os.getenv("APICFG_SUBSCRIPTION_KEY", default="")
+        headers["Ocp-Apim-Subscription-Key"] = "2da21a24a3474673ad8464edb4a71011"
 
         dbRun = getattr(context, "dbRun")
 
@@ -2990,8 +2984,7 @@ def step_impl(context, job_name, seconds):
 def step_impl(context, job_name):
     try:
         headers = {}
-        if 'APICFG_SUBSCRIPTION_KEY' in os.environ:
-            headers["Ocp-Apim-Subscription-Key"] = os.getenv("APICFG_SUBSCRIPTION_KEY", default="")
+        headers["Ocp-Apim-Subscription-Key"] = "2da21a24a3474673ad8464edb4a71011"
 
         dbRun = getattr(context, "dbRun")
 
@@ -3084,8 +3077,7 @@ def step_impl(context):
     adopted_db.closeConnection(conn)
     
     headers = {}
-    if 'APICFG_SUBSCRIPTION_KEY' in os.environ:
-        headers["Ocp-Apim-Subscription-Key"] = os.getenv("APICFG_SUBSCRIPTION_KEY", default="")
+    headers["Ocp-Apim-Subscription-Key"] = "2da21a24a3474673ad8464edb4a71011"
 
     refresh_response = None
     if dbRun == "Postgres":
