@@ -98,19 +98,20 @@ def step_impl(context):
                 proxies = getattr(context, "proxies")
                 ####RUN DA LOCALE
                 if user_profile != None:
-                    if url == 'https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1/info':
-                        print(f"############URL:{url}")
+                    if url == 'https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1/info':   
                         resp = requests.get(url, headers=headers, verify=False)
-                    else:
-                        print(f"############URL:{url} proxies {proxies}")
+                        print(f"############URL:{url} and headers: {headers}")
+                    else: 
                         resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
+                        print(f"############URL:{url}, proxies: {proxies} and headers: {headers}")
                 ####RUN IN REMOTO
-                else:
+                else:        
                     resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
-                    print(f"############URL:{url} proxies {proxies}")
+                    print(f"############URL:{url}, proxies: {proxies} and headers: {headers}")
             elif dbRun == "Oracle":
                 resp = requests.get(url, headers=headers, verify=False)
-
+                print(f"############URL:{url} and headers: {headers}")
+                
             print(f"response: {resp.status_code}")
             responses &= (resp.status_code == 200)
 
