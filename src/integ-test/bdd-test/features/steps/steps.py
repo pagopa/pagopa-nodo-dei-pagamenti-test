@@ -46,79 +46,89 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # Steps definitions
 @given('systems up')
 def step_impl(context):
-    """
-        health check for 
-            - nodo-dei-pagamenti ( application under test )
-            - mock-ec ( used by nodo-dei-pagamenti to forwarding EC's requests )
-            - pagopa-api-config ( used in tests to set DB's nodo-dei-pagamenti correctly according to input test ))
-    """
-    
-    apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
-    db.set_address(apicfg_testing_support_service)
-
-    dbRun = getattr(context, "dbRun")
-    print(f"DB SELECTED -> {dbRun}")
-
-    global db_online
-    global db_offline
-    global db_re
-    global db_wfesp
-
-    if dbRun == "Postgres":
-        db_online = db_operation_postgres
-        db_offline = db_operation_postgres
-        db_re = db_operation_postgres
-        db_wfesp = db_operation_postgres
-    elif dbRun == "Oracle":
-        db_online = db_operation_oracle
-        db_offline =  db_operation_oracle
-        db_re = db_operation_oracle
-        db_wfesp = db_operation_oracle
-
-    responses = True
-    user_profile = None
-
     try:
-        user_profile = getattr(context, "user_profile")
-        print(f"User Profile: {user_profile} ->>> local run!")
-    except AttributeError as e:
-        print(f"User Profile None: {e} ->>> remote run!")
-
-    for row in context.table:
-        print(f"calling: {row.get('name')} -> {row.get('url')}")
-        url = row.get("url") + row.get("healthcheck")
-        print(f"calling -> {url}")
-
-        header_host = utils.estrapola_header_host(row.get("url"))
-        print(f"header_host -> {header_host}")
-        headers = {'Host': header_host}
+        """
+            health check for 
+                - nodo-dei-pagamenti ( application under test )
+                - mock-ec ( used by nodo-dei-pagamenti to forwarding EC's requests )
+                - pagopa-api-config ( used in tests to set DB's nodo-dei-pagamenti correctly according to input test ))
+        """
         
-        headers[SUBKEY] = "2da21a24a3474673ad8464edb4a71011"
-    
-        #CHECK SE LANCIO DA DB POSTGRES O ORACLE
+        apicfg_testing_support_service = context.config.userdata.get("services").get("apicfg-testing-support")
+        db.set_address(apicfg_testing_support_service)
+
+        dbRun = getattr(context, "dbRun")
+        print(f"DB SELECTED -> {dbRun}")
+
+        global db_online
+        global db_offline
+        global db_re
+        global db_wfesp
+
         if dbRun == "Postgres":
-            proxies = getattr(context, "proxies")
-            ####RUN DA LOCALE
-            if user_profile != None:
-                if url == 'https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1/info':
-                    print(f"############URL:{url}")
-                    resp = requests.get(url, headers=headers, verify=False)
-                else:
-                    print(f"############URL:{url} proxies {proxies}")
-                    resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
-            ####RUN IN REMOTO
-            else:
-                resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
-                print(f"############URL:{url} proxies {proxies}")
+            db_online = db_operation_postgres
+            db_offline = db_operation_postgres
+            db_re = db_operation_postgres
+            db_wfesp = db_operation_postgres
         elif dbRun == "Oracle":
-            resp = requests.get(url, headers=headers, verify=False)
+            db_online = db_operation_oracle
+            db_offline =  db_operation_oracle
+            db_re = db_operation_oracle
+            db_wfesp = db_operation_oracle
 
-        print(f"response: {resp.status_code}")
-        responses &= (resp.status_code == 200)
+        responses = True
+        user_profile = None
 
-    assert responses
+        try:
+            user_profile = getattr(context, "user_profile")
+            print(f"User Profile: {user_profile} ->>> local run!")
+        except AttributeError as e:
+            print(f"User Profile None: {e} ->>> remote run!")
 
+        for row in context.table:
+            print(f"calling: {row.get('name')} -> {row.get('url')}")
+            url = row.get("url") + row.get("healthcheck")
+            print(f"calling -> {url}")
 
+            header_host = utils.estrapola_header_host(row.get("url"))
+            print(f"header_host -> {header_host}")
+            headers = {'Host': header_host}
+            
+            headers[SUBKEY] = "2da21a24a3474673ad8464edb4a71011"
+        
+            #CHECK SE LANCIO DA DB POSTGRES O ORACLE
+            if dbRun == "Postgres":
+                proxies = getattr(context, "proxies")
+                ####RUN DA LOCALE
+                if user_profile != None:
+                    if url == 'https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1/info':
+                        print(f"############URL:{url}")
+                        resp = requests.get(url, headers=headers, verify=False)
+                    else:
+                        print(f"############URL:{url} proxies {proxies}")
+                        resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
+                ####RUN IN REMOTO
+                else:
+                    resp = requests.get(url, headers=headers, verify=False, proxies=proxies)
+                    print(f"############URL:{url} proxies {proxies}")
+            elif dbRun == "Oracle":
+                resp = requests.get(url, headers=headers, verify=False)
+
+            print(f"response: {resp.status_code}")
+            responses &= (resp.status_code == 200)
+
+        assert responses, f"System up status code expected: {200} but obtained {resp.status_code}"
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step('initial XML {primitive}')
