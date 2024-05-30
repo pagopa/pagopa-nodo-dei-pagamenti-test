@@ -455,38 +455,21 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.paymentMethod of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.touchPoint of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2Response.suggestedIdBundle of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2Response.suggestedIdCiBundle of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2Response.suggestedUserFee of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2Response.suggestedPaFee of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        ### POSITION_ACTIVATE
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column               | value                                                |
+            | PAYMENT_TOKEN        | $activatePaymentNoticeV2Response.paymentToken        |
+            | PSP_ID               | $activatePaymentNoticeV2.idPSP                       |
+            | PAYMENT_METHOD       | $activatePaymentNoticeV2.paymentMethod               |
+            | TOUCHPOINT           | $activatePaymentNoticeV2.touchPoint                  |
+            | SUGGESTED_IDBUNDLE   | $activatePaymentNoticeV2Response.suggestedIdBundle   |
+            | SUGGESTED_IDCIBUNDLE | $activatePaymentNoticeV2Response.suggestedIdCiBundle |
+            | SUGGESTED_USER_FEE   | $activatePaymentNoticeV2Response.suggestedUserFee    |
+            | SUGGESTED_PA_FEE     | $activatePaymentNoticeV2Response.suggestedPaFee      |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
 
 
     @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_6 @after
@@ -555,38 +538,21 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2Response.paymentToken of the record at column PAYMENT_TOKEN of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.idPSP of the record at column PSP_ID of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.paymentMethod of the record at column PAYMENT_METHOD of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.touchPoint of the record at column TOUCHPOINT of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value None of the record at column SUGGESTED_IDBUNDLE of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value None of the record at column SUGGESTED_IDCIBUNDLE of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        ### POSITION_ACTIVATE
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column               | value                                                |
+            | PAYMENT_TOKEN        | $activatePaymentNoticeV2Response.paymentToken        |
+            | PSP_ID               | $activatePaymentNoticeV2.idPSP                       |
+            | PAYMENT_METHOD       | $activatePaymentNoticeV2.paymentMethod               |
+            | TOUCHPOINT           | $activatePaymentNoticeV2.touchPoint                  |
+            | SUGGESTED_IDBUNDLE   | $activatePaymentNoticeV2Response.suggestedIdBundle   |
+            | SUGGESTED_IDCIBUNDLE | $activatePaymentNoticeV2Response.suggestedIdCiBundle |
+            | SUGGESTED_USER_FEE   | $activatePaymentNoticeV2Response.suggestedUserFee    |
+            | SUGGESTED_PA_FEE     | $activatePaymentNoticeV2Response.suggestedPaFee      |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
 
 
     @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_7 @after
@@ -689,15 +655,17 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcome.idPSP           |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -859,15 +827,17 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcome.idPSP           |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -1017,27 +987,17 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcome.idPSP           |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -1279,18 +1239,20 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcome.idPSP           |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_PAYMENT
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -1452,18 +1414,20 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcome.idPSP           |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_PAYMENT
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -1613,30 +1577,20 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcome.idPSP           |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_PAYMENT
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -1876,30 +1830,20 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcomeV2.idPSP         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_PAYMENT
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -2046,30 +1990,20 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcomeV2.idPSP         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_PAYMENT
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -2217,30 +2151,20 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcomeV2.idPSP         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_PAYMENT
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -2388,27 +2312,17 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcome.idPSP           |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -2560,27 +2474,17 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcome.idPSP           |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -2732,27 +2636,17 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcome.idPSP           |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -2904,30 +2798,20 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcomeV2.idPSP         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_PAYMENT
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -3076,30 +2960,20 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcomeV2.idPSP         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_PAYMENT
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -3249,30 +3123,20 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value $activatePaymentNoticeV2.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcomeV2.idPSP         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_PAYMENT
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -3421,27 +3285,17 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcomeV2.idPSP         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -3594,27 +3448,17 @@ Feature: NM3 flows con pagamento OK
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcomeV2.idPSP         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
@@ -3778,7 +3622,7 @@ Feature: NM3 flows con pagamento OK
             | INSERTED_TIMESTAMP | NotNone                             |
             | UPDATED_TIMESTAMP  | NotNone                             |
             | PSP_ID             | $sendPaymentOutcomeV2.idPSP         |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
