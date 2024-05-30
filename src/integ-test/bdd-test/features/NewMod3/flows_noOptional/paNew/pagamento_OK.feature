@@ -3354,140 +3354,140 @@ Feature: NM3 flows con pagamento OK
         Then check outcome is OK of verifyPaymentNotice response
         And check standin field not exists in verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347$iuv      | 10.00  |
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347$iuv      | 10.00  |
         And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
-            | outcome                     | OK                                  |
-            | creditorReferenceId         | 47$iuv                              |
-            | paymentAmount               | 10.00                               |
-            | dueDate                     | 2021-12-31                          |
-            | description                 | pagamentoTest                       |
-            | companyName                 | companyName                         |
-            | entityUniqueIdentifierType  | G                                   |
-            | entityUniqueIdentifierValue | 77777777777                         |
-            | fullName                    | Massimo Benvegnù                    |
-            | transferAmount              | 10.00                               |
+            | outcome                     | OK                                |
+            | creditorReferenceId         | 47$iuv                            |
+            | paymentAmount               | 10.00                             |
+            | dueDate                     | 2021-12-31                        |
+            | description                 | pagamentoTest                     |
+            | companyName                 | companyName                       |
+            | entityUniqueIdentifierType  | G                                 |
+            | entityUniqueIdentifierValue | 77777777777                       |
+            | fullName                    | Massimo Benvegnù                  |
+            | transferAmount              | 10.00                             |
             | fiscalCodePA                | $activatePaymentNotice.fiscalCode |
-            | IBAN                        | IT45R0760103200000000001016         |
-            | remittanceInformation       | testPaGetPayment                    |
-            | transferCategory            | paGetPaymentTest                    |
+            | IBAN                        | IT45R0760103200000000001016       |
+            | remittanceInformation       | testPaGetPayment                  |
+            | transferCategory            | paGetPaymentTest                  |
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And check standin field not exists in activatePaymentNotice response
         And checks the value Y of the record at column FLAG_STANDIN of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
+            | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 2 seconds for expiration
         And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value NOTICE_GENERATED,NOTICE_SENT,PAYING,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys    | where_values                                  |
+            | where_keys    | where_values                                |
             | PAYMENT_TOKEN | $activatePaymentNoticeResponse.paymentToken |
         And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys    | where_values                                  |
+            | where_keys    | where_values                                |
             | PAYMENT_TOKEN | $activatePaymentNoticeResponse.paymentToken |
         And checks the value PAYING,PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys    | where_values                                  |
+            | where_keys    | where_values                                |
             | PAYMENT_TOKEN | $activatePaymentNoticeResponse.paymentToken |
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys    | where_values                                  |
+            | where_keys    | where_values                                |
             | PAYMENT_TOKEN | $activatePaymentNoticeResponse.paymentToken |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_PAYMENT
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_RECEIPT
         And verify 1 record for the table POSITION_RECEIPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_RECEIPT_XML
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_RECEIPT_RECIPIENT
         And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # RE
         And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys         | where_values                          |
+            | where_keys         | where_values                        |
             | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
-            | TIPO_EVENTO        | paVerifyPaymentNotice                 |
-            | SOTTO_TIPO_EVENTO  | REQ                                   |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                      |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                   |
+            | TIPO_EVENTO        | paVerifyPaymentNotice               |
+            | SOTTO_TIPO_EVENTO  | REQ                                 |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                    |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                 |
         And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys         | where_values                                  |
+            | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | paGetPaymentV2                                |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+            | TIPO_EVENTO        | paGetPaymentV2                              |
+            | SOTTO_TIPO_EVENTO  | REQ                                         |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
+            | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA_KO                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+            | TIPO_EVENTO        | paSendRTV2                                  |
+            | SOTTO_TIPO_EVENTO  | REQ                                         |
+            | ESITO              | INVIATA_KO                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
         And check value $paSendRT.standIn is equal to value true
         And check value $paSendRT.idStation is equal to value standin
@@ -3495,7 +3495,7 @@ Feature: NM3 flows con pagamento OK
         # ESAMINARE QUESTO STEP SOTTO PER INCLUDERE NEL DATATABLE LA SELECT CON LA WHERE CONDITION CON LA IN
         And verify 2 record for the table RE retrived by the query on db re with where datatable horizontal
             | where_keys         | where_values                                |
-            | NOTICE_ID          | $activatePaymentNotice.noticeNumber       |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber         |
             | TIPO_EVENTO        | ('paGetPaymentV2', 'paVerifyPaymentNotice') |
             | SOTTO_TIPO_EVENTO  | REQ                                         |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
@@ -3527,140 +3527,140 @@ Feature: NM3 flows con pagamento OK
         Then check outcome is OK of verifyPaymentNotice response
         And check standin is true of verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347$iuv      | 10.00  |
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347$iuv      | 10.00  |
         And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
-            | outcome                     | OK                                  |
-            | creditorReferenceId         | 47$iuv                              |
-            | paymentAmount               | 10.00                               |
-            | dueDate                     | 2021-12-31                          |
-            | description                 | pagamentoTest                       |
-            | companyName                 | companyName                         |
-            | entityUniqueIdentifierType  | G                                   |
-            | entityUniqueIdentifierValue | 77777777777                         |
-            | fullName                    | Massimo Benvegnù                    |
-            | transferAmount              | 10.00                               |
+            | outcome                     | OK                                |
+            | creditorReferenceId         | 47$iuv                            |
+            | paymentAmount               | 10.00                             |
+            | dueDate                     | 2021-12-31                        |
+            | description                 | pagamentoTest                     |
+            | companyName                 | companyName                       |
+            | entityUniqueIdentifierType  | G                                 |
+            | entityUniqueIdentifierValue | 77777777777                       |
+            | fullName                    | Massimo Benvegnù                  |
+            | transferAmount              | 10.00                             |
             | fiscalCodePA                | $activatePaymentNotice.fiscalCode |
-            | IBAN                        | IT45R0760103200000000001016         |
-            | remittanceInformation       | testPaGetPayment                    |
-            | transferCategory            | paGetPaymentTest                    |
+            | IBAN                        | IT45R0760103200000000001016       |
+            | remittanceInformation       | testPaGetPayment                  |
+            | transferCategory            | paGetPaymentTest                  |
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And check standin is true of activatePaymentNotice response
         And checks the value Y of the record at column FLAG_STANDIN of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
+            | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 2 seconds for expiration
         And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value NOTICE_GENERATED,NOTICE_SENT,PAYING,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys    | where_values                                  |
+            | where_keys    | where_values                                |
             | PAYMENT_TOKEN | $activatePaymentNoticeResponse.paymentToken |
         And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys    | where_values                                  |
+            | where_keys    | where_values                                |
             | PAYMENT_TOKEN | $activatePaymentNoticeResponse.paymentToken |
         And checks the value PAYING,PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys    | where_values                                  |
+            | where_keys    | where_values                                |
             | PAYMENT_TOKEN | $activatePaymentNoticeResponse.paymentToken |
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys    | where_values                                  |
+            | where_keys    | where_values                                |
             | PAYMENT_TOKEN | $activatePaymentNoticeResponse.paymentToken |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_PAYMENT
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_RECEIPT
         And verify 1 record for the table POSITION_RECEIPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_RECEIPT_XML
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_RECEIPT_RECIPIENT
         And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # RE
         And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys         | where_values                          |
+            | where_keys         | where_values                        |
             | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
-            | TIPO_EVENTO        | paVerifyPaymentNotice                 |
-            | SOTTO_TIPO_EVENTO  | REQ                                   |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                      |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                   |
+            | TIPO_EVENTO        | paVerifyPaymentNotice               |
+            | SOTTO_TIPO_EVENTO  | REQ                                 |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                    |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                 |
         And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys         | where_values                                  |
+            | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | paGetPaymentV2                                |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+            | TIPO_EVENTO        | paGetPaymentV2                              |
+            | SOTTO_TIPO_EVENTO  | REQ                                         |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
+            | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA_KO                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+            | TIPO_EVENTO        | paSendRTV2                                  |
+            | SOTTO_TIPO_EVENTO  | REQ                                         |
+            | ESITO              | INVIATA_KO                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
         And check payload tag standIn field not exists in $paSendRT
         And check value $paSendRT.idStation is equal to value standin
@@ -3668,7 +3668,7 @@ Feature: NM3 flows con pagamento OK
         # ESAMINARE QUESTO STEP SOTTO PER INCLUDERE NEL DATATABLE LA SELECT CON LA WHERE CONDITION CON LA IN
         And verify 2 record for the table RE retrived by the query on db re with where datatable horizontal
             | where_keys         | where_values                                |
-            | NOTICE_ID          | $activatePaymentNotice.noticeNumber       |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber         |
             | TIPO_EVENTO        | ('paGetPaymentV2', 'paVerifyPaymentNotice') |
             | SOTTO_TIPO_EVENTO  | REQ                                         |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
@@ -3701,140 +3701,130 @@ Feature: NM3 flows con pagamento OK
         Then check outcome is OK of verifyPaymentNotice response
         And check standin is true of verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
-            | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
-            | #psp# | #psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347$iuv      | 10.00  |
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 347$iuv      | 10.00  |
         And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
-            | outcome                     | OK                                  |
-            | creditorReferenceId         | 47$iuv                              |
-            | paymentAmount               | 10.00                               |
-            | dueDate                     | 2021-12-31                          |
-            | description                 | pagamentoTest                       |
-            | companyName                 | companyName                         |
-            | entityUniqueIdentifierType  | G                                   |
-            | entityUniqueIdentifierValue | 77777777777                         |
-            | fullName                    | Massimo Benvegnù                    |
-            | transferAmount              | 10.00                               |
+            | outcome                     | OK                                |
+            | creditorReferenceId         | 47$iuv                            |
+            | paymentAmount               | 10.00                             |
+            | dueDate                     | 2021-12-31                        |
+            | description                 | pagamentoTest                     |
+            | companyName                 | companyName                       |
+            | entityUniqueIdentifierType  | G                                 |
+            | entityUniqueIdentifierValue | 77777777777                       |
+            | fullName                    | Massimo Benvegnù                  |
+            | transferAmount              | 10.00                             |
             | fiscalCodePA                | $activatePaymentNotice.fiscalCode |
-            | IBAN                        | IT45R0760103200000000001016         |
-            | remittanceInformation       | testPaGetPayment                    |
-            | transferCategory            | paGetPaymentTest                    |
+            | IBAN                        | IT45R0760103200000000001016       |
+            | remittanceInformation       | testPaGetPayment                  |
+            | transferCategory            | paGetPaymentTest                  |
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         And check standin is true of activatePaymentNotice response
         And checks the value Y of the record at column FLAG_STANDIN of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
+            | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                | outcome |
             | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 2 seconds for expiration
         And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value NOTICE_GENERATED,NOTICE_SENT,PAYING,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys    | where_values                                  |
+            | where_keys    | where_values                                |
             | PAYMENT_TOKEN | $activatePaymentNoticeResponse.paymentToken |
         And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys    | where_values                                  |
+            | where_keys    | where_values                                |
             | PAYMENT_TOKEN | $activatePaymentNoticeResponse.paymentToken |
         And checks the value PAYING,PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And verify 4 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys    | where_values                                  |
+            | where_keys    | where_values                                |
             | PAYMENT_TOKEN | $activatePaymentNoticeResponse.paymentToken |
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys    | where_values                                  |
+            | where_keys    | where_values                                |
             | PAYMENT_TOKEN | $activatePaymentNoticeResponse.paymentToken |
         And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value $activatePaymentNotice.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
-        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+        ### POSITION_RETRY_PA_SEND_RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
+            | RETRY              | 0                                   |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | PSP_ID             | $sendPaymentOutcomeV2.idPSP         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_PAYMENT
         And verify 1 record for the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_RECEIPT
         And verify 1 record for the table POSITION_RECEIPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_RECEIPT_XML
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_RECEIPT_RECIPIENT
         And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
+            | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # RE
         And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys         | where_values                          |
+            | where_keys         | where_values                        |
             | NOTICE_ID          | $activatePaymentNotice.noticeNumber |
-            | TIPO_EVENTO        | paVerifyPaymentNotice                 |
-            | SOTTO_TIPO_EVENTO  | REQ                                   |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                      |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                   |
+            | TIPO_EVENTO        | paVerifyPaymentNotice               |
+            | SOTTO_TIPO_EVENTO  | REQ                                 |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                    |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                 |
         And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query on db re with where datatable horizontal
-            | where_keys         | where_values                                  |
+            | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | paGetPaymentV2                                |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+            | TIPO_EVENTO        | paGetPaymentV2                              |
+            | SOTTO_TIPO_EVENTO  | REQ                                         |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
+            | where_keys         | where_values                                |
             | PAYMENT_TOKEN      | $activatePaymentNoticeResponse.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA_KO                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+            | TIPO_EVENTO        | paSendRTV2                                  |
+            | SOTTO_TIPO_EVENTO  | REQ                                         |
+            | ESITO              | INVIATA_KO                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                         |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
         And check value $paSendRT.standIn is equal to value true
         And check value $paSendRT.idStation is equal to value standin
@@ -3842,7 +3832,7 @@ Feature: NM3 flows con pagamento OK
         # ESAMINARE QUESTO STEP SOTTO PER INCLUDERE NEL DATATABLE LA SELECT CON LA WHERE CONDITION CON LA IN
         And verify 2 record for the table RE retrived by the query on db re with where datatable horizontal
             | where_keys         | where_values                                |
-            | NOTICE_ID          | $activatePaymentNotice.noticeNumber       |
+            | NOTICE_ID          | $activatePaymentNotice.noticeNumber         |
             | TIPO_EVENTO        | ('paGetPaymentV2', 'paVerifyPaymentNotice') |
             | SOTTO_TIPO_EVENTO  | REQ                                         |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                            |
@@ -3866,7 +3856,7 @@ Feature: NM3 flows con pagamento OK
         When psp sends SOAP verifyPaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of verifyPaymentNotice response
         Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
-            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | idPSP | idBrokerPSP | idChannel                     | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_versione_primitive_2# | #password# | #creditor_institution_code# | 310$iuv      | 10.00  |
         And from body with datatable vertical paGetPaymentV2_noOptional initial XML paGetPaymentV2
             | outcome                     | OK                                  |
