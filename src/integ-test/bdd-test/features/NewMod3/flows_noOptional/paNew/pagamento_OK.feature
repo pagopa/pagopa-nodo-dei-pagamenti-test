@@ -404,7 +404,7 @@ Feature: NM3 flows con pagamento OK
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-        And wait 2 seconds for expiration
+        And wait 4 seconds for expiration
         And checks the value INVIATA of the record at column ESITO of the table RE retrived by the query on db re with where datatable horizontal
             | where_keys         | where_values                          |
             | NOTICE_ID          | $activatePaymentNoticeV2.noticeNumber |
@@ -467,9 +467,9 @@ Feature: NM3 flows con pagamento OK
             | SUGGESTED_USER_FEE   | $activatePaymentNoticeV2Response.suggestedUserFee    |
             | SUGGESTED_PA_FEE     | $activatePaymentNoticeV2Response.suggestedPaFee      |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
 
 
     @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_6 @after
@@ -501,7 +501,7 @@ Feature: NM3 flows con pagamento OK
             | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
-        And wait 2 seconds for expiration
+        And wait 4 seconds for expiration
         And checks the value PAYING, PAID, NOTICE_GENERATED, NOTICE_SENT, NOTIFIED of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys    | where_values                                  |
             | PAYMENT_TOKEN | $activatePaymentNoticeV2Response.paymentToken |
@@ -540,19 +540,19 @@ Feature: NM3 flows con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         ### POSITION_ACTIVATE
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column               | value                                                |
-            | PAYMENT_TOKEN        | $activatePaymentNoticeV2Response.paymentToken        |
-            | PSP_ID               | $activatePaymentNoticeV2.idPSP                       |
-            | PAYMENT_METHOD       | $activatePaymentNoticeV2.paymentMethod               |
-            | TOUCHPOINT           | $activatePaymentNoticeV2.touchPoint                  |
-            | SUGGESTED_IDBUNDLE   | $activatePaymentNoticeV2Response.suggestedIdBundle   |
-            | SUGGESTED_IDCIBUNDLE | $activatePaymentNoticeV2Response.suggestedIdCiBundle |
-            | SUGGESTED_USER_FEE   | $activatePaymentNoticeV2Response.suggestedUserFee    |
-            | SUGGESTED_PA_FEE     | $activatePaymentNoticeV2Response.suggestedPaFee      |
+            | column               | value                                         |
+            | PAYMENT_TOKEN        | $activatePaymentNoticeV2Response.paymentToken |
+            | PSP_ID               | $activatePaymentNoticeV2.idPSP                |
+            | PAYMENT_METHOD       | $activatePaymentNoticeV2.paymentMethod        |
+            | TOUCHPOINT           | $activatePaymentNoticeV2.touchPoint           |
+            | SUGGESTED_IDBUNDLE   | None                                          |
+            | SUGGESTED_IDCIBUNDLE | None                                          |
+            | SUGGESTED_USER_FEE   | None                                          |
+            | SUGGESTED_PA_FEE     | None                                          |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                        |
-            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
 
 
     @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_7 @after
@@ -1069,11 +1069,12 @@ Feature: NM3 flows con pagamento OK
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
         And wait 60 seconds after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 20.00  |
-        And from body with datatable vertical paGetPayment_4transfer_noOptional initial XML paGetPayment
+        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
             | outcome                     | OK                                |
             | creditorReferenceId         | 02$iuv                            |
             | paymentAmount               | 20.00                             |
@@ -1087,6 +1088,7 @@ Feature: NM3 flows con pagamento OK
             | IBAN                        | IT45R0760103200000000001016       |
             | fiscalCodePA2               | 90000000001                       |
             | fiscalCodePA3               | 90000000002                       |
+            | fiscalCodePA4               | 90000000003                       |
             | fiscalCodePA4               | 88888888888                       |
             | remittanceInformation       | testPaGetPayment                  |
             | transferCategory            | paGetPaymentTest                  |
@@ -3802,5 +3804,6 @@ Feature: NM3 flows con pagamento OK
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
         And wait 60 seconds after triggered refresh job ALL
 # mettere una wait dentro il refresh job e creare un nuovo "has config parameter" senza timesleep

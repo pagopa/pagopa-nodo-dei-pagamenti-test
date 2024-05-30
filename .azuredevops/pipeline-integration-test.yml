@@ -88,7 +88,7 @@ stages:
               # replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "/config/refresh/ALL"
 
               replace $file ".services.\"nodo-dei-pagamenti\".url"           "$(NODO_URL)"
-              replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "/monitoring/v1/monitor/health"
+              replace $file ".services.\"nodo-dei-pagamenti\".healthcheck"   "-monitoring/monitoring/v1/monitor/health"
               replace $file ".services.\"nodo-dei-pagamenti\".soap_service"  ""
               replace $file ".services.\"nodo-dei-pagamenti\".rest_service"  ""
               replace $file ".services.\"nodo-dei-pagamenti\".refresh_config_service"  "https://api.dev.platform.pagopa.it/nodo-monitoring/monitoring/v1/config/refresh/ALL"
