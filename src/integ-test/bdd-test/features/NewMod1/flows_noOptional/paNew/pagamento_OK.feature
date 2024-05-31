@@ -1,11 +1,11 @@
-Feature: NMU flows con pagamento OK
+Feature: NMU flows con paNEW pagamento OK
 
     Background:
         Given systems up
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_1
-    Scenario: NMU flow OK, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPayment, closeV2+ -> pspNotifyV2, spoV2+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-8)
+    Scenario: NMU flow paNEW OK, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPayment, closeV2+ -> pspNotifyV2, spoV2+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-8)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -253,7 +253,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_2 @after
-    Scenario: NMU flow OK con Travaso CP, FLOW: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-9)
+    Scenario: NMU flow paNEW OK con Travaso CP, FLOW: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-9)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -344,7 +344,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_3 @after
-    Scenario: NMU flow OK con Travaso PPAL, FLOW: con checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spo+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-10)
+    Scenario: NMU flow paNEW OK con Travaso PPAL, FLOW: con checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spo+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-10)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -434,7 +434,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_4 @after
-    Scenario: NMU flow OK con Travaso BPAY, FLOW: con checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spo+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-11)
+    Scenario: NMU flow paNEW OK con Travaso BPAY, FLOW: con checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spo+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-11)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -525,7 +525,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_5
-    Scenario: NMU flow OK, FLOW: con checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-12)
+    Scenario: NMU flow paNEW OK, FLOW: con checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-12)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -613,7 +613,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_6 @after
-    Scenario: NMU flow OK con Travaso CP, FLOW: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-13)
+    Scenario: NMU flow paNEW OK con Travaso CP, FLOW: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-13)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -703,7 +703,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_7 @after
-    Scenario: NMU flow OK con Travaso PPAL, FLOW: con checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-14)
+    Scenario: NMU flow paNEW OK con Travaso PPAL, FLOW: con checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-14)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -793,7 +793,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_8 @after
-    Scenario: NMU flow OK con Travaso BPAY, FLOW: con checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-15)
+    Scenario: NMU flow paNEW OK con Travaso BPAY, FLOW: con checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-15)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -887,7 +887,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_9
-    Scenario: NMU flow OK, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPayment , closeV2+ -> pspNotifyPaymentV2 con additionalPaymentInformations, spo+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-16)
+    Scenario: NMU flow paNEW OK, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPayment , closeV2+ -> pspNotifyPaymentV2 con additionalPaymentInformations, spo+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-16)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -977,7 +977,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_10 @after
-    Scenario: NMU flow OK con Travaso CP, FLOW: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-22)
+    Scenario: NMU flow paNEW OK con Travaso CP, FLOW: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-22)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -1071,7 +1071,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_11 @after
-    Scenario: NMU flow OK con Travaso PPAL, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-23)
+    Scenario: NMU flow paNEW OK con Travaso PPAL, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-23)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -1165,7 +1165,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_12 @after
-    Scenario: NMU flow OK con Travaso BPAY, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-24)
+    Scenario: NMU flow paNEW OK con Travaso BPAY, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-24)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -1259,7 +1259,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_13
-    Scenario: NMU flow OK, FLOW: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-25)
+    Scenario: NMU flow paNEW OK, FLOW: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-25)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -1350,7 +1350,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_14 @after
-    Scenario: NMU flow OK con Travaso CP, FLOW: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-26)
+    Scenario: NMU flow paNEW OK con Travaso CP, FLOW: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-26)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -1442,7 +1442,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_15 @after
-    Scenario: NMU flow OK con Travaso PPAL, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con paypalPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-27)
+    Scenario: NMU flow paNEW OK con Travaso PPAL, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con paypalPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-27)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -1536,7 +1536,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_16 @after
-    Scenario: NMU flow OK con Travaso BPAY, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con bancomatpayPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-28)
+    Scenario: NMU flow paNEW OK con Travaso BPAY, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con bancomatpayPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-28)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -1628,7 +1628,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_17
-    Scenario: NMU flow OK, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPaymentV2 con additionalPaymentInformations, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-29)
+    Scenario: NMU flow paNEW OK, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPaymentV2 con additionalPaymentInformations, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-29)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -1718,7 +1718,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_18
-    Scenario: NMU flow OK con Multitoken, FLOW: con checkPosition con 4 nav, 4x activateV2 -> paGetPayment , closeV2+ -> pspNotifyV2 con 4 token, spoV2+ con 4 token -> 4x paSendRT+, 4x BIZ+ e SPRv2+ (NMU-17)
+    Scenario: NMU flow paNEW OK con Multitoken, FLOW: con checkPosition con 4 nav, 4x activateV2 -> paGetPayment , closeV2+ -> pspNotifyV2 con 4 token, spoV2+ con 4 token -> 4x paSendRT+, 4x BIZ+ e SPRv2+ (NMU-17)
         Given from body with datatable vertical checkPositionBody_4element initial JSON checkPosition
             | fiscalCode1   | #creditor_institution_code# |
             | fiscalCode2   | #creditor_institution_code# |
@@ -1975,7 +1975,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_19
-    Scenario: NMU flow OK con Multitoken, FLOW: con checkPosition con 4 nav, 4x activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyV2 con 4 token, spoV2+ con 4 token -> 4x paSendRTV2, 4x BIZ+ e SPRv2+ (NMU-30)
+    Scenario: NMU flow paNEW OK con Multitoken, FLOW: con checkPosition con 4 nav, 4x activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyV2 con 4 token, spoV2+ con 4 token -> 4x paSendRTV2, 4x BIZ+ e SPRv2+ (NMU-30)
         Given from body with datatable vertical checkPositionBody_4element initial JSON checkPosition
             | fiscalCode1   | #creditor_institution_code# |
             | fiscalCode2   | #creditor_institution_code# |
@@ -2237,7 +2237,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_20 @after
-    Scenario: NMU flow OK con broadcast paPrinc!=paSec MBD, FLOW: con PA con broadcast sia vp1 che vp2, checkPosition con 1 nav, activateV2 -> paGetPaymentV2 con MBD, closeV2+ -> pspNotifyPaymentV2 con MBD, spoV2 con MBD+ -> paSendRTV2 con MBD verso stazione principale, paSendRT con IBAN fittizio e paSendRTV2 con MBD verso le broadcast delle PA secondarie, paSendRTV2 con MBD verso le broadcast vp2 della PA principale, BIZ+ e SPRv2+ (NMU-49)
+    Scenario: NMU flow paNEW OK con broadcast paPrinc!=paSec MBD, FLOW: con PA con broadcast sia vp1 che vp2, checkPosition con 1 nav, activateV2 -> paGetPaymentV2 con MBD, closeV2+ -> pspNotifyPaymentV2 con MBD, spoV2 con MBD+ -> paSendRTV2 con MBD verso stazione principale, paSendRT con IBAN fittizio e paSendRTV2 con MBD verso le broadcast delle PA secondarie, paSendRTV2 con MBD verso le broadcast vp2 della PA principale, BIZ+ e SPRv2+ (NMU-49)
         Given updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro NewMod1 on db nodo_cfg
         And wait 7 seconds after triggered refresh job ALL
         And MB generation MBD_generation with datatable vertical
@@ -2340,7 +2340,7 @@ Feature: NMU flows con pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_21 @after
-    Scenario: NMU flow OK con Multitoken, FLOW: con token1: PA Old, token2: PA New vp1, token3: PA New vp2, token4: PA New vp1 standin, token5: PA New vp2 standin. Le PA New hanno tutte delle broadcast sia vp1 che vp2. checkPosition con 5 nav, 5x activateV2 (la presenza del flag standin dipende dalla configurazione del psp eCommerce, non da quella del PSP vero) -> token1: paaAttivaRPT, token2: paGetPayment 5 transfer paPrincip = paSecond, token3: paGetPaymentV2 5 transfer paPrincip = paSecond, token4: paGetPayment verso ACA 5 transfer paPrincip = paSecond e token5: paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, nodoInviaRPT token1, closeV2+ -> pspNotifyV2 con 5 token e senza il flag standin=true, spoV2+ con 5 token -> token1: paaInviaRT+; token2: paSendRT verso stazione principale, paSendRT/V2 verso broadcast PA secondarie (compresa PA principale che è anche secondaria?); token3: paSendRTV2 verso stazione principale, paSendRT/V2 verso broadcast PA secondarie, paSendRTV2 verso broadcast PA principale (anche le paSendRT visto che è sia principale che secondaria?); token4: paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie (compresa PA principale che è anche secondaria?); token5: paSendRTV2 verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie, paSendRTV2 verso broadcast PA principale (anche le paSendRT visto che è sia principale che secondaria?). Tutte le receipt NON hanno il flag standin=true, 5x BIZ+ e SPRv2+ (NMU-35)
+    Scenario: NMU flow paNEW OK con Multitoken, FLOW: con token1: PA Old, token2: PA New vp1, token3: PA New vp2, token4: PA New vp1 standin, token5: PA New vp2 standin. Le PA New hanno tutte delle broadcast sia vp1 che vp2. checkPosition con 5 nav, 5x activateV2 (la presenza del flag standin dipende dalla configurazione del psp eCommerce, non da quella del PSP vero) -> token1: paaAttivaRPT, token2: paGetPayment 5 transfer paPrincip = paSecond, token3: paGetPaymentV2 5 transfer paPrincip = paSecond, token4: paGetPayment verso ACA 5 transfer paPrincip = paSecond e token5: paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, nodoInviaRPT token1, closeV2+ -> pspNotifyV2 con 5 token e senza il flag standin=true, spoV2+ con 5 token -> token1: paaInviaRT+; token2: paSendRT verso stazione principale, paSendRT/V2 verso broadcast PA secondarie (compresa PA principale che è anche secondaria?); token3: paSendRTV2 verso stazione principale, paSendRT/V2 verso broadcast PA secondarie, paSendRTV2 verso broadcast PA principale (anche le paSendRT visto che è sia principale che secondaria?); token4: paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie (compresa PA principale che è anche secondaria?); token5: paSendRTV2 verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie, paSendRTV2 verso broadcast PA principale (anche le paSendRT visto che è sia principale che secondaria?). Tutte le receipt NON hanno il flag standin=true, 5x BIZ+ e SPRv2+ (NMU-35)
         Given update parameter invioReceiptStandin on configuration keys with value true
         And from body with datatable vertical checkPositionBody_4element initial JSON checkPosition
             | fiscalCode1   | #creditor_institution_code# |

@@ -93,7 +93,6 @@ def step_impl(context):
             print(f"calling -> {url}")
 
             header_host = utils.estrapola_header_host(row.get("url"))
-            print(f"header_host -> {header_host}")
             headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}
         
             #CHECK SE LANCIO DA DB POSTGRES O ORACLE
@@ -2523,7 +2522,7 @@ def step_impl(context, action, value):
         print(f'HTTP status expected: {value} - obtained:{getattr(context, action + RESPONSE).status_code}')
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
-        print("----->>>> Assertion Error: ", e)
+        print(f"----->>>> Assertion Error: {e} and description error is: {getattr(context, action + RESPONSE).text}")
         # Interrompiamo il test
         raise AssertionError(str(e))
 

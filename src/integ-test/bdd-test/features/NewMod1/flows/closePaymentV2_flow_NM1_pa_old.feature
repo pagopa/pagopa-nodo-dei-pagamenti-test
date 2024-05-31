@@ -19,7 +19,7 @@ Feature: flow tests for closePaymentV2 936
             <fiscalCode>#creditor_institution_code#</fiscalCode>
             <noticeNumber>002#iuv#</noticeNumber>
             </qrCode>
-            <expirationTime>60000</expirationTime>
+            <expirationTime>7000</expirationTime>
             <amount>10.00</amount>
             <paymentNote>responseFull</paymentNote>
             </nod:activatePaymentNoticeV2Request>
@@ -448,7 +448,7 @@ Feature: flow tests for closePaymentV2 936
         # STATI_RPT_SNAPSHOT
         And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query iuv on db nodo_online under macro NewMod1
-    @test 
+    @test @prova
     Scenario: FLUSSO_OLD_CP_01 (part 2)
         Given the FLUSSO_OLD_CP_01 (part 1) scenario executed successfully
         And the sendPaymentOutcome request scenario executed successfully
