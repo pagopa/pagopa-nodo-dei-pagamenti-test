@@ -198,6 +198,12 @@ def get_refresh_config_url(context):
         return context.config.userdata.get('services').get('nodo-dei-pagamenti').get('refresh_config_service')
     else:
         return ""
+    
+def get_forcing_refresh_config_url(context):
+    if context.config.userdata.get('services').get('nodo-dei-pagamenti').get('forcing_refresh_config_service') is not None:
+        return context.config.userdata.get('services').get('nodo-dei-pagamenti').get('forcing_refresh_config_service')
+    else:
+        return ""
 
 
 def get_rest_mock_ec(context):
@@ -393,6 +399,48 @@ def replace_local_variables_for_query(body, context):
     return body
 
 
+
+def replace_local_variables_with_position(body, position, context):
+    list_tag = body.split(".")
+    size_list = len(list_tag)
+
+    string_pattern = ''
+
+    for i in range(0, size_list):
+        if i == 0:
+            string_pattern = '\\$\\w+\\'
+        else:
+            string_pattern += '.\\w+'
+
+    dbRun = getattr(context, "dbRun")
+    pattern = re.compile(string_pattern)
+    match = pattern.findall(body)
+    for field in match:
+        saved_elem = getattr(context, field.replace('$', '').split('.')[0])
+        value = saved_elem
+        if len(field.replace('$', '').split('.')) > 1:
+            tag = field.replace('$', '').split('.')[size_list-1]
+            if dbRun == "Postgres":
+                if isinstance(saved_elem, str):
+                    document = parseString(saved_elem)
+                else:
+                    document = parseString(saved_elem.content)
+            elif dbRun == "Oracle":
+                if isinstance(saved_elem, str):
+                    document = parseString(saved_elem)  
+                elif isinstance(saved_elem, cx_Oracle.LOB):
+                    document = parseString(saved_elem.read())
+                else:
+                    document = parseString(saved_elem.content)
+            try:
+                value = document.getElementsByTagNameNS('*', tag)[int(position)].firstChild.data
+            except Exception as e:
+                raise Exception(f"Errore nel metodo replace_local_variables: il Tag '{tag}' non esiste nel contesto") from e
+        body = body.replace(field, value)
+    return body
+
+
+
 def replace_local_variables(body, context):
     dbRun = getattr(context, "dbRun")
     pattern = re.compile('\\$\\w+\\.\\w+')
@@ -407,7 +455,6 @@ def replace_local_variables(body, context):
                     document = parseString(saved_elem)
                 else:
                     document = parseString(saved_elem.content)
-                    print(tag)
             elif dbRun == "Oracle":
                 if isinstance(saved_elem, str):
                     document = parseString(saved_elem)  
@@ -415,7 +462,6 @@ def replace_local_variables(body, context):
                     document = parseString(saved_elem.read())
                 else:
                     document = parseString(saved_elem.content)
-                    print(tag)
             try:
                 value = document.getElementsByTagNameNS('*', tag)[0].firstChild.data
             except Exception as e:

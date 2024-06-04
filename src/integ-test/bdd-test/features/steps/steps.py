@@ -2453,18 +2453,16 @@ def step_impl(context, sender, method, service, receiver):
                 body = json.dumps(body, indent=4)
             else:
                 body = """{}"""
-        print(body)
+
         body = utils.replace_local_variables(body, context)
         body = utils.replace_context_variables(body, context)
         body = utils.replace_global_variables(body, context)
-        print(body)
+
         run_local = False
         if service in url_nodo:
             url_nodo = utils.replace_local_variables(url_nodo, context)
             url_nodo = utils.replace_context_variables(url_nodo, context)
             run_local = True
-
-            print(f"{url_nodo}")
         else:
             service = utils.replace_local_variables(service, context)
             service = utils.replace_context_variables(service, context)
@@ -2479,18 +2477,21 @@ def step_impl(context, sender, method, service, receiver):
                 url_nodo = url_nodo.split('_')[0]
 
                 print(f"URL REST: {url_nodo}")
+                print(f"Body: {json_body}")
                 if dbRun == "Postgres":
                     nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
                 elif dbRun == "Oracle":
                     nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
             else:
                 print(f"URL REST: {url_nodo}")
+                print(f"Body: {json_body}")
                 if dbRun == "Postgres":
                     nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies')) 
                 elif dbRun == "Oracle":
                     nodo_response = requests.request(method, f"{url_nodo}", headers=headers, json=json_body, verify=False)
         else:
             print(f"URL REST: {url_nodo}/{service}")
+            print(f"Body: {json_body}")
             if dbRun == "Postgres":
                 nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
             elif dbRun == "Oracle":
@@ -2498,10 +2499,10 @@ def step_impl(context, sender, method, service, receiver):
 
         setattr(context, service.split('?')[0], json_body)
         setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
+
         print(service.split('?')[0] + RESPONSE)
-        print(nodo_response.content)
-        print(f'URL: {nodo_response.url}')
-        print(f'rest response: {nodo_response.headers}')
+        print(f"rest response content: {nodo_response.content}")
+        print(f'rest response headers: {nodo_response.headers}')
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
@@ -2964,9 +2965,24 @@ def step_impl(context, job_name, seconds):
             refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
         setattr(context, job_name + RESPONSE, refresh_response)
-        print(f"wait for: {seconds} seconds")
-        time.sleep(int(seconds))
+    #    print(f"wait for: {seconds} seconds")
+        time.sleep(5)
         assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
+
+        print("Forcing Refresh...")
+        forcing_refresh_response = ''
+        if dbRun == "Postgres":
+            print(f"URL refresh: {utils.get_forcing_refresh_config_url(context)}")
+            forcing_refresh_response = requests.get(utils.get_forcing_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        elif dbRun == "Oracle":
+            print(f"URL refresh: {utils.get_forcing_refresh_config_url(context)}")
+            forcing_refresh_response = requests.get(utils.get_forcing_refresh_config_url(context), headers=headers, verify=False)
+
+        print(f"waiting forcing for: {seconds} seconds")
+        time.sleep(20)
+        assert forcing_refresh_response.status_code == 200, f"forcing refresh status code expected: {200} but obtained: {forcing_refresh_response.status_code}"
+        print("Refresh Completed!")
+
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
@@ -3075,6 +3091,7 @@ def step_impl(context):
 
     adopted_db.closeConnection(conn)
     
+    header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
     headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}
 
     refresh_response = None
@@ -4083,6 +4100,35 @@ def step_impl(context, condition, param):
 
     else:
         assert False
+
+
+
+
+@step('from {value_obtained_with_path} check value {value_expected} in position {n}')
+def step_impl(context, value_obtained_with_path, value_expected, n):
+    try:
+        value_obtained_with_path = utils.replace_local_variables_with_position(value_obtained_with_path, n, context)
+
+        value_expected = utils.replace_local_variables(value_expected, context)
+        value_expected = utils.replace_context_variables(value_expected, context)
+        value_expected = utils.replace_global_variables(value_expected, context)
+
+        assert value_obtained_with_path == value_expected, f"value obtained: {value_obtained_with_path} != value expected: {value_expected}"
+        print(f"check value expected: {value_expected} is equal to value obtained: {value_obtained_with_path}")
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
+
+
+
 
 
 @step('check value {value1} is {condition} value {value2}')
