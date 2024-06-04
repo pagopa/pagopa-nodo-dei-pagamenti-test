@@ -82,4 +82,3 @@ Feature: semantic checks for pspNotifyPaymentReq - payPal [T_01] 124
 #    And identificativoCanale with SERVIZIO_NMP
     Then verify the HTTP status code of inoltroEsito/paypal response is 200
     And check esito is OK of inoltroEsito/paypal response
-    #And activateIOPayment response and pspNotifyPayment request are consistent with paypal

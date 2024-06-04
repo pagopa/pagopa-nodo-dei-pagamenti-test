@@ -97,4 +97,4 @@ Feature: semantic checks for pspNotifyPaymentReq - CreditCard [T_02] 123
     #       And identificativoCanale with SERVIZIO_NMP
     Then verify the HTTP status code of inoltroEsito/carta response is 200
     And check esito is OK of inoltroEsito/carta response
-    #Then activateIOPayment response and pspNotifyPayment request are consistent
+  

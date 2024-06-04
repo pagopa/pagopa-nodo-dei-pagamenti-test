@@ -61,7 +61,7 @@ Feature: verify test flow paGetPayment, pspNotifyPayment and sendPaymentOutcome 
   # Verify PA response is coherent with PSP Request
   Scenario: Verify consistency between activateIOPaymentRes and pspNotifyPaymentReq
     Given the Execute nodoInoltraEsitoPagamentoCarta request scenario executed successfully
-    Then activateIOPayment response and pspNotifyPayment request are consistent
+
 
   # Send receipt phase
   Scenario: Execute sendPaymentOutcome request

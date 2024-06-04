@@ -7,35 +7,35 @@
          "soap_service": "/webservices/input",
          "rest_service": "runlocal",
          "refresh_config_service": "http://localhost:81/nodo-sit/config/refresh/ALL",
-         "subscription_key_name": ""
+         "subscription_key_name": "N"
       },
       "mock-ec": {
          "url": "http://localhost:81/mock-ec-sit/servizi/PagamentiTelematiciRPT",
          "healthcheck": "/info",
          "soap_service": "",
          "rest_service": "",
-         "subscription_key_name": ""
+         "subscription_key_name": "Y"
       },
       "mock-psp": {
          "url": "http://localhost:81/pspmock-sit/servizi/MockPSP",
          "healthcheck": "/info",
          "soap_service": "",
          "rest_service": "",
-         "subscription_key_name": ""
+         "subscription_key_name": "Y"
       },
       "secondary-mock-ec": {
          "url": "http://localhost:81/secondary-mock-ec-sit/secondary-mock-ec",
          "healthcheck": "/info",
          "soap_service": "",
          "rest_service": "",
-         "subscription_key_name": ""
+         "subscription_key_name": "Y"
       },
       "secondary-mock-psp": {
          "url": "http://localhost:81/psp-sec-mock-sit/psp-sec-mock",
          "healthcheck": "/info",
          "soap_service": "",
          "rest_service": "",
-         "subscription_key_name": ""
+         "subscription_key_name": "Y"
       },
       "apicfg-testing-support": {
         "url": "https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/p/v1",
@@ -43,7 +43,7 @@
         "soap_service": " ",
         "rest_service": " ",
         "refresh_config_service": "",
-        "subscription_key_name": "APICFG_SUBSCRIPTION_KEY"
+        "subscription_key_name": "Y"
       }
    },
    "global_configuration": {

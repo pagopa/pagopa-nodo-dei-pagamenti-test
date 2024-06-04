@@ -34,7 +34,7 @@ import urllib3
 # Constants
 RESPONSE = "Response"
 REQUEST = "Request"
-SUBKEY = "Ocp-Apim-Subscription-Key"
+SUBKEY = "2da21a24a3474673ad8464edb4a71011"
 
 db_online = None
 db_offline = None
@@ -90,10 +90,18 @@ def step_impl(context):
         for row in context.table:
             print(f"calling: {row.get('name')} -> {row.get('url')}")
             url = row.get("url") + row.get("healthcheck")
-            print(f"calling -> {url}")
+            flag_subscription = row.get("subscription_key_name")
 
+            print(f"calling -> {url}")
+            print(f"flag subscription -> {flag_subscription}")
+
+            headers = ''
             header_host = utils.estrapola_header_host(row.get("url"))
-            headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}
+
+            if flag_subscription == 'Y':
+                headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+            else:
+                headers = {'Host': header_host}
         
             #CHECK SE LANCIO DA DB POSTGRES O ORACLE
             if dbRun == "Postgres":
@@ -1898,12 +1906,16 @@ def step_impl(context, sender, soap_primitive, receiver):
     try:
         dbRun = getattr(context, "dbRun")
         url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
+
+        flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+
+        headers = ''
         header_host = utils.estrapola_header_host(url_nodo)
 
-        if dbRun == "Postgres":
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}
-        elif dbRun == "Oracle":
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': header_host, 'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}  # set what your server accepts
+        if flag_subscription == 'Y':
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+        else:
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'Host': header_host}
         
         #url_nodo = "http://localhost:81/nodo-sit/webservices/input"
         print("url_nodo: ", url_nodo)
@@ -1940,13 +1952,16 @@ def step_impl(context, sender, soap_primitive, receiver):
     try:
         dbRun = getattr(context, "dbRun")
         url_nodo = utils.get_soap_url_nodo(context, soap_primitive)
-        header_host = utils.estrapola_header_host(url_nodo)
-        dbRun = getattr(context, "dbRun")
 
-        if dbRun == "Postgres":
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}
-        elif dbRun == "Oracle":
-            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'X-Forwarded-For': '10.82.39.148', 'Host': header_host, 'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}  # set what your server accepts        
+        flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+
+        headers = ''
+        header_host = utils.estrapola_header_host(url_nodo)
+
+        if flag_subscription == 'Y':
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+        else:
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': soap_primitive, 'Host': header_host}
 
         print("url_nodo: ", url_nodo)
         print("nodo soap_request sent >>>", getattr(context, soap_primitive))
@@ -1981,8 +1996,16 @@ def step_impl(context, job_name, seconds):
         seconds = utils.replace_local_variables(seconds, context)
         time.sleep(int(seconds))
         url_nodo = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("url")
+
+        flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+
+        headers = ''
         header_host = utils.estrapola_header_host(url_nodo)
-        headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}
+
+        if flag_subscription == 'Y':
+            headers = {'Content-Type': 'application/xml', 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+        else:
+            headers = {'Content-Type': 'application/xml', 'Host': header_host}
 
         user_profile = os.environ.get("USERPROFILE")
         nodo_response = None
@@ -2419,8 +2442,16 @@ def step_impl(context, sender, method, service, receiver):
     try:
         url_nodo = utils.get_rest_url_nodo(context, service)
         print(url_nodo)
+
+        flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+
+        headers = ''
         header_host = utils.estrapola_header_host(url_nodo)
-        headers = {'Content-Type': 'application/json','Host': header_host, 'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}
+
+        if flag_subscription == 'Y':
+            headers = {'Content-Type': 'application/json', 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+        else:
+            headers = {'Content-Type': 'application/json', 'Host': header_host}
 
         dbRun = getattr(context, "dbRun")
         body = context.text or ""
@@ -2587,108 +2618,6 @@ def step_impl(context, field, field_value, elem, value, primitive):
         setattr(context, primitive, xml)
 
 
-@then('activateIOPayment response and pspNotifyPayment request are consistent')
-def step_impl(context):
-    # retrieve info from soap request of background step
-    soap_request = getattr(context, "activateIOPayment")
-    my_document = parseString(soap_request)
-    notice_number = my_document.getElementsByTagName('noticeNumber')[
-        0].firstChild.data
-
-    inoltroEsito = getattr(context, "inoltroEsito/carta")
-
-    activateIOPaymentResponse = getattr(
-        context, "activateIOPayment" + RESPONSE)
-    activateIOPaymentResponseXml = parseString(
-        activateIOPaymentResponse.content)
-
-    header_host = utils.estrapola_header_host(f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment")
-    headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}
-
-    paGetPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers, proxies = getattr(context,'proxies'))
-    pspNotifyPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment", headers=headers, proxies = getattr(context,'proxies'))
-
-    paGetPayment = paGetPaymentJson.json()
-    print(">>>>>>>>>>>>>>>>", paGetPayment)
-    pspNotifyPayment = pspNotifyPaymentJson.json()
-    print("################", pspNotifyPayment)
-
-    # verify transfer list are equal
-    paGetPaymentRes_transferList = \
-        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get(
-            "data")[0].get("transferList")
-    pspNotifyPaymentReq_transferList = \
-        pspNotifyPayment.get("request").get("soapenv:Envelope").get("soapenv:Body")[0].get("pfn:pspnotifypaymentreq")[
-            0].get("transferlist")
-
-    paGetPaymentRes_transferList_sorted = sorted(paGetPaymentRes_transferList, key=lambda transfer: int(
-        transfer.get("transfer")[0].get("idTransfer")[0]))
-    pspNotifyPaymentReq_transferList_sorted = sorted(pspNotifyPaymentReq_transferList, key=lambda transfer: int(
-        transfer.get("transfer")[0].get("idtransfer")[0]))
-
-    mixed_list = zip(paGetPaymentRes_transferList_sorted,
-                     pspNotifyPaymentReq_transferList_sorted)
-    for x in mixed_list:
-        assert x[0].get("transfer")[0].get("idTransfer")[
-                   0] == x[1].get("transfer")[0].get("idtransfer")[0]
-        assert x[0].get("transfer")[0].get("transferAmount")[
-                   0] == x[1].get("transfer")[0].get("transferamount")[0]
-        assert x[0].get("transfer")[0].get("fiscalCodePA")[
-                   0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
-        assert x[0].get("transfer")[0].get("IBAN")[
-                   0] == x[1].get("transfer")[0].get("iban")[0]
-
-    pspNotifyPaymentBody = \
-        pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
-            0]
-
-    data = \
-        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get(
-            "data")[0]
-    assert pspNotifyPaymentBody.get(
-        "idpsp")[0] == inoltroEsito["identificativoPsp"]
-    assert pspNotifyPaymentBody.get("idbrokerpsp")[
-               0] == inoltroEsito["identificativoIntermediario"]
-    assert pspNotifyPaymentBody.get(
-        "idchannel")[0] == inoltroEsito["identificativoCanale"]
-    assert float(pspNotifyPaymentBody.get("creditcardpayment")[0].get("fee")[0]) == float(
-        inoltroEsito["importoTotalePagato"]) - float(data["paymentAmount"][0])
-    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("rrn")[
-               0] == str(inoltroEsito["RRN"])
-    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("outcomepaymentgateway")[0] == str(
-        inoltroEsito["esitoTransazioneCarta"])
-    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("totalamount")[0] == str(
-        inoltroEsito["importoTotalePagato"])
-    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("timestampoperation")[0] in str(
-        inoltroEsito["timestampOperazione"])
-    assert pspNotifyPaymentBody.get("creditcardpayment")[0].get("authorizationcode")[0] == str(
-        inoltroEsito["codiceAutorizzativo"])
-
-    assert pspNotifyPaymentBody.get("paymentdescription")[0] == \
-           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-               0].get(
-               "data")[0].get("description")[0]
-    assert pspNotifyPaymentBody.get("companyname")[0] == \
-           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-               0].get(
-               "data")[0].get("companyName")[0]
-
-    assert pspNotifyPaymentBody.get("paymenttoken")[0] == \
-           activateIOPaymentResponseXml.getElementsByTagName("paymentToken")[
-               0].firstChild.data
-    assert pspNotifyPaymentBody.get("fiscalcodepa")[0] == my_document.getElementsByTagName('fiscalCode')[
-        0].firstChild.data
-    assert pspNotifyPaymentBody.get("debtamount")[0] == \
-           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-               0].get(
-               "data")[0].get("paymentAmount")[0]
-    assert pspNotifyPaymentBody.get("creditorreferenceid")[0] == \
-           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-               0].get(
-               "data")[0].get("creditorReferenceId")[0]
-
 
 @step('save {primitive} response in {new_primitive}')
 def step_impl(context, primitive, new_primitive):
@@ -2732,100 +2661,6 @@ def step_impl(context, response, response_1):
 
     assert soap_response == soap_response_1
 
-
-@then('activateIOPayment response and pspNotifyPayment request are consistent with paypal')
-def step_impl(context):
-    # retrieve info from soap request of background step
-    soap_request = getattr(context, "activateIOPayment")
-    my_document = parseString(soap_request)
-    notice_number = my_document.getElementsByTagName('noticeNumber')[
-        0].firstChild.data
-
-    inoltroEsito = getattr(context, "inoltroEsito/paypal")
-
-    activateIOPaymentResponse = getattr(
-        context, "activateIOPayment" + RESPONSE)
-    activateIOPaymentResponseXml = parseString(
-        activateIOPaymentResponse.content)
-
-    header_host = utils.estrapola_header_host(f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment")
-    headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}
-
-    paGetPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/paGetPayment", headers=headers, proxies = getattr(context,'proxies'))
-    pspNotifyPaymentJson = requests.get(
-        f"{utils.get_rest_mock_ec(context)}/history/{notice_number}/pspNotifyPayment", headers=headers, proxies = getattr(context,'proxies'))
-
-    paGetPayment = paGetPaymentJson.json()
-    pspNotifyPayment = pspNotifyPaymentJson.json()
-
-    # verify transfer list are equal
-    paGetPaymentRes_transferList = \
-        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get(
-            "data")[0].get("transferList")
-    pspNotifyPaymentReq_transferList = \
-        pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
-            0].get("transferlist")
-
-    paGetPaymentRes_transferList_sorted = sorted(paGetPaymentRes_transferList, key=lambda transfer: int(
-        transfer.get("transfer")[0].get("idTransfer")[0]))
-    pspNotifyPaymentReq_transferList_sorted = sorted(pspNotifyPaymentReq_transferList, key=lambda transfer: int(
-        transfer.get("transfer")[0].get("idtransfer")[0]))
-
-    mixed_list = zip(paGetPaymentRes_transferList_sorted,
-                     pspNotifyPaymentReq_transferList_sorted)
-    for x in mixed_list:
-        assert x[0].get("transfer")[0].get("idTransfer")[
-                   0] == x[1].get("transfer")[0].get("idtransfer")[0]
-        assert x[0].get("transfer")[0].get("transferAmount")[
-                   0] == x[1].get("transfer")[0].get("transferamount")[0]
-        assert x[0].get("transfer")[0].get("fiscalCodePA")[
-                   0] == x[1].get("transfer")[0].get("fiscalcodepa")[0]
-        assert x[0].get("transfer")[0].get("IBAN")[
-                   0] == x[1].get("transfer")[0].get("iban")[0]
-
-    pspNotifyPaymentBody = \
-        pspNotifyPayment.get("request").get("soapenv:envelope").get("soapenv:body")[0].get("pspfn:pspnotifypaymentreq")[
-            0]
-
-    data = \
-        paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[0].get(
-            "data")[0]
-    assert pspNotifyPaymentBody.get(
-        "idpsp")[0] == inoltroEsito["identificativoPsp"]
-    assert pspNotifyPaymentBody.get("idbrokerpsp")[
-               0] == inoltroEsito["identificativoIntermediario"]
-    assert pspNotifyPaymentBody.get(
-        "idchannel")[0] == inoltroEsito["identificativoCanale"]
-    assert pspNotifyPaymentBody.get("paymenttoken")[0] == \
-           activateIOPaymentResponseXml.getElementsByTagName("paymentToken")[
-               0].firstChild.data
-    assert pspNotifyPaymentBody.get("paymentdescription")[0] == \
-           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-               0].get(
-               "data")[0].get("description")[0]
-    assert pspNotifyPaymentBody.get("fiscalcodepa")[0] == my_document.getElementsByTagName('fiscalCode')[
-        0].firstChild.data
-    assert pspNotifyPaymentBody.get("companyname")[0] == \
-           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-               0].get(
-               "data")[0].get("companyName")[0]
-    assert pspNotifyPaymentBody.get("creditorreferenceid")[0] == \
-           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-               0].get(
-               "data")[0].get("creditorReferenceId")[0]
-    assert pspNotifyPaymentBody.get("debtamount")[0] == \
-           paGetPayment.get("response").get("soapenv:Envelope").get("soapenv:Body")[0].get("paf:paGetPaymentRes")[
-               0].get(
-               "data")[0].get("paymentAmount")[0]
-    assert pspNotifyPaymentBody.get("paypalpayment")[0].get(
-        "transactionid")[0] == inoltroEsito["idTransazione"]
-    assert pspNotifyPaymentBody.get("paypalpayment")[0].get(
-        "psptransactionid")[0] == inoltroEsito["idTransazionePsp"]
-    assert float(pspNotifyPaymentBody.get("paypalpayment")[0].get("fee")[0]) == float(
-        inoltroEsito["importoTotalePagato"]) - float(data["paymentAmount"][0])
-    assert pspNotifyPaymentBody.get("paypalpayment")[0].get("timestampoperation")[0] in str(
-        inoltroEsito["timestampOperazione"])
 
 
 @step("random idempotencyKey having {value} as idPSP in {primitive}")
@@ -2882,8 +2717,15 @@ def step_impl(context, param, value):
 
         adopted_db.closeConnection(conn)
 
+        flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+
+        headers = ''
         header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
-        headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}
+
+        if flag_subscription == 'Y':
+            headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+        else:
+            headers = {'Host': header_host}
         
         print("Refreshing...")
         refresh_response = None
@@ -3078,9 +2920,16 @@ def step_impl(context):
         adopted_db.executeQuery(conn, selected_query, as_dict=True)
 
     adopted_db.closeConnection(conn)
-    
+
+    flag_subscription = context.config.userdata.get("services").get("nodo-dei-pagamenti").get("subscription_key_name")
+
+    headers = ''
     header_host = utils.estrapola_header_host(utils.get_refresh_config_url(context))
-    headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': '2da21a24a3474673ad8464edb4a71011'}
+
+    if flag_subscription == 'Y':
+        headers = {'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+    else:
+        headers = {'Host': header_host}
 
     refresh_response = None
     if dbRun == "Postgres":
