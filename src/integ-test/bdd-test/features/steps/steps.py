@@ -2979,7 +2979,7 @@ def step_impl(context, job_name, seconds):
             forcing_refresh_response = requests.get(utils.get_forcing_refresh_config_url(context), headers=headers, verify=False)
 
         print(f"waiting forcing for: {seconds} seconds")
-        time.sleep(20)
+        time.sleep(30)
         assert forcing_refresh_response.status_code == 200, f"forcing refresh status code expected: {200} but obtained: {forcing_refresh_response.status_code}"
         print("Refresh Completed!")
 
@@ -4113,8 +4113,15 @@ def step_impl(context, value_obtained_with_path, value_expected, n):
         value_expected = utils.replace_context_variables(value_expected, context)
         value_expected = utils.replace_global_variables(value_expected, context)
 
-        assert value_obtained_with_path == value_expected, f"value obtained: {value_obtained_with_path} != value expected: {value_expected}"
-        print(f"check value expected: {value_expected} is equal to value obtained: {value_obtained_with_path}")
+        if value_expected == 'None': 
+            assert value_obtained_with_path == None, f"assert result query with None for Failed!"
+            print(f"Check value expected: {value_expected} is None")
+        elif value_expected == 'NotNone':    
+            assert value_obtained_with_path != None, f"assert result query with Not None Failed!"
+            print(f"Check value expected: {value_expected} is NotNone")
+        else:
+            assert value_obtained_with_path == value_expected, f"value obtained: {value_obtained_with_path} != value expected: {value_expected}"
+            print(f"check value expected: {value_expected} is equal to value obtained: {value_obtained_with_path}")
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert

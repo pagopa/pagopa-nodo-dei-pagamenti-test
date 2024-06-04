@@ -598,12 +598,12 @@ Feature: NMU flows con paOLD pagamento OK
             | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
         # PM_METADATA
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column         | value                                               |
-            | TRANSACTION_ID | $transaction_id,$transaction_id,$transaction_id     |
-            | KEY            | Token,Tipo versamento,outcomePaymentGateway         |
-            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00 |
-            | INSERTED_BY    | closePayment-v2,closePayment-v2,closePayment-v2     |
-            | UPDATED_BY     | closePayment-v2,closePayment-v2,closePayment-v2     |
+            | column         | value                                                                                                                                           |
+            | TRANSACTION_ID | $transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id |
+            | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn                             |
+            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,11223344                                                 |
+            | INSERTED_BY    | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 |
+            | UPDATED_BY     | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
             | TRANSACTION_ID | $transaction_id |
@@ -632,6 +632,23 @@ Feature: NMU flows con paOLD pagamento OK
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
             | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
+        # RE
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | pspNotifyPayment                              |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPayment
+        And from $pspNotifyPayment.creditCardPayment.rrn check value 11223344 in position 0
+        And from $pspNotifyPayment.creditCardPayment.outcomePaymentGateway check value 00 in position 0
+        And from $pspNotifyPayment.creditCardPayment.totalAmount check value 12 in position 0
+        And from $pspNotifyPayment.creditCardPayment.fee check value 2 in position 0
+        And from $pspNotifyPayment.creditCardPayment.timestampOperation check value 2021-07-09T17:06:03 in position 0
+        And from $pspNotifyPayment.creditCardPayment.authorizationCode check value 123456 in position 0
+        And from $pspNotifyPayment.creditCardPayment.paymentGateway check value 00 in position 0
 
 
 
@@ -900,12 +917,12 @@ Feature: NMU flows con paOLD pagamento OK
             | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
         # PM_METADATA
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column         | value                                               |
-            | TRANSACTION_ID | $transaction_id,$transaction_id,$transaction_id     |
-            | KEY            | Token,Tipo versamento,outcomePaymentGateway         |
-            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00 |
-            | INSERTED_BY    | closePayment-v2,closePayment-v2,closePayment-v2     |
-            | UPDATED_BY     | closePayment-v2,closePayment-v2,closePayment-v2     |
+            | column         | value                                                                                                           |
+            | TRANSACTION_ID | $transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id |
+            | KEY            | Token,Tipo versamento,pspTransactionId,timestampOperation,totalAmount,transactionId,fee                         |
+            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,PPAL,NotNone,2021-07-09T17:06:03,12,NotNone,2                     |
+            | INSERTED_BY    | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 |
+            | UPDATED_BY     | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
             | TRANSACTION_ID | $transaction_id |
@@ -934,6 +951,22 @@ Feature: NMU flows con paOLD pagamento OK
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
             | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
+        # RE
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | pspNotifyPayment                              |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPayment
+        And from $pspNotifyPayment.paypalPayment.transactionId check value NotNone in position 0
+        And from $pspNotifyPayment.paypalPayment.pspTransactionId check value NotNone in position 0
+        And from $pspNotifyPayment.paypalPayment.totalAmount check value 12 in position 0
+        And from $pspNotifyPayment.paypalPayment.fee check value 2 in position 0
+        And from $pspNotifyPayment.paypalPayment.timestampOperation check value 2021-07-09T17:06:03 in position 0
+
 
 
 
@@ -1204,12 +1237,12 @@ Feature: NMU flows con paOLD pagamento OK
             | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
         # PM_METADATA
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column         | value                                               |
-            | TRANSACTION_ID | $transaction_id,$transaction_id,$transaction_id     |
-            | KEY            | Token,Tipo versamento,outcomePaymentGateway         |
-            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00 |
-            | INSERTED_BY    | closePayment-v2,closePayment-v2,closePayment-v2     |
-            | UPDATED_BY     | closePayment-v2,closePayment-v2,closePayment-v2     |
+            | column         | value                                                                                                                                           |
+            | TRANSACTION_ID | $transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id |
+            | KEY            | Token,Tipo versamento,outcomePaymentGateway,authorizationCode,timestampOperation,totalAmount,paymentGateway,transactionId,fee                   |
+            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,BPAY,00,123456,2021-07-09T17:06:03,12,00,NotNone,2                                                |
+            | INSERTED_BY    | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 |
+            | UPDATED_BY     | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
             | TRANSACTION_ID | $transaction_id |
@@ -1238,7 +1271,23 @@ Feature: NMU flows con paOLD pagamento OK
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
             | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
-
+        # RE
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | pspNotifyPayment                              |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPayment
+        And from $pspNotifyPayment.ctBancomatpayPayment.transactionId check value NotNone in position 0
+        And from $pspNotifyPayment.ctBancomatpayPayment.outcomePaymentGateway check value 00 in position 0
+        And from $pspNotifyPayment.ctBancomatpayPayment.totalAmount check value 12 in position 0
+        And from $pspNotifyPayment.ctBancomatpayPayment.fee check value 2 in position 0
+        And from $pspNotifyPayment.ctBancomatpayPayment.timestampOperation check value 2021-07-09T17:06:03 in position 0
+        And from $pspNotifyPayment.ctBancomatpayPayment.authorizationCode check value 123456 in position 0
+        And from $pspNotifyPayment.ctBancomatpayPayment.paymentGateway check value 00 in position 0
 
 
 
