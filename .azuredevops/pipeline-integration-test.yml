@@ -123,10 +123,10 @@ stages:
               replace $file ".services.\"apicfg-testing-support\".rest_service"  ""
               replace $file ".services.\"apicfg-testing-support\".subscription_key_name"  "APICFG_SUBSCRIPTION_KEY"
 
-              replace $file ".services.\"mock-pm\".url"           "https://api.dev.platform.pagopa.it/mock-pm-sit/api/v1"
-              replace $file ".services.\"mock-pm\".healthcheck"   "/info"
-              replace $file ".services.\"mock-pm\".soap_service"  ""
-              replace $file ".services.\"mock-pm\".rest_service"  ""
+              # replace $file ".services.\"mock-pm\".url"           "https://api.dev.platform.pagopa.it/mock-pm-sit/api/v1"
+              # replace $file ".services.\"mock-pm\".healthcheck"   "/info"
+              # replace $file ".services.\"mock-pm\".soap_service"  ""
+              # replace $file ".services.\"mock-pm\".rest_service"  ""
 
 
               replace $file ".db_configuration.nodo_cfg.host"     $(db-cfg-host-${{ parameters.env }})

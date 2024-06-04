@@ -2965,24 +2965,12 @@ def step_impl(context, job_name, seconds):
             refresh_response = requests.get(utils.get_refresh_config_url(context), headers=headers, verify=False)
 
         setattr(context, job_name + RESPONSE, refresh_response)
-    #    print(f"wait for: {seconds} seconds")
-        time.sleep(5)
+        print(f"wait for: {seconds} seconds")
+        time.sleep(int(seconds))
+
         assert refresh_response.status_code == 200, f"refresh status code expected: {200} but obtained: {refresh_response.status_code}"
 
-        print("Forcing Refresh...")
-        forcing_refresh_response = ''
-        if dbRun == "Postgres":
-            print(f"URL refresh: {utils.get_forcing_refresh_config_url(context)}")
-            forcing_refresh_response = requests.get(utils.get_forcing_refresh_config_url(context), headers=headers, verify=False, proxies = getattr(context,'proxies'))
-        elif dbRun == "Oracle":
-            print(f"URL refresh: {utils.get_forcing_refresh_config_url(context)}")
-            forcing_refresh_response = requests.get(utils.get_forcing_refresh_config_url(context), headers=headers, verify=False)
-
-        print(f"waiting forcing for: {seconds} seconds")
-        time.sleep(30)
-        assert forcing_refresh_response.status_code == 200, f"forcing refresh status code expected: {200} but obtained: {forcing_refresh_response.status_code}"
         print("Refresh Completed!")
-
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert

@@ -6,8 +6,7 @@
          "healthcheck": "/monitor/health",
          "soap_service": "/webservices/input",
          "rest_service": "runlocal",
-         "refresh_config_service": "https://api.dev.platform.pagopa.it:82/api-config-cache/p/v1/cache/refresh",
-         "forcing_refresh_config_service": "https://api.dev.platform.pagopa.it:82/api-config-cache/o/v1/stakeholders/node/cache/schemas/v1?refresh=true",
+         "refresh_config_service": "http://localhost:81/nodo-sit/config/refresh/ALL",
          "subscription_key_name": ""
       },
       "mock-ec": {
