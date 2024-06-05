@@ -2101,7 +2101,7 @@ Feature: NMU flows con paOLD pagamento OK
             | BROKER_PSP_ID              | #id_broker_psp#                               |
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | 2.00                                             |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | NotNone                                       |
             | PAYMENT_METHOD             | None                                          |
             | PAYMENT_CHANNEL            | NA                                            |
@@ -2422,7 +2422,7 @@ Feature: NMU flows con paOLD pagamento OK
             | BROKER_PSP_ID              | #id_broker_psp#                               |
             | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | 2.00                                             |
+            | FEE                        | 2.00                                          |
             | OUTCOME                    | NotNone                                       |
             | PAYMENT_METHOD             | None                                          |
             | PAYMENT_CHANNEL            | NA                                            |
@@ -2922,6 +2922,9 @@ Feature: NMU flows con paOLD pagamento OK
         And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 123456 in position 6
         And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value rrn in position 7
         And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 11223344 in position 7
+
+
+
 
 
     @after
