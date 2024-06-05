@@ -3251,7 +3251,16 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
                     if utils.isFloat(single_dict_fields_values_expected[field]):
                         assert float(value) == float(single_dict_fields_values_expected[field]), f"check for field: {field} ---> expected element: {float(single_dict_fields_values_expected[field])}, obtained: {float(value)}"
                     elif utils.isNumeric(single_dict_fields_values_expected[field]) and utils.isDecimal(single_dict_fields_values_expected[field]):
-                        assert int(value) == int(single_dict_fields_values_expected[field]), f"check for field: {field} ---> expected element: {int(single_dict_fields_values_expected[field])}, obtained: {int(value)}"
+                        flag_int_cast_KO = False
+                        try:
+                            int(value)
+                        except Exception as e:
+                            flag_int_cast_KO = True
+                            
+                        if flag_int_cast_KO:
+                            assert value == single_dict_fields_values_expected[field], f"check for field: {field} ---> expected element: {single_dict_fields_values_expected[field]}, obtained: {value}"
+                        else:    
+                            assert int(value) == int(single_dict_fields_values_expected[field]), f"check for field: {field} ---> expected element: {int(single_dict_fields_values_expected[field])}, obtained: {int(value)}"
                     else:
                         assert str(value) == str(single_dict_fields_values_expected[field]), f"check for field: {field} ---> expected element: {str(single_dict_fields_values_expected[field])}, obtained: {str(value)}"
                     print(f"check for field: {field} ---> expected element: {single_dict_fields_values_expected[field]}, obtained: {value} ---> OK !!!")
