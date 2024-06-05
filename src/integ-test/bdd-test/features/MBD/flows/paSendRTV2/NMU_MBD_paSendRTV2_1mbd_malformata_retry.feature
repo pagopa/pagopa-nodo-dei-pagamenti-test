@@ -328,8 +328,8 @@ Feature: flow tests for paSendRTV2 - Marca da bollo 283
             </soapenv:Envelope>
             """
         And EC replies to nodo-dei-pagamenti with the paSendRTV2
-        When job paSendRt triggered after 1 seconds
-        And wait 15 seconds for expiration
+        When job paSendRt triggered after 3 seconds
+        And wait 10 seconds for expiration
         Then verify the HTTP status code of paSendRt response is 200
 
         # DB check 1
