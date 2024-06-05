@@ -508,10 +508,16 @@ def query_json(context, name_query, name_macro):
         selected_query = replace_global_variables(selected_query, context)
     return selected_query
 
-
 def isFloat(string: str) -> bool:
     value = string.split('.')
     return len(value) == 2 and value[0].isdigit() and value[1].isdigit()
+
+def isNumeric(string: str) -> bool:
+    return string.isnumeric()
+
+def isDecimal(string: str) -> bool:
+    return string.isdecimal()
+
 
 
 def isDate(string: str):

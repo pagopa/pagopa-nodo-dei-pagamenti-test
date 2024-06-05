@@ -7,7 +7,7 @@
          "soap_service": "/webservices/input",
          "rest_service": "runlocal",
          "refresh_config_service": "https://nodo-p-sit.tst-npc.sia.eu/config/refresh/ALL",
-         "subscription_key_name": ""
+         "subscription_key_name": "N"
       },
       "mock-ec": {
          "url": "https://mock-ec-primary-sit.tst-npc.sia.eu/servizi/PagamentiTelematiciRPT",
@@ -15,7 +15,7 @@
          "soap_service": "",
          "rest_service": "",
          "refresh_config_service": "",
-         "subscription_key_name": ""
+         "subscription_key_name": "Y"
       },
       "mock-psp": {
          "url": "https://mock-psp-primary-sit.tst-npc.sia.eu/servizi/MockPSP",
@@ -23,7 +23,7 @@
          "soap_service": "",
          "rest_service": "",
          "refresh_config_service": "",
-         "subscription_key_name": ""
+         "subscription_key_name": "Y"
       },
       "secondary-mock-ec": {
          "url": "https://mock-ec-secondary-sit.tst-npc.sia.eu/secondary-mock-ec",
@@ -31,7 +31,7 @@
          "soap_service": "",
          "rest_service": "",
          "refresh_config_service": "",
-         "subscription_key_name": ""
+         "subscription_key_name": "Y"
       },
       "secondary-mock-psp": {
          "url": "https://mock-psp-secondary-sit.tst-npc.sia.eu/psp-sec-mock",
@@ -39,7 +39,7 @@
          "soap_service": "",
          "rest_service": "",
          "refresh_config_service": "",
-         "subscription_key_name": ""
+         "subscription_key_name": "Y"
       },
       "apicfg-testing-support": {
          "url": "https://api.dev.platform.pagopa.it:82/apiconfig/testing-support/pnexi/v1",
@@ -47,7 +47,7 @@
          "soap_service": " ",
          "rest_service": " ",
          "refresh_config_service": "",
-         "subscription_key_name": "APICFG_SUBSCRIPTION_KEY"
+         "subscription_key_name": "Y"
       }
    },
    "global_configuration": {
