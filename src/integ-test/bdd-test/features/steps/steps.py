@@ -3034,20 +3034,24 @@ def step_impl(context, query_name, param, position, row_number, key):
     
 
 
-@step("through the query {query_name} retrieve xml {xml} at position {position:d} and save it under the key {key}")
-def step_impl(context, query_name, xml, position, key):
+
+@step("through the query {query_name} retrieve {type_body} {body} at position {position:d} and save it under the key {key}")
+def step_impl(context, query_name, type_body, body, position, key):
     try:
         dbRun = getattr(context, "dbRun")
         result_query = getattr(context, query_name)
         print(f'{query_name}: {result_query}')
 
         selected_element = ''
-        if dbRun == "Postgres":
-            selected_element = result_query[0][position].tobytes().decode('utf-8')
-        elif dbRun == "Oracle":
-            selected_element = result_query[0][position].read().decode('utf-8')
+        if type_body == 'xml':
+            if dbRun == "Postgres":
+                selected_element = result_query[0][position].tobytes().decode('utf-8')
+            elif dbRun == "Oracle":
+                selected_element = result_query[0][position].read().decode('utf-8')
+        elif type_body == 'json':
+            selected_element = result_query
 
-        print(f'{xml}: {selected_element}')
+        print(f'{body}: {selected_element}')
         setattr(context, key, selected_element)
         
     except AssertionError as e:
@@ -3256,7 +3260,7 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
                             int(value)
                         except Exception as e:
                             flag_int_cast_KO = True
-                            
+
                         if flag_int_cast_KO:
                             assert value == single_dict_fields_values_expected[field], f"check for field: {field} ---> expected element: {single_dict_fields_values_expected[field]}, obtained: {value}"
                         else:    
@@ -3952,10 +3956,13 @@ def step_impl(context, condition, param):
 
 
 
-@step('from {value_obtained_with_path} check value {value_expected} in position {n}')
-def step_impl(context, value_obtained_with_path, value_expected, n):
+@step('from {value_obtained_with_path} {type_body} check value {value_expected} in position {n}')
+def step_impl(context, value_obtained_with_path, type_body, value_expected, n):
     try:
-        value_obtained_with_path = utils.replace_local_variables_with_position(value_obtained_with_path, n, context)
+        index_dot = value_obtained_with_path.find('.')
+        tipo_evento = value_obtained_with_path[1:index_dot]
+
+        value_obtained_with_path = utils.replace_local_variables_with_position(value_obtained_with_path, n, context, type_body)
 
         value_expected = utils.replace_local_variables(value_expected, context)
         value_expected = utils.replace_context_variables(value_expected, context)
@@ -3963,13 +3970,13 @@ def step_impl(context, value_obtained_with_path, value_expected, n):
 
         if value_expected == 'None': 
             assert value_obtained_with_path == None, f"assert result query with None for Failed!"
-            print(f"Check value expected: {value_expected} is None")
+            print(f"For tipo evento: {tipo_evento} -> check value expected: {value_expected} is None")
         elif value_expected == 'NotNone':    
             assert value_obtained_with_path != None, f"assert result query with Not None Failed!"
-            print(f"Check value expected: {value_expected} is NotNone")
+            print(f"For tipo evento: {tipo_evento} -> Check value expected: {value_expected} is NotNone")
         else:
             assert value_obtained_with_path == value_expected, f"value obtained: {value_obtained_with_path} != value expected: {value_expected}"
-            print(f"check value expected: {value_expected} is equal to value obtained: {value_obtained_with_path}")
+            print(f"For tipo evento: {tipo_evento} -> check value expected: {value_expected} is equal to value obtained: {value_obtained_with_path}")
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
