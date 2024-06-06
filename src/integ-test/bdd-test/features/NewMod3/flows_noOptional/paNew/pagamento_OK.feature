@@ -1,4 +1,4 @@
-Feature: NM3 flows con pagamento OK
+Feature: NM3 flows PA New con pagamento OK
 
     Background:
         Given systems up
@@ -1946,18 +1946,18 @@ Feature: NM3 flows con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_RECEIPT_XML
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                    | value                                       |
-            | ID                        | NotNone                                     |
-            | NOTICE_ID                 | $activatePaymentNotice.noticeNumber         |
-            | PA_FISCAL_CODE            | $activatePaymentNotice.fiscalCode           |
-            | CREDITOR_REFERENCE_ID     | $paGetPayment.creditorReferenceId           |
-            | PAYMENT_TOKEN             | $activatePaymentNoticeResponse.paymentToken |
-            | XML                       | NotNone                                     |
-            | FK_POSITION_RECEIPT       | NotNone                                     |
-            | INSERTED_TIMESTAMP        | NotNone                                     |
-            | UPDATED_TIMESTAMP         | NotNone                                     |
-            | INSERTED_BY               | sendPaymentOutcome                          |
-            | UPDATED_BY                | sendPaymentOutcome                          |
+            | column                | value                                       |
+            | ID                    | NotNone                                     |
+            | NOTICE_ID             | $activatePaymentNotice.noticeNumber         |
+            | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode           |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId           |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
+            | XML                   | NotNone                                     |
+            | FK_POSITION_RECEIPT   | NotNone                                     |
+            | INSERTED_TIMESTAMP    | NotNone                                     |
+            | UPDATED_TIMESTAMP     | NotNone                                     |
+            | INSERTED_BY           | sendPaymentOutcome                          |
+            | UPDATED_BY            | sendPaymentOutcome                          |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RECEIPT_XML retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
@@ -1968,19 +1968,19 @@ Feature: NM3 flows con pagamento OK
             | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
         # DB Checks for POSITION_RECEIPT_RECIPIENT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                    | value                                       |
-            | ID                        | NotNone                                     |
-            | NOTICE_ID                 | $activatePaymentNotice.noticeNumber         |
-            | PA_FISCAL_CODE            | $activatePaymentNotice.fiscalCode           |
-            | CREDITOR_REFERENCE_ID     | $paGetPayment.creditorReferenceId           |
-            | PAYMENT_TOKEN             | $activatePaymentNoticeResponse.paymentToken |
-            | STATUS                    | NOTICE_PENDING                              |
-            | INSERTED_TIMESTAMP        | NotNone                                     |
-            | UPDATED_TIMESTAMP         | NotNone                                     |
-            | FK_POSITION_RECEIPT       | NotNone                                     |
-            | FK_RECEIPT_XML            | NotNone                                     |
-            | INSERTED_BY               | sendPaymentOutcome                          |
-            | UPDATED_BY                | sendPaymentOutcome                          |
+            | column                | value                                       |
+            | ID                    | NotNone                                     |
+            | NOTICE_ID             | $activatePaymentNotice.noticeNumber         |
+            | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode           |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId           |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
+            | STATUS                | NOTICE_PENDING                              |
+            | INSERTED_TIMESTAMP    | NotNone                                     |
+            | UPDATED_TIMESTAMP     | NotNone                                     |
+            | FK_POSITION_RECEIPT   | NotNone                                     |
+            | FK_RECEIPT_XML        | NotNone                                     |
+            | INSERTED_BY           | sendPaymentOutcome                          |
+            | UPDATED_BY            | sendPaymentOutcome                          |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_RECEIPT_RECIPIENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                        |
             | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
