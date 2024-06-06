@@ -400,7 +400,7 @@ def replace_local_variables_for_query(body, context):
 
 
 
-def replace_local_variables_with_position(body, position, context):
+def replace_local_variables_with_position(body, position, context, type_body):
     list_tag = body.split(".")
     size_list = len(list_tag)
 
@@ -422,16 +422,49 @@ def replace_local_variables_with_position(body, position, context):
             tag = field.replace('$', '').split('.')[size_list-1]
             if dbRun == "Postgres":
                 if isinstance(saved_elem, str):
-                    document = parseString(saved_elem)
+                    modify_xmlns = False
+                    try:
+                        document = parseString(saved_elem)
+                    except Exception as e:
+                        modify_xmlns = True
+
+                    if modify_xmlns:
+                        saved_elem = saved_elem.replace('psp','pfn')
+                        document = parseString(saved_elem)
                 else:
-                    document = parseString(saved_elem.content)
+                    if type_body == 'xml':
+                        document = parseString(saved_elem.content)
+                    elif type_body == 'json':
+                        jsonDict = json.loads(saved_elem[0][int(position)].tobytes().decode('utf-8'))
+                        payload = json2xml(jsonDict)
+                        payload = '<root>' + payload + '</root>'
+                        payload = payload.replace('\n','').replace('\t','')
+                        document = parseString(payload)
             elif dbRun == "Oracle":
                 if isinstance(saved_elem, str):
-                    document = parseString(saved_elem)  
+                    modify_xmlns = False
+                    try:
+                        document = parseString(saved_elem)
+                    except Exception as e:
+                        modify_xmlns = True
+
+                    if modify_xmlns:
+                        saved_elem = saved_elem.replace('psp','pfn')
+                        document = parseString(saved_elem)
                 elif isinstance(saved_elem, cx_Oracle.LOB):
                     document = parseString(saved_elem.read())
                 else:
-                    document = parseString(saved_elem.content)
+                    if type_body == 'xml':
+                        document = parseString(saved_elem.content)
+                    elif type_body == 'json':
+                        selected_element = saved_elem[0][int(position)]
+                        selected_element = selected_element.read()
+                        selected_element = selected_element.decode("utf-8")
+                        jsonDict = json.loads(selected_element)
+                        payload = json2xml(jsonDict)
+                        payload = '<root>' + payload + '</root>'
+                        payload = payload.replace('\n','').replace('\t','')
+                        document = parseString(payload)
             try:
                 value = document.getElementsByTagNameNS('*', tag)[int(position)].firstChild.data
             except Exception as e:
