@@ -432,8 +432,8 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys         | where_values                                  |
             | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
             | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
-            | SOTTO_TIPO_EVENTO  | RESP                                           |
-            | ESITO              | INVIATA                                      |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | INVIATA                                       |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Resp
@@ -484,7 +484,7 @@ Feature: NMU flows con paNEW pagamento OK
             | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
             | TIPO_EVENTO        | sendPaymentResult-v2                          |
             | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                      |
+            | ESITO              | INVIATA                                       |
             | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
             | ORDER BY           | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key sendPaymentResultv2Req

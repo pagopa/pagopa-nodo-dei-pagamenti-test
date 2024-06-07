@@ -3253,7 +3253,7 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
                     single_dict_fields_values_expected[field] = utils.replace_context_variables(single_dict_fields_values_expected[field], context)
 
                     if utils.isFloat(single_dict_fields_values_expected[field]):
-                        assert float(value) == float(single_dict_fields_values_expected[field]), f"check for field: {field} ---> expected element: {float(single_dict_fields_values_expected[field])}, obtained: {float(value)}"
+                        assert float(value) == float(single_dict_fields_values_expected[field]), f"Check for field: {field} ---> expected element: {float(single_dict_fields_values_expected[field])}, obtained: {float(value)}"
                     elif utils.isNumeric(single_dict_fields_values_expected[field]) and utils.isDecimal(single_dict_fields_values_expected[field]):
                         flag_int_cast_KO = False
                         try:
@@ -3262,12 +3262,12 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
                             flag_int_cast_KO = True
 
                         if flag_int_cast_KO:
-                            assert value == single_dict_fields_values_expected[field], f"check for field: {field} ---> expected element: {single_dict_fields_values_expected[field]}, obtained: {value}"
+                            assert value == single_dict_fields_values_expected[field], f"Check for field: {field} ---> expected element: {single_dict_fields_values_expected[field]}, obtained: {value}"
                         else:    
-                            assert int(value) == int(single_dict_fields_values_expected[field]), f"check for field: {field} ---> expected element: {int(single_dict_fields_values_expected[field])}, obtained: {int(value)}"
+                            assert int(value) == int(single_dict_fields_values_expected[field]), f"Check for field: {field} ---> expected element: {int(single_dict_fields_values_expected[field])}, obtained: {int(value)}"
                     else:
-                        assert str(value) == str(single_dict_fields_values_expected[field]), f"check for field: {field} ---> expected element: {str(single_dict_fields_values_expected[field])}, obtained: {str(value)}"
-                    print(f"check for field: {field} ---> expected element: {single_dict_fields_values_expected[field]}, obtained: {value} ---> OK !!!")
+                        assert str(value) == str(single_dict_fields_values_expected[field]), f"Check for field: {field} ---> expected element: {str(single_dict_fields_values_expected[field])}, obtained: {str(value)}"
+                    print(f"Check for field: {field} ---> expected element: {single_dict_fields_values_expected[field]}, obtained: {value} ---> OK !!!")
 
         adopted_db.closeConnection(conn)
 
@@ -3962,6 +3962,9 @@ def step_impl(context, value_obtained_with_path, type_body, value_expected, n):
         index_dot = value_obtained_with_path.find('.')
         tipo_evento = value_obtained_with_path[1:index_dot]
 
+        list_tag = value_obtained_with_path.split('.')
+        field_to_check = list_tag[len(list_tag)-1]
+
         value_obtained_with_path = utils.replace_local_variables_with_position(value_obtained_with_path, n, context, type_body)
 
         value_expected = utils.replace_local_variables(value_expected, context)
@@ -3969,14 +3972,14 @@ def step_impl(context, value_obtained_with_path, type_body, value_expected, n):
         value_expected = utils.replace_global_variables(value_expected, context)
 
         if value_expected == 'None': 
-            assert value_obtained_with_path == None, f"assert result query with None for Failed!"
-            print(f"For tipo evento: {tipo_evento} -> check value expected: {value_expected} is None")
+            assert value_obtained_with_path == None, f"For tipo evento: {tipo_evento} assert result query with None for field: {field_to_check} Failed!"
+            print(f"For tipo evento: {tipo_evento} -> check field: {field_to_check} -> value expected: {value_expected} is None")
         elif value_expected == 'NotNone':    
-            assert value_obtained_with_path != None, f"assert result query with Not None Failed!"
-            print(f"For tipo evento: {tipo_evento} -> Check value expected: {value_expected} is NotNone")
+            assert value_obtained_with_path != None, f"For tipo evento: {tipo_evento} assert result query with Not None field: {field_to_check} Failed!"
+            print(f"For tipo evento: {tipo_evento} -> check field: {field_to_check} -> value expected: {value_expected} is NotNone")
         else:
-            assert value_obtained_with_path == value_expected, f"value obtained: {value_obtained_with_path} != value expected: {value_expected}"
-            print(f"For tipo evento: {tipo_evento} -> check value expected: {value_expected} is equal to value obtained: {value_obtained_with_path}")
+            assert value_obtained_with_path == value_expected, f"For tipo evento: {tipo_evento} for field: {field_to_check} -> value obtained: {value_obtained_with_path} != value expected: {value_expected}"
+            print(f"For tipo evento: {tipo_evento} -> check field: {field_to_check} -> value expected: {value_expected} is equal to value obtained: {value_obtained_with_path}")
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
