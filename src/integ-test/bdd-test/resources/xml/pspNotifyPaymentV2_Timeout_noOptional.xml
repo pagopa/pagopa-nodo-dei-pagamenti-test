@@ -2,7 +2,7 @@
     <soapenv:Header/>
     <soapenv:Body>
         <pfn:pspNotifyPaymentV2Res>
-            <delay>10000</delay>
+            <delay>$delay</delay>
         </pfn:pspNotifyPaymentV2Res>
     </soapenv:Body>
 </soapenv:Envelope>
