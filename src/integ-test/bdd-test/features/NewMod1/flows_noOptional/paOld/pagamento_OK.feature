@@ -208,11 +208,10 @@ Feature: NMU flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-            | ORDER BY       | ID ASC                                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -231,7 +230,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                     |
@@ -246,7 +244,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value         |
@@ -263,7 +260,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                  |
@@ -291,7 +287,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                     |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value           |
@@ -303,7 +298,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
         # RE #####
         # activatePaymentNoticeV2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
@@ -761,11 +755,10 @@ Feature: NMU flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-            | ORDER BY       | ID ASC                                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -784,7 +777,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                     |
@@ -799,7 +791,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value         |
@@ -816,7 +807,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                  |
@@ -844,7 +834,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                     |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value           |
@@ -856,7 +845,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
         # RE
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -1082,11 +1070,10 @@ Feature: NMU flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-            | ORDER BY       | ID ASC                                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -1105,7 +1092,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                     |
@@ -1120,7 +1106,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value         |
@@ -1137,7 +1122,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                  |
@@ -1165,7 +1149,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                     |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value           |
@@ -1177,7 +1160,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
         # RE
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -1404,11 +1386,10 @@ Feature: NMU flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-            | ORDER BY       | ID ASC                                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -1427,7 +1408,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                     |
@@ -1442,7 +1422,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value         |
@@ -1459,7 +1438,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                  |
@@ -1487,7 +1465,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                     |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value           |
@@ -1499,7 +1476,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
         # RE
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -1725,11 +1701,10 @@ Feature: NMU flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-            | ORDER BY       | ID ASC                                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -1748,7 +1723,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                     |
@@ -1763,7 +1737,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value         |
@@ -1780,7 +1753,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                  |
@@ -1808,7 +1780,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                     |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value           |
@@ -1820,7 +1791,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
         # RE
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -2057,11 +2027,10 @@ Feature: NMU flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-            | ORDER BY       | ID ASC                                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -2080,7 +2049,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                     |
@@ -2095,7 +2063,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value         |
@@ -2112,7 +2079,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                  |
@@ -2140,7 +2106,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                     |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value           |
@@ -2152,7 +2117,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
         # RE
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -2378,11 +2342,10 @@ Feature: NMU flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-            | ORDER BY       | ID ASC                                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -2401,7 +2364,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                     |
@@ -2416,7 +2378,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value         |
@@ -2433,7 +2394,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                  |
@@ -2461,7 +2421,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                     |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value           |
@@ -2473,7 +2432,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
         # RE
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -2699,11 +2657,10 @@ Feature: NMU flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-            | ORDER BY       | ID ASC                                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -2722,7 +2679,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                     |
@@ -2737,7 +2693,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value         |
@@ -2754,7 +2709,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                  |
@@ -2782,7 +2736,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                     |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value           |
@@ -2794,7 +2747,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
         # RE
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -3021,11 +2973,10 @@ Feature: NMU flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-            | ORDER BY       | ID ASC                                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -3044,7 +2995,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                     |
@@ -3059,7 +3009,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value         |
@@ -3076,7 +3025,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                  |
@@ -3104,7 +3052,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                     |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value           |
@@ -3116,7 +3063,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
         # RE
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -3349,11 +3295,10 @@ Feature: NMU flows PA Old con pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $nodoInviaRPT.identificativoDominio   |
-            | ORDER BY       | ID ASC                                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_PAYMENT_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column                | value                                         |
@@ -3372,7 +3317,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column             | value                     |
@@ -3387,7 +3331,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # POSITION_STATUS_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column              | value         |
@@ -3404,7 +3347,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                          |
             | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
         # PM_SESSION_DATA
         And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys  | where_values                                  |
@@ -3432,7 +3374,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 8 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC                     |
         # STATI_RPT_SNAPSHOT
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column | value           |
@@ -3444,7 +3385,6 @@ Feature: NMU flows PA Old con pagamento OK
         And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values                                  |
             | IUV        | $nodoInviaRPT.identificativoUnivocoVersamento |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                        |
         # RE #####
         # activatePaymentNoticeV2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal

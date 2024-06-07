@@ -3222,7 +3222,7 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
         adopted_db, conn = utils.get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
 
         exec_query = adopted_db.executeQuery(conn, selected_query)
-        assert exec_query != None, f"Result query empty!!!!"
+        assert exec_query != None and len(exec_query) != 0, f"Result query empty or None for table: {table_name} !"
 
         ###CONVERSIONE STRINGA IN DICT
         dict_fields_values_expected = json.loads(utils.replace_context_variables(d_fields_values_expected, context).replace("'",'"'))
@@ -3242,18 +3242,18 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
         for single_dict_fields_values_obtained, single_dict_fields_values_expected in zip(list_dict_fields_values_obtained, list_dict_fields_values_expected):
             for field, value in single_dict_fields_values_obtained.items():
                 if single_dict_fields_values_expected[field] == 'None':
-                    assert value == None, f"assert result query with None for Failed for field: {field}"
-                    print(f"Check value None for field {field} ---> OK !!!")
+                    assert value == None, f"For table {table_name} -> assert result query with None for Failed for field: {field}"
+                    print(f"For table {table_name} -> check value None for field {field} ---> OK!")
                 elif single_dict_fields_values_expected[field] == 'NotNone':
-                    assert value != None, f"assert result query with Not None Failed for field: {field}"
-                    print(f"Check value NotNone for field {field} ---> OK !!!")
+                    assert value != None, f"For table {table_name} -> assert result query with Not None Failed for field: {field}"
+                    print(f"For table {table_name} -> check value NotNone for field {field} ---> OK!")
                 else:
                     single_dict_fields_values_expected[field] = utils.replace_global_variables(single_dict_fields_values_expected[field], context)
                     single_dict_fields_values_expected[field] = utils.replace_local_variables(single_dict_fields_values_expected[field], context)
                     single_dict_fields_values_expected[field] = utils.replace_context_variables(single_dict_fields_values_expected[field], context)
 
                     if utils.isFloat(single_dict_fields_values_expected[field]):
-                        assert float(value) == float(single_dict_fields_values_expected[field]), f"Check for field: {field} ---> expected element: {float(single_dict_fields_values_expected[field])}, obtained: {float(value)}"
+                        assert float(value) == float(single_dict_fields_values_expected[field]), f"For table {table_name} -> check for field: {field} ---> expected element: {float(single_dict_fields_values_expected[field])}, obtained: {float(value)}"
                     elif utils.isNumeric(single_dict_fields_values_expected[field]) and utils.isDecimal(single_dict_fields_values_expected[field]):
                         flag_int_cast_KO = False
                         try:
@@ -3262,12 +3262,12 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
                             flag_int_cast_KO = True
 
                         if flag_int_cast_KO:
-                            assert value == single_dict_fields_values_expected[field], f"Check for field: {field} ---> expected element: {single_dict_fields_values_expected[field]}, obtained: {value}"
+                            assert value == single_dict_fields_values_expected[field], f"For table {table_name} -> check for field: {field} ---> expected element: {single_dict_fields_values_expected[field]}, obtained: {value}"
                         else:    
-                            assert int(value) == int(single_dict_fields_values_expected[field]), f"Check for field: {field} ---> expected element: {int(single_dict_fields_values_expected[field])}, obtained: {int(value)}"
+                            assert int(value) == int(single_dict_fields_values_expected[field]), f"For table {table_name} -> check for field: {field} ---> expected element: {int(single_dict_fields_values_expected[field])}, obtained: {int(value)}"
                     else:
-                        assert str(value) == str(single_dict_fields_values_expected[field]), f"Check for field: {field} ---> expected element: {str(single_dict_fields_values_expected[field])}, obtained: {str(value)}"
-                    print(f"Check for field: {field} ---> expected element: {single_dict_fields_values_expected[field]}, obtained: {value} ---> OK !!!")
+                        assert str(value) == str(single_dict_fields_values_expected[field]), f"For table {table_name} -> check for field: {field} ---> expected element: {str(single_dict_fields_values_expected[field])}, obtained: {str(value)}"
+                    print(f"For table {table_name} -> check for field: {field} ---> expected element: {single_dict_fields_values_expected[field]}, obtained: {value} ---> OK!")
 
         adopted_db.closeConnection(conn)
 
