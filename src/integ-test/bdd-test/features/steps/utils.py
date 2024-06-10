@@ -960,12 +960,15 @@ def table_to_dict(table, type_table):
                 else:
                     dict_table[field] = [value]
     elif type_table == 'vertical':
-        for row in table:
-            dict_table[row.headings[0]] = [row.headings[1]]
-            break
+        if len(table.rows) == 0:
+            dict_table[table.headings[0]] = [table.headings[1]]
+        else:    
+            for row in table:
+                dict_table[row.headings[0]] = [row.headings[1]]
+                break
 
-        for row in table:
-            dict_table[row[0]] = [row[1]]
+            for row in table:
+                dict_table[row[0]] = [row[1]]
             
     else:
         raise ValueError(f"Invalid value of type table: {type_table}. It should be one of {predefined_values}")

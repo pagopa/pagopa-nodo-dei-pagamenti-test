@@ -1,4 +1,4 @@
-Feature: NMU flows con paNEW pagamento OK
+Feature: NMU flows con PA New pagamento OK
 
 
     Background:
@@ -6,7 +6,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_1
-    Scenario: NMU flow paNEW OK, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPayment, closeV2+ -> pspNotifyV2, spoV2+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-8)
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp2: checkPosition con 1 nav, activateV2 -> paGetPayment, closeV2+ -> pspNotifyV2, spoV2+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-8)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -189,7 +189,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -500,7 +500,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_2 @after
-    Scenario: NMU flow paNEW OK con Travaso CP, FLOW: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-9)
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con Travaso CP: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-9)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -685,7 +685,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -778,7 +778,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_3 @after
-    Scenario: NMU flow paNEW OK con Travaso PPAL, FLOW: con checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spo+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-10)
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con Travaso PPAL: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spo+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-10)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -961,7 +961,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -1052,7 +1052,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_4 @after
-    Scenario: NMU flow paNEW OK con Travaso BPAY, FLOW: con checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spo+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-11)
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con Travaso BPAY: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spo+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-11)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -1237,7 +1237,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -1330,7 +1330,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_5
-    Scenario: NMU flow paNEW OK, FLOW: con checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-12)
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-12)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -1513,7 +1513,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -1614,7 +1614,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_6 @after
-    Scenario: NMU flow paNEW OK con Travaso CP, FLOW: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-13)
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo c con Travaso CP: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-13)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -1799,7 +1799,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -1891,7 +1891,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_7 @after
-    Scenario: NMU flow paNEW OK con Travaso PPAL, FLOW: con checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-14)
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con Travaso PPAL: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-14)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -2074,7 +2074,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -2166,7 +2166,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_8 @after
-    Scenario: NMU flow paNEW OK con Travaso BPAY, FLOW: con checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-15)
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con Travaso BPAY: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-15)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -2351,7 +2351,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -2447,7 +2447,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_9
-    Scenario: NMU flow paNEW OK, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPayment , closeV2+ -> pspNotifyPaymentV2 con additionalPaymentInformations, spo+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-16)
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp2 notify e PSP vp1 spo: con checkPosition con 1 nav, activateV2 -> paGetPayment , closeV2+ -> pspNotifyPaymentV2 con additionalPaymentInformations, spo+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-16)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 302#iuv#     |
@@ -2630,7 +2630,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -2733,7 +2733,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_10 @after
-    Scenario: NMU flow paNEW OK con Travaso CP, FLOW: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-22)
+    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con Travaso CP: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-22)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -2919,7 +2919,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -3014,7 +3014,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_11 @after
-    Scenario: NMU flow paNEW OK con Travaso PPAL, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-23)
+    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con Travaso PPAL: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-23)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -3198,7 +3198,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -3293,7 +3293,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_12 @after
-    Scenario: NMU flow paNEW OK con Travaso BPAY, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-24)
+    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con Travaso BPAY: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-24)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -3479,7 +3479,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -3574,7 +3574,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_13
-    Scenario: NMU flow paNEW OK, FLOW: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-25)
+    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-25)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -3758,7 +3758,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -3861,7 +3861,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_14 @after
-    Scenario: NMU flow paNEW OK con Travaso CP, FLOW: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-26)
+    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con Travaso CP: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-26)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -4047,7 +4047,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -4140,7 +4140,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_15 @after
-    Scenario: NMU flow paNEW OK con Travaso PPAL, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con paypalPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-27)
+    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con Travaso PPAL: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con paypalPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-27)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -4324,7 +4324,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -4419,7 +4419,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_16 @after
-    Scenario: NMU flow paNEW OK con Travaso BPAY, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con bancomatpayPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-28)
+    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con Travaso BPAY: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con bancomatpayPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-28)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -4605,7 +4605,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -4698,7 +4698,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_17
-    Scenario: NMU flow paNEW OK, FLOW: con checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPaymentV2 con additionalPaymentInformations, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-29)
+    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp2 notify e PSP vp1 spo: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPaymentV2 con additionalPaymentInformations, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-29)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
             | #creditor_institution_code# | 310#iuv#     |
@@ -4882,7 +4882,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -4984,7 +4984,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_18
-    Scenario: NMU flow paNEW OK con Multitoken, FLOW: con checkPosition con 4 nav, 4x activateV2 -> paGetPayment , closeV2+ -> pspNotifyV2 con 4 token, spoV2+ con 4 token -> 4x paSendRT+, 4x BIZ+ e SPRv2+ (NMU-17)
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp2 con Multitoken: checkPosition con 4 nav, 4x activateV2 -> paGetPayment , closeV2+ -> pspNotifyV2 con 4 token, spoV2+ con 4 token -> 4x paSendRT+, 4x BIZ+ e SPRv2+ (NMU-17)
         Given from body with datatable vertical checkPositionBody_4element initial JSON checkPosition
             | fiscalCode1   | #creditor_institution_code# |
             | fiscalCode2   | #creditor_institution_code# |
@@ -5609,7 +5609,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_1.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_1.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_1.noticeNumber |
@@ -5630,7 +5630,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_2.noticeNumber |
@@ -5651,7 +5651,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_3.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_3.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_3.noticeNumber |
@@ -5672,7 +5672,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_4.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_4.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_4.noticeNumber |
@@ -5955,7 +5955,7 @@ Feature: NMU flows con paNEW pagamento OK
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_19
-    Scenario: NMU flow paNEW OK con Multitoken, FLOW: con checkPosition con 4 nav, 4x activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyV2 con 4 token, spoV2+ con 4 token -> 4x paSendRTV2, 4x BIZ+ e SPRv2+ (NMU-30)
+    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp2 con Multitoken: checkPosition con 4 nav, 4x activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyV2 con 4 token, spoV2+ con 4 token -> 4x paSendRTV2, 4x BIZ+ e SPRv2+ (NMU-30)
         Given from body with datatable vertical checkPositionBody_4element initial JSON checkPosition
             | fiscalCode1   | #creditor_institution_code# |
             | fiscalCode2   | #creditor_institution_code# |
@@ -6584,7 +6584,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_1.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_1.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_1.noticeNumber |
@@ -6605,7 +6605,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_2.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_2.noticeNumber |
@@ -6626,7 +6626,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_3.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_3.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_3.noticeNumber |
@@ -6647,7 +6647,7 @@ Feature: NMU flows con paNEW pagamento OK
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_4.noticeNumber |
             | PA_FISCAL_CODE | $activatePaymentNoticeV2_4.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                  |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC               |
         And verify 8 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                            |
             | NOTICE_ID      | $activatePaymentNoticeV2_4.noticeNumber |
