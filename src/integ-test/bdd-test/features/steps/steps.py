@@ -4043,6 +4043,15 @@ def step_impl(context, tag, payload):
     # assert len(my_document.getElementsByTagName(tag)) == 0
 
 
+
+@step("calling primitive evolution {primitive1} and {primitive2} with {restType1} and {restType2} in parallel with {delay1:d} ms delay")
+def step_impl(context, primitive1, primitive2, restType1, restType2, delay1):
+    list_of_primitive = [primitive1, primitive2]
+    list_of_type = [restType1, restType2]
+    utils.threading_evolution(context, list_of_primitive, list_of_type, delay1)
+
+
+
 @step("calling primitive {primitive1} {restType1} and {primitive2} {restType2} in parallel")
 def step_impl(context, primitive1, primitive2, restType1, restType2):
     list_of_primitive = [primitive1, primitive2]
