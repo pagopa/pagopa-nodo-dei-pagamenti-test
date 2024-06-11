@@ -3265,7 +3265,9 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
                             flag_int_cast_KO = True
 
                         if flag_int_cast_KO:
-                            assert value == single_dict_fields_values_expected[field], f"For table {table_name} -> check for field: {field} ---> expected element: {single_dict_fields_values_expected[field]}, obtained: {value}"
+                            value = float(value)
+                            value = int(value)
+                            assert value == int(single_dict_fields_values_expected[field]), f"For table {table_name} -> check for field: {field} ---> expected element: {int(single_dict_fields_values_expected[field])}, obtained: {value}"
                         else:    
                             assert int(value) == int(single_dict_fields_values_expected[field]), f"For table {table_name} -> check for field: {field} ---> expected element: {int(single_dict_fields_values_expected[field])}, obtained: {int(value)}"
                     else:
@@ -3983,8 +3985,27 @@ def step_impl(context, value_obtained_with_path, type_body, value_expected, n):
             assert value_obtained_with_path != None, f"For tipo evento: {tipo_evento} assert result query with Not None field: {field_to_check} Failed!"
             print(f"For tipo evento: {tipo_evento} -> check field: {field_to_check} -> value expected: {value_expected} is NotNone")
         else:
-            assert value_obtained_with_path == value_expected, f"For tipo evento: {tipo_evento} for field: {field_to_check} -> value obtained: {value_obtained_with_path} != value expected: {value_expected}"
+            if utils.isFloat(value_expected):
+                assert float(value_obtained_with_path) == float(value_expected), f"For tipo evento: {tipo_evento} for field: {field_to_check} -> value obtained: {float(value_obtained_with_path)} != value expected: {float(value_expected)}"
+            elif utils.isNumeric(value_expected) and utils.isDecimal(value_expected):
+                flag_int_cast_KO = False
+                try:
+                    int(value_obtained_with_path)
+                except Exception as e:
+                    flag_int_cast_KO = True
+
+                if flag_int_cast_KO:
+                    value_obtained_with_path = float(value_obtained_with_path)
+                    value_obtained_with_path = int(value_obtained_with_path)
+                    assert value_obtained_with_path == int(value_expected), f"For tipo evento: {tipo_evento} for field: {field_to_check} -> value obtained: {value_obtained_with_path} != value expected: {int(value_expected)}"
+                else:                    
+                    assert int(value_obtained_with_path) == int(value_expected), f"For tipo evento: {tipo_evento} for field: {field_to_check} -> value obtained: {int(value_obtained_with_path)} != value expected: {int(value_expected)}"
+            else:
+                assert str(value_obtained_with_path) == str(value_expected), f"For tipo evento: {tipo_evento} for field: {field_to_check} -> value obtained: {str(value_obtained_with_path)} != value expected: {str(value_expected)}"
             print(f"For tipo evento: {tipo_evento} -> check field: {field_to_check} -> value expected: {value_expected} is equal to value obtained: {value_obtained_with_path}")
+
+
+
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert

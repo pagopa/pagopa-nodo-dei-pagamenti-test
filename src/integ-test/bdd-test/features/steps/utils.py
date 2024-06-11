@@ -403,7 +403,7 @@ def replace_local_variables_for_query(body, context):
     return body
 
 
-
+#### position deve essere l'occorrenza (prima seconda terza...) del tag che si vuole controllare
 def replace_local_variables_with_position(body, position, context, type_body):
     list_tag = body.split(".")
     size_list = len(list_tag)
