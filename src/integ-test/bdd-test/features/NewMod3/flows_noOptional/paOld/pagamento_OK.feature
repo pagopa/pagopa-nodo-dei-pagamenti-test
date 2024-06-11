@@ -2715,7 +2715,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
         And from body with datatable horizontal paaAttivaRPT_timeout initial XML paaAttivaRPT
             | delay |
-            | 4000  |
+            | 7000  |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         Given RPT generation RPT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old#             |
@@ -2724,7 +2724,7 @@ Feature: NM3 flows PA Old con pagamento OK
             | dataEsecuzionePagamento           | #date#                                      |
             | importoTotaleDaVersare            | $activatePaymentNotice.amount               |
             | identificativoUnivocoVersamento   | 12$iuv                                      |
-            | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
+            | codiceContestoPagamento           | paymentToken |
             | importoSingoloVersamento          | $activatePaymentNotice.amount               |
         And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                             |
@@ -2737,7 +2737,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | identificativoIntermediarioPSP        | #brokerFittizio#                            |
             | identificativoCanale                  | #canaleFittizio#                            |
             | rpt                                   | $rptAttachment                              |
-        When calling primitive nodoInviaRT_nodoInviaRT POST and activatePaymentNotice_activatePaymentNotice POST with 4000 ms delay
+        Then saving activatePaymentNotice request in activatePaymentNotice
+        And saving nodoInviaRPT request in nodoInviaRPT
+        When calling primitive evolution activatePaymentNotice and nodoInviaRPT with POST and POST in parallel with 7000 ms delay
         Then check outcome is OK of activatePaymentNotice response
         And check esito is OK of nodoInviaRPT response
         Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome

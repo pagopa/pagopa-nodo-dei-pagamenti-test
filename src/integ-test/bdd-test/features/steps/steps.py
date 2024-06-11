@@ -3236,6 +3236,9 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
         ###CREAZIONE LIST DI DICT VALUES OBTAINED
         list_dict_fields_values_obtained = utils.generate_list_dict_values_obt(list_col_split, exec_query)
 
+        ###CHECK SE NELLA LIST DI VALUE OBTAINED MANCANO RECORD RISPETTO ALLA LIST VALUE EXPECTED
+        assert len(list_dict_fields_values_obtained) == size_dict_fields_values_expected+1, f"The number of records obtained {len(list_dict_fields_values_obtained)} is less than records expected {size_dict_fields_values_expected+1}, for table {table_name}!"
+
         print(f"query result: {list_dict_fields_values_obtained}")
 
         ###CHECKS PHASE
@@ -3281,6 +3284,8 @@ def step_impl(context, d_fields_values_expected, l_columns, table_name, db_name,
         print(f"----->>>> Exception: {e}")
         # Interrompiamo il test
         raise e
+
+
 
 @step(u"checks the value {value} of the record at column {column} of the table {table_name} retrived by the query on db {db_name} with where datatable {type_table}")
 def step_impl(context, value, column, table_name, db_name, type_table): 
@@ -4041,6 +4046,15 @@ def step_impl(context, tag, payload):
     assert root.find(".//{}".format(tag)) is None
     # my_document = parseString(root.content)
     # assert len(my_document.getElementsByTagName(tag)) == 0
+
+
+
+@step("calling primitive evolution {primitive1} and {primitive2} with {restType1} and {restType2} in parallel with {delay1:d} ms delay")
+def step_impl(context, primitive1, primitive2, restType1, restType2, delay1):
+    list_of_primitive = [primitive1, primitive2]
+    list_of_type = [restType1, restType2]
+    utils.threading_evolution(context, list_of_primitive, list_of_type, delay1)
+
 
 
 @step("calling primitive {primitive1} {restType1} and {primitive2} {restType2} in parallel")
