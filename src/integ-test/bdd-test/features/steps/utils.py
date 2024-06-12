@@ -439,7 +439,7 @@ def replace_local_variables_with_position(body, position, context, type_body):
                     if type_body == 'xml':
                         document = parseString(saved_elem.content)
                     elif type_body == 'json':
-                        jsonDict = json.loads(saved_elem[0][int(position)].tobytes().decode('utf-8'))
+                        jsonDict = json.loads(saved_elem[0][0].tobytes().decode('utf-8'))
                         payload = json2xml(jsonDict)
                         payload = '<root>' + payload + '</root>'
                         payload = payload.replace('\n','').replace('\t','')
@@ -461,7 +461,7 @@ def replace_local_variables_with_position(body, position, context, type_body):
                     if type_body == 'xml':
                         document = parseString(saved_elem.content)
                     elif type_body == 'json':
-                        selected_element = saved_elem[0][int(position)]
+                        selected_element = saved_elem[0][0]
                         selected_element = selected_element.read()
                         selected_element = selected_element.decode("utf-8")
                         jsonDict = json.loads(selected_element)
