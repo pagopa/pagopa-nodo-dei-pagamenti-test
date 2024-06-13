@@ -4292,7 +4292,7 @@ Feature: NM3 flows PA Old con retry a token scaduto
 
     # spo- arriva dopo la scadenza della sessione ma prima della RPT
     @ALL @NM3 @NM3PAOLD @NM3PAOLDRETRY @NM3PAOLDRETRY_10 @after1
-    Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spoV2- con resp PPT_TOKEN_SCADUTO_KO nodoInviaRPT -> paaInviaRT- (NM3-18)
+    Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  BIZ- spoV2- con resp PPT_TOKEN_SCADUTO_KO nodoInviaRPT -> paaInviaRT- (NM3-44)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
