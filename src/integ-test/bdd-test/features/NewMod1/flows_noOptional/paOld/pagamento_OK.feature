@@ -4,7 +4,7 @@ Feature: NMU flows PA Old con pagamento OK
         Given systems up
 
 
-    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_1 @after
+    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_1 @after_1
     Scenario: NMU flow OK, FLOW con PA Old e PSP vp1: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT , closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spo+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-8)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 3 seconds after triggered refresh job ALL
@@ -549,7 +549,7 @@ Feature: NMU flows PA Old con pagamento OK
 
 
 
-    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_2 @after
+    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_2 @after_1
     Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 e Travaso CP, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-9)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 3 seconds after triggered refresh job ALL
@@ -866,7 +866,7 @@ Feature: NMU flows PA Old con pagamento OK
 
 
 
-    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_3 @after
+    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_3 @after_1
     Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 e Travaso PPAL, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con paypalPayment, spo+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-10)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 3 seconds after triggered refresh job ALL
@@ -1180,7 +1180,7 @@ Feature: NMU flows PA Old con pagamento OK
 
 
 
-    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_4 @after
+    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_4 @after_1
     Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 e Travaso BPAY, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con bancomatpayPayment, spo+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-11)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 3 seconds after triggered refresh job ALL
@@ -1497,7 +1497,7 @@ Feature: NMU flows PA Old con pagamento OK
 
 
 
-    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_5 @after
+    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_5 @after_1
     Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 notify PSP vp2 spo: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-12)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 3 seconds after triggered refresh job ALL
@@ -1821,7 +1821,7 @@ Feature: NMU flows PA Old con pagamento OK
 
 
 
-    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_6 @after
+    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_6 @after_1
     Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 notify PSP vp2 spo e Travaso CP, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-13)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 3 seconds after triggered refresh job ALL
@@ -2138,7 +2138,7 @@ Feature: NMU flows PA Old con pagamento OK
 
 
 
-    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_7 @after
+    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_7 @after_1
     Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 notify PSP vp2 spo e Travaso PPAL, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con paypalPayment, spoV2+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-14)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 3 seconds after triggered refresh job ALL
@@ -2451,7 +2451,7 @@ Feature: NMU flows PA Old con pagamento OK
 
 
 
-    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_8 @after
+    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_8 @after_1
     Scenario: NMU flow OK, FLOW con PA Old e PSP vp1 notify PSP vp2 spo e Travaso BPAY, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPayment con bancomatpayPayment, spoV2+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-15)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 3 seconds after triggered refresh job ALL
@@ -2769,7 +2769,7 @@ Feature: NMU flows PA Old con pagamento OK
 
 
 
-    @ALL @NMU @NMUPAOLD  @NMUPAOLDPAGOK_9 @after
+    @ALL @NMU @NMUPAOLD  @NMUPAOLDPAGOK_9 @after_1
     Scenario: NMU flow OK, FLOW con PA Old e PSP vp2 notify PSP vp1 spo, FLOW: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspNotifyPaymentV2 con additionalPaymentInformations, spo+ -> paInviaRT+, BIZ+ e SPRv2+ (NMU-16)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 3 seconds after triggered refresh job ALL
@@ -3091,7 +3091,7 @@ Feature: NMU flows PA Old con pagamento OK
         And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 11223344 in position 7
 
 
-    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_10 @after
+    @ALL @NMU @NMUPAOLD @NMUPAOLDPAGOK @NMUPAOLDPAGOK_10 @after_1
     Scenario: NMU flow OK, FLOW con PA Old e PSP vp2: checkPosition con 1 nav, activateV2 -> paaAttivaRPT, nodoInviaRPT, closeV2+ -> pspnotifyV2, spoV2+  -> paaInviaRT+, BIZ+ e SPRv2+ (NMU-20)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 3 seconds after triggered refresh job ALL
@@ -3635,7 +3635,7 @@ Feature: NMU flows PA Old con pagamento OK
 
 
 
-    @after
+    @after1
     Scenario: After restore
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'N', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
