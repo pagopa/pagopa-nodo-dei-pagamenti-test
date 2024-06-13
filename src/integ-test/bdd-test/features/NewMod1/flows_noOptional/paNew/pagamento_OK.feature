@@ -500,7 +500,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_2 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_2 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con Travaso CP: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-9)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -779,7 +779,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_3 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_3 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con Travaso PPAL: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spo+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-10)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -1054,7 +1054,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_4 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_4 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con Travaso BPAY: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spo+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-11)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -1618,7 +1618,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 11223344 in position 7
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_6 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_6 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo c con Travaso CP: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paSendRT+, BIZ+ e SPRv2+ (NMU-13)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -1896,7 +1896,7 @@ Feature: NMU flows con PA New pagamento OK
         And from $pspNotifyPayment.creditCardPayment.paymentGateway check value 00 in position 0
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_7 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_7 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con Travaso PPAL: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-14)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -2172,7 +2172,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_8 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_8 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con Travaso BPAY: checkPosition con 1 nav activateV2 -> paGetPayment, closeV2+ -> pspNotifyPayment con additionalPaymentInformations, spoV2+ -> paSendRT+ BIZ+ e SPRv2+ (NMU-15)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -2741,7 +2741,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_10 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_10 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con Travaso CP: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-22)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -3023,7 +3023,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_11 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_11 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con Travaso PPAL: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-23)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -3303,7 +3303,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_12 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_12 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con Travaso BPAY: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spo+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-24)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -3873,7 +3873,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_14 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_14 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con Travaso CP: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con creditCardPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-26)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -4153,7 +4153,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_15 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_15 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con Travaso PPAL: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con paypalPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-27)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -4433,7 +4433,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_16 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_16 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con Travaso BPAY: checkPosition con 1 nav, activateV2 -> paGetPaymentV2, closeV2+ -> pspNotifyPayment con bancomatpayPayment, spoV2+ -> paSendRTV2, BIZ+ e SPRv2+ (NMU-28)
         Given from body with datatable horizontal checkPositionBody initial JSON checkPosition
             | fiscalCode                  | noticeNumber |
@@ -6955,7 +6955,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_20 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_20 @after_1
     Scenario: NMU flow paNEW OK con broadcast paPrinc!=paSec MBD, FLOW: con PA con broadcast sia vp1 che vp2, checkPosition con 1 nav, activateV2 -> paGetPaymentV2 con MBD, closeV2+ -> pspNotifyPaymentV2 con MBD, spoV2 con MBD+ -> paSendRTV2 con MBD verso stazione principale, paSendRT con IBAN fittizio e paSendRTV2 con MBD verso le broadcast delle PA secondarie, paSendRTV2 con MBD verso le broadcast vp2 della PA principale, BIZ+ e SPRv2+ (NMU-49)
         Given updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with Y under macro NewMod1 on db nodo_cfg
         And wait 7 seconds after triggered refresh job ALL
@@ -7058,7 +7058,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_21 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_21 @after_1
     Scenario: NMU flow paNEW OK con Multitoken, FLOW: con token1: PA Old, token2: PA New vp1, token3: PA New vp2, token4: PA New vp1 standin, token5: PA New vp2 standin. Le PA New hanno tutte delle broadcast sia vp1 che vp2. checkPosition con 5 nav, 5x activateV2 (la presenza del flag standin dipende dalla configurazione del psp eCommerce, non da quella del PSP vero) -> token1: paaAttivaRPT, token2: paGetPayment 5 transfer paPrincip = paSecond, token3: paGetPaymentV2 5 transfer paPrincip = paSecond, token4: paGetPayment verso ACA 5 transfer paPrincip = paSecond e token5: paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, nodoInviaRPT token1, closeV2+ -> pspNotifyV2 con 5 token e senza il flag standin=true, spoV2+ con 5 token -> token1: paaInviaRT+; token2: paSendRT verso stazione principale, paSendRT/V2 verso broadcast PA secondarie (compresa PA principale che è anche secondaria?); token3: paSendRTV2 verso stazione principale, paSendRT/V2 verso broadcast PA secondarie, paSendRTV2 verso broadcast PA principale (anche le paSendRT visto che è sia principale che secondaria?); token4: paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie (compresa PA principale che è anche secondaria?); token5: paSendRTV2 verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie, paSendRTV2 verso broadcast PA principale (anche le paSendRT visto che è sia principale che secondaria?). Tutte le receipt NON hanno il flag standin=true, 5x BIZ+ e SPRv2+ (NMU-35)
         Given update parameter invioReceiptStandin on configuration keys with value true
         And from body with datatable vertical checkPositionBody_4element initial JSON checkPosition
@@ -7229,7 +7229,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_22 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_22 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify flag standin=true, spo+  -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt verso broadcast con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-38)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -7965,7 +7965,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_23 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_23 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify flag standin=true, spo+  -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt verso broadcast con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-39)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -8702,7 +8702,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_24 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_24 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp2 notify e PSP vp1 spo con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify flag standin=true, spo+  -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt verso broadcast con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-40)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -9438,7 +9438,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_25 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_25 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify flag standin=true, spo+  -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt verso broadcast con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-41)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -10180,7 +10180,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_26 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_26 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPaymentV2 verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify flag standin=true, spoV2+  -> paSendRTV2 verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie, paSendRTV2 verso broadcast PA principale tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-42)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -10919,7 +10919,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_27 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_27 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp2 notify e PSP vp1 spo con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPaymentV2 verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotifyV2 flag standin=true, spo+ -> paSendRTV2 verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie, paSendRTV2 verso broadcast PA principale tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-43)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -11658,8 +11658,8 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_28 @after
-    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPayment verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con flag standin=true, spoV2+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie (compresa PA principale che è anche secondaria?) tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-44)
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_28 @after_2
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPayment verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con flag standin=true, spoV2+ -> paSendRT verso stazione principale (quella del nav), BIZ+ e SPRv2+ (NMU-44)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
@@ -12248,8 +12248,8 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_29 @after
-    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp2 notify e PSP vp1 spo con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPayment verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotifyV2 con flag standin=true, spo+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie (compresa PA principale che è anche secondaria?) tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-45)
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_29 @after_2
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp2 notify e PSP vp1 spo con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPayment verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotifyV2 con flag standin=true, spo+ -> paSendRT verso stazione principale (quella del nav), BIZ+ e SPRv2+ (NMU-45)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
@@ -12837,8 +12837,8 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_30 @after
-    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con flag standin=true, spo+  -> paSendRTV2 verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie, paSendRTV2 verso broadcast PA principale (anche le paSendRT visto che è sia principale che secondaria?) tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-46)
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_30 @after_2
+    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con flag standin=true, spo+  -> paSendRTV2 verso stazione principale (quella del nav), paSendRTV2 verso broadcast PA principale tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-46)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
@@ -13496,8 +13496,8 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_31 @after
-    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con flag standin=true, spoV2+  -> paSendRTV2 verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie, paSendRTV2 verso broadcast PA principale (anche le paSendRT visto che è sia principale che secondaria?) tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-47)
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_31 @after_2
+    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con flag standin=true, spoV2+  -> paSendRTV2 verso stazione principale (quella del nav), paSendRTV2 verso broadcast PA principale tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-47)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
@@ -14156,8 +14156,8 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_32 @after
-    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con flag standin=true, spoV2+  -> paSendRTV2 verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie, paSendRTV2 verso broadcast PA principale (anche le paSendRT visto che è sia principale che secondaria?) tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-47)
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_32 @after_2
+    Scenario: NMU flow OK, FLOW con PA New vp2 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 -> paGetPaymentV2 verso ACA 5 transfer paPrincip = paSecond, closeV2+ -> pspNotify con flag standin=true, spoV2+  -> paSendRTV2 verso stazione principale (quella del nav), paSendRTV2 verso broadcast PA principale tutte le receipt hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-48)
         Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
@@ -14737,7 +14737,7 @@ Feature: NMU flows con PA New pagamento OK
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
         And from $paSendRTV2Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.idStation xml check value 66666666666_09 in position 0
+        And from $paSendRTV2Req.idStation xml check value 66666666666_08 in position 0
         And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
         And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
@@ -14817,7 +14817,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_33 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_33 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true e Travaso CP: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify con 1 token, creditCardPayment e flag standin=true, spo+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt dirette verso stazioni con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-50)
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
@@ -15545,8 +15545,8 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_34 @after
-    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true e Travaso PPAL: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify con 1 token, paypalPayment e flag standin=true, spo+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt dirette verso stazioni con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-51)
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_34 @after_1
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true e Travaso PPAL: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify con 1 token, paypalPayment e flag standin=true, spo+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt dirette verso stazioni con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-51)
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
@@ -16267,7 +16267,7 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_35 @after
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_35 @after_1
     Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true e Travaso PPAL: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify con 1 token, paypalPayment e flag standin=true, spo+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt dirette verso stazioni con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-51)
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
@@ -16995,8 +16995,2192 @@ Feature: NMU flows con PA New pagamento OK
 
 
 
-    @after
-    Scenario: After restore
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_36 @after_1
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true con Travaso CP: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify con 1 token, creditCardPayment e flag standin=true, spoV2+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt dirette verso stazioni con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-53)
+        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11989' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        And update parameter invioReceiptStandin on configuration keys with value true
+        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And wait 5 seconds after triggered refresh job ALL
+        And from body with datatable horizontal checkPositionBody initial JSON checkPosition
+            | fiscalCode                  | noticeNumber |
+            | #creditor_institution_code# | 347#iuv#     |
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
+        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+            | outcome                     | OK                          |
+            | creditorReferenceId         | 47$iuv                      |
+            | paymentAmount               | 50.00                       |
+            | dueDate                     | 2021-12-31                  |
+            | description                 | pagamentoTest               |
+            | entityUniqueIdentifierType  | G                           |
+            | entityUniqueIdentifierValue | 77777777777                 |
+            | fullName                    | Massimo Benvegnù            |
+            | transferAmount              | 10.00                       |
+            | IBAN                        | IT45R0760103200000000001016 |
+            | fiscalCodePA1               | 90000000001                 |
+            | fiscalCodePA2               | 90000000002                 |
+            | fiscalCodePA3               | 90000000003                 |
+            | fiscalCodePA4               | 88888888888                 |
+            | fiscalCodePA5               | 88888888888                 |
+            | remittanceInformation       | testPaGetPayment            |
+            | transferCategory            | paGetPaymentTest            |
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        Given from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+            | token1                | $activatePaymentNoticeV2Response.paymentToken |
+            | outcome               | OK                                            |
+            | idPSP                 | #psp#                                         |
+            | idBrokerPSP           | #psp#                                         |
+            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | paymentMethod         | CP                                            |
+            | transactionId         | #transaction_id#                              |
+            | totalAmountExt        | 52                                            |
+            | feeExt                | 2                                             |
+            | primaryCiIncurredFee  | 1                                             |
+            | idBundle              | 0bf0c282-3054-11ed-af20-acde48001122          |
+            | idCiBundle            | 0bf0c35e-3054-11ed-af20-acde48001122          |
+            | timestampOperationExt | 2023-11-30T12:46:46.554+01:00                 |
+            | rrn                   | 11223344                                      |
+            | outPaymentGateway     | 00                                            |
+            | totalAmount1          | 52                                            |
+            | fee1                  | 2                                             |
+            | timestampOperation1   | 2021-07-09T17:06:03                           |
+            | authorizationCode     | 123456                                        |
+            | paymentGateway        | 00                                            |
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+            | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
+            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
+        # POSITION_ACTIVATE
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                         |
+            | ID                    | NotNone                                       |
+            | CREDITOR_REFERENCE_ID | 47$iuv                                        |
+            | PSP_ID                | #psp#                                         |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
+            | TOKEN_VALID_FROM      | NotNone                                       |
+            | TOKEN_VALID_TO        | NotNone                                       |
+            | DUE_DATE              | None                                          |
+            | AMOUNT                | $activatePaymentNoticeV2.amount               |
+            | INSERTED_TIMESTAMP    | NotNone                                       |
+            | UPDATED_TIMESTAMP     | NotNone                                       |
+            | INSERTED_BY           | activatePaymentNoticeV2                       |
+            | UPDATED_BY            | closePayment-v2                               |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_SERVICE
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                   |
+            | ID                 | NotNone                 |
+            | DESCRIPTION        | NotNone                 |
+            | COMPANY_NAME       | None                    |
+            | OFFICE_NAME        | None                    |
+            | DEBTOR_ID          | NotNone                 |
+            | INSERTED_TIMESTAMP | NotNone                 |
+            | UPDATED_TIMESTAMP  | NotNone                 |
+            | INSERTED_BY        | activatePaymentNoticeV2 |
+            | UPDATED_BY         | activatePaymentNoticeV2 |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_PAYMENT_PLAN
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                           |
+            | ID                    | NotNone                         |
+            | CREDITOR_REFERENCE_ID | 47$iuv                          |
+            | DUE_DATE              | NotNone                         |
+            | RETENTION_DATE        | None                            |
+            | AMOUNT                | $activatePaymentNoticeV2.amount |
+            | FLAG_FINAL_PAYMENT    | N                               |
+            | INSERTED_TIMESTAMP    | NotNone                         |
+            | UPDATED_TIMESTAMP     | NotNone                         |
+            | METADATA              | None                            |
+            | FK_POSITION_SERVICE   | NotNone                         |
+            | INSERTED_BY           | activatePaymentNoticeV2         |
+            | UPDATED_BY            | activatePaymentNoticeV2         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_PAYMENT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                     | value                                         |
+            | ID                         | NotNone                                       |
+            | CREDITOR_REFERENCE_ID      | 47$iuv                                        |
+            | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
+            | BROKER_PA_ID               | irraggiungibile                               |
+            | STATION_ID                 | standin                                       |
+            | STATION_VERSION            | 2                                             |
+            | PSP_ID                     | #psp#                                         |
+            | BROKER_PSP_ID              | #id_broker_psp#                               |
+            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | AMOUNT                     | $activatePaymentNoticeV2.amount               |
+            | FEE                        | 2.00                                          |
+            | OUTCOME                    | NotNone                                       |
+            | PAYMENT_METHOD             | None                                          |
+            | PAYMENT_CHANNEL            | None                                          |
+            | TRANSFER_DATE              | None                                          |
+            | PAYER_ID                   | None                                          |
+            | INSERTED_TIMESTAMP         | NotNone                                       |
+            | UPDATED_TIMESTAMP          | NotNone                                       |
+            | FK_PAYMENT_PLAN            | NotNone                                       |
+            | RPT_ID                     | None                                          |
+            | PAYMENT_TYPE               | MOD3                                          |
+            | CARRELLO_ID                | None                                          |
+            | ORIGINAL_PAYMENT_TOKEN     | None                                          |
+            | FLAG_IO                    | N                                             |
+            | RICEVUTA_PM                | Y                                             |
+            | FLAG_PAYPAL                | N                                             |
+            | FLAG_ACTIVATE_RESP_MISSING | None                                          |
+            | TRANSACTION_ID             | $transaction_id                               |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_TRANSFER
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                   | value                                                       |
+            | ID                       | NotNone                                                     |
+            | CREDITOR_REFERENCE_ID    | 47$iuv                                                      |
+            | PA_FISCAL_CODE_SECONDARY | 90000000001,90000000002,90000000003,88888888888,88888888888 |
+            | IBAN                     | IT45R0760103200000000001016                                 |
+            | AMOUNT                   | 10                                                          |
+            | REMITTANCE_INFORMATION   | NotNone                                                     |
+            | TRANSFER_CATEGORY        | NotNone                                                     |
+            | TRANSFER_IDENTIFIER      | 1,2,3,4,5                                                   |
+            | VALID                    | Y                                                           |
+            | FK_POSITION_PAYMENT      | NotNone                                                     |
+            | INSERTED_TIMESTAMP       | NotNone                                                     |
+            | UPDATED_TIMESTAMP        | NotNone                                                     |
+            | FK_PAYMENT_PLAN          | NotNone                                                     |
+            | INSERTED_BY              | activatePaymentNoticeV2                                     |
+            | UPDATED_BY               | activatePaymentNoticeV2                                     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
+        # POSITION_PAYMENT_STATUS
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                                                                                                                   |
+            | ID                    | NotNone                                                                                                                                 |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode                                                                                                     |
+            | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber                                                                                                   |
+            | STATUS                | PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT                                                 |
+            | INSERTED_TIMESTAMP    | NotNone                                                                                                                                 |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                                                                                                       |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken                                                                                           |
+            | INSERTED_BY           | activatePaymentNoticeV2,closePayment-v2,closePayment-v2,pspNotifyPayment,sendPaymentOutcomeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2 |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
+        And verify 7 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                         |
+            | ID                    | NotNone                                       |
+            | FK_POSITION_PAYMENT   | NotNone                                       |
+            | CREDITOR_REFERENCE_ID | 47$iuv                                        |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
+            | STATUS                | NOTICE_SENT                                   |
+            | INSERTED_TIMESTAMP    | NotNone                                       |
+            | UPDATED_TIMESTAMP     | NotNone                                       |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | ID ASC                                |
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
+            | ORDER BY   | ID ASC                                |
+        # POSITION_STATUS
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value       |
+            | ID                 | NotNone     |
+            | STATUS             | PAYING,PAID |
+            | INSERTED_TIMESTAMP | NotNone     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+        And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+        # POSITION_STATUS_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column              | value   |
+            | ID                  | NotNone |
+            | STATUS              | PAID    |
+            | INSERTED_TIMESTAMP  | NotNone |
+            | UPDATED_TIMESTAMP   | NotNone |
+            | FK_POSITION_SERVICE | NotNone |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | ID ASC                                |
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
+            | ORDER BY   | ID ASC                                |
+        # PM_SESSION_DATA
+        And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys  | where_values                                  |
+            | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
+        # PM_METADATA
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column         | value                                                                                                               |
+            | TRANSACTION_ID | $transaction_id                                                                                                     |
+            | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn |
+            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,52,00,2,123456,11223344                     |
+            | INSERTED_BY    | closePayment-v2                                                                                                     |
+            | UPDATED_BY     | closePayment-v2                                                                                                     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values    |
+            | TRANSACTION_ID | $transaction_id |
+            | ORDER BY       | ID ASC          |
+        # RE #####
+        # activatePaymentNoticeV2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Req
+        And from $activatePaymentNoticeV2Req.idPSP xml check value #pspEcommerce# in position 0
+        And from $activatePaymentNoticeV2Req.idBrokerPSP xml check value #brokerEcommerce# in position 0
+        And from $activatePaymentNoticeV2Req.idChannel xml check value #canaleEcommerce# in position 0
+        And from $activatePaymentNoticeV2Req.password xml check value #password# in position 0
+        And from $activatePaymentNoticeV2Req.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $activatePaymentNoticeV2Req.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $activatePaymentNoticeV2Req.amount xml check value $activatePaymentNoticeV2.amount in position 0
+        # activatePaymentNoticeV2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Resp
+        And from $activatePaymentNoticeV2Resp.outcome xml check value OK in position 0
+        And from $activatePaymentNoticeV2Resp.totalAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
+        And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        ### TRANSFER 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 5
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 47$iuv in position 0
+        And from $activatePaymentNoticeV2Resp.standin xml check value true in position 0
+        # paGetPayment REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paGetPayment                                  |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentReq
+        And from $paGetPaymentReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paGetPaymentReq.idBrokerPA xml check value irraggiungibile in position 0
+        And from $paGetPaymentReq.idStation xml check value standin in position 0
+        And from $paGetPaymentReq.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paGetPaymentReq.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paGetPaymentReq.amount xml check value $activatePaymentNoticeV2.amount in position 0
+        # paGetPayment RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paGetPayment                                  |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentResp
+        And from $paGetPaymentResp.outcome xml check value OK in position 0
+        And from $paGetPaymentResp.data.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paGetPaymentResp.data.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paGetPaymentResp.data.dueDate xml check value 2021-12-31 in position 0
+        And from $paGetPaymentResp.data.description xml check value pagamentoTest in position 0
+        ###TRANSFER 1
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ###TRANSFER 2
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ###TRANSFER 3
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ###TRANSFER 4
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ###TRANSFER 5
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        # closePayment-v2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | closePayment-v2                               |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
+        And from $closePaymentv2Req.fee json check value 2.0 in position 0
+        And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $closePaymentv2Req.idPSP json check value #psp# in position 0
+        And from $closePaymentv2Req.outcome json check value OK in position 0
+        And from $closePaymentv2Req.paymentMethod json check value CP in position 0
+        And from $closePaymentv2Req.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
+        # closePayment-v2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | closePayment-v2                               |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Resp
+        And from $closePaymentv2Resp.outcome json check value OK in position 0
+        # pspNotifyPayment REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | pspNotifyPayment                              |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentReq
+        And from $pspNotifyPaymentReq.creditCardPayment.rrn xml check value 11223344 in position 0
+        And from $pspNotifyPaymentReq.creditCardPayment.outcomePaymentGateway xml check value 00 in position 0
+        And from $pspNotifyPaymentReq.creditCardPayment.totalAmount xml check value 52 in position 0
+        And from $pspNotifyPaymentReq.creditCardPayment.fee xml check value 2 in position 0
+        And from $pspNotifyPaymentReq.creditCardPayment.timestampOperation xml check value 2021-07-09T17:06:03 in position 0
+        And from $pspNotifyPaymentReq.creditCardPayment.authorizationCode xml check value 123456 in position 0
+        And from $pspNotifyPaymentReq.creditCardPayment.paymentGateway xml check value 00 in position 0
+        # pspNotifyPayment RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | pspNotifyPayment                              |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentResp
+        And from $pspNotifyPaymentResp.outcome xml check value OK in position 0
+        # sendPaymentOutcomeV2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
+        And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
+        And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
+        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
+        And from $sendPaymentOutcomeV2Req.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
+        # sendPaymentOutcomeV2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Resp
+        And from $sendPaymentOutcomeV2Resp.outcome xml check value OK in position 0
+        # paSendRT REQ standin
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA_KO                                    |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
+        And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
+        And from $paSendRTStandinReq.idStation xml check value standin in position 0
+        And from $paSendRTStandinReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTStandinReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTStandinReq.receipt.outcome xml check value OK in position 0
+        And from $paSendRTStandinReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTStandinReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTStandinReq.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTStandinReq.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTStandinReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTStandinReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTStandinReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTStandinReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTStandinReq.receipt.fee xml check value 2.00 in position 0
+        # paSendRT REQ NO standin
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
+        And from $paSendRTReq.idPA xml check value 90000000001 in position 0
+        And from $paSendRTReq.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTReq.idStation xml check value 90000000001_08 in position 0
+        And from $paSendRTReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTReq.receipt.outcome xml check value OK in position 0
+        And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTReq.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
+        And from $paSendRTResp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
+        And from $paSendRTV2Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRTV2Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2Req.idStation xml check value 90000000001_09 in position 0
+        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
+        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+        # sendPaymentResult-v2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentResult-v2                          |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key sendPaymentResultv2Req
+        And from $sendPaymentResultv2Req.outcome json check value OK in position 0
+        And from $sendPaymentResultv2Req.paymentDate json check value NotNone in position 0
+        And from $sendPaymentResultv2Req.payments.creditorReferenceId json check value 47$iuv in position 0
+        And from $sendPaymentResultv2Req.payments.debtor json check value 77777777777 in position 0
+        And from $sendPaymentResultv2Req.payments.description json check value pagamentoTest in position 0
+        And from $sendPaymentResultv2Req.payments.fiscalCode json check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
+
+
+
+
+
+
+
+
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_37 @after_1
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true con Travaso PPAL: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify con 1 token, creditCardPayment e flag standin=true, spoV2+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt dirette verso stazioni con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-54)
+        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11989' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        And update parameter invioReceiptStandin on configuration keys with value true
+        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And wait 5 seconds after triggered refresh job ALL
+        And from body with datatable horizontal checkPositionBody initial JSON checkPosition
+            | fiscalCode                  | noticeNumber |
+            | #creditor_institution_code# | 347#iuv#     |
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
+        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+            | outcome                     | OK                          |
+            | creditorReferenceId         | 47$iuv                      |
+            | paymentAmount               | 50.00                       |
+            | dueDate                     | 2021-12-31                  |
+            | description                 | pagamentoTest               |
+            | entityUniqueIdentifierType  | G                           |
+            | entityUniqueIdentifierValue | 77777777777                 |
+            | fullName                    | Massimo Benvegnù            |
+            | transferAmount              | 10.00                       |
+            | IBAN                        | IT45R0760103200000000001016 |
+            | fiscalCodePA1               | 90000000001                 |
+            | fiscalCodePA2               | 90000000002                 |
+            | fiscalCodePA3               | 90000000003                 |
+            | fiscalCodePA4               | 88888888888                 |
+            | fiscalCodePA5               | 88888888888                 |
+            | remittanceInformation       | testPaGetPayment            |
+            | transferCategory            | paGetPaymentTest            |
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        Given from body with datatable vertical closePaymentV2Body_PPAL_noOptional initial json v2/closepayment
+            | token1                | $activatePaymentNoticeV2Response.paymentToken |
+            | outcome               | OK                                            |
+            | idPSP                 | #psp#                                         |
+            | idBrokerPSP           | #psp#                                         |
+            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | paymentMethod         | PPAL                                          |
+            | transactionId         | #transaction_id#                              |
+            | totalAmountExt        | 52                                            |
+            | feeExt                | 2                                             |
+            | primaryCiIncurredFee  | 1                                             |
+            | idBundle              | 0bf0c282-3054-11ed-af20-acde48001122          |
+            | idCiBundle            | 0bf0c35e-3054-11ed-af20-acde48001122          |
+            | timestampOperationExt | 2023-11-30T12:46:46.554+01:00                 |
+            | transId               | #transaction_id#                              |
+            | pspTransactionId      | #psp_transaction_id#                          |
+            | totalAmount1          | 12                                            |
+            | fee1                  | 2                                             |
+            | timestampOperation1   | 2021-07-09T17:06:03                           |
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+            | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
+            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
+        # POSITION_ACTIVATE
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                         |
+            | ID                    | NotNone                                       |
+            | CREDITOR_REFERENCE_ID | 47$iuv                                        |
+            | PSP_ID                | #psp#                                         |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
+            | TOKEN_VALID_FROM      | NotNone                                       |
+            | TOKEN_VALID_TO        | NotNone                                       |
+            | DUE_DATE              | None                                          |
+            | AMOUNT                | $activatePaymentNoticeV2.amount               |
+            | INSERTED_TIMESTAMP    | NotNone                                       |
+            | UPDATED_TIMESTAMP     | NotNone                                       |
+            | INSERTED_BY           | activatePaymentNoticeV2                       |
+            | UPDATED_BY            | closePayment-v2                               |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_SERVICE
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                   |
+            | ID                 | NotNone                 |
+            | DESCRIPTION        | NotNone                 |
+            | COMPANY_NAME       | None                    |
+            | OFFICE_NAME        | None                    |
+            | DEBTOR_ID          | NotNone                 |
+            | INSERTED_TIMESTAMP | NotNone                 |
+            | UPDATED_TIMESTAMP  | NotNone                 |
+            | INSERTED_BY        | activatePaymentNoticeV2 |
+            | UPDATED_BY         | activatePaymentNoticeV2 |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_PAYMENT_PLAN
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                           |
+            | ID                    | NotNone                         |
+            | CREDITOR_REFERENCE_ID | 47$iuv                          |
+            | DUE_DATE              | NotNone                         |
+            | RETENTION_DATE        | None                            |
+            | AMOUNT                | $activatePaymentNoticeV2.amount |
+            | FLAG_FINAL_PAYMENT    | N                               |
+            | INSERTED_TIMESTAMP    | NotNone                         |
+            | UPDATED_TIMESTAMP     | NotNone                         |
+            | METADATA              | None                            |
+            | FK_POSITION_SERVICE   | NotNone                         |
+            | INSERTED_BY           | activatePaymentNoticeV2         |
+            | UPDATED_BY            | activatePaymentNoticeV2         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_PAYMENT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                     | value                                         |
+            | ID                         | NotNone                                       |
+            | CREDITOR_REFERENCE_ID      | 47$iuv                                        |
+            | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
+            | BROKER_PA_ID               | irraggiungibile                               |
+            | STATION_ID                 | standin                                       |
+            | STATION_VERSION            | 2                                             |
+            | PSP_ID                     | #psp#                                         |
+            | BROKER_PSP_ID              | #id_broker_psp#                               |
+            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | AMOUNT                     | $activatePaymentNoticeV2.amount               |
+            | FEE                        | 2.00                                          |
+            | OUTCOME                    | NotNone                                       |
+            | PAYMENT_METHOD             | None                                          |
+            | PAYMENT_CHANNEL            | None                                          |
+            | TRANSFER_DATE              | None                                          |
+            | PAYER_ID                   | None                                          |
+            | INSERTED_TIMESTAMP         | NotNone                                       |
+            | UPDATED_TIMESTAMP          | NotNone                                       |
+            | FK_PAYMENT_PLAN            | NotNone                                       |
+            | RPT_ID                     | None                                          |
+            | PAYMENT_TYPE               | MOD3                                          |
+            | CARRELLO_ID                | None                                          |
+            | ORIGINAL_PAYMENT_TOKEN     | None                                          |
+            | FLAG_IO                    | N                                             |
+            | RICEVUTA_PM                | Y                                             |
+            | FLAG_PAYPAL                | N                                             |
+            | FLAG_ACTIVATE_RESP_MISSING | None                                          |
+            | TRANSACTION_ID             | $transaction_id                               |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_TRANSFER
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                   | value                                                       |
+            | ID                       | NotNone                                                     |
+            | CREDITOR_REFERENCE_ID    | 47$iuv                                                      |
+            | PA_FISCAL_CODE_SECONDARY | 90000000001,90000000002,90000000003,88888888888,88888888888 |
+            | IBAN                     | IT45R0760103200000000001016                                 |
+            | AMOUNT                   | 10                                                          |
+            | REMITTANCE_INFORMATION   | NotNone                                                     |
+            | TRANSFER_CATEGORY        | NotNone                                                     |
+            | TRANSFER_IDENTIFIER      | 1,2,3,4,5                                                   |
+            | VALID                    | Y                                                           |
+            | FK_POSITION_PAYMENT      | NotNone                                                     |
+            | INSERTED_TIMESTAMP       | NotNone                                                     |
+            | UPDATED_TIMESTAMP        | NotNone                                                     |
+            | FK_PAYMENT_PLAN          | NotNone                                                     |
+            | INSERTED_BY              | activatePaymentNoticeV2                                     |
+            | UPDATED_BY               | activatePaymentNoticeV2                                     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
+        # POSITION_PAYMENT_STATUS
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                                                                                                                   |
+            | ID                    | NotNone                                                                                                                                 |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode                                                                                                     |
+            | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber                                                                                                   |
+            | STATUS                | PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT                                                 |
+            | INSERTED_TIMESTAMP    | NotNone                                                                                                                                 |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                                                                                                       |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken                                                                                           |
+            | INSERTED_BY           | activatePaymentNoticeV2,closePayment-v2,closePayment-v2,pspNotifyPayment,sendPaymentOutcomeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2 |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
+        And verify 7 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                         |
+            | ID                    | NotNone                                       |
+            | FK_POSITION_PAYMENT   | NotNone                                       |
+            | CREDITOR_REFERENCE_ID | 47$iuv                                        |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
+            | STATUS                | NOTICE_SENT                                   |
+            | INSERTED_TIMESTAMP    | NotNone                                       |
+            | UPDATED_TIMESTAMP     | NotNone                                       |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | ID ASC                                |
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
+            | ORDER BY   | ID ASC                                |
+        # POSITION_STATUS
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value       |
+            | ID                 | NotNone     |
+            | STATUS             | PAYING,PAID |
+            | INSERTED_TIMESTAMP | NotNone     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+        And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+        # POSITION_STATUS_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column              | value   |
+            | ID                  | NotNone |
+            | STATUS              | PAID    |
+            | INSERTED_TIMESTAMP  | NotNone |
+            | UPDATED_TIMESTAMP   | NotNone |
+            | FK_POSITION_SERVICE | NotNone |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | ID ASC                                |
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
+            | ORDER BY   | ID ASC                                |
+        # PM_SESSION_DATA
+        And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys  | where_values                                  |
+            | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
+        # PM_METADATA
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column         | value                                                                                               |
+            | TRANSACTION_ID | $transaction_id                                                                                     |
+            | KEY            | Token,Tipo versamento,pspTransactionId,timestampOperation,totalAmount,transactionId,fee             |
+            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,PPAL,NotNone,2021-07-09T17:06:03,12,$transaction_id,2 |
+            | INSERTED_BY    | closePayment-v2                                                                                     |
+            | UPDATED_BY     | closePayment-v2                                                                                     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values    |
+            | TRANSACTION_ID | $transaction_id |
+            | ORDER BY       | ID ASC          |
+        # RE #####
+        # activatePaymentNoticeV2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Req
+        And from $activatePaymentNoticeV2Req.idPSP xml check value #pspEcommerce# in position 0
+        And from $activatePaymentNoticeV2Req.idBrokerPSP xml check value #brokerEcommerce# in position 0
+        And from $activatePaymentNoticeV2Req.idChannel xml check value #canaleEcommerce# in position 0
+        And from $activatePaymentNoticeV2Req.password xml check value #password# in position 0
+        And from $activatePaymentNoticeV2Req.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $activatePaymentNoticeV2Req.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $activatePaymentNoticeV2Req.amount xml check value $activatePaymentNoticeV2.amount in position 0
+        # activatePaymentNoticeV2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Resp
+        And from $activatePaymentNoticeV2Resp.outcome xml check value OK in position 0
+        And from $activatePaymentNoticeV2Resp.totalAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
+        And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        ### TRANSFER 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 5
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 47$iuv in position 0
+        And from $activatePaymentNoticeV2Resp.standin xml check value true in position 0
+        # paGetPayment REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paGetPayment                                  |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentReq
+        And from $paGetPaymentReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paGetPaymentReq.idBrokerPA xml check value irraggiungibile in position 0
+        And from $paGetPaymentReq.idStation xml check value standin in position 0
+        And from $paGetPaymentReq.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paGetPaymentReq.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paGetPaymentReq.amount xml check value $activatePaymentNoticeV2.amount in position 0
+        # paGetPayment RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paGetPayment                                  |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentResp
+        And from $paGetPaymentResp.outcome xml check value OK in position 0
+        And from $paGetPaymentResp.data.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paGetPaymentResp.data.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paGetPaymentResp.data.dueDate xml check value 2021-12-31 in position 0
+        And from $paGetPaymentResp.data.description xml check value pagamentoTest in position 0
+        ###TRANSFER 1
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ###TRANSFER 2
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ###TRANSFER 3
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ###TRANSFER 4
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ###TRANSFER 5
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        # closePayment-v2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | closePayment-v2                               |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
+        And from $closePaymentv2Req.fee json check value 2.0 in position 0
+        And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $closePaymentv2Req.idPSP json check value #psp# in position 0
+        And from $closePaymentv2Req.outcome json check value OK in position 0
+        And from $closePaymentv2Req.paymentMethod json check value PPAL in position 0
+        And from $closePaymentv2Req.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.pspTransactionId json check value NotNone in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2021-07-09T17:06:03 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.transactionId json check value NotNone in position 1
+        # closePayment-v2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | closePayment-v2                               |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Resp
+        And from $closePaymentv2Resp.outcome json check value OK in position 0
+        # pspNotifyPayment REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | pspNotifyPayment                              |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentReq
+        And from $pspNotifyPaymentReq.paypalPayment.transactionId xml check value NotNone in position 0
+        And from $pspNotifyPaymentReq.paypalPayment.pspTransactionId xml check value NotNone in position 0
+        And from $pspNotifyPaymentReq.paypalPayment.totalAmount xml check value 12 in position 0
+        And from $pspNotifyPaymentReq.paypalPayment.fee xml check value 2 in position 0
+        And from $pspNotifyPaymentReq.paypalPayment.timestampOperation xml check value 2021-07-09T17:06:03 in position 0
+        # pspNotifyPayment RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | pspNotifyPayment                              |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentResp
+        And from $pspNotifyPaymentResp.outcome xml check value OK in position 0
+        # sendPaymentOutcomeV2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
+        And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
+        And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
+        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
+        And from $sendPaymentOutcomeV2Req.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
+        # sendPaymentOutcomeV2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Resp
+        And from $sendPaymentOutcomeV2Resp.outcome xml check value OK in position 0
+        # paSendRT REQ standin
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA_KO                                    |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
+        And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
+        And from $paSendRTStandinReq.idStation xml check value standin in position 0
+        And from $paSendRTStandinReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTStandinReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTStandinReq.receipt.outcome xml check value OK in position 0
+        And from $paSendRTStandinReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTStandinReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTStandinReq.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTStandinReq.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTStandinReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTStandinReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTStandinReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTStandinReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTStandinReq.receipt.fee xml check value 2.00 in position 0
+        # paSendRT REQ NO standin
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
+        And from $paSendRTReq.idPA xml check value 90000000001 in position 0
+        And from $paSendRTReq.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTReq.idStation xml check value 90000000001_08 in position 0
+        And from $paSendRTReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTReq.receipt.outcome xml check value OK in position 0
+        And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTReq.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
+        And from $paSendRTResp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
+        And from $paSendRTV2Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRTV2Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2Req.idStation xml check value 90000000001_09 in position 0
+        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
+        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+        # sendPaymentResult-v2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentResult-v2                          |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key sendPaymentResultv2Req
+        And from $sendPaymentResultv2Req.outcome json check value OK in position 0
+        And from $sendPaymentResultv2Req.paymentDate json check value NotNone in position 0
+        And from $sendPaymentResultv2Req.payments.creditorReferenceId json check value 47$iuv in position 0
+        And from $sendPaymentResultv2Req.payments.debtor json check value 77777777777 in position 0
+        And from $sendPaymentResultv2Req.payments.description json check value pagamentoTest in position 0
+        And from $sendPaymentResultv2Req.payments.fiscalCode json check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
+
+
+
+
+
+
+    @ALL @NMU @NMUPANEW @NMUPANEWPAGOK @NMUPANEWPAGOK_38 @after_1
+    Scenario: NMU flow OK, FLOW con PA New vp1 e PSP vp1 notify e PSP vp2 spo con broadcast paPrinc!=paSec standin flag_standin_psp flag_standin_pa flag invioReceiptStandin=true con Travaso BPAY: PA New vp1 standin con broadcast sia vp1 che vp2, Broadcast alcune con flag_standin_pa=Y altre =N, checkPosition, activateV2 con flag standin=true (qui il psp è eCommerce, non il PSP vero)-> paGetPayment verso ACA 5 transfer paPrincip != paSecond, closeV2+ -> pspNotify con 1 token, creditCardPayment e flag standin=true, spoV2+ -> paSendRT verso stazione principale (quella del nav), paSendRT/V2 verso broadcast PA secondarie tutte le receipt dirette verso stazioni con flag_standin_pa=Y hanno flagStandin = true, BIZ+ e SPRv2+ (NMU-55)
+        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '4329' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11991' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '11993' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15134' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '15133' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '13' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '14' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11989' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '15131' under macro update_query on db nodo_cfg
+        And update parameter invioReceiptStandin on configuration keys with value true
+        And update parameter scheduler.jobName_paSendRt.enabled on configuration keys with value true
+        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And wait 5 seconds after triggered refresh job ALL
+        And from body with datatable horizontal checkPositionBody initial JSON checkPosition
+            | fiscalCode                  | noticeNumber |
+            | #creditor_institution_code# | 347#iuv#     |
+        When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of checkPosition response is 200
+        And check outcome is OK of checkPosition response
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv      | 50.00  |
+        And from body with datatable vertical paGetPayment_5transfer_noOptional initial XML paGetPayment
+            | outcome                     | OK                          |
+            | creditorReferenceId         | 47$iuv                      |
+            | paymentAmount               | 50.00                       |
+            | dueDate                     | 2021-12-31                  |
+            | description                 | pagamentoTest               |
+            | entityUniqueIdentifierType  | G                           |
+            | entityUniqueIdentifierValue | 77777777777                 |
+            | fullName                    | Massimo Benvegnù            |
+            | transferAmount              | 10.00                       |
+            | IBAN                        | IT45R0760103200000000001016 |
+            | fiscalCodePA1               | 90000000001                 |
+            | fiscalCodePA2               | 90000000002                 |
+            | fiscalCodePA3               | 90000000003                 |
+            | fiscalCodePA4               | 88888888888                 |
+            | fiscalCodePA5               | 88888888888                 |
+            | remittanceInformation       | testPaGetPayment            |
+            | transferCategory            | paGetPaymentTest            |
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        Given from body with datatable vertical closePaymentV2Body_BPAY_noOptional initial json v2/closepayment
+            | token1                | $activatePaymentNoticeV2Response.paymentToken |
+            | outcome               | OK                                            |
+            | idPSP                 | #psp#                                         |
+            | idBrokerPSP           | #psp#                                         |
+            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | paymentMethod         | BPAY                                          |
+            | transactionId         | #transaction_id#                              |
+            | totalAmountExt        | 52                                            |
+            | feeExt                | 2                                             |
+            | primaryCiIncurredFee  | 1                                             |
+            | idBundle              | 0bf0c282-3054-11ed-af20-acde48001122          |
+            | idCiBundle            | 0bf0c35e-3054-11ed-af20-acde48001122          |
+            | timestampOperationExt | 2023-11-30T12:46:46.554+01:00                 |
+            | transId               | #transaction_id#                              |
+            | outPaymentGateway     | 00                                            |
+            | totalAmount1          | 12                                            |
+            | fee1                  | 2                                             |
+            | timestampOperation1   | 2021-07-09T17:06:03                           |
+            | authorizationCode     | 123456                                        |
+            | paymentGateway        | 00                                            |
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 200
+        And check outcome is OK of v2/closepayment response
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+            | idPSP | idBrokerPSP     | idChannel                            | password   | paymentToken                                  | outcome |
+            | #psp# | #id_broker_psp# | #canale_IMMEDIATO_MULTIBENEFICIARIO# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 5 seconds for expiration
+        # POSITION_ACTIVATE
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                         |
+            | ID                    | NotNone                                       |
+            | CREDITOR_REFERENCE_ID | 47$iuv                                        |
+            | PSP_ID                | #psp#                                         |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
+            | TOKEN_VALID_FROM      | NotNone                                       |
+            | TOKEN_VALID_TO        | NotNone                                       |
+            | DUE_DATE              | None                                          |
+            | AMOUNT                | $activatePaymentNoticeV2.amount               |
+            | INSERTED_TIMESTAMP    | NotNone                                       |
+            | UPDATED_TIMESTAMP     | NotNone                                       |
+            | INSERTED_BY           | activatePaymentNoticeV2                       |
+            | UPDATED_BY            | closePayment-v2                               |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_SERVICE
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                   |
+            | ID                 | NotNone                 |
+            | DESCRIPTION        | NotNone                 |
+            | COMPANY_NAME       | None                    |
+            | OFFICE_NAME        | None                    |
+            | DEBTOR_ID          | NotNone                 |
+            | INSERTED_TIMESTAMP | NotNone                 |
+            | UPDATED_TIMESTAMP  | NotNone                 |
+            | INSERTED_BY        | activatePaymentNoticeV2 |
+            | UPDATED_BY         | activatePaymentNoticeV2 |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_PAYMENT_PLAN
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                           |
+            | ID                    | NotNone                         |
+            | CREDITOR_REFERENCE_ID | 47$iuv                          |
+            | DUE_DATE              | NotNone                         |
+            | RETENTION_DATE        | None                            |
+            | AMOUNT                | $activatePaymentNoticeV2.amount |
+            | FLAG_FINAL_PAYMENT    | N                               |
+            | INSERTED_TIMESTAMP    | NotNone                         |
+            | UPDATED_TIMESTAMP     | NotNone                         |
+            | METADATA              | None                            |
+            | FK_POSITION_SERVICE   | NotNone                         |
+            | INSERTED_BY           | activatePaymentNoticeV2         |
+            | UPDATED_BY            | activatePaymentNoticeV2         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_PAYMENT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                     | value                                         |
+            | ID                         | NotNone                                       |
+            | CREDITOR_REFERENCE_ID      | 47$iuv                                        |
+            | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
+            | BROKER_PA_ID               | irraggiungibile                               |
+            | STATION_ID                 | standin                                       |
+            | STATION_VERSION            | 2                                             |
+            | PSP_ID                     | #psp#                                         |
+            | BROKER_PSP_ID              | #id_broker_psp#                               |
+            | CHANNEL_ID                 | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | AMOUNT                     | $activatePaymentNoticeV2.amount               |
+            | FEE                        | 2.00                                          |
+            | OUTCOME                    | NotNone                                       |
+            | PAYMENT_METHOD             | None                                          |
+            | PAYMENT_CHANNEL            | None                                          |
+            | TRANSFER_DATE              | None                                          |
+            | PAYER_ID                   | None                                          |
+            | INSERTED_TIMESTAMP         | NotNone                                       |
+            | UPDATED_TIMESTAMP          | NotNone                                       |
+            | FK_PAYMENT_PLAN            | NotNone                                       |
+            | RPT_ID                     | None                                          |
+            | PAYMENT_TYPE               | MOD3                                          |
+            | CARRELLO_ID                | None                                          |
+            | ORIGINAL_PAYMENT_TOKEN     | None                                          |
+            | FLAG_IO                    | N                                             |
+            | RICEVUTA_PM                | Y                                             |
+            | FLAG_PAYPAL                | N                                             |
+            | FLAG_ACTIVATE_RESP_MISSING | None                                          |
+            | TRANSACTION_ID             | $transaction_id                               |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_TRANSFER
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                   | value                                                       |
+            | ID                       | NotNone                                                     |
+            | CREDITOR_REFERENCE_ID    | 47$iuv                                                      |
+            | PA_FISCAL_CODE_SECONDARY | 90000000001,90000000002,90000000003,88888888888,88888888888 |
+            | IBAN                     | IT45R0760103200000000001016                                 |
+            | AMOUNT                   | 10                                                          |
+            | REMITTANCE_INFORMATION   | NotNone                                                     |
+            | TRANSFER_CATEGORY        | NotNone                                                     |
+            | TRANSFER_IDENTIFIER      | 1,2,3,4,5                                                   |
+            | VALID                    | Y                                                           |
+            | FK_POSITION_PAYMENT      | NotNone                                                     |
+            | INSERTED_TIMESTAMP       | NotNone                                                     |
+            | UPDATED_TIMESTAMP        | NotNone                                                     |
+            | FK_PAYMENT_PLAN          | NotNone                                                     |
+            | INSERTED_BY              | activatePaymentNoticeV2                                     |
+            | UPDATED_BY               | activatePaymentNoticeV2                                     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
+        # POSITION_PAYMENT_STATUS
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                                                                                                                   |
+            | ID                    | NotNone                                                                                                                                 |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode                                                                                                     |
+            | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber                                                                                                   |
+            | STATUS                | PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_ACCEPTED,PAID,NOTICE_GENERATED,NOTICE_SENT                                                 |
+            | INSERTED_TIMESTAMP    | NotNone                                                                                                                                 |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                                                                                                       |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken                                                                                           |
+            | INSERTED_BY           | activatePaymentNoticeV2,closePayment-v2,closePayment-v2,pspNotifyPayment,sendPaymentOutcomeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2 |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC             |
+        And verify 7 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                         |
+            | ID                    | NotNone                                       |
+            | FK_POSITION_PAYMENT   | NotNone                                       |
+            | CREDITOR_REFERENCE_ID | 47$iuv                                        |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
+            | STATUS                | NOTICE_SENT                                   |
+            | INSERTED_TIMESTAMP    | NotNone                                       |
+            | UPDATED_TIMESTAMP     | NotNone                                       |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | ID ASC                                |
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
+            | ORDER BY   | ID ASC                                |
+        # POSITION_STATUS
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value       |
+            | ID                 | NotNone     |
+            | STATUS             | PAYING,PAID |
+            | INSERTED_TIMESTAMP | NotNone     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+        And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+        # POSITION_STATUS_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column              | value   |
+            | ID                  | NotNone |
+            | STATUS              | PAID    |
+            | INSERTED_TIMESTAMP  | NotNone |
+            | UPDATED_TIMESTAMP   | NotNone |
+            | FK_POSITION_SERVICE | NotNone |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | ID ASC                                |
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
+            | ORDER BY   | ID ASC                                |
+        # PM_SESSION_DATA
+        And verify 0 record for the table PM_SESSION_DATA retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys  | where_values                                  |
+            | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
+        # PM_METADATA
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column         | value                                                                                                                         |
+            | TRANSACTION_ID | $transaction_id                                                                                                               |
+            | KEY            | Token,Tipo versamento,outcomePaymentGateway,authorizationCode,timestampOperation,totalAmount,paymentGateway,transactionId,fee |
+            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,BPAY,00,123456,2021-07-09T17:06:03,12,00,$transaction_id,2                      |
+            | INSERTED_BY    | closePayment-v2                                                                                                               |
+            | UPDATED_BY     | closePayment-v2                                                                                                               |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values    |
+            | TRANSACTION_ID | $transaction_id |
+            | ORDER BY       | ID ASC          |
+        # RE #####
+        # activatePaymentNoticeV2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Req
+        And from $activatePaymentNoticeV2Req.idPSP xml check value #pspEcommerce# in position 0
+        And from $activatePaymentNoticeV2Req.idBrokerPSP xml check value #brokerEcommerce# in position 0
+        And from $activatePaymentNoticeV2Req.idChannel xml check value #canaleEcommerce# in position 0
+        And from $activatePaymentNoticeV2Req.password xml check value #password# in position 0
+        And from $activatePaymentNoticeV2Req.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $activatePaymentNoticeV2Req.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $activatePaymentNoticeV2Req.amount xml check value $activatePaymentNoticeV2.amount in position 0
+        # activatePaymentNoticeV2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Resp
+        And from $activatePaymentNoticeV2Resp.outcome xml check value OK in position 0
+        And from $activatePaymentNoticeV2Resp.totalAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $activatePaymentNoticeV2Resp.paymentDescription xml check value pagamentoTest in position 0
+        And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        ### TRANSFER 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 5
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 47$iuv in position 0
+        And from $activatePaymentNoticeV2Resp.standin xml check value true in position 0
+        # paGetPayment REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paGetPayment                                  |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentReq
+        And from $paGetPaymentReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paGetPaymentReq.idBrokerPA xml check value irraggiungibile in position 0
+        And from $paGetPaymentReq.idStation xml check value standin in position 0
+        And from $paGetPaymentReq.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paGetPaymentReq.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paGetPaymentReq.amount xml check value $activatePaymentNoticeV2.amount in position 0
+        # paGetPayment RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paGetPayment                                  |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentResp
+        And from $paGetPaymentResp.outcome xml check value OK in position 0
+        And from $paGetPaymentResp.data.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paGetPaymentResp.data.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paGetPaymentResp.data.dueDate xml check value 2021-12-31 in position 0
+        And from $paGetPaymentResp.data.description xml check value pagamentoTest in position 0
+        ###TRANSFER 1
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ###TRANSFER 2
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ###TRANSFER 3
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ###TRANSFER 4
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ###TRANSFER 5
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        # closePayment-v2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | closePayment-v2                               |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
+        And from $closePaymentv2Req.fee json check value 2.0 in position 0
+        And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $closePaymentv2Req.idPSP json check value #psp# in position 0
+        And from $closePaymentv2Req.outcome json check value OK in position 0
+        And from $closePaymentv2Req.paymentMethod json check value BPAY in position 0
+        And from $closePaymentv2Req.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2021-07-09T17:06:03 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.transactionId json check value NotNone in position 1
+        # closePayment-v2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | closePayment-v2                               |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Resp
+        And from $closePaymentv2Resp.outcome json check value OK in position 0
+        # pspNotifyPayment REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | pspNotifyPayment                              |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentReq
+        And from $pspNotifyPaymentReq.ctBancomatpayPayment.transactionId xml check value NotNone in position 0
+        And from $pspNotifyPaymentReq.ctBancomatpayPayment.outcomePaymentGateway xml check value 00 in position 0
+        And from $pspNotifyPaymentReq.ctBancomatpayPayment.totalAmount xml check value 12 in position 0
+        And from $pspNotifyPaymentReq.ctBancomatpayPayment.fee xml check value 2 in position 0
+        And from $pspNotifyPaymentReq.ctBancomatpayPayment.timestampOperation xml check value 2021-07-09T17:06:03 in position 0
+        And from $pspNotifyPaymentReq.ctBancomatpayPayment.authorizationCode xml check value 123456 in position 0
+        And from $pspNotifyPaymentReq.ctBancomatpayPayment.paymentGateway xml check value 00 in position 0
+        # pspNotifyPayment RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | pspNotifyPayment                              |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentResp
+        And from $pspNotifyPaymentResp.outcome xml check value OK in position 0
+        # sendPaymentOutcomeV2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
+        And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
+        And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
+        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
+        And from $sendPaymentOutcomeV2Req.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
+        # sendPaymentOutcomeV2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Resp
+        And from $sendPaymentOutcomeV2Resp.outcome xml check value OK in position 0
+        # paSendRT REQ standin
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA_KO                                    |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
+        And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
+        And from $paSendRTStandinReq.idStation xml check value standin in position 0
+        And from $paSendRTStandinReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTStandinReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTStandinReq.receipt.outcome xml check value OK in position 0
+        And from $paSendRTStandinReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTStandinReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTStandinReq.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTStandinReq.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTStandinReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTStandinReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTStandinReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTStandinReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTStandinReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTStandinReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTStandinReq.receipt.fee xml check value 2.00 in position 0
+        # paSendRT REQ NO standin
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
+        And from $paSendRTReq.idPA xml check value 90000000001 in position 0
+        And from $paSendRTReq.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTReq.idStation xml check value 90000000001_08 in position 0
+        And from $paSendRTReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTReq.receipt.outcome xml check value OK in position 0
+        And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTReq.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
+        And from $paSendRTResp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
+        And from $paSendRTV2Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRTV2Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2Req.idStation xml check value 90000000001_09 in position 0
+        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
+        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+        # sendPaymentResult-v2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentResult-v2                          |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key sendPaymentResultv2Req
+        And from $sendPaymentResultv2Req.outcome json check value OK in position 0
+        And from $sendPaymentResultv2Req.paymentDate json check value NotNone in position 0
+        And from $sendPaymentResultv2Req.payments.creditorReferenceId json check value 47$iuv in position 0
+        And from $sendPaymentResultv2Req.payments.debtor json check value 77777777777 in position 0
+        And from $sendPaymentResultv2Req.payments.description json check value pagamentoTest in position 0
+        And from $sendPaymentResultv2Req.payments.fiscalCode json check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
+
+
+
+
+    @after1
+    Scenario: After restore 1
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
         And updates through the query update_obj_id_1 of the table PA_STAZIONE_PA the parameter BROADCAST with N under macro NewMod1 on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
@@ -17018,14 +19202,19 @@ Feature: NMU flows con PA New pagamento OK
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '11990' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '7' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
+        And update parameter invioReceiptStandin on configuration keys with value false
+        And update parameter station.stand-in on configuration keys with value 66666666666_01
+        And wait 3 seconds after triggered refresh job ALL
 
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16632' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1160001' under macro update_query on db nodo_cfg
 
+    @after2
+    Scenario: After restore 2
+        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '16640' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '1340001' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '16641' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16632' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '1160001' under macro update_query on db nodo_cfg
         And update parameter invioReceiptStandin on configuration keys with value false
         And update parameter station.stand-in on configuration keys with value 66666666666_01
         And wait 3 seconds after triggered refresh job ALL

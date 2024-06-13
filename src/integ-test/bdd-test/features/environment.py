@@ -25,8 +25,14 @@ user_profile = os.environ.get("USERPROFILE")
 # Variabile globale per segnalare se lo scenario "after" deve essere eseguito
 execute_after_scenario = False
 
-# Nome scenario After
-name_scenario_after = ''
+# Lista nome scenari After
+list_name_scenario_after = []
+
+# Dict after n nome scenario after n
+dict_after_n_name_scenario_n = {}
+
+# Tag after da eseguire
+tag_after_selected = '' 
 
 def before_all(context):
     print('Global settings...')
@@ -97,11 +103,15 @@ def before_all(context):
 
 
 def before_feature(context, feature):
-    global name_scenario_after
+    global list_name_scenario_after
+    global dict_after_n_name_scenario_n
 
+    i = 1
     for scenario in feature.scenarios:
-        if 'after' in scenario.tags:
-            name_scenario_after = scenario.name
+        if f"after{i}" in scenario.tags:
+            list_name_scenario_after.append(scenario.name)
+            dict_after_n_name_scenario_n[f"after_{i}"] = scenario.name
+            i += 1
 
     services = context.config.userdata.get("services")
     # add heading
@@ -122,8 +132,14 @@ def before_feature(context, feature):
 
 def before_scenario(context, scenario):
     global execute_after_scenario
-    if 'after' in scenario.effective_tags:
-        execute_after_scenario = True
+    global list_name_scenario_after
+    global tag_after_selected
+
+    for i in range(1, len(list_name_scenario_after)+1):
+        if f"after_{i}" in scenario.effective_tags:
+            execute_after_scenario = True
+            tag_after_selected = f"after_{i}"
+            break
 
     # context.stdout_capture = StringIO()
     # context.original_stdout = sys.stdout
@@ -133,18 +149,21 @@ def before_scenario(context, scenario):
 
 def after_scenario(context, scenario):
     global execute_after_scenario
-    global name_scenario_after
+    global dict_after_n_name_scenario_n
+    global tag_after_selected
 
     if execute_after_scenario:
-        print("----> AFTER STEP EXECUTING...")
-        name = name_scenario_after
-        # # Resetta la variabile per evitare di eseguire lo scenario "after" più volte
-        execute_after_scenario = False  
+        for after, name_scenario_after in dict_after_n_name_scenario_n.items():
+            if after == tag_after_selected:
+                print(f"----> AFTER STEP: {name_scenario_after} EXECUTING...")
+                name = name_scenario_after
+                # # Resetta la variabile per evitare di eseguire lo scenario "after" più volte
+                execute_after_scenario = False  
 
-        # # Esegue tutti gli step dello scenario "after"
-        phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
-        text_step = ''.join([step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
-        context.execute_steps(text_step)
+                # # Esegue tutti gli step dello scenario "after"
+                phase = ([phase for phase in context.feature.scenarios if name in phase.name] or [None])[0]
+                text_step = ''.join([step.keyword + " " + step.name + "\n\"\"\"\n" + (step.text or '') + "\n\"\"\"\n" for step in phase.steps])
+                context.execute_steps(text_step)
         print("----> AFTER STEP COMPLETED")
 
     # dbRun = getattr(context, "dbRun")
