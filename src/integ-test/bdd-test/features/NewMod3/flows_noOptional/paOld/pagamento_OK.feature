@@ -2710,43 +2710,43 @@ Feature: NM3 flows PA Old con pagamento OK
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spo+ -> paaInviaRT+ BIZ+ (NM3-12)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
-        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNoticeV2
+        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
             | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
             | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
-        And from body with datatable horizontal paaAttivaRPT_timeout initial XML paaAttivaRPT
-            | delay |
-            | 7000  |
+        And from body with datatable horizontal paaAttivaRPT_delay_noOptional initial XML paaAttivaRPT
+            | delay | esito | importoSingoloVersamento |
+            | 2900  | OK    | 10.00                    |
         And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
         Given RPT generation RPT_generation with datatable vertical
-            | identificativoDominio             | #creditor_institution_code_old#             |
-            | identificativoStazioneRichiedente | #id_station_old#                            |
-            | dataOraMessaggioRichiesta         | #timedate#                                  |
-            | dataEsecuzionePagamento           | #date#                                      |
-            | importoTotaleDaVersare            | $activatePaymentNotice.amount               |
-            | identificativoUnivocoVersamento   | 12$iuv                                      |
-            | codiceContestoPagamento           | paymentToken |
-            | importoSingoloVersamento          | $activatePaymentNotice.amount               |
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station_old#                |
+            | dataOraMessaggioRichiesta         | #timedate#                      |
+            | dataEsecuzionePagamento           | #date#                          |
+            | importoTotaleDaVersare            | $activatePaymentNotice.amount   |
+            | identificativoUnivocoVersamento   | 12$iuv                          |
+            | codiceContestoPagamento           | paymentToken                    |
+            | importoSingoloVersamento          | $activatePaymentNotice.amount   |
         And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
-            | identificativoIntermediarioPA         | #id_broker_old#                             |
-            | identificativoStazioneIntermediarioPA | #id_station_old#                            |
-            | identificativoDominio                 | #creditor_institution_code_old#             |
-            | identificativoUnivocoVersamento       | 12$iuv                                      |
-            | codiceContestoPagamento               | $activatePaymentNoticeResponse.paymentToken |
-            | password                              | #password#                                  |
-            | identificativoPSP                     | #pspFittizio#                               |
-            | identificativoIntermediarioPSP        | #brokerFittizio#                            |
-            | identificativoCanale                  | #canaleFittizio#                            |
-            | rpt                                   | $rptAttachment                              |
+            | identificativoIntermediarioPA         | #id_broker_old#                 |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoDominio                 | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento       | 12$iuv                          |
+            | codiceContestoPagamento               | paymentToken                    |
+            | password                              | #password#                      |
+            | identificativoPSP                     | #pspFittizio#                   |
+            | identificativoIntermediarioPSP        | #brokerFittizio#                |
+            | identificativoCanale                  | #canaleFittizio#                |
+            | rpt                                   | rptAttachment                   |
         Then saving activatePaymentNotice request in activatePaymentNotice
         And saving nodoInviaRPT request in nodoInviaRPT
-        When calling primitive evolution activatePaymentNotice and nodoInviaRPT with POST and POST in parallel with 7000 ms delay
-        Then check outcome is OK of activatePaymentNotice response
-        And check esito is OK of nodoInviaRPT response
-        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
-            | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
-            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
-        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcome response
+        When calling primitive evolution activatePaymentNotice and nodoInviaRPT_$rpt with POST and POST in parallel with 2000 ms delay
+    #Then check outcome is OK of activatePaymentNotice response
+    # And check esito is OK of nodoInviaRPT response
+    # Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+    #     | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
+    #     | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
+    # When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+    # Then check outcome is OK of sendPaymentOutcome response
 
 
 

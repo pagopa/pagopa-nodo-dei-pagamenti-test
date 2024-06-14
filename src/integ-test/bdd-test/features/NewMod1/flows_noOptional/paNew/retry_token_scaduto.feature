@@ -642,14 +642,14 @@ Feature: NMU flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                                                                 |
-            | ID                    | NotNone                                                                               |
-            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode                                                   |
-            | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber                                                 |
-            | STATUS                | PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED                        |
-            | INSERTED_TIMESTAMP    | NotNone                                                                               |
-            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                                                     |
-            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken                                         |
+            | column                | value                                                                                   |
+            | ID                    | NotNone                                                                                 |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode                                                     |
+            | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber                                                   |
+            | STATUS                | PAYING,PAYMENT_RESERVED,PAYMENT_SENT,PAYMENT_UNKNOWN,CANCELLED                          |
+            | INSERTED_TIMESTAMP    | NotNone                                                                                 |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                                                       |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken                                           |
             | INSERTED_BY           | activatePaymentNoticeV2,closePayment-v2,closePayment-v2,pspNotifyPaymentV2,mod3CancelV2 |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
@@ -981,7 +981,7 @@ Feature: NMU flows con PA New retry a token scaduto
             | column                | value                                         |
             | ID                    | NotNone                                       |
             | CREDITOR_REFERENCE_ID | 02$iuv                                        |
-            | PSP_ID                | #pspEcommerce#                                         |
+            | PSP_ID                | #pspEcommerce#                                |
             | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
             | TOKEN_VALID_FROM      | NotNone                                       |
             | TOKEN_VALID_TO        | NotNone                                       |
@@ -990,7 +990,7 @@ Feature: NMU flows con PA New retry a token scaduto
             | INSERTED_TIMESTAMP    | NotNone                                       |
             | UPDATED_TIMESTAMP     | NotNone                                       |
             | INSERTED_BY           | activatePaymentNoticeV2                       |
-            | UPDATED_BY            | activatePaymentNoticeV2                               |
+            | UPDATED_BY            | activatePaymentNoticeV2                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -1039,13 +1039,13 @@ Feature: NMU flows con PA New retry a token scaduto
             | BROKER_PA_ID               | $activatePaymentNoticeV2.fiscalCode           |
             | STATION_ID                 | #id_station#                                  |
             | STATION_VERSION            | 2                                             |
-            | PSP_ID                     | #pspEcommerce#                                         |
-            | BROKER_PSP_ID              | #brokerEcommerce#                               |
-            | CHANNEL_ID                 | #canaleEcommerce#          |
+            | PSP_ID                     | #pspEcommerce#                                |
+            | BROKER_PSP_ID              | #brokerEcommerce#                             |
+            | CHANNEL_ID                 | #canaleEcommerce#                             |
             | AMOUNT                     | $activatePaymentNoticeV2.amount               |
             | FEE                        | None                                          |
             | OUTCOME                    | None                                          |
-            | PAYMENT_METHOD             | None                                       |
+            | PAYMENT_METHOD             | None                                          |
             | PAYMENT_CHANNEL            | NotNone                                       |
             | TRANSFER_DATE              | None                                          |
             | PAYER_ID                   | None                                          |
@@ -1057,10 +1057,10 @@ Feature: NMU flows con PA New retry a token scaduto
             | CARRELLO_ID                | None                                          |
             | ORIGINAL_PAYMENT_TOKEN     | None                                          |
             | FLAG_IO                    | N                                             |
-            | RICEVUTA_PM                | None                                             |
-            | FLAG_PAYPAL                | None                                             |
+            | RICEVUTA_PM                | None                                          |
+            | FLAG_PAYPAL                | None                                          |
             | FLAG_ACTIVATE_RESP_MISSING | None                                          |
-            | TRANSACTION_ID             | None                               |
+            | TRANSACTION_ID             | None                                          |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
@@ -1089,15 +1089,15 @@ Feature: NMU flows con PA New retry a token scaduto
             | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
         # POSITION_PAYMENT_STATUS
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                                                                 |
-            | ID                    | NotNone                                                                               |
-            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode                                                   |
-            | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber                                                 |
-            | STATUS                | PAYING,CANCELLED                        |
-            | INSERTED_TIMESTAMP    | NotNone                                                                               |
-            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                                                     |
-            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken                                         |
-            | INSERTED_BY           | activatePaymentNoticeV2,mod3CancelV2 |
+            | column                | value                                         |
+            | ID                    | NotNone                                       |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode           |
+            | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber         |
+            | STATUS                | PAYING,CANCELLED                              |
+            | INSERTED_TIMESTAMP    | NotNone                                       |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId             |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
+            | INSERTED_BY           | activatePaymentNoticeV2,mod3CancelV2          |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values                          |
             | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |

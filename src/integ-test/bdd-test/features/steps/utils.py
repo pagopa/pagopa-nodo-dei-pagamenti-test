@@ -14,7 +14,6 @@ import requests
 from requests.adapters import HTTPAdapter
 import xmltodict
 
-
 from urllib.parse import urlparse
 from behave.model import Table, Row
 
@@ -566,17 +565,20 @@ def isDate(string: str):
 
 
 
-
-
-def single_thread_evolution(context, list_soap_primitive, list_tipo, delay_retrieve_token):
+def single_thread_evolution(context, primitive, tipo):
     print("single_thread_evolution")
 
     dbRun = getattr(context, "dbRun")
 
-    global db_online
-    global db_offline
-    global db_re
-    global db_wfesp
+    db_online = ''
+    db_offline = ''
+    db_re = ''
+    db_wfesp = ''
+
+    import base64 as b64
+    import db_operation_postgres
+    import db_operation_oracle
+    import db_operation_apicfg_testing_support as db
 
     if dbRun == "Postgres":
         db_online = db_operation_postgres
@@ -590,123 +592,141 @@ def single_thread_evolution(context, list_soap_primitive, list_tipo, delay_retri
         db_wfesp = db_operation_oracle
 
     db_config = context.config.userdata.get("db_configuration")
-    db_selected = db_config.get(db_name)
+    db_selected = db_config.get("nodo_online")   
 
-    payment_token = ''
-
-    print(f"primitives to launch in parallel: {list_soap_primitive} with type: {list_tipo}")
+    print(f"primitives to launch in parallel: {primitive} with type: {tipo}")
 
     i = 0
-    for primitive in list_soap_primitive:
-        if list_tipo[i] == 'GET':
-            if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
-                url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
-            else:
-                url_nodo = get_rest_url_nodo(context, primitive)
+    payment_token = ''
+    payload_support = ''
+
+    if 'nodoInviaRPT' in primitive:
+        if '_' in primitive:
+            primitive_full = primitive
+            primitive = primitive.split('_')[0]
+            payload_support = primitive_full.split('_')[1]
+            payload_support = replace_context_variables(payload_support, context)
+
+            ### RECUPERO IL TOKEN DAL DB DALLA TABLE RPT_ACTIVATIONS
+            notice_number = "$activatePaymentNotice.noticeNumber"
+            fiscal_code = "$activatePaymentNotice.fiscalCode"
+
+            notice_number = replace_local_variables(notice_number, context)
+            fiscal_code = replace_local_variables(fiscal_code, context)
+
+            select_get_token = f"SELECT PAYMENT_TOKEN FROM RPT_ACTIVATIONS WHERE NOTICE_ID = '{notice_number}' AND PA_FISCAL_CODE = '{fiscal_code}'"
+
+            db_name = 'nodo_online'
+
+            adopted_db, conn = get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
+
+            exec_query = adopted_db.executeQuery(conn, select_get_token)
+            assert exec_query != None and len(exec_query) != 0, f"Result query empty or None for table: RPT_ACTIVATIONS !"
+
+            payment_token = exec_query[0][0]
+            ### REPLACE DEL TOKEN RECUPERATO DENTRO RPT GENERATA
+            payload_support = payload_support.replace('paymentToken', payment_token)
+
+            payload_b = bytes(payload_support, 'UTF-8')
+            payload_uni = b64.b64encode(payload_b)
+            payload = f"{payload_uni}".split("'")[1]
+
+            setattr(context, 'rptAttachment', payload)
+    ###LANCIO DELLE PRIMITIVE
+    ###LANCIO GET
+    if tipo == 'GET':
+        if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
+            url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+        else:
+            url_nodo = get_rest_url_nodo(context, primitive)
+        print(f"url: {url_nodo}")
+
+        header_host = estrapola_header_host(url_nodo)
+        headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
+        
+        get_response = ''
+        if dbRun == "Postgres":
+            get_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        elif dbRun == "Oracle":
+            get_response = requests.get(url_nodo, headers=headers, verify=False)
+
+        setattr(context, primitive + "Response", get_response)
+        
+        print("get response: ", get_response.content)
+        print(primitive + "Response")
+    ###LANCIO POST
+    elif tipo == 'POST':
+        body = ''
+        if 'nodoInviaRPT' in primitive:
+            body = getattr(context, primitive)
+            body = body.replace('rptAttachment',getattr(context, 'rptAttachment')).replace('paymentToken',payment_token)
+        else:    
+            body = getattr(context, primitive)
+        
+        response = ''
+        url_nodo = ''
+
+        if 'xml' in getattr(context, primitive):
+            url_nodo = get_soap_url_nodo(context, primitive)
             print(f"url: {url_nodo}")
 
             header_host = estrapola_header_host(url_nodo)
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
-            
-            get_response = ''
+            print(f"primitive: {primitive} ---> body: {body}")
+
             if dbRun == "Postgres":
-                get_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
-            elif dbRun == "Oracle":
-                get_response = requests.get(url_nodo, headers=headers, verify=False)
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+            elif dbRun == 'Oracle':
+                response = requests.post(url_nodo, body, headers=headers, verify=False)
+        else:
+            if '<' in body: 
+                body = xmltodict.parse(body)
+                body = body["root"]
+                if body != None:
+                    if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
+                        body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
+                        if type(body["paymentTokens"]) != list:
+                            l = list()
+                            l.append(body["paymentTokens"])
+                            body["paymentTokens"] = l
+                    if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
+                        body["totalAmount"] = float(body["totalAmount"])
+                    if ('fee' in body.keys()) and (body["fee"] != None):
+                        body["fee"] = float(body["fee"])
+                    if ('importoTotalePagato' in body.keys()) and (body["importoTotalePagato"] != None):
+                        body["importoTotalePagato"] = float(body["importoTotalePagato"])
+                    if ('RRN' in body.keys()) and (body["RRN"] != None):
+                        body["RRN"] = float(body["RRN"])
+                    if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
+                        body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
+                    if ('positionslist' in body.keys()) and (body["positionslist"] != None):
+                        body["positionslist"] = body["positionslist"]["position"]
+                        if type(body["positionslist"]) != list:
+                            l = list()
+                            l.append(body["positionslist"])
+                            body["positionslist"] = l
+                    body = json.dumps(body, indent=4)
+                    print(f"body: {body}")
 
-            setattr(context, primitive + "Response", get_response)
+            if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
+                url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
+            else:    
+                url_nodo = get_rest_url_nodo(context, primitive)
+
+            print(f"url: {url_nodo}")
+
+            header_host = estrapola_header_host(url_nodo)
+            headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY} 
+
+            if dbRun == "Postgres":
+                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+            elif dbRun == 'Oracle':
+                response = requests.post(url_nodo, body, headers=headers, verify=False)            
             
-            print("get response: ", get_response.content)
-            print(primitive + "Response")
-
-        elif list_tipo[i] == 'POST':
-            body = getattr(context, primitive)
-
-            response = ''
-            url_nodo = ''
-
-            if 'xml' in getattr(context, primitive):
-                url_nodo = get_soap_url_nodo(context, primitive)
-                print(f"url: {url_nodo}")
-
-                header_host = estrapola_header_host(url_nodo)
-                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY}
-
-                if dbRun == "Postgres":
-                    response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
-                elif dbRun == 'Oracle':
-                    response = requests.post(url_nodo, body, headers=headers, verify=False)
-            else:
-                if '<' in body: 
-                    body = xmltodict.parse(body)
-                    body = body["root"]
-                    if body != None:
-                        if ('paymentTokens' in body.keys()) and (body["paymentTokens"] != None and (type(body["paymentTokens"]) != str)):
-                            body["paymentTokens"] = body["paymentTokens"]["paymentToken"]
-                            if type(body["paymentTokens"]) != list:
-                                l = list()
-                                l.append(body["paymentTokens"])
-                                body["paymentTokens"] = l
-                        if ('totalAmount' in body.keys()) and (body["totalAmount"] != None):
-                            body["totalAmount"] = float(body["totalAmount"])
-                        if ('fee' in body.keys()) and (body["fee"] != None):
-                            body["fee"] = float(body["fee"])
-                        if ('importoTotalePagato' in body.keys()) and (body["importoTotalePagato"] != None):
-                            body["importoTotalePagato"] = float(body["importoTotalePagato"])
-                        if ('RRN' in body.keys()) and (body["RRN"] != None):
-                            body["RRN"] = float(body["RRN"])
-                        if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
-                            body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
-                        if ('positionslist' in body.keys()) and (body["positionslist"] != None):
-                            body["positionslist"] = body["positionslist"]["position"]
-                            if type(body["positionslist"]) != list:
-                                l = list()
-                                l.append(body["positionslist"])
-                                body["positionslist"] = l
-                        body = json.dumps(body, indent=4)
-                        print(f"body: {body}")
-
-                if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
-                    url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
-                else:    
-                    url_nodo = get_rest_url_nodo(context, primitive)
-
-                print(f"url: {url_nodo}")
-
-                header_host = estrapola_header_host(url_nodo)
-                headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY} 
- 
-                if dbRun == "Postgres":
-                    response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
-                elif dbRun == 'Oracle':
-                    response = requests.post(url_nodo, body, headers=headers, verify=False)            
-                
-            setattr(context, primitive + "Response", response)
-            print("response: ", response.content)
-            print(primitive + "Response")
-
-        if i == 0:
-            if delay_retrieve_token != 0:
-                notice_number = f"{primitive}.noticeNumber"
-                fiscal_code = f"{primitive}.fiscalCode"
-
-                notice_number = replace_local_variables(notice_number, context)
-                fiscal_code = replace_local_variables(fiscal_code, context)
-
-                select_get_token = f"SELECT PAYMENT_TOKEN FROM RPT_ACTIVATIONS WHERE NOTICE_ID = '{notice_number}' AND PA_FISCAL_CODE = '{fiscal_code}'"
-
-                db_name = 'nodo_online'
-
-                adopted_db, conn = get_db_connection(db_name, db, db_online, db_offline, db_re, db_wfesp, db_selected)
-
-                exec_query = adopted_db.executeQuery(conn, select_get_token)
-                assert exec_query != None and len(exec_query) != 0, f"Result query empty or None for table: RPT_ACTIVATIONS !"
-
-                payment_token = exec_query
-
-
-        
-        i += 1
+        setattr(context, primitive + "Response", response)
+        print("response: ", response.content)
+        print(primitive + "Response")
+     
 
 
 
@@ -824,20 +844,24 @@ def single_thread(context, soap_primitive, tipo):
 
 
 
-
-
 def threading_evolution(context, primitive_list, list_of_type, delay):
-    t = Thread(target=single_thread_evolution, args=(context, primitive_list, list_of_type, delay))
-    t.start()
+    i = 0
+    threads = list()
+    
+    while i < len(primitive_list):
+        t = Thread(target=single_thread_evolution, args=(context, primitive_list[i], list_of_type[i]))
+        threads.append(t)
+        time.sleep(delay/1000)
+        # Avvia il thread
+        t.start()
+        i += 1
+
+    for thread in threads:
+        # Attende che il thread completi l'esecuzione
+        thread.join()
+        
     print('Thread completed!')
     
-
-
-
-
-
-
-
 
 def threading(context, primitive_list, list_of_type):
     i = 0
