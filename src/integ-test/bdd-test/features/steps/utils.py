@@ -442,7 +442,6 @@ def replace_local_variables_with_position(body, position, context, type_body):
                         payload = json2xml(jsonDict)
                         payload = '<root>' + payload + '</root>'
                         payload = payload.replace('\n','').replace('\t','')
-                        print(f"payload from json to xml ---> {payload}")
                         document = parseString(payload)
             elif dbRun == "Oracle":
                 if isinstance(saved_elem, str):
@@ -468,7 +467,6 @@ def replace_local_variables_with_position(body, position, context, type_body):
                         payload = json2xml(jsonDict)
                         payload = '<root>' + payload + '</root>'
                         payload = payload.replace('\n','').replace('\t','')
-                        print(f"payload from json to xml ---> {payload}")
                         document = parseString(payload)
             try:
                 value = document.getElementsByTagNameNS('*', tag)[int(position)].firstChild.data

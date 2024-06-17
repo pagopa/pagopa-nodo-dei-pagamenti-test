@@ -4004,9 +4004,6 @@ def step_impl(context, value_obtained_with_path, type_body, value_expected, n):
                 assert str(value_obtained_with_path) == str(value_expected), f"For tipo evento: {tipo_evento} for field: {field_to_check} -> value obtained: {str(value_obtained_with_path)} != value expected: {str(value_expected)}"
             print(f"For tipo evento: {tipo_evento} -> check field: {field_to_check} -> value expected: {value_expected} is equal to value obtained: {value_obtained_with_path}")
 
-
-
-
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
         print("----->>>> Assertion Error: ", e)
@@ -4072,9 +4069,20 @@ def step_impl(context, tag, payload):
 
 @step("calling primitive evolution {primitive1} and {primitive2} with {restType1} and {restType2} in parallel with {delay1:d} ms delay")
 def step_impl(context, primitive1, primitive2, restType1, restType2, delay1):
-    list_of_primitive = [primitive1, primitive2]
-    list_of_type = [restType1, restType2]
-    utils.threading_evolution(context, list_of_primitive, list_of_type, delay1)
+    try:
+        list_of_primitive = [primitive1, primitive2]
+        list_of_type = [restType1, restType2]
+        utils.threading_evolution(context, list_of_primitive, list_of_type, delay1)
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 
