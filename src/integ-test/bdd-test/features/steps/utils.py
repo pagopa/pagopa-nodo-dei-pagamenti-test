@@ -442,6 +442,7 @@ def replace_local_variables_with_position(body, position, context, type_body):
                         payload = json2xml(jsonDict)
                         payload = '<root>' + payload + '</root>'
                         payload = payload.replace('\n','').replace('\t','')
+                        print(f"payload from json to xml ---> {payload}")
                         document = parseString(payload)
             elif dbRun == "Oracle":
                 if isinstance(saved_elem, str):
@@ -467,6 +468,7 @@ def replace_local_variables_with_position(body, position, context, type_body):
                         payload = json2xml(jsonDict)
                         payload = '<root>' + payload + '</root>'
                         payload = payload.replace('\n','').replace('\t','')
+                        print(f"payload from json to xml ---> {payload}")
                         document = parseString(payload)
             try:
                 value = document.getElementsByTagNameNS('*', tag)[int(position)].firstChild.data
@@ -565,7 +567,7 @@ def isDate(string: str):
 
 
 
-def single_thread_evolution(context, primitive, tipo):
+def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel):
     print("single_thread_evolution")
 
     dbRun = getattr(context, "dbRun")
@@ -608,8 +610,14 @@ def single_thread_evolution(context, primitive, tipo):
             payload_support = replace_context_variables(payload_support, context)
 
             ### RECUPERO IL TOKEN DAL DB DALLA TABLE RPT_ACTIVATIONS
-            notice_number = "$activatePaymentNotice.noticeNumber"
-            fiscal_code = "$activatePaymentNotice.fiscalCode"
+            notice_number = ''
+            fiscal_code = ''
+
+            for single_primitive_in_parallel in all_primitive_in_parallel:
+                if 'activatePaymentNotice' in single_primitive_in_parallel:
+                    notice_number = f"${single_primitive_in_parallel}.noticeNumber"
+                    fiscal_code = f"${single_primitive_in_parallel}.fiscalCode"
+                    break
 
             notice_number = replace_local_variables(notice_number, context)
             fiscal_code = replace_local_variables(fiscal_code, context)
@@ -846,10 +854,12 @@ def single_thread(context, soap_primitive, tipo):
 
 def threading_evolution(context, primitive_list, list_of_type, delay):
     i = 0
+
     threads = list()
+    all_primitive_in_parallel = primitive_list
     
     while i < len(primitive_list):
-        t = Thread(target=single_thread_evolution, args=(context, primitive_list[i], list_of_type[i]))
+        t = Thread(target=single_thread_evolution, args=(context, primitive_list[i], list_of_type[i], all_primitive_in_parallel))
         threads.append(t)
         time.sleep(delay/1000)
         # Avvia il thread
