@@ -637,6 +637,7 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             payload_uni = b64.b64encode(payload_b)
             payload = f"{payload_uni}".split("'")[1]
 
+            setattr(context, 'token_by_rptActivations', payment_token)
             setattr(context, 'rptAttachment', payload)
     ###LANCIO DELLE PRIMITIVE
     ###LANCIO GET
