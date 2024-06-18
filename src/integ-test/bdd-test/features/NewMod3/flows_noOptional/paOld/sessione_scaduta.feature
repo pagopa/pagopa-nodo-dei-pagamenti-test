@@ -4,7 +4,7 @@ Feature: NM3 flows PA Old sessione scaduta
         Given systems up
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_1 @after
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_1 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT  nodoInviaRPT (scadenza sessione)  mod3cancelV1 -> paaInviaRT- BIZ- (NM3-9)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -377,7 +377,7 @@ Feature: NM3 flows PA Old sessione scaduta
 
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_2 @after
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_2 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  nodoInviaRPT -> paaInviaRT- BIZ- (NM3-10)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -749,7 +749,7 @@ Feature: NM3 flows PA Old sessione scaduta
         And from $paaInviaRTResp.esito xml check value OK in position 0
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_3 @after
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_3 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT  nodoInviaRPT (scadenza sessione)  mod3cancelV1 -> paaInviaRT- BIZ- (NM3-35)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -1122,7 +1122,7 @@ Feature: NM3 flows PA Old sessione scaduta
 
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_4 @after
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_4 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT (scadenza sessione)  mod3cancelV1  nodoInviaRPT -> paaInviaRT- BIZ- (NM3-36)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
@@ -1494,7 +1494,7 @@ Feature: NM3 flows PA Old sessione scaduta
         And from $paaInviaRTResp.esito xml check value OK in position 0
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_5 @after
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_5 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT (scadenza sessione)  mod3cancelV1 BIZ- (NM3-11)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And wait 5 seconds after triggered refresh job ALL
@@ -1673,7 +1673,7 @@ Feature: NM3 flows PA Old sessione scaduta
 
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_6 @after
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDSESSCADUTA @NM3PAOLDSESSCADUTA_6 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT (scadenza sessione)  mod3cancelV1 BIZ- (NM3-37)
         Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
         And wait 5 seconds after triggered refresh job ALL
@@ -1851,7 +1851,7 @@ Feature: NM3 flows PA Old sessione scaduta
         And from $paaAttivaRPTResp.datiPagamentoPA.ibanAccredito xml check value NotNone in position 0
 
 
-    @after
+    @after1
     Scenario: After restore
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'N', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And update parameter default_token_duration_validity_millis on configuration keys with value 1800000

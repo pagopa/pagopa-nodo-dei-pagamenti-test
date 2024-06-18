@@ -578,7 +578,7 @@ Feature: NM3 flows PA Old con attivazione fallita
         And from $nodoInviaRPTResp.esito xml check value KO in position 0
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3ATTFALLITAPAOLD_3 @after1
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3ATTFALLITAPAOLD_3 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP KO -> paaInviaRT- BIZ+ (NM3-13)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -912,7 +912,7 @@ Feature: NM3 flows PA Old con attivazione fallita
 
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3ATTFALLITAPAOLD_4 @after1
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3ATTFALLITAPAOLD_4 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP Timeout -> paaInviaRT- BIZ+ (NM3-14)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -1246,7 +1246,7 @@ Feature: NM3 flows PA Old con attivazione fallita
 
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3ATTFALLITAPAOLD_5 @after1
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3ATTFALLITAPAOLD_5 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP KO -> paaInviaRT- BIZ+ (NM3-39)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -1579,7 +1579,7 @@ Feature: NM3 flows PA Old con attivazione fallita
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3ATTFALLITAPAOLD_6 @after1
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3ATTFALLITAPAOLD_6 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP Timeout -> paaInviaRT- BIZ+ (NM3-40)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -1912,7 +1912,7 @@ Feature: NM3 flows PA Old con attivazione fallita
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3ATTFALLITAPAOLD_7 @after1
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3ATTFALLITAPAOLD_7 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1: verificaBollettino -> paVerify activate Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP KO -> paaInviaRT- BIZ- (NM3-94)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -2257,7 +2257,7 @@ Feature: NM3 flows PA Old con attivazione fallita
 
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3ATTFALLITAPAOLD_8 @after1
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3ATTFALLITAPAOLD_8 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1: activate -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP Timeout -> paaInviaRT- BIZ+ (NM3-95)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -2601,7 +2601,7 @@ Feature: NM3 flows PA Old con attivazione fallita
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
 
 
-    @after_1
+    @after1
     Scenario: After restore
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'N', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And update parameter default_token_duration_validity_millis on configuration keys with value 1800000

@@ -4,7 +4,7 @@ Feature: NM3 flows PA Old con pagamento OK
         Given systems up
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_1 @after3
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_1 @after_3
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT  spo+  nodoInviaRPT -> paaInviaRT+ (subito, senza job paInviaRT) BIZ+ (NM3-2)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -352,7 +352,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_2 @after3
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_2 @after_3
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: verify -> paaVerificaRPT activate -> paaAttivaRPT  nodoInviaRPT spo+ -> paaInviaRT+ (subito, senza job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ BIZ+ (NM3-1)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -1021,7 +1021,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_4 @after3
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_4 @after_3
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT  spoV2+  nodoInviaRPT -> paaInviaRT+ BIZ+ (NM3-28)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -1689,7 +1689,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_6 @after2
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_6 @after_2
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: verificaBollettino -> paaVerificaRPT activatev2 -> paaAttivaRPT  nodoInviaRPT spov2+ -> paaInviaRT+ (tramite job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ BIZ+ (NM3-30)
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -2027,7 +2027,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_7 @after2
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_7 @after_2
     Scenario: NM3 flow OK, FLOW con PSP POSTE vp2 activate PSP POSTE vp1 spo: verificaBollettino -> paaVerificaRPT activatev2 -> paaAttivaRPT  nodoInviaRPT spo+ -> paaInviaRT+ (tramite job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ BIZ+ (NM3-73)
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -2367,7 +2367,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_8 @after2
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_8 @after_2
     Scenario: NM3 flow OK, FLOW con PSP POSTE vp1 activate PSP POSTE vp2 spo: verificaBollettino -> paaVerificaRPT activate -> paaAttivaRPT  nodoInviaRPT spov2+ -> paaInviaRT+ (tramite job paInviaRT) nodoChiediStatoRPT nodoChiediCopiaRT BIZ+ BIZ+ (NM3-56)
         Given from body with datatable horizontal verificaBollettino_noOptional initial XML verificaBollettino
             | idPSP      | idBrokerPSP      | idChannel      | password   | ccPost    | noticeNumber |
@@ -2706,7 +2706,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_9 @after3
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_9 @after_3
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spo+ -> paaInviaRT+ BIZ+ (NM3-12)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -3024,7 +3024,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_10 @after3
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_10 @after_3
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp2: activateV2 -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spoV2+ -> paaInviaRT+ BIZ+ (NM3-38)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -3341,7 +3341,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_11 @after3
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_11 @after_3
     Scenario: NM3 flow OK, FLOW con PA Old, PSP vp1 activate e PSP vp2 spo: activate -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spoV2+ -> paaInviaRT+ BIZ+ (NM3-61)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -3658,7 +3658,7 @@ Feature: NM3 flows PA Old con pagamento OK
         And from $nodoInviaRPTResp.redirect xml check value 0 in position 0
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_12 @after3
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_12 @after_3
     Scenario: NM3 flow OK, FLOW con PA Old, PSP vp2 activate e PSP vp1 spo: activateV2 -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spo+ -> paaInviaRT+ BIZ+ (NM3-78)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -3976,7 +3976,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_13 @after3
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_13 @after_3
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp1: verificaBollettino -> paVerify activate Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spo+ Poste -> paaInviaRT+ BIZ+ (NM3-93)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -4305,7 +4305,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_14 @after1
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_14 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old e PSP POSTE vp2: verificaBollettino -> paVerify activateV2 Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spoV2+ Poste -> paaInviaRT+ BIZ+ (NM3-96)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
@@ -4635,7 +4635,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_15 @after1
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_15 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old, PSP POSTE vp1 activate e PSP POSTE vp2 spo: verificaBollettino -> paVerify activate Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spoV2+ Poste -> paaInviaRT+ BIZ+ (NM3-99)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -4966,7 +4966,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_16 @after1
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_16 @after_1
     Scenario: NM3 flow OK, FLOW con PA Old, PSP POSTE vp2 activate e PSP POSTE vp1 spo: verificaBollettino -> paVerify activateV2 Poste -> paaAttivaRPT REQ  nodoInviaRPT  paaAttivaRPT RESP OK  spo+ Poste -> paaInviaRT+ BIZ+ (NM3-100)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
@@ -5298,7 +5298,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_17 @after3
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_17 @after_3
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT  spo+ REQ -> lock nodoInviaRPT REQ -> aspetta lock spo+ RESP nodoInviaRPT RESP -> paaInviaRT+ BIZ+ (NM3-105)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -5616,7 +5616,7 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_18 @after3
+    @ALL @NM3 @NM3PAOLD @NM3PAOLDPAGOK @NM3PAOLDPAGOK_18 @after_3
     Scenario: NM3 flow OK, FLOW con PA Old e PSP vp1: activate -> paaAttivaRPT   nodoInviaRPT REQ -> lock spo+ REQ -> aspetta lock nodoInviaRPT RESP spo+ RESP -> paaInviaRT+ BIZ+ (NM3-106)
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
@@ -5935,20 +5935,20 @@ Feature: NM3 flows PA Old con pagamento OK
 
 
 
-    @after_1
+    @after1
     Scenario: After restore
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'N', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
 
 
-    @after_2
+    @after2
     Scenario: After restore
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '14748' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
 
 
-    @after_3
+    @after3
     Scenario: After restore
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'N', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
         And wait 5 seconds after triggered refresh job ALL
