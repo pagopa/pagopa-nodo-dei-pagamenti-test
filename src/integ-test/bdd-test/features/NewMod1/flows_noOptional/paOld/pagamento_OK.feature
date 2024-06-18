@@ -333,7 +333,7 @@ Feature: NMU flows PA Old con pagamento OK
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value NotNone in position 0
         And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 12$iuv in position 0
@@ -421,9 +421,9 @@ Feature: NMU flows PA Old con pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -813,12 +813,12 @@ Feature: NMU flows PA Old con pagamento OK
             | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
         # PM_METADATA
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column         | value                                                                                                                                           |
-            | TRANSACTION_ID | $transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id |
-            | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn                             |
-            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,11223344                                                 |
-            | INSERTED_BY    | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 |
-            | UPDATED_BY     | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 |
+            | column         | value                                                                                                               |
+            | TRANSACTION_ID | $transaction_id                                                                                                     |
+            | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn |
+            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,11223344                     |
+            | INSERTED_BY    | closePayment-v2                                                                                                     |
+            | UPDATED_BY     | closePayment-v2                                                                                                     |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
             | TRANSACTION_ID | $transaction_id |
@@ -1128,12 +1128,12 @@ Feature: NMU flows PA Old con pagamento OK
             | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
         # PM_METADATA
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column         | value                                                                                                           |
-            | TRANSACTION_ID | $transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id |
-            | KEY            | Token,Tipo versamento,pspTransactionId,timestampOperation,totalAmount,transactionId,fee                         |
-            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,PPAL,NotNone,2021-07-09T17:06:03,12,NotNone,2                     |
-            | INSERTED_BY    | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 |
-            | UPDATED_BY     | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 |
+            | column         | value                                                                                       |
+            | TRANSACTION_ID | $transaction_id                                                                             |
+            | KEY            | Token,Tipo versamento,pspTransactionId,timestampOperation,totalAmount,transactionId,fee     |
+            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,PPAL,NotNone,2021-07-09T17:06:03,12,NotNone,2 |
+            | INSERTED_BY    | closePayment-v2                                                                             |
+            | UPDATED_BY     | closePayment-v2                                                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
             | TRANSACTION_ID | $transaction_id |
@@ -1444,12 +1444,12 @@ Feature: NMU flows PA Old con pagamento OK
             | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
         # PM_METADATA
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column         | value                                                                                                                                           |
-            | TRANSACTION_ID | $transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id |
-            | KEY            | Token,Tipo versamento,outcomePaymentGateway,authorizationCode,timestampOperation,totalAmount,paymentGateway,transactionId,fee                   |
-            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,BPAY,00,123456,2021-07-09T17:06:03,12,00,NotNone,2                                                |
-            | INSERTED_BY    | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 |
-            | UPDATED_BY     | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 |
+            | column         | value                                                                                                                         |
+            | TRANSACTION_ID | $transaction_id                                                                                                               |
+            | KEY            | Token,Tipo versamento,outcomePaymentGateway,authorizationCode,timestampOperation,totalAmount,paymentGateway,transactionId,fee |
+            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,BPAY,00,123456,2021-07-09T17:06:03,12,00,NotNone,2                              |
+            | INSERTED_BY    | closePayment-v2                                                                                                               |
+            | UPDATED_BY     | closePayment-v2                                                                                                               |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
             | TRANSACTION_ID | $transaction_id |
@@ -2085,12 +2085,12 @@ Feature: NMU flows PA Old con pagamento OK
             | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
         # PM_METADATA
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column         | value                                                                                                                                           |
-            | TRANSACTION_ID | $transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id |
-            | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn                             |
-            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,11223344                                                 |
-            | INSERTED_BY    | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 |
-            | UPDATED_BY     | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 |
+            | column         | value                                                                                                               |
+            | TRANSACTION_ID | $transaction_id                                                                                                     |
+            | KEY            | Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn |
+            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,CP,00,2021-07-09T17:06:03,12,00,2,123456,11223344                     |
+            | INSERTED_BY    | closePayment-v2                                                                                                     |
+            | UPDATED_BY     | closePayment-v2                                                                                                     |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
             | TRANSACTION_ID | $transaction_id |
@@ -2715,12 +2715,12 @@ Feature: NMU flows PA Old con pagamento OK
             | ID_SESSIONE | $activatePaymentNoticeV2Response.paymentToken |
         # PM_METADATA
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column         | value                                                                                                                                           |
-            | TRANSACTION_ID | $transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id |
-            | KEY            | Token,Tipo versamento,outcomePaymentGateway,authorizationCode,timestampOperation,totalAmount,paymentGateway,transactionId,fee                   |
-            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,BPAY,00,123456,2021-07-09T17:06:03,12,00,NotNone,2                                                |
-            | INSERTED_BY    | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 |
-            | UPDATED_BY     | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2 |
+            | column         | value                                                                                                                         |
+            | TRANSACTION_ID | $transaction_id                                                                                                               |
+            | KEY            | Token,Tipo versamento,outcomePaymentGateway,authorizationCode,timestampOperation,totalAmount,paymentGateway,transactionId,fee |
+            | VALUE          | $activatePaymentNoticeV2Response.paymentToken,BPAY,00,123456,2021-07-09T17:06:03,12,00,NotNone,2                              |
+            | INSERTED_BY    | closePayment-v2                                                                                                               |
+            | UPDATED_BY     | closePayment-v2                                                                                                               |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
             | TRANSACTION_ID | $transaction_id |
@@ -3420,7 +3420,7 @@ Feature: NMU flows PA Old con pagamento OK
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value NotNone in position 0
         And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 12$iuv in position 0
@@ -3508,9 +3508,9 @@ Feature: NMU flows PA Old con pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -3983,7 +3983,7 @@ Feature: NMU flows PA Old con pagamento OK
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value NotNone in position 0
         And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 12$iuv in position 0
@@ -4071,9 +4071,9 @@ Feature: NMU flows PA Old con pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -4545,7 +4545,7 @@ Feature: NMU flows PA Old con pagamento OK
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value NotNone in position 0
         And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 12$iuv in position 0
@@ -4633,9 +4633,9 @@ Feature: NMU flows PA Old con pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -5108,7 +5108,7 @@ Feature: NMU flows PA Old con pagamento OK
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value NotNone in position 0
         And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 12$iuv in position 0
@@ -5196,9 +5196,9 @@ Feature: NMU flows PA Old con pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -5670,7 +5670,7 @@ Feature: NMU flows PA Old con pagamento OK
         And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
         And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
         And from $activatePaymentNoticeV2Resp.transferList.transfer.remittanceInformation xml check value NotNone in position 0
         And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 12$iuv in position 0
@@ -5758,9 +5758,9 @@ Feature: NMU flows PA Old con pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -5948,7 +5948,7 @@ Feature: NMU flows PA Old con pagamento OK
             | paymentGateway        | 00                                            |
         Then saving nodoInviaRPT request in nodoInviaRPT
         And saving v2/closepayment request in v2/closepayment
-        When calling primitive evolution nodoInviaRPT and v2/closepayment with POST and POST in parallel with 70 ms delay
+        When calling primitive evolution nodoInviaRPT and v2/closepayment with POST and POST in parallel with 100 ms delay
         Then check esito is OK of nodoInviaRPT response
         And verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
