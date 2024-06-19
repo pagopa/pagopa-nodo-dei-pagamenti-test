@@ -10391,41 +10391,212 @@ Feature: NMU flows con PA New pagamento OK
         # PM_METADATA
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column         | value                                                                                                                                                                                                                                                       |
-            | TRANSACTION_ID | $transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id,$transaction_id                                                             |
+            | TRANSACTION_ID | $transaction_id                                                                                                                                                                                                                                             |
             | KEY            | Token,Token,Token,Token,Tipo versamento,outcomePaymentGateway,timestampOperation,totalAmount,paymentGateway,fee,authorizationCode,rrn                                                                                                                       |
             | VALUE          | $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken,$activatePaymentNoticeV2_3Response.paymentToken,$activatePaymentNoticeV2_4Response.paymentToken,CP,NotNone,2021-07-09T17:06:03,42,NotNone,2,123456,11223344 |
-            | INSERTED_BY    | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2                                                             |
-            | UPDATED_BY     | closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2,closePayment-v2                                                             |
+            | INSERTED_BY    | closePayment-v2                                                                                                                                                                                                                                             |
+            | UPDATED_BY     | closePayment-v2                                                                                                                                                                                                                                             |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
             | TRANSACTION_ID | $transaction_id |
             | ORDER BY       | ID ASC          |
-        # RE
+        # RE #####
+        # activatePaymentNoticeV2 REQ COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | activatePaymentNoticeV2                                                                                                                                                                                   |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                                                                                                                       |
+            | ESITO              | RICEVUTA                                                                                                                                                                                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # activatePaymentNoticeV2 RESP COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | activatePaymentNoticeV2                                                                                                                                                                                   |
+            | SOTTO_TIPO_EVENTO  | RESP                                                                                                                                                                                                      |
+            | ESITO              | INVIATA                                                                                                                                                                                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # paGetPaymentV2 REQ COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | paGetPaymentV2                                                                                                                                                                                            |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                                                                                                                       |
+            | ESITO              | INVIATA                                                                                                                                                                                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # paGetPaymentV2 RESP COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | paGetPaymentV2                                                                                                                                                                                            |
+            | SOTTO_TIPO_EVENTO  | RESP                                                                                                                                                                                                      |
+            | ESITO              | RICEVUTA                                                                                                                                                                                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # closePayment-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                    |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2_1Response.paymentToken |
-            | TIPO_EVENTO        | pspNotifyPaymentV2                              |
-            | SOTTO_TIPO_EVENTO  | REQ                                             |
-            | ESITO              | INVIATA                                         |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                             |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPayment
-        And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value tipoVersamento in position 0
-        And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value CP in position 0
-        And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value outcomePaymentGateway in position 1
-        And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 00 in position 1
-        And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value timestampOperation in position 2
-        And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 2021-07-09T17:06:03 in position 2
-        And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value totalAmount in position 3
-        And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 42 in position 3
-        And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value paymentGateway in position 4
-        And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 00 in position 4
-        And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value fee in position 5
-        And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 2 in position 5
-        And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value authorizationCode in position 6
-        And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 123456 in position 6
-        And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.key check value rrn in position 7
-        And from $pspNotifyPayment.additionalPaymentInformations.metadata.mapEntry.value check value 11223344 in position 7
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | closePayment-v2                                                                                                                                                                                           |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                                                                                                                       |
+            | ESITO              | RICEVUTA                                                                                                                                                                                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
+        And from $closePaymentv2Req.fee json check value 2.0 in position 0
+        And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_versione_primitive_2# in position 0
+        And from $closePaymentv2Req.idPSP json check value #psp# in position 0
+        And from $closePaymentv2Req.outcome json check value OK in position 0
+        And from $closePaymentv2Req.paymentMethod json check value CP in position 0
+        And from $closePaymentv2Req.paymentTokens.paymentToken json check value $activatePaymentNoticeV2_1Response.paymentToken in position 0
+        And from $closePaymentv2Req.paymentTokens.paymentToken json check value $activatePaymentNoticeV2_2Response.paymentToken in position 1
+        And from $closePaymentv2Req.paymentTokens.paymentToken json check value $activatePaymentNoticeV2_3Response.paymentToken in position 2
+        And from $closePaymentv2Req.paymentTokens.paymentToken json check value $activatePaymentNoticeV2_4Response.paymentToken in position 3
+        And from $closePaymentv2Req.totalAmount json check value 42.0 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 42.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2021-07-09T17:06:03 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
+        # closePayment-v2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | closePayment-v2                                                                                                                                                                                           |
+            | SOTTO_TIPO_EVENTO  | RESP                                                                                                                                                                                                      |
+            | ESITO              | INVIATA                                                                                                                                                                                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Resp
+        And from $closePaymentv2Resp.outcome json check value OK in position 0
+        # pspNotifyPaymentV2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | pspNotifyPaymentV2                                                                                                                                                                                        |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                                                                                                                       |
+            | ESITO              | INVIATA                                                                                                                                                                                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentV2Req
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value tipoVersamento in position 0
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value CP in position 0
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value outcomePaymentGateway in position 1
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 00 in position 1
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value timestampOperation in position 2
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 2021-07-09T17:06:03 in position 2
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value totalAmount in position 3
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 42 in position 3
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value paymentGateway in position 4
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 00 in position 4
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value fee in position 5
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 2 in position 5
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value authorizationCode in position 6
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 123456 in position 6
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.key xml check value rrn in position 7
+        And from $pspNotifyPaymentV2Req.additionalPaymentInformations.metadata.mapEntry.value xml check value 11223344 in position 7
+        # pspNotifyPaymentV2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | pspNotifyPaymentV2                                                                                                                                                                                        |
+            | SOTTO_TIPO_EVENTO  | RESP                                                                                                                                                                                                      |
+            | ESITO              | RICEVUTA                                                                                                                                                                                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPaymentV2Resp
+        And from $pspNotifyPaymentV2Resp.outcome xml check value OK in position 0
+        # sendPaymentOutcomeV2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                                                                                                                                                                                      |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                                                                                                                       |
+            | ESITO              | RICEVUTA                                                                                                                                                                                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
+        And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
+        And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
+        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
+        And from $sendPaymentOutcomeV2Req.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2_1Response.paymentToken in position 0
+        And from $sendPaymentOutcomeV2Req.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2_2Response.paymentToken in position 1
+        And from $sendPaymentOutcomeV2Req.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2_3Response.paymentToken in position 2
+        And from $sendPaymentOutcomeV2Req.paymentTokens.paymentToken xml check value $activatePaymentNoticeV2_4Response.paymentToken in position 3
+        And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
+        # sendPaymentOutcomeV2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                                                                                                                                                                                      |
+            | SOTTO_TIPO_EVENTO  | RESP                                                                                                                                                                                                      |
+            | ESITO              | INVIATA                                                                                                                                                                                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Resp
+        And from $sendPaymentOutcomeV2Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | paSendRTV2                                                                                                                                                                                                |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                                                                                                                       |
+            | ESITO              | INVIATA                                                                                                                                                                                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # paSendRTV2 RESP COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | paSendRTV2                                                                                                                                                                                                |
+            | SOTTO_TIPO_EVENTO  | RESP                                                                                                                                                                                                      |
+            | ESITO              | RICEVUTA                                                                                                                                                                                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # sendPaymentResult-v2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | sendPaymentResult-v2                                                                                                                                                                                      |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                                                                                                                       |
+            | ESITO              | INVIATA                                                                                                                                                                                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key sendPaymentResultv2Req
+        And from $sendPaymentResultv2Req.outcome json check value OK in position 0
+        And from $sendPaymentResultv2Req.paymentDate json check value NotNone in position 0
+        #ACTIVATE 1
+        And from $sendPaymentResultv2Req.payments.payment.creditorReferenceId json check value 10$iuv in position 0
+        And from $sendPaymentResultv2Req.payments.payment.debtor json check value 44444444444 in position 0
+        And from $sendPaymentResultv2Req.payments.payment.description json check value pagamentoTest in position 0
+        And from $sendPaymentResultv2Req.payments.payment.fiscalCode json check value $activatePaymentNoticeV2_1.fiscalCode in position 0
+        And from $sendPaymentResultv2Req.payments.payment.paymentToken json check value $activatePaymentNoticeV2_1Response.paymentToken in position 0
+        #ACTIVATE 2
+        And from $sendPaymentResultv2Req.payments.payment.creditorReferenceId json check value 10$iuv1 in position 1
+        And from $sendPaymentResultv2Req.payments.payment.debtor json check value 44444444444 in position 1
+        And from $sendPaymentResultv2Req.payments.payment.description json check value pagamentoTest in position 1
+        And from $sendPaymentResultv2Req.payments.payment.fiscalCode json check value $activatePaymentNoticeV2_1.fiscalCode in position 1
+        And from $sendPaymentResultv2Req.payments.payment.paymentToken json check value $activatePaymentNoticeV2_2Response.paymentToken in position 1
+        #ACTIVATE 3
+        And from $sendPaymentResultv2Req.payments.payment.creditorReferenceId json check value 10$iuv2 in position 2
+        And from $sendPaymentResultv2Req.payments.payment.debtor json check value 44444444444 in position 2
+        And from $sendPaymentResultv2Req.payments.payment.description json check value pagamentoTest in position 2
+        And from $sendPaymentResultv2Req.payments.payment.fiscalCode json check value $activatePaymentNoticeV2_1.fiscalCode in position 2
+        And from $sendPaymentResultv2Req.payments.payment.paymentToken json check value $activatePaymentNoticeV2_3Response.paymentToken in position 2
+        #ACTIVATE 4
+        And from $sendPaymentResultv2Req.payments.payment.creditorReferenceId json check value 10$iuv3 in position 3
+        And from $sendPaymentResultv2Req.payments.payment.debtor json check value 44444444444 in position 3
+        And from $sendPaymentResultv2Req.payments.payment.description json check value pagamentoTest in position 3
+        And from $sendPaymentResultv2Req.payments.payment.fiscalCode json check value $activatePaymentNoticeV2_1.fiscalCode in position 3
+        And from $sendPaymentResultv2Req.payments.payment.paymentToken json check value $activatePaymentNoticeV2_4Response.paymentToken in position 3
 
 
 
@@ -10803,9 +10974,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -10888,13 +11059,14 @@ Feature: NMU flows con PA New pagamento OK
         And from $sendPaymentOutcomeV2Resp.outcome xml check value OK in position 0
         # paSendRT REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
         And from $paSendRTReq.idPA xml check value 88888888888 in position 0
         And from $paSendRTReq.idBrokerPA xml check value 88888888888 in position 0
@@ -10916,24 +11088,26 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
         # paSendRT RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
         And from $paSendRTResp.outcome xml check value OK in position 0
         # paSendRTV2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
         And from $paSendRTV2Req.idPA xml check value 88888888888 in position 0
         And from $paSendRTV2Req.idBrokerPA xml check value 88888888888 in position 0
@@ -10955,15 +11129,57 @@ Feature: NMU flows con PA New pagamento OK
         And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
         # paSendRTV2 RESP
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | DATA_ORA_EVENTO ASC                           |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
         And from $paSendRTV2Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ PA Princ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2PrincReq
+        And from $paSendRTV2PrincReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2PrincReq.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2PrincReq.idStation xml check value #stazione_versione_primitive_2# in position 0
+        And from $paSendRTV2PrincReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2PrincReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2PrincReq.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2PrincReq.receipt.creditorReferenceId xml check value 10$iuv in position 0
+        And from $paSendRTV2PrincReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2PrincReq.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2PrincReq.receipt.companyName xml check value company in position 0
+        And from $paSendRTV2PrincReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2PrincReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2PrincReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 0
+        And from $paSendRTV2PrincReq.receipt.transferList.transfer.MBDAttachment xml check value NotNone in position 0
+        And from $paSendRTV2PrincReq.receipt.transferList.transfer.remittanceInformation xml check value NotNone in position 0
+        And from $paSendRTV2PrincReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRTV2PrincReq.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRTV2PrincReq.receipt.fee xml check value 2.00 in position 0
+        # paSendRTV2 RESP PA Princ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2PrincResp
+        And from $paSendRTV2PrincResp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -11084,7 +11300,7 @@ Feature: NMU flows con PA New pagamento OK
         And save activatePaymentNoticeV2 response in activatePaymentNoticeV2_3
         Given update parameter station.stand-in on configuration keys with value 66666666666_08
         And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And wait 60 seconds after triggered refresh job ALL
+        And wait 3 seconds after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
             | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                  | noticeNumber | amount |
             | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code# | 347$iuv3     | 25.00  |
@@ -11593,9 +11809,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -11675,13 +11891,14 @@ Feature: NMU flows con PA New pagamento OK
         And from $sendPaymentOutcomeResp.outcome xml check value OK in position 0
         # paSendRT REQ standin
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA_KO                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA_KO                                    |
+            | IDENTIFICATIVO_EROGATORE | standin                                       |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
         And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -11731,146 +11948,508 @@ Feature: NMU flows con PA New pagamento OK
 
         And from $paSendRTStandinReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
         And from $paSendRTStandinReq.receipt.fee xml check value 2.00 in position 0
-        # paSendRT REQ NO standin
+        # paSendRT REQ NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
-        And from $paSendRTReq.idPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idStation xml check value 90000000001_08 in position 0
-        And from $paSendRTReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTReq.receipt.outcome xml check value OK in position 0
-        And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
+        And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idStation xml check value 90000000001_08 in position 0
+        And from $paSendRT_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTReq.receipt.standIn xml check value true in position 0
-        # paSendRT RESP NO standin
+        And from $paSendRT_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_1Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
-        And from $paSendRTResp.outcome xml check value OK in position 0
-        # paSendRTV2 REQ NO standin
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
+        And from $paSendRT_1Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
-        And from $paSendRTV2Req.idPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idStation xml check value 90000000001_09 in position 0
-        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
-        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2Req.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
+        And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idStation xml check value 90000000003_01 in position 0
+        And from $paSendRT_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
-        # paSendRTV2 RESP NO standin
+        And from $paSendRT_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_2Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRT RESP NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
-        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
+        And from $paSendRT_2Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
+        And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idStation xml check value 88888888888_01 in position 0
+        And from $paSendRT_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_3Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_3Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
+        And from $paSendRT_3Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
+        And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idStation xml check value 88888888888_02 in position 0
+        And from $paSendRT_4Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_4Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_4Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_4Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_4Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_4Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
+        And from $paSendRT_4Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
+        And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idStation xml check value 90000000001_09 in position 0
+        And from $paSendRTV2_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_1Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
+        And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
+        And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
+        And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.idStation xml check value 90000000001_01 in position 0
+        And from $paSendRTV2_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_2Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_2Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
+        And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
+        And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idStation xml check value 90000000003_02 in position 0
+        And from $paSendRTV2_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_3Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRTV2 RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
+        And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -12329,9 +12908,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -12411,13 +12990,14 @@ Feature: NMU flows con PA New pagamento OK
         And from $sendPaymentOutcomeV2Resp.outcome xml check value OK in position 0
         # paSendRT REQ standin
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA_KO                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA_KO                                    |
+            | IDENTIFICATIVO_EROGATORE | standin                                       |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
         And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -12467,146 +13047,508 @@ Feature: NMU flows con PA New pagamento OK
 
         And from $paSendRTStandinReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
         And from $paSendRTStandinReq.receipt.fee xml check value 2.00 in position 0
-        # paSendRT REQ NO standin
+        # paSendRT REQ NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
-        And from $paSendRTReq.idPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idStation xml check value 90000000001_08 in position 0
-        And from $paSendRTReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTReq.receipt.outcome xml check value OK in position 0
-        And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
+        And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idStation xml check value 90000000001_08 in position 0
+        And from $paSendRT_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTReq.receipt.standIn xml check value true in position 0
-        # paSendRT RESP NO standin
+        And from $paSendRT_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_1Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
-        And from $paSendRTResp.outcome xml check value OK in position 0
-        # paSendRTV2 REQ NO standin
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
+        And from $paSendRT_1Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
-        And from $paSendRTV2Req.idPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idStation xml check value 90000000001_09 in position 0
-        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
-        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2Req.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
+        And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idStation xml check value 90000000003_01 in position 0
+        And from $paSendRT_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
-        # paSendRTV2 RESP NO standin
+        And from $paSendRT_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_2Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRT RESP NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
-        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
+        And from $paSendRT_2Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
+        And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idStation xml check value 88888888888_01 in position 0
+        And from $paSendRT_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_3Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_3Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
+        And from $paSendRT_3Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
+        And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idStation xml check value 88888888888_02 in position 0
+        And from $paSendRT_4Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_4Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_4Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_4Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_4Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_4Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
+        And from $paSendRT_4Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
+        And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idStation xml check value 90000000001_09 in position 0
+        And from $paSendRTV2_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_1Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
+        And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
+        And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
+        And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.idStation xml check value 90000000001_01 in position 0
+        And from $paSendRTV2_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_2Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_2Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
+        And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
+        And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idStation xml check value 90000000003_02 in position 0
+        And from $paSendRTV2_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_3Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRTV2 RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
+        And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -13066,9 +14008,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -13148,13 +14090,14 @@ Feature: NMU flows con PA New pagamento OK
         And from $sendPaymentOutcomeResp.outcome xml check value OK in position 0
         # paSendRT REQ standin
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA_KO                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA_KO                                    |
+            | IDENTIFICATIVO_EROGATORE | standin                                       |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTStandinReq
         And from $paSendRTStandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTStandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -13204,146 +14147,508 @@ Feature: NMU flows con PA New pagamento OK
 
         And from $paSendRTStandinReq.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
         And from $paSendRTStandinReq.receipt.fee xml check value 2.00 in position 0
-        # paSendRT REQ NO standin
+        # paSendRT REQ NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
-        And from $paSendRTReq.idPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idStation xml check value 90000000001_08 in position 0
-        And from $paSendRTReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTReq.receipt.outcome xml check value OK in position 0
-        And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
+        And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idStation xml check value 90000000001_08 in position 0
+        And from $paSendRT_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
-        And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTReq.receipt.standIn xml check value true in position 0
-        # paSendRT RESP NO standin
+        And from $paSendRT_1Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRT_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_1Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
-        And from $paSendRTResp.outcome xml check value OK in position 0
-        # paSendRTV2 REQ NO standin
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
+        And from $paSendRT_1Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
-        And from $paSendRTV2Req.idPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idStation xml check value 90000000001_09 in position 0
-        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
-        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2Req.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
+        And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idStation xml check value 90000000003_01 in position 0
+        And from $paSendRT_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
-        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
-        # paSendRTV2 RESP NO standin
+        And from $paSendRT_2Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRT_2Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRT RESP NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
-        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
+        And from $paSendRT_2Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
+        And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idStation xml check value 88888888888_01 in position 0
+        And from $paSendRT_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_3Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRT_3Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_3Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
+        And from $paSendRT_3Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
+        And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idStation xml check value 88888888888_02 in position 0
+        And from $paSendRT_4Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_4Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_4Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_4Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRT_4Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_4Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
+        And from $paSendRT_4Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
+        And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idStation xml check value 90000000001_09 in position 0
+        And from $paSendRTV2_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_1Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRTV2_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_1Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
+        And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
+        And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
+        And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.idStation xml check value 90000000001_01 in position 0
+        And from $paSendRTV2_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_2Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRTV2_2Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_2Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
+        And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
+        And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idStation xml check value 90000000003_02 in position 0
+        And from $paSendRTV2_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_3Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRTV2_3Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRTV2 RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
+        And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -13804,9 +15109,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -13886,13 +15191,14 @@ Feature: NMU flows con PA New pagamento OK
         And from $sendPaymentOutcomeResp.outcome xml check value OK in position 0
         # paSendRTV2 REQ standin
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA_KO                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA_KO                                    |
+            | IDENTIFICATIVO_EROGATORE | standin                                       |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2StandinReq
         And from $paSendRTV2StandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2StandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -13942,146 +15248,508 @@ Feature: NMU flows con PA New pagamento OK
 
         And from $paSendRTV2StandinReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
         And from $paSendRTV2StandinReq.receipt.fee xml check value 2.00 in position 0
-        # paSendRT REQ NO standin
+        # paSendRT REQ NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
-        And from $paSendRTReq.idPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idStation xml check value 90000000001_08 in position 0
-        And from $paSendRTReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTReq.receipt.outcome xml check value OK in position 0
-        And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value company in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
+        And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idStation xml check value 90000000001_08 in position 0
+        And from $paSendRT_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTReq.receipt.standIn xml check value true in position 0
-        # paSendRT RESP NO standin
+        And from $paSendRT_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_1Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
-        And from $paSendRTResp.outcome xml check value OK in position 0
-        # paSendRTV2 REQ NO standin
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
+        And from $paSendRT_1Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
-        And from $paSendRTV2Req.idPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idStation xml check value 90000000001_09 in position 0
-        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
-        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2Req.receipt.companyName xml check value company in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
+        And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idStation xml check value 90000000003_01 in position 0
+        And from $paSendRT_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
-        # paSendRTV2 RESP NO standin
+        And from $paSendRT_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_2Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRT RESP NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
-        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
+        And from $paSendRT_2Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
+        And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idStation xml check value 88888888888_01 in position 0
+        And from $paSendRT_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_3Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_3Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
+        And from $paSendRT_3Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
+        And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idStation xml check value 88888888888_02 in position 0
+        And from $paSendRT_4Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_4Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_4Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_4Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_4Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_4Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
+        And from $paSendRT_4Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
+        And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idStation xml check value 90000000001_09 in position 0
+        And from $paSendRTV2_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_1Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
+        And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
+        And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
+        And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.idStation xml check value 90000000001_01 in position 0
+        And from $paSendRTV2_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_2Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_2Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
+        And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
+        And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idStation xml check value 90000000003_02 in position 0
+        And from $paSendRTV2_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_3Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRTV2 RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
+        And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -14099,7 +15767,6 @@ Feature: NMU flows con PA New pagamento OK
         And from $sendPaymentResultv2Req.payments.description json check value pagamentoTest in position 0
         And from $sendPaymentResultv2Req.payments.fiscalCode json check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $sendPaymentResultv2Req.payments.paymentToken json check value $activatePaymentNoticeV2Response.paymentToken in position 0
-
 
 
 
@@ -14546,9 +16213,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -14628,13 +16295,14 @@ Feature: NMU flows con PA New pagamento OK
         And from $sendPaymentOutcomeV2Resp.outcome xml check value OK in position 0
         # paSendRTV2 REQ standin
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA_KO                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA_KO                                    |
+            | IDENTIFICATIVO_EROGATORE | standin                                       |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2StandinReq
         And from $paSendRTV2StandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2StandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -14684,146 +16352,508 @@ Feature: NMU flows con PA New pagamento OK
 
         And from $paSendRTV2StandinReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
         And from $paSendRTV2StandinReq.receipt.fee xml check value 2.00 in position 0
-        # paSendRT REQ NO standin
+        # paSendRT REQ NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
-        And from $paSendRTReq.idPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idStation xml check value 90000000001_08 in position 0
-        And from $paSendRTReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTReq.receipt.outcome xml check value OK in position 0
-        And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value company in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
+        And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idStation xml check value 90000000001_08 in position 0
+        And from $paSendRT_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTReq.receipt.standIn xml check value true in position 0
-        # paSendRT RESP NO standin
+        And from $paSendRT_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_1Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
-        And from $paSendRTResp.outcome xml check value OK in position 0
-        # paSendRTV2 REQ NO standin
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
+        And from $paSendRT_1Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
-        And from $paSendRTV2Req.idPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idStation xml check value 90000000001_09 in position 0
-        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
-        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2Req.receipt.companyName xml check value company in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
+        And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idStation xml check value 90000000003_01 in position 0
+        And from $paSendRT_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
-        # paSendRTV2 RESP NO standin
+        And from $paSendRT_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_2Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRT RESP NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
-        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
+        And from $paSendRT_2Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
+        And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idStation xml check value 88888888888_01 in position 0
+        And from $paSendRT_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_3Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_3Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
+        And from $paSendRT_3Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
+        And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idStation xml check value 88888888888_02 in position 0
+        And from $paSendRT_4Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_4Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_4Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_4Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_4Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_4Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
+        And from $paSendRT_4Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
+        And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idStation xml check value 90000000001_09 in position 0
+        And from $paSendRTV2_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_1Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
+        And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
+        And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
+        And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.idStation xml check value 90000000001_01 in position 0
+        And from $paSendRTV2_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_2Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_2Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
+        And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
+        And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idStation xml check value 90000000003_02 in position 0
+        And from $paSendRTV2_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_3Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRTV2 RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
+        And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -15285,9 +17315,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -15367,13 +17397,14 @@ Feature: NMU flows con PA New pagamento OK
         And from $sendPaymentOutcomeResp.outcome xml check value OK in position 0
         # paSendRTV2 REQ standin
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA_KO                                    |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA_KO                                    |
+            | IDENTIFICATIVO_EROGATORE | standin                                       |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2StandinReq
         And from $paSendRTV2StandinReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
         And from $paSendRTV2StandinReq.idBrokerPA xml check value irraggiungibile in position 0
@@ -15423,146 +17454,508 @@ Feature: NMU flows con PA New pagamento OK
 
         And from $paSendRTV2StandinReq.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
         And from $paSendRTV2StandinReq.receipt.fee xml check value 2.00 in position 0
-        # paSendRT REQ NO standin
+        # paSendRT REQ NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
-        And from $paSendRTReq.idPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idStation xml check value 90000000001_08 in position 0
-        And from $paSendRTReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTReq.receipt.outcome xml check value OK in position 0
-        And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value company in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
+        And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idStation xml check value 90000000001_08 in position 0
+        And from $paSendRT_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
-        And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTReq.receipt.standIn xml check value true in position 0
-        # paSendRTV2 RESP NO standin
+        And from $paSendRT_1Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRT_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_1Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
-        And from $paSendRTResp.outcome xml check value OK in position 0
-        # paSendRTV2 REQ NO standin
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
+        And from $paSendRT_1Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
-        And from $paSendRTV2Req.idPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idStation xml check value 90000000001_09 in position 0
-        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
-        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2Req.receipt.companyName xml check value company in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
+        And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idStation xml check value 90000000003_01 in position 0
+        And from $paSendRT_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
-        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
-        # paSendRTV2 RESP NO standin
+        And from $paSendRT_2Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRT_2Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRT RESP NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
-        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
+        And from $paSendRT_2Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
+        And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idStation xml check value 88888888888_01 in position 0
+        And from $paSendRT_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_3Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRT_3Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_3Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
+        And from $paSendRT_3Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
+        And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idStation xml check value 88888888888_02 in position 0
+        And from $paSendRT_4Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_4Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_4Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_4Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRT_4Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_4Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
+        And from $paSendRT_4Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
+        And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idStation xml check value 90000000001_09 in position 0
+        And from $paSendRTV2_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_1Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRTV2_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_1Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
+        And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
+        And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
+        And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.idStation xml check value 90000000001_01 in position 0
+        And from $paSendRTV2_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_2Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRTV2_2Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_2Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
+        And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
+        And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idStation xml check value 90000000003_02 in position 0
+        And from $paSendRTV2_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_3Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRTV2_3Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRTV2 RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
+        And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -16015,9 +18408,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -16605,9 +18998,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -17195,9 +19588,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -17333,75 +19726,149 @@ Feature: NMU flows con PA New pagamento OK
 
         And from $paSendRTV2StandinReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
         And from $paSendRTV2StandinReq.receipt.fee xml check value 2.00 in position 0
-        # paSendRTV2 REQ NO standin
+        # paSendRTV2 REQ NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
-        And from $paSendRTV2Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.idStation xml check value 66666666666_09 in position 0
-        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
-        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2Req.receipt.companyName xml check value company in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
+        And from $paSendRTV2_1Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.idStation xml check value 66666666666_08 in position 0
+        And from $paSendRTV2_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
-        # paSendRTV2 RESP NO standin
+        And from $paSendRTV2_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_1Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
-        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
+        And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 66666666666_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
+        And from $paSendRTV2_2Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.idStation xml check value 66666666666_09 in position 0
+        And from $paSendRTV2_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_2Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRTV2 RESP NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 66666666666_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
+        And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -17854,9 +20321,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -17992,75 +20459,149 @@ Feature: NMU flows con PA New pagamento OK
 
         And from $paSendRTV2StandinReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
         And from $paSendRTV2StandinReq.receipt.fee xml check value 2.00 in position 0
-        # paSendRTV2 REQ NO standin
+        # paSendRTV2 REQ NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
-        And from $paSendRTV2Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.idStation xml check value 66666666666_09 in position 0
-        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
-        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2Req.receipt.companyName xml check value company in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
+        And from $paSendRTV2_1Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.idStation xml check value 66666666666_08 in position 0
+        And from $paSendRTV2_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
-        # paSendRTV2 RESP NO standin
+        And from $paSendRTV2_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_1Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
-        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
+        And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 66666666666_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
+        And from $paSendRTV2_2Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.idStation xml check value 66666666666_09 in position 0
+        And from $paSendRTV2_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_2Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRTV2 RESP NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 66666666666_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
+        And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -18514,9 +21055,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -18652,75 +21193,149 @@ Feature: NMU flows con PA New pagamento OK
 
         And from $paSendRTV2StandinReq.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
         And from $paSendRTV2StandinReq.receipt.fee xml check value 2.00 in position 0
-        # paSendRTV2 REQ NO standin
+        # paSendRTV2 REQ NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
-        And from $paSendRTV2Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.idStation xml check value 66666666666_08 in position 0
-        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
-        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2Req.receipt.companyName xml check value company in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
+        And from $paSendRTV2_1Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.idStation xml check value 66666666666_08 in position 0
+        And from $paSendRTV2_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value company in position 0
         ### TRANSFER 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
-        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
-        # paSendRTV2 RESP NO standin
+        And from $paSendRTV2_1Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRTV2_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_1Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
-        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 66666666666_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
+        And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 66666666666_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
+        And from $paSendRTV2_2Req.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.idStation xml check value 66666666666_09 in position 0
+        And from $paSendRTV2_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value company in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_2Req.receipt.idChannel xml check value #canale_versione_primitive_2# in position 0
+        And from $paSendRTV2_2Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRTV2 RESP NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 66666666666_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
+        And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -19182,9 +21797,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -19311,146 +21926,508 @@ Feature: NMU flows con PA New pagamento OK
 
         And from $paSendRTStandinReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
         And from $paSendRTStandinReq.receipt.fee xml check value 2.00 in position 0
-        # paSendRT REQ NO standin
+        # paSendRT REQ NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
-        And from $paSendRTReq.idPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idStation xml check value 90000000001_08 in position 0
-        And from $paSendRTReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTReq.receipt.outcome xml check value OK in position 0
-        And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
+        And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idStation xml check value 90000000001_08 in position 0
+        And from $paSendRT_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTReq.receipt.standIn xml check value true in position 0
-        # paSendRT RESP NO standin
+        And from $paSendRT_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_1Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
-        And from $paSendRTResp.outcome xml check value OK in position 0
-        # paSendRTV2 REQ NO standin
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
+        And from $paSendRT_1Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
-        And from $paSendRTV2Req.idPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idStation xml check value 90000000001_09 in position 0
-        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
-        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2Req.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
+        And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idStation xml check value 90000000003_01 in position 0
+        And from $paSendRT_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
-        # paSendRTV2 RESP NO standin
+        And from $paSendRT_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_2Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRT RESP NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
-        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
+        And from $paSendRT_2Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
+        And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idStation xml check value 88888888888_01 in position 0
+        And from $paSendRT_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_3Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_3Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
+        And from $paSendRT_3Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
+        And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idStation xml check value 88888888888_02 in position 0
+        And from $paSendRT_4Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_4Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_4Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_4Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_4Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_4Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
+        And from $paSendRT_4Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
+        And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idStation xml check value 90000000001_09 in position 0
+        And from $paSendRTV2_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_1Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
+        And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
+        And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
+        And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.idStation xml check value 90000000001_01 in position 0
+        And from $paSendRTV2_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_2Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_2Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
+        And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
+        And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idStation xml check value 90000000003_02 in position 0
+        And from $paSendRTV2_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_3Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRTV2 RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
+        And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -20033,146 +23010,508 @@ Feature: NMU flows con PA New pagamento OK
 
         And from $paSendRTStandinReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
         And from $paSendRTStandinReq.receipt.fee xml check value 2.00 in position 0
-        # paSendRT REQ NO standin
+        # paSendRT REQ NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
-        And from $paSendRTReq.idPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idStation xml check value 90000000001_08 in position 0
-        And from $paSendRTReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTReq.receipt.outcome xml check value OK in position 0
-        And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
+        And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idStation xml check value 90000000001_08 in position 0
+        And from $paSendRT_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTReq.receipt.standIn xml check value true in position 0
-        # paSendRT RESP NO standin
+        And from $paSendRT_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_1Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
-        And from $paSendRTResp.outcome xml check value OK in position 0
-        # paSendRTV2 REQ NO standin
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
+        And from $paSendRT_1Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
-        And from $paSendRTV2Req.idPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idStation xml check value 90000000001_09 in position 0
-        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
-        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2Req.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
+        And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idStation xml check value 90000000003_01 in position 0
+        And from $paSendRT_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
-        # paSendRTV2 RESP NO standin
+        And from $paSendRT_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_2Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRT RESP NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
-        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
+        And from $paSendRT_2Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
+        And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idStation xml check value 88888888888_01 in position 0
+        And from $paSendRT_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_3Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_3Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
+        And from $paSendRT_3Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
+        And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idStation xml check value 88888888888_02 in position 0
+        And from $paSendRT_4Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_4Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_4Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_4Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_4Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_4Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
+        And from $paSendRT_4Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
+        And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idStation xml check value 90000000001_09 in position 0
+        And from $paSendRTV2_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_1Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
+        And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
+        And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
+        And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.idStation xml check value 90000000001_01 in position 0
+        And from $paSendRTV2_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_2Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_2Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
+        And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
+        And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idStation xml check value 90000000003_02 in position 0
+        And from $paSendRTV2_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_3Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRTV2 RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
+        And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -20761,146 +24100,508 @@ Feature: NMU flows con PA New pagamento OK
 
         And from $paSendRTStandinReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
         And from $paSendRTStandinReq.receipt.fee xml check value 2.00 in position 0
-        # paSendRT REQ NO standin
+        # paSendRT REQ NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
-        And from $paSendRTReq.idPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idStation xml check value 90000000001_08 in position 0
-        And from $paSendRTReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTReq.receipt.outcome xml check value OK in position 0
-        And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
+        And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idStation xml check value 90000000001_08 in position 0
+        And from $paSendRT_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTReq.receipt.standIn xml check value true in position 0
-        # paSendRT RESP NO standin
+        And from $paSendRT_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_1Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
-        And from $paSendRTResp.outcome xml check value OK in position 0
-        # paSendRTV2 REQ NO standin
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
+        And from $paSendRT_1Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
-        And from $paSendRTV2Req.idPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idStation xml check value 90000000001_09 in position 0
-        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
-        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2Req.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
+        And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idStation xml check value 90000000003_01 in position 0
+        And from $paSendRT_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
-        # paSendRTV2 RESP NO standin
+        And from $paSendRT_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_2Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRT RESP NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
-        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
+        And from $paSendRT_2Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
+        And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idStation xml check value 88888888888_01 in position 0
+        And from $paSendRT_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_3Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_3Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
+        And from $paSendRT_3Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
+        And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idStation xml check value 88888888888_02 in position 0
+        And from $paSendRT_4Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_4Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_4Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_4Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_4Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_4Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
+        And from $paSendRT_4Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
+        And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idStation xml check value 90000000001_09 in position 0
+        And from $paSendRTV2_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_1Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
+        And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
+        And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
+        And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.idStation xml check value 90000000001_01 in position 0
+        And from $paSendRTV2_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_2Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_2Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
+        And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
+        And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idStation xml check value 90000000003_02 in position 0
+        And from $paSendRTV2_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_3Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRTV2 RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
+        And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -21360,9 +25061,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -21489,146 +25190,508 @@ Feature: NMU flows con PA New pagamento OK
 
         And from $paSendRTStandinReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
         And from $paSendRTStandinReq.receipt.fee xml check value 2.00 in position 0
-        # paSendRT REQ NO standin
+        # paSendRT REQ NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
-        And from $paSendRTReq.idPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idStation xml check value 90000000001_08 in position 0
-        And from $paSendRTReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTReq.receipt.outcome xml check value OK in position 0
-        And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
+        And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idStation xml check value 90000000001_08 in position 0
+        And from $paSendRT_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTReq.receipt.standIn xml check value true in position 0
-        # paSendRT RESP NO standin
+        And from $paSendRT_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_1Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
-        And from $paSendRTResp.outcome xml check value OK in position 0
-        # paSendRTV2 REQ NO standin
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
+        And from $paSendRT_1Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
-        And from $paSendRTV2Req.idPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idStation xml check value 90000000001_09 in position 0
-        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
-        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2Req.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
+        And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idStation xml check value 90000000003_01 in position 0
+        And from $paSendRT_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
-        # paSendRTV2 RESP NO standin
+        And from $paSendRT_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_2Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRT RESP NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
-        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
+        And from $paSendRT_2Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
+        And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idStation xml check value 88888888888_01 in position 0
+        And from $paSendRT_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_3Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_3Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
+        And from $paSendRT_3Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
+        And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idStation xml check value 88888888888_02 in position 0
+        And from $paSendRT_4Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_4Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_4Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_4Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_4Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_4Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
+        And from $paSendRT_4Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
+        And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idStation xml check value 90000000001_09 in position 0
+        And from $paSendRTV2_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_1Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
+        And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
+        And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
+        And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.idStation xml check value 90000000001_01 in position 0
+        And from $paSendRTV2_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_2Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_2Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
+        And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
+        And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idStation xml check value 90000000003_02 in position 0
+        And from $paSendRTV2_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_3Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRTV2 RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
+        And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -22215,146 +26278,508 @@ Feature: NMU flows con PA New pagamento OK
 
         And from $paSendRTStandinReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
         And from $paSendRTStandinReq.receipt.fee xml check value 2.00 in position 0
-        # paSendRT REQ NO standin
+        # paSendRT REQ NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
-        And from $paSendRTReq.idPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idStation xml check value 90000000001_08 in position 0
-        And from $paSendRTReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTReq.receipt.outcome xml check value OK in position 0
-        And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
+        And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idStation xml check value 90000000001_08 in position 0
+        And from $paSendRT_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTReq.receipt.standIn xml check value true in position 0
-        # paSendRT RESP NO standin
+        And from $paSendRT_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_1Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
-        And from $paSendRTResp.outcome xml check value OK in position 0
-        # paSendRTV2 REQ NO standin
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
+        And from $paSendRT_1Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
-        And from $paSendRTV2Req.idPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idStation xml check value 90000000001_09 in position 0
-        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
-        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2Req.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
+        And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idStation xml check value 90000000003_01 in position 0
+        And from $paSendRT_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
-        # paSendRTV2 RESP NO standin
+        And from $paSendRT_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_2Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRT RESP NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
-        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
+        And from $paSendRT_2Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
+        And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idStation xml check value 88888888888_01 in position 0
+        And from $paSendRT_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_3Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_3Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
+        And from $paSendRT_3Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
+        And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idStation xml check value 88888888888_02 in position 0
+        And from $paSendRT_4Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_4Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_4Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_4Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_4Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_4Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
+        And from $paSendRT_4Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
+        And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idStation xml check value 90000000001_09 in position 0
+        And from $paSendRTV2_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_1Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
+        And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
+        And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
+        And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.idStation xml check value 90000000001_01 in position 0
+        And from $paSendRTV2_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_2Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_2Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
+        And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
+        And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idStation xml check value 90000000003_02 in position 0
+        And from $paSendRTV2_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_3Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRTV2 RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
+        And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -22945,146 +27370,508 @@ Feature: NMU flows con PA New pagamento OK
 
         And from $paSendRTStandinReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
         And from $paSendRTStandinReq.receipt.fee xml check value 2.00 in position 0
-        # paSendRT REQ NO standin
+        # paSendRT REQ NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
-        And from $paSendRTReq.idPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTReq.idStation xml check value 90000000001_08 in position 0
-        And from $paSendRTReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTReq.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTReq.receipt.outcome xml check value OK in position 0
-        And from $paSendRTReq.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Req
+        And from $paSendRT_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.idStation xml check value 90000000001_08 in position 0
+        And from $paSendRT_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_1Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTReq.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTReq.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTReq.receipt.standIn xml check value true in position 0
-        # paSendRT RESP NO standin
+        And from $paSendRT_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_1Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 1
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRT                                      |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
-        And from $paSendRTResp.outcome xml check value OK in position 0
-        # paSendRTV2 REQ NO standin
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_08                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_1Resp
+        And from $paSendRT_1Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | REQ                                           |
-            | ESITO              | INVIATA                                       |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Req
-        And from $paSendRTV2Req.idPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idBrokerPA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.idStation xml check value 90000000001_09 in position 0
-        And from $paSendRTV2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-        And from $paSendRTV2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-        And from $paSendRTV2Req.receipt.outcome xml check value OK in position 0
-        And from $paSendRTV2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
-        And from $paSendRTV2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-        And from $paSendRTV2Req.receipt.description xml check value pagamentoTest in position 0
-        And from $paSendRTV2Req.receipt.companyName xml check value NA in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Req
+        And from $paSendRT_2Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRT_2Req.idStation xml check value 90000000003_01 in position 0
+        And from $paSendRT_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_2Req.receipt.companyName xml check value NA in position 0
         ### TRANSFER 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
         ### TRANSFER 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
         ### TRANSFER 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
         ### TRANSFER 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
         ### TRANSFER 5
-        And from $paSendRTV2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
-        And from $paSendRTV2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
 
-        And from $paSendRTV2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
-        And from $paSendRTV2Req.receipt.fee xml check value 2.00 in position 0
-        And from $paSendRTV2Req.receipt.standIn xml check value true in position 0
-        # paSendRTV2 RESP NO standin
+        And from $paSendRT_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_2Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRT RESP NO standin 2
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-            | where_keys         | where_values                                  |
-            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-            | TIPO_EVENTO        | paSendRTV2                                    |
-            | SOTTO_TIPO_EVENTO  | RESP                                          |
-            | ESITO              | RICEVUTA                                      |
-            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-            | ORDER BY           | INSERTED_TIMESTAMP ASC                        |
-        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2Resp
-        And from $paSendRTV2Resp.outcome xml check value OK in position 0
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_2Resp
+        And from $paSendRT_2Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Req
+        And from $paSendRT_3Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_3Req.idStation xml check value 88888888888_01 in position 0
+        And from $paSendRT_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_3Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_3Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_3Resp
+        And from $paSendRT_3Resp.outcome xml check value OK in position 0
+        # paSendRT REQ NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Req
+        And from $paSendRT_4Req.idPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idBrokerPA xml check value 88888888888 in position 0
+        And from $paSendRT_4Req.idStation xml check value 88888888888_02 in position 0
+        And from $paSendRT_4Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRT_4Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRT_4Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRT_4Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRT_4Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRT_4Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRT_4Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRT_4Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRT_4Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRT_4Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRT_4Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRT_4Req.receipt.standIn xml check value true in position 0
+        # paSendRT RESP NO standin 4
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 88888888888_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRT_4Resp
+        And from $paSendRT_4Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Req
+        And from $paSendRTV2_1Req.idPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.idStation xml check value 90000000001_09 in position 0
+        And from $paSendRTV2_1Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_1Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_1Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_1Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_1Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_1Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_1Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_1Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_1Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_1Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_1Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 1
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_09                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_1Resp
+        And from $paSendRTV2_1Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Req
+        And from $paSendRTV2_2Req.idPA xml check value 90000000002 in position 0
+        And from $paSendRTV2_2Req.idBrokerPA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.idStation xml check value 90000000001_01 in position 0
+        And from $paSendRTV2_2Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_2Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_2Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_2Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_2Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_2Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_2Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_2Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_2Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_2Req.receipt.fee xml check value 2.00 in position 0
+        And from $paSendRTV2_2Req.receipt.standIn xml check value true in position 0
+        # paSendRTV2 RESP NO standin 2
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000001_01                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_2Resp
+        And from $paSendRTV2_2Resp.outcome xml check value OK in position 0
+        # paSendRTV2 REQ NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Req
+        And from $paSendRTV2_3Req.idPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idBrokerPA xml check value 90000000003 in position 0
+        And from $paSendRTV2_3Req.idStation xml check value 90000000003_02 in position 0
+        And from $paSendRTV2_3Req.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTV2_3Req.receipt.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTV2_3Req.receipt.outcome xml check value OK in position 0
+        And from $paSendRTV2_3Req.receipt.creditorReferenceId xml check value 47$iuv in position 0
+        And from $paSendRTV2_3Req.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTV2_3Req.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTV2_3Req.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000001 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 0
+        ### TRANSFER 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 2 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000002 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 1
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 1
+        ### TRANSFER 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 3 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 90000000003 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 2
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 2
+        ### TRANSFER 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 4 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 3
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 3
+        ### TRANSFER 5
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.idTransfer xml check value 5 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferAmount xml check value 10 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.fiscalCodePA xml check value 88888888888 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 4
+        And from $paSendRTV2_3Req.receipt.transferList.transfer.transferCategory xml check value paGetPaymentTest in position 4
+
+        And from $paSendRTV2_3Req.receipt.idChannel xml check value #canale_IMMEDIATO_MULTIBENEFICIARIO# in position 0
+        And from $paSendRTV2_3Req.receipt.fee xml check value 2.00 in position 0
+        # paSendRTV2 RESP NO standin 3
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRTV2                                    |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | 90000000003_02                                |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2_3Resp
+        And from $paSendRTV2_3Resp.outcome xml check value OK in position 0
         # sendPaymentResult-v2 REQ
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys         | where_values                                  |
@@ -23537,9 +28324,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 52.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 52.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -24067,9 +28854,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -24579,9 +29366,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -25092,9 +29879,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -25604,9 +30391,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -26116,9 +30903,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -26628,9 +31415,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -27140,9 +31927,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -27653,9 +32440,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
@@ -28174,9 +32961,9 @@ Feature: NMU flows con PA New pagamento OK
         And from $closePaymentv2Req.totalAmount json check value 12.0 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 0
-        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2023-11-30T12:46:46.554+01:00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 12.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value NotNone in position 1
         And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
         And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
         # closePayment-v2 RESP
