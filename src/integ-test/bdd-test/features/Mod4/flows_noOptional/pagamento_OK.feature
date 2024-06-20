@@ -7,6 +7,13 @@ Feature: NM4 e MOD4 flows con PA New e PA OLD pagamento OK
 
     @ALL @NM4 @NM4PANEW @NM4PANEWPAGOK @NM4PANEWPAGOK_1
     Scenario: NM4 flow OK, FLOW con PA New vp1: nodoChiediCatalogoServiziV2, demandPaymentNotice -> paDemandPaymentNotice, activatePaymentNotice -> paGetPayment, spo+ -> paSendRT, BIZ+ (NM4-4)
+        Given from body with datatable horizontal nodoChiediCatalogoServiziV2_noOptional initial XML nodoChiediCatalogoServiziV2
+            | identificativoPSP | identificativoIntermediarioPSP | identificativoCanale         | password   |
+            | #psp#             | #psp#                          | #canale_ATTIVATO_PRESSO_PSP# | #password# |
+        When PSP sends SOAP nodoChiediCatalogoServiziV2 to nodo-dei-pagamenti
+        Then check xmlCatalogoServizi field exists in nodoChiediCatalogoServiziV2 response
+        And check outcome is OK of nodoChiediCatalogoServiziV2 response
+        And check fault field not exists in nodoChiediCatalogoServiziV2 response
         Given from body with datatable horizontal demandPaymentNotice_noOptional initial XML demandPaymentNotice
             | idPSP | idBrokerPSP     | idChannel                    | password   | idSoggettoServizio |
             | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 00042              |

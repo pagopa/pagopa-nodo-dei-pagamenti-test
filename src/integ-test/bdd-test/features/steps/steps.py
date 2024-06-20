@@ -2308,30 +2308,54 @@ def step_impl(context, tag, value, primitive):
 
 @then('check {tag} field exists in {primitive} response')
 def step_impl(context, tag, primitive):
-    soap_response = getattr(context, primitive + RESPONSE)
+    try:
+        soap_response = getattr(context, primitive + RESPONSE)
 
-    if 'xml' in soap_response.headers['content-type']:
-        my_document = parseString(soap_response.content)
-        assert len(my_document.getElementsByTagName(tag)) > 0
+        if 'xml' in soap_response.headers['content-type']:
+            my_document = parseString(soap_response.content)
+            assert len(my_document.getElementsByTagName(tag)) > 0,f"size: {len(my_document.getElementsByTagName(tag))} by tag: {tag} in soap response: {soap_response.content} is <= 0"
 
-    else:
-        node_response = getattr(context, primitive + RESPONSE)
-        json_response = node_response.json()
-        find = jo.search_tag(json_response, tag)
-        assert find
+        else:
+            node_response = getattr(context, primitive + RESPONSE)
+            json_response = node_response.json()
+            find = jo.search_tag(json_response, tag)
+            assert find,f"find tag: {tag} in json response: {json_response} is: {find}"
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @then('check {tag} field not exists in {primitive} response')
 def step_impl(context, tag, primitive):
-    soap_response = getattr(context, primitive + RESPONSE)
-    if 'xml' in soap_response.headers['content-type']:
-        my_document = parseString(soap_response.content)
-        assert len(my_document.getElementsByTagName(tag)) == 0
-    else:
-        node_response = getattr(context, primitive + RESPONSE)
-        json_response = node_response.json()
-        find = jo.search_tag(json_response, tag)
-        assert not find
+    try:
+        soap_response = getattr(context, primitive + RESPONSE)
+        if 'xml' in soap_response.headers['content-type']:
+            my_document = parseString(soap_response.content)
+            assert len(my_document.getElementsByTagName(tag)) == 0,f"size: {len(my_document.getElementsByTagName(tag))} by tag: {tag} in soap response: {soap_response.content} is != 0"
+        else:
+            node_response = getattr(context, primitive + RESPONSE)
+            json_response = node_response.json()
+            find = jo.search_tag(json_response, tag)
+            assert not find,f"find tag: {tag} in json response: {json_response} is: {find}"
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 # TODO improve with greater/equals than options
