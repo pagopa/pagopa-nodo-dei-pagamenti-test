@@ -414,9 +414,9 @@ Feature: NMU flows con pagamento KO
             | CHANNEL_ID                 | #canaleEcommerce#                               |
             | AMOUNT                     | $activatePaymentNoticeV2.amount                 |
             | FEE                        | None                                            |
-            #    | OUTCOME                    | $sendPaymentOutcomeV2.outcome                   |
+            | OUTCOME                    | None                                            |
             | INSERTED_BY                | activatePaymentNoticeV2                         |
-            #    | UPDATED_BY                 | sendPaymentOutcomeV2                            |
+            | UPDATED_BY                 | activatePaymentNoticeV2                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
             | RPT_ID                     | None                                            |
             | PAYMENT_TYPE               | NotNone                                         |
@@ -449,9 +449,9 @@ Feature: NMU flows con pagamento KO
             | CHANNEL_ID                 | #canaleEcommerce#                               |
             | AMOUNT                     | $activatePaymentNoticeV2.amount                 |
             | FEE                        | None                                            |
-            #    | OUTCOME                    | $sendPaymentOutcomeV2.outcome                   |
-            | INSERTED_BY                | NotNone                                         |
-            #   | UPDATED_BY                 | sendPaymentOutcomeV2                            |
+            | OUTCOME                    | None                                            |
+            | INSERTED_BY                | activatePaymentNoticeV2                         |
+            | UPDATED_BY                 | activatePaymentNoticeV2                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
             | RPT_ID                     | None                                            |
             | PAYMENT_TYPE               | NotNone                                         |
@@ -484,9 +484,9 @@ Feature: NMU flows con pagamento KO
             | CHANNEL_ID                 | #canaleEcommerce#                               |
             | AMOUNT                     | $activatePaymentNoticeV2.amount                 |
             | FEE                        | None                                            |
-            #    | OUTCOME                    | $sendPaymentOutcomeV2.outcome                   |
+            | OUTCOME                    | None                                            |
             | INSERTED_BY                | NotNone                                         |
-            #   | UPDATED_BY                 | sendPaymentOutcomeV2                            |
+            | UPDATED_BY                 | activatePaymentNoticeV2                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
             | RPT_ID                     | None                                            |
             | PAYMENT_TYPE               | NotNone                                         |
@@ -519,9 +519,9 @@ Feature: NMU flows con pagamento KO
             | CHANNEL_ID                 | #canaleEcommerce#                               |
             | AMOUNT                     | $activatePaymentNoticeV2.amount                 |
             | FEE                        | None                                            |
-            #   | OUTCOME                    | $sendPaymentOutcomeV2.outcome                   |
+            | OUTCOME                    | None                                            |
             | INSERTED_BY                | NotNone                                         |
-            #  | UPDATED_BY                 | sendPaymentOutcomeV2                            |
+            | UPDATED_BY                 | activatePaymentNoticeV2                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
             | RPT_ID                     | None                                            |
             | PAYMENT_TYPE               | NotNone                                         |
@@ -557,7 +557,6 @@ Feature: NMU flows con pagamento KO
             | where_keys  | where_values                                    |
             | ID_SESSIONE | $activatePaymentNoticeV2_4Response.paymentToken |
         # POSITION_ACTIVATE
-        ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column        | value                                                                                                                                                                                           |
             | PAYMENT_TOKEN | $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken,$activatePaymentNoticeV2_3Response.paymentToken,$activatePaymentNoticeV2_4Response.paymentToken |
@@ -570,7 +569,83 @@ Feature: NMU flows con pagamento KO
         And verify 0 record for the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
             | TRANSACTION_ID | $transaction_id |
-
+        # RE #####
+        # activatePaymentNoticeV2 REQ COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | activatePaymentNoticeV2                                                                                                                                                                                   |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                                                                                                                       |
+            | ESITO              | RICEVUTA                                                                                                                                                                                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # activatePaymentNoticeV2 RESP COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | activatePaymentNoticeV2                                                                                                                                                                                   |
+            | SOTTO_TIPO_EVENTO  | RESP                                                                                                                                                                                                      |
+            | ESITO              | INVIATA                                                                                                                                                                                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # paGetPayment REQ COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | paGetPayment                                                                                                                                                                                              |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                                                                                                                       |
+            | ESITO              | INVIATA                                                                                                                                                                                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # paGetPayment RESP COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | paGetPayment                                                                                                                                                                                              |
+            | SOTTO_TIPO_EVENTO  | RESP                                                                                                                                                                                                      |
+            | ESITO              | RICEVUTA                                                                                                                                                                                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # closePayment-v2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | closePayment-v2                                                                                                                                                                                           |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                                                                                                                       |
+            | ESITO              | RICEVUTA                                                                                                                                                                                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
+        And from $closePaymentv2Req.fee json check value 2.0 in position 0
+        And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_versione_primitive_2# in position 0
+        And from $closePaymentv2Req.idPSP json check value #psp# in position 0
+        And from $closePaymentv2Req.outcome json check value OK in position 0
+        And from $closePaymentv2Req.paymentMethod json check value CP in position 0
+        And from $closePaymentv2Req.paymentTokens.paymentToken json check value $activatePaymentNoticeV2_1Response.paymentToken in position 0
+        And from $closePaymentv2Req.paymentTokens.paymentToken json check value $activatePaymentNoticeV2_2Response.paymentToken in position 1
+        And from $closePaymentv2Req.paymentTokens.paymentToken json check value $activatePaymentNoticeV2_3Response.paymentToken in position 2
+        And from $closePaymentv2Req.paymentTokens.paymentToken json check value $activatePaymentNoticeV2_4Response.paymentToken in position 3
+        And from $closePaymentv2Req.totalAmount json check value 42.0 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 42.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2021-07-09T17:06:03 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
+        # closePayment-v2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | closePayment-v2                                                                                                                                                                                           |
+            | SOTTO_TIPO_EVENTO  | RESP                                                                                                                                                                                                      |
+            | ESITO              | INVIATA                                                                                                                                                                                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Resp
+        And from $closePaymentv2Resp.outcome json check value KO in position 0
+        And from $closePaymentv2Resp.description json check value Unknown token in position 0
 
 
 
@@ -985,9 +1060,9 @@ Feature: NMU flows con pagamento KO
             | CHANNEL_ID                 | #canaleEcommerce#                               |
             | AMOUNT                     | $activatePaymentNoticeV2.amount                 |
             | FEE                        | None                                            |
-            #    | OUTCOME                    | $sendPaymentOutcomeV2.outcome                   |
+            | OUTCOME                    | None                                            |
             | INSERTED_BY                | activatePaymentNoticeV2                         |
-            #    | UPDATED_BY                 | sendPaymentOutcomeV2                            |
+            | UPDATED_BY                 | activatePaymentNoticeV2                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
             | RPT_ID                     | None                                            |
             | PAYMENT_TYPE               | NotNone                                         |
@@ -1020,9 +1095,9 @@ Feature: NMU flows con pagamento KO
             | CHANNEL_ID                 | #canaleEcommerce#                               |
             | AMOUNT                     | $activatePaymentNoticeV2.amount                 |
             | FEE                        | None                                            |
-            #    | OUTCOME                    | $sendPaymentOutcomeV2.outcome                   |
-            | INSERTED_BY                | NotNone                                         |
-            #   | UPDATED_BY                 | sendPaymentOutcomeV2                            |
+            | OUTCOME                    | None                                            |
+            | INSERTED_BY                | activatePaymentNoticeV2                         |
+            | UPDATED_BY                 | activatePaymentNoticeV2                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
             | RPT_ID                     | None                                            |
             | PAYMENT_TYPE               | NotNone                                         |
@@ -1055,9 +1130,9 @@ Feature: NMU flows con pagamento KO
             | CHANNEL_ID                 | #canaleEcommerce#                               |
             | AMOUNT                     | $activatePaymentNoticeV2.amount                 |
             | FEE                        | None                                            |
-            #    | OUTCOME                    | $sendPaymentOutcomeV2.outcome                   |
-            | INSERTED_BY                | NotNone                                         |
-            #   | UPDATED_BY                 | sendPaymentOutcomeV2                            |
+            | OUTCOME                    | None                                            |
+            | INSERTED_BY                | activatePaymentNoticeV2                         |
+            | UPDATED_BY                 | activatePaymentNoticeV2                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
             | RPT_ID                     | None                                            |
             | PAYMENT_TYPE               | NotNone                                         |
@@ -1090,9 +1165,9 @@ Feature: NMU flows con pagamento KO
             | CHANNEL_ID                 | #canaleEcommerce#                               |
             | AMOUNT                     | $activatePaymentNoticeV2.amount                 |
             | FEE                        | None                                            |
-            #   | OUTCOME                    | $sendPaymentOutcomeV2.outcome                   |
-            | INSERTED_BY                | NotNone                                         |
-            #  | UPDATED_BY                 | sendPaymentOutcomeV2                            |
+            | OUTCOME                    | None                                            |
+            | INSERTED_BY                | activatePaymentNoticeV2                         |
+            | UPDATED_BY                 | activatePaymentNoticeV2                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
             | RPT_ID                     | None                                            |
             | PAYMENT_TYPE               | NotNone                                         |
@@ -1128,7 +1203,6 @@ Feature: NMU flows con pagamento KO
             | where_keys  | where_values                                    |
             | ID_SESSIONE | $activatePaymentNoticeV2_4Response.paymentToken |
         # POSITION_ACTIVATE
-        ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column        | value                                                                                                                                                                                           |
             | PAYMENT_TOKEN | $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken,$activatePaymentNoticeV2_3Response.paymentToken,$activatePaymentNoticeV2_4Response.paymentToken |
@@ -1141,7 +1215,82 @@ Feature: NMU flows con pagamento KO
         And verify 0 record for the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
             | TRANSACTION_ID | $transaction_id |
-
+        # RE #####
+        # activatePaymentNoticeV2 REQ COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | activatePaymentNoticeV2                                                                                                                                                                                   |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                                                                                                                       |
+            | ESITO              | RICEVUTA                                                                                                                                                                                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # activatePaymentNoticeV2 RESP COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | activatePaymentNoticeV2                                                                                                                                                                                   |
+            | SOTTO_TIPO_EVENTO  | RESP                                                                                                                                                                                                      |
+            | ESITO              | INVIATA                                                                                                                                                                                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # paGetPayment REQ COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | paGetPayment                                                                                                                                                                                              |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                                                                                                                       |
+            | ESITO              | INVIATA                                                                                                                                                                                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # paGetPayment RESP COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | paGetPayment                                                                                                                                                                                              |
+            | SOTTO_TIPO_EVENTO  | RESP                                                                                                                                                                                                      |
+            | ESITO              | RICEVUTA                                                                                                                                                                                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # closePayment-v2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | closePayment-v2                                                                                                                                                                                           |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                                                                                                                       |
+            | ESITO              | RICEVUTA                                                                                                                                                                                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
+        And from $closePaymentv2Req.fee json check value 2.0 in position 0
+        And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_versione_primitive_2# in position 0
+        And from $closePaymentv2Req.idPSP json check value #psp# in position 0
+        And from $closePaymentv2Req.outcome json check value KO in position 0
+        And from $closePaymentv2Req.paymentMethod json check value CP in position 0
+        And from $closePaymentv2Req.paymentTokens.paymentToken json check value $activatePaymentNoticeV2_1Response.paymentToken in position 0
+        And from $closePaymentv2Req.paymentTokens.paymentToken json check value $activatePaymentNoticeV2_2Response.paymentToken in position 1
+        And from $closePaymentv2Req.paymentTokens.paymentToken json check value $activatePaymentNoticeV2_3Response.paymentToken in position 2
+        And from $closePaymentv2Req.paymentTokens.paymentToken json check value $activatePaymentNoticeV2_4Response.paymentToken in position 3
+        And from $closePaymentv2Req.totalAmount json check value 42.0 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 42.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2021-07-09T17:06:03 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
+        # closePayment-v2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | closePayment-v2                                                                                                                                                                                           |
+            | SOTTO_TIPO_EVENTO  | RESP                                                                                                                                                                                                      |
+            | ESITO              | INVIATA                                                                                                                                                                                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Resp
+        And from $closePaymentv2Resp.outcome json check value OK in position 0
 
 
 
@@ -1558,9 +1707,9 @@ Feature: NMU flows con pagamento KO
             | CHANNEL_ID                 | #canaleEcommerce#                               |
             | AMOUNT                     | $activatePaymentNoticeV2.amount                 |
             | FEE                        | None                                            |
-            #    | OUTCOME                    | $sendPaymentOutcomeV2.outcome                   |
+            | OUTCOME                    | None                                            |
             | INSERTED_BY                | activatePaymentNoticeV2                         |
-            #    | UPDATED_BY                 | sendPaymentOutcomeV2                            |
+            | UPDATED_BY                 | activatePaymentNoticeV2                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
             | RPT_ID                     | None                                            |
             | PAYMENT_TYPE               | NotNone                                         |
@@ -1593,9 +1742,9 @@ Feature: NMU flows con pagamento KO
             | CHANNEL_ID                 | #canaleEcommerce#                               |
             | AMOUNT                     | $activatePaymentNoticeV2.amount                 |
             | FEE                        | None                                            |
-            #    | OUTCOME                    | $sendPaymentOutcomeV2.outcome                   |
-            | INSERTED_BY                | NotNone                                         |
-            #   | UPDATED_BY                 | sendPaymentOutcomeV2                            |
+            | OUTCOME                    | None                                            |
+            | INSERTED_BY                | activatePaymentNoticeV2                         |
+            | UPDATED_BY                 | activatePaymentNoticeV2                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
             | RPT_ID                     | None                                            |
             | PAYMENT_TYPE               | NotNone                                         |
@@ -1628,9 +1777,9 @@ Feature: NMU flows con pagamento KO
             | CHANNEL_ID                 | #canaleEcommerce#                               |
             | AMOUNT                     | $activatePaymentNoticeV2.amount                 |
             | FEE                        | None                                            |
-            #    | OUTCOME                    | $sendPaymentOutcomeV2.outcome                   |
-            | INSERTED_BY                | NotNone                                         |
-            #   | UPDATED_BY                 | sendPaymentOutcomeV2                            |
+            | OUTCOME                    | None                                            |
+            | INSERTED_BY                | activatePaymentNoticeV2                         |
+            | UPDATED_BY                 | activatePaymentNoticeV2                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
             | RPT_ID                     | None                                            |
             | PAYMENT_TYPE               | NotNone                                         |
@@ -1663,9 +1812,9 @@ Feature: NMU flows con pagamento KO
             | CHANNEL_ID                 | #canaleEcommerce#                               |
             | AMOUNT                     | $activatePaymentNoticeV2.amount                 |
             | FEE                        | None                                            |
-            #   | OUTCOME                    | $sendPaymentOutcomeV2.outcome                   |
-            | INSERTED_BY                | NotNone                                         |
-            #  | UPDATED_BY                 | sendPaymentOutcomeV2                            |
+            | OUTCOME                    | None                                            |
+            | INSERTED_BY                | activatePaymentNoticeV2                         |
+            | UPDATED_BY                 | activatePaymentNoticeV2                         |
             | FK_PAYMENT_PLAN            | NotNone                                         |
             | RPT_ID                     | None                                            |
             | PAYMENT_TYPE               | NotNone                                         |
@@ -1701,7 +1850,6 @@ Feature: NMU flows con pagamento KO
             | where_keys  | where_values                                    |
             | ID_SESSIONE | $activatePaymentNoticeV2_4Response.paymentToken |
         # POSITION_ACTIVATE
-        ###ACTIVATE 1
         And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
             | column        | value                                                                                                                                                                                           |
             | PAYMENT_TOKEN | $activatePaymentNoticeV2_1Response.paymentToken,$activatePaymentNoticeV2_2Response.paymentToken,$activatePaymentNoticeV2_3Response.paymentToken,$activatePaymentNoticeV2_4Response.paymentToken |
@@ -1714,4 +1862,82 @@ Feature: NMU flows con pagamento KO
         And verify 0 record for the table PM_METADATA retrived by the query on db nodo_online with where datatable horizontal
             | where_keys     | where_values    |
             | TRANSACTION_ID | $transaction_id |
+        # RE #####
+        # activatePaymentNoticeV2 REQ COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | activatePaymentNoticeV2                                                                                                                                                                                   |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                                                                                                                       |
+            | ESITO              | RICEVUTA                                                                                                                                                                                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # activatePaymentNoticeV2 RESP COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | activatePaymentNoticeV2                                                                                                                                                                                   |
+            | SOTTO_TIPO_EVENTO  | RESP                                                                                                                                                                                                      |
+            | ESITO              | INVIATA                                                                                                                                                                                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # paGetPayment REQ COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | paGetPayment                                                                                                                                                                                              |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                                                                                                                       |
+            | ESITO              | INVIATA                                                                                                                                                                                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # paGetPayment RESP COUNT 4 RECORDS
+        And verify 4 record for the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | paGetPayment                                                                                                                                                                                              |
+            | SOTTO_TIPO_EVENTO  | RESP                                                                                                                                                                                                      |
+            | ESITO              | RICEVUTA                                                                                                                                                                                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        # closePayment-v2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | closePayment-v2                                                                                                                                                                                           |
+            | SOTTO_TIPO_EVENTO  | REQ                                                                                                                                                                                                       |
+            | ESITO              | RICEVUTA                                                                                                                                                                                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Req
+        And from $closePaymentv2Req.fee json check value 2.0 in position 0
+        And from $closePaymentv2Req.idBrokerPSP json check value #id_broker_psp# in position 0
+        And from $closePaymentv2Req.idChannel json check value #canale_versione_primitive_2# in position 0
+        And from $closePaymentv2Req.idPSP json check value #psp# in position 0
+        And from $closePaymentv2Req.outcome json check value OK in position 0
+        And from $closePaymentv2Req.paymentMethod json check value CP in position 0
+        And from $closePaymentv2Req.paymentTokens.paymentToken json check value $activatePaymentNoticeV2_1Response.paymentToken in position 0
+        And from $closePaymentv2Req.paymentTokens.paymentToken json check value $activatePaymentNoticeV2_2Response.paymentToken in position 1
+        And from $closePaymentv2Req.paymentTokens.paymentToken json check value $activatePaymentNoticeV2_3Response.paymentToken in position 2
+        And from $closePaymentv2Req.paymentTokens.paymentToken json check value $activatePaymentNoticeV2_4Response.paymentToken in position 3
+        And from $closePaymentv2Req.totalAmount json check value 42.0 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.rrn json check value 11223344 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.outcomePaymentGateway json check value 00 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.totalAmount json check value 42.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.fee json check value 2.0 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.timestampOperation json check value 2021-07-09T17:06:03 in position 1
+        And from $closePaymentv2Req.additionalPaymentInformations.authorizationCode json check value 123456 in position 0
+        And from $closePaymentv2Req.additionalPaymentInformations.paymentGateway json check value 00 in position 0
+        # closePayment-v2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                                                                                                                                                                              |
+            | PAYMENT_TOKEN      | ('$activatePaymentNoticeV2_1Response.paymentToken','$activatePaymentNoticeV2_2Response.paymentToken','$activatePaymentNoticeV2_3Response.paymentToken','$activatePaymentNoticeV2_4Response.paymentToken') |
+            | TIPO_EVENTO        | closePayment-v2                                                                                                                                                                                           |
+            | SOTTO_TIPO_EVENTO  | RESP                                                                                                                                                                                                      |
+            | ESITO              | INVIATA                                                                                                                                                                                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                                                                                                                                                                                          |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                                                                                                                                                                                       |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key closePaymentv2Resp
+        And from $closePaymentv2Resp.outcome json check value KO in position 0
+        And from $closePaymentv2Resp.description json check value Unacceptable outcome when token has expired in position 0
+
 
