@@ -1,4 +1,4 @@
-Feature: NM4 e MOD4 flows con PA New e PA OLD pagamento OK
+Feature: NM4 e MOD4 flows con PA New pagamento OK
 
 
     Background:
