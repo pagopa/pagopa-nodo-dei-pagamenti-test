@@ -1,0 +1,26 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/" xmlns:pag="http://www.digitpa.gov.it/schemas/2011/Pagamenti/" xmlns:bc="http://PuntoAccessoPSP.spcoop.gov.it/BarCode_GS1_128_Modified" xmlns:aim="http://PuntoAccessoPSP.spcoop.gov.it/Code_128_AIM_USS-128_tipo_C" xmlns:qrc="http://PuntoAccessoPSP.spcoop.gov.it/QrCode">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<ws:nodoAttivaRPT>
+			<identificativoPSP>$identificativoPSP</identificativoPSP>
+			<identificativoIntermediarioPSP>$identificativoIntermediarioPSP</identificativoIntermediarioPSP>
+			<identificativoCanale>$identificativoCanale</identificativoCanale>
+			<password>$password</password>
+			<codiceContestoPagamento>$codiceContestoPagamento</codiceContestoPagamento>
+			<identificativoIntermediarioPSPPagamento>$identificativoIntermediarioPSPPagamento</identificativoIntermediarioPSPPagamento>
+			<identificativoCanalePagamento>$identificativoCanalePagamento</identificativoCanalePagamento>
+			<codificaInfrastrutturaPSP>$codificaInfrastrutturaPSP</codificaInfrastrutturaPSP>
+			<codiceIdRPT>
+				<aim:aim128>
+					<aim:CCPost>$CCPost</aim:CCPost>
+					<aim:CodStazPA>$CodStazPA</aim:CodStazPA>
+					<aim:AuxDigit>$AuxDigit</aim:AuxDigit>
+					<aim:CodIUV>$CodIUV</aim:CodIUV>
+				</aim:aim128>
+			</codiceIdRPT>
+			<datiPagamentoPSP>
+				<importoSingoloVersamento>$importoSingoloVersamento</importoSingoloVersamento>
+			</datiPagamentoPSP>
+		</ws:nodoAttivaRPT>
+	</soapenv:Body>
+</soapenv:Envelope>
