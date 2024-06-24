@@ -919,7 +919,7 @@ Feature: NMU flows con PA New retry a token scaduto
 
 
     @ALL @NMU @NMUPANEW @NMUPANEWRETRY @NMUPANEWRETRY_3 @after_1
-    Scenario: NMU flow retry a token scaduto, FLOW con PA New vp1 e PSP na: checkPosition con 1 nav activateV2 -> paGetPayment (scadenza sessione), mod3cancelV2, BIZ-, closeV2+ con resp KO perché token scaduto (NMU-4)
+    Scenario: NMU flow sessione scaduta, FLOW con PA New vp1 e PSP na: checkPosition con 1 nav activateV2 -> paGetPayment (scadenza sessione), mod3cancelV2, BIZ-, closeV2+ con resp KO perché token scaduto (NMU-4)
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And wait 3 seconds after triggered refresh job ALL
         And from body with datatable horizontal checkPositionBody initial JSON checkPosition
