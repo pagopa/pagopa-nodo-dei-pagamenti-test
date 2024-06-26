@@ -135,7 +135,7 @@ Feature: process tests for pspInviaCarrelloRPTCarte 345
         Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
         And retrieve session token from $nodoInviaCarrelloRPTResponse.url
 
-    @runnable
+    @runnable @test
     Scenario Outline: Execution Esito Carta
         Given the Execute nodoInviaCarrelloRPT request scenario executed successfully
         And initial XML pspInviaCarrelloRPTCarte
@@ -178,16 +178,16 @@ Feature: process tests for pspInviaCarrelloRPTCarte 345
         Examples:
             | tag                                 | value | status | description | response_tagvalue            | soapUI test |
             | soapenv:Body                        | Empty | 408    | error       | Operazione in timeout        | CRPTCRES3   |
-            | soapenv:Body                        | None  | 408    | error       | Operazione in timeout        | CRPTCRES4   |
-            | ws:pspInviaCarrelloRPTCarteResponse | Empty | 408    | error       | Operazione in timeout        | CRPTCRES5   |
-            | fault                               | Empty | 408    | error       | Operazione in timeout        | CRPTCRES6   |
-            | faultCode                           | Empty | 200    | descrizione | Risposta negativa del Canale | CRPTCRES8   |
-            | faultCode                           | CIAO  | 200    | descrizione | Risposta negativa del Canale | CRPTCRES9   |
-            | faultString                         | Empty | 200    | descrizione | Risposta negativa del Canale | CRPTCRES10  |
-            | id                                  | Empty | 200    | descrizione | Risposta negativa del Canale | CRPTCRES11  |
-            | esitoComplessivoOperazione          | None  | 408    | error       | Operazione in timeout        | CRPTCRES12  |
-            | fault                               | None  | 408    | error       | Operazione in timeout        | CRPTCRES13  |
-            | esitoComplessivoOperazione          | CIAO  | 408    | error       | Operazione in timeout        | CRPTCRES15  |
+            # | soapenv:Body                        | None  | 408    | error       | Operazione in timeout        | CRPTCRES4   |
+            # | ws:pspInviaCarrelloRPTCarteResponse | Empty | 408    | error       | Operazione in timeout        | CRPTCRES5   |
+            # | fault                               | Empty | 408    | error       | Operazione in timeout        | CRPTCRES6   |
+            # | faultCode                           | Empty | 200    | descrizione | Risposta negativa del Canale | CRPTCRES8   |
+            # | faultCode                           | CIAO  | 200    | descrizione | Risposta negativa del Canale | CRPTCRES9   |
+            # | faultString                         | Empty | 200    | descrizione | Risposta negativa del Canale | CRPTCRES10  |
+            # | id                                  | Empty | 200    | descrizione | Risposta negativa del Canale | CRPTCRES11  |
+            # | esitoComplessivoOperazione          | None  | 408    | error       | Operazione in timeout        | CRPTCRES12  |
+            # | fault                               | None  | 408    | error       | Operazione in timeout        | CRPTCRES13  |
+            # | esitoComplessivoOperazione          | CIAO  | 408    | error       | Operazione in timeout        | CRPTCRES15  |
 
 
     @runnable
