@@ -4902,7 +4902,13 @@ def step_impl(context):
 @step('retrieve session token from {url}')
 def step_impl(context, url):
     try:
-        user_profile = getattr(context, "user_profile")
+        user_profile = None
+        try:
+            user_profile = getattr(context, "user_profile")
+            print("RUN IN LOCALE")
+        except Exception as e:
+            print("RUN IN REMOTO")
+
         print(f"url from response {url}: ")
         url = utils.replace_local_variables(url, context)
         print(url)
@@ -4928,7 +4934,13 @@ def step_impl(context, url):
 @step('retrieve session token {number:d} from {url}')
 def step_impl(context, number, url):
     try:
-        user_profile = getattr(context, "user_profile")
+        user_profile = None
+        try:
+            user_profile = getattr(context, "user_profile")
+            print("RUN IN LOCALE")
+        except Exception as e:
+            print("RUN IN REMOTO")
+            
         print(f"url from response {url}: ")
         url = utils.replace_local_variables(url, context)
         print(url)
