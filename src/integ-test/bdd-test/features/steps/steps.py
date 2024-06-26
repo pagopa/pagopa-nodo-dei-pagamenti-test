@@ -4901,18 +4901,54 @@ def step_impl(context):
 
 @step('retrieve session token from {url}')
 def step_impl(context, url):
-    url = utils.replace_local_variables(url, context)
-    print(url)
-    print(f"#################### {url.split('idSession=')[1]}")
-    setattr(context, f'sessionToken', url.split('idSession=')[1])
+    try:
+        user_profile = getattr(context, "user_profile")
+        print(f"url from response {url}: ")
+        url = utils.replace_local_variables(url, context)
+        print(url)
+        ####RUN DA LOCALE
+        if user_profile != None:
+            print(f"#################### {url.split('idSession=')[1]}")
+            setattr(context, f'sessionToken', url.split('idSession=')[1])
+        else:
+            print(f"#################### {url.split('sessionId=')[1]}")
+            setattr(context, f'sessionToken', url.split('sessionId=')[1])
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step('retrieve session token {number:d} from {url}')
 def step_impl(context, number, url):
-    url = utils.replace_local_variables(url, context)
-    print(url)
-    print(f"#################### {url.split('idSession=')[1]}")
-    setattr(context, f'{number}sessionToken', url.split('idSession=')[1])
+    try:
+        user_profile = getattr(context, "user_profile")
+        print(f"url from response {url}: ")
+        url = utils.replace_local_variables(url, context)
+        print(url)
+        ####RUN DA LOCALE
+        if user_profile != None:
+            print(f"#################### {url.split('idSession=')[1]}")
+            setattr(context, f'{number}sessionToken', url.split('idSession=')[1])
+        else:
+            print(f"#################### {url.split('sessionId=')[1]}")
+            setattr(context, f'sessionToken', url.split('sessionId=')[1])      
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step('retrieve url from {url}')
