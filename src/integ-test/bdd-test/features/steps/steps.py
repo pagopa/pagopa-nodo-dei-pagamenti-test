@@ -4917,8 +4917,8 @@ def step_impl(context, url):
             print(f"#################### {url.split('idSession=')[1]}")
             setattr(context, f'sessionToken', url.split('idSession=')[1])
         else:
-            print(f"#################### {url.split('sessionId=')[1]}")
-            setattr(context, f'sessionToken', url.split('sessionId=')[1])
+            print(f"#################### {url.split('_')[1]}")
+            setattr(context, f'sessionToken', url.split('_')[1])
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
         print("----->>>> Assertion Error: ", e)
@@ -4940,7 +4940,7 @@ def step_impl(context, number, url):
             print("RUN IN LOCALE")
         except Exception as e:
             print("RUN IN REMOTO")
-            
+
         print(f"url from response {url}: ")
         url = utils.replace_local_variables(url, context)
         print(url)
@@ -4949,8 +4949,8 @@ def step_impl(context, number, url):
             print(f"#################### {url.split('idSession=')[1]}")
             setattr(context, f'{number}sessionToken', url.split('idSession=')[1])
         else:
-            print(f"#################### {url.split('sessionId=')[1]}")
-            setattr(context, f'sessionToken', url.split('sessionId=')[1])      
+            print(f"#################### {url.split('_')[1]}")
+            setattr(context, f'sessionToken', url.split('_')[1])      
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert
         print("----->>>> Assertion Error: ", e)
