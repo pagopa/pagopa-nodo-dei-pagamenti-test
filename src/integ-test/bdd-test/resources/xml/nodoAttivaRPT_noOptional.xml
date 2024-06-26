@@ -7,8 +7,8 @@
 			<identificativoCanale>$identificativoCanale</identificativoCanale>
 			<password>$password</password>
 			<codiceContestoPagamento>$codiceContestoPagamento</codiceContestoPagamento>
-			<identificativoIntermediarioPSPPagamento>$identificativoIntermediarioPSPPagamento</identificativoIntermediarioPSPPagamento>
-			<identificativoCanalePagamento>$identificativoCanalePagamento</identificativoCanalePagamento>
+			<identificativoIntermediarioPSPPagamento>$idIntermediarioPSPPagamento</identificativoIntermediarioPSPPagamento>
+			<identificativoCanalePagamento>$idCanalePagamento</identificativoCanalePagamento>
 			<codificaInfrastrutturaPSP>$codificaInfrastrutturaPSP</codificaInfrastrutturaPSP>
 			<codiceIdRPT>
 				<aim:aim128>
