@@ -4905,7 +4905,6 @@ def step_impl(context, url):
         print(f"url from response {url}: ")
         url = utils.replace_local_variables(url, context)
         print(url)
-        ####RUN DA LOCALE
         print(f"#################### {url.split('idSession=')[1]}")
         setattr(context, f'sessionToken', url.split('idSession=')[1])
         
