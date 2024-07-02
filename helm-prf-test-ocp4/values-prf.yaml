@@ -49,12 +49,3 @@ deployments:
             drop:
             - all
           readOnlyRootFilesystem: true
-
-        nodeSelector:
-          envnodopa: prf
-        
-        tolerations:
-        - key: "envnodopa"
-          operator: "Equal"
-          value: prf
-          effect: "NoExecute"
