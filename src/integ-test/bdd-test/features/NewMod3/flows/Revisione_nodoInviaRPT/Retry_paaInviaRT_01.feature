@@ -434,9 +434,9 @@ Feature: process tests for nodoInviaRPT [Retry_paaInviaRT_01] 1243
         And check value $prx_xml.idChannel is equal to value $pp1_channel_id
         #check xml rt
         And execution query rt to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
+        And by the query rt retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
         And execution query rt to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
+        And by the query rt retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
         #position_payment
         And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns BROKER_PA_ID, STATION_ID, PAYMENT_TOKEN, NOTICE_ID, PA_FISCAL_CODE, OUTCOME, CREDITOR_REFERENCE_ID, AMOUNT, PSP_ID, CHANNEL_ID, PAYMENT_CHANNEL, PAYMENT_METHOD, FEE, INSERTED_TIMESTAMP, APPLICATION_DATE, TRANSFER_DATE under macro NewMod3 with db name nodo_online
         And through the query payment_status_pay retrieve param BROKER_PA_ID at position 0 and save it under the key BROKER_PA_ID

@@ -284,10 +284,10 @@ Feature: process tests for retry a token scaduto (retry_PaOld_30) 1208
 
     # Assigning XML_CONTENT query result to
     And execution query rt_xml to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-    And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
+    And by the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
     # Assigning XML_CONTENT query result to
     And execution query rt_xml to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-    And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
+    And by the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
 
     #checks on XML
     And check value $xml_rt.identificativoDominio is equal to value $xml_rpt.identificativoDominio

@@ -409,9 +409,9 @@ Feature: Eliminazione_lock_retry_token_scaduto 1124
 
         # Check XML RT-
         And execution query rt_xml to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
+        And by the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
         And execution query rt_xml to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
+        And by the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
         And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online
         And through the query payment_status_pay retrieve param BROKER_PA_ID at position 5 and save it under the key BROKER_PA_ID
         And through the query payment_status_pay retrieve param STATION_ID at position 6 and save it under the key STATION_ID
@@ -441,9 +441,9 @@ Feature: Eliminazione_lock_retry_token_scaduto 1124
 
         # Check XML RT+
         And execution query rt_xml_v2 to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml_v2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
+        And by the query rt_xml_V2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
         And execution query rt_xml_v2 to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml_v2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
+        And by the query rt_xml_V2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
         And execution query receipt_xml_v2 to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
         And through the query receipt_xml_v2 retrieve xml XML_CONTENT at position 0 and save it under the key xml_receipt
         And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online
@@ -516,9 +516,9 @@ Feature: Eliminazione_lock_retry_token_scaduto 1124
 
         # Check XML RT-
         And execution query rt_xml to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
+        And by the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
         And execution query rt_xml to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
+        And by the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
         And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online
         And through the query payment_status_pay retrieve param BROKER_PA_ID at position 5 and save it under the key BROKER_PA_ID
         And through the query payment_status_pay retrieve param STATION_ID at position 6 and save it under the key STATION_ID
@@ -548,9 +548,9 @@ Feature: Eliminazione_lock_retry_token_scaduto 1124
 
         # Check XML RT+
         And execution query rt_xml_v2 to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml_v2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
+        And by the query rt_xml_V2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
         And execution query rt_xml_v2 to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml_v2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
+        And by the query rt_xml_V2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
         And execution query receipt_xml_v2 to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
         And through the query receipt_xml_v2 retrieve xml XML_CONTENT at position 0 and save it under the key xml_receipt
         And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online
@@ -627,9 +627,9 @@ Feature: Eliminazione_lock_retry_token_scaduto 1124
 
         # Check XML RT-
         And execution query rt_xml to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
+        And by the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
         And execution query rt_xml to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
+        And by the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
         And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online
         And through the query payment_status_pay retrieve param BROKER_PA_ID at position 5 and save it under the key BROKER_PA_ID
         And through the query payment_status_pay retrieve param STATION_ID at position 6 and save it under the key STATION_ID
@@ -670,9 +670,9 @@ Feature: Eliminazione_lock_retry_token_scaduto 1124
 
         # Check XML RT+
         And execution query rt_xml_v2 to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml_v2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
+        And by the query rt_xml_V2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
         And execution query rt_xml_v2 to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml_v2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
+        And by the query rt_xml_V2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
         And execution query receipt_xml_v2 to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
         And through the query receipt_xml_v2 retrieve xml XML_CONTENT at position 0 and save it under the key xml_receipt
         And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online
@@ -776,9 +776,9 @@ Feature: Eliminazione_lock_retry_token_scaduto 1124
 
         # Check XML RT-
         And execution query rt_xml to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
+        And by the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
         And execution query rt_xml to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
+        And by the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
         And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online
         And through the query payment_status_pay retrieve param BROKER_PA_ID at position 5 and save it under the key BROKER_PA_ID
         And through the query payment_status_pay retrieve param STATION_ID at position 6 and save it under the key STATION_ID
@@ -812,9 +812,9 @@ Feature: Eliminazione_lock_retry_token_scaduto 1124
 
         # Check XML RT+
         And execution query rt_xml_v2 to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml_v2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
+        And by the query rt_xml_V2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
         And execution query rt_xml_v2 to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml_v2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
+        And by the query rt_xml_V2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
         And execution query receipt_xml_v2 to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
         And through the query receipt_xml_v2 retrieve xml XML_CONTENT at position 0 and save it under the key xml_receipt
         And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online

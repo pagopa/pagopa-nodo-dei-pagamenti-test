@@ -473,11 +473,11 @@ Feature: process tests for nodoInviaRPT [REV_NIRPT_01] 1221
         # Assigning XML_CONTENT query result to xml_rt
 
         And execution query rt_xml to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
+        And by the query rt_xml retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
         
         # Assigning XML_CONTENT query result to xml_rt
         And execution query rpt to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-        And through the query rpt retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
+        And by the query rpt retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
        
         #position_payment
         And execution query payment_status_pay to get value on the table POSITION_PAYMENT, with the columns * under macro NewMod3 with db name nodo_online

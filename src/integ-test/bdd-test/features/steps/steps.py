@@ -3165,13 +3165,25 @@ def step_impl(context, query_name, type_body, body, position, key):
         raise e
 
 
-@step("through the query {query_name} retrieve xml_no_decode {xml} at position {position:d} and save it under the key {key}")
+@step("by the query {query_name} retrieve xml_no_decode {xml} at position {position:d} and save it under the key {key}")
 def step_impl(context, query_name, xml, position, key):
-    result_query = getattr(context, query_name)
-    print(f'{query_name}: {result_query}')
-    selected_element = result_query[0][position]
-    print(f'{xml}: {selected_element}')
-    setattr(context, key, selected_element)
+    try:    
+        result_query = getattr(context, query_name)
+        print(f'{query_name}: {result_query}')
+        selected_element = result_query[0][position]
+        print(f'{xml}: {selected_element}')
+        setattr(context, key, selected_element)
+        
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @step("with the query {query_name1} check assert beetwen elem {elem1} in position {position1:d} and elem {elem2} with position {position2:d} of the query {query_name2}")

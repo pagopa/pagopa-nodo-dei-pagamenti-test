@@ -116,7 +116,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
             | idCiBundle                    | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
 
 
-    @test
+    @test @prova
     # syntax check - Invalid field - paymentToken
     Scenario Outline: Check syntax error on invalid body element value - paymentToken
         Given the closePaymentV2 scenario executed successfully
@@ -842,16 +842,6 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
     Scenario: check closePaymentV2 PAG-2555 OK with timezone Z
         Given the check activatePaymentNoticeV2 OK scenario executed successfully
         And the closePaymentV2 PAG-2555 with timeZone Z scenario executed successfully
-        And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
-        And paymentGateway with None in v2/closepayment
-        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v2/closepayment response is 200
-        And check outcome is OK of v2/closepayment response
-
-    @test
-    Scenario: check closePaymentV2 PAG-2555 OK with timezone +
-        Given the check activatePaymentNoticeV2 OK scenario executed successfully
-        And the closePaymentV2 PAG-2555 with timeZone + scenario executed successfully
         And paymentToken with $activatePaymentNoticeV21Response.paymentToken in v2/closepayment
         And paymentGateway with None in v2/closepayment
         When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti

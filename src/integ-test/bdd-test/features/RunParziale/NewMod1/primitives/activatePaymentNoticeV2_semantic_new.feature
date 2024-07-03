@@ -1286,5 +1286,5 @@ Feature: semantic checks new for activatePaymentNoticeV2Request 1511
         And execution query activatev2_resp to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query activatev2_resp retrieve xml PAYLOAD at position 0 and save it under the key XML_DB_1
         And execution query select_activatev2 to get value on the table IDEMPOTENCY_CACHE, with the columns RESPONSE under macro NewMod1 with db name nodo_online
-        And through the query select_activatev2 retrieve xml_no_decode RESPONSE at position 0 and save it under the key XML_DB_2
+        And by the query select_activatev2 retrieve xml_no_decode RESPONSE at position 0 and save it under the key XML_DB_2
         And check value $XML_DB_1 is equal to value $XML_DB_2
