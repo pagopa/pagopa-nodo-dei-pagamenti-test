@@ -29025,8 +29025,8 @@ Feature: NM3 flows PA New con pagamento OK
         When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNotice response
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
-            | #psp# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
+            | idPSP      | idBrokerPSP      | idChannel      | password   | paymentToken                                | outcome |
+            | #pspPoste# | #brokerPspPoste# | #channelPoste# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 5 seconds for expiration
