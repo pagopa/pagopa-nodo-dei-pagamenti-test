@@ -413,10 +413,10 @@ Feature: process tests for retry a token scaduto 1209
     And check value $xml_rt.datiSpecificiRiscossione is equal to value $xml_rpt.datiSpecificiRiscossione
     # Assigning XML_CONTENT query result to
     And execution query rt_xml_v2 to get value on the table RT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-    And by the query rt_xml_V2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
+    And by the query rt_xml_v2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rt
     # Assigning XML_CONTENT query result to
     And execution query rt_xml_v2 to get value on the table RPT_XML, with the columns XML_CONTENT under macro NewMod3 with db name nodo_online
-    And by the query rt_xml_V2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
+    And by the query rt_xml_v2 retrieve xml_no_decode XML_CONTENT at position 0 and save it under the key xml_rpt
     # Assigning XML_CONTENT query result to receipt
     And execution query receipt_xml_v2 to get value on the table POSITION_RECEIPT_XML, with the columns XML under macro NewMod3 with db name nodo_online
     And through the query receipt_xml_v2 retrieve xml XML_CONTENT at position 0 and save it under the key xml_receipt
