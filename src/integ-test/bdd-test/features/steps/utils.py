@@ -18,6 +18,8 @@ from urllib.parse import urlparse
 from behave.model import Table, Row
 
 import string
+from azure.eventhub import EventHubConsumerClient
+from azure.eventhub.exceptions import EventHubError
 
 
 try:
@@ -231,9 +233,21 @@ def save_soap_action(context, mock, primitive, soap_action, override=False):
     headers = {'Content-Type': 'application/xml'}
     print(f'{mock}/response/{primitive}?override={override}')
 
+    user_profile = None
+    try:
+        user_profile = getattr(context, "user_profile")
+        print(f"User Profile: {user_profile} ->>> local run!")
+    except AttributeError as e:
+        print(f"User Profile None: {e} ->>> remote run!")
+
     response = None
     if dbRun == "Postgres":
-        response = requests.post(f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+        ####RUN DA LOCALE
+        if user_profile != None:
+            response = requests.post(f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False)
+        ###RUN DA REMOTO
+        else:  
+            response = requests.post(f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False, proxies = getattr(context,'proxies'))
     elif dbRun == "Oracle":
         response = requests.post(f"{mock}/response/{primitive}?override={override}", soap_action, headers=headers, verify=False)
     print(response.content, response.status_code)
@@ -580,6 +594,13 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
     import db_operation_oracle
     import db_operation_apicfg_testing_support as db
 
+    user_profile = None
+    try:
+        user_profile = getattr(context, "user_profile")
+        print(f"User Profile: {user_profile} ->>> local run!")
+    except AttributeError as e:
+        print(f"User Profile None: {e} ->>> remote run!")
+
     if dbRun == "Postgres":
         db_online = db_operation_postgres
         db_offline = db_operation_postgres
@@ -653,7 +674,12 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
         
         get_response = ''
         if dbRun == "Postgres":
-            get_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+            ####RUN DA LOCALE
+            if user_profile != None:
+                get_response = requests.get(url_nodo, headers=headers, verify=False)
+            ###RUN DA REMOTO
+            else:   
+                get_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
         elif dbRun == "Oracle":
             get_response = requests.get(url_nodo, headers=headers, verify=False)
 
@@ -682,7 +708,12 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             print(f"primitive: {primitive} ---> body: {body}")
 
             if dbRun == "Postgres":
-                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+                ####RUN DA LOCALE
+                if user_profile != None:
+                    response = requests.post(url_nodo, body, headers=headers, verify=False)
+                ###RUN DA REMOTO
+                else:  
+                    response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
             elif dbRun == 'Oracle':
                 response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
@@ -726,7 +757,12 @@ def single_thread_evolution(context, primitive, tipo, all_primitive_in_parallel)
             headers = {'Content-Type': 'application/xml', 'SOAPAction': primitive, 'Host': header_host, 'Ocp-Apim-Subscription-Key': SUBKEY} 
 
             if dbRun == "Postgres":
-                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+                ####RUN DA LOCALE
+                if user_profile != None:
+                    response = requests.post(url_nodo, body, headers=headers, verify=False)
+                ###RUN DA REMOTO
+                else:  
+                    response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
             elif dbRun == 'Oracle':
                 response = requests.post(url_nodo, body, headers=headers, verify=False)            
             
@@ -748,6 +784,14 @@ def single_thread(context, soap_primitive, tipo):
     primitive = replace_context_variables(primitive, context)
     primitive = replace_global_variables(primitive, context)
     print(f"primitive: {primitive}")
+
+    user_profile = None
+    try:
+        user_profile = getattr(context, "user_profile")
+        print(f"User Profile: {user_profile} ->>> local run!")
+    except AttributeError as e:
+        print(f"User Profile None: {e} ->>> remote run!")
+
     if tipo == 'GET':
         if context.config.userdata.get("services").get("nodo-dei-pagamenti").get("rest_service") == "":
             url_nodo = f"{get_rest_url_nodo(context, primitive)}/{primitive}"
@@ -763,7 +807,12 @@ def single_thread(context, soap_primitive, tipo):
         
         soap_response = ''
         if dbRun == "Postgres":
-            soap_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+            ####RUN DA LOCALE
+            if user_profile != None:
+                soap_response = requests.get(url_nodo, headers=headers, verify=False)
+            ###RUN DA REMOTO
+            else:  
+                soap_response = requests.get(url_nodo, headers=headers, verify=False, proxies = getattr(context,'proxies'))
         elif dbRun == "Oracle":
             soap_response = requests.get(url_nodo, headers=headers, verify=False)
         print("response: ", soap_response.content)
@@ -790,7 +839,12 @@ def single_thread(context, soap_primitive, tipo):
 
             response = ''
             if dbRun == "Postgres":
-                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+                ####RUN DA LOCALE
+                if user_profile != None:
+                    response = requests.post(url_nodo, body, headers=headers, verify=False)
+                ###RUN DA REMOTO
+                else: 
+                    response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
             elif dbRun == 'Oracle':
                 response = requests.post(url_nodo, body, headers=headers, verify=False)
         else:
@@ -841,7 +895,12 @@ def single_thread(context, soap_primitive, tipo):
             response = ''
             print(f"url: {url_nodo}")
             if dbRun == "Postgres":
-                response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
+                ####RUN DA LOCALE
+                if user_profile != None:
+                    response = requests.post(url_nodo, body, headers=headers, verify=False)
+                ###RUN DA REMOTO
+                else: 
+                    response = requests.post(url_nodo, body, headers=headers, verify=False, proxies = getattr(context,'proxies'))
             elif dbRun == 'Oracle':
                 response = requests.post(url_nodo, body, headers=headers, verify=False)            
             
@@ -1291,3 +1350,49 @@ def generate_list_dict_values_obt(list_col_split, exec_query):
         list_dict_fields_values_obtained.append(dict_fields_values_obtained)
 
     return list_dict_fields_values_obtained
+
+
+def consumer():
+
+    # Definisci la stringa di connessione e altri dettagli
+    connection_str = ''
+    consumer_group = '$Default'
+    eventhub_name = 'nodo-dei-pagamenti-biz-evt'
+
+    # Callback per la gestione degli eventi ricevuti
+    def on_event(partition_context, event):
+        print(f"Ricevuto evento: {event.body_as_str()}")
+        # Conferma dell'evento
+        partition_context.update_checkpoint(event)
+
+    # Callback per la gestione degli errori
+    def on_error(partition_context, error):
+        print(f"Errore nella partizione: {partition_context.partition_id}. Errore: {error}")
+
+    # Callback per la gestione della chiusura delle partizioni
+    def on_partition_close(partition_context, reason):
+        print(f"Chiusura della partizione: {partition_context.partition_id}. Motivo: {reason}")
+
+    # Configura il client del consumatore
+    client = EventHubConsumerClient.from_connection_string(
+        conn_str=connection_str,
+        consumer_group=consumer_group,
+        eventhub_name=eventhub_name
+    )
+
+    try:
+        # Avvia la ricezione degli eventi dall'inizio del topic
+        with client:
+            client.receive(
+                on_event=on_event,
+                on_error=on_error,
+                on_partition_close=on_partition_close,
+                starting_position="-1",  # Legge dall'inizio del topic
+                partition_id='0'         # Legge dalla partizione 0
+            )
+    except KeyboardInterrupt:
+        print("Ricezione degli eventi interrotta.")
+    except EventHubError as e:
+        print(f"Errore durante la ricezione degli eventi: {e}")
+    finally:
+        client.close()
