@@ -102,7 +102,7 @@ replace $file ".services.\"secondary-mock-psp\".rest_service"  ""
 replace $file ".services.\"secondary-mock-psp\".subscription_key_name"  "Y"
 
 
-replace $file ".services.\"mock-pm\".url"           "https://mock-pm-sit.tst-npc.sia.eu/PerfPMMock"
+replace $file ".services.\"mock-pm\".url"           "https://test.nexi.ndp.pagopa.it/mock-pm-sit.nexigroup.com/PerfPMMock"
 replace $file ".services.\"mock-pm\".healthcheck"   "/actuator/health"
 replace $file ".services.\"mock-pm\".soap_service"  ""
 replace $file ".services.\"mock-pm\".rest_service"  ""
@@ -115,7 +115,7 @@ replace $file ".services.\"apicfg-testing-support\".url"           "https://api.
 replace $file ".services.\"apicfg-testing-support\".healthcheck"   "/info"
 replace $file ".services.\"apicfg-testing-support\".soap_service"  ""
 replace $file ".services.\"apicfg-testing-support\".rest_service"  ""
-replace $file ".services.\"apicfg-testing-support\".subscription_key_name"  "APICFG_SUBSCRIPTION_KEY"
+replace $file ".services.\"apicfg-testing-support\".subscription_key_name"  "Y"
 
 ##################### DB CONFIG #####################
 
