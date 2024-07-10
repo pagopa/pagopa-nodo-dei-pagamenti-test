@@ -366,14 +366,20 @@ def step_impl(context, primitive, type_table, filebody):
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
 
-        ####RUN DA LOCALE
-        if user_profile != None:
-            # Specifica il percorso del tuo file XML da locale
+        dbRun = getattr(context, "dbRun")
+
+        if dbRun == "Postgres":
+            ###RUN SI DA LOCALE CHE DAREMOTO
             file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
-        ###RUN DA REMOTO
-        else:      
-            # Specifica il percorso del tuo file XML da remoto
-            file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
+        elif dbRun == "Oracle":       
+            ####RUN DA LOCALE
+            if user_profile != None:
+                # Specifica il percorso del tuo file XML da locale
+                file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+            ###RUN DA REMOTO
+            else:      
+                # Specifica il percorso del tuo file XML da remoto
+                file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"             
 
         # Leggi il contenuto del file XML come stringa
         with open(file_path, 'r') as file:
@@ -614,16 +620,22 @@ def step_impl(context, primitive, filebody):
         user_profile = getattr(context, "user_profile")
         print(f"User Profile: {user_profile} ->>> local run!")
     except AttributeError as e:
-        print(f"User Profile None: {e} ->>> remote run!")
-        
-    ####RUN DA LOCALE
-    if user_profile != None:
-        # Specifica il percorso del tuo file XML da locale
+        print(f"User Profile None: {e} ->>> remote run!") 
+
+    dbRun = getattr(context, "dbRun")
+
+    if dbRun == "Postgres":
+        ###RUN SI DA LOCALE CHE DAREMOTO
         file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
-    ###RUN DA REMOTO
-    else:      
-        # Specifica il percorso del tuo file XML da remoto
-        file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"   
+    elif dbRun == "Oracle":       
+        ####RUN DA LOCALE
+        if user_profile != None:
+            # Specifica il percorso del tuo file XML da locale
+            file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+        ###RUN DA REMOTO
+        else:      
+            # Specifica il percorso del tuo file XML da remoto
+            file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"
 
     # Leggi il contenuto del file XML come stringa
     with open(file_path, 'r') as file:
@@ -838,12 +850,21 @@ def step_impl(context, primitive, type_table, filebody):
             print(f"User Profile: {user_profile} ->>> local run!")
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
-        ####RUN DA LOCALE
-        if user_profile != None:
+
+        dbRun = getattr(context, "dbRun")
+
+        if dbRun == "Postgres":
+            ###RUN SI DA LOCALE CHE DAREMOTO
             file_json = open(f"src/integ-test/bdd-test/resources/json/{filebody}.json")
-        ###RUN DA REMOTO
-        else:                   
-            file_json = open(f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/json/{filebody}.json")
+        elif dbRun == "Oracle":       
+            ####RUN DA LOCALE
+            if user_profile != None:
+                # Specifica il percorso del tuo file XML da locale
+                file_json = open(f"src/integ-test/bdd-test/resources/json/{filebody}.json")
+            ###RUN DA REMOTO
+            else:      
+                # Specifica il percorso del tuo file XML da remoto
+                file_json = open(f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/json/{filebody}.json")
             
         data_json = json.load(file_json)
 
@@ -1052,15 +1073,21 @@ def step_impl(context, filebody, type_table):
             print(f"User Profile: {user_profile} ->>> local run!")
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
-            
-        ####RUN DA LOCALE
-        if user_profile != None:
-            # Specifica il percorso del tuo file XML da locale
+
+        dbRun = getattr(context, "dbRun")
+
+        if dbRun == "Postgres":
+            ###RUN SI DA LOCALE CHE DAREMOTO
             file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
-        ###RUN DA REMOTO
-        else:      
-            # Specifica il percorso del tuo file XML da remoto
-            file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"   
+        elif dbRun == "Oracle":       
+            ####RUN DA LOCALE
+            if user_profile != None:
+                # Specifica il percorso del tuo file XML da locale
+                file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+            ###RUN DA REMOTO
+            else:      
+                # Specifica il percorso del tuo file XML da remoto
+                file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"
 
         # Leggi il contenuto del file XML come stringa
         with open(file_path, 'r') as file:
@@ -1539,15 +1566,21 @@ def step_impl(context, filebody, type_table):
             print(f"User Profile: {user_profile} ->>> local run!")
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
-            
-        ####RUN DA LOCALE
-        if user_profile != None:
-            # Specifica il percorso del tuo file XML da locale
+
+        dbRun = getattr(context, "dbRun")
+
+        if dbRun == "Postgres":
+            ###RUN SI DA LOCALE CHE DAREMOTO
             file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
-        ###RUN DA REMOTO
-        else:      
-            # Specifica il percorso del tuo file XML da remoto
-            file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"   
+        elif dbRun == "Oracle":       
+            ####RUN DA LOCALE
+            if user_profile != None:
+                # Specifica il percorso del tuo file XML da locale
+                file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+            ###RUN DA REMOTO
+            else:      
+                # Specifica il percorso del tuo file XML da remoto
+                file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"
 
         # Leggi il contenuto del file XML come stringa
         with open(file_path, 'r') as file:
@@ -1668,15 +1701,21 @@ def step_impl(context, filebody, type_table):
             print(f"User Profile: {user_profile} ->>> local run!")
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
-            
-        ####RUN DA LOCALE
-        if user_profile != None:
-            # Specifica il percorso del tuo file XML da locale
+        
+        dbRun = getattr(context, "dbRun")
+
+        if dbRun == "Postgres":
+            ###RUN SI DA LOCALE CHE DAREMOTO
             file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
-        ###RUN DA REMOTO
-        else:      
-            # Specifica il percorso del tuo file XML da remoto
-            file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"   
+        elif dbRun == "Oracle":       
+            ####RUN DA LOCALE
+            if user_profile != None:
+                # Specifica il percorso del tuo file XML da locale
+                file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+            ###RUN DA REMOTO
+            else:      
+                # Specifica il percorso del tuo file XML da remoto
+                file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"
 
         # Leggi il contenuto del file XML come stringa
         with open(file_path, 'r') as file:
