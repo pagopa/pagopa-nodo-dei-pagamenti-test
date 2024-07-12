@@ -362,7 +362,6 @@ def step_impl(context, primitive, type_table, filebody):
         user_profile = None
         try:
             user_profile = getattr(context, "user_profile")
-            print(f"User Profile: {user_profile} ->>> local run!")
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
 
@@ -618,7 +617,6 @@ def step_impl(context, primitive, filebody):
     user_profile = None
     try:
         user_profile = getattr(context, "user_profile")
-        print(f"User Profile: {user_profile} ->>> local run!")
     except AttributeError as e:
         print(f"User Profile None: {e} ->>> remote run!") 
 
@@ -847,7 +845,6 @@ def step_impl(context, primitive, type_table, filebody):
         user_profile = None
         try:
             user_profile = getattr(context, "user_profile")
-            print(f"User Profile: {user_profile} ->>> local run!")
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
 
@@ -1070,7 +1067,6 @@ def step_impl(context, filebody, type_table):
         user_profile = None
         try:
             user_profile = getattr(context, "user_profile")
-            print(f"User Profile: {user_profile} ->>> local run!")
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
 
@@ -1563,7 +1559,6 @@ def step_impl(context, filebody, type_table):
         user_profile = None
         try:
             user_profile = getattr(context, "user_profile")
-            print(f"User Profile: {user_profile} ->>> local run!")
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
 
@@ -1698,7 +1693,6 @@ def step_impl(context, filebody, type_table):
         user_profile = None
         try:
             user_profile = getattr(context, "user_profile")
-            print(f"User Profile: {user_profile} ->>> local run!")
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
         
@@ -2040,7 +2034,6 @@ def step_impl(context, sender, soap_primitive, receiver):
 
         try:
             user_profile = getattr(context, "user_profile")
-            print(f"User Profile: {user_profile} ->>> local run!")
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
 
@@ -2100,7 +2093,6 @@ def step_impl(context, sender, soap_primitive, receiver):
 
         try:
             user_profile = getattr(context, "user_profile")
-            print(f"User Profile: {user_profile} ->>> local run!")
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
         
@@ -2139,7 +2131,6 @@ def step_impl(context, job_name, seconds):
 
         try:
             user_profile = getattr(context, "user_profile")
-            print(f"User Profile: {user_profile} ->>> local run!")
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
 
@@ -2905,7 +2896,6 @@ def step_impl(context, param, value):
 
         try:
             user_profile = getattr(context, "user_profile")
-            print(f"User Profile: {user_profile} ->>> local run!")
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
         
@@ -2988,7 +2978,6 @@ def step_impl(context, job_name, seconds):
 
         try:
             user_profile = getattr(context, "user_profile")
-            print(f"User Profile: {user_profile} ->>> local run!")
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
 
@@ -3038,7 +3027,6 @@ def step_impl(context, job_name):
 
         try:
             user_profile = getattr(context, "user_profile")
-            print(f"User Profile: {user_profile} ->>> local run!")
         except AttributeError as e:
             print(f"User Profile None: {e} ->>> remote run!")
 
@@ -3150,7 +3138,6 @@ def step_impl(context):
 
     try:
         user_profile = getattr(context, "user_profile")
-        print(f"User Profile: {user_profile} ->>> local run!")
     except AttributeError as e:
         print(f"User Profile None: {e} ->>> remote run!")
 
