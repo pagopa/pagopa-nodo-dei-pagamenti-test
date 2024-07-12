@@ -7,12 +7,10 @@ Feature: happy flow with Stand In on and channel no Stand In 1566
     # ma che vengano inviate le receipt dalla paSendRT, dato che il flag invioReceiptStandin sulla config keys è a Y, non contenenti però il parametro opzionale standin=true. 
 
     Scenario: Execute verifyPaymentNotice request
-        Given insert through the query insert_query into the table STAND_IN_STATIONS the fields STATION_CODE with 'irraggiungibile' under macro update_query on db nodo_cfg 
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter invioReceiptStandin set to true
         And nodo-dei-pagamenti has config parameter station.stand-in set to 66666666666_01
-        And wait 50 seconds for expiration
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -25,7 +23,7 @@ Feature: happy flow with Stand In on and channel no Stand In 1566
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>346#iuv#</noticeNumber>
+            <noticeNumber>347#iuv#</noticeNumber>
             </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
@@ -80,7 +78,7 @@ Feature: happy flow with Stand In on and channel no Stand In 1566
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>46$iuv</creditorReferenceId>
+            <creditorReferenceId>47$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -169,7 +167,7 @@ Feature: happy flow with Stand In on and channel no Stand In 1566
         And checks the value Y of the record at column FLAG_STANDIN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
 
 
-    @standin
+    @runnable
     Scenario: Define sendPaymentOutcome
         Given the activatePaymentNotice request scenario executed successfully
         And initial XML sendPaymentOutcome
@@ -259,7 +257,6 @@ Feature: happy flow with Stand In on and channel no Stand In 1566
         And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod3 with db name re
         And through the query re_paSendRT_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
         And check payload tag standIn field not exists in $paSendRT
-        And check value $paSendRT.idStation is equal to value irraggiungibile
+        And check value $paSendRT.idStation is equal to value standin
         And verify 2 record for the table RE retrived by the query sottoTipoEvento on db re under macro NewMod3
-        And delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value 'irraggiungibile' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter invioReceiptStandin set to false

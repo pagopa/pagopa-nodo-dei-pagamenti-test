@@ -7,12 +7,10 @@ Feature: happy flow with Stand In on and channel no Stand In 1565
     # paSendRT, dato che il flag invioReceiptStandin sulla config keys è a N. 
 
     Scenario: Execute verifyPaymentNotice request
-        Given insert through the query insert_query into the table STAND_IN_STATIONS the fields STATION_CODE with 'irraggiungibile' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter invioReceiptStandin set to false
         And nodo-dei-pagamenti has config parameter station.stand-in set to 66666666666_01
-        And wait 50 seconds for expiration
         And initial XML verifyPaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -25,7 +23,7 @@ Feature: happy flow with Stand In on and channel no Stand In 1565
             <password>pwdpwdpwd</password>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>346#iuv#</noticeNumber>
+            <noticeNumber>347#iuv#</noticeNumber>
             </qrCode>
             </nod:verifyPaymentNoticeReq>
             </soapenv:Body>
@@ -80,7 +78,7 @@ Feature: happy flow with Stand In on and channel no Stand In 1565
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>46$iuv</creditorReferenceId>
+            <creditorReferenceId>47$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -169,7 +167,7 @@ Feature: happy flow with Stand In on and channel no Stand In 1565
         And checks the value Y of the record at column FLAG_STANDIN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
 
 
-    @standin
+    @runnable
     Scenario: Define sendPaymentOutcome
         Given the activatePaymentNotice request scenario executed successfully
         And initial XML sendPaymentOutcome

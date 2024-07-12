@@ -7,21 +7,19 @@ Feature: happy flow with Stand In on and channel no Stand In for NMU 1561
     # ma che vengano inviate le receipt dalla paSendRT, dato che il flag invioReceiptStandin sulla config keys è a Y, non contenenti però il parametro opzionale standin=true. 
 
     Scenario: checkPosition request
-        Given insert through the query insert_query into the table STAND_IN_STATIONS the fields STATION_CODE with 'irraggiungibile' under macro update_query on db nodo_cfg 
-        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter invioReceiptStandin set to true
         And nodo-dei-pagamenti has config parameter station.stand-in set to 66666666666_08
-        And wait 50 seconds for expiration
         And initial json checkPosition
             """
             {
                 "positionslist": [
                     {
                         "fiscalCode": "#creditor_institution_code#",
-                        "noticeNumber": "346#iuv#"
+                        "noticeNumber": "347#iuv#"
                     }
                 ]
             }
@@ -46,7 +44,7 @@ Feature: happy flow with Stand In on and channel no Stand In for NMU 1561
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>346$iuv</noticeNumber>
+            <noticeNumber>347$iuv</noticeNumber>
             </qrCode>
             <expirationTime>60000</expirationTime>
             <amount>10.00</amount>
@@ -63,7 +61,7 @@ Feature: happy flow with Stand In on and channel no Stand In for NMU 1561
             <paf:paGetPaymentV2Response>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>46$iuv</creditorReferenceId>
+            <creditorReferenceId>47$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-12</dueDate>
             <!--Optional:-->
@@ -161,7 +159,7 @@ Feature: happy flow with Stand In on and channel no Stand In for NMU 1561
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-    @standin
+    @runnable
     # Define primitive sendPaymentOutcome
     Scenario: sendPaymentOutcomeV2 request
         Given the closePaymentV2 request scenario executed successfully
@@ -262,8 +260,7 @@ Feature: happy flow with Stand In on and channel no Stand In for NMU 1561
         And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
         And through the query re_paSendRT_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key paSendRTV2
         And check payload tag standIn field not exists in $paSendRTV2
-        And check value $paSendRTV2.idStation is equal to value irraggiungibile
+        And check value $paSendRTV2.idStation is equal to value standin
         And verify 1 record for the table RE retrived by the query sottoTipoEvento on db re under macro NewMod1
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
-        And delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value 'irraggiungibile' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
         And nodo-dei-pagamenti has config parameter invioReceiptStandin set to false 

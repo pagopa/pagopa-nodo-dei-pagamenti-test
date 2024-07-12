@@ -3,12 +3,10 @@ Feature: stand in manager without station available for stand in for NMU 1564
     Background:
         Given systems up
 
-    @standin
+    @runnable
     Scenario: activatePaymentNoticeV2 request
-        Given delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value 'irraggiungibile' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
+        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds
-        And wait 50 seconds for expiration
         And initial XML activatePaymentNoticeV2
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -22,7 +20,7 @@ Feature: stand in manager without station available for stand in for NMU 1564
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>346#iuv#</noticeNumber>
+            <noticeNumber>347#iuv#</noticeNumber>
             </qrCode>
             <expirationTime>60000</expirationTime>
             <amount>10.00</amount>
@@ -39,7 +37,7 @@ Feature: stand in manager without station available for stand in for NMU 1564
             <paf:paGetPaymentV2Response>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>46$iuv</creditorReferenceId>
+            <creditorReferenceId>47$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-12</dueDate>
             <!--Optional:-->

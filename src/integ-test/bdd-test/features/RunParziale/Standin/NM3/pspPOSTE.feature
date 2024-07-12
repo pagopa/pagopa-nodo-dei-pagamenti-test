@@ -3,12 +3,9 @@ Feature: Stand in with psp POSTE 1568
     Background:
         Given systems up
 
-    @standin
+    @runnable
     Scenario: activatePaymentNotice request
-        Given insert through the query insert_query into the table STAND_IN_STATIONS the fields STATION_CODE with 'irraggiungibile' under macro update_query on db nodo_cfg
-        And refresh job ALL triggered after 10 seconds
-        And wait 50 seconds for expiration
-        And initial XML activatePaymentNotice
+        Given initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
             xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">
@@ -22,7 +19,7 @@ Feature: Stand in with psp POSTE 1568
             <idempotencyKey>#idempotency_key_POSTE#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>346#iuv#</noticeNumber>
+            <noticeNumber>347#iuv#</noticeNumber>
             </qrCode>
             <expirationTime>120000</expirationTime>
             <amount>10.00</amount>
@@ -41,7 +38,7 @@ Feature: Stand in with psp POSTE 1568
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>46$iuv</creditorReferenceId>
+            <creditorReferenceId>47$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
@@ -103,5 +100,3 @@ Feature: Stand in with psp POSTE 1568
         When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
         Then check outcome is KO of activatePaymentNotice response
         And check faultCode is PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE of activatePaymentNotice response
-        And delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value 'irraggiungibile' under macro update_query on db nodo_cfg
-        And refresh job ALL triggered after 10 seconds

@@ -3,12 +3,9 @@ Feature: stand in manager without station available for stand in 1569
     Background:
         Given systems up
 
-    @standin
+    @runnable
     Scenario: activatePaymentNotice request
-        Given delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value 'irraggiungibile' under macro update_query on db nodo_cfg
-        And refresh job ALL triggered after 10 seconds
-        And wait 50 seconds for expiration
-        And initial XML activatePaymentNotice
+        Given initial XML activatePaymentNotice
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
             xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd">

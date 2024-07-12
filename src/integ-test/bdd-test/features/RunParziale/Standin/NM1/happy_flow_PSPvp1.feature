@@ -1,19 +1,24 @@
-Feature: happy flow with Stand In on and channel no Stand In for NMU 1560
+Feature: happy flow with Stand In on and PSP no POSTE for NMU 1562
 
     Background:
         Given systems up
 
-    # Lo scopo di questo test è verificare che il parametro opzionale standin=true non sia presente nelle response verso il psp e che non vengano inviate le receipt dalla 
-    # paSendRT, dato che il flag invioReceiptStandin sulla config keys è a N. 
+    # Lo scopo di questo test è verificare, a seguito di un flusso passante per stazione di standin,
+    # che sia presente il parametro opzionale standin=true nelle response verso il psp, dato che il canale è flaggato a Y su FLAG_STANDIN.
+    # Inoltre, dato che anche la stazione sarà flaggata a Y su FLAG_STANDIN, ci aspettiamo di ritrovarci il campo opzionale standin=true, dentro la receipt inviata all'EC
+    # dalla paSendRT.
 
     Scenario: checkPosition request
-        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
-        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to false
-        And nodo-dei-pagamenti has config parameter station.stand-in set to 66666666666_08
-        And initial json checkPosition
+        Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '2000041' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'Y', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'Y', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
+        # nel caso di stazione principale vp1, allora non mandiamo la paSendRtV2 anche alle broadcast della pa principale
+        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to true
+        And nodo-dei-pagamenti has config parameter station.stand-in set to 66666666666_01
+        Given initial json checkPosition
             """
             {
                 "positionslist": [
@@ -27,7 +32,6 @@ Feature: happy flow with Stand In on and channel no Stand In for NMU 1560
         When WISP sends rest POST checkPosition_json to nodo-dei-pagamenti
         Then verify the HTTP status code of checkPosition response is 200
         And check outcome is OK of checkPosition response
-        
 
     Scenario: activatePaymentNoticeV2 request
         Given the checkPosition request scenario executed successfully
@@ -53,29 +57,31 @@ Feature: happy flow with Stand In on and channel no Stand In for NMU 1560
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And initial XML paGetPaymentV2
+        And initial XML paGetPayment
             """
-            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:paf="http://pagopa-api.pagopa.gov.it/pa/paForNode.xsd">
             <soapenv:Header/>
             <soapenv:Body>
-            <paf:paGetPaymentV2Response>
+            <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
             <creditorReferenceId>47$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
-            <dueDate>2021-12-12</dueDate>
+            <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
-            <retentionDate>2021-12-30T12:12:12</retentionDate>
+            <retentionDate>2021-12-31T12:12:12</retentionDate>
             <!--Optional:-->
             <lastPayment>1</lastPayment>
-            <description>test</description>
+            <description>description</description>
+            <!--Optional:-->
             <companyName>company</companyName>
             <!--Optional:-->
             <officeName>office</officeName>
             <debtor>
             <uniqueIdentifier>
             <entityUniqueIdentifierType>G</entityUniqueIdentifierType>
-            <entityUniqueIdentifierValue>44444444444</entityUniqueIdentifierValue>
+            <entityUniqueIdentifierValue>#creditor_institution_code#</entityUniqueIdentifierValue>
             </uniqueIdentifier>
             <fullName>paGetPaymentName</fullName>
             <!--Optional:-->
@@ -93,24 +99,16 @@ Feature: happy flow with Stand In on and channel no Stand In for NMU 1560
             <!--Optional:-->
             <e-mail>paGetPayment@test.it</e-mail>
             </debtor>
+            <!--Optional:-->
             <transferList>
             <!--1 to 5 repetitions:-->
             <transfer>
             <idTransfer>1</idTransfer>
             <transferAmount>10.00</transferAmount>
-            <fiscalCodePA>$activatePaymentNoticeV2.fiscalCode</fiscalCodePA>
-            <companyName>companySec</companyName>
+            <fiscalCodePA>#creditor_institution_code#</fiscalCodePA>
             <IBAN>IT45R0760103200000000001016</IBAN>
-            <remittanceInformation>/RFB/00202200000217527/5.00/TXT/</remittanceInformation>
+            <remittanceInformation>testPaGetPayment</remittanceInformation>
             <transferCategory>paGetPaymentTest</transferCategory>
-            <!--Optional:-->
-            <metadata>
-            <!--1 to 10 repetitions:-->
-            <mapEntry>
-            <key>1</key>
-            <value>22</value>
-            </mapEntry>
-            </metadata>
             </transfer>
             </transferList>
             <!--Optional:-->
@@ -122,17 +120,16 @@ Feature: happy flow with Stand In on and channel no Stand In for NMU 1560
             </mapEntry>
             </metadata>
             </data>
-            </paf:paGetPaymentV2Response>
+            </paf:paGetPaymentRes>
             </soapenv:Body>
             </soapenv:Envelope>
             """
-        And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
         When PSP sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-        And check standin field not exists in activatePaymentNoticeV2 response
+        And check standin is true of activatePaymentNoticeV2 response
         And checks the value Y of the record at column FLAG_STANDIN of the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
- 
-
+    
     Scenario: closePaymentV2 request
         Given the activatePaymentNoticeV2 request scenario executed successfully
         And initial json v2/closepayment
@@ -145,7 +142,7 @@ Feature: happy flow with Stand In on and channel no Stand In for NMU 1560
                 "idPSP": "#psp#",
                 "paymentMethod": "TPAY",
                 "idBrokerPSP": "#id_broker_psp#",
-                "idChannel": "#canale_versione_primitive_2#",
+                "idChannel": "#canale_IMMEDIATO_MULTIBENEFICIARIO#",
                 "transactionId": "#transaction_id#",
                 "totalAmount": 12,
                 "fee": 2,
@@ -216,15 +213,32 @@ Feature: happy flow with Stand In on and channel no Stand In for NMU 1560
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 5 seconds for expiration
 
+        And execution query position_transfer to get value on the table POSITION_RECEIPT_RECIPIENT_STATUS, with the columns STATUS under macro NewMod1 with db name nodo_online
+        And checks the value NOTICE_GENERATED,NOTICE_SENT,NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT_STATUS retrived by the query position_transfer on db nodo_online under macro NewMod1
+        
+        And execution query select_activatev2 to get value on the table POSITION_RECEIPT_RECIPIENT, with the columns STATUS under macro NewMod1 with db name nodo_online
+        And checks the value NOTICE_PENDING of the record at column STATUS of the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+
         And execution query position_transfer to get value on the table POSITION_PAYMENT_STATUS, with the columns STATUS under macro NewMod1 with db name nodo_online
-        And checks the value NOTICE_GENERATED,PAYING,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NOTICE_GENERATED,NOTICE_SENT,PAYING,PAID of the record at column STATUS of the table POSITION_PAYMENT_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        
         And execution query position_transfer to get value on the table POSITION_PAYMENT_STATUS_SNAPSHOT, with the columns STATUS under macro NewMod1 with db name nodo_online
-        And checks the value NOTICE_GENERATED of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NOTICE_SENT of the record at column STATUS of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        
         And execution query position_transfer to get value on the table POSITION_STATUS, with the columns STATUS under macro NewMod1 with db name nodo_online
         And checks the value PAYING,PAID of the record at column STATUS of the table POSITION_STATUS retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        
         And execution query select_activatev2 to get value on the table POSITION_STATUS_SNAPSHOT, with the columns STATUS under macro NewMod1 with db name nodo_online
         And checks the value PAID of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
-
+        
+        And checks the value NotNone of the record at column ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.fiscalCode of the record at column PA_FISCAL_CODE of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value $activatePaymentNoticeV2.noticeNumber of the record at column NOTICE_ID of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        
+        And checks the value 0 of the record at column RETRY of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column INSERTED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And checks the value NotNone of the record at column UPDATED_TIMESTAMP of the table POSITION_RETRY_PA_SEND_RT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+    
         # DB Checks for POSITION_PAYMENT
         And verify 1 record for the table POSITION_PAYMENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         
@@ -235,10 +249,20 @@ Feature: happy flow with Stand In on and channel no Stand In for NMU 1560
         And verify 1 record for the table POSITION_RECEIPT_XML retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         
         # DB Checks for POSITION_RECEIPT_RECIPIENT
-        And verify 0 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
+        And verify 1 record for the table POSITION_RECEIPT_RECIPIENT retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         
         # RE
-        And verify 0 record for the table RE retrived by the query re_paSendRTV2_trunc on db re under macro NewMod1
-
-        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter VERSIONE_PRIMITIVE = '1', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
-        And refresh job ALL triggered after 10 seconds
+        And checks the value Y of the record at column FLAG_STANDIN of the table RE retrived by the query sottoTipoEvento_paGetPayment on db re under macro NewMod1
+        And execution query re_paSendRT_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query re_paSendRT_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key paSendRT
+        And check value $paSendRT.standIn is equal to value true
+        And check value $paSendRT.idStation is equal to value standin
+        And execution query re_pspNotifyPayment_REQ_xml to get value on the table RE, with the columns PAYLOAD under macro NewMod1 with db name re
+        And through the query re_pspNotifyPayment_REQ_xml retrieve xml PAYLOAD at position 0 and save it under the key pspNotifyPayment
+        And check value $pspNotifyPayment.standin is equal to value true
+        And verify 1 record for the table RE retrived by the query sottoTipoEvento on db re under macro NewMod1
+        And generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '1380001' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16647' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter FLAG_STANDIN = 'N', with where condition OBJ_ID = '1200001' under macro update_query on db nodo_cfg
+        And nodo-dei-pagamenti has config parameter invioReceiptStandin set to false

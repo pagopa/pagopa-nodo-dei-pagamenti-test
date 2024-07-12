@@ -6,12 +6,9 @@ Feature: stand in manager without station available for stand in 1559
     # Lo scopo di questo test è verificare che se la stazione non è censita all'interno della tabella STAND_IN_STATIONS, il flusso esegua
     # il normale comportamento passante per EC e non vada su ACA.
 
-    @standin
+    @runnable
     Scenario: activateIOPayment request
-        Given delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value 'irraggiungibile' under macro update_query on db nodo_cfg
-        And refresh job ALL triggered after 10 seconds
-        And wait 50 seconds for expiration
-        And initial XML activateIOPayment
+        Given initial XML activateIOPayment
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nod="http://pagopa-api.pagopa.gov.it/node/nodeForIO.xsd">
             <soapenv:Header/>
@@ -24,7 +21,7 @@ Feature: stand in manager without station available for stand in 1559
             <idempotencyKey>#idempotency_key#</idempotencyKey>
             <qrCode>
             <fiscalCode>#creditor_institution_code#</fiscalCode>
-            <noticeNumber>346#iuv#</noticeNumber>
+            <noticeNumber>347#iuv#</noticeNumber>
             </qrCode>
             <expirationTime>60000</expirationTime>
             <amount>10.00</amount>
@@ -41,7 +38,7 @@ Feature: stand in manager without station available for stand in 1559
             <paf:paGetPaymentRes>
             <outcome>OK</outcome>
             <data>
-            <creditorReferenceId>46$iuv</creditorReferenceId>
+            <creditorReferenceId>47$iuv</creditorReferenceId>
             <paymentAmount>10.00</paymentAmount>
             <dueDate>2021-12-31</dueDate>
             <!--Optional:-->
