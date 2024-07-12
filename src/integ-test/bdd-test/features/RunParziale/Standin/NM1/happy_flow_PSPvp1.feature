@@ -156,7 +156,7 @@ Feature: happy flow with Stand In on and PSP no POSTE for NMU 1562
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
 
-    @runnable
+    @standin
     # Define primitive sendPaymentOutcome
     Scenario: sendPaymentOutcomeV2 request
         Given the closePaymentV2 request scenario executed successfully

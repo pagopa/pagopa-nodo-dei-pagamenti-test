@@ -3,7 +3,7 @@ Feature: Stand in with psp POSTE for NMMU 1563
     Background:
         Given systems up
 
-    @runnable
+    @standin
     Scenario: activatePaymentNoticeV2 request
         Given initial XML activatePaymentNoticeV2
             """

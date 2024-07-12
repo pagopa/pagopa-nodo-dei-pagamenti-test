@@ -3,7 +3,7 @@ Feature: Stand in with psp POSTE 1568
     Background:
         Given systems up
 
-    @runnable
+    @standin
     Scenario: activatePaymentNotice request
         Given initial XML activatePaymentNotice
             """

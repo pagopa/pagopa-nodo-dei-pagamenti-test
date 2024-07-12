@@ -192,7 +192,7 @@ Feature: happy flow with Stand In on and channel no Stand In 1557
         Then verify the HTTP status code of v1/closepayment response is 200
         And check esito is OK of v1/closepayment response
 
-    @runnable
+    @standin
     # Define primitive sendPaymentOutcome
     Scenario: sendPaymentOutcomeV2
         Given the closePayment request scenario executed successfully

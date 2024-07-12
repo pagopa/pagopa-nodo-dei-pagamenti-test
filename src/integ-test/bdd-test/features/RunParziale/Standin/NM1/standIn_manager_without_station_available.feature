@@ -3,7 +3,7 @@ Feature: stand in manager without station available for stand in for NMU 1564
     Background:
         Given systems up
 
-    @runnable
+    @standin
     Scenario: activatePaymentNoticeV2 request
         Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter VERSIONE_PRIMITIVE = '2', with where condition OBJ_ID = '129' under macro update_query on db nodo_cfg
         And refresh job ALL triggered after 10 seconds

@@ -168,7 +168,7 @@ Feature: happy flow with Stand In on and PSP no POSTE 1567
         And check standin is true of activatePaymentNotice response
         And checks the value Y of the record at column FLAG_STANDIN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro NewMod3
 
-    @runnable
+    @standin
     # Define primitive sendPaymentOutcome
     Scenario: Define sendPaymentOutcome
         Given the activatePaymentNotice request scenario executed successfully

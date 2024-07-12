@@ -6,7 +6,7 @@ Feature: stand in manager without station available for stand in 1559
     # Lo scopo di questo test è verificare che se la stazione non è censita all'interno della tabella STAND_IN_STATIONS, il flusso esegua
     # il normale comportamento passante per EC e non vada su ACA.
 
-    @runnable
+    @standin
     Scenario: activateIOPayment request
         Given initial XML activateIOPayment
             """
