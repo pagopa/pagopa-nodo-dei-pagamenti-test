@@ -16,7 +16,7 @@ Feature: TEST INSERT
             | identificativoUnivocoVersamento   | $1iuv                           |
             | codiceContestoPagamento           | CCD01                           |
             | importoSingoloVersamento          | 10.00                           |
-        And from body with datatable vertical nodoInviaCarrelloRPT_paOld initial XML nodoInviaCarrelloRPT
+        And from body with datatable vertical nodoInviaCarrelloRPT initial XML nodoInviaCarrelloRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
             | identificativoStazioneIntermediarioPA | #id_station_old#                |
             | identificativoCarrello                | $1iuv                           |
