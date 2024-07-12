@@ -10669,8 +10669,8 @@ Feature: NMU flows con PA New pagamento OK
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_noOptional initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome | paymentMethod | fee  | MBDAttachment |
-            | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      | creditCard    | 2.00 | $bollo        |
+            | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome | paymentMethod | fee  | MBDAttachment | idTransfer |
+            | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      | creditCard    | 2.00 | $bollo        | 1          |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 5 seconds for expiration
@@ -33629,8 +33629,8 @@ Feature: NMU flows con PA New pagamento OK
         Then verify the HTTP status code of v2/closepayment response is 200
         And check outcome is OK of v2/closepayment response
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_MBD_noOptional initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome | paymentMethod | fee  | MBDAttachment |
-            | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      | creditCard    | 2.00 | $bollo        |
+            | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome | paymentMethod | fee  | MBDAttachment | idTransfer |
+            | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      | creditCard    | 2.00 | $bollo        | 1          |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 5 seconds for expiration
@@ -35855,4 +35855,13 @@ Feature: NMU flows con PA New pagamento OK
     @after5
     Scenario: After restore 5
         Given generic update through the query param_update_generic_where_condition of the table CANALI_NODO the parameter FLAG_TRAVASO = 'N', with where condition OBJ_ID = '16649' under macro update_query on db nodo_cfg
+        And wait 3 seconds after triggered refresh job ALL
+
+
+
+
+
+    @after_6
+    Scenario: After restore 6
+        Given generic update through the query param_update_generic_where_condition of the table PA_STAZIONE_PA the parameter BROADCAST = 'N', with where condition OBJ_ID = '4328' under macro update_query on db nodo_cfg
         And wait 3 seconds after triggered refresh job ALL

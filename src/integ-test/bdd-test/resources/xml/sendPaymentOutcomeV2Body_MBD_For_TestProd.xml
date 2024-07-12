@@ -6,15 +6,17 @@
             <idBrokerPSP>$idBrokerPSP</idBrokerPSP>
             <idChannel>$idChannel</idChannel>
             <password>$password</password>
+            <idempotencyKey>$idempotencyKey</idempotencyKey>
             <paymentTokens>
                 <paymentToken>$paymentToken</paymentToken>
             </paymentTokens>
             <outcome>$outcome</outcome>
             <details>
                 <paymentMethod>$paymentMethod</paymentMethod>
+                <paymentChannel>app</paymentChannel>
                 <fee>$fee</fee>
-                <applicationDate>2021-12-12</applicationDate>
-                <transferDate>2021-12-11</transferDate>
+				<applicationDate>2024-07-10</applicationDate>
+				<transferDate>2024-07-11</transferDate>
                 <marcheDaBollo>
                     <marcaDaBollo>
                         <paymentToken>$paymentToken</paymentToken>
