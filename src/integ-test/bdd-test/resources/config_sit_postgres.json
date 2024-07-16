@@ -107,35 +107,35 @@
    },
    "db_configuration": {
       "nodo_cfg": {
-         "host": "localhost",
+         "host": "10.221.83.180",
          "database": "ndpspct",
          "user": "nodo4_cfg",
          "password": "n0D04_CFG",
          "port": "5444"
       },
       "nodo_online": {
-         "host": "localhost",
+         "host": "10.221.83.180",
          "database": "ndpspct",
          "user": "nodo_online",
          "password": "n0D0_0NLIN3",
          "port": "5444"
       },
       "nodo_offline": {
-         "host": "localhost",
+         "host": "10.221.83.180",
          "database": "ndpspct",
          "user": "nodo_offline",
          "password": "n0D0_0FFLIN3",
          "port": "5444"
       },
       "re": {
-         "host": "localhost",
+         "host": "10.221.83.180",
          "database": "ndpareht",
          "user": "re",
          "password": "r3_US3R",
          "port": "5444"
       },
       "wfesp": {
-         "host": "localhost",
+         "host": "10.221.83.180",
          "database": "ndpspct",
          "user": "wfesp",
          "password": "wF35P",
