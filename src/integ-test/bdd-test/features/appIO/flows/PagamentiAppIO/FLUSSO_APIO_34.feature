@@ -127,7 +127,7 @@ Scenario: Execute nodoInoltroEsitoCarta (Phase 4)
     Then verify the HTTP status code of inoltroEsito/carta response is 404
     And check error is Il Pagamento indicato non esiste of inoltroEsito/carta response
 
-@runnable
+@PM
 Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoPaypal primitive and the correctness of column values
     Given the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully
     And initial XML sendPaymentOutcome

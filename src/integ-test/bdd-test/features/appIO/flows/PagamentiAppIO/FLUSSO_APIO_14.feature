@@ -203,7 +203,7 @@ Feature: FLUSSO_APIO_14 84
         And checks the value None of the record at column MOTIVO_ANNULLAMENTO of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
         And checks the value None of the record at column CODICE_CONVENZIONE of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
 
-@runnable
+@PM
     Scenario: Check sendPaymentOutcome response after nodoInoltroEsitoCarta, and check correctness of database tables
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 6000
         And the Execute nodoInoltroEsitoCarta (Phase 4) scenario executed successfully

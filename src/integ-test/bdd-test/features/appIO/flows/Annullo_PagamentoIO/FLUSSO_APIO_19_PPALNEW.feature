@@ -102,7 +102,7 @@ Feature: FLUSSO_APIO_19_PPALNEW 8
         Then verify the HTTP status code of inoltroEsito/paypal response is 200
         And check esito is OK of inoltroEsito/paypal response
     
-    @runnable  
+    @PM  
     Scenario: Execute nodoNotificaAnnullamentoPagamento (Phase 4)
         Given the Execute nodoInoltroEsitoPayPal (Phase 3.1) scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken&motivoAnnullamento=SESSCA to nodo-dei-pagamenti

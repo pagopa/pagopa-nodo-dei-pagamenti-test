@@ -90,7 +90,7 @@ Scenario: Execute nodoNotificaAnnullamento (Phase 4)
     When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of notificaAnnullamento response is 200
 
-@runnable
+@PM
 Scenario: Execute activateIOPayment1 (Phase 5)
     Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 6000
     Given the Execute nodoNotificaAnnullamento (Phase 4) scenario executed successfully

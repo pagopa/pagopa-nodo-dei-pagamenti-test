@@ -111,7 +111,7 @@ Feature: PRO_ANNULLO_01_PPALOLD 17
         When IO sends SOAP nodoVerificaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoVerificaRPT response
 
-@runnable
+@PM
     Scenario: Execute nodoAttivaRPT (Phase 2)
         Given the Execute nodoVerificaRPT (Phase 1) scenario executed successfully
         And initial XML nodoAttivaRPT
@@ -198,7 +198,7 @@ Feature: PRO_ANNULLO_01_PPALOLD 17
         When IO sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoAttivaRPT response
  
- @runnable       
+ @PM       
     Scenario: Execute nodoInviaRPT (Phase 3)
         Given the Execute nodoAttivaRPT (Phase 2) scenario executed successfully
         And initial XML nodoInviaRPT
@@ -319,7 +319,7 @@ Feature: PRO_ANNULLO_01_PPALOLD 17
         #check correctness STATI_RPT_SNAPSHOT table
         And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
 
-    @runnable
+    @PM
     Scenario: Execute nodoNotificaAnnullamento (Phase 6)
         Given the Execute nodoInoltroEsitoPayPal (Phase 5) - Response malformata scenario executed successfully
         When WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=SESSCA to nodo-dei-pagamenti

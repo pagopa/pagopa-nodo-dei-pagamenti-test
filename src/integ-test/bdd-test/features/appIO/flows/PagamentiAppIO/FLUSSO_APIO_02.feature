@@ -86,7 +86,7 @@ Scenario: Execute nodoChiediInformazioniPagamento (Phase 3)
     Then verify the HTTP status code of informazioniPagamento response is 200
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
 
-@runnable
+@PM
 Scenario: Check sendPaymentOutcome response before nodoInoltroEsitoCarta with sendPaymentOutcome outcome OK, and check correctness of database tables
     Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
     And initial XML sendPaymentOutcome

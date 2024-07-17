@@ -320,7 +320,7 @@ Feature: PRO_ANNULLO_00_PPALOLD 14
         #check correctness STATI_RPT_SNAPSHOT table
         And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
 
-    @runnable
+    @PM
     Scenario: Execute nodoNotificaAnnullamento (Phase 6)
         Given the Execute nodoInoltroEsitoPayPal (Phase 5) - Timeout scenario executed successfully
         When WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=SESSCA to nodo-dei-pagamenti

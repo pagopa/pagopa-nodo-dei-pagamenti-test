@@ -103,7 +103,7 @@ Feature: FLUSSO_APIO_18_PPALNEW 6
         And check esito is KO of inoltroEsito/paypal response
         And check errorCode is CONPSP of inoltroEsito/paypal response
     
-    @runnable   
+    @PM   
     Scenario: Execute nodoNotificaAnnullamentoPagamento (Phase 4)
         Given the Execute nodoInoltroEsitoPayPal (Phase 3.1) scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken&motivoAnnullamento=CONPSP to nodo-dei-pagamenti

@@ -26,7 +26,7 @@ Feature: syntax checks for closePayment outcome KO 141
         }
       }
       """
-  @test
+  @PM
   # syntax check - Field invalido
   Scenario Outline: Check syntax error on invalid body element value
     Given the closePayment scenario executed successfully
@@ -39,7 +39,7 @@ Feature: syntax checks for closePayment outcome KO 141
       | elem          | value | soapUI test |
       | paymentTokens | None  | SIN_CP_01   |
 
-  @test
+  @PM
   Scenario Outline: Check syntax error on invalid body element value - paymentToken
     Given the closePayment scenario executed successfully
     And <elem> with <value> in v1/closepayment
@@ -195,7 +195,7 @@ Feature: syntax checks for closePayment outcome KO 141
     Given the check activateIOPayment OK scenario executed successfully
     When WISP sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
-  @test
+  @PM
   Scenario Outline: check closePayment OK
     Given the nodoChiediInformazioniPagamento scenario executed successfully
     And the closePayment scenario executed successfully
@@ -255,7 +255,7 @@ Feature: syntax checks for closePayment outcome KO 141
     When PSP sends SOAP activateIOPayment to nodo-dei-pagamenti
     Then check outcome is OK of activateIOPayment response
     And save activateIOPayment response in activateIOPaymentResponse
-  @test
+  @PM
   Scenario: nodoChiediInformazioniPagamento 2
     Given the check activateIOPayment OK 2 scenario executed successfully
     When WISP sends REST GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
@@ -271,7 +271,7 @@ Feature: syntax checks for closePayment outcome KO 141
         "outcome": "KO"
       }
       """
-  @test
+  @PM
   Scenario: check closePayment OK 2
     Given the nodoChiediInformazioniPagamento 2 scenario executed successfully
     And the closePayment 2 scenario executed successfully
@@ -280,7 +280,7 @@ Feature: syntax checks for closePayment outcome KO 141
     Then verify the HTTP status code of v1/closepayment response is 200
     And check esito is OK of v1/closepayment response
 
-  @test
+  @PM
   # syntax check - Il Pagamento indicato non esiste
   Scenario Outline: Check syntax error on totalAmount and fee empty
     Given the closePayment scenario executed successfully
@@ -364,7 +364,7 @@ Feature: syntax checks for closePayment outcome KO 141
         }
       }
       """
-  @test
+  @PM
   Scenario: check closePayment OK with 2 tokens
     Given the closePayment 2 tokens scenario executed successfully
     When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
@@ -395,7 +395,7 @@ Feature: syntax checks for closePayment outcome KO 141
         }
       }
       """
-  @test
+  @PM
   Scenario: check closePayment without brackets in paymentTokens
     Given the closePayment without brackets in paymentTokens [SIN_CP_03.1] scenario executed successfully
     When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti

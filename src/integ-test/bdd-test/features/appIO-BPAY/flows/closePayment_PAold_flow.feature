@@ -560,7 +560,7 @@ Feature: flow checks for closePayment - PA old 131
       And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-   @test 
+   @PM 
    Scenario: FLUSSO_OLD_CP_01 (part 4)
       Given the FLUSSO_OLD_CP_01 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -629,7 +629,7 @@ Feature: flow checks for closePayment - PA old 131
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_02 (part 4)
       Given the FLUSSO_OLD_CP_02 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -719,7 +719,7 @@ Feature: flow checks for closePayment - PA old 131
       And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_03 (part 4)
       Given the FLUSSO_OLD_CP_03 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -783,7 +783,7 @@ Feature: flow checks for closePayment - PA old 131
       And check esito is OK of v1/closepayment response
       And verify the HTTP status code of paInviaRt response is 200
       And wait 5 seconds for expiration
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_04 (part 4)
       Given the FLUSSO_OLD_CP_04 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -858,7 +858,7 @@ Feature: flow checks for closePayment - PA old 131
       And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_05 (part 4)
       Given the FLUSSO_OLD_CP_05 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -941,7 +941,7 @@ Feature: flow checks for closePayment - PA old 131
       And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_06 (part 4)
       Given the FLUSSO_OLD_CP_06 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -1025,7 +1025,7 @@ Feature: flow checks for closePayment - PA old 131
       And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RPT_PARCHEGGIATA_NODO of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_07 (part 4)
       Given the FLUSSO_OLD_CP_07 (part 3) scenario executed successfully
       When job mod3CancelV1 triggered after 0 seconds
@@ -1126,7 +1126,7 @@ Feature: flow checks for closePayment - PA old 131
       And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RPT_ACCETTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_09 (part 3)
       Given the FLUSSO_OLD_CP_09 (part 2) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -1213,7 +1213,7 @@ Feature: flow checks for closePayment - PA old 131
       When job annullamentoRptMaiRichiesteDaPm triggered after 0 seconds
       Then verify the HTTP status code of annullamentoRptMaiRichiesteDaPm response is 200
       And wait 5 seconds for expiration
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_09.1 (part 4)
       Given the FLUSSO_OLD_CP_09.1 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -1338,7 +1338,7 @@ Feature: flow checks for closePayment - PA old 131
       And check esito is KO of v1/closepayment response
       And check descrizione is Esito già acquisito of v1/closepayment response
       And wait 5 seconds for expiration
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_11 (part 5)
       Given the FLUSSO_OLD_CP_11 (part 4) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -1406,7 +1406,7 @@ Feature: flow checks for closePayment - PA old 131
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_12 (part 4)
       Given the FLUSSO_OLD_CP_12 (part 3) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -1469,7 +1469,7 @@ Feature: flow checks for closePayment - PA old 131
       And check esito is KO of v1/closepayment response
       And check descrizione is Esito già acquisito of v1/closepayment response
       And wait 5 seconds for expiration
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_13 (part 5)
       Given the FLUSSO_OLD_CP_13 (part 4) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -1537,7 +1537,7 @@ Feature: flow checks for closePayment - PA old 131
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_14 (part 4)
       Given the FLUSSO_OLD_CP_14 (part 3) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -1578,7 +1578,7 @@ Feature: flow checks for closePayment - PA old 131
       Then check outcome is KO of sendPaymentOutcome response
       And check faultCode is PPT_SEMANTICA of sendPaymentOutcome response
       And check description is Esito discorde of sendPaymentOutcome response
-   @test 
+   @PM 
    Scenario: FLUSSO_OLD_CP_15 (part 5)
       Given the FLUSSO_OLD_CP_15 (part 4) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -1692,7 +1692,7 @@ Feature: flow checks for closePayment - PA old 131
       And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ACCETTATA_PSP,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_16 (part 5)
       Given the FLUSSO_OLD_CP_16 (part 4) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -1717,7 +1717,7 @@ Feature: flow checks for closePayment - PA old 131
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_17 (part 3)
       Given the FLUSSO_OLD_CP_17 (part 2) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully
@@ -1831,7 +1831,7 @@ Feature: flow checks for closePayment - PA old 131
       And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RPT_ACCETTATA_PSP,RPT_RISOLTA_OK,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_18 (part 5)
       Given the FLUSSO_OLD_CP_18 (part 4) scenario executed successfully
       And the closePayment scenario executed successfully
@@ -1862,7 +1862,7 @@ Feature: flow checks for closePayment - PA old 131
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_19 (part 4)
       Given the FLUSSO_OLD_CP_19 (part 3) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -1891,7 +1891,7 @@ Feature: flow checks for closePayment - PA old 131
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 12 seconds for expiration
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_20 (part 4)
       Given the FLUSSO_OLD_CP_20 (part 3) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -1926,7 +1926,7 @@ Feature: flow checks for closePayment - PA old 131
       When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
       Then check outcome is OK of sendPaymentOutcome response
       And wait 5 seconds for expiration
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_21 (part 5)
       Given the FLUSSO_OLD_CP_21 (part 4) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -1955,7 +1955,7 @@ Feature: flow checks for closePayment - PA old 131
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_22 (part 4)
       Given the FLUSSO_OLD_CP_22 (part 3) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -1984,7 +1984,7 @@ Feature: flow checks for closePayment - PA old 131
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
       And wait 5 seconds for expiration
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_23 (part 4)
       Given the FLUSSO_OLD_CP_23 (part 3) scenario executed successfully
       And the nodoAttivaRPT scenario executed successfully
@@ -2018,7 +2018,7 @@ Feature: flow checks for closePayment - PA old 131
       When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
       Then verify the HTTP status code of v1/closepayment response is 200
       And check esito is OK of v1/closepayment response
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_27 (part 4)
       Given the FLUSSO_OLD_CP_27 (part 3) scenario executed successfully
       When PM sends REST GET avanzamentoPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
@@ -2077,7 +2077,7 @@ Feature: flow checks for closePayment - PA old 131
       And checks the value RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
       And checks the value RT_ACCETTATA_PA of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
-   @test
+   @PM
    Scenario: FLUSSO_OLD_CP_28 (part 4)
       Given the FLUSSO_OLD_CP_28 (part 3) scenario executed successfully
       And the sendPaymentOutcome scenario executed successfully

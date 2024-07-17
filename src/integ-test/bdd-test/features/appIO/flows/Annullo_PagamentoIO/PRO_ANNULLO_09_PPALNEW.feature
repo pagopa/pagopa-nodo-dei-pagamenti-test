@@ -85,7 +85,7 @@ Feature: PRO_ANNULLO_09_PPALNEW 32
         When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
     
-    @runnable
+    @PM
     Scenario: Execute nodoInoltroEsitoPaypal (Phase 4)
         Given the Execute nodoChiediInformazioniPagamento (Phase 3) scenario executed successfully
         When WISP sends rest POST inoltroEsito/paypal to nodo-dei-pagamenti

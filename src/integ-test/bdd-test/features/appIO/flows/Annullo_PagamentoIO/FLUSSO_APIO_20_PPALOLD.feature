@@ -302,7 +302,7 @@ Feature: FLUSSO_APIO_20_PPALOLD 11
         Then check outcome is OK of sendPaymentOutcome response
         And wait 3 seconds for expiration
     
-    @runnable
+    @PM
     Scenario: Execute nodoNotificaAnnullamentoPagamento (Phase 7)
         Given the Execute sendPaymentOutcome (Phase 6) scenario executed successfully
         When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti

@@ -591,7 +591,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC 122
         And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
         And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status_old on db nodo_online under macro AppIO
     
-    @runnable
+    @PM
     Scenario: Execute nodoInoltroEsitoPaypal (Phase 7) [SEM_NIEPP_07]
         Given the Execute sendPaymentOutcome (Phase 6) scenario executed successfully
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti
@@ -663,7 +663,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC 122
         And WISP sends REST GET notificaAnnullamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of notificaAnnullamento response is 200
 
-    @runnable
+    @PM
     Scenario: Execute nodoInoltroEsitoPaypal1 (Phase 7) [SEM_NIEPP_08]
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And the Execute nodoNotificaAnnullamento (Phase 6) scenario executed successfully
@@ -727,7 +727,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC 122
         And checks the value responseMalformata of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
         And restore initial configurations
 
-    @runnable
+    @PM
     # [SEM_NIEPP_09]
     Scenario: Execute nodoInoltroEsitoPaypal1 (Phase 6) [SEM_NIEPP_09]
         Given the Execute nodoInoltroEsitoPayPal (Phase 5) - OK scenario executed successfully
@@ -790,7 +790,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC 122
         #And checks the value $activateIOPayment.idempotencyKey of the record at column ID_TRANSAZIONE_PSP_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session on db nodo_online under macro AppIO
         And checks the value responseOK of the record at column ID_TRANSAZIONE_PM_PAYPAL of the table PM_SESSION_DATA retrived by the query pm_session_old on db nodo_online under macro AppIO
     
-    @runnable
+    @PM
     # [SEM_NIEPP_10]
     Scenario: Execute nodoInoltroEsitoPaypal1 (Phase 6) [SEM_NIEPP_10]
         Given the Execute nodoInoltroEsitoPaypal (Phase 5) - Timeout scenario executed successfully
@@ -856,7 +856,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC 122
         # check correctness STATI_RPT_SNAPSHOT
         And checks the value RPT_ESITO_SCONOSCIUTO_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
     
-    @runnable
+    @PM
     # [SEM_NIEPP_11]
     Scenario: Execute nodoInoltroEsitoPayPal1 (Phase 6) [SEM_NIEPP_11]
         Given the Execute nodoInoltroEsitoPaypal (Phase 5) - KO (RIFPSP) scenario executed successfully
@@ -924,7 +924,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC 122
         # check correctness STATI_RPT_SNAPSHOT
         And checks the value RPT_RIFIUTATA_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
     
-    @runnable
+    @PM
     # [SEM_NIEPP_12]
     Scenario: Execute nodoInoltroEsitoPaypal1 (Phase 6) [SEM_NIEPP_12]
         Given the Execute nodoInoltroEsitoPaypal (Phase 5) - KO (CONPSP) scenario executed successfully
@@ -1028,7 +1028,7 @@ Feature: Semantic checks on inoltroEsitoPayPal primitive for old EC 122
         # check correctness STATI_RPT_SNAPSHOT
         And checks the value RPT_ERRORE_INVIO_A_PSP of the record at column STATO of the table STATI_RPT_SNAPSHOT retrived by the query rpt_stati on db nodo_online under macro AppIO
     
-    @runnable
+    @PM
     Scenario: Execute nodoInoltroEsitoPaypal (Phase 7) [SEM_NIEPP_13]
         Given nodo-dei-pagamenti has config parameter default_durata_estensione_token_IO set to 1000
         And the Execute trigger PollerAnnulli (Phase 6) scenario executed successfully

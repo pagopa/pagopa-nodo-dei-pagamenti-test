@@ -92,7 +92,7 @@ Scenario: Execute nodoNotificaAnnullamento (Phase 4)
     And check esito is OK of notificaAnnullamento response
     And verify 0 record for the table IDEMPOTENCY_CACHE retrived by the query payment_status on db nodo_online under macro AppIO
     
-@runnable
+@PM
 Scenario: Check nodoNotificaAnnullamento1 response after nodoNotificaAnnullamento, and check correctness of database tables
     Given the Execute nodoNotificaAnnullamento (Phase 4) scenario executed successfully
     When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken&motivoAnnullamento=AUTNEG to nodo-dei-pagamenti

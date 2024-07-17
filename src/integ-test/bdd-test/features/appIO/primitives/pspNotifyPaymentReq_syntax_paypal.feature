@@ -63,7 +63,7 @@ Feature: syntax checks for pspNotifyPaymentReq - payPal [T_01] 126
     When WISP sends rest GET informazioniPagamento?idPagamento=$activateIOPaymentResponse.paymentToken to nodo-dei-pagamenti
     Then verify the HTTP status code of informazioniPagamento response is 200
         
-  @runnable     
+  @PM     
   # nodoInoltraEsitoPagamentoPaypal phase
   Scenario: 3. Execute nodoInoltraEsitoPagamentoPaypal request
     Given the 2. Execute nodoChiediInformazioniPagamento request scenario executed successfully

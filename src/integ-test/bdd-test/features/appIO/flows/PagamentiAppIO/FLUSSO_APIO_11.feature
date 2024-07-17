@@ -231,7 +231,7 @@ Scenario: (Phase 5)
     And checks the value None of the record at column ORIGINAL_PAYMENT_TOKEN of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value Y of the record at column FLAG_IO of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
     And checks the value Y of the record at column RICEVUTA_PM of the table POSITION_PAYMENT retrived by the query payment_status on db nodo_online under macro AppIO
-@runnable
+@PM
 Scenario: Check nodoInoltroEsitoCarta1 response after sendPaymentOutcome
     Given the (Phase 5) scenario executed successfully
     When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti

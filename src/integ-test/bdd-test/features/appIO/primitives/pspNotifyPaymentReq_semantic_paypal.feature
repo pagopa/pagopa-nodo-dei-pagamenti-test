@@ -65,7 +65,7 @@ Feature: semantic checks for pspNotifyPaymentReq - payPal [T_01] 124
 
 
   # nodoInoltraEsitoPagamentoPaypal phase
-  @runnable
+  @PM
   Scenario: 3. Execute nodoInoltraEsitoPagamentoPaypal request
     Given the 2. Execute nodoChiediInformazioniPagamento request scenario executed successfully
     When WISP sends rest POST inoltroEsito/paypal to nodo-dei-pagamenti

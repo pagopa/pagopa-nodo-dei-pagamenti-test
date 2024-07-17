@@ -231,7 +231,7 @@ Feature: PRO_ANNULLO_15_PPALOLD 47
         When WISP sends REST GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
         Then verify the HTTP status code of informazioniPagamento response is 200
     
-    @runnable
+    @PM
     Scenario: Execute nodoInoltroEsitoPayPal (Phase 5) - Response malformata
         Given the Execute nodoChiediInformazioniPagamento (Phase 4) scenario executed successfully
         When WISP sends REST POST inoltroEsito/paypal to nodo-dei-pagamenti

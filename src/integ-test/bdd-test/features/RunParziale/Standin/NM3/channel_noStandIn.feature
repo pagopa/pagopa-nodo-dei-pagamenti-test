@@ -244,6 +244,3 @@ Feature: happy flow with Stand In on and channel no Stand In 1565
         
         # RE
         And verify 0 record for the table RE retrived by the query re_paSendRT_trunc on db re under macro NewMod3
-
-        And delete through the query delete_query into the table STAND_IN_STATIONS with where condition STATION_CODE and where value 'irraggiungibile' under macro update_query on db nodo_cfg
-        And refresh job ALL triggered after 10 seconds

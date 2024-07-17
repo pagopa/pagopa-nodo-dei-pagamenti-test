@@ -200,7 +200,7 @@ Scenario: Execute sendPaymentOutcome (Phase 5)
     When PSP sends soap sendPaymentOutcome to nodo-dei-pagamenti
     Then check outcome is OK of sendPaymentOutcome response
 
-@runnable
+@PM
 Scenario: Execute nodoNotificaAnnullamento (Phase 6)
     Given the Execute sendPaymentOutcome (Phase 5) scenario executed successfully
     When WISP sends rest GET notificaAnnullamento?idPagamento=$activateIOPaymentResponse.paymentToken&motivoAnnullamento=SESSCA to nodo-dei-pagamenti

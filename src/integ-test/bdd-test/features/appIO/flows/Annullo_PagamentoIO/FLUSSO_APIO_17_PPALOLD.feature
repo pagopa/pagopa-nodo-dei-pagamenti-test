@@ -332,7 +332,7 @@ Feature: FLUSSO_APIO_17_PPALOLD 5
         And check esito is KO of inoltroEsito/paypal response
         And check errorCode is RIFPSP of inoltroEsito/paypal response
     
-    @runnable
+    @PM
     Scenario: Execute nodoNotificaAnnullamentoPagamento (Phase 6)
         Given the Execute nodoInoltroEsitoPayPal (Phase 5) scenario executed successfully
         And wait 5 seconds for expiration

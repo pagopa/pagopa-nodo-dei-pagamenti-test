@@ -173,7 +173,7 @@ Feature: PRO_ANNULLO_00_PPALNEW 13
         And checks the value PAYING, INSERTED of the record at column STATUS of the table POSITION_STATUS retrived by the query payment_status on db nodo_online under macro AppIO
         And checks the value INSERTED of the record at column STATUS of the table POSITION_STATUS_SNAPSHOT retrived by the query payment_status on db nodo_online under macro AppIO
 
-    @runnable
+    @PM
     Scenario: Execute activateIOPayment (Phase 5)
         Given the Execute nodoInoltroEsitoPayPal (Phase 4) scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paGetPayment

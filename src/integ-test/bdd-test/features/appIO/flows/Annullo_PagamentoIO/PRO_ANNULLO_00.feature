@@ -216,7 +216,7 @@ Feature: PRO_ANNULLO_00 12
         # check correctness POSITION_TRANSFER
         And checks the value Y of the record at column VALID of the table POSITION_TRANSFER retrived by the query payment_status on db nodo_online under macro AppIO
 
-    @runnable
+    @PM
     Scenario: Execute activateIOPayment (Phase 5)
         Given the Execute nodoInoltraEsitoPagamentoCarta (Phase 4) scenario executed successfully
         And EC replies to nodo-dei-pagamenti with the paGetPayment
