@@ -130,4 +130,3 @@ Feature: semantic check for sendPaymentOutcomeReq regarding idempotency - use id
     When PSP sends SOAP activatePaymentNotice to nodo-dei-pagamenti
     Then check outcome is OK of activatePaymentNotice response
     And verify the paymentToken of the activatePaymentNotice response is not equals to paymentTokenPhase1
-    And restore initial configurations
