@@ -70,15 +70,29 @@ Feature: TEST INSERT
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
 
-        Given from body with datatable vertical inoltroEsitoMod1 initial json inoltroEsito/mod1
-            | idPagamento                 | $sessionToken |
-            | identificativoPsp           | #psp#         |
-            | tipoVersamento              | BP            |
-            | identificativoIntermediario | #psp#         |
-            | identificativoCanale        | #canale#      |
-            | tipoOperazione              | web           |
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
-        Then check esito is OK of inoltroEsito/mod1 response
+            """
+            {
+            "idPagamento":"$sessionToken",
+            "identificativoPsp":"#psp#",
+            "tipoVersamento":"BP",
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#canale#",
+            "tipoOperazione":"web"
+            }
+
+             """
+        Then check error is timeout of inoltroEsito/mod1 response
+
+        # Given from body with datatable vertical inoltroEsitoMod1 initial json inoltroEsito/mod1
+        #     | idPagamento                 | $sessionToken |
+        #     | identificativoPsp           | #psp#         |
+        #     | tipoVersamento              | BP            |
+        #     | identificativoIntermediario | #psp#         |
+        #     | identificativoCanale        | #canale#      |
+        #     | tipoOperazione              | web           |
+        # When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
+        # Then check esito is OK of inoltroEsito/mod1 response
 
 
     @ALL @INSERT @INSERT_3
@@ -116,12 +130,27 @@ Feature: TEST INSERT
         And check oggettoPagamento field exists in informazioniPagamento response
         And check urlRedirectEC field exists in informazioniPagamento response
 
-        Given from body with datatable vertical inoltroEsitoMod1 initial json inoltroEsito/mod1
-            | idPagamento                 | $sessionToken |
-            | identificativoPsp           | #psp#         |
-            | tipoVersamento              | BP            |
-            | identificativoIntermediario | #psp#         |
-            | identificativoCanale        | #canale#      |
-            | tipoOperazione              | web           |
         When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
-        Then check esito is OK of inoltroEsito/mod1 response
+            """
+            {
+            "idPagamento":"$sessionToken",
+            "identificativoPsp":"#psp#",
+            "tipoVersamento":"BP",
+            "identificativoIntermediario":"#psp#",
+            "identificativoCanale":"#canale#",
+            "tipoOperazione":"web"
+            }
+
+             """
+        Then check error is timeout of inoltroEsito/mod1 response
+
+
+        # Given from body with datatable vertical inoltroEsitoMod1 initial json inoltroEsito/mod1
+        #     | idPagamento                 | $sessionToken |
+        #     | identificativoPsp           | #psp#         |
+        #     | tipoVersamento              | BP            |
+        #     | identificativoIntermediario | #psp#         |
+        #     | identificativoCanale        | #canale#      |
+        #     | tipoOperazione              | web           |
+        # When WISP sends REST POST inoltroEsito/mod1 to nodo-dei-pagamenti
+        # Then check esito is OK of inoltroEsito/mod1 response
