@@ -225,6 +225,8 @@ stages:
               echo 'Install Behave'
               sudo pip3 install behave 
               sudo pip3 install -U -r $(Pipeline.Workspace)/$(destinationFolderExtractArtifact)/requirements.txt #Install Requirements
+              sudo pip3 install cx-Oracle
+              sudo pip3 install xmltodict
               echo python version
               python3 -V
               whereis behave
