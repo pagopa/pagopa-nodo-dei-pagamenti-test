@@ -56,6 +56,9 @@
       "creditor_institution_code": "66666666666",
       "creditor_institution_code_old": "66666666666",
       "creditor_institution_code_secondary": "88888888888",
+      "psp_Gec": "BCITITMM",
+      "broker_Gec": "00799960158",
+      "canale_Gec": "00799960158_07",
       "psp": "60000000001",
       "id_broker_psp": "60000000001",
       "intermediarioPA": "66666666666",
@@ -103,7 +106,8 @@
       "ragione_sociale": "PA paolo",
       "pspFittizio": "15376371009",
       "brokerFittizio": "15376371009",
-      "canaleFittizio": "15376371009_01"
+      "canaleFittizio": "15376371009_01",
+      "stazioneFittizia": "15376371009_02"
    },
    "db_configuration": {
       "nodo_cfg": {
