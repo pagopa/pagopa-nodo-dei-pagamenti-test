@@ -163,7 +163,7 @@ Feature: TEST INSERT
 
 
 
-    @ALL @INSERT @INSERT_2
+    @ALL @INSERT @INSERT_3
     Scenario: chiediStato_RPT_ESITO_SCONOSCIUTO_PSP_Carrello_sbloccoParcheggio
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And generate 2 notice number and iuv with aux digit 0, segregation code NA and application code 02
@@ -379,4 +379,161 @@ Feature: TEST INSERT
             | where_keys | where_values           |
             | IUV        | avanzaErrResponse      |
             | CCP        | $2ccp                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+
+    @ALL @INSERT @INSERT_4
+    Scenario: chiediStato_RPT_RIFIUTATA_PSP
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+        And RPT generation RPT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRichiesta         | #timedate#                  |
+            | dataEsecuzionePagamento           | #date#                      |
+            | importoTotaleDaVersare            | 10.00                       |
+            | identificativoUnivocoVersamento   | RPTdaRifPsp                 |
+            | codiceContestoPagamento           | #ccp1#                      |
+            | importoSingoloVersamento          | 10.00                       |
+        And from body with datatable vertical pspInviaRPT_canale_errore initial XML pspInviaRPT
+            | faultCode | CANALE_SYSTEM_ERROR |
+        And PSP replies to nodo-dei-pagamenti with the pspInviaRPT
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker#                 |
+            | identificativoStazioneIntermediarioPA | #id_station#                |
+            | identificativoDominio                 | #creditor_institution_code# |
+            | identificativoUnivocoVersamento       | RPTdaRifPsp                 |
+            | codiceContestoPagamento               | $1ccp                       |
+            | password                              | #password#                  |
+            | identificativoPSP                     | #psp#                       |
+            | identificativoIntermediarioPSP        | #psp#                       |
+            | identificativoCanale                  | #canale#                    |
+            | rpt                                   | $rptAttachment              |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is KO of nodoInviaRPT response
+        And check faultCode is PPT_CANALE_ERRORE of nodoInviaRPT response
+        And check id is #psp# of nodoInviaRPT response
+
+        Given from body with datatable vertical nodoChiediStatoRPT initial XML nodoChiediStatoRPT
+            | identificativoIntermediarioPA         | #creditor_institution_code# |
+            | identificativoStazioneIntermediarioPA | #id_station#                |
+            | password                              | #password#                  |
+            | identificativoDominio                 | #creditor_institution_code# |
+            | identificativoUnivocoVersamento       | RPTdaRifPsp                 |
+            | codiceContestoPagamento               | $1ccp                       |
+        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+        Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_RIFIUTATA_PSP of nodoChiediStatoRPT response
+
+        Given from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker#                 |
+            | identificativoStazioneIntermediarioPA | #id_station#                |
+            | identificativoDominio                 | #creditor_institution_code# |
+            | identificativoUnivocoVersamento       | RPTdaRifPsp                 |
+            | codiceContestoPagamento               | $1ccp                       |
+            | password                              | #password#                  |
+            | identificativoPSP                     | #psp#                       |
+            | identificativoIntermediarioPSP        | #psp#                       |
+            | identificativoCanale                  | #canale#                    |
+            | rpt                                   | $rptAttachment              |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is KO of nodoInviaRPT response
+        And check faultCode is PPT_RPT_DUPLICATA of nodoInviaRPT response
+        And check id is NodoDeiPagamentiSPC of nodoInviaRPT response
+
+        # RPT
+        And verify 1 record for the table RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | RPTdaRifPsp            |
+            | CCP        | $1ccp                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # RPT_GI
+        And verify 1 record for the table RPT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | RPTdaRifPsp            |
+            | CCP        | $1ccp                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+
+    @ALL @INSERT @INSERT_5
+    Scenario: chiediStato_RPT_ERRORE_INVIO_PSP_mod1
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+        And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | 44444444444     |
+            | identificativoStazioneRichiedente | 44444444444_01  |
+            | dataOraMessaggioRichiesta         | #timedate#      |
+            | dataEsecuzionePagamento           | #date#          |
+            | importoTotaleDaVersare            | 10.00           |
+            | tipoVersamento                    | PO              |
+            | identificativoUnivocoVersamento   | irraggiungibile |
+            | codiceContestoPagamento           | #ccp1#          |
+            | importoSingoloVersamento          | 10.00           |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | 44444444444     |
+            | identificativoStazioneIntermediarioPA | 44444444444_01  |
+            | identificativoDominio                 | 44444444444     |
+            | identificativoUnivocoVersamento       | irraggiungibile |
+            | codiceContestoPagamento               | $1ccp           |
+            | password                              | #password#      |
+            | identificativoPSP                     | irraggiungibile |
+            | identificativoIntermediarioPSP        | irraggiungibile |
+            | identificativoCanale                  | irraggiungibile |
+            | rpt                                   | $rpt1Attachment |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is KO of nodoInviaRPT response
+        And check faultCode is PPT_CANALE_IRRAGGIUNGIBILE of nodoInviaRPT response
+
+        Given from body with datatable vertical nodoChiediStatoRPT initial XML nodoChiediStatoRPT
+            | identificativoIntermediarioPA         | 44444444444     |
+            | identificativoStazioneIntermediarioPA | 44444444444_01  |
+            | password                              | #password#      |
+            | identificativoDominio                 | 44444444444     |
+            | identificativoUnivocoVersamento       | irraggiungibile |
+            | codiceContestoPagamento               | $1ccp           |
+        When EC sends SOAP nodoChiediStatoRPT to nodo-dei-pagamenti
+        Then checks stato contains RPT_RICEVUTA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_ACCETTATA_NODO of nodoChiediStatoRPT response
+        And checks stato contains RPT_ERRORE_INVIO_A_PSP of nodoChiediStatoRPT response
+
+        Given from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | 44444444444                  |
+            | identificativoStazioneIntermediarioPA | 44444444444_01               |
+            | identificativoDominio                 | 44444444444                  |
+            | identificativoUnivocoVersamento       | irraggiungibile              |
+            | codiceContestoPagamento               | $1ccp                        |
+            | password                              | #password#                   |
+            | identificativoPSP                     | #psp#                        |
+            | identificativoIntermediarioPSP        | #id_broker_psp#              |
+            | identificativoCanale                  | #canale_ATTIVATO_PRESSO_PSP# |
+            | rpt                                   | $rpt1Attachment              |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+        # RPT
+        And verify 1 record for the table RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | irraggiungibile        |
+            | CCP        | $1ccp                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # RPT_GI
+        And verify 1 record for the table RPT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | irraggiungibile        |
+            | CCP        | $1ccp                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # STATI_RPT_SNAPSHOT
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | irraggiungibile        |
+            | CCP        | $1ccp                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # STATI_RPT_SNAPSHOT_GI
+        And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | irraggiungibile        |
+            | CCP        | $1ccp                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
