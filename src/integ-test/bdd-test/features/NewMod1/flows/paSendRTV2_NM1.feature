@@ -1043,7 +1043,7 @@ Feature: flow tests for paSendRTV2 944
         And EC replies to nodo-dei-pagamenti with the paGetPaymentV2
         When psp sends soap activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
-    @test @company @prova
+    @test @company 
     Scenario: PSRTV2_ACTV1_04 (part 2)
         Given the PSRTV2_ACTV1_04 (part 1) scenario executed successfully
         And the closePaymentV2 scenario executed successfully

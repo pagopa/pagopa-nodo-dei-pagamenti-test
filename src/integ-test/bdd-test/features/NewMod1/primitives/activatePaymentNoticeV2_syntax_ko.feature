@@ -37,7 +37,7 @@ Feature: syntax checks KO for activatePaymentNoticeV2Request 958
         Examples:
             | elem             | attribute     | value                                     | soapUI test  |
             | soapenv:Envelope | xmlns:soapenv | http://schemas.xmlsoap.org/ciao/envelope/ | SIN_APNV2_01 |
-    @test @prova
+    @test 
     Scenario Outline: Check PPT_SINTASSI_EXTRAXSD error on invalid body element value
         Given <elem> with <value> in activatePaymentNoticeV2
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti

@@ -116,7 +116,7 @@ Feature: syntax checks for closePaymentV2 outcome OK 965
             | idCiBundle                    | Empty                                                                                                                                                                                                                                                            | PAG-2444      |
 
 
-    @test @prova
+    @test 
     # syntax check - Invalid field - paymentToken
     Scenario Outline: Check syntax error on invalid body element value - paymentToken
         Given the closePaymentV2 scenario executed successfully

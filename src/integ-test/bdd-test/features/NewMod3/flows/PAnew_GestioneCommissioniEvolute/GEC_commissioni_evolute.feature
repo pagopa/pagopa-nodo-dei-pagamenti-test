@@ -168,7 +168,7 @@ Feature: Commissioni evolute process 1103
         And checks the value None of the record at column SUGGESTED_USER_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
         And checks the value None of the record at column SUGGESTED_PA_FEE of the table POSITION_ACTIVATE retrived by the query select_activatev2 on db nodo_online under macro NewMod1
 
-    @newfix @prova
+    @newfix 
     # sunny day activate
     Scenario: Execute activate 2
         Given update parameter gec.enabled on configuration keys with value true

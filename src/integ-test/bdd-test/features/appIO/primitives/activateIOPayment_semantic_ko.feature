@@ -522,7 +522,7 @@ Feature: Semantic checks for activateIOPayment - KO 116
       | stateProvinceRegion         | None                  | SEM_AIPR_21 |
       | country                     | FR                    | SEM_AIPR_21 |
       | country                     | None                  | SEM_AIPR_21 |
-      | e-mail                      | test1@prova.gmail.com | SEM_AIPR_21 |
+      | e-mail                      | test1@test.gmail.com | SEM_AIPR_21 |
       | e-mail                      | None                  | SEM_AIPR_21 |
 
   @runnable
@@ -574,7 +574,7 @@ Feature: Semantic checks for activateIOPayment - KO 116
       | stateProvinceRegion         | None                  | SEM_AIPR_22 |
       | country                     | FR                    | SEM_AIPR_22 |
       | country                     | None                  | SEM_AIPR_22 |
-      | e-mail                      | test1@prova.gmail.com | SEM_AIPR_22 |
+      | e-mail                      | test1@test.gmail.com | SEM_AIPR_22 |
       | e-mail                      | None                  | SEM_AIPR_22 |
 
   @runnable
