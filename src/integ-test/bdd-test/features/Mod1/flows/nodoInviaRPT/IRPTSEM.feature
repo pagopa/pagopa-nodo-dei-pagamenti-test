@@ -840,6 +840,7 @@ Feature: process tests for nodoInviaRT[IRPTSEM] 328
             </soapenv:Envelope>
             """
         When PSP sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        # a valle del merge delle insert con dismissione WFESP, questa primitiva andrà in OK !
         Then check faultCode is PPT_CANALE_ERRORE_RESPONSE of nodoInviaRPT response
 
     Scenario: (phase 4) Execute nodoInviaRPT2 request

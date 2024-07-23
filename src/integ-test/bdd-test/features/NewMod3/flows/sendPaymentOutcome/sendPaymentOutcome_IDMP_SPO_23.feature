@@ -6,6 +6,7 @@ Background:
   # Activate Phase
   Scenario: 1. Execute activatePaymentNotice request
     Given nodo-dei-pagamenti has config parameter useIdempotency set to true
+    And nodo-dei-pagamenti has config parameter scheduler.jobName_idempotencyCacheClean.enabled set to false
     And generate 1 notice number and iuv with aux digit 0, segregation code NA and application code #cod_segr#
     And initial XML activatePaymentNotice
       """

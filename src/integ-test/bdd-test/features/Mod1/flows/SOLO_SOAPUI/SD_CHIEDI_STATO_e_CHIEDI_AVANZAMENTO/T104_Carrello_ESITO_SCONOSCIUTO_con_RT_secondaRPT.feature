@@ -503,6 +503,36 @@ Feature: T104_Carrello_ESITO_SCONOSCIUTO_con_RT_secondaRPT 478
             </pay_i:datiPagamento>
             </pay_i:RT>
             """
+        And initial XML pspInviaCarrelloRPT
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:pspInviaCarrelloRPTResponse>
+            <pspInviaCarrelloRPTResponse>
+            <fault>
+            <faultCode>CANALE_BUSTA_ERRATA</faultCode>
+            <faultString>La busta non è corretta</faultString>
+            <id>IDPSPFNZ</id>
+            <serial>1</serial>
+            </fault>
+            <esitoComplessivoOperazione>KO</esitoComplessivoOperazione>
+            <identificativoCarrello>$1iuv</identificativoCarrello>
+
+            <listaErroriRPT>
+            <fault>
+            <faultCode>CANALE_FIRMA_SCONOSCIUTA</faultCode>
+            <faultString>La firma è sconosciuta</faultString>
+            <id>IDPSPFNZ</id>
+            <serial>1</serial>
+            </fault>
+            </listaErroriRPT>
+            </pspInviaCarrelloRPTResponse>
+            </ws:pspInviaCarrelloRPTResponse>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
         And initial XML nodoInviaCarrelloRPT
             """
             <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ppt="http://ws.pagamenti.telematici.gov/ppthead" xmlns:ws="http://ws.pagamenti.telematici.gov/">
