@@ -459,7 +459,7 @@ Feature: lispay opzione 2 extended flow 282
         Then verify the HTTP status code of listaPSP response is 200
         Then check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
-        And restore initial configurations
+        Given nodo-dei-pagamenti has config parameter chiediListaPSP.listaPspLisPay set to ABC
 
     Scenario: nodoChiediListaPsp with IBAN
         Given nodo-dei-pagamenti has config parameter chiediListaPSP.listaPspLisPay set to BIC36019
@@ -474,7 +474,7 @@ Feature: lispay opzione 2 extended flow 282
         Then verify the HTTP status code of listaPSP response is 200
         Then check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
-        And restore initial configurations
+        Given nodo-dei-pagamenti has config parameter chiediListaPSP.listaPspLisPay set to ABC
 
     Scenario: nodoInoltraEsitoCarta
         When WISP sends REST POST inoltroEsito/carta to nodo-dei-pagamenti
@@ -529,6 +529,7 @@ Feature: lispay opzione 2 extended flow 282
         And the nodoInoltraEsitoCarta scenario executed successfully
         And the RT with MBD scenario executed successfully
         And the nodoInviaRT scenario executed successfully
+        Given nodo-dei-pagamenti has config parameter chiediListaPSP.listaPspLisPay set to ABC
 
     @sync 
     Scenario: Test nodoInviaRPT with IBAN
@@ -539,6 +540,7 @@ Feature: lispay opzione 2 extended flow 282
         And the nodoInoltraEsitoCarta scenario executed successfully
         And the RT with IBAN scenario executed successfully
         And the nodoInviaRT scenario executed successfully
+        Given nodo-dei-pagamenti has config parameter chiediListaPSP.listaPspLisPay set to ABC
 
     @sync 
     Scenario: Test nodoInviaCarrelloRPT with MBD
@@ -550,6 +552,7 @@ Feature: lispay opzione 2 extended flow 282
         And the nodoInoltraEsitoCarta scenario executed successfully
         And the RT with MBD scenario executed successfully
         And the nodoInviaRT scenario executed successfully
+        Given nodo-dei-pagamenti has config parameter chiediListaPSP.listaPspLisPay set to ABC
 
     @sync 
     Scenario: Test nodoInviaCarrelloRPT with IBAN
@@ -560,3 +563,4 @@ Feature: lispay opzione 2 extended flow 282
         And the nodoInoltraEsitoCarta scenario executed successfully
         And the RT with IBAN scenario executed successfully
         And the nodoInviaRT scenario executed successfully
+        Given nodo-dei-pagamenti has config parameter chiediListaPSP.listaPspLisPay set to ABC

@@ -321,15 +321,15 @@ Feature: lispay opzione 2 281
         When WISP sends rest GET listaPSP?idPagamento=$sessionToken&percorsoPagamento=CARTE to nodo-dei-pagamenti
         Then verify the HTTP status code of listaPSP response is 200
 
+    @sync
     Scenario: Settings
         Given nodo-dei-pagamenti has config parameter chiediListaPSP.listaPspLisPay set to BIC36019
         And nodo-dei-pagamenti has config parameter chiediListaPSP.listaCanaliLisPay set to 13212880150_07
-        And execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
-        And through the query version retrieve param version at position 0 and save it under the key version
 
     @sync
     Scenario: nodoInviaRPT with MBD
-        Given the Settings scenario executed successfully
+        Given execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
+        And through the query version retrieve param version at position 0 and save it under the key version
         And execution query get_psp_mbd to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
         And through the query get_psp_mbd retrieve param sizeCarte at position 0 and save it under the key sizeCarte
         And execution query get_psp_mbd to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
@@ -340,11 +340,11 @@ Feature: lispay opzione 2 281
         And the nodoChiediListaPsp scenario executed successfully
         Then check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
-        And restore initial configurations
 
-    @sync 
+    @sync
     Scenario: nodoInviaRPT with MBD and IBAN
-        Given the Settings scenario executed successfully
+        Given execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
+        And through the query version retrieve param version at position 0 and save it under the key version
         And execution query get_psp_mbd_iban to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
         And through the query get_psp_mbd_iban retrieve param sizeCarte at position 0 and save it under the key sizeCarte
         And execution query get_psp_mbd_iban to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
@@ -355,11 +355,11 @@ Feature: lispay opzione 2 281
         And the nodoChiediListaPsp scenario executed successfully
         Then check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
-        And restore initial configurations
 
-    @sync 
+    @sync
     Scenario: nodoInviaRPT with IBAN
-        Given the Settings scenario executed successfully
+        Given execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
+        And through the query version retrieve param version at position 0 and save it under the key version
         And execution query get_psp_iban to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
         And through the query get_psp_iban retrieve param sizeCarte at position 0 and save it under the key sizeCarte
         And execution query get_psp_iban to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
@@ -370,11 +370,11 @@ Feature: lispay opzione 2 281
         And the nodoChiediListaPsp scenario executed successfully
         Then check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
-        And restore initial configurations
 
-    @sync 
+    @sync
     Scenario: nodoInviaCarrelloRPT with MBD
-        Given the Settings scenario executed successfully
+        Given execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
+        And through the query version retrieve param version at position 0 and save it under the key version
         And execution query get_psp_mbd to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
         And through the query get_psp_mbd retrieve param sizeCarte at position 0 and save it under the key sizeCarte
         And execution query get_psp_mbd to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
@@ -385,11 +385,11 @@ Feature: lispay opzione 2 281
         And the nodoChiediListaPsp scenario executed successfully
         Then check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
-        And restore initial configurations
 
-    @sync 
+    @sync
     Scenario: nodoInviaCarrelloRPT with MBD and IBAN
-        Given the Settings scenario executed successfully
+        Given execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
+        And through the query version retrieve param version at position 0 and save it under the key version
         And execution query get_psp_mbd_iban to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
         And through the query get_psp_mbd_iban retrieve param sizeCarte at position 0 and save it under the key sizeCarte
         And execution query get_psp_mbd_iban to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
@@ -400,11 +400,11 @@ Feature: lispay opzione 2 281
         And the nodoChiediListaPsp scenario executed successfully
         Then check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
-        And restore initial configurations
 
-    @sync 
+    @sync
     Scenario: nodoInviaCarrelloRPT with IBAN
-        Given the Settings scenario executed successfully
+        Given execution query version to get value on the table ELENCO_SERVIZI_PSP_SYNC_STATUS, with the columns SNAPSHOT_VERSION under macro Mod1 with db name nodo_offline
+        And through the query version retrieve param version at position 0 and save it under the key version
         And execution query get_psp_iban to get value on the table ELENCO_SERVIZI_PSP, with the columns COUNT(*) under macro Mod1 with db name nodo_offline
         And through the query get_psp_iban retrieve param sizeCarte at position 0 and save it under the key sizeCarte
         And execution query get_psp_iban to get value on the table ELENCO_SERVIZI_PSP, with the columns ID under macro Mod1 with db name nodo_offline
@@ -415,4 +415,7 @@ Feature: lispay opzione 2 281
         And the nodoChiediListaPsp scenario executed successfully
         Then check totalRows is $sizeCarte of listaPSP response
         And check data is $listaCarte of listaPSP response
-        And restore initial configurations
+
+    @sync
+    Scenario: Restore settings
+        Given nodo-dei-pagamenti has config parameter chiediListaPSP.listaPspLisPay set to ABC
