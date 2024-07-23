@@ -1464,53 +1464,491 @@ Feature: NM3 flows PA New con pagamento OK
         And from $sendPaymentOutcomeV2Resp.outcome xml check value OK in position 0
 
 
+
+
+
     @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_5 @after_15
-    Scenario: Scenario: NM3 flow OK, FLOW con GEC: activateV2 -> paGetPayment --> getFees OK spoV2+ -> paSendRT BIZ+ (NM3-16)
+    Scenario: Scenario: NM3 flow OK, FLOW con GEC: activateV2 -> paGetPayment --> getFees OK, spoV2+ -> paSendRT BIZ+ (NM3-16)
         Given update parameter gec.enabled on configuration keys with value true
-        And wait 5 seconds after triggered refresh job ALL
+        And wait 10 seconds after triggered refresh job ALL
         And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_noOptional initial XML activatePaymentNoticeV2
-            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode  | noticeNumber | amount | paymentMethod | touchPoint |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | 77777777777 | 302#iuv#     | 7001.00   | PO            | ATM        |
-        And from body with datatable vertical paGetPayment_2transfer_noOptional initial XML paGetPayment
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode  | noticeNumber | amount   | paymentMethod | touchPoint |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | 77777777777 | 302#iuv#     | 10000.00 | PO            | PSP        |
+        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
             | outcome                     | OK                                  |
             | creditorReferenceId         | 02$iuv                              |
-            | paymentAmount               | 7001.00                                |
+            | paymentAmount               | 10000.00                            |
             | dueDate                     | 2021-12-31                          |
             | description                 | pagamentoTest                       |
             | entityUniqueIdentifierType  | G                                   |
             | entityUniqueIdentifierValue | 77777777777                         |
             | fullName                    | Massimo Benvegnù                    |
-            | transferAmount1             | 3001.00                                |
-            | transferAmount2             | 4000.00                                |
-            | fiscalCodePA1               | $activatePaymentNoticeV2.fiscalCode |
-            | fiscalCodePA2               | 77777777778                         |
+            | transferAmount              | 10000.00                            |
+            | fiscalCodePA                | $activatePaymentNoticeV2.fiscalCode |
             | IBAN                        | IT45R0760103200000000001016         |
             | remittanceInformation       | testPaGetPayment                    |
-            | transferCategory1           | TAX1                                |
-            | transferCategory2           | TAX2                                |
+            | transferCategory            | 0101101IM                           |
         And EC replies to nodo-dei-pagamenti with the paGetPayment
         When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
         Then check outcome is OK of activatePaymentNoticeV2 response
         Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
-            | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+            | idPSP     | idBrokerPSP  | idChannel    | password   | paymentToken                                  | outcome |
+            | #psp_Gec# | #broker_Gec# | #canale_Gec# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
         When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
         Then check outcome is OK of sendPaymentOutcomeV2 response
         And wait 4 seconds for expiration
-    # And checks the value INVIATA of the record at column ESITO of the table RE retrived by the query on db re with where datatable horizontal
-    #     | where_keys         | where_values                          |
-    #     | NOTICE_ID          | $activatePaymentNoticeV2.noticeNumber |
-    #     | TIPO_EVENTO        | fees                                  |
-    #     | SOTTO_TIPO_EVENTO  | REQ                                   |
-    #     | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                      |
-    #     | ORDER BY           | DATA_ORA_EVENTO ASC                   |
-    # And checks the value RICEVUTA of the record at column ESITO of the table RE retrived by the query on db re with where datatable horizontal
-    #     | where_keys         | where_values                          |
-    #     | NOTICE_ID          | $activatePaymentNoticeV2.noticeNumber |
-    #     | TIPO_EVENTO        | fees                                  |
-    #     | SOTTO_TIPO_EVENTO  | RESP                                  |
-    #     | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                      |
-    #     | ORDER BY           | DATA_ORA_EVENTO ASC                   |
+        And checks the value INVIATA of the record at column ESITO of the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                          |
+            | NOTICE_ID          | $activatePaymentNoticeV2.noticeNumber |
+            | TIPO_EVENTO        | fees                                  |
+            | SOTTO_TIPO_EVENTO  | REQ                                   |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                      |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                   |
+        And checks the value RICEVUTA of the record at column ESITO of the table RE retrived by the query on db re with where datatable horizontal
+            | where_keys         | where_values                          |
+            | NOTICE_ID          | $activatePaymentNoticeV2.noticeNumber |
+            | TIPO_EVENTO        | fees                                  |
+            | SOTTO_TIPO_EVENTO  | RESP                                  |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                      |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                   |
+        # POSITION_ACTIVATE
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                              |
+            | ID                    | NotNone                                            |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                  |
+            | PSP_ID                | #psp_Gec#                                          |
+            | IDEMPOTENCY_KEY       | None                                               |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken      |
+            | TOKEN_VALID_FROM      | NotNone                                            |
+            | TOKEN_VALID_TO        | NotNone                                            |
+            | DUE_DATE              | None                                               |
+            | AMOUNT                | $activatePaymentNoticeV2.amount                    |
+            | INSERTED_TIMESTAMP    | NotNone                                            |
+            | UPDATED_TIMESTAMP     | NotNone                                            |
+            | INSERTED_BY           | activatePaymentNoticeV2                            |
+            | UPDATED_BY            | activatePaymentNoticeV2                            |
+            | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle |
+            | SUGGESTED_IDCIBUNDLE  | None                                               |
+            | SUGGESTED_USER_FEE    | 100                                                |
+            | SUGGESTED_PA_FEE      | 0                                                  |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_SERVICE
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                               |
+            | ID                 | NotNone                             |
+            | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode |
+            | DESCRIPTION        | pagamentoTest                       |
+            | COMPANY_NAME       | None                                |
+            | OFFICE_NAME        | None                                |
+            | DEBTOR_ID          | NotNone                             |
+            | INSERTED_TIMESTAMP | NotNone                             |
+            | UPDATED_TIMESTAMP  | NotNone                             |
+            | INSERTED_BY        | activatePaymentNoticeV2             |
+            | UPDATED_BY         | activatePaymentNoticeV2             |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_PAYMENT_PLAN
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                               |
+            | ID                    | NotNone                             |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId   |
+            | DUE_DATE              | NotNone                             |
+            | RETENTION_DATE        | None                                |
+            | AMOUNT                | $activatePaymentNoticeV2.amount     |
+            | FLAG_FINAL_PAYMENT    | N                                   |
+            | INSERTED_TIMESTAMP    | NotNone                             |
+            | UPDATED_TIMESTAMP     | NotNone                             |
+            | METADATA              | None                                |
+            | FK_POSITION_SERVICE   | NotNone                             |
+            | INSERTED_BY           | activatePaymentNoticeV2             |
+            | UPDATED_BY            | activatePaymentNoticeV2             |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_PAYMENT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                     | value                                         |
+            | ID                         | NotNone                                       |
+            | PA_FISCAL_CODE             | $activatePaymentNoticeV2.fiscalCode           |
+            | CREDITOR_REFERENCE_ID      | $paGetPayment.creditorReferenceId             |
+            | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
+            | BROKER_PA_ID               | #pspFittizio#                                 |
+            | STATION_ID                 | #stazioneFittizia#                            |
+            | STATION_VERSION            | 2                                             |
+            | PSP_ID                     | #psp_Gec#                                     |
+            | BROKER_PSP_ID              | #broker_Gec#                                  |
+            | CHANNEL_ID                 | #canale_Gec#                                  |
+            | IDEMPOTENCY_KEY            | None                                          |
+            | AMOUNT                     | $activatePaymentNoticeV2.amount               |
+            | FEE                        | None                                          |
+            | OUTCOME                    | NotNone                                       |
+            | PAYMENT_METHOD             | None                                          |
+            | PAYMENT_CHANNEL            | NA                                            |
+            | TRANSFER_DATE              | None                                          |
+            | PAYER_ID                   | None                                          |
+            | APPLICATION_DATE           | NotNone                                       |
+            | INSERTED_TIMESTAMP         | NotNone                                       |
+            | UPDATED_TIMESTAMP          | NotNone                                       |
+            | FK_PAYMENT_PLAN            | NotNone                                       |
+            | RPT_ID                     | None                                          |
+            | PAYMENT_TYPE               | MOD3                                          |
+            | CARRELLO_ID                | None                                          |
+            | ORIGINAL_PAYMENT_TOKEN     | None                                          |
+            | FLAG_IO                    | N                                             |
+            | RICEVUTA_PM                | None                                          |
+            | FLAG_ACTIVATE_RESP_MISSING | None                                          |
+            | FLAG_PAYPAL                | None                                          |
+            | INSERTED_BY                | activatePaymentNoticeV2                       |
+            | UPDATED_BY                 | sendPaymentOutcomeV2                          |
+            | TRANSACTION_ID             | None                                          |
+            | CLOSE_VERSION              | None                                          |
+            | FEE_PA                     | None                                          |
+            | BUNDLE_ID                  | None                                          |
+            | BUNDLE_PA_ID               | None                                          |
+            | PM_INFO                    | None                                          |
+            | MBD                        | N                                             |
+            | FEE_SPO                    | None                                          |
+            | PAYMENT_NOTE               | None                                          |
+            | FLAG_STANDIN               | N                                             |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_TRANSFER
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                   | value                                 |
+            | ID                       | NotNone                               |
+            | NOTICE_ID                | $activatePaymentNoticeV2.noticeNumber |
+            | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId     |
+            | PA_FISCAL_CODE           | $activatePaymentNoticeV2.fiscalCode   |
+            | PA_FISCAL_CODE_SECONDARY | $activatePaymentNoticeV2.fiscalCode   |
+            | IBAN                     | IT45R0760103200000000001016           |
+            | AMOUNT                   | $activatePaymentNoticeV2.amount       |
+            | REMITTANCE_INFORMATION   | testPaGetPayment                      |
+            | TRANSFER_CATEGORY        | 0101101IM                             |
+            | TRANSFER_IDENTIFIER      | 1                                     |
+            | VALID                    | Y                                     |
+            | FK_POSITION_PAYMENT      | NotNone                               |
+            | INSERTED_TIMESTAMP       | NotNone                               |
+            | UPDATED_TIMESTAMP        | NotNone                               |
+            | FK_PAYMENT_PLAN          | NotNone                               |
+            | INSERTED_BY              | activatePaymentNoticeV2               |
+            | UPDATED_BY               | activatePaymentNoticeV2               |
+            | METADATA                 | None                                  |
+            | REQ_TIPO_BOLLO           | None                                  |
+            | REQ_HASH_DOCUMENTO       | None                                  |
+            | REQ_PROVINCIA_RESIDENZA  | None                                  |
+            | COMPANY_NAME_SECONDARY   | None                                  |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_PAYMENT_STATUS
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                                                                           |
+            | ID                    | NotNone                                                                                         |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode                                                             |
+            | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber                                                           |
+            | STATUS                | PAYING,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED                                               |
+            | INSERTED_TIMESTAMP    | NotNone                                                                                         |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                                                               |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken                                                   |
+            | INSERTED_BY           | activatePaymentNoticeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2,paSendRT |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+        And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                         |
+            | ID                    | NotNone                                       |
+            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode           |
+            | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber         |
+            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId             |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
+            | STATUS                | NOTIFIED                                      |
+            | INSERTED_TIMESTAMP    | NotNone                                       |
+            | UPDATED_TIMESTAMP     | NotNone                                       |
+            | FK_POSITION_PAYMENT   | NotNone                                       |
+            | INSERTED_BY           | activatePaymentNoticeV2                       |
+            | UPDATED_BY            | sendPaymentOutcomeV2                          |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | ID ASC                                |
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
+            | ORDER BY   | ID ASC                                |
+        # POSITION_STATUS
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                                 |
+            | ID                 | NotNone                                               |
+            | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode                   |
+            | NOTICE_ID          | $activatePaymentNoticeV2.noticeNumber                 |
+            | STATUS             | PAYING,PAID,NOTIFIED                                  |
+            | INSERTED_TIMESTAMP | NotNone                                               |
+            | INSERTED_BY        | activatePaymentNoticeV2,sendPaymentOutcomeV2,paSendRT |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
+        And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
+        # POSITION_STATUS_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column              | value                                 |
+            | ID                  | NotNone                               |
+            | PA_FISCAL_CODE      | $activatePaymentNoticeV2.fiscalCode   |
+            | NOTICE_ID           | $activatePaymentNoticeV2.noticeNumber |
+            | STATUS              | NOTIFIED                              |
+            | INSERTED_TIMESTAMP  | NotNone                               |
+            | UPDATED_TIMESTAMP   | NotNone                               |
+            | FK_POSITION_SERVICE | NotNone                               |
+            | ACTIVATION_PENDING  | N                                     |
+            | INSERTED_BY         | activatePaymentNoticeV2               |
+            | UPDATED_BY          | sendPaymentOutcomeV2                  |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                          |
+            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
+            | ORDER BY       | ID ASC                                |
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                          |
+            | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
+            | ORDER BY   | ID ASC                                |
+        # RE #####
+        # activatePaymentNoticeV2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Req
+        And from $activatePaymentNoticeV2Req.idPSP xml check value #psp_Gec# in position 0
+        And from $activatePaymentNoticeV2Req.idBrokerPSP xml check value #broker_Gec# in position 0
+        And from $activatePaymentNoticeV2Req.idChannel xml check value #canale_Gec# in position 0
+        And from $activatePaymentNoticeV2Req.password xml check value #password# in position 0
+        And from $activatePaymentNoticeV2Req.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $activatePaymentNoticeV2Req.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $activatePaymentNoticeV2Req.amount xml check value $activatePaymentNoticeV2.amount in position 0
+        # activatePaymentNoticeV2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | activatePaymentNoticeV2                       |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Resp
+        And from $activatePaymentNoticeV2Resp.outcome xml check value OK in position 0
+        And from $activatePaymentNoticeV2Resp.totalAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 1
+        And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value NotNone in position 0
+        And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 02$iuv in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedUserFee xml check value 100 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedPaFee xml check value 0 in position 0
+        And from $activatePaymentNoticeV2Resp.suggestedIdBundle xml check value 2ad0ccdd-14ad-4249-bd01-613b424106ca in position 0
+        # paGetPayment REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paGetPayment                                  |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentReq
+        And from $paGetPaymentReq.idPA xml check value 77777777777 in position 0
+        And from $paGetPaymentReq.idBrokerPA xml check value #brokerFittizio# in position 0
+        And from $paGetPaymentReq.idStation xml check value #stazioneFittizia# in position 0
+        And from $paGetPaymentReq.qrCode.fiscalCode xml check value 77777777777 in position 0
+        And from $paGetPaymentReq.qrCode.noticeNumber xml check value 302$iuv in position 0
+        And from $paGetPaymentReq.amount xml check value $activatePaymentNoticeV2.amount in position 0
+        # paGetPayment RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | paGetPayment                                  |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentResp
+        And from $paGetPaymentResp.outcome xml check value OK in position 0
+        And from $paGetPaymentResp.data.creditorReferenceId xml check value 02$iuv in position 0
+        And from $paGetPaymentResp.data.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value 77777777777 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paGetPaymentResp.data.transferList.transfer.transferCategory xml check value 0101101IM in position 0
+        # fees REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | fees                                          |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key feesReq
+        And from $feesReq.paymentAmount json check value $activatePaymentNoticeV2.amount in position 0
+        And from $feesReq.primaryCreditorInstitution json check value 77777777777 in position 0
+        And from $feesReq.idPspList.idBrokerPsp json check value 00799960158 in position 0
+        And from $feesReq.idPspList.idChannel json check value 00799960158_07 in position 0
+        And from $feesReq.idPspList.idPsp json check value BCITITMM in position 0
+        And from $feesReq.transferList.creditorInstitution json check value 77777777777 in position 0
+        And from $feesReq.transferList.transferCategory json check value 0101101IM in position 0
+        # fees RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | fees                                          |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve json PAYLOAD at position 0 and save it under the key feesResp
+        And from $feesResp.belowThreshold json check value false in position 0
+        And from $feesResp.bundleOptions.abi json check value NotNone in position 0
+        And from $feesResp.bundleOptions.bundleDescription json check value Clienti e non delle Banche del Gruppo Intesa Sanpaolo possono disporre pagamenti con carte di pagamento VISA-MASTERCARD in position 0
+        And from $feesResp.bundleOptions.bundleName json check value Intesa Sanpaolo S.p.A in position 0
+        And from $feesResp.bundleOptions.idBrokerPsp json check value 00799960158 in position 0
+        And from $feesResp.bundleOptions.idBundle json check value 2ad0ccdd-14ad-4249-bd01-613b424106ca in position 0
+        And from $feesResp.bundleOptions.idChannel json check value 00799960158_07 in position 0
+        And from $feesResp.bundleOptions.idPsp json check value BCITITMM in position 0
+        And from $feesResp.bundleOptions.pspBusinessName json check value Intesa Sanpaolo S.p.A in position 0
+        And from $feesResp.bundleOptions.taxPayerFee json check value 100 in position 0
+        # sendPaymentOutcomeV2 REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+            | SOTTO_TIPO_EVENTO  | REQ                                           |
+            | ESITO              | RICEVUTA                                      |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
+        And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp_Gec# in position 0
+        And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #broker_Gec# in position 0
+        And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_Gec# in position 0
+        And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
+        And from $sendPaymentOutcomeV2Req.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
+        And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
+        # sendPaymentOutcomeV2 RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys         | where_values                                  |
+            | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
+            | SOTTO_TIPO_EVENTO  | RESP                                          |
+            | ESITO              | INVIATA                                       |
+            | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
+            | ORDER BY           | DATA_ORA_EVENTO ASC                           |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Resp
+        And from $sendPaymentOutcomeV2Resp.outcome xml check value OK in position 0
+        # paSendRT REQ
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | REQ                                           |
+            | ESITO                    | INVIATA                                       |
+            | IDENTIFICATIVO_EROGATORE | #id_station#                                  |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTReq
+        And from $paSendRTReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTReq.idBrokerPA xml check value 15376371009 in position 0
+        And from $paSendRTReq.idStation xml check value 15376371009_02 in position 0
+        And from $paSendRTReq.receipt.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
+        And from $paSendRTReq.receipt.fiscalCode xml check value 77777777777 in position 0
+        And from $paSendRTReq.receipt.outcome xml check value OK in position 0
+        And from $paSendRTReq.receipt.creditorReferenceId xml check value 02$iuv in position 0
+        And from $paSendRTReq.receipt.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTReq.receipt.description xml check value pagamentoTest in position 0
+        And from $paSendRTReq.receipt.companyName xml check value NA in position 0
+        ### TRANSFER 1
+        And from $paSendRTReq.receipt.transferList.transfer.idTransfer xml check value 1 in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.remittanceInformation xml check value testPaGetPayment in position 0
+        And from $paSendRTReq.receipt.transferList.transfer.transferCategory xml check value 0101101IM in position 0
+        And from $paSendRTReq.receipt.idChannel xml check value #canale_Gec# in position 0
+        # paSendRT RESP
+        And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
+            | where_keys               | where_values                                  |
+            | PAYMENT_TOKEN            | $activatePaymentNoticeV2Response.paymentToken |
+            | TIPO_EVENTO              | paSendRT                                      |
+            | SOTTO_TIPO_EVENTO        | RESP                                          |
+            | ESITO                    | RICEVUTA                                      |
+            | IDENTIFICATIVO_EROGATORE | #id_station#                                  |
+            | INSERTED_TIMESTAMP       | TRUNC(SYSDATE-1)                              |
+            | ORDER BY                 | INSERTED_TIMESTAMP ASC                        |
+        And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paSendRTResp
+        And from $paSendRTResp.outcome xml check value OK in position 0
+
+
+
+
+
+
+    @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_6 @after_1
+    Scenario: Scenario: NM3 flow OK, FLOW con GEC: activateV2 -> paGetPayment --> getFees KO spoV2+ -> paSendRT BIZ+ (NM3-17)
+        Given update parameter gec.enabled on configuration keys with value true
+        And wait 5 seconds after triggered refresh job ALL
+        And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_noOptional initial XML activatePaymentNoticeV2
+            | idPSP    | idBrokerPSP | idChannel      | password   | fiscalCode  | noticeNumber | amount | paymentMethod | touchPoint |
+            | BCITITMM | 00799960158 | 00799960158_07 | #password# | 77777777777 | 302#iuv#     | 400.00 | CP            | CHECKOUT   |
+        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
+            | outcome                     | OK                                  |
+            | creditorReferenceId         | 02$iuv                              |
+            | paymentAmount               | 400.00                              |
+            | dueDate                     | 2021-12-31                          |
+            | description                 | pagamentoTest                       |
+            | entityUniqueIdentifierType  | G                                   |
+            | entityUniqueIdentifierValue | 77777777777                         |
+            | fullName                    | Massimo Benvegnù                    |
+            | transferAmount              | 400.00                              |
+            | fiscalCodePA                | $activatePaymentNoticeV2.fiscalCode |
+            | IBAN                        | IT45R0760103200000000001016         |
+            | remittanceInformation       | testPaGetPayment                    |
+            | transferCategory            | paGetPaymentTest                    |
+        And EC replies to nodo-dei-pagamenti with the paGetPayment
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+            | idPSP    | idBrokerPSP | idChannel      | password   | paymentToken                                  | outcome |
+            | BCITITMM | 00799960158 | 00799960158_07 | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of sendPaymentOutcomeV2 response
+        And wait 4 seconds for expiration
     # # POSITION_ACTIVATE
     # And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
     #     | column                | value                                                |
@@ -1735,358 +2173,6 @@ Feature: NM3 flows PA New con pagamento OK
     #     | where_keys | where_values                          |
     #     | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
     #     | ORDER BY   | ID ASC                                |
-    # # RE #####
-    # # activatePaymentNoticeV2 REQ
-    # And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-    #     | where_keys         | where_values                                  |
-    #     | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-    #     | TIPO_EVENTO        | activatePaymentNoticeV2                       |
-    #     | SOTTO_TIPO_EVENTO  | REQ                                           |
-    #     | ESITO              | RICEVUTA                                      |
-    #     | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-    #     | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-    # And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Req
-    # And from $activatePaymentNoticeV2Req.idPSP xml check value #psp# in position 0
-    # And from $activatePaymentNoticeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
-    # And from $activatePaymentNoticeV2Req.idChannel xml check value #canale_ATTIVATO_PRESSO_PSP# in position 0
-    # And from $activatePaymentNoticeV2Req.password xml check value #password# in position 0
-    # And from $activatePaymentNoticeV2Req.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-    # And from $activatePaymentNoticeV2Req.qrCode.noticeNumber xml check value $activatePaymentNoticeV2.noticeNumber in position 0
-    # And from $activatePaymentNoticeV2Req.amount xml check value $activatePaymentNoticeV2.amount in position 0
-    # # activatePaymentNoticeV2 RESP
-    # And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-    #     | where_keys         | where_values                                  |
-    #     | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-    #     | TIPO_EVENTO        | activatePaymentNoticeV2                       |
-    #     | SOTTO_TIPO_EVENTO  | RESP                                          |
-    #     | ESITO              | INVIATA                                       |
-    #     | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-    #     | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-    # And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key activatePaymentNoticeV2Resp
-    # And from $activatePaymentNoticeV2Resp.outcome xml check value OK in position 0
-    # And from $activatePaymentNoticeV2Resp.totalAmount xml check value $activatePaymentNoticeV2.amount in position 0
-    # And from $activatePaymentNoticeV2Resp.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-    # And from $activatePaymentNoticeV2Resp.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-    # And from $activatePaymentNoticeV2Resp.transferList.transfer.idTransfer xml check value 1 in position 0
-    # And from $activatePaymentNoticeV2Resp.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
-    # And from $activatePaymentNoticeV2Resp.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-    # And from $activatePaymentNoticeV2Resp.transferList.transfer.IBAN xml check value NotNone in position 0
-    # And from $activatePaymentNoticeV2Resp.creditorReferenceId xml check value 02$iuv in position 0
-    # # paGetPayment REQ
-    # And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-    #     | where_keys         | where_values                                  |
-    #     | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-    #     | TIPO_EVENTO        | paGetPayment                                  |
-    #     | SOTTO_TIPO_EVENTO  | REQ                                           |
-    #     | ESITO              | INVIATA                                       |
-    #     | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-    #     | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-    # And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentReq
-    # And from $paGetPaymentReq.idPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-    # And from $paGetPaymentReq.idBrokerPA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-    # And from $paGetPaymentReq.idStation xml check value #id_station# in position 0
-    # And from $paGetPaymentReq.qrCode.fiscalCode xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-    # And from $paGetPaymentReq.qrCode.noticeNumber xml check value 302$iuv in position 0
-    # And from $paGetPaymentReq.amount xml check value $activatePaymentNoticeV2.amount in position 0
-    # # paGetPayment RESP
-    # And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-    #     | where_keys         | where_values                                  |
-    #     | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-    #     | TIPO_EVENTO        | paGetPayment                                  |
-    #     | SOTTO_TIPO_EVENTO  | RESP                                          |
-    #     | ESITO              | RICEVUTA                                      |
-    #     | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-    #     | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-    # And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paGetPaymentResp
-    # And from $paGetPaymentResp.outcome xml check value OK in position 0
-    # And from $paGetPaymentResp.data.creditorReferenceId xml check value 02$iuv in position 0
-    # And from $paGetPaymentResp.data.paymentAmount xml check value $activatePaymentNoticeV2.amount in position 0
-    # And from $paGetPaymentResp.data.transferList.transfer.transferAmount xml check value $activatePaymentNoticeV2.amount in position 0
-    # And from $paGetPaymentResp.data.transferList.transfer.fiscalCodePA xml check value $activatePaymentNoticeV2.fiscalCode in position 0
-    # And from $paGetPaymentResp.data.transferList.transfer.IBAN xml check value IT45R0760103200000000001016 in position 0
-    # # sendPaymentOutcomeV2 REQ
-    # And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-    #     | where_keys         | where_values                                  |
-    #     | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-    #     | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
-    #     | SOTTO_TIPO_EVENTO  | REQ                                           |
-    #     | ESITO              | RICEVUTA                                      |
-    #     | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-    #     | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-    # And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Req
-    # And from $sendPaymentOutcomeV2Req.idPSP xml check value #psp# in position 0
-    # And from $sendPaymentOutcomeV2Req.idBrokerPSP xml check value #id_broker_psp# in position 0
-    # And from $sendPaymentOutcomeV2Req.idChannel xml check value #canale_ATTIVATO_PRESSO_PSP# in position 0
-    # And from $sendPaymentOutcomeV2Req.password xml check value #password# in position 0
-    # And from $sendPaymentOutcomeV2Req.paymentToken xml check value $activatePaymentNoticeV2Response.paymentToken in position 0
-    # And from $sendPaymentOutcomeV2Req.outcome xml check value OK in position 0
-    # # sendPaymentOutcomeV2 RESP
-    # And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
-    #     | where_keys         | where_values                                  |
-    #     | PAYMENT_TOKEN      | $activatePaymentNoticeV2Response.paymentToken |
-    #     | TIPO_EVENTO        | sendPaymentOutcomeV2                          |
-    #     | SOTTO_TIPO_EVENTO  | RESP                                          |
-    #     | ESITO              | INVIATA                                       |
-    #     | INSERTED_TIMESTAMP | TRUNC(SYSDATE-1)                              |
-    #     | ORDER BY           | DATA_ORA_EVENTO ASC                           |
-    # And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key sendPaymentOutcomeV2Resp
-    # And from $sendPaymentOutcomeV2Resp.outcome xml check value OK in position 0
-
-
-    @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_6 @after_1
-    Scenario: Scenario: NM3 flow OK, FLOW con GEC: activateV2 -> paGetPayment --> getFees KO spoV2+ -> paSendRT BIZ+ (NM3-17)
-        Given update parameter gec.enabled on configuration keys with value true
-        And wait 5 seconds after triggered refresh job ALL
-        And from body with datatable horizontal activatePaymentNoticeV2Body_GEC_noOptional initial XML activatePaymentNoticeV2
-            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount | paymentMethod | touchPoint |
-            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 302#iuv#     | 400.00 | PO            | PSP        |
-        And from body with datatable vertical paGetPayment_noOptional initial XML paGetPayment
-            | outcome                     | OK                                  |
-            | creditorReferenceId         | 02$iuv                              |
-            | paymentAmount               | 400.00                              |
-            | dueDate                     | 2021-12-31                          |
-            | description                 | pagamentoTest                       |
-            | entityUniqueIdentifierType  | G                                   |
-            | entityUniqueIdentifierValue | 77777777777                         |
-            | fullName                    | Massimo Benvegnù                    |
-            | transferAmount              | 400.00                              |
-            | fiscalCodePA                | $activatePaymentNoticeV2.fiscalCode |
-            | IBAN                        | IT45R0760103200000000001016         |
-            | remittanceInformation       | testPaGetPayment                    |
-            | transferCategory            | paGetPaymentTest                    |
-        And EC replies to nodo-dei-pagamenti with the paGetPayment
-        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of activatePaymentNoticeV2 response
-        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
-            | idPSP | idBrokerPSP     | idChannel                     | password   | paymentToken                                  | outcome |
-            | #psp# | #id_broker_psp# | #canale_versione_primitive_2# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
-        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
-        Then check outcome is OK of sendPaymentOutcomeV2 response
-        And wait 4 seconds for expiration
-        # POSITION_ACTIVATE
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                                |
-            | ID                    | NotNone                                              |
-            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                    |
-            | PSP_ID                | #psp#                                                |
-            | IDEMPOTENCY_KEY       | None                                                 |
-            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken        |
-            | TOKEN_VALID_FROM      | NotNone                                              |
-            | TOKEN_VALID_TO        | NotNone                                              |
-            | DUE_DATE              | None                                                 |
-            | AMOUNT                | $activatePaymentNoticeV2.amount                      |
-            | INSERTED_TIMESTAMP    | NotNone                                              |
-            | UPDATED_TIMESTAMP     | NotNone                                              |
-            | INSERTED_BY           | activatePaymentNoticeV2                              |
-            | UPDATED_BY            | activatePaymentNoticeV2                              |
-            | PAYMENT_METHOD        | $activatePaymentNoticeV2.paymentMethod               |
-            | TOUCHPOINT            | $activatePaymentNoticeV2.touchPoint                  |
-            | SUGGESTED_IDBUNDLE    | $activatePaymentNoticeV2Response.suggestedIdBundle   |
-            | SUGGESTED_IDCIBUNDLE  | $activatePaymentNoticeV2Response.suggestedIdCiBundle |
-            | SUGGESTED_USER_FEE    | $activatePaymentNoticeV2Response.suggestedUserFee    |
-            | SUGGESTED_PA_FEE      | $activatePaymentNoticeV2Response.suggestedPaFee      |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_ACTIVATE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        # POSITION_SERVICE
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                               |
-            | ID                 | NotNone                             |
-            | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode |
-            | DESCRIPTION        | pagamentoTest                       |
-            | COMPANY_NAME       | None                                |
-            | OFFICE_NAME        | None                                |
-            | DEBTOR_ID          | NotNone                             |
-            | INSERTED_TIMESTAMP | NotNone                             |
-            | UPDATED_TIMESTAMP  | NotNone                             |
-            | INSERTED_BY        | activatePaymentNoticeV2             |
-            | UPDATED_BY         | activatePaymentNoticeV2             |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        # POSITION_PAYMENT_PLAN
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                               |
-            | ID                    | NotNone                             |
-            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode |
-            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId   |
-            | DUE_DATE              | NotNone                             |
-            | RETENTION_DATE        | None                                |
-            | AMOUNT                | $activatePaymentNoticeV2.amount     |
-            | FLAG_FINAL_PAYMENT    | N                                   |
-            | INSERTED_TIMESTAMP    | NotNone                             |
-            | UPDATED_TIMESTAMP     | NotNone                             |
-            | METADATA              | None                                |
-            | FK_POSITION_SERVICE   | NotNone                             |
-            | INSERTED_BY           | activatePaymentNoticeV2             |
-            | UPDATED_BY            | activatePaymentNoticeV2             |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_PLAN retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        # POSITION_PAYMENT
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                     | value                                         |
-            | ID                         | NotNone                                       |
-            | PA_FISCAL_CODE             | $activatePaymentNoticeV2.fiscalCode           |
-            | CREDITOR_REFERENCE_ID      | $paGetPayment.creditorReferenceId             |
-            | PAYMENT_TOKEN              | $activatePaymentNoticeV2Response.paymentToken |
-            | BROKER_PA_ID               | $activatePaymentNoticeV2.fiscalCode           |
-            | STATION_ID                 | #id_station#                                  |
-            | STATION_VERSION            | 2                                             |
-            | PSP_ID                     | #psp#                                         |
-            | BROKER_PSP_ID              | #id_broker_psp#                               |
-            | CHANNEL_ID                 | #canale_ATTIVATO_PRESSO_PSP#                  |
-            | IDEMPOTENCY_KEY            | None                                          |
-            | AMOUNT                     | $activatePaymentNoticeV2.amount               |
-            | FEE                        | None                                          |
-            | OUTCOME                    | NotNone                                       |
-            | PAYMENT_METHOD             | None                                          |
-            | PAYMENT_CHANNEL            | NA                                            |
-            | TRANSFER_DATE              | None                                          |
-            | PAYER_ID                   | None                                          |
-            | APPLICATION_DATE           | NotNone                                       |
-            | INSERTED_TIMESTAMP         | NotNone                                       |
-            | UPDATED_TIMESTAMP          | NotNone                                       |
-            | FK_PAYMENT_PLAN            | NotNone                                       |
-            | RPT_ID                     | None                                          |
-            | PAYMENT_TYPE               | MOD3                                          |
-            | CARRELLO_ID                | None                                          |
-            | ORIGINAL_PAYMENT_TOKEN     | None                                          |
-            | FLAG_IO                    | N                                             |
-            | RICEVUTA_PM                | None                                          |
-            | FLAG_ACTIVATE_RESP_MISSING | None                                          |
-            | FLAG_PAYPAL                | None                                          |
-            | INSERTED_BY                | activatePaymentNoticeV2                       |
-            | UPDATED_BY                 | sendPaymentOutcomeV2                          |
-            | TRANSACTION_ID             | None                                          |
-            | CLOSE_VERSION              | None                                          |
-            | FEE_PA                     | None                                          |
-            | BUNDLE_ID                  | None                                          |
-            | BUNDLE_PA_ID               | None                                          |
-            | PM_INFO                    | None                                          |
-            | MBD                        | N                                             |
-            | FEE_SPO                    | None                                          |
-            | PAYMENT_NOTE               | None                                          |
-            | FLAG_STANDIN               | N                                             |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        # POSITION_TRANSFER
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                   | value                                 |
-            | ID                       | NotNone                               |
-            | NOTICE_ID                | $activatePaymentNoticeV2.noticeNumber |
-            | CREDITOR_REFERENCE_ID    | $paGetPayment.creditorReferenceId     |
-            | PA_FISCAL_CODE           | $activatePaymentNoticeV2.fiscalCode   |
-            | PA_FISCAL_CODE_SECONDARY | $activatePaymentNoticeV2.fiscalCode   |
-            | IBAN                     | IT45R0760103200000000001016           |
-            | AMOUNT                   | $activatePaymentNoticeV2.amount       |
-            | REMITTANCE_INFORMATION   | testPaGetPayment                      |
-            | TRANSFER_CATEGORY        | paGetPaymentTest                      |
-            | TRANSFER_IDENTIFIER      | 1                                     |
-            | VALID                    | Y                                     |
-            | FK_POSITION_PAYMENT      | NotNone                               |
-            | INSERTED_TIMESTAMP       | NotNone                               |
-            | UPDATED_TIMESTAMP        | NotNone                               |
-            | FK_PAYMENT_PLAN          | NotNone                               |
-            | INSERTED_BY              | activatePaymentNoticeV2               |
-            | UPDATED_BY               | activatePaymentNoticeV2               |
-            | METADATA                 | None                                  |
-            | REQ_TIPO_BOLLO           | None                                  |
-            | REQ_HASH_DOCUMENTO       | None                                  |
-            | REQ_PROVINCIA_RESIDENZA  | None                                  |
-            | COMPANY_NAME_SECONDARY   | None                                  |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_TRANSFER retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        # POSITION_PAYMENT_STATUS
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                                                                           |
-            | ID                    | NotNone                                                                                         |
-            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode                                                             |
-            | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber                                                           |
-            | STATUS                | PAYING,PAID,NOTICE_GENERATED,NOTICE_SENT,NOTIFIED                                               |
-            | INSERTED_TIMESTAMP    | NotNone                                                                                         |
-            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId                                                               |
-            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken                                                   |
-            | INSERTED_BY           | activatePaymentNoticeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2,paSendRT |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
-        And verify 5 record for the table POSITION_PAYMENT_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-        # POSITION_PAYMENT_STATUS_SNAPSHOT
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column                | value                                         |
-            | ID                    | NotNone                                       |
-            | PA_FISCAL_CODE        | $activatePaymentNoticeV2.fiscalCode           |
-            | NOTICE_ID             | $activatePaymentNoticeV2.noticeNumber         |
-            | CREDITOR_REFERENCE_ID | $paGetPayment.creditorReferenceId             |
-            | PAYMENT_TOKEN         | $activatePaymentNoticeV2Response.paymentToken |
-            | STATUS                | NOTIFIED                                      |
-            | INSERTED_TIMESTAMP    | NotNone                                       |
-            | UPDATED_TIMESTAMP     | NotNone                                       |
-            | FK_POSITION_PAYMENT   | NotNone                                       |
-            | INSERTED_BY           | activatePaymentNoticeV2                       |
-            | UPDATED_BY            | sendPaymentOutcomeV2                          |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | ID ASC                                |
-        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                          |
-            | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
-        # POSITION_STATUS
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column             | value                                                 |
-            | ID                 | NotNone                                               |
-            | PA_FISCAL_CODE     | $activatePaymentNoticeV2.fiscalCode                   |
-            | NOTICE_ID          | $activatePaymentNoticeV2.noticeNumber                 |
-            | STATUS             | PAYING,PAID,NOTIFIED                                  |
-            | INSERTED_TIMESTAMP | NotNone                                               |
-            | INSERTED_BY        | activatePaymentNoticeV2,sendPaymentOutcomeV2,paSendRT |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | INSERTED_TIMESTAMP ASC                |
-        And verify 3 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                          |
-            | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | INSERTED_TIMESTAMP ASC                |
-        # POSITION_STATUS_SNAPSHOT
-        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
-            | column              | value                                 |
-            | ID                  | NotNone                               |
-            | PA_FISCAL_CODE      | $activatePaymentNoticeV2.fiscalCode   |
-            | NOTICE_ID           | $activatePaymentNoticeV2.noticeNumber |
-            | STATUS              | NOTIFIED                              |
-            | INSERTED_TIMESTAMP  | NotNone                               |
-            | UPDATED_TIMESTAMP   | NotNone                               |
-            | FK_POSITION_SERVICE | NotNone                               |
-            | ACTIVATION_PENDING  | N                                     |
-            | INSERTED_BY         | activatePaymentNoticeV2               |
-            | UPDATED_BY          | sendPaymentOutcomeV2                  |
-        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys     | where_values                          |
-            | NOTICE_ID      | $activatePaymentNoticeV2.noticeNumber |
-            | PA_FISCAL_CODE | $activatePaymentNoticeV2.fiscalCode   |
-            | ORDER BY       | ID ASC                                |
-        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values                          |
-            | NOTICE_ID  | $activatePaymentNoticeV2.noticeNumber |
-            | ORDER BY   | ID ASC                                |
 
 
     @ALL @NM3 @NM3PANEW @NM3PANEWPAGOK @NM3PANEWPAGOK_7 @after_1
