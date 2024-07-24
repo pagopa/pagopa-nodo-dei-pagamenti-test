@@ -537,3 +537,428 @@ Feature: TEST INSERT
             | IUV        | irraggiungibile        |
             | CCP        | $1ccp                  |
             | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+
+    @ALL @INSERT @INSERT_9
+    Scenario: nodoInviaRPT - RT_ACCETTATA_PA
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+        And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station_old#                |
+            | dataOraMessaggioRichiesta         | #timedate#                      |
+            | dataEsecuzionePagamento           | #date#                          |
+            | importoTotaleDaVersare            | 10.00                           |
+            | tipoVersamento                    | PO                              |
+            | identificativoUnivocoVersamento   | $1iuv                           |
+            | codiceContestoPagamento           | CCD01                           |
+            | importoSingoloVersamento          | 10.00                           |
+        And RT generation RT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station_old#                |
+            | dataOraMessaggioRicevuta          | #timedate#                      |
+            | importoTotalePagato               | 10.00                           |
+            | identificativoUnivocoVersamento   | $1iuv                           |
+            | identificativoUnivocoRiscossione  | $1iuv                           |
+            | CodiceContestoPagamento           | CCD01                           |
+            | singoloImportoPagato              | 10.00                           |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker_old#                 |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoDominio                 | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento       | $1iuv                           |
+            | codiceContestoPagamento               | CCD01                           |
+            | password                              | #password#                      |
+            | identificativoPSP                     | #psp#                           |
+            | identificativoIntermediarioPSP        | #psp#                           |
+            | identificativoCanale                  | #canaleRtPull_sec#              |
+            | rpt                                   | $rpt1Attachment                 |
+        And from body with datatable vertical pspInviaRPT_noOptional initial XML pspInviaRPT
+            | esitoComplessivoOperazione  | OK                 |
+            | identificativoCarrello      | $1iuv              |
+            | parametriPagamentoImmediato | idBruciatura=$1iuv |
+        And from body with datatable horizontal pspChiediListaRT_noOptional initial XML pspChiediListaRT
+            | identificativoDominio           | identificativoUnivocoVersamento | codiceContestoPagamento |
+            | #creditor_institution_code_old# | $1iuv                           | CCD01                   |
+        And from body with datatable horizontal pspChiediRT_noOptional initial XML pspChiediRT
+            | rt            |
+            | $rtAttachment |
+        And PSP2 replies to nodo-dei-pagamenti with the pspInviaRPT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        And wait 5 seconds for expiration
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+        # STATI_RPT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column      | value                                                                    |
+            | ID          | NotNone                                                                  |
+            | ID_SESSIONE | NotNone                                                                  |
+            | STATO       | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP |
+            | INSERTED_BY | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,pspInviaRPT                       |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+
+        # STATI_RPT_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column      | value             |
+            | ID_SESSIONE | NotNone           |
+            | STATO       | RPT_ACCETTATA_PSP |
+            | INSERTED_BY | nodoInviaRPT      |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $1iuv        |
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # STATI_RPT_SNAPSHOT_GI
+        And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        When job pspChiediListaAndChiediRt triggered after 5 seconds
+        And wait 5 seconds for expiration
+
+        # STATI_RPT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column      | value                                                                                                       |
+            | ID          | NotNone                                                                                                     |
+            | ID_SESSIONE | NotNone                                                                                                     |
+            | STATO       | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP,RT_RICEVUTA_NODO,RT_ACCETTATA_NODO |
+            | INSERTED_BY | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,pspInviaRPT,pspChiediRT,pspChiediRT                                  |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # STATI_RPT_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column      | value             |
+            | ID_SESSIONE | NotNone           |
+            | STATO       | RT_ACCETTATA_NODO |
+            | INSERTED_BY | nodoInviaRPT      |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $1iuv        |
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # STATI_RPT_SNAPSHOT_GI
+        And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # RT
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # RT_GI
+        And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # RETRY_PA_INVIA_RT
+        And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        Given generic update through the query param_update_generic_where_condition of the table STATI_RPT_SNAPSHOT the parameter STATO = 'RPT_ACCETTATA_PSP', with where condition ID_DOMINIO='$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' under macro update_query on db nodo_online
+        And wait 5 seconds for expiration
+        And from body with datatable horizontal pspChiediListaRT_noOptional initial XML pspChiediListaRT
+            | identificativoDominio           | identificativoUnivocoVersamento | codiceContestoPagamento |
+            | #creditor_institution_code_old# | $1iuv                           | CCD01                   |
+        And from body with datatable horizontal pspChiediRT_noOptional initial XML pspChiediRT
+            | rt            |
+            | $rtAttachment |
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediListaRT
+        And PSP2 replies to nodo-dei-pagamenti with the pspChiediRT
+        And wait 2 seconds for expiration
+        When job pspChiediListaAndChiediRt triggered after 5 seconds
+
+        # STATI_RPT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column      | value                                                                                                                        |
+            | ID          | NotNone                                                                                                                      |
+            | ID_SESSIONE | NotNone                                                                                                                      |
+            | STATO       | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_INVIATA_A_PSP,RPT_ACCETTATA_PSP,RT_RICEVUTA_NODO,RT_ACCETTATA_NODO,RT_RICEVUTA_NODO |
+            | INSERTED_BY | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,pspInviaRPT,pspChiediRT,pspChiediRT,pspChiediRT                                       |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+
+        # STATI_RPT_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column      | value             |
+            | ID_SESSIONE | NotNone           |
+            | STATO       | RPT_ACCETTATA_PSP |
+            | INSERTED_BY | nodoInviaRPT      |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $1iuv        |
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # STATI_RPT_SNAPSHOT_GI
+        And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # RT
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # RT_GI
+        And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # RETRY_PA_INVIA_RT
+        And verify 0 record for the table RETRY_PA_INVIA_RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+
+    @ALL @INSERT @INSERT_10
+    Scenario: NotificaAnnullamento_RPT_CONPSP
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+        And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRichiesta         | #timedate#                  |
+            | dataEsecuzionePagamento           | #date#                      |
+            | importoTotaleDaVersare            | 10.00                       |
+            | tipoVersamento                    | BBT                         |
+            | identificativoUnivocoVersamento   | $1iuv                       |
+            | codiceContestoPagamento           | CCD01                       |
+            | importoSingoloVersamento          | 10.00                       |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker#                 |
+            | identificativoStazioneIntermediarioPA | #id_station#                |
+            | identificativoDominio                 | #creditor_institution_code# |
+            | identificativoUnivocoVersamento       | $1iuv                       |
+            | codiceContestoPagamento               | CCD01                       |
+            | password                              | #password#                  |
+            | identificativoPSP                     | #psp_AGID#                  |
+            | identificativoIntermediarioPSP        | #broker_AGID#               |
+            | identificativoCanale                  | #canale_AGID_BBT#           |
+            | rpt                                   | $rpt1Attachment             |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
+
+        # STATI_RPT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column      | value                                                      |
+            | ID          | NotNone                                                    |
+            | ID_SESSIONE | NotNone                                                    |
+            | STATO       | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO |
+            | INSERTED_BY | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT                     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # STATI_RPT_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column      | value                 |
+            | ID_SESSIONE | NotNone               |
+            | STATO       | RPT_PARCHEGGIATA_NODO |
+            | INSERTED_BY | nodoInviaRPT          |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $1iuv        |
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # STATI_RPT_SNAPSHOT_GI
+        And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 200
+
+        When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=CONPSP to nodo-dei-pagamenti
+        Then verify the HTTP status code of notificaAnnullamento response is 200
+
+        # STATI_RPT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column      | value                                                                       |
+            | ID          | NotNone                                                                     |
+            | ID_SESSIONE | NotNone                                                                     |
+            | STATO       | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO |
+            | INSERTED_BY | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoNotificaAnnullamento             |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # STATI_RPT_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column      | value            |
+            | ID_SESSIONE | NotNone          |
+            | STATO       | RT_GENERATA_NODO |
+            | INSERTED_BY | nodoInviaRPT     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $1iuv        |
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # STATI_RPT_SNAPSHOT_GI
+        And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value        |
+            | ESITO  | NON_ESEGUITO |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $1iuv        |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # RT_GI
+        And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        Given generic update through the query param_update_generic_where_condition of the table STATI_RPT_SNAPSHOT the parameter STATO = 'RPT_PARCHEGGIATA_NODO', with where condition ID_DOMINIO='$nodoInviaRPT.identificativoDominio' AND IUV='$nodoInviaRPT.identificativoUnivocoVersamento' under macro update_query on db nodo_online
+        And wait 5 seconds for expiration
+
+        When WISP sends rest GET notificaAnnullamento?idPagamento=$sessionToken&motivoAnnullamento=CONPSP to nodo-dei-pagamenti
+        Then verify the HTTP status code of notificaAnnullamento response is 200
+
+        # STATI_RPT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column      | value                                                                       |
+            | ID          | NotNone                                                                     |
+            | ID_SESSIONE | NotNone                                                                     |
+            | STATO       | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO,RT_GENERATA_NODO |
+            | INSERTED_BY | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoNotificaAnnullamento             |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # STATI_RPT_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column      | value                 |
+            | ID_SESSIONE | NotNone               |
+            | STATO       | RPT_PARCHEGGIATA_NODO |
+            | INSERTED_BY | nodoInviaRPT          |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $1iuv        |
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # STATI_RPT_SNAPSHOT_GI
+        And verify 1 record for the table STATI_RPT_SNAPSHOT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value        |
+            | ESITO  | NON_ESEGUITO |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $1iuv        |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # RT_GI
+        And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $1iuv                  |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+
+
+    @ALL @INSERT @INSERT_11
+    Scenario: close v2 ko con update sullo stato
+        Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
+        And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRichiesta         | #timedate#                  |
+            | dataEsecuzionePagamento           | #date#                      |
+            | importoTotaleDaVersare            | 10.00                       |
+            | tipoVersamento                    | PO                          |
+            | identificativoUnivocoVersamento   | $1iuv                       |
+            | codiceContestoPagamento           | #ccp1#                      |
+            | importoSingoloVersamento          | 10.00                       |
+        And RT generation RT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station_old#                |
+            | dataOraMessaggioRicevuta          | #timedate#                      |
+            | importoTotalePagato               | 10.00                           |
+            | identificativoUnivocoVersamento   | $1iuv                           |
+            | identificativoUnivocoRiscossione  | $1iuv                           |
+            | CodiceContestoPagamento           | $1ccp                           |
+            | singoloImportoPagato              | 10.00                           |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker#                  |
+            | identificativoStazioneIntermediarioPA | #id_station#                 |
+            | identificativoDominio                 | #creditor_institution_code#  |
+            | identificativoUnivocoVersamento       | $1iuv                        |
+            | codiceContestoPagamento               | $1ccp                        |
+            | password                              | #password#                   |
+            | identificativoPSP                     | #psp#                        |
+            | identificativoIntermediarioPSP        | #id_broker_psp#              |
+            | identificativoCanale                  | #canale_ATTIVATO_PRESSO_PSP# |
+            | rpt                                   | $rpt1Attachment              |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        And from body with datatable vertical nodoInviaRTBody_noOptional initial XML nodoInviaRT
+            | identificativoIntermediarioPSP  | #id_broker#                  |
+            | identificativoCanale            | #canale_ATTIVATO_PRESSO_PSP# |
+            | password                        | #password#                   |
+            | identificativoPSP               | #psp#                        |
+            | identificativoDominio           | #creditor_institution_code#  |
+            | identificativoUnivocoVersamento | $1iuv                        |
+            | codiceContestoPagamento         | $1ccp                        |
+            | forzaControlloSegno             | 1                            |
+            | rt                              | $rtAttachment                |
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRT response
+

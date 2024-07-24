@@ -1907,6 +1907,7 @@ def step_impl(context, filebody, type_table):
             for value in values:
                 payload = payload.replace(f"${fields}", value)
 
+        payload = utils.replace_global_variables(payload, context)
         payload = utils.replace_local_variables(payload, context)
         payload = utils.replace_context_variables(payload, context)
 
