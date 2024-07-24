@@ -2,7 +2,7 @@
 	<pay_i:versioneOggetto>6.0</pay_i:versioneOggetto>
 	<pay_i:dominio>
 		<pay_i:identificativoDominio>$identificativoDominio</pay_i:identificativoDominio>
-		<pay_i:identificativoStazioneRichiedente>$identificativoDominio</pay_i:identificativoStazioneRichiedente>
+		<pay_i:identificativoStazioneRichiedente>$identificativoStazioneRichiedente</pay_i:identificativoStazioneRichiedente>
 	</pay_i:dominio>
 	<pay_i:identificativoMessaggioRicevuta>IdentificativoMessaggioRicevuta</pay_i:identificativoMessaggioRicevuta>
 	<pay_i:dataOraMessaggioRicevuta>$dataOraMessaggioRicevuta</pay_i:dataOraMessaggioRicevuta>
