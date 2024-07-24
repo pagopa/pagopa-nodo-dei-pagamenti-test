@@ -949,7 +949,7 @@ Feature: TEST INSERT
             | rpt                                   | $rpt1Attachment              |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
-        And from body with datatable vertical nodoInviaRTBody_noOptional initial XML nodoInviaRT
+        Given from body with datatable vertical nodoInviaRTBody_noOptional initial XML nodoInviaRT
             | identificativoIntermediarioPSP  | #id_broker#                  |
             | identificativoCanale            | #canale_ATTIVATO_PRESSO_PSP# |
             | password                        | #password#                   |
@@ -961,4 +961,69 @@ Feature: TEST INSERT
             | rt                              | $rtAttachment                |
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
+        And replace ccp1 content with $1ccp content
+        Given from body with datatable vertical nodoAttivaRPT initial XML nodoAttivaRPT
+            | identificativoPSP                       | #psp_AGID#        |
+            | identificativoIntermediarioPSP          | #broker_AGID#     |
+            | identificativoCanale                    | #canale_AGID#     |
+            | password                                | #password#        |
+            | codiceContestoPagamento                 | #ccp#             |
+            | identificativoIntermediarioPSPPagamento | #broker_AGID#     |
+            | identificativoCanalePagamento           | #canale_AGID_BBT# |
+            | qrc:CF                                  | #ccPoste#         |
+            | qrc:CodStazPA                           | #cod_segr#        |
+            | qrc:AuxDigit                            | 0                 |
+            | qrc:CodIUV                              | $1iuv             |
+            | importoSingoloVersamento                | 10.00             |
+        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+            | esito | importoSingoloVersamento |
+            | OK    | 10.00                    |
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        When EC sends SOAP nodoAttivaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoAttivaRPT response
+        And replace ccp2 content with $ccp content
+        Given RPT generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRichiesta         | #timedate#                  |
+            | dataEsecuzionePagamento           | #date#                      |
+            | importoTotaleDaVersare            | 10.00                       |
+            | tipoVersamento                    | PO                          |
+            | identificativoUnivocoVersamento   | $1iuv                       |
+            | codiceContestoPagamento           | $ccp2                       |
+            | importoSingoloVersamento          | 10.00                       |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker#                 |
+            | identificativoStazioneIntermediarioPA | #id_station#                |
+            | identificativoDominio                 | #creditor_institution_code# |
+            | identificativoUnivocoVersamento       | $1iuv                       |
+            | codiceContestoPagamento               | $ccp2                       |
+            | password                              | #password#                  |
+            | identificativoPSP                     | #psp_AGID#                  |
+            | identificativoIntermediarioPSP        | #broker_AGID#               |
+            | identificativoCanale                  | #canale_AGID_BBT#           |
+            | rpt                                   | $rptAttachment              |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        And retrieve session token from $nodoInviaRPTResponse.url
 
+        Given generic update through the query param_update_generic_where_condition of the table RT the parameter CCP = '$ccp2', with where condition IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$1iuv' under macro update_query on db nodo_online
+        And wait 5 seconds for expiration
+
+        Given from body with datatable vertical closePaymentBody initial json v1closepayment
+            | token1                      | $sessionToken                        |
+            | outcome                     | KO                                   |
+            | identificativoPsp           | #psp#                                |
+            | identificativoIntermediario | #id_broker_psp#                      |
+            | identificativoCanale        | #canale_IMMEDIATO_MULTIBENEFICIARIO# |
+            | tipoVersamento              | BPAY                                 |
+            | pspTransactionId            | #transaction_id#                     |
+            | totalAmount                 | 12                                   |
+            | fee                         | 2                                    |
+            | timestampOperation          | 2023-11-30T12:46:46.554+01:00        |
+            | transactionId               | #transaction_id#                     |
+            | outcomePaymentGateway       | 00                                   |
+            | authorizationCode           | 123456                               |
+        When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v1/closepayment response is 200
+        And check outcome is OK of v1/closepayment response

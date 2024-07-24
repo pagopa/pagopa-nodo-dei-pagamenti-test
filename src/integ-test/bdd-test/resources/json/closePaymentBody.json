@@ -1,0 +1,19 @@
+{
+    "paymentTokens": [
+       "$token"
+    ],
+    "outcome": "$outcome",
+    "identificativoPsp": "$idPSP",
+    "tipoVersamento": "$tipoVersamento",
+    "identificativoIntermediario": "$idBrokerPSP",
+    "identificativoCanale": "$idChannel",
+    "pspTransactionId": "$pspTransactionId",
+    "totalAmount": "$totalAmount",
+    "fee": "$feeExt",
+    "timestampOperation": "$timestampOperation",
+    "additionalPaymentInformations": {
+       "transactionId": "$transId",
+       "outcomePaymentGateway": "$outPaymentGateway",
+       "authorizationCode": "$authorizationCode"
+    }
+ }
