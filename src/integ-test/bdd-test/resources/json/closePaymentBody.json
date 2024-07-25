@@ -3,17 +3,17 @@
        "$token"
     ],
     "outcome": "$outcome",
-    "identificativoPsp": "$idPSP",
+    "identificativoPsp": "$identificativoPsp",
     "tipoVersamento": "$tipoVersamento",
-    "identificativoIntermediario": "$idBrokerPSP",
-    "identificativoCanale": "$idChannel",
+    "identificativoIntermediario": "$identificativoIntermediario",
+    "identificativoCanale": "$identificativoCanale",
     "pspTransactionId": "$pspTransactionId",
     "totalAmount": "$totalAmount",
-    "fee": "$feeExt",
+    "fee": "$fee",
     "timestampOperation": "$timestampOperation",
     "additionalPaymentInformations": {
-       "transactionId": "$transId",
-       "outcomePaymentGateway": "$outPaymentGateway",
+       "transactionId": "$transactionId",
+       "outcomePaymentGateway": "$outcomePaymentGateway",
        "authorizationCode": "$authorizationCode"
     }
  }

@@ -560,6 +560,7 @@ def step_impl(context, primitive, type_table, filebody):
             ccp3 = str(random.randint(0, 10000)) + timedate
             payload = payload.replace('#ccp3#', ccp3)
             setattr(context, 'ccp3', ccp3)
+            
         if '$iuv' in payload:
             payload = payload.replace('$iuv', getattr(context, 'iuv'))
 
@@ -2880,13 +2881,13 @@ def step_impl(context, sender, method, service, receiver):
                 nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False, proxies = getattr(context,'proxies'))
             elif dbRun == "Oracle":
                 nodo_response = requests.request(method, f"{url_nodo}/{service}", headers=headers, json=json_body, verify=False)   
-
-        setattr(context, service.split('?')[0], json_body)
-        setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
-
-        print(service.split('?')[0] + RESPONSE)
+        
         print(f"rest response content: {nodo_response.content}")
         print(f'rest response headers: {nodo_response.headers}')
+        print(service.split('?')[0] + RESPONSE)
+        
+        setattr(context, service.split('?')[0], json_body)
+        setattr(context, service.split('?')[0] + RESPONSE, nodo_response)
 
     except AssertionError as e:
         # Stampiamo il messaggio di errore dell'assert

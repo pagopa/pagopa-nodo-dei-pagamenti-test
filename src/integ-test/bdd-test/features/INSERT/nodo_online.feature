@@ -915,18 +915,18 @@ Feature: TEST INSERT
 
 
     @ALL @INSERT @INSERT_11
-    Scenario: close v2 ko con update sullo stato
+    Scenario: close ko con update a DB dopo aver già avuto una RT
         Given generate 1 notice number and iuv with aux digit 0, segregation code NA and application code 02
         And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
-            | identificativoDominio             | #creditor_institution_code# |
-            | identificativoStazioneRichiedente | #id_station#                |
-            | dataOraMessaggioRichiesta         | #timedate#                  |
-            | dataEsecuzionePagamento           | #date#                      |
-            | importoTotaleDaVersare            | 10.00                       |
-            | tipoVersamento                    | PO                          |
-            | identificativoUnivocoVersamento   | $1iuv                       |
-            | codiceContestoPagamento           | #ccp1#                      |
-            | importoSingoloVersamento          | 10.00                       |
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station_old#                |
+            | dataOraMessaggioRichiesta         | #timedate#                      |
+            | dataEsecuzionePagamento           | #date#                          |
+            | importoTotaleDaVersare            | 10.00                           |
+            | tipoVersamento                    | PO                              |
+            | identificativoUnivocoVersamento   | $1iuv                           |
+            | codiceContestoPagamento           | #ccp1#                          |
+            | importoSingoloVersamento          | 10.00                           |
         And RT generation RT_generation with datatable vertical
             | identificativoDominio             | #creditor_institution_code_old# |
             | identificativoStazioneRichiedente | #id_station_old#                |
@@ -937,44 +937,45 @@ Feature: TEST INSERT
             | CodiceContestoPagamento           | $1ccp                           |
             | singoloImportoPagato              | 10.00                           |
         And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
-            | identificativoIntermediarioPA         | #id_broker#                  |
-            | identificativoStazioneIntermediarioPA | #id_station#                 |
-            | identificativoDominio                 | #creditor_institution_code#  |
-            | identificativoUnivocoVersamento       | $1iuv                        |
-            | codiceContestoPagamento               | $1ccp                        |
-            | password                              | #password#                   |
-            | identificativoPSP                     | #psp#                        |
-            | identificativoIntermediarioPSP        | #id_broker_psp#              |
-            | identificativoCanale                  | #canale_ATTIVATO_PRESSO_PSP# |
-            | rpt                                   | $rpt1Attachment              |
+            | identificativoIntermediarioPA         | #id_broker_old#                 |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoDominio                 | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento       | $1iuv                           |
+            | codiceContestoPagamento               | $1ccp                           |
+            | password                              | #password#                      |
+            | identificativoPSP                     | #psp#                           |
+            | identificativoIntermediarioPSP        | #id_broker_psp#                 |
+            | identificativoCanale                  | #canale_ATTIVATO_PRESSO_PSP#    |
+            | rpt                                   | $rpt1Attachment                 |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         Given from body with datatable vertical nodoInviaRTBody_noOptional initial XML nodoInviaRT
-            | identificativoIntermediarioPSP  | #id_broker#                  |
-            | identificativoCanale            | #canale_ATTIVATO_PRESSO_PSP# |
-            | password                        | #password#                   |
-            | identificativoPSP               | #psp#                        |
-            | identificativoDominio           | #creditor_institution_code#  |
-            | identificativoUnivocoVersamento | $1iuv                        |
-            | codiceContestoPagamento         | $1ccp                        |
-            | forzaControlloSegno             | 1                            |
-            | rt                              | $rtAttachment                |
+            | identificativoIntermediarioPSP  | #id_broker_psp#                 |
+            | identificativoCanale            | #canale_ATTIVATO_PRESSO_PSP#    |
+            | password                        | #password#                      |
+            | identificativoPSP               | #psp#                           |
+            | identificativoDominio           | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento | $1iuv                           |
+            | codiceContestoPagamento         | $1ccp                           |
+            | forzaControlloSegno             | 1                               |
+            | rt                              | $rtAttachment                   |
         When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRT response
         And replace ccp1 content with $1ccp content
+        And replace iuv content with $1iuv content
         Given from body with datatable vertical nodoAttivaRPT initial XML nodoAttivaRPT
-            | identificativoPSP                       | #psp_AGID#        |
-            | identificativoIntermediarioPSP          | #broker_AGID#     |
-            | identificativoCanale                    | #canale_AGID#     |
-            | password                                | #password#        |
-            | codiceContestoPagamento                 | #ccp#             |
-            | identificativoIntermediarioPSPPagamento | #broker_AGID#     |
-            | identificativoCanalePagamento           | #canale_AGID_BBT# |
-            | qrc:CF                                  | #ccPoste#         |
-            | qrc:CodStazPA                           | #cod_segr#        |
-            | qrc:AuxDigit                            | 0                 |
-            | qrc:CodIUV                              | $1iuv             |
-            | importoSingoloVersamento                | 10.00             |
+            | identificativoIntermediarioPSPPagamento | #broker_AGID#                   |
+            | identificativoCanalePagamento           | #canale_AGID_BBT#               |
+            | identificativoPSP                       | #psp_AGID#                      |
+            | identificativoIntermediarioPSP          | #broker_AGID#                   |
+            | identificativoCanale                    | #canale_AGID#                   |
+            | password                                | #password#                      |
+            | codiceContestoPagamento                 | #ccp#                           |
+            | CCPost                                  | #creditor_institution_code_old# |
+            | CodStazPA                               | #cod_segr#                      |
+            | AuxDigit                                | 0                               |
+            | CodIUV                                  | $iuv                            |
+            | importoSingoloVersamento                | 10.00                           |
         And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
             | esito | importoSingoloVersamento |
             | OK    | 10.00                    |
@@ -983,35 +984,35 @@ Feature: TEST INSERT
         Then check esito is OK of nodoAttivaRPT response
         And replace ccp2 content with $ccp content
         Given RPT generation RPT_generation_tipoVersamento with datatable vertical
-            | identificativoDominio             | #creditor_institution_code# |
-            | identificativoStazioneRichiedente | #id_station#                |
-            | dataOraMessaggioRichiesta         | #timedate#                  |
-            | dataEsecuzionePagamento           | #date#                      |
-            | importoTotaleDaVersare            | 10.00                       |
-            | tipoVersamento                    | PO                          |
-            | identificativoUnivocoVersamento   | $1iuv                       |
-            | codiceContestoPagamento           | $ccp2                       |
-            | importoSingoloVersamento          | 10.00                       |
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station_old#                |
+            | dataOraMessaggioRichiesta         | #timedate#                      |
+            | dataEsecuzionePagamento           | #date#                          |
+            | importoTotaleDaVersare            | 10.00                           |
+            | tipoVersamento                    | PO                              |
+            | identificativoUnivocoVersamento   | $iuv                            |
+            | codiceContestoPagamento           | $ccp2                           |
+            | importoSingoloVersamento          | 10.00                           |
         And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
-            | identificativoIntermediarioPA         | #id_broker#                 |
-            | identificativoStazioneIntermediarioPA | #id_station#                |
-            | identificativoDominio                 | #creditor_institution_code# |
-            | identificativoUnivocoVersamento       | $1iuv                       |
-            | codiceContestoPagamento               | $ccp2                       |
-            | password                              | #password#                  |
-            | identificativoPSP                     | #psp_AGID#                  |
-            | identificativoIntermediarioPSP        | #broker_AGID#               |
-            | identificativoCanale                  | #canale_AGID_BBT#           |
-            | rpt                                   | $rptAttachment              |
+            | identificativoIntermediarioPA         | #id_broker_old#                 |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoDominio                 | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento       | $iuv                            |
+            | codiceContestoPagamento               | $ccp2                           |
+            | password                              | #password#                      |
+            | identificativoPSP                     | #psp_AGID#                      |
+            | identificativoIntermediarioPSP        | #broker_AGID#                   |
+            | identificativoCanale                  | #canale_AGID_BBT#               |
+            | rpt                                   | $rptAttachment                  |
         When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
         Then check esito is OK of nodoInviaRPT response
         And retrieve session token from $nodoInviaRPTResponse.url
 
-        Given generic update through the query param_update_generic_where_condition of the table RT the parameter CCP = '$ccp2', with where condition IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$1iuv' under macro update_query on db nodo_online
+        Given generic update through the query param_update_generic_where_condition of the table RT the parameter CCP = '$ccp2', with where condition IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$ccp1' under macro update_query on db nodo_online
         And wait 5 seconds for expiration
 
-        Given from body with datatable vertical closePaymentBody initial json v1closepayment
-            | token1                      | $sessionToken                        |
+        And from body with datatable vertical closePaymentBody initial json v1/closepayment
+            | token                       | $sessionToken                        |
             | outcome                     | KO                                   |
             | identificativoPsp           | #psp#                                |
             | identificativoIntermediario | #id_broker_psp#                      |
@@ -1025,5 +1026,418 @@ Feature: TEST INSERT
             | outcomePaymentGateway       | 00                                   |
             | authorizationCode           | 123456                               |
         When WISP sends rest POST v1/closepayment_json to nodo-dei-pagamenti
-        Then verify the HTTP status code of v1/closepayment response is 200
-        And check outcome is OK of v1/closepayment response
+        Then verify the HTTP status code of v1/closepayment response is 500
+        And check esito is KO of v1/closepayment response
+        And check descrizione is Errore generico. of v1/closepayment response
+
+        # RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value    |
+            | ESITO  | ESEGUITO |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | $iuv         |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $iuv                   |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # RT_GI
+        And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | $iuv                   |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+
+
+    @ALL @INSERT @INSERT_12
+    Scenario: close v2 ko con update sullo stato
+        Given generate 1 notice number and iuv with aux digit 3, segregation code NA and application code 12
+        And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station_old#                |
+            | dataOraMessaggioRichiesta         | #timedate#                      |
+            | dataEsecuzionePagamento           | #date#                          |
+            | importoTotaleDaVersare            | 10.00                           |
+            | tipoVersamento                    | PO                              |
+            | identificativoUnivocoVersamento   | 12$1iuv                         |
+            | codiceContestoPagamento           | #ccp1#                          |
+            | importoSingoloVersamento          | 10.00                           |
+        And RT generation RT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station_old#                |
+            | dataOraMessaggioRicevuta          | #timedate#                      |
+            | importoTotalePagato               | 10.00                           |
+            | identificativoUnivocoVersamento   | 12$1iuv                         |
+            | identificativoUnivocoRiscossione  | 12$1iuv                         |
+            | CodiceContestoPagamento           | $1ccp                           |
+            | singoloImportoPagato              | 10.00                           |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker_old#                 |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoDominio                 | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento       | 12$1iuv                         |
+            | codiceContestoPagamento               | $1ccp                           |
+            | password                              | #password#                      |
+            | identificativoPSP                     | #psp#                           |
+            | identificativoIntermediarioPSP        | #id_broker_psp#                 |
+            | identificativoCanale                  | #canale_ATTIVATO_PRESSO_PSP#    |
+            | rpt                                   | $rpt1Attachment                 |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        Given from body with datatable vertical nodoInviaRTBody_noOptional initial XML nodoInviaRT
+            | identificativoIntermediarioPSP  | #id_broker_psp#                 |
+            | identificativoCanale            | #canale_ATTIVATO_PRESSO_PSP#    |
+            | password                        | #password#                      |
+            | identificativoPSP               | #psp#                           |
+            | identificativoDominio           | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento | 12$1iuv                         |
+            | codiceContestoPagamento         | $1ccp                           |
+            | forzaControlloSegno             | 1                               |
+            | rt                              | $rtAttachment                   |
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRT response
+
+        # RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value    |
+            | ESITO  | ESEGUITO |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | 12$1iuv      |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | 12$1iuv                |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        And replace ccp1 content with $1ccp content
+        And replace iuv content with $1iuv content
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+            | idPSP          | idBrokerPSP       | idChannel         | password   | fiscalCode                      | noticeNumber | amount |
+            | #pspEcommerce# | #brokerEcommerce# | #canaleEcommerce# | #password# | #creditor_institution_code_old# | 312$iuv      | 10.00  |
+        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+            | esito | importoSingoloVersamento |
+            | OK    | 10.00                    |
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        Given RPT generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old#               |
+            | identificativoStazioneRichiedente | #id_station_old#                              |
+            | dataOraMessaggioRichiesta         | #timedate#                                    |
+            | dataEsecuzionePagamento           | #date#                                        |
+            | importoTotaleDaVersare            | 10.00                                         |
+            | tipoVersamento                    | PO                                            |
+            | identificativoUnivocoVersamento   | 12$iuv                                        |
+            | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
+            | importoSingoloVersamento          | 10.00                                         |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker_old#                               |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                              |
+            | identificativoDominio                 | #creditor_institution_code_old#               |
+            | identificativoUnivocoVersamento       | 12$iuv                                        |
+            | codiceContestoPagamento               | $activatePaymentNoticeV2Response.paymentToken |
+            | password                              | #password#                                    |
+            | identificativoPSP                     | #psp_AGID#                                    |
+            | identificativoIntermediarioPSP        | #broker_AGID#                                 |
+            | identificativoCanale                  | #canale_AGID_BBT#                             |
+            | rpt                                   | $rptAttachment                                |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+        Given generic update through the query param_update_generic_where_condition of the table RT the parameter CCP = '$activatePaymentNoticeV2Response.paymentToken', with where condition IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$ccp1' under macro update_query on db nodo_online
+        And wait 5 seconds for expiration
+
+        And from body with datatable vertical closePaymentV2Body_CP_noOptional initial json v2/closepayment
+            | token1                | $activatePaymentNoticeV2Response.paymentToken |
+            | outcome               | KO                                            |
+            | idPSP                 | #psp#                                         |
+            | idBrokerPSP           | #id_broker_psp#                               |
+            | idChannel             | #canale_IMMEDIATO_MULTIBENEFICIARIO#          |
+            | paymentMethod         | BPAY                                          |
+            | transactionId         | #transaction_id#                              |
+            | totalAmountExt        | 12                                            |
+            | feeExt                | 2                                             |
+            | primaryCiIncurredFee  | 1                                             |
+            | idBundle              | 0bf0c282-3054-11ed-af20-acde48001122          |
+            | idCiBundle            | 0bf0c35e-3054-11ed-af20-acde48001122          |
+            | timestampOperationExt | 2023-11-30T12:46:46.554+01:00                 |
+            | rrn                   | 11223344                                      |
+            | outPaymentGateway     | 00                                            |
+            | totalAmount1          | 12                                            |
+            | fee1                  | 2                                             |
+            | timestampOperation1   | 2021-07-09T17:06:03                           |
+            | authorizationCode     | 123456                                        |
+            | paymentGateway        | 00                                            |
+        When WISP sends rest POST v2/closepayment_json to nodo-dei-pagamenti
+        Then verify the HTTP status code of v2/closepayment response is 500
+        And check outcome is KO of v2/closepayment response
+        And check description is Errore generico. of v2/closepayment response
+
+        # RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value    |
+            | ESITO  | ESEGUITO |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | 12$iuv       |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | 12$iuv                 |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # RT_GI
+        And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | 12$iuv                 |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+
+
+    @ALL @INSERT @INSERT_13
+    Scenario: spo con update sullo stato
+        Given generate 1 notice number and iuv with aux digit 3, segregation code NA and application code 12
+        And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station_old#                |
+            | dataOraMessaggioRichiesta         | #timedate#                      |
+            | dataEsecuzionePagamento           | #date#                          |
+            | importoTotaleDaVersare            | 10.00                           |
+            | tipoVersamento                    | PO                              |
+            | identificativoUnivocoVersamento   | 12$1iuv                         |
+            | codiceContestoPagamento           | #ccp1#                          |
+            | importoSingoloVersamento          | 10.00                           |
+        And RT generation RT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station_old#                |
+            | dataOraMessaggioRicevuta          | #timedate#                      |
+            | importoTotalePagato               | 10.00                           |
+            | identificativoUnivocoVersamento   | 12$1iuv                         |
+            | identificativoUnivocoRiscossione  | 12$1iuv                         |
+            | CodiceContestoPagamento           | $1ccp                           |
+            | singoloImportoPagato              | 10.00                           |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker_old#                 |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoDominio                 | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento       | 12$1iuv                         |
+            | codiceContestoPagamento               | $1ccp                           |
+            | password                              | #password#                      |
+            | identificativoPSP                     | #psp#                           |
+            | identificativoIntermediarioPSP        | #id_broker_psp#                 |
+            | identificativoCanale                  | #canale_ATTIVATO_PRESSO_PSP#    |
+            | rpt                                   | $rpt1Attachment                 |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        Given from body with datatable vertical nodoInviaRTBody_noOptional initial XML nodoInviaRT
+            | identificativoIntermediarioPSP  | #id_broker_psp#                 |
+            | identificativoCanale            | #canale_ATTIVATO_PRESSO_PSP#    |
+            | password                        | #password#                      |
+            | identificativoPSP               | #psp#                           |
+            | identificativoDominio           | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento | 12$1iuv                         |
+            | codiceContestoPagamento         | $1ccp                           |
+            | forzaControlloSegno             | 1                               |
+            | rt                              | $rtAttachment                   |
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRT response
+
+        # RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value    |
+            | ESITO  | ESEGUITO |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | 12$1iuv      |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | 12$1iuv                |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        And replace ccp1 content with $1ccp content
+        And replace iuv content with $1iuv content
+        Given from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP     | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
+        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+            | esito | importoSingoloVersamento |
+            | OK    | 10.00                    |
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        Given RPT generation RPT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old#             |
+            | identificativoStazioneRichiedente | #id_station_old#                            |
+            | dataOraMessaggioRichiesta         | #timedate#                                  |
+            | dataEsecuzionePagamento           | #date#                                      |
+            | importoTotaleDaVersare            | $activatePaymentNotice.amount               |
+            | identificativoUnivocoVersamento   | 12$iuv                                      |
+            | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
+            | importoSingoloVersamento          | $activatePaymentNotice.amount               |
+        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker_old#                             |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                            |
+            | identificativoDominio                 | #creditor_institution_code_old#             |
+            | identificativoUnivocoVersamento       | 12$iuv                                      |
+            | codiceContestoPagamento               | $activatePaymentNoticeResponse.paymentToken |
+            | password                              | #password#                                  |
+            | identificativoPSP                     | #pspFittizio#                               |
+            | identificativoIntermediarioPSP        | #brokerFittizio#                            |
+            | identificativoCanale                  | #canaleFittizio#                            |
+            | rpt                                   | $rptAttachment                              |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+        Given generic update through the query param_update_generic_where_condition of the table RT the parameter CCP = '$activatePaymentNoticeResponse.paymentToken', with where condition IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$ccp1' under macro update_query on db nodo_online
+        And wait 5 seconds for expiration
+
+        Given from body with datatable horizontal sendPaymentOutcomeBody_noOptional initial XML sendPaymentOutcome
+            | idPSP | idBrokerPSP     | idChannel                    | password   | paymentToken                                | outcome |
+            | #psp# | #id_broker_psp# | #canale_ATTIVATO_PRESSO_PSP# | #password# | $activatePaymentNoticeResponse.paymentToken | OK      |
+        When PSP sends SOAP sendPaymentOutcome to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcome response
+        And check faultCode is PPT_SYSTEM_ERROR of sendPaymentOutcome response
+        And check description is Errore generico. of sendPaymentOutcome response
+
+        # RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value    |
+            | ESITO  | ESEGUITO |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | 12$iuv       |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | 12$iuv                 |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # RT_GI
+        And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | 12$iuv                 |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+
+
+    @ALL @INSERT @INSERT_14
+    Scenario: spoV2 con update sullo stato
+        Given generate 1 notice number and iuv with aux digit 3, segregation code NA and application code 12
+        And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station_old#                |
+            | dataOraMessaggioRichiesta         | #timedate#                      |
+            | dataEsecuzionePagamento           | #date#                          |
+            | importoTotaleDaVersare            | 10.00                           |
+            | tipoVersamento                    | PO                              |
+            | identificativoUnivocoVersamento   | 12$1iuv                         |
+            | codiceContestoPagamento           | #ccp1#                          |
+            | importoSingoloVersamento          | 10.00                           |
+        And RT generation RT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old# |
+            | identificativoStazioneRichiedente | #id_station_old#                |
+            | dataOraMessaggioRicevuta          | #timedate#                      |
+            | importoTotalePagato               | 10.00                           |
+            | identificativoUnivocoVersamento   | 12$1iuv                         |
+            | identificativoUnivocoRiscossione  | 12$1iuv                         |
+            | CodiceContestoPagamento           | $1ccp                           |
+            | singoloImportoPagato              | 10.00                           |
+        And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker_old#                 |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                |
+            | identificativoDominio                 | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento       | 12$1iuv                         |
+            | codiceContestoPagamento               | $1ccp                           |
+            | password                              | #password#                      |
+            | identificativoPSP                     | #psp#                           |
+            | identificativoIntermediarioPSP        | #id_broker_psp#                 |
+            | identificativoCanale                  | #canale_ATTIVATO_PRESSO_PSP#    |
+            | rpt                                   | $rpt1Attachment                 |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        Given from body with datatable vertical nodoInviaRTBody_noOptional initial XML nodoInviaRT
+            | identificativoIntermediarioPSP  | #id_broker_psp#                 |
+            | identificativoCanale            | #canale_ATTIVATO_PRESSO_PSP#    |
+            | password                        | #password#                      |
+            | identificativoPSP               | #psp#                           |
+            | identificativoDominio           | #creditor_institution_code_old# |
+            | identificativoUnivocoVersamento | 12$1iuv                         |
+            | codiceContestoPagamento         | $1ccp                           |
+            | forzaControlloSegno             | 1                               |
+            | rt                              | $rtAttachment                   |
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRT response
+
+        # RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value    |
+            | ESITO  | ESEGUITO |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | 12$1iuv      |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | 12$1iuv                |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        And replace ccp1 content with $1ccp content
+        And replace iuv content with $1iuv content
+        Given from body with datatable horizontal activatePaymentNoticeV2Body_noOptional initial XML activatePaymentNoticeV2
+            | idPSP | idBrokerPSP         | idChannel  | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #intermediarioPSP2# | #canale32# | #password# | #creditor_institution_code# | 312$iuv      | 10.00  |
+        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+            | esito | importoSingoloVersamento |
+            | OK    | 10.00                    |
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        When psp sends SOAP activatePaymentNoticeV2 to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNoticeV2 response
+        Given RPT generation RPT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old#               |
+            | identificativoStazioneRichiedente | #id_station_old#                              |
+            | dataOraMessaggioRichiesta         | #timedate#                                    |
+            | dataEsecuzionePagamento           | #date#                                        |
+            | importoTotaleDaVersare            | $activatePaymentNoticeV2.amount               |
+            | identificativoUnivocoVersamento   | 12$iuv                                        |
+            | codiceContestoPagamento           | $activatePaymentNoticeV2Response.paymentToken |
+            | importoSingoloVersamento          | $activatePaymentNoticeV2.amount               |
+        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker_old#                               |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                              |
+            | identificativoDominio                 | #creditor_institution_code_old#               |
+            | identificativoUnivocoVersamento       | 12$iuv                                        |
+            | codiceContestoPagamento               | $activatePaymentNoticeV2Response.paymentToken |
+            | password                              | #password#                                    |
+            | identificativoPSP                     | #pspFittizio#                                 |
+            | identificativoIntermediarioPSP        | #brokerFittizio#                              |
+            | identificativoCanale                  | #canaleFittizio#                              |
+            | rpt                                   | $rptAttachment                                |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+
+        Given generic update through the query param_update_generic_where_condition of the table RT the parameter CCP = '$activatePaymentNoticeV2Response.paymentToken', with where condition IUV='$nodoInviaRPT.identificativoUnivocoVersamento' AND CCP ='$ccp1' under macro update_query on db nodo_online
+        And wait 5 seconds for expiration
+
+        Given from body with datatable horizontal sendPaymentOutcomeV2Body_noOptional initial XML sendPaymentOutcomeV2
+            | idPSP | idBrokerPSP         | idChannel  | password   | paymentToken                                  | outcome |
+            | #psp# | #intermediarioPSP2# | #canale32# | #password# | $activatePaymentNoticeV2Response.paymentToken | OK      |
+        When PSP sends SOAP sendPaymentOutcomeV2 to nodo-dei-pagamenti
+        Then check outcome is KO of sendPaymentOutcomeV2 response
+        And check faultCode is PPT_SYSTEM_ERROR of sendPaymentOutcomeV2 response
+        And check description is Errore generico. of sendPaymentOutcomeV2 response
+
+        # RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column | value    |
+            | ESITO  | ESEGUITO |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | 12$iuv       |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | 12$iuv                 |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |
+
+        # RT_GI
+        And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values           |
+            | IUV        | 12$iuv                 |
+            | ORDER BY   | INSERTED_TIMESTAMP ASC |

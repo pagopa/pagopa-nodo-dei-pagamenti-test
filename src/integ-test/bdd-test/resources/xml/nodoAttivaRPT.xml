@@ -8,12 +8,12 @@
 			<identificativoCanale>$identificativoCanale</identificativoCanale>
 			<password>$password</password>
 			<codiceContestoPagamento>$codiceContestoPagamento</codiceContestoPagamento>
-			<identificativoIntermediarioPSPPagamento>$idIntermediarioPSPPagamento</identificativoIntermediarioPSPPagamento>
-			<identificativoCanalePagamento>$idCanalePagamento</identificativoCanalePagamento>
+			<identificativoIntermediarioPSPPagamento>$identificativoIntermediarioPSPPagamento</identificativoIntermediarioPSPPagamento>
+			<identificativoCanalePagamento>$identificativoCanalePagamento</identificativoCanalePagamento>
 			<codificaInfrastrutturaPSP>QR-CODE</codificaInfrastrutturaPSP>
             <codiceIdRPT>
                 <qrc:QrCode>
-                    <qrc:CF>$CF</qrc:CF>
+                    <qrc:CF>$CCPost</qrc:CF>
                     <qrc:CodStazPA>$CodStazPA</qrc:CodStazPA>
                     <qrc:AuxDigit>$AuxDigit</qrc:AuxDigit>
                     <qrc:CodIUV>$CodIUV</qrc:CodIUV>
