@@ -244,9 +244,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paaInviaRT                                      |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
@@ -685,9 +685,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcome,sendPaymentOutcome,sendPaymentOutcome,paaInviaRT                    |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
@@ -1093,9 +1093,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcomeV2,sendPaymentOutcomeV2,paInviaRt,paaInviaRT                         |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
@@ -1475,9 +1475,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,paaInviaRT                                      |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
@@ -1915,9 +1915,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcome,sendPaymentOutcome,paInviaRt,paaInviaRT                             |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
@@ -2329,9 +2329,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcomeV2,sendPaymentOutcomeV2,paInviaRt,paaInviaRT                         |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
@@ -2745,9 +2745,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcome,sendPaymentOutcome,paInviaRt,paaInviaRT                             |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
@@ -3159,9 +3159,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcomeV2,sendPaymentOutcomeV2,paInviaRt,paaInviaRT                         |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |
@@ -12165,9 +12165,9 @@ Feature: NM3 flows PA Old con pagamento OK
             | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,sendPaymentOutcomeV2,sendPaymentOutcomeV2,sendPaymentOutcomeV2,paaInviaRT              |
             | INSERTED_TIMESTAMP    | NotNone                                                                                                                       |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
-            | where_keys | where_values |
-            | IUV        | 12$iuv       |
-            | ORDER BY   | ID ASC       |
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
         And verify 7 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
             | where_keys | where_values |
             | IUV        | 12$iuv       |

@@ -4,13 +4,8 @@
     <soapenv:Body>
         <ws:paaAttivaRPTRisposta>
             <paaAttivaRPTRisposta>
-                <esito>OK</esito>
-                <delay>10000</delay>
-                <datiPagamentoPA>
-                    <importoSingoloVersamento>$activatePaymentNotice.amount</importoSingoloVersamento>
-                    <ibanAccredito>IT45R0760103200000000001016</ibanAccredito>
-                    <causaleVersamento>prova/RFDB/018431538193400/TXT/causale $iuv</causaleVersamento>
-                </datiPagamentoPA>
+                <esito>$esito</esito>
+                <delay>$delay</delay>
             </paaAttivaRPTRisposta>
         </ws:paaAttivaRPTRisposta>
     </soapenv:Body>
