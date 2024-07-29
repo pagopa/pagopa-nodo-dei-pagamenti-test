@@ -4501,6 +4501,23 @@ def step_impl(context, primitive1, primitive2, restType1, restType2, delay1):
         print("----->>>> Exception:", e)
         # Interrompiamo il test
         raise e
+    
+@step("calling in parallel with update token {primitive1} and {primitive2} with {restType1} and {restType2} with {delay1:d} ms delay")
+def step_impl(context, primitive1, primitive2, restType1, restType2, delay1):
+    try:
+        list_of_primitive = [primitive1, primitive2]
+        list_of_type = [restType1, restType2]
+        utils.threading_update(context, list_of_primitive, list_of_type, delay1)
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 

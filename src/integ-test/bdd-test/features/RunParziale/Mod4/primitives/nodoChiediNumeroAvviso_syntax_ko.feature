@@ -121,3 +121,52 @@ Feature: syntax checks for nodoChiediNumeroAvviso - KO 1500
             | value                 |
             | idServizio            |
             | datiSpecificiServizio |
+
+
+    @chiediNumeroAvvisoSinKO_4 @Mod4 @ALL
+    Scenario: nodoChiediNumeroAvviso wrong XSD in base64
+        Given initial XML nodoChiediNumeroAvviso
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:nodoChiediNumeroAvviso>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#id_broker_psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+            <password>#password#</password>
+            <idServizio>00001</idServizio>
+            <idDominioErogatoreServizio>#creditor_institution_code_old#</idDominioErogatoreServizio>
+            <datiSpecificiServizio>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHRhOnRhc3NhQXV0byB4bWxuczp0YT0iaHR0cDovL1B1bnRvQWNjZXNzb1BTUC5zcGNvb3AuZ292Lml0L1Rhc3NhQXV0byIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vUHVudG9BY2Nlc3NvUFNQLnNwY29vcC5nb3YuaXQvVGFzc2FBdXRvIFRhc3NhQXV0b21vYmlsaXN0aWNhXzFfMF8wLnhzZCAiPgogIDx0YTp2ZWljb2xvQ29uVGFyZ2E+CiAgICA8dGE6Y2lhbz4xPC90YTpjaWFvPgogICAgPHRhOnZlaWNvbG9UYXJnYT5LTzEyM1BBPC90YTp2ZWljb2xvVGFyZ2E+CiAgPC90YTp2ZWljb2xvQ29uVGFyZ2E+CjwvdGE6dGFzc2FBdXRvPg==</datiSpecificiServizio>
+            </ws:nodoChiediNumeroAvviso>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When PSP sends soap nodoChiediNumeroAvviso to nodo-dei-pagamenti
+        Then check esito is KO of nodoChiediNumeroAvviso response
+        And check faultCode is PPT_SINTASSI_XSD of nodoChiediNumeroAvviso response
+
+
+
+    @chiediNumeroAvvisoSinKO_5 @Mod4 @ALL
+    Scenario: nodoChiediNumeroAvviso wrong XSD in base64
+        Given initial XML nodoChiediNumeroAvviso
+            """
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.pagamenti.telematici.gov/">
+            <soapenv:Header/>
+            <soapenv:Body>
+            <ws:nodoChiediNumeroAvviso>
+            <identificativoPSP>#psp#</identificativoPSP>
+            <identificativoIntermediarioPSP>#id_broker_psp#</identificativoIntermediarioPSP>
+            <identificativoCanale>#canale_ATTIVATO_PRESSO_PSP#</identificativoCanale>
+            <password>#password#</password>
+            <idServizio>00001</idServizio>
+            <idDominioErogatoreServizio>#creditor_institution_code_old#</idDominioErogatoreServizio>
+            <datiSpecificiServizio>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHRhOnRhc3NhQXV0byB4bWxuczp0YT0iaHR0cDovL1B1bnRvQWNjZXNzb1BTUC5zcGNvb3AuZ292Lml0L1Rhc3NhQXV0byIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnNjaGVtYUxvY2F0aW9uPSJodHRwOi8vUHVudG9BY2Nlc3NvUFNQLnNwY29vcC5nb3YuaXQvVGFzc2FBdXRvIFRhc3NhQXV0b21vYmlsaXN0aWNhXzFfMF8wLnhzZCAiPgogIDx0YTp2ZWljb2xvQ29uVGFyZ2E+CiAgICA8dGE6dGlwb1ZlaWNvbG9UYXJnbz4xPC90YTp0aXBvVmVpY29sb1RhcmdvPgogIDwvdGE6dmVpY29sb0NvblRhcmdhPgo8L3RhOnRhc3NhQXV0bz4=</datiSpecificiServizio>
+            </ws:nodoChiediNumeroAvviso>
+            </soapenv:Body>
+            </soapenv:Envelope>
+            """
+        When PSP sends soap nodoChiediNumeroAvviso to nodo-dei-pagamenti
+        Then check esito is KO of nodoChiediNumeroAvviso response
+        And check faultCode is PPT_SINTASSI_XSD of nodoChiediNumeroAvviso response
