@@ -516,6 +516,7 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
             | identificativoUnivocoVersamento   | $iuv                                               |
             | identificativoUnivocoRiscossione  | $iuv                                               |
             | CodiceContestoPagamento           | $ccp                                               |
+            | codiceEsitoPagamento              | 0                                                  |
             | singoloImportoPagato              | $nodoAttivaRPT.importoSingoloVersamento            |
         And from body with datatable vertical nodoInviaRTBody_noOptional initial XML nodoInviaRT
             | identificativoDominio           | $nodoChiediNumeroAvviso.idDominioErogatoreServizio |
@@ -833,19 +834,19 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
             | dataEsecuzionePagamento           | 2016-09-16                              |
             | importoTotaleDaVersare            | $nodoAttivaRPT.importoSingoloVersamento |
             | identificativoUnivocoVersamento   | $iuv                                    |
-            | codiceContestoPagamento           | $ccp                                   |
+            | codiceContestoPagamento           | $ccp                                    |
             | importoSingoloVersamento          | $nodoAttivaRPT.importoSingoloVersamento |
         And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
-            | identificativoIntermediarioPA         | #id_broker_old#              |
-            | identificativoStazioneIntermediarioPA | #id_station_old#             |
-            | identificativoDominio                 | #creditor_institution_code#  |
-            | identificativoUnivocoVersamento       | $iuv                         |
-            | codiceContestoPagamento               | $ccp                         |
-            | password                              | #password#                   |
-            | identificativoPSP                     | #psp#                        |
-            | identificativoIntermediarioPSP        | #id_broker_psp#              |
-            | identificativoCanale                  | #canaleRtPull_sec# |
-            | rpt                                   | $rptAttachment               |
+            | identificativoIntermediarioPA         | #id_broker_old#             |
+            | identificativoStazioneIntermediarioPA | #id_station_old#            |
+            | identificativoDominio                 | #creditor_institution_code# |
+            | identificativoUnivocoVersamento       | $iuv                        |
+            | codiceContestoPagamento               | $ccp                        |
+            | password                              | #password#                  |
+            | identificativoPSP                     | #psp#                       |
+            | identificativoIntermediarioPSP        | #id_broker_psp#             |
+            | identificativoCanale                  | #canaleRtPull_sec#          |
+            | rpt                                   | $rptAttachment              |
         Given RT generation RT_generation with datatable vertical
             | identificativoDominio             | $nodoChiediNumeroAvviso.idDominioErogatoreServizio |
             | identificativoStazioneRichiedente | #id_station_old#                                   |
@@ -854,6 +855,7 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
             | identificativoUnivocoVersamento   | $iuv                                               |
             | identificativoUnivocoRiscossione  | $iuv                                               |
             | CodiceContestoPagamento           | $ccp                                               |
+            | codiceEsitoPagamento              | 0                                                  |
             | singoloImportoPagato              | $nodoAttivaRPT.importoSingoloVersamento            |
         And from body with datatable horizontal pspInviaRPT_noOptional initial XML pspInviaRPT
             | esitoComplessivoOperazione | identificativoCarrello                        | parametriPagamentoImmediato                                |
@@ -923,7 +925,7 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
             | UPDATED_TIMESTAMP   | NotNone                                 |
             | ID_RICEVUTA         | NotNone                                 |
             | ID_RICHIESTA        | NotNone                                 |
-            | CANALE              | #canaleRtPull_sec#            |
+            | CANALE              | #canaleRtPull_sec#                      |
             | NOTIFICA_PROCESSATA | N                                       |
             | GENERATA_DA         | PSP                                     |
         And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
@@ -1093,7 +1095,7 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys                | where_values        |
             | CODICE_CONTESTO_PAGAMENTO | $ccp                |
-            | TIPO_EVENTO               | pspInviaAckRT         |
+            | TIPO_EVENTO               | pspInviaAckRT       |
             | SOTTO_TIPO_EVENTO         | REQ                 |
             | ESITO                     | INVIATA             |
             | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)    |
@@ -1106,7 +1108,7 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys                | where_values        |
             | CODICE_CONTESTO_PAGAMENTO | $ccp                |
-            | TIPO_EVENTO               | pspInviaAckRT         |
+            | TIPO_EVENTO               | pspInviaAckRT       |
             | SOTTO_TIPO_EVENTO         | RESP                |
             | ESITO                     | RICEVUTA            |
             | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)    |
@@ -1117,9 +1119,9 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys                | where_values        |
             | CODICE_CONTESTO_PAGAMENTO | $ccp                |
-            | TIPO_EVENTO               | paaInviaRT         |
+            | TIPO_EVENTO               | paaInviaRT          |
             | SOTTO_TIPO_EVENTO         | REQ                 |
-            | ESITO                     | INVIATA            |
+            | ESITO                     | INVIATA             |
             | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)    |
             | ORDER BY                  | DATA_ORA_EVENTO ASC |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTReq
@@ -1133,9 +1135,9 @@ Feature: NM4 e MOD4 flows con PA OLD pagamento OK
         And execution query to get value result_query on the table RE, with the columns PAYLOAD with db name re with where datatable horizontal
             | where_keys                | where_values        |
             | CODICE_CONTESTO_PAGAMENTO | $ccp                |
-            | TIPO_EVENTO               | paaInviaRT         |
+            | TIPO_EVENTO               | paaInviaRT          |
             | SOTTO_TIPO_EVENTO         | RESP                |
-            | ESITO                     | RICEVUTA             |
+            | ESITO                     | RICEVUTA            |
             | INSERTED_TIMESTAMP        | TRUNC(SYSDATE-1)    |
             | ORDER BY                  | DATA_ORA_EVENTO ASC |
         And through the query result_query retrieve xml PAYLOAD at position 0 and save it under the key paaInviaRTResp
