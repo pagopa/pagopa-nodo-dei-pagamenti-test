@@ -67,7 +67,7 @@
 		<pay_i:e-mailPagatore>gesualdo.riccitelli@poste.it</pay_i:e-mailPagatore>
 	</pay_i:soggettoPagatore>
 	<pay_i:datiPagamento>
-		<pay_i:codiceEsitoPagamento>0</pay_i:codiceEsitoPagamento>
+		<pay_i:codiceEsitoPagamento>$codiceEsitoPagamento</pay_i:codiceEsitoPagamento>
 		<pay_i:importoTotalePagato>$importoTotalePagato</pay_i:importoTotalePagato>
 		<pay_i:identificativoUnivocoVersamento>$identificativoUnivocoVersamento</pay_i:identificativoUnivocoVersamento>
 		<pay_i:CodiceContestoPagamento>$CodiceContestoPagamento</pay_i:CodiceContestoPagamento>

@@ -1947,6 +1947,85 @@ def step_impl(context, filebody, type_table):
         print("----->>>> Exception:", e)
         # Interrompiamo il test
         raise e
+    
+    
+@step('RT{number:d} generation {filebody} with datatable {type_table}')
+def step_impl(context, filebody, type_table, number):
+    try:
+        assert context.table is not None, f"Datatable non inserita!!!"
+        # Legge la datatable per le where conditions e la mette in una dict
+        dict_fields_values = utils.table_to_dict(context.table, type_table)
+
+        file_path = ''
+        user_profile = None
+        try:
+            user_profile = getattr(context, "user_profile")
+        except AttributeError as e:
+            print(f"User Profile None: {e} ->>> remote run!")
+        
+        dbRun = getattr(context, "dbRun")
+
+        if dbRun == "Postgres":
+            ###RUN SI DA LOCALE CHE DAREMOTO
+            file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+        elif dbRun == "Oracle":       
+            ####RUN DA LOCALE
+            if user_profile != None:
+                # Specifica il percorso del tuo file XML da locale
+                file_path = f"src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+            ###RUN DA REMOTO
+            else:      
+                # Specifica il percorso del tuo file XML da remoto
+                file_path = f"/agent/_work/1/nodo/extracted/src/integ-test/bdd-test/resources/xml/{filebody}.xml"
+
+        # Leggi il contenuto del file XML come stringa
+        with open(file_path, 'r') as file:
+            payload = file.read()
+
+        #replace placeHolder with value by datatable
+        for fields, values in dict_fields_values.items():
+            for value in values:
+                payload = payload.replace(f"${fields}", value)
+
+        payload = utils.replace_global_variables(payload, context)
+        payload = utils.replace_local_variables(payload, context)
+        payload = utils.replace_context_variables(payload, context)
+
+        if '#date#' in payload:
+            date = datetime.date.today().strftime("%Y-%m-%d")
+            payload = payload.replace('#date#', date)
+            setattr(context, 'date', date)
+
+        if "#timedate#" in payload:
+            date = datetime.date.today().strftime("%Y-%m-%d")
+            timedate = date + datetime.datetime.now().strftime("T%H:%M:%S.%f")[:-3]
+            payload = payload.replace('#timedate#', timedate)
+            setattr(context, 'timedate', timedate)
+
+        if "#ccp#" in payload:
+            ccp = str(utils.current_milli_time())
+            payload = payload.replace('#ccp#', ccp)
+            setattr(context, "ccp", ccp)
+
+        setattr(context, f'rt{number}', payload)
+
+        payload_b = bytes(payload, 'UTF-8')
+        payload_uni = b64.b64encode(payload_b)
+        payload = f"{payload_uni}".split("'")[1]
+
+        print("RT generato: ", payload)
+        setattr(context, f'rt{number}Attachment', payload)
+
+    except AssertionError as e:
+        # Stampiamo il messaggio di errore dell'assert
+        print("----->>>> Assertion Error: ", e)
+        # Interrompiamo il test
+        raise AssertionError(str(e))
+    except Exception as e:
+        # Gestione di tutte le altre eccezioni
+        print("----->>>> Exception:", e)
+        # Interrompiamo il test
+        raise e
 
 
 @given('RT{number:d} generation')
@@ -2834,6 +2913,10 @@ def step_impl(context, sender, method, service, receiver):
                     body["totalAmount"] = float(body["totalAmount"])
                 if ('fee' in body.keys()) and (body["fee"] != None):
                     body["fee"] = float(body["fee"])
+                if ('RRN' in body.keys()) and (body["RRN"] != None):
+                    body["RRN"] = float(body["RRN"])
+                if ('importoTotalePagato' in body.keys()) and (body["importoTotalePagato"] != None):
+                    body["importoTotalePagato"] = float(body["importoTotalePagato"])
                 if ('primaryCiIncurredFee' in body.keys()) and (body["primaryCiIncurredFee"] != None):
                     body["primaryCiIncurredFee"] = float(body["primaryCiIncurredFee"])
                 if ('positionslist' in body.keys()) and (body["positionslist"] != None):

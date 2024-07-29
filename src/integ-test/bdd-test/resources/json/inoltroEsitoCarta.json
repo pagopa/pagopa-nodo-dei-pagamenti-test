@@ -1,0 +1,12 @@
+{
+    "idPagamento": "$idPagamento",
+    "RRN": 10026669,
+    "identificativoPsp": "$identificativoPsp",
+    "tipoVersamento": "$tipoVersamento",
+    "identificativoIntermediario": "$identificativoIntermediario",
+    "identificativoCanale": "$identificativoCanale",
+    "esitoTransazioneCarta": "123456",
+    "importoTotalePagato": "$importoTotalePagato",
+    "timestampOperazione": "2012-04-23T18:25:43.001Z",
+    "codiceAutorizzativo": "123212"
+}

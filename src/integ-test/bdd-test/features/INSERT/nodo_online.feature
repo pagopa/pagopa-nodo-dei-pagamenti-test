@@ -563,6 +563,7 @@ Feature: TEST INSERT
             | identificativoUnivocoVersamento   | $1iuv                           |
             | identificativoUnivocoRiscossione  | $1iuv                           |
             | CodiceContestoPagamento           | CCD01                           |
+            | codiceEsitoPagamento              | 0                               |
             | singoloImportoPagato              | 10.00                           |
         And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
@@ -952,6 +953,7 @@ Feature: TEST INSERT
             | identificativoUnivocoVersamento   | $1iuv                           |
             | identificativoUnivocoRiscossione  | $1iuv                           |
             | CodiceContestoPagamento           | $1ccp                           |
+            | codiceEsitoPagamento              | 0                               |
             | singoloImportoPagato              | 10.00                           |
         And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
@@ -1094,6 +1096,7 @@ Feature: TEST INSERT
             | identificativoUnivocoVersamento   | 12$1iuv                         |
             | identificativoUnivocoRiscossione  | 12$1iuv                         |
             | CodiceContestoPagamento           | $1ccp                           |
+            | codiceEsitoPagamento              | 0                               |
             | singoloImportoPagato              | 10.00                           |
         And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
@@ -1244,6 +1247,7 @@ Feature: TEST INSERT
             | identificativoUnivocoVersamento   | 12$1iuv                         |
             | identificativoUnivocoRiscossione  | 12$1iuv                         |
             | CodiceContestoPagamento           | $1ccp                           |
+            | codiceEsitoPagamento              | 0                               |
             | singoloImportoPagato              | 10.00                           |
         And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
@@ -1383,6 +1387,7 @@ Feature: TEST INSERT
             | identificativoUnivocoVersamento   | 12$1iuv                         |
             | identificativoUnivocoRiscossione  | 12$1iuv                         |
             | CodiceContestoPagamento           | $1ccp                           |
+            | codiceEsitoPagamento              | 0                               |
             | singoloImportoPagato              | 10.00                           |
         And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
@@ -1522,6 +1527,7 @@ Feature: TEST INSERT
             | identificativoUnivocoVersamento   | 12$1iuv                         |
             | identificativoUnivocoRiscossione  | 12$1iuv                         |
             | CodiceContestoPagamento           | $1ccp                           |
+            | codiceEsitoPagamento              | 0                               |
             | singoloImportoPagato              | 10.00                           |
         And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
@@ -1651,6 +1657,7 @@ Feature: TEST INSERT
             | identificativoUnivocoVersamento   | 12$1iuv                         |
             | identificativoUnivocoRiscossione  | 12$1iuv                         |
             | CodiceContestoPagamento           | $1ccp                           |
+            | codiceEsitoPagamento              | 0                               |
             | singoloImportoPagato              | 10.00                           |
         And from body with datatable vertical nodoInviaRPT initial XML nodoInviaRPT
             | identificativoIntermediarioPA         | #id_broker_old#                 |
@@ -1757,3 +1764,496 @@ Feature: TEST INSERT
             | IUV           | $nodoInviaRPT.identificativoUnivocoVersamento |
             | CCP           | $token_by_rptActivations                      |
             | ORDER BY      | INSERTED_TIMESTAMP ASC                        |
+
+
+
+    @ALL @INSERT @INSERT_17 @after_1
+    Scenario: INSERT - activate -> paaAttivaRPT  nodoInviaRPT (scadenza sessione)  mod3cancelV1 -> STATI_RPT_SNAPSHOT fare update con RPT_PARCHEGGIATA_NODO_MOD3 --> POSITION_PAYMENT_STATUS_SNAPSHOT fare update con PAYING_RPT --> POSITION_STATUS_SNAPSHOT fare update con PAYING --> mod3CancelV1
+        Given update parameter default_token_duration_validity_millis on configuration keys with value 2000
+        And generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'Y', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
+        And wait 5 seconds after triggered refresh job ALL
+        And from body with datatable horizontal activatePaymentNoticeBody_noOptional initial XML activatePaymentNotice
+            | idPSP | idBrokerPSP | idChannel                    | password   | fiscalCode                  | noticeNumber | amount |
+            | #psp# | #psp#       | #canale_ATTIVATO_PRESSO_PSP# | #password# | #creditor_institution_code# | 312#iuv#     | 10.00  |
+        And from body with datatable horizontal paaAttivaRPT_noOptional initial XML paaAttivaRPT
+            | esito | importoSingoloVersamento |
+            | OK    | 10.00                    |
+        And EC replies to nodo-dei-pagamenti with the paaAttivaRPT
+        When psp sends SOAP activatePaymentNotice to nodo-dei-pagamenti
+        Then check outcome is OK of activatePaymentNotice response
+        Given RPT generation RPT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_old#             |
+            | identificativoStazioneRichiedente | #id_station_old#                            |
+            | dataOraMessaggioRichiesta         | #timedate#                                  |
+            | dataEsecuzionePagamento           | #date#                                      |
+            | importoTotaleDaVersare            | $activatePaymentNotice.amount               |
+            | identificativoUnivocoVersamento   | 12$iuv                                      |
+            | codiceContestoPagamento           | $activatePaymentNoticeResponse.paymentToken |
+            | importoSingoloVersamento          | $activatePaymentNotice.amount               |
+        And from body with datatable vertical nodoInviaRPTBody_noOptional initial XML nodoInviaRPT
+            | identificativoIntermediarioPA         | #id_broker_old#                             |
+            | identificativoStazioneIntermediarioPA | #id_station_old#                            |
+            | identificativoDominio                 | #creditor_institution_code_old#             |
+            | identificativoUnivocoVersamento       | 12$iuv                                      |
+            | codiceContestoPagamento               | $activatePaymentNoticeResponse.paymentToken |
+            | password                              | #password#                                  |
+            | identificativoPSP                     | #pspFittizio#                               |
+            | identificativoIntermediarioPSP        | #brokerFittizio#                            |
+            | identificativoCanale                  | #canaleFittizio#                            |
+            | rpt                                   | $rptAttachment                              |
+        When EC sends SOAP nodoInviaRPT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRPT response
+        When job mod3CancelV1 triggered after 4 seconds
+        Then verify the HTTP status code of mod3CancelV1 response is 200
+        And wait 2 seconds for expiration
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                       |
+            | ID                    | NotNone                                     |
+            | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode           |
+            | NOTICE_ID             | $activatePaymentNotice.noticeNumber         |
+            | CREDITOR_REFERENCE_ID | 12$iuv                                      |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
+            | STATUS                | CANCELLED                                   |
+            | INSERTED_TIMESTAMP    | NotNone                                     |
+            | UPDATED_TIMESTAMP     | NotNone                                     |
+            | FK_POSITION_PAYMENT   | NotNone                                     |
+            | INSERTED_BY           | activatePaymentNotice                       |
+            | UPDATED_BY            | mod3CancelV1                                |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                        |
+            | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC           |
+
+        # POSITION_STATUS
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column         | value                               |
+            | ID             | NotNone                             |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | STATUS         | PAYING,INSERTED                     |
+            | INSERTED_BY    | activatePaymentNotice,mod3CancelV1  |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
+        And verify 2 record for the table POSITION_STATUS retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                        |
+            | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC           |
+
+        # POSITION_STATUS_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column              | value                               |
+            | ID                  | NotNone                             |
+            | PA_FISCAL_CODE      | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID           | $activatePaymentNotice.noticeNumber |
+            | STATUS              | INSERTED                            |
+            | INSERTED_TIMESTAMP  | NotNone                             |
+            | UPDATED_TIMESTAMP   | NotNone                             |
+            | FK_POSITION_SERVICE | NotNone                             |
+            | INSERTED_BY         | activatePaymentNotice               |
+            | UPDATED_BY          | mod3CancelV1                        |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                        |
+            | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC           |
+
+        # STATI_RPT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                                                                                          |
+            | ID                    | NotNone                                                                                                        |
+            | ID_SESSIONE           | NotNone                                                                                                        |
+            | ID_SESSIONE_ORIGINALE | NotNone                                                                                                        |
+            | ID_DOMINIO            | $activatePaymentNotice.fiscalCode                                                                              |
+            | IUV                   | 12$iuv                                                                                                         |
+            | CCP                   | $activatePaymentNoticeResponse.paymentToken                                                                    |
+            | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
+            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,mod3CancelV1,mod3CancelV1,paaInviaRT                                    |
+            | INSERTED_TIMESTAMP    | NotNone                                                                                                        |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
+        And verify 6 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
+
+        # STATI_RPT_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                       |
+            | ID_SESSIONE        | NotNone                                     |
+            | ID_DOMINIO         | $activatePaymentNotice.fiscalCode           |
+            | IUV                | 12$iuv                                      |
+            | CCP                | $activatePaymentNoticeResponse.paymentToken |
+            | STATO              | RT_ACCETTATA_PA                             |
+            | INSERTED_BY        | nodoInviaRPT                                |
+            | UPDATED_BY         | paaInviaRT                                  |
+            | INSERTED_TIMESTAMP | NotNone                                     |
+            | UPDATED_TIMESTAMP  | NotNone                                     |
+            | PUSH               | None                                        |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | 12$iuv       |
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | 12$iuv       |
+
+        # RT_GI
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                       |
+            | IDENT_DOMINIO      | $activatePaymentNotice.fiscalCode           |
+            | IUV                | 12$iuv                                      |
+            | CCP                | $activatePaymentNoticeResponse.paymentToken |
+            | INSERTED_TIMESTAMP | NotNone                                     |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys    | where_values                                |
+            | IUV           | 12$iuv                                      |
+            | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode           |
+            | CCP           | $activatePaymentNoticeResponse.paymentToken |
+        And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys    | where_values                                |
+            | IUV           | 12$iuv                                      |
+            | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode           |
+            | CCP           | $activatePaymentNoticeResponse.paymentToken |
+
+        # RT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column              | value                                       |
+            | ID_SESSIONE         | NotNone                                     |
+            | IDENT_DOMINIO       | $activatePaymentNotice.fiscalCode           |
+            | IUV                 | 12$iuv                                      |
+            | CCP                 | $activatePaymentNoticeResponse.paymentToken |
+            | COD_ESITO           | 1                                           |
+            | ESITO               | NON_ESEGUITO                                |
+            | DATA_RICEVUTA       | NotNone                                     |
+            | DATA_RICHIESTA      | NotNone                                     |
+            | ID_RICEVUTA         | NotNone                                     |
+            | ID_RICHIESTA        | NotNone                                     |
+            | SOMMA_VERSAMENTI    | 0                                           |
+            | INSERTED_TIMESTAMP  | NotNone                                     |
+            | UPDATED_TIMESTAMP   | NotNone                                     |
+            | CANALE              | #canaleFittizio#                            |
+            | NOTIFICA_PROCESSATA | N                                           |
+            | GENERATA_DA         | NMP                                         |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys    | where_values                                |
+            | IUV           | 12$iuv                                      |
+            | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode           |
+            | CCP           | $activatePaymentNoticeResponse.paymentToken |
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys    | where_values                                |
+            | IUV           | 12$iuv                                      |
+            | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode           |
+            | CCP           | $activatePaymentNoticeResponse.paymentToken |
+
+        Given generic update through the query param_update_generic_where_condition of the table STATI_RPT_SNAPSHOT the parameter STATO = 'RPT_PARCHEGGIATA_NODO_MOD3', with where condition ID_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV = '$nodoInviaRPT.identificativoUnivocoVersamento' under macro update_query on db nodo_online
+        And generic update through the query param_update_generic_where_condition of the table POSITION_PAYMENT_STATUS_SNAPSHOT the parameter STATO = 'PAYING_RPT', with where condition ID_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV = '$nodoInviaRPT.identificativoUnivocoVersamento' under macro update_query on db nodo_online
+        And generic update through the query param_update_generic_where_condition of the table POSITION_STATUS_SNAPSHOT the parameter STATO = 'PAYING', with where condition ID_DOMINIO = '$nodoInviaRPT.identificativoDominio' AND IUV = '$nodoInviaRPT.identificativoUnivocoVersamento' under macro update_query on db nodo_online
+        And wait 5 seconds for expiration
+
+        When job mod3CancelV1 triggered after 4 seconds
+        Then verify the HTTP status code of mod3CancelV1 response is 200
+
+        # POSITION_PAYMENT_STATUS_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                       |
+            | ID                    | NotNone                                     |
+            | PA_FISCAL_CODE        | $activatePaymentNotice.fiscalCode           |
+            | NOTICE_ID             | $activatePaymentNotice.noticeNumber         |
+            | CREDITOR_REFERENCE_ID | 12$iuv                                      |
+            | PAYMENT_TOKEN         | $activatePaymentNoticeResponse.paymentToken |
+            | STATUS                | PAYING_RPT                                  |
+            | INSERTED_TIMESTAMP    | NotNone                                     |
+            | UPDATED_TIMESTAMP     | NotNone                                     |
+            | FK_POSITION_PAYMENT   | NotNone                                     |
+            | INSERTED_BY           | activatePaymentNotice                       |
+            | UPDATED_BY            | mod3CancelV1                                |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
+        And verify 1 record for the table POSITION_PAYMENT_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                        |
+            | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC           |
+
+        # POSITION_STATUS_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column              | value                               |
+            | ID                  | NotNone                             |
+            | PA_FISCAL_CODE      | $activatePaymentNotice.fiscalCode   |
+            | NOTICE_ID           | $activatePaymentNotice.noticeNumber |
+            | STATUS              | PAYING                              |
+            | INSERTED_TIMESTAMP  | NotNone                             |
+            | UPDATED_TIMESTAMP   | NotNone                             |
+            | FK_POSITION_SERVICE | NotNone                             |
+            | INSERTED_BY         | activatePaymentNotice               |
+            | UPDATED_BY          | mod3CancelV1                        |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                        |
+            | NOTICE_ID      | $activatePaymentNotice.noticeNumber |
+            | PA_FISCAL_CODE | $activatePaymentNotice.fiscalCode   |
+            | ORDER BY       | INSERTED_TIMESTAMP,ID ASC           |
+        And verify 1 record for the table POSITION_STATUS_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values                        |
+            | NOTICE_ID  | $activatePaymentNotice.noticeNumber |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC           |
+
+        # STATI_RPT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column                | value                                                                                                          |
+            | ID                    | NotNone                                                                                                        |
+            | ID_SESSIONE           | NotNone                                                                                                        |
+            | ID_SESSIONE_ORIGINALE | NotNone                                                                                                        |
+            | ID_DOMINIO            | $activatePaymentNotice.fiscalCode                                                                              |
+            | IUV                   | 12$iuv                                                                                                         |
+            | CCP                   | $activatePaymentNoticeResponse.paymentToken                                                                    |
+            | STATO                 | RPT_RICEVUTA_NODO,RPT_ACCETTATA_NODO,RPT_PARCHEGGIATA_NODO_MOD3,RT_GENERATA_NODO,RT_INVIATA_PA,RT_ACCETTATA_PA |
+            | INSERTED_BY           | nodoInviaRPT,nodoInviaRPT,nodoInviaRPT,mod3CancelV1,mod3CancelV1,paaInviaRT                                    |
+            | INSERTED_TIMESTAMP    | NotNone                                                                                                        |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
+        And verify 6 record for the table STATI_RPT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values              |
+            | IUV        | 12$iuv                    |
+            | ORDER BY   | INSERTED_TIMESTAMP,ID ASC |
+
+        # STATI_RPT_SNAPSHOT
+        And generate list columns list_columns and dict fields values expected dict_fields_values_expected for query checks all values with datatable horizontal
+            | column             | value                                       |
+            | ID_SESSIONE        | NotNone                                     |
+            | ID_DOMINIO         | $activatePaymentNotice.fiscalCode           |
+            | IUV                | 12$iuv                                      |
+            | CCP                | $activatePaymentNoticeResponse.paymentToken |
+            | STATO              | RPT_PARCHEGGIATA_NODO_MOD3                  |
+            | INSERTED_BY        | nodoInviaRPT                                |
+            | UPDATED_BY         | paaInviaRT                                  |
+            | INSERTED_TIMESTAMP | NotNone                                     |
+            | UPDATED_TIMESTAMP  | NotNone                                     |
+            | PUSH               | None                                        |
+        And checks all values by $dict_fields_values_expected of the record for each columns $list_columns of the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | 12$iuv       |
+        And verify 1 record for the table STATI_RPT_SNAPSHOT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys | where_values |
+            | IUV        | 12$iuv       |
+
+        # RT_GI
+        And verify 1 record for the table RT_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys    | where_values                                |
+            | IUV           | 12$iuv                                      |
+            | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode           |
+            | CCP           | $activatePaymentNoticeResponse.paymentToken |
+
+        # RT
+        And verify 1 record for the table RT retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys    | where_values                                |
+            | IUV           | 12$iuv                                      |
+            | IDENT_DOMINIO | $activatePaymentNotice.fiscalCode           |
+            | CCP           | $activatePaymentNoticeResponse.paymentToken |
+
+
+
+    @ALL @INSERT @INSERT_18
+    Scenario: MOD1 carrello multibeneficiario rt push
+        Given generate 1 notice number and iuv with aux digit 3, segregation code 02 and application code NA
+        And generate 1 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
+        And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRichiesta         | #timedate#                  |
+            | dataEsecuzionePagamento           | #date#                      |
+            | importoTotaleDaVersare            | 10.00                       |
+            | tipoVersamento                    | BBT                         |
+            | identificativoUnivocoVersamento   | $1iuv                       |
+            | codiceContestoPagamento           | $1carrello                  |
+            | importoSingoloVersamento          | 10.00                       |
+        And RPT2 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_secondary# |
+            | identificativoStazioneRichiedente | #id_stazion#                          |
+            | dataOraMessaggioRichiesta         | #timedate#                            |
+            | dataEsecuzionePagamento           | #date#                                |
+            | importoTotaleDaVersare            | 10.00                                 |
+            | tipoVersamento                    | BBT                                   |
+            | identificativoUnivocoVersamento   | $1iuv                                 |
+            | codiceContestoPagamento           | $1carrello                            |
+            | importoSingoloVersamento          | 10.00                                 |
+        And RT1 generation RT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRicevuta          | #timedate#                  |
+            | importoTotalePagato               | 0.00                        |
+            | identificativoUnivocoVersamento   | $1iuv                       |
+            | identificativoUnivocoRiscossione  | $1iuv                       |
+            | CodiceContestoPagamento           | $1carrello                  |
+            | codiceEsitoPagamento              | 1                           |
+            | singoloImportoPagato              | 0.00                        |
+        And RT2 generation RT_generation with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_secondary# |
+            | identificativoStazioneRichiedente | #id_station#                          |
+            | dataOraMessaggioRicevuta          | #timedate#                            |
+            | importoTotalePagato               | 0.00                                  |
+            | identificativoUnivocoVersamento   | $1iuv                                 |
+            | identificativoUnivocoRiscossione  | $1iuv                                 |
+            | CodiceContestoPagamento           | $1carrello                            |
+            | codiceEsitoPagamento              | 1                                     |
+            | singoloImportoPagato              | 0.00                                  |
+        And from body with datatable vertical nodoInviaCarrelloRPT_2elemLista_multibeneficiario initial XML nodoInviaCarrelloRPT
+            | identificativoIntermediarioPA         | #creditor_institution_code#           |
+            | identificativoStazioneIntermediarioPA | #id_station#                          |
+            | identificativoCarrello                | $1carrello                            |
+            | password                              | #password#                            |
+            | identificativoPSP                     | #psp_AGID#                            |
+            | identificativoIntermediarioPSP        | #broker_AGID#                         |
+            | identificativoCanale                  | #canale_AGID_BBT#                     |
+            | identificativoDominio1                | #creditor_institution_code#           |
+            | identificativoUnivocoVersamento1      | $1iuv                                 |
+            | codiceContestoPagamento1              | $1carrello                            |
+            | rpt1                                  | $rpt1Attachment                       |
+            | identificativoDominio2                | #creditor_institution_code_secondary# |
+            | identificativoUnivocoVersamento2      | $1iuv                                 |
+            | codiceContestoPagamento2              | $1carrello                            |
+            | rpt2                                  | $rpt2Attachment                       |
+        And from body with datatable vertical pspInviaCarrelloRPT_noOptional initial XML pspInviaCarrelloRPT
+            | esitoComplessivoOperazione  | OK                                                        |
+            | identificativoCarrello      | $nodoInviaCarrelloRPT.identificativoCarrello              |
+            | parametriPagamentoImmediato | idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello |
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+        And retrieve session token from $nodoInviaCarrelloRPTResponse.url
+
+
+        When WISP sends rest GET informazioniPagamento?idPagamento=$sessionToken to nodo-dei-pagamenti
+        Then verify the HTTP status code of informazioniPagamento response is 200
+
+        Given from body with datatable vertical pspInviaCarrelloRPTCarte initial XML pspInviaCarrelloRPTCarte
+            | esitoComplessivoOperazione | OK |
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPTCarte
+        And from body with datatable vertical inoltroEsitoCarta initial json inoltroEsito/carta
+            | idPagamento                 | $sessionToken |
+            | identificativoPsp           | #psp#         |
+            | tipoVersamento              | CP            |
+            | identificativoIntermediario | #psp#         |
+            | identificativoCanale        | #canale#      |
+            | importoTotalePagato         | 11.11         |
+        When WISP sends REST POST inoltroEsito/carta_json to nodo-dei-pagamenti
+        Then check esito is OK of inoltroEsito/carta response
+        Given from body with datatable vertical nodoInviaRTBody_noOptional initial XML nodoInviaRT
+            | identificativoIntermediarioPSP  | #id_broker_psp#             |
+            | identificativoCanale            | #canale#                    |
+            | password                        | #password#                  |
+            | identificativoPSP               | #psp#                       |
+            | identificativoDominio           | #creditor_institution_code# |
+            | identificativoUnivocoVersamento | $1iuv                       |
+            | codiceContestoPagamento         | $1carrello                  |
+            | forzaControlloSegno             | 1                           |
+            | rt                              | $rt1Attachment              |
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRT response
+        Given from body with datatable vertical nodoInviaRTBody_noOptional initial XML nodoInviaRT
+            | identificativoIntermediarioPSP  | #id_broker_psp#                       |
+            | identificativoCanale            | #canale#                              |
+            | password                        | #password#                            |
+            | identificativoPSP               | #psp#                                 |
+            | identificativoDominio           | #creditor_institution_code_secondary# |
+            | identificativoUnivocoVersamento | $1iuv                                 |
+            | codiceContestoPagamento         | $1carrello                            |
+            | forzaControlloSegno             | 1                                     |
+            | rt                              | $rt2Attachment                        |
+        When EC sends SOAP nodoInviaRT to nodo-dei-pagamenti
+        Then check esito is OK of nodoInviaRT response
+
+        # POSITION_SERVICE_GI
+        And verify 1 record for the table POSITION_SERVICE_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                |
+            | NOTICE_ID      | 302$1iuv                    |
+            | PA_FISCAL_CODE | #creditor_institution_code# |
+
+        # POSITION_SERVICE
+        And verify 1 record for the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                |
+            | NOTICE_ID      | 302$1iuv                    |
+            | PA_FISCAL_CODE | #creditor_institution_code# |
+
+        Given generate 2 cart with PA #creditor_institution_code_old# and notice number $1noticeNumber
+        And RPT1 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code# |
+            | identificativoStazioneRichiedente | #id_station#                |
+            | dataOraMessaggioRichiesta         | #timedate#                  |
+            | dataEsecuzionePagamento           | #date#                      |
+            | importoTotaleDaVersare            | 10.00                       |
+            | tipoVersamento                    | BBT                         |
+            | identificativoUnivocoVersamento   | $1iuv                       |
+            | codiceContestoPagamento           | $2carrello                  |
+            | importoSingoloVersamento          | 10.00                       |
+        And RPT2 generation RPT_generation_tipoVersamento with datatable vertical
+            | identificativoDominio             | #creditor_institution_code_secondary# |
+            | identificativoStazioneRichiedente | #id_stazion#                          |
+            | dataOraMessaggioRichiesta         | #timedate#                            |
+            | dataEsecuzionePagamento           | #date#                                |
+            | importoTotaleDaVersare            | 10.00                                 |
+            | tipoVersamento                    | BBT                                   |
+            | identificativoUnivocoVersamento   | $1iuv                                 |
+            | codiceContestoPagamento           | $2carrello                            |
+            | importoSingoloVersamento          | 10.00                                 |
+        And from body with datatable vertical nodoInviaCarrelloRPT_2elemLista initial XML nodoInviaCarrelloRPT
+            | identificativoIntermediarioPA         | #creditor_institution_code#           |
+            | identificativoStazioneIntermediarioPA | #id_station#                          |
+            | identificativoCarrello                | $2carrello                            |
+            | password                              | #password#                            |
+            | identificativoPSP                     | #psp_AGID#                            |
+            | identificativoIntermediarioPSP        | #broker_AGID#                         |
+            | identificativoCanale                  | #canale_AGID_BBT#                     |
+            | identificativoDominio1                | #creditor_institution_code#           |
+            | identificativoUnivocoVersamento1      | $1iuv                                 |
+            | codiceContestoPagamento1              | $2carrello                            |
+            | rpt1                                  | $rpt1Attachment                       |
+            | identificativoDominio2                | #creditor_institution_code_secondary# |
+            | identificativoUnivocoVersamento2      | $1iuv                                 |
+            | codiceContestoPagamento2              | $2carrello                            |
+            | rpt2                                  | $rpt2Attachment                       |
+        And from body with datatable vertical pspInviaCarrelloRPT_noOptional initial XML pspInviaCarrelloRPT
+            | esitoComplessivoOperazione  | OK                                                        |
+            | identificativoCarrello      | $nodoInviaCarrelloRPT.identificativoCarrello              |
+            | parametriPagamentoImmediato | idBruciatura=$nodoInviaCarrelloRPT.identificativoCarrello |
+        And PSP replies to nodo-dei-pagamenti with the pspInviaCarrelloRPT
+        When EC sends SOAP nodoInviaCarrelloRPT to nodo-dei-pagamenti
+        Then check esitoComplessivoOperazione is OK of nodoInviaCarrelloRPT response
+
+        # POSITION_SERVICE_GI
+        And verify 1 record for the table POSITION_SERVICE_GI retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                |
+            | NOTICE_ID      | 302$1iuv                    |
+            | PA_FISCAL_CODE | #creditor_institution_code# |
+
+        # POSITION_SERVICE
+        And verify 1 record for the table POSITION_SERVICE retrived by the query on db nodo_online with where datatable horizontal
+            | where_keys     | where_values                |
+            | NOTICE_ID      | 302$1iuv                    |
+            | PA_FISCAL_CODE | #creditor_institution_code# |
+
+
+
+    @after1
+    Scenario: After restore
+        Given generic update through the query param_update_generic_where_condition of the table STAZIONI the parameter INVIO_RT_ISTANTANEO = 'N', with where condition OBJ_ID = '16635' under macro update_query on db nodo_cfg
+        And update parameter default_token_duration_validity_millis on configuration keys with value 1800000
+        And wait 5 seconds after triggered refresh job ALL
