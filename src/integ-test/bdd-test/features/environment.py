@@ -54,8 +54,8 @@ def before_all(context):
             ####RUN DA LOCALE
             if user_profile != None:
                 proxies = {
-                    'http': 'http://cipchtritonws01.office.corp.sia.it:8080',
-                    'https': 'http://cipchtritonws01.office.corp.sia.it:8080',
+                    'http': 'http://172.31.253.47:8080',
+                    'https': 'http://172.31.253.47:8080',
                 }
             ####RUN IN REMOTO
             else:
@@ -141,9 +141,9 @@ def before_scenario(context, scenario):
             tag_after_selected = f"after_{i}"
             break
 
-    context.stdout_capture = StringIO()
-    context.original_stdout = sys.stdout
-    sys.stdout = context.stdout_capture
+    # context.stdout_capture = StringIO()
+    # context.original_stdout = sys.stdout
+    # sys.stdout = context.stdout_capture
 
 
 
@@ -166,32 +166,32 @@ def after_scenario(context, scenario):
                 context.execute_steps(text_step)
         print("----> AFTER STEP COMPLETED")
 
-    dbRun = getattr(context, "dbRun")
-    if dbRun == "Postgres":
-        sys.stdout = context.original_stdout
-        context.stdout_capture.seek(0)
-        captured_stdout = context.stdout_capture.read()
+    # dbRun = getattr(context, "dbRun")
+    # if dbRun == "Postgres":
+    #     sys.stdout = context.original_stdout
+    #     context.stdout_capture.seek(0)
+    #     captured_stdout = context.stdout_capture.read()
 
-        allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+    #     allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
 
-        context.stdout_capture.close()
+    #     context.stdout_capture.close()
 
-        # Stampa l'output nel terminale
-        print(f"\nCaptured stdout:\n{captured_stdout}")
+    #     # Stampa l'output nel terminale
+    #     print(f"\nCaptured stdout:\n{captured_stdout}")
 
-    elif dbRun == "Oracle":
-        ####RUN DA LOCALE
-        if user_profile != None:
-            sys.stdout = context.original_stdout
-            context.stdout_capture.seek(0)
-            captured_stdout = context.stdout_capture.read()
+    # elif dbRun == "Oracle":
+    #     ####RUN DA LOCALE
+    #     if user_profile != None:
+    #         sys.stdout = context.original_stdout
+    #         context.stdout_capture.seek(0)
+    #         captured_stdout = context.stdout_capture.read()
 
-            allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
+    #         allure.attach(captured_stdout, name="stdout", attachment_type=allure.attachment_type.TEXT)
 
-            context.stdout_capture.close()
+    #         context.stdout_capture.close()
 
-            # Stampa l'output nel terminale
-            print(f"\nCaptured stdout:\n{captured_stdout}")
+    #         # Stampa l'output nel terminale
+    #         print(f"\nCaptured stdout:\n{captured_stdout}")
 
 
 
