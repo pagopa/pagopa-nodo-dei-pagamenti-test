@@ -431,6 +431,7 @@ def replace_local_variables_with_position(body, position, context, type_body):
     dbRun = getattr(context, "dbRun")
     pattern = re.compile(string_pattern)
     match = pattern.findall(body)
+
     for field in match:
         saved_elem = getattr(context, field.replace('$', '').split('.')[0])
         value = saved_elem
@@ -1219,6 +1220,21 @@ def json2xml(json_obj, line_padding=""):
                         result_list.append("%s<%s>" % (line_padding, "payment"))
                         result_list.append(json2xml(sub_elem, line_padding))
                         result_list.append("%s</%s>" % (line_padding, "payment"))
+                if tag_name == 'idPspList':
+                    for sub_elem in sub_obj:
+                        result_list.append("%s<%s>" % (line_padding, "idPspListContent"))
+                        result_list.append(json2xml(sub_elem, line_padding))
+                        result_list.append("%s</%s>" % (line_padding, "idPspListContent"))
+                if tag_name == 'transferList':
+                    for sub_elem in sub_obj:
+                        result_list.append("%s<%s>" % (line_padding, "transferListContent"))
+                        result_list.append(json2xml(sub_elem, line_padding))
+                        result_list.append("%s</%s>" % (line_padding, "transferListContent"))
+                if tag_name == 'bundleOptions':
+                    for sub_elem in sub_obj:
+                        result_list.append("%s<%s>" % (line_padding, "bundleOptionsContent"))
+                        result_list.append(json2xml(sub_elem, line_padding))
+                        result_list.append("%s</%s>" % (line_padding, "bundleOptionsContent"))
                 result_list.append("%s</%s>" % (line_padding, tag_name))
             else:
                 result_list.append("%s<%s>" % (line_padding, tag_name))
